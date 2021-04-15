@@ -1,0 +1,2252 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{url}
+\usepackage{xargs}
+\usepackage[pdftex,dvipsnames]{xcolor}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\usepackage[lined,boxed,ruled,norelsize,algo2e]{algorithm2e}
+\usepackage[small,bf]{caption}
+\usepackage{tikz}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=red,
+    filecolor=red,
+    linkcolor=red,
+    urlcolor=red
+}
+
+
+
+\usepackage{fancybox}
+\usepackage{multirow}
+\usepackage{nicefrac}
+\usepackage{hyperref}
+
+
+\expandafter\def\expandafter\normalsize\expandafter{%
+    \normalsize
+%	    \setlength\abovedisplayskip{5pt}
+    \setlength\belowdisplayskip{5pt}
+    % \setlength\abovedisplayshortskip{5pt}
+    \setlength\belowdisplayshortskip{5pt}
+}
+
+\usepackage{tocloft}
+\setlength{\cftsecnumwidth}{2.8em}%
+
+%%%%%
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{fix-cm}
+\makeatletter
+\newcommand\HUGE{\@setfontsize\Huge{38}{47}}
+\makeatother
+
+\titleclass{\part}{top}
+\titleformat{\part}[display]
+  {\normalfont\HUGE\sffamily}{\partname\ \thepart}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\HUGE\bfseries\filleft}
+%\titlespacing*{\part} {0pt}{20pt}{40pt}
+\titlespacing*{\part} {0pt}{30pt}{50pt}
+
+% chapter heading formatting
+\titleformat{\chapter}[display]
+  {\normalfont\LARGE\sffamily}{\chaptertitlename\ \thechapter}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\LARGE\bfseries\filleft}
+% section heading formatting
+\titleformat{\section}
+  {\normalfont\Large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesection}{0.5em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesubsection}{0.5em}{}
+\titlespacing*{\chapter} {0pt}{20pt}{30pt}
+
+% header/footer
+\fancyhf{}
+\fancyhead[ER]{\footnotesize\sffamily\leftmark}
+\fancyhead[OL]{\footnotesize\sffamily\nouppercase\rightmark}
+\fancyhead[EL,OR]{\bfseries\thepage}
+
+\setcounter{secnumdepth}{3}
+\end_preamble
+\options openany
+\use_default_options false
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+theorems-sec
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding default
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 0
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic true
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip 0.1in
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Sphere and Parabola Methods
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+checked calculations
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Gradient-Descent"
+
+\end_inset
+
+, we proved that gradient descent converges at the rate 
+\begin_inset Formula $(1-\frac{\mu}{L})^{k}$
+\end_inset
+
+ in function value assuming the function satisfies 
+\begin_inset Formula $\mu\cdot I\preceq\nabla^{2}f(x)\preceq L\cdot I$
+\end_inset
+
+ for all 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ Hence, if 
+\begin_inset Formula $\frac{L}{\mu}$
+\end_inset
+
+ is not too large, this rate of decrease of the function value can be much
+ better than the 
+\begin_inset Formula $\left(1-\frac{1}{n^{2}}\right)^{k}$
+\end_inset
+
+ rate of the ellipsoid method or the 
+\begin_inset Formula $\left(1-\frac{1}{n}\right)^{k}$
+\end_inset
+
+ rate of the center of gravity method (recall that the convergence rate
+ in function value is 
+\begin_inset Formula $n$
+\end_inset
+
+ times slower than the convergence rate in volume).
+ In this section, we show how to modify the ellipsoid method to get a faster
+ convergence rate when 
+\begin_inset Formula $\frac{L}{\mu}$
+\end_inset
+
+ is small.
+ One can view this whole section as just an interpretation of accelerated
+ gradient descent (which we haven't seen yet) in the cutting plane framework.
+ In a later section, we will give another interpretation.
+\end_layout
+
+\begin_layout Subsection
+Sphere Method
+\end_layout
+
+\begin_layout Standard
+We have been using convexity to find a halfspace containing the optimum
+ with the current point on its boundary.
+ For a strongly convex function, any optimal 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ is contained in a strictly smaller region than a halfspace.
+ In particular, we have
+\begin_inset Formula 
+\[
+f(x^{*})\geq f(x)+\nabla f(x)^{\top}(x^{*}-x)+\frac{\mu}{2}\norm{x^{*}-x}_{2}^{2}.
+\]
+
+\end_inset
+
+Completing the square, we have that
+\begin_inset Formula 
+\[
+\frac{\mu}{2}\norm{(x^{*}-x)+\frac{1}{\mu}\nabla f(x)}_{2}^{2}-\frac{\norm{\nabla f(x)}_{2}^{2}}{2\mu}\le-\left(f(x)-f(x^{*})\right)
+\]
+
+\end_inset
+
+Using 
+\begin_inset Formula $x^{+}\defeq x-\frac{1}{L}\nabla f(x)$
+\end_inset
+
+ and 
+\begin_inset Formula $x^{++}\defeq x-\frac{1}{\mu}\nabla f(x)$
+\end_inset
+
+, we can write
+\begin_inset Formula 
+\begin{equation}
+\norm{x^{*}-x^{++}}_{2}^{2}\leq\frac{\norm{\nabla f(x)}_{2}^{2}}{\mu^{2}}-\frac{2}{\mu}(f(x)-f(x^{*})).\label{eq:geometricdescent_ball-1}
+\end{equation}
+
+\end_inset
+
+To use this formula in the cutting plane framework, we need a crude upper
+ bound on 
+\begin_inset Formula $f(x^{*})$
+\end_inset
+
+.
+ One can simply use 
+\begin_inset Formula $f(x^{*})\leq f(x)$
+\end_inset
+
+.
+ Or, we can use Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:gradient_progress"
+
+\end_inset
+
+ and get
+\begin_inset Formula 
+\[
+f(x^{*})\leq f(x^{+})\le f(x-\frac{1}{L}\nabla f(x))\leq f(x)-\frac{1}{2L}\|\nabla f(x)\|^{2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Putting it into (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:geometricdescent_ball-1"
+
+\end_inset
+
+), we see that
+\begin_inset Formula 
+\begin{align}
+\norm{x^{*}-x^{++}}_{2}^{2} & \leq\frac{1}{\mu^{2}}\left(\norm{\nabla f(x)}_{2}^{2}-2\mu\cdot\left(f(x)-f(x^{*})\right)\right)\nonumber \\
+ & \leq\frac{1}{\mu^{2}}\left(\norm{\nabla f(x)}_{2}^{2}-2\mu\cdot\left(f(x)-f(x^{+})\right)\right)-\frac{2}{\mu}\left(f(x^{+})-f(x^{*})\right)\nonumber \\
+ & \leq\frac{1}{\mu^{2}}\left(\norm{\nabla f(x)}_{2}^{2}-2\mu\cdot\frac{1}{2L}\|\nabla f(x)\|_{2}^{2}\right)-\frac{2}{\mu}\left(f(x^{+})-f(x^{*})\right)\nonumber \\
+ & \leq\frac{\left(1-\frac{\mu}{L}\right)}{\mu^{2}}\norm{\nabla f(x)}_{2}^{2}-\frac{2}{\mu}\left(f(x^{+})-f(x^{*})\right).\label{eq:radius-decrease}
+\end{align}
+
+\end_inset
+
+Therefore, using the trivial bound of zero for the second term on the RHS,
+ 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ lies in a ball centered at 
+\begin_inset Formula $x^{++}$
+\end_inset
+
+ with radius at most
+\begin_inset Formula 
+\begin{equation}
+\sqrt{1-\frac{\mu}{L}}\cdot\frac{\norm{\nabla f(x)}_{2}}{\mu}.\label{eq:geometr_descent_simple-1}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This suggests using balls instead of ellipsoids in a cutting plane algorithm;
+ it would certainly be more efficient to maintain!
+\end_layout
+
+\begin_layout Standard
+We arrive at the following algorithm.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm2e}[H]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\mathtt{SphereMethod}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetAlgoLined
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Input:
+\series default
+ Initial point 
+\begin_inset Formula $x^{(0)}\in\Rn$
+\end_inset
+
+, strong convexity parameter 
+\begin_inset Formula $\mu$
+\end_inset
+
+, Lipschitz gradient parameter 
+\begin_inset Formula $L$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $Q^{(0)}\leftarrow\Rn$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+For{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $k=0,\cdots$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Set 
+\begin_inset Formula $Q=\left\{ x\in\Rn:\norm{x-(x^{(k)}-\frac{1}{\mu}\nabla f(x^{(k)}))}_{2}^{2}\leq\frac{1-\frac{\mu}{L}}{\mu^{2}}\cdot\norm{\nabla f(x^{(k)})}_{2}^{2}\right\} $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $Q^{(k+1)}\leftarrow\mathtt{minSphere}(Q\cap Q^{(k)})$
+\end_inset
+
+ where 
+\begin_inset Formula $\mathtt{minSphere}(K)$
+\end_inset
+
+ is the smallest sphere covering 
+\begin_inset Formula $K$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $x^{(k+1)}\leftarrow$
+\end_inset
+
+ center of 
+\begin_inset Formula $Q^{(k+1)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To analyze 
+\begin_inset Formula $\mathtt{SphereMethod}$
+\end_inset
+
+, we need the following lemma, which is illustrated in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:geometric_descent-1"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:one_ball_shrink-1"
+
+\end_inset
+
+For any 
+\begin_inset Formula $g\in\Rn$
+\end_inset
+
+ and 
+\begin_inset Formula $\epsilon\in(0,1)$
+\end_inset
+
+, we have 
+\begin_inset Formula $B(0,1)\cap B(g,\|g\|_{2}\sqrt{1-\epsilon})\subset B(x,\sqrt{1-\epsilon})$
+\end_inset
+
+ for some 
+\begin_inset Formula $x$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+It suffices to consider the two-dimensional case by symmetry, and to assume
+ that 
+\begin_inset Formula $g=ae_{1}$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $a\leq1$
+\end_inset
+
+, we can simply pick 
+\begin_inset Formula $x=g$
+\end_inset
+
+.
+ Otherwise, let 
+\begin_inset Formula $(x,0)$
+\end_inset
+
+ be the center of the smallest ball containing the required intersection,
+ and 
+\begin_inset Formula $y$
+\end_inset
+
+ be its radius.
+ (See Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:geometric_descent-1"
+
+\end_inset
+
+).
+ We have 
+\begin_inset Formula $x^{2}+y^{2}=1$
+\end_inset
+
+ and 
+\begin_inset Formula $(x-a)^{2}+y^{2}=(1-\epsilon)a^{2}$
+\end_inset
+
+.
+ This implies that 
+\begin_inset Formula 
+\[
+x=\frac{1+\epsilon a^{2}}{2a}
+\]
+
+\end_inset
+
+and so 
+\begin_inset Formula 
+\[
+y^{2}=1-\frac{\epsilon}{2}-\frac{1}{4a^{2}}-\frac{\epsilon^{2}a^{2}}{4}\le1-\epsilon
+\]
+
+\end_inset
+
+as claimed.
+\end_layout
+
+\begin_layout Lemma
+Let the measure of progress 
+\begin_inset Formula $\mathcal{V}(Q)=\mathrm{radius}(Q)$
+\end_inset
+
+.
+ Then, we have that 
+\begin_inset Formula $x^{*}\in Q^{(k)}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathcal{V}(Q^{(k+1)})\leq\sqrt{1-\frac{\mu}{L}}\cdot\mathcal{V}(Q^{(k)})$
+\end_inset
+
+ for all 
+\begin_inset Formula $k$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Remark
+The function value decrease follows from Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:conv_opt"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Proof Sketch.
+\end_layout
+
+\end_inset
+
+The fact 
+\begin_inset Formula $x^{*}\in Q^{(k)}$
+\end_inset
+
+ follows directly from the definition of 
+\begin_inset Formula $Q$
+\end_inset
+
+.
+ For the decrease of radius, suppose that 
+\begin_inset Formula 
+\[
+Q^{(k)}=\left\{ x\in\Rn:\|x-x^{(k)}\|\leq R^{(k)}\right\} .
+\]
+
+\end_inset
+
+Then, the new ball is given by
+\begin_inset Formula 
+\[
+Q^{(k+1)}=\mathtt{minSphere}\left(\left\{ \norm{x-(x^{(k)}-\frac{1}{\mu}\nabla f(x^{(k)}))}_{2}^{2}\leq\frac{1-\frac{\mu}{L}}{\mu^{2}}\cdot\norm{\nabla f(x^{(k)})}_{2}^{2}\right\} \cap\left\{ \|x-x^{(k)}\|\leq R^{(k)}\right\} \right).
+\]
+
+\end_inset
+
+To compute 
+\begin_inset Formula $\frac{\mathrm{radius}(Q^{(k+1)})^{2}}{\mathrm{radius}(Q^{(k)})^{2}}$
+\end_inset
+
+, we can assume 
+\begin_inset Formula $x^{(k)}=0$
+\end_inset
+
+ and 
+\begin_inset Formula $R^{(k)}=1$
+\end_inset
+
+ and let 
+\begin_inset Formula $g=\frac{\nabla f(0)}{\mu}$
+\end_inset
+
+.
+ Hence, we have
+\begin_inset Formula 
+\[
+Q^{(k+1)}=\mathtt{minSphere}\left(\left\{ \norm{x-g}_{2}^{2}\leq(1-\frac{\mu}{L})\cdot\norm g_{2}^{2}\right\} \cap\left\{ \|x\|\leq1\right\} \right).
+\]
+
+\end_inset
+
+Now Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:one_ball_shrink-1"
+
+\end_inset
+
+ (with 
+\begin_inset Formula $\epsilon=\frac{\mu}{L}$
+\end_inset
+
+) shows that the 
+\begin_inset Formula $\mathrm{radius}(Q^{(k+1)})^{2}\leq1-\frac{\mu}{L}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Note that this gives the same convergence rate as gradient descent for strongly
+ convex functions.
+ Each iteration is much faster than the 
+\begin_inset Formula $O(n^{2})$
+\end_inset
+
+ time of the Ellipsoid method.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[scale=0.7, every node/.style={transform shape}]
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw  (0,0) ellipse (2 and 2);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[dashed]  (4,0) ellipse (4 and 4);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw  (4,0) ellipse (3.85 and 3.85);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw [|-|] (4,0) -- (4,4) node[pos=0.5, right] {$|g|$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw [|-|] (4,0) -- (7.85,0) node[pos=0.5, above] {$
+\backslash
+sqrt{1-
+\backslash
+epsilon}
+\backslash
+ |g|$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{scope}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+clip (0,0) ellipse (2 and 2);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+fill[lightgray] (4,0) ellipse (3.85 and 3.85);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{scope}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (0,0) node[cross=5pt] {};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw [|-|] (0,0) -- (-2,0) node[pos=0.4, above] {$1$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw [|-|] (0.64719,0) -- (2.53958,0) node[pos=0.35, above] {$
+\backslash
+sqrt{1-
+\backslash
+epsilon}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[thick]  (0.64719,0) ellipse (1.8924 and 1.8924);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption*{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $B(0,1)\cap B(g,|g|\sqrt{1-\epsilon})\subset B(x,\sqrt{1-\epsilon})$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[scale=0.7, every node/.style={transform shape}]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[dashed]  (0,0) ellipse (2 and 2);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw  (0,0) ellipse (1.68 and 1.68);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[dashed]  (4,0) ellipse (4 and 4);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw  (4,0) ellipse (3.85 and 3.85);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw [|-|] (4,0) -- (4,4) node[pos=0.5, right] {$|g|$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw [|-|] (4,0) -- (7.85,0) node[pos=0.5, above] {$
+\backslash
+sqrt{1-
+\backslash
+epsilon}
+\backslash
+ |g|$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{scope}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+clip (0,0) ellipse (1.68 and 1.68);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+fill[lightgray] (4,0) ellipse (3.85 and 3.85);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{scope}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (0,0) node[cross=4pt] {};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw [->] (0,3) -- (0,1.68) node[pos=0, above] {radius = $
+\backslash
+sqrt{1-
+\backslash
+epsilon |g|^2}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\backslash
+draw [|-|] (0,-3) -- (-1.68,-3) node[pos=0.5, above] {$
+\backslash
+sqrt{1-
+\backslash
+epsilon |g|^2}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw [|-|] (0.5,0) -- (2.1044,0) node[pos=0.3, above] {
+\backslash
+scriptsize $
+\backslash
+sqrt{1-
+\backslash
+sqrt{
+\backslash
+epsilon}}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+%%
+\backslash
+draw[thick]  (0.5,0) ellipse (1.6044 and 1.6044);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw[thick]  (0.5,0) ellipse (1.6044 and 1.6044);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption*{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $B(0,\sqrt{1-\epsilon|g|^{2}})\cap B(g,|g|\sqrt{1-\epsilon})\subset B(x,\sqrt{1-\sqrt{\epsilon}})$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The left diagram shows the intersection shrinks at the same rate if only
+ one of the ball shrinks; the right diagram shows the intersection shrinks
+ much faster if two balls shrink at the same absolute amount.
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:geometric_descent-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Parabola Method Via Epigraph
+\end_layout
+
+\begin_layout Standard
+In previous sections, we have discussed cutting plane methods that maintain
+ a region that contains the minimizer 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ of 
+\begin_inset Formula $f$
+\end_inset
+
+.
+ The proof of such a cutting plane method relies on the following inequality
+\begin_inset Formula 
+\begin{equation}
+f(x)>f(x^{*})\geq f(x)+\left\langle \nabla f(x),x^{*}-x\right\rangle \label{eq:epigraph_cuttingplane-1}
+\end{equation}
+
+\end_inset
+
+Notice that the left-hand side is a strict inequality (unless we already
+ solved the problem).
+ We infer a halfspace containing the optimum, namely 
+\begin_inset Formula 
+\[
+\left\langle \nabla f(x),x^{*}-x\right\rangle \le0.
+\]
+
+\end_inset
+
+As the algorithm proceeds, we find a new point 
+\begin_inset Formula $x^{\new}$
+\end_inset
+
+ such that 
+\begin_inset Formula $f(x^{\new})<f(x)$
+\end_inset
+
+.
+ Therefore, the original inequality can be strengthened to 
+\begin_inset Formula 
+\[
+f(x^{(new)})>f(x)+\left\langle \nabla f(x),x^{*}-x\right\rangle 
+\]
+
+\end_inset
+
+or 
+\begin_inset Formula 
+\[
+\left\langle \nabla f(x),x^{*}-x\right\rangle <-(f(x)-f(x^{(new)})).
+\]
+
+\end_inset
+
+This suggests we should move earlier halfspaces and thereby reduce the measure
+ of the next set.
+ We expect merely updating the halfspaces can improve the convergence rate
+ from 
+\begin_inset Formula $1-\frac{\mu}{L}$
+\end_inset
+
+ to 
+\begin_inset Formula $1-\sqrt{\frac{\mu}{L}}$
+\end_inset
+
+ because of the right diagram in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:geometric_descent-1"
+
+\end_inset
+
+.
+ An efficient way to manage all this information is to directly maintain
+ a region that contains 
+\begin_inset Formula $(x^{*},f(x^{*}))$
+\end_inset
+
+.
+ Now, we can view the inequality 
+\begin_inset Formula $f(y)\geq f(x)+\left\langle \nabla f(x),y-x\right\rangle $
+\end_inset
+
+ as a cutting plane of the epigraph of 
+\begin_inset Formula $f$
+\end_inset
+
+ and we do not need to update previous cutting planes anymore.
+\end_layout
+
+\begin_layout Standard
+The next algorithm is an epigraph cutting plane method.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm2e}[H]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\mathtt{ParabolaMethod}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetAlgoLined
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Input:
+\series default
+ Initial point 
+\begin_inset Formula $x^{(0)}\in\Rn$
+\end_inset
+
+ and the strong convexity parameter 
+\begin_inset Formula $\mu$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $q^{(0)}(y)\leftarrow-\infty$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+For{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $k=0,\cdots$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Set 
+\begin_inset Formula $q^{(k+\frac{1}{2})}(y)=f(x^{(k)})+\nabla f(x^{(k)})^{\top}(y-x^{(k)})+\frac{\mu}{2}\norm{y-x^{(k)}}^{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $q^{(k+1)}=\mathtt{maxParabola}(\max(q^{(k+\frac{1}{2})},q^{(k)}))$
+\end_inset
+
+ where 
+\begin_inset Formula $\mathtt{maxParabola}(q)$
+\end_inset
+
+ outputs the parabolic function 
+\begin_inset Formula $p$
+\end_inset
+
+ such that 
+\begin_inset Formula $p(x)\leq q(x)$
+\end_inset
+
+ for all 
+\begin_inset Formula $x$
+\end_inset
+
+, and 
+\begin_inset Formula $p$
+\end_inset
+
+ maximizes 
+\begin_inset Formula $\min_{x}p(x)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tcp{
+\end_layout
+
+\end_inset
+
+Alternatively, one can use 
+\begin_inset Formula $x^{(k+\frac{1}{2})}\leftarrow x^{(k)}-\frac{1}{L}\nabla f(x^{(k)})$
+\end_inset
+
+ below.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $x^{(k+\frac{1}{2})}=\ls(x^{(k)},-\nabla f(x^{(k)}))$
+\end_inset
+
+ where
+\begin_inset Formula 
+\[
+\ls(x,y)=\argmin_{z=x+ty\text{ with }t\geq0}f(z).
+\]
+
+\end_inset
+
+Let 
+\begin_inset Formula $x^{(k+1)}=\ls(x^{(k+\frac{1}{2})},c^{(k+1)}-x^{(k+\frac{1}{2})})$
+\end_inset
+
+ where 
+\begin_inset Formula $c^{(k+1)}$
+\end_inset
+
+ be the minimizer of 
+\begin_inset Formula $q^{(k+1)}(y)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As in gradient descent, to avoid using the parameter 
+\begin_inset Formula $L$
+\end_inset
+
+, we do a line search from 
+\begin_inset Formula $x^{(k)}$
+\end_inset
+
+ along the direction 
+\begin_inset Formula $\nabla f(x^{(k)})$
+\end_inset
+
+.
+ 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+The differences between 
+\begin_inset Formula $\mathtt{SphereMethod}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathtt{ParabolaMethod}$
+\end_inset
+
+ are the following:
+\end_layout
+
+\begin_layout Enumerate
+The latter is an epigraph cutting plane method and does not need to know
+\begin_inset Formula $f^{*}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Both ellipsoid method and 
+\begin_inset Formula $\mathtt{SphereMethod}$
+\end_inset
+
+ evaluate 
+\begin_inset Formula $\nabla f$
+\end_inset
+
+ at the center 
+\begin_inset Formula $c^{(k)}$
+\end_inset
+
+ of the ellipsoid/sphere.
+ However, the function value 
+\begin_inset Formula $f(c^{(k)})$
+\end_inset
+
+ may be larger than some point we evaluated before.
+ On the other hand, evaluating 
+\begin_inset Formula $\nabla f$
+\end_inset
+
+ at 
+\begin_inset Formula $x^{(k+\frac{1}{2})}$
+\end_inset
+
+ does not work either because the gradient at this point cannot cut the
+ domain by 
+\begin_inset Quotes eld
+\end_inset
+
+half
+\begin_inset Quotes erd
+\end_inset
+
+ like the center of ellipsoid.
+ Therefore, the algorithm instead uses a line search between the center
+ 
+\begin_inset Formula $c^{(k)}$
+\end_inset
+
+ and the previous gradient descent point 
+\begin_inset Formula $x^{(k+\frac{1}{2})}$
+\end_inset
+
+.
+ This makes sure we always evaluate 
+\begin_inset Formula $\nabla f$
+\end_inset
+
+ at the point with smallest function value we have ever seen.
+ This make sure that all the balls shrink every step.
+ Furthermore, since this is a line search from the center, the cutting plane
+ induced by the gradient must cut away the center.
+ See the right diagram in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:geometric_descent-1"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+These are natural modifications to make the algorithm use available information.
+\end_layout
+
+\end_inset
+
+ The subroutine 
+\begin_inset Formula $\mathtt{maxParabola}$
+\end_inset
+
+ has an explicit formula 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "drusvyatskiy2016optimal"
+literal "true"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+BTW, this looks a lot like Nesterov: there are two sequences of points 
+\begin_inset Formula $x^{k}$
+\end_inset
+
+ and 
+\begin_inset Formula $c^{k}$
+\end_inset
+
+ updating each other; is there a more direct connection? They are probably
+ very similar algorithm except this algorithm is more 
+\begin_inset Quotes eld
+\end_inset
+
+dynamic
+\begin_inset Quotes erd
+\end_inset
+
+ because it does not use fixed mixture.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm2e}[H]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $q=\mathtt{maxParabola}(\max(q_{a},q_{b}))$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetAlgoLined
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Input:
+\series default
+ 
+\begin_inset Formula $q_{A}(x)=v_{A}+\frac{\mu}{2}\|x-c_{A}\|_{2}^{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $q_{B}(x)=v_{B}+\frac{\mu}{2}\|x-c_{B}\|_{2}^{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Compute 
+\begin_inset Formula $\lambda=\mathrm{proj}_{[0,1]}\left(\frac{1}{2}+\frac{v_{A}-v_{B}}{\mu\|c_{A}-c_{B}\|^{2}}\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $c_{\lambda}=\lambda c_{A}+(1-\lambda)c_{B}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $v_{\lambda}=\lambda v_{A}+(1-\lambda)v_{B}+\frac{\mu}{2}\lambda(1-\lambda)\|c_{A}-c_{B}\|^{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Output: 
+\begin_inset Formula $q(x)=v_{\lambda}+\frac{\mu}{2}\|x-c_{\lambda}\|_{2}^{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Show that the formula for 
+\begin_inset Formula $\mathtt{maxParabola}$
+\end_inset
+
+ computes the optimal parabola.
+\end_layout
+
+\begin_layout Standard
+The key fact we will be using from the formula is that when 
+\begin_inset Formula $0<\lambda<1$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+v_{\lambda}=v_{A}+\frac{\mu}{8}\frac{(\|c_{A}-c_{B}\|^{2}+\frac{2}{\mu}(v_{B}-v_{A}))^{2}}{\|c_{A}-c_{B}\|^{2}}.
+\]
+
+\end_inset
+
+This says that the quadratic lower bound improves a lot whenever 
+\begin_inset Formula $\frac{\mu}{2}\|c_{A}-c_{B}\|^{2}\gg v_{B}-v_{A}$
+\end_inset
+
+ or 
+\begin_inset Formula $\frac{\mu}{2}\|c_{A}-c_{B}\|^{2}\ll v_{B}-v_{A}$
+\end_inset
+
+.
+ Using this, we can analyze the 
+\begin_inset Formula $\mathtt{ParabolaMethod}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:geometric_convergence_rate-1"
+
+\end_inset
+
+Assume that 
+\begin_inset Formula $f$
+\end_inset
+
+ is 
+\begin_inset Formula $\mu$
+\end_inset
+
+-strongly convex with 
+\begin_inset Formula $L$
+\end_inset
+
+-Lipschitz gradient.
+ Let 
+\begin_inset Formula $r_{k}=f(x^{(k)})-\min_{y}q^{(k)}(y)$
+\end_inset
+
+.
+ Then, we have that
+\begin_inset Formula 
+\[
+r_{k+1}^{2}\leq(1-\sqrt{\frac{\mu}{L}})\cdot r_{k}^{2}.
+\]
+
+\end_inset
+
+In particular, we have that
+\begin_inset Formula 
+\[
+f(x^{(k+1)})-f^{*}\leq\frac{1}{2\mu}(1-\sqrt{\frac{\mu}{L}})^{k}\|\nabla f(x^{(0)})\|^{2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+Note that the squared radius of 
+\begin_inset Formula $\{y:q^{(k)}(y)=f(x^{(k)})\}$
+\end_inset
+
+ is 
+\begin_inset Formula $\frac{2}{\mu}(f(x^{(k)})-\min_{y}q^{(k)}(y))$
+\end_inset
+
+ because 
+\begin_inset Formula $q^{(k)}(y)=\min_{y}q^{(k)}(y)+\frac{\mu}{2}\|y-\arg\min_{x}q^{(k)}(x)\|^{2}$
+\end_inset
+
+.
+ Hence, 
+\begin_inset Formula $r_{k}$
+\end_inset
+
+ is measuring the squared radius of our quadratic lower bound.
+ To relate to the cutting plane framework, we can view the set as 
+\begin_inset Formula $\{y:q^{(k)}(y)\leq f(x^{(k)})\}$
+\end_inset
+
+ and the measure 
+\begin_inset Formula $\mathcal{V}=f(x^{(k)})-\min_{y}q^{(k)}(y)$
+\end_inset
+
+.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Can we draw a picture with the epigraph? TODO
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Fix some 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ We write 
+\begin_inset Formula $q^{(k)}(y)=v_{A}+\frac{\mu}{2}\norm{y-c_{A}}^{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $q^{(k+\frac{1}{2})}(y)=v_{B}+\frac{\mu}{2}\norm{y-c_{B}}^{2}$
+\end_inset
+
+ with
+\begin_inset Formula 
+\[
+c_{A}=c^{(k)},\quad c_{B}=x^{(k)}-\frac{\nabla f(x^{(k)})}{\mu}\quad\text{and}\quad v_{B}=f(x^{(k)})-\frac{\|\nabla f(x^{(k)})\|^{2}}{2\mu}.
+\]
+
+\end_inset
+
+Using the notation in 
+\begin_inset Formula $\mathtt{maxParabola}$
+\end_inset
+
+, we write 
+\begin_inset Formula $q^{(k+1)}(y)=v_{\lambda}+\frac{\mu}{2}\norm{y-c_{\lambda}}^{2}$
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula $r_{k+1}^{2}=f(x^{(k+1)})-v_{\lambda}$
+\end_inset
+
+ and 
+\begin_inset Formula $r_{k}^{2}=f(x^{(k)})-v_{A}$
+\end_inset
+
+.
+ Therefore, we have
+\begin_inset Formula 
+\begin{equation}
+\frac{r_{k}^{2}-r_{k+1}^{2}}{r_{k}^{2}}=\frac{f(x^{(k)})-f(x^{(k+1)})+v_{\lambda}-v_{A}}{r_{k}^{2}}.\label{eq:r_ratio-1}
+\end{equation}
+
+\end_inset
+
+To bound the right hand side, it suffices to bound 
+\begin_inset Formula $v_{A}$
+\end_inset
+
+ and 
+\begin_inset Formula $v_{\lambda}$
+\end_inset
+
+.
+ From the description of the algorithm 
+\begin_inset Formula $\mathtt{maxParabola}$
+\end_inset
+
+, we see that there are three cases 
+\begin_inset Formula $\lambda=0$
+\end_inset
+
+, 
+\begin_inset Formula $\lambda=1$
+\end_inset
+
+ and 
+\begin_inset Formula $0<\lambda<1$
+\end_inset
+
+.
+ We only focus on proving the nontrivial case 
+\begin_inset Formula $\lambda\in(0,1)$
+\end_inset
+
+.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+How to handle 
+\begin_inset Formula $\lambda=0,1$
+\end_inset
+
+? How does 
+\begin_inset Formula $r_{k}$
+\end_inset
+
+ decrease?
+\end_layout
+
+\end_inset
+
+ In this case, we have that
+\begin_inset Formula 
+\begin{align*}
+v_{\lambda} & =v_{A}+\frac{\mu}{8}\frac{(\|c_{A}-c_{B}\|^{2}+\frac{2}{\mu}(v_{B}-v_{A}))^{2}}{\|c_{A}-c_{B}\|^{2}}\\
+ & =v_{A}+\frac{\mu}{8}\frac{(\|c_{A}-c_{B}\|^{2}+\frac{2}{\mu}(f(x^{(k)})-v_{A})-\frac{\|\nabla f(x^{(k)})\|^{2}}{\mu^{2}})^{2}}{\|c_{A}-c_{B}\|^{2}}.
+\end{align*}
+
+\end_inset
+
+Since 
+\begin_inset Formula $f\geq q^{(k)}$
+\end_inset
+
+, we have 
+\begin_inset Formula $f(x^{(k)})\geq q^{(k)}(x^{(k)})\geq\min_{x}q^{(k)}(x)=v_{A}$
+\end_inset
+
+.
+ Next, we claim that 
+\begin_inset Formula $\|c_{A}-c_{B}\|^{2}\geq\frac{\|\nabla f(x^{(k)})\|^{2}}{\mu^{2}}$
+\end_inset
+
+.
+ Using these two facts, we can prove that
+\begin_inset Formula 
+\[
+v_{\lambda}\geq v_{A}+\frac{\mu}{8}\frac{(\frac{2}{\mu}(f(x^{(k)})-v_{A}))^{2}}{\frac{\|\nabla f(x^{(k)})\|^{2}}{\mu^{2}}}=v_{A}+\frac{\mu\cdot r_{k}^{4}}{2\|\nabla f(x^{(k)})\|^{2}}.
+\]
+
+\end_inset
+
+Putting this into 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:r_ratio-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we have
+\begin_inset Formula 
+\begin{align}
+\frac{r_{k}^{2}-r_{k+1}^{2}}{r_{k}^{2}} & \geq\frac{f(x^{(k)})-f(x^{(k+1)})}{r_{k}^{2}}+\frac{\mu\cdot r_{k}^{2}}{2\|\nabla f(x^{(k)})\|^{2}}\nonumber \\
+ & \geq\frac{f(x^{(k+\frac{1}{2})})-f(x^{(k+1)})}{r_{k}^{2}}+\frac{\mu\cdot r_{k}^{2}}{2\|\nabla f(x^{(k)})\|^{2}}\nonumber \\
+ & \geq\frac{\|\nabla f(x^{(k)})\|^{2}}{2Lr_{k}^{2}}+\frac{\mu\cdot r_{k}^{2}}{2\|\nabla f(x^{(k)})\|^{2}}\label{eq:geometric_key-1}\\
+ & \geq\sqrt{\frac{\mu}{L}}\nonumber 
+\end{align}
+
+\end_inset
+
+where the second inequality is due to the fact 
+\begin_inset Formula $x^{(k+\frac{1}{2})}$
+\end_inset
+
+ is a line search from 
+\begin_inset Formula $x^{(k)}$
+\end_inset
+
+, the third inequality is due to the assumption on 
+\begin_inset Formula $L$
+\end_inset
+
+ (Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:gradient_progress"
+
+\end_inset
+
+), the last inequality follows from the Cauchy-Schwarz inequality.
+\end_layout
+
+\begin_layout Proof
+For the final conclusion, we note that
+\begin_inset Formula 
+\begin{align*}
+q^{(1)}(y) & =f(x^{(0)})+\nabla f(x^{(0)})^{\top}(y-x^{(0)})+\frac{\mu}{2}\norm{y-x^{(0)}}^{2}\\
+ & =f(x^{(0)})-\frac{1}{2\mu}\|\nabla f(x^{(0)})\|^{2}+\frac{\mu}{2}\norm{y-(x^{(0)}-\frac{1}{\mu}\nabla f(x^{(0)}))}^{2}.
+\end{align*}
+
+\end_inset
+
+Hence, we have 
+\begin_inset Formula $v^{(1)}=f(x^{(0)})-\frac{1}{2\mu}\|\nabla f(x^{(0)})\|^{2}$
+\end_inset
+
+ and hence 
+\begin_inset Formula $r_{1}\leq f(x^{(1)})-v^{(1)}\leq\frac{1}{2\mu}\|\nabla f(x^{(0)})\|^{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+To prove the claim, we note that 
+\begin_inset Formula $x^{(k)}$
+\end_inset
+
+ is the result of a line search of 
+\begin_inset Formula $f$
+\end_inset
+
+ between 
+\begin_inset Formula $c^{(k)}$
+\end_inset
+
+ and some point.
+ Therefore, we have that 
+\begin_inset Formula $\nabla f(x^{(k)})\perp(x^{(k)}-c^{(k)})$
+\end_inset
+
+ and hence
+\begin_inset Formula 
+\[
+\|c_{A}-c_{B}\|^{2}=\|c^{(k)}-x^{(k)}+\frac{\nabla f(x^{(k)})}{\mu}\|^{2}\geq\frac{\|\nabla f(x^{(k)})\|^{2}}{\mu^{2}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+We can view 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:geometric_key-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ as the key equation of the proof above.
+ It shows that the progress is roughly 
+\begin_inset Formula $\frac{\|\nabla f\|^{2}}{L}+\frac{\mu}{\|\nabla f\|^{2}}$
+\end_inset
+
+ where the first term comes from the progress on the function value and
+ the second term comes from 
+\begin_inset Quotes eld
+\end_inset
+
+the curvature
+\begin_inset Quotes erd
+\end_inset
+
+ of the cutting sphere.
+\end_layout
+
+\begin_layout Exercise
+Prove the following extension of Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:one_ball_shrink-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+: There exists 
+\begin_inset Formula $x$
+\end_inset
+
+ s.t.
+ 
+\begin_inset Formula $B(0,\sqrt{1-\epsilon|g|^{2}})\cap B(g,|g|\sqrt{1-\epsilon})\subset B(x,\sqrt{1-\sqrt{\epsilon}})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Discussion
+\end_layout
+
+\begin_layout Standard
+This section was about the idea of managing cutting planes, and as a byproduct
+ we get an accelerated rate of convergence.
+ As we will see later, standard accelerated gradient descent does not use
+ line search and achieves the rate 
+\begin_inset Formula $1-\sqrt{\frac{\mu}{L}}$
+\end_inset
+
+.
+ However, it seems that the use of line search helps in practice and that
+ with a careful implementation, line search can be as cheap as gradient
+ computation.
+ For more difficult problems, one may want to store multiple quadratic lower
+ bounds (see 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "drusvyatskiy2016optimal"
+literal "true"
+
+\end_inset
+
+).
+\end_layout
+
+\end_body
+\end_document

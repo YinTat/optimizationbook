@@ -1,0 +1,1398 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{url}
+\usepackage{xargs}
+\usepackage[pdftex,dvipsnames]{xcolor}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\usepackage[lined,boxed,ruled,norelsize,algo2e]{algorithm2e}
+\usepackage[small,bf]{caption}
+\usepackage{tikz}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=red,
+    filecolor=red,
+    linkcolor=red,
+    urlcolor=red
+}
+
+
+
+\usepackage{fancybox}
+\usepackage{multirow}
+\usepackage{nicefrac}
+\usepackage{hyperref}
+
+
+\expandafter\def\expandafter\normalsize\expandafter{%
+    \normalsize
+%	    \setlength\abovedisplayskip{5pt}
+    \setlength\belowdisplayskip{5pt}
+    % \setlength\abovedisplayshortskip{5pt}
+    \setlength\belowdisplayshortskip{5pt}
+}
+
+\usepackage{tocloft}
+\setlength{\cftsecnumwidth}{2.8em}%
+
+%%%%%
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{fix-cm}
+\makeatletter
+\newcommand\HUGE{\@setfontsize\Huge{38}{47}}
+\makeatother
+
+\titleclass{\part}{top}
+\titleformat{\part}[display]
+  {\normalfont\HUGE\sffamily}{\partname\ \thepart}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\HUGE\bfseries\filleft}
+%\titlespacing*{\part} {0pt}{20pt}{40pt}
+\titlespacing*{\part} {0pt}{30pt}{50pt}
+
+% chapter heading formatting
+\titleformat{\chapter}[display]
+  {\normalfont\LARGE\sffamily}{\chaptertitlename\ \thechapter}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\LARGE\bfseries\filleft}
+% section heading formatting
+\titleformat{\section}
+  {\normalfont\Large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesection}{0.5em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesubsection}{0.5em}{}
+\titlespacing*{\chapter} {0pt}{20pt}{30pt}
+
+% header/footer
+\fancyhf{}
+\fancyhead[ER]{\footnotesize\sffamily\leftmark}
+\fancyhead[OL]{\footnotesize\sffamily\nouppercase\rightmark}
+\fancyhead[EL,OR]{\bfseries\thepage}
+
+\setcounter{secnumdepth}{3}
+\end_preamble
+\options openany
+\use_default_options false
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+theorems-sec
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding default
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 0
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic true
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip 0.1in
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Gradient-based methods: Langevin Dynamics
+\end_layout
+
+\begin_layout Standard
+Here we study a simple stochastic process for generating samples from a
+ desired distribution 
+\begin_inset Formula $e^{-f(x)}$
+\end_inset
+
+.
+ It can also be viewed as a stochastic version of gradient descent.
+ While gradient descent corresponds to an ordinary differential equation
+ (ODE), stochastic gradient descent corresponds to a stochastic differential
+ equation (SDE).
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm2e}[H]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\mathtt{LangevinDynamics}$
+\end_inset
+
+ (LD)
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetAlgoLined
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Input:
+\series default
+ Initial point 
+\begin_inset Formula $x_{0}\in\Rn$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Solve the stochastic differential equation
+\begin_inset Formula 
+\[
+dx_{t}=-\nabla f(x_{t})dt+\sqrt{2}dW_{t}
+\]
+
+\end_inset
+
+
+\series bold
+Output:
+\series default
+ 
+\begin_inset Formula $x_{t}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Here 
+\begin_inset Formula $f:\R^{n}\rightarrow\R$
+\end_inset
+
+ is a function, 
+\begin_inset Formula $x_{t}$
+\end_inset
+
+ is the random variable at time 
+\begin_inset Formula $t$
+\end_inset
+
+ and 
+\begin_inset Formula $dW_{t}$
+\end_inset
+
+ is infinitesimal Brownian motion also known as a Wiener process.
+ While it takes some care to define rigorously, for now we can view it as
+ the following discrete process 
+\begin_inset Formula 
+\[
+x_{t+h}=x_{t}-h\nabla f(x_{t})+\sqrt{2h}\zeta_{t}
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $\zeta_{t}$
+\end_inset
+
+ sampled independently from 
+\begin_inset Formula $N(0,I)$
+\end_inset
+
+.
+ When we take the step size 
+\begin_inset Formula $h\rightarrow0$
+\end_inset
+
+, this discrete process converges to the continuous one.
+ We choose to discuss the continuous version here only for simplicity.
+\end_layout
+
+\begin_layout Standard
+A crucial difference between ordinary differentials and stochastic differentials
+ is in the chain rule.
+ Unlike classical differentials where we have 
+\begin_inset Formula $df(x)=\nabla f(x)dx$
+\end_inset
+
+, we have the following chain rule for stochastic calculus.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+It
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+^{o}
+\end_layout
+
+\end_inset
+
+'s lemma
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:itos"
+
+\end_inset
+
+For any process 
+\begin_inset Formula $x_{t}\in\Rn$
+\end_inset
+
+ satisfying 
+\begin_inset Formula $dx_{t}=\mu(x_{t})dt+\sigma(x_{t})dW_{t}$
+\end_inset
+
+ where 
+\begin_inset Formula $\mu(x_{t})\in\Rn$
+\end_inset
+
+ and 
+\begin_inset Formula $\sigma(x_{t})\in\R^{n\times m}$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+df(x_{t})=\nabla f(x_{t})^{\top}\mu(x_{t})dt+\nabla f(x_{t})^{\top}\sigma(x_{t})dW_{t}+\frac{1}{2}\tr(\sigma(x_{t})^{\top}\nabla^{2}f(x_{t})\sigma(x_{t}))dt.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+First, we will see that the Langevin SDE converges to 
+\begin_inset Formula $e^{-f}$
+\end_inset
+
+ in continuous time.
+ The proof relies on the following general theorem about the distribution
+ induced by an SDE.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:fokker_planck"
+
+\end_inset
+
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Fokker–Planck equation*
+\end_layout
+
+\end_inset
+
+For any process 
+\begin_inset Formula $x_{t}\in\Rn$
+\end_inset
+
+ satisfying 
+\begin_inset Formula $dx_{t}=\mu(x_{t})dt+\sigma(x_{t})dW_{t}$
+\end_inset
+
+ where 
+\begin_inset Formula $\mu(x_{t})\in\Rn$
+\end_inset
+
+ and 
+\begin_inset Formula $\sigma(x_{t})\in\R^{n\times m}$
+\end_inset
+
+ with the initial point 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ drawn from 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+.
+ Then, the distribution 
+\begin_inset Formula $p_{t}$
+\end_inset
+
+ of 
+\begin_inset Formula $x_{t}$
+\end_inset
+
+ satisfies the equation
+\begin_inset Formula 
+\[
+\frac{dp_{t}}{dt}=-\sum_{i}\frac{\partial}{\partial x_{i}}(\mu(x)_{i}p_{t}(x))+\frac{1}{2}\sum_{i,j}\frac{\partial^{2}}{\partial x_{i}\partial x_{j}}\left[(D(x))_{ij}p_{t}(x)\right]
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $D(x)=\sigma(x)\sigma(x)^{\top}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+For any smooth function 
+\begin_inset Formula $\phi$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+\E_{x\sim p_{t}}\phi(x)=\E\phi(x_{t}).
+\]
+
+\end_inset
+
+Taking derivatives on the both sides with respect to 
+\begin_inset Formula $t$
+\end_inset
+
+ and using It
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+^{o}
+\end_layout
+
+\end_inset
+
+'s lemma (Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:itos"
+
+\end_inset
+
+), we have that
+\begin_inset Formula 
+\begin{align*}
+\int\phi(x)dp_{t}(x)dx & =\E\left(\nabla\phi(x_{t})^{\top}\mu(x_{t})dt+\nabla\phi(x_{t})^{\top}\sigma(x_{t})dW_{t}+\frac{1}{2}\tr(\sigma(x_{t})^{\top}\nabla^{2}\phi(x_{t})\sigma(x_{t}))dt\right)\\
+ & =\E\left(\nabla\phi(x_{t})^{\top}\mu(x_{t})dt+\frac{1}{2}\tr(\nabla^{2}\phi(x_{t})D(x_{t}))dt\right).
+\end{align*}
+
+\end_inset
+
+Using 
+\begin_inset Formula $x_{t}\sim p_{t}$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+\int\phi(x)\frac{dp_{t}}{dt}dx=\int\nabla\phi(x)^{\top}\mu(x)p_{t}(x)+\frac{1}{2}\tr(\nabla^{2}\phi(x)D(x))p_{t}(x)dx.
+\]
+
+\end_inset
+
+Integrating by parts, 
+\begin_inset Formula 
+\[
+\int\nabla\phi(x)^{\top}\mu(x)p_{t}(x)dx=-\int\phi(x)\sum_{i}\frac{\partial}{\partial x_{i}}(\mu_{i}(x)p_{t}(x))dx.
+\]
+
+\end_inset
+
+Similarly, integrating by parts twice gives
+\begin_inset Formula 
+\begin{align*}
+\int\tr(\sigma(x)^{\top}\nabla^{2}\phi(x)\sigma(x))p_{t}(x)dx & =\int\tr(\nabla^{2}\phi(x)\sigma(x)\sigma(x)^{\top})p_{t}(x)dx\\
+ & =\sum_{i,j}\int\phi(x)\frac{\partial^{2}}{\partial x_{i}\partial x_{j}}\left[(D(x))_{ij}p_{t}(x)\right]dx.
+\end{align*}
+
+\end_inset
+
+Hence, 
+\begin_inset Formula 
+\[
+\int\phi(x)\left[\frac{dp_{t}}{dt}+\sum_{i}\frac{\partial}{\partial x_{i}}(\mu(x)_{i}p_{t}(x))-\frac{1}{2}\sum_{i,j}\frac{\partial^{2}}{\partial x_{i}\partial x_{j}}\left[(D(x))_{ij}p_{t}(x)\right]\right]dx=0
+\]
+
+\end_inset
+
+for any smooth 
+\begin_inset Formula $\phi$
+\end_inset
+
+.
+ Therefore, we have the conclusion of the lemma.
+\end_layout
+
+\begin_layout Proof
+We apply the Fokker–Planck equation to the Langevin dynamics.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:langevin_stationary"
+
+\end_inset
+
+For any smooth function 
+\begin_inset Formula $f$
+\end_inset
+
+, the density proportional to 
+\begin_inset Formula $F=e^{-f}$
+\end_inset
+
+ is stationary for the Langevin dynamics.
+\end_layout
+
+\begin_layout Proof
+The Fokker–Planck equation (Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:fokker_planck"
+
+\end_inset
+
+) shows that the distribution 
+\begin_inset Formula $p_{t}$
+\end_inset
+
+ of 
+\begin_inset Formula $x_{t}$
+\end_inset
+
+ satisfies 
+\begin_inset Formula 
+\begin{equation}
+\frac{dp_{t}}{dt}=\sum_{i}\frac{\partial}{\partial x_{i}}(\frac{\partial f(x)}{\partial x_{i}}p_{t}(x))+\sum_{i}\frac{\partial^{2}}{\partial x_{i}^{2}}\left[p_{t}(x)\right].\label{eq:dp_LD}
+\end{equation}
+
+\end_inset
+
+We can verify that 
+\begin_inset Formula $p_{t}(x)\propto e^{-f(x)}$
+\end_inset
+
+ is a solution.
+\end_layout
+
+\begin_layout Paragraph
+Convergence via Coupling.
+\end_layout
+
+\begin_layout Standard
+Next we turn to the rate of convergence, which will also prove uniqueness.
+ For this, we assume that 
+\begin_inset Formula $f$
+\end_inset
+
+ is strongly convex.
+ The proof is via the classical coupling technique (cite: Aldous).
+ Briefly, two distributions are compared via some probabilistic distance.
+ For example, the total variation distance can be bounded by the probability
+ that random variables from the two distributions are not identical, under
+ any matching (assignment) between the two distributions.
+ We then couple two copies 
+\begin_inset Formula $x_{t},y_{t}$
+\end_inset
+
+ of the process with different starting points (the coupling is a joint
+ distribution 
+\begin_inset Formula $D(x_{t},y_{t})$
+\end_inset
+
+ with the property that its marginal for each of 
+\begin_inset Formula $x_{t},y_{t}$
+\end_inset
+
+ is exactly the process) and show that their distributions get closer over
+ time.
+ While the challenge is usually to find a good coupling, in the present
+ case, the simplest identity coupling works (for the continuous time convergence
+).
+\end_layout
+
+\begin_layout Lemma
+Let 
+\begin_inset Formula $x_{t},y_{t}$
+\end_inset
+
+ evolves according to the Langevin diffusion for a 
+\begin_inset Formula $\mu$
+\end_inset
+
+-strongly convex function 
+\begin_inset Formula $f:\R^{n}\rightarrow\R$
+\end_inset
+
+.
+ Then, there is a coupling between 
+\begin_inset Formula $x_{t},y_{t}$
+\end_inset
+
+ s.t.
+\begin_inset Formula 
+\[
+\E\norm{x_{t}-y_{t}}\le e^{-\mu t}\norm{x_{0}-y_{0}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+From the definition of LD, and by using the same Gaussian 
+\begin_inset Formula $dW_{t}$
+\end_inset
+
+ for both process, we have that 
+\begin_inset Formula 
+\[
+\frac{d}{dt}\left(x_{t}-y_{t}\right)=\nabla f(y_{t})-\nabla f(x_{t}).
+\]
+
+\end_inset
+
+Hence, 
+\begin_inset Formula 
+\[
+\frac{1}{2}\frac{d}{dt}\|x_{t}-y_{t}\|^{2}=2\left\langle \nabla f(y_{t})-\nabla f(x_{t}),x_{t}-y_{t}\right\rangle .
+\]
+
+\end_inset
+
+Next, from the strong convexity of 
+\begin_inset Formula $f$
+\end_inset
+
+, we have 
+\begin_inset Formula 
+\begin{align*}
+f(y_{t})-f(x_{t}) & \ge\nabla f(x_{t})^{\top}(y_{t}-x_{t})+\frac{\mu}{2}\norm{x_{t}-y_{t}}^{2},\\
+f(x_{t})-f(y_{t}) & \ge\nabla f(y_{t})^{\top}(x_{t}-y_{t})+\frac{\mu}{2}\norm{x_{t}-y_{t}}^{2}.
+\end{align*}
+
+\end_inset
+
+Adding two equations together, we have
+\begin_inset Formula 
+\[
+(\nabla f(x_{t})-\nabla f(y_{t}))^{\top}(x_{t}-y_{t})\geq\mu\norm{x_{t}-y_{t}}^{2}.
+\]
+
+\end_inset
+
+Therefore, 
+\begin_inset Formula 
+\[
+\frac{1}{2}\frac{d}{dt}\|x_{t}-y_{t}\|^{2}\leq-\mu\|x_{t}-y_{t}\|^{2}.
+\]
+
+\end_inset
+
+ Hence, 
+\begin_inset Formula 
+\[
+\frac{d}{dt}\log\|x_{t}-y_{t}\|^{2}=\frac{\frac{d}{dt}\|x_{t}-y_{t}\|^{2}}{\|x_{t}-y_{t}\|^{2}}\leq-2\mu.
+\]
+
+\end_inset
+
+Integrating both sides from 
+\begin_inset Formula $0$
+\end_inset
+
+ to 
+\begin_inset Formula $t$
+\end_inset
+
+, we get 
+\begin_inset Formula 
+\[
+\log\|x_{t}-y_{t}\|^{2}\leq\log\|x_{0}-y_{0}\|^{2}-2\mu t
+\]
+
+\end_inset
+
+owhich proves the result.
+\end_layout
+
+\begin_layout Section
+Langevin Dynamics is Gradient Descent in Density Space*
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:LD_GD"
+
+\end_inset
+
+
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Anything marked with * means it is probably too mathematical and could be
+ skipped.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Here we show that Langevin dynamics is simply gradient descent for the function
+ 
+\begin_inset Formula $F(\rho)=\KL(\rho\|\nu)$
+\end_inset
+
+ on the Wasserstein space where 
+\begin_inset Formula $\nu=e^{-f(x)}/\int e^{-f(y)}dy$
+\end_inset
+
+.
+ For this, we first define the Wasserstein space.
+\end_layout
+
+\begin_layout Definition
+The Wasserstein space 
+\begin_inset Formula $P_{2}(\Rn)$
+\end_inset
+
+ on 
+\begin_inset Formula $\Rn$
+\end_inset
+
+ is the manifold on the set of probability measures on 
+\begin_inset Formula $\Rn$
+\end_inset
+
+ such that the shortest path distance of two measures 
+\begin_inset Formula $x,y$
+\end_inset
+
+ in this manifold is exactly equal to the Wasserstein distance between 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $y$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+For any 
+\begin_inset Formula $p\in P_{2}(\Rn)$
+\end_inset
+
+ and 
+\begin_inset Formula $v\in T_{p}P_{2}(\Rn)$
+\end_inset
+
+, we can write 
+\begin_inset Formula $v(x)=\nabla\cdot(p(x)\nabla\lambda(x))$
+\end_inset
+
+ for some function 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ on 
+\begin_inset Formula $\Rn$
+\end_inset
+
+.
+ Furthermore, the length of 
+\begin_inset Formula $v$
+\end_inset
+
+ in this metric is given by
+\begin_inset Formula 
+\[
+\|v\|_{p}^{2}=\E_{x\sim p}\|\nabla\lambda(x)\|^{2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $p\in P_{2}(\Rn)$
+\end_inset
+
+ and 
+\begin_inset Formula $v\in T_{p}P_{2}(\Rn)$
+\end_inset
+
+.
+ We will show that any change of density 
+\begin_inset Formula $v$
+\end_inset
+
+ can be represented by a vector field 
+\begin_inset Formula $c$
+\end_inset
+
+ on 
+\begin_inset Formula $\Rn$
+\end_inset
+
+ as follows: Consider the process 
+\begin_inset Formula $x_{0}\sim p$
+\end_inset
+
+ and 
+\begin_inset Formula $\frac{d}{dt}x_{t}=c(x_{t})$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $p_{t}$
+\end_inset
+
+ be the density of the distribution of 
+\begin_inset Formula $x_{t}$
+\end_inset
+
+.
+ To compute 
+\begin_inset Formula $\frac{d}{dt}p_{t}$
+\end_inset
+
+, we follow the same idea as in the proof as Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:fokker_planck"
+
+\end_inset
+
+.
+ For any smooth function 
+\begin_inset Formula $\phi$
+\end_inset
+
+, we have that 
+\begin_inset Formula $\E_{x\sim p_{t}}\phi(x)=\E\phi(x_{t}).$
+\end_inset
+
+ Taking derivatives on the both sides with respect to 
+\begin_inset Formula $t$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+\int\phi(x)\frac{d}{dt}p_{t}(x)dx=\int\nabla\phi(x)^{\top}c(x)p_{t}(x)dx=-\int\nabla\cdot(c(x)p_{t}(x))\phi(x)dx
+\]
+
+\end_inset
+
+where we used integration by parts at the end.
+ Since this holds for all 
+\begin_inset Formula $\phi$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+\frac{dp_{t}(x)}{dt}=-\nabla\cdot(p_{t}(x)c(x)).
+\]
+
+\end_inset
+
+Since we are interested only inthe vector fields that generate minimum movement
+ in Wasserstein distance, we consider the optimization problem
+\begin_inset Formula 
+\[
+\min_{-\nabla\cdot(pc)=v}\frac{1}{2}\int p(x)\|c(x)\|^{2}dx
+\]
+
+\end_inset
+
+where we can think 
+\begin_inset Formula $v$
+\end_inset
+
+ is the change of 
+\begin_inset Formula $p_{t}$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $\lambda(x)$
+\end_inset
+
+ be the Lagrangian multiplier of the constraint 
+\begin_inset Formula $-\nabla\cdot(pc)=v$
+\end_inset
+
+.
+ Then, the problem becomes
+\begin_inset Formula 
+\begin{align*}
+ & \min_{c}\frac{1}{2}\int p(x)\|c(x)\|^{2}dx-\int\lambda(x)\nabla\cdot(p(x)c(x))dx.\\
+= & \min_{c}\frac{1}{2}\int p(x)\|c(x)\|^{2}dx+\int\nabla\lambda(x)^{\top}c(x)\cdot p(x)dx.
+\end{align*}
+
+\end_inset
+
+Now, we note that the problem is a pointwise optimization problem with the
+ minimizer is given by
+\begin_inset Formula 
+\[
+c(x)=-\nabla\lambda(x).
+\]
+
+\end_inset
+
+This proves that any vector fields that generate minimum movement in Wasserstein
+ distance is a gradient field.
+ Also, we have that 
+\begin_inset Formula $v(x)=\nabla\cdot(p(x)\nabla\lambda(x)).$
+\end_inset
+
+ Note that the right hand side is an elliptical differential equation and
+ hence for any 
+\begin_inset Formula $v$
+\end_inset
+
+ with 
+\begin_inset Formula $\int v(x)dx=0$
+\end_inset
+
+, there is an unique solution 
+\begin_inset Formula $\lambda(x)$
+\end_inset
+
+.
+ Therefore, we can write 
+\begin_inset Formula $v(x)=\nabla\cdot(p(x)\nabla\lambda(x))$
+\end_inset
+
+ for some 
+\begin_inset Formula $\lambda(x)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Next, we note that the movement is given by
+\begin_inset Formula 
+\[
+\|v\|_{p}^{2}=\int p(x)\|c(x)\|^{2}dx=\E_{x\sim p}\|\nabla\lambda(x)\|^{2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As we discussed in the gradient descent section, one can use norms other
+ than 
+\begin_inset Formula $\ell_{2}$
+\end_inset
+
+ norm.
+ For the Wasserstein space, we should use the local norm.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:LD_GD"
+
+\end_inset
+
+Let 
+\begin_inset Formula $\rho_{t}$
+\end_inset
+
+ be the density of the distribution produced by Langevin Dynamics for the
+ target distribution 
+\begin_inset Formula $\nu=e^{-f(x)}/\int e^{-f(y)}dy$
+\end_inset
+
+.
+ Then, we have that
+\begin_inset Formula 
+\[
+\frac{d\rho}{dt}=\argmin_{v\in T_{p}P_{2}(\Rn)}\left\langle \nabla F(\rho),v\right\rangle _{p}+\frac{1}{2}\|v\|_{p}^{2}.
+\]
+
+\end_inset
+
+Namely, 
+\begin_inset Formula $\rho_{t}$
+\end_inset
+
+ follows continuous gradient descent in the density space for the function
+ 
+\begin_inset Formula $F(\rho)=\KL(\rho\|\nu)$
+\end_inset
+
+ under the Wasserstein metric.
+\end_layout
+
+\begin_layout Proof
+For any function 
+\begin_inset Formula $c$
+\end_inset
+
+, the optimization problem of interest satisfies
+\begin_inset Formula 
+\[
+\min_{\delta=\nabla\cdot(\rho\nabla\lambda)}\left\langle c,\delta\right\rangle +\frac{1}{2}\int\rho(x)\|\nabla\lambda(x)\|^{2}dx=\min_{\nabla\lambda}-\int\rho(x)\cdot\nabla c(x)^{\top}\nabla\lambda(x)dx+\frac{1}{2}\int\rho(x)\|\nabla\lambda(x)\|^{2}dx.
+\]
+
+\end_inset
+
+Solving the right hand side, we have 
+\begin_inset Formula $\nabla c=\nabla\lambda$
+\end_inset
+
+ and hence 
+\begin_inset Formula $\delta=\nabla\cdot(\rho\nabla c)$
+\end_inset
+
+.
+ Now, we note that 
+\begin_inset Formula $\nabla F(\rho)=\log\frac{\rho}{\nu}-1$
+\end_inset
+
+.
+ Therefore, 
+\begin_inset Formula 
+\begin{align*}
+\frac{d\rho}{dt} & =\nabla\cdot(\rho\nabla(\log\frac{\rho}{\nu}-1))\\
+ & =\nabla\cdot(\rho\nabla\log\frac{\rho}{\nu})\\
+ & =\nabla\cdot\left(\rho\nabla f\right)+\Delta\rho
+\end{align*}
+
+\end_inset
+
+which is exactly equal to (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:dp_LD"
+
+\end_inset
+
+).
+ 
+\end_layout
+
+\begin_layout Standard
+To analyze this continuous descent in Wasserstein space, we first prove
+ that continuous gradient descent converges exponentially whenever 
+\begin_inset Formula $F$
+\end_inset
+
+ is strongly convex.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:grad-dom"
+
+\end_inset
+
+Let 
+\begin_inset Formula $F$
+\end_inset
+
+ be a function satisfying 
+\begin_inset Quotes eld
+\end_inset
+
+Gradient Dominance
+\begin_inset Quotes erd
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{equation}
+\norm{\nabla F(x)}_{x}^{2}\ge\alpha\cdot(F(x)-\min_{y}F(y))\quad\text{for all }x\label{eq:LD_strong_convexity}
+\end{equation}
+
+\end_inset
+
+on the manifold with the metric 
+\begin_inset Formula $\|\cdot\|_{x}$
+\end_inset
+
+ where 
+\begin_inset Formula $\nabla$
+\end_inset
+
+ is the gradient on the manifold.
+ Then, the process 
+\begin_inset Formula $dx_{t}=-\nabla F(x_{t})dt$
+\end_inset
+
+ converges exponentially, i.e., 
+\begin_inset Formula $F(x_{t})-\min_{y}F(y)\le e^{-\alpha t}(F(x_{0})-\min_{y}F(y))$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+We write
+\begin_inset Formula 
+\[
+\frac{d}{dt}(F(x)-\min_{y}F(y))=\langle\nabla F(x_{t}),\frac{dx_{t}}{dt}\rangle_{x_{t}}=-\|\nabla F(x_{t})\|_{x_{t}}^{2}\leq-\alpha(F(x)-\min_{y}F(y)).
+\]
+
+\end_inset
+
+The conclusion follows.
+\end_layout
+
+\begin_layout Standard
+Finally, we note that the log-Sobolev inequality for the density 
+\begin_inset Formula $\nu$
+\end_inset
+
+ can be re-stated as the condition (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:LD_strong_convexity"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:log_sob_LD"
+
+\end_inset
+
+Fix a density 
+\begin_inset Formula $\nu$
+\end_inset
+
+.
+ Then the log-Sobolev inequality, namely, for every smooth function 
+\begin_inset Formula $g$
+\end_inset
+
+, 
+\begin_inset Formula 
+\[
+2\int\norm{\nabla g}^{2}\,d\nu\ge\alpha\int g(x)^{2}\log g(x)^{2}\ d\nu
+\]
+
+\end_inset
+
+ implies the condition (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:LD_strong_convexity"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Proof
+Take 
+\begin_inset Formula $g(x)=\sqrt{\frac{\rho(x)}{\nu(x)}}$
+\end_inset
+
+, the log-Sobolev inequality shows that 
+\begin_inset Formula 
+\[
+\frac{1}{2}\int\rho(x)\norm{\nabla\log\frac{\rho(x)}{\nu(x)}}^{2}\,dx\geq\alpha\cdot\int\rho(x)\log\frac{\rho(x)}{\nu(x)}\,dx\text{ for all }\rho.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+As we calculate in Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:LD_GD"
+
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+\norm{\nabla F(\rho)}_{\rho}^{2}=\int\rho(x)\norm{\nabla\log\frac{\rho(x)}{\nu(x)}}^{2}\,dx.
+\]
+
+\end_inset
+
+Therefore, this is exactly the condition (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:LD_strong_convexity"
+
+\end_inset
+
+) with coefficient 
+\begin_inset Formula $2\alpha$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Combining Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:log_sob_LD"
+
+\end_inset
+
+ and Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:grad-dom"
+
+\end_inset
+
+, we have the following result:
+\end_layout
+
+\begin_layout Theorem
+Let 
+\begin_inset Formula $f$
+\end_inset
+
+ be a smooth function with log-Sobolev constant 
+\begin_inset Formula $\alpha$
+\end_inset
+
+.
+ Then the Langevin dynamics 
+\begin_inset Formula 
+\[
+dx_{t}=-\nabla f(x)dt+\sqrt{2}dW_{t}
+\]
+
+\end_inset
+
+converges exponentially in KL-divergence to the density 
+\begin_inset Formula $\nu(x)\propto e^{-f(x)}$
+\end_inset
+
+ with mixing rate 
+\begin_inset Formula $O(\frac{1}{\alpha})$
+\end_inset
+
+, i.e., 
+\begin_inset Formula $KL(x_{t},\nu)\le e^{-2\alpha t}KL(x_{0},\nu)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+See 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "lee2018stochastic"
+literal "true"
+
+\end_inset
+
+ for a tight estimate of log-Sobolev constant for logconcave measures.
+ In particular for a logconcave measure with support of diameter 
+\begin_inset Formula $D$
+\end_inset
+
+, the log-Sobolev constant is 
+\begin_inset Formula $\Omega(1/D)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Discussion
+\end_layout
+
+\begin_layout Standard
+Langevin dynamics samples from strongly logconcave densities, and the convergenc
+e is fast in continuous time.
+ Turning this into an efficient algorithm takes more work and assumptions.
+ As we saw in Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:LD_GD"
+
+\end_inset
+
+, it turns out that Langevin dynamics is in fact gradient descent in the
+ space of probability measures under the Wasserstein metric, where the function
+ being minimized is the KL-divergence of the current density from the target
+ stationary density.
+ For more on this view, see 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "wibisono2018sampling"
+literal "true"
+
+\end_inset
+
+.
+\end_layout
+
+\end_body
+\end_document

@@ -1,0 +1,2028 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{url}
+\usepackage{xargs}
+\usepackage[pdftex,dvipsnames]{xcolor}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\usepackage[lined,boxed,ruled,norelsize,algo2e]{algorithm2e}
+\usepackage[small,bf]{caption}
+\usepackage{tikz}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=red,
+    filecolor=red,
+    linkcolor=red,
+    urlcolor=red
+}
+
+
+
+\usepackage{fancybox}
+\usepackage{multirow}
+\usepackage{nicefrac}
+\usepackage{hyperref}
+
+
+\expandafter\def\expandafter\normalsize\expandafter{%
+    \normalsize
+%	    \setlength\abovedisplayskip{5pt}
+    \setlength\belowdisplayskip{5pt}
+    % \setlength\abovedisplayshortskip{5pt}
+    \setlength\belowdisplayshortskip{5pt}
+}
+
+\usepackage{tocloft}
+\setlength{\cftsecnumwidth}{2.8em}%
+
+%%%%%
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{fix-cm}
+\makeatletter
+\newcommand\HUGE{\@setfontsize\Huge{38}{47}}
+\makeatother
+
+\titleclass{\part}{top}
+\titleformat{\part}[display]
+  {\normalfont\HUGE\sffamily}{\partname\ \thepart}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\HUGE\bfseries\filleft}
+%\titlespacing*{\part} {0pt}{20pt}{40pt}
+\titlespacing*{\part} {0pt}{30pt}{50pt}
+
+% chapter heading formatting
+\titleformat{\chapter}[display]
+  {\normalfont\LARGE\sffamily}{\chaptertitlename\ \thechapter}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\LARGE\bfseries\filleft}
+% section heading formatting
+\titleformat{\section}
+  {\normalfont\Large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesection}{0.5em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesubsection}{0.5em}{}
+\titlespacing*{\chapter} {0pt}{20pt}{30pt}
+
+% header/footer
+\fancyhf{}
+\fancyhead[ER]{\footnotesize\sffamily\leftmark}
+\fancyhead[OL]{\footnotesize\sffamily\nouppercase\rightmark}
+\fancyhead[EL,OR]{\bfseries\thepage}
+
+\setcounter{secnumdepth}{3}
+\end_preamble
+\options openany
+\use_default_options false
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+theorems-sec
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding default
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 0
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic true
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip 0.1in
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Stochastic Gradient Descent
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Stochastic-Gradient-Descent"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this section, we study problems of the form 
+\begin_inset Formula $\sum f_{i}$
+\end_inset
+
+ where each 
+\begin_inset Formula $f_{i}$
+\end_inset
+
+ are convex and the sum can be either infinite or finite.
+\end_layout
+
+\begin_layout Subsection
+Stochastic Problem
+\end_layout
+
+\begin_layout Standard
+In this part, we discuss the problem
+\begin_inset Formula 
+\[
+\min_{x}F(x)\defeq\E_{f\sim\mathcal{D}}f(x)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\mathcal{D}$
+\end_inset
+
+ is a distribution of convex functions in 
+\begin_inset Formula $\R^{d}$
+\end_inset
+
+.
+ The goal is to find the minimizer 
+\begin_inset Formula $x^{*}=\argmin_{x}F(x)$
+\end_inset
+
+.
+ Suppose we observed 
+\begin_inset Formula $f_{1},f_{2},\cdots,f_{T}$
+\end_inset
+
+ samples from 
+\begin_inset Formula $\mathcal{D}$
+\end_inset
+
+.
+ Ideally, we wish to approximate 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ by the empirical risk minimizer
+\begin_inset Formula 
+\[
+x_{\mathrm{ERM}}^{(T)}=\arg\min_{x}F_{T}(x)\defeq\frac{1}{T}\sum_{i=1}^{T}f_{i}(x).
+\]
+
+\end_inset
+
+It is known that 
+\begin_inset Formula $x_{\mathrm{ERM}}^{(T)}$
+\end_inset
+
+ is optimal in a certain sense in spite of its computational cost.
+ Therefore, to discuss the efficiency of an optimization algorithm for 
+\begin_inset Formula $F(x)$
+\end_inset
+
+, it is helpful to consider the ratio
+\begin_inset Formula 
+\[
+\frac{\E F(x^{(T)})-F(x^{*})}{\E F(x_{\mathrm{ERM}}^{(T)})-F(x^{*})}.
+\]
+
+\end_inset
+
+We will first discuss the term 
+\begin_inset Formula $\E F(x_{\mathrm{ERM}}^{(T)})-F(x^{*})$
+\end_inset
+
+.
+ As an example, consider the simplest one-dimensional problem 
+\begin_inset Formula $F(x)=\E_{b\sim N(0,I)}(x-b)^{2}$
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula $x^{(T)}$
+\end_inset
+
+ is simply average of 
+\begin_inset Formula $T$
+\end_inset
+
+ standard normal variables and hence 
+\begin_inset Formula 
+\begin{align*}
+\E F(x_{\mathrm{ERM}}^{(T)})-F(x^{*}) & =\E_{b_{1},b_{2},\cdots,b_{T}}\E_{b}(x_{\mathrm{ERM}}^{(T)}-b)^{2}-b^{2}\\
+ & =\E_{b_{1},b_{2},\cdots,b_{T}}(x_{\mathrm{ERM}}^{(T)})^{2}\\
+ & =\E_{b_{1},b_{2},\cdots,b_{T}}(\frac{1}{T}\sum_{i=1}^{T}b_{i})^{2}=\frac{1}{T}.
+\end{align*}
+
+\end_inset
+
+In general, the following lemma shows that
+\begin_inset Formula 
+\[
+\E F(x_{\mathrm{ERM}}^{(T)})-F(x^{*})\rightarrow\frac{\sigma^{2}}{T}\quad\text{where }\sigma^{2}=\frac{1}{2}\E\|\nabla f(x^{*})\|_{(\nabla^{2}F(x^{*}))^{-1}}^{2}.
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\frac{\sigma^{2}}{T}$
+\end_inset
+
+ is called the Cramer-Rao bound.
+\end_layout
+
+\begin_layout Lemma
+Suppose that 
+\begin_inset Formula $f$
+\end_inset
+
+ is 
+\begin_inset Formula $\mu$
+\end_inset
+
+-strongly convex with Lipschitz Hessian for all 
+\begin_inset Formula $f\sim\mathcal{D}$
+\end_inset
+
+ for some 
+\begin_inset Formula $\mu>0$
+\end_inset
+
+.
+ Suppose that 
+\begin_inset Formula $\E_{f\sim\mathcal{D}}\|\nabla f(x^{*})\|^{2}<+\infty$
+\end_inset
+
+.
+ Then, we have that
+\begin_inset Formula 
+\[
+\lim_{N\rightarrow+\infty}\frac{\E F(x_{\mathrm{ERM}}^{(N)})-F(x^{*})}{\sigma^{2}/N}=1.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+The statement holds with much weaker assumptions and the rate of convergence
+ can be made quantitative.
+\end_layout
+
+\begin_layout Proof
+We first prove 
+\begin_inset Formula $x_{\mathrm{ERM}}^{(N)}\rightarrow x^{*}$
+\end_inset
+
+ as 
+\begin_inset Formula $N\rightarrow+\infty$
+\end_inset
+
+.
+ By the optimality condition of 
+\begin_inset Formula $x_{\mathrm{ERM}}^{(N)}$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\begin{equation}
+0=\nabla F_{N}(x_{\mathrm{ERM}}^{(N)})=\nabla F_{N}(x^{*})+\nabla^{2}F_{N}(\widetilde{x})(x_{\mathrm{ERM}}^{(N)}-x^{*}).\label{eq:error_F_N}
+\end{equation}
+
+\end_inset
+
+By the 
+\begin_inset Formula $\mu$
+\end_inset
+
+-strongly convexity, we have
+\begin_inset Formula 
+\[
+\|x_{\mathrm{ERM}}^{(N)}-x^{*}\|_{2}^{2}\leq\frac{1}{\mu}\|\nabla F_{N}(x^{*})\|^{2}.
+\]
+
+\end_inset
+
+Since 
+\begin_inset Formula $\E_{f\sim\mathcal{D}}\nabla f(x^{*})=\nabla F(x^{*})=0$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\begin{align*}
+\E\|x_{\mathrm{ERM}}^{(N)}-x^{*}\|_{2}^{2} & \leq\frac{1}{\mu}\E\frac{1}{N^{2}}\sum_{i}\|\nabla f_{i}(x^{*})\|^{2}\\
+ & =\frac{1}{\mu N}\E_{f\sim\mathcal{D}}\|\nabla f(x^{*})\|^{2}
+\end{align*}
+
+\end_inset
+
+Therefore, 
+\begin_inset Formula $x_{\mathrm{ERM}}^{(N)}\rightarrow x^{*}$
+\end_inset
+
+ as 
+\begin_inset Formula $N\rightarrow+\infty$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Now, to compute the error, Taylor expansion of 
+\begin_inset Formula $F$
+\end_inset
+
+ at 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ shows that
+\begin_inset Formula 
+\[
+F(x_{\mathrm{ERM}}^{(N)})-F(x^{*})=\frac{1}{2}(x_{\mathrm{ERM}}^{(N)}-x^{*})^{\top}\nabla^{2}F(\overline{x})(x_{\mathrm{ERM}}^{(N)}-x^{*})
+\]
+
+\end_inset
+
+for some 
+\begin_inset Formula $\overline{x}$
+\end_inset
+
+ between 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ and 
+\begin_inset Formula $x_{\mathrm{ERM}}^{(N)}$
+\end_inset
+
+.
+ Using this and (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:error_F_N"
+
+\end_inset
+
+) gives
+\begin_inset Formula 
+\[
+F(x_{\mathrm{ERM}}^{(N)})-F(x^{*})=\frac{1}{2}\nabla F_{N}(x^{*})^{\top}(\nabla^{2}F_{N}(\widetilde{x}))^{-1}\nabla^{2}F(\overline{x})(\nabla^{2}F_{N}(\widetilde{x}))^{-1}\nabla F_{N}(x^{*}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Since 
+\begin_inset Formula $x_{\mathrm{ERM}}^{(N)}\rightarrow x^{*}$
+\end_inset
+
+ and 
+\begin_inset Formula $\nabla^{2}F_{N}\succeq\mu I$
+\end_inset
+
+, we have 
+\begin_inset Formula $(\nabla^{2}F_{N}(\widetilde{x}))^{-1}\nabla^{2}F(\overline{x})(\nabla^{2}F_{N}(\widetilde{x}))^{-1}\rightarrow(\nabla^{2}F(x^{*}))^{-1}$
+\end_inset
+
+.
+ Hence, we have
+\begin_inset Formula 
+\begin{align*}
+\lim_{N\rightarrow\infty}\E N\cdot(F(x_{\mathrm{ERM}}^{(N)})-F(x^{*})) & =\lim_{N\rightarrow\infty}\frac{N}{2}\E\nabla F_{N}(x^{*})^{\top}(\nabla^{2}F(x^{*}))^{-1}\nabla F_{N}(x^{*})\\
+ & =\frac{1}{2}\E\|\nabla f(x^{*})\|_{(\nabla^{2}F(x^{*}))^{-1}}^{2}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now, we discuss how to achieve a bound similar to 
+\begin_inset Formula $\sigma^{2}/T$
+\end_inset
+
+ using stochastic gradient descent.
+ Since gradient descent is a first order method, we can only achieve a bound
+ related to the 
+\begin_inset Formula $\ell_{2}$
+\end_inset
+
+ norm, 
+\begin_inset Formula $\E\|\nabla f(x^{*})\|_{2}^{2}$
+\end_inset
+
+, instead of the inverse Hessian norm.
+ We need a lemma relating 
+\begin_inset Formula $\nabla f(x^{*})$
+\end_inset
+
+ and 
+\begin_inset Formula $\nabla f(x)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Exercise
+Suppose 
+\begin_inset Formula $f$
+\end_inset
+
+ has 
+\begin_inset Formula $L$
+\end_inset
+
+-Lipschitz gradient.
+ Then, 
+\begin_inset Formula $\|\nabla f(x)-\nabla f(y)\|^{2}\leq2L\cdot D_{f}(y,x)$
+\end_inset
+
+ for any 
+\begin_inset Formula $x,y$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Exercise
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Proof: ...Oh my proof does not work..Anyway..Lemma 7 in http://www.aaronsidford.com/chap_
+5_extend_v7.pdf
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{align*}
+D_{f}(y,x) & =f(y)-f(x)-\nabla f(x)^{\top}(y-x)\\
+ & =\int_{0}^{1}(1-\theta)(y-x)^{\top}\nabla^{2}f(x+\theta(y-x))(y-x)d\theta.
+\end{align*}
+
+\end_inset
+
+On the other hand, we have
+\begin_inset Formula 
+\begin{align*}
+\|\nabla f(x)-\nabla f(y)\|^{2} & =\|\int_{0}^{1}\nabla^{2}f(x+\theta(y-x))(y-x)d\theta\|^{2}\\
+ & \leq\left(\int_{0}^{1}\|\nabla^{2}f(x+\theta(y-x))(y-x)\|d\theta\right)^{2}\\
+ & \leq\int_{0}^{1}\|\nabla^{2}f(x+\theta(y-x))(y-x)\|^{2}d\theta\\
+ & \leq L\cdot\int_{0}^{1}(y-x)^{\top}\nabla^{2}f(x+\theta(y-x))(y-x)d\theta\\
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:change_variance"
+
+\end_inset
+
+Suppose 
+\begin_inset Formula $f$
+\end_inset
+
+ has 
+\begin_inset Formula $L$
+\end_inset
+
+-Lipschitz gradient for all 
+\begin_inset Formula $f\in\mathcal{D}$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ be the minimizer of 
+\begin_inset Formula $F$
+\end_inset
+
+.
+ Then, we have
+\begin_inset Formula 
+\[
+\E_{f\sim\mathcal{D}}\|\nabla f(x)-\nabla f(x^{*})\|_{2}^{2}\leq2L\cdot(F(x)-F(x^{*})).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+By the exercise above, we have
+\begin_inset Formula 
+\[
+\|\nabla f(x)-\nabla f(x^{*})\|^{2}\leq2L\cdot(f(x)-f(x^{*})-\nabla f(x^{*})^{\top}(x-x^{*})).
+\]
+
+\end_inset
+
+Taking expectation, we have the result.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm2e}[H]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\mathtt{StochasticGradientDescent}$
+\end_inset
+
+ (SGD)
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetAlgoLined
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Input:
+\series default
+ Initial point 
+\begin_inset Formula $x^{(0)}\in\R^{d}$
+\end_inset
+
+, step size 
+\begin_inset Formula $h>0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+For{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $k=0,1,\cdots,T$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Sample 
+\begin_inset Formula $f\sim\mathcal{D}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $x^{(k+1)}\leftarrow x^{(k)}-h\cdot\nabla f(x^{(k)})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:sgd_convex_strongly"
+
+\end_inset
+
+Suppose 
+\begin_inset Formula $f$
+\end_inset
+
+ has 
+\begin_inset Formula $L$
+\end_inset
+
+-Lipschitz gradient for all 
+\begin_inset Formula $f\in\mathcal{D}$
+\end_inset
+
+ and 
+\begin_inset Formula $F$
+\end_inset
+
+ is 
+\begin_inset Formula $\mu$
+\end_inset
+
+ strongly convex.
+ Let 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ be the minimizer of 
+\begin_inset Formula $F$
+\end_inset
+
+ and 
+\begin_inset Formula $\sigma^{2}=\frac{1}{2}\E\|\nabla f(x^{*})\|^{2}$
+\end_inset
+
+.
+ For step size 
+\begin_inset Formula $h\leq\frac{1}{4L}$
+\end_inset
+
+, the sequence 
+\begin_inset Formula $x^{(k)}$
+\end_inset
+
+ in 
+\begin_inset Formula $\mathtt{StochasticGradientDescent}$
+\end_inset
+
+ satisfies
+\begin_inset Formula 
+\[
+\E\|x^{(k)}-x^{*}\|^{2}\leq\frac{8h\sigma^{2}}{\mu}+(1-\frac{h\mu}{2})^{k}\cdot\|x^{(0)}-x^{*}\|^{2}
+\]
+
+\end_inset
+
+and
+\begin_inset Formula 
+\[
+\frac{1}{T}\sum_{k=0}^{T-1}\E F(x^{(k)})-F(x^{*})\leq4h\sigma^{2}+\frac{\|x^{(0)}-x^{*}\|^{2}}{hT}.
+\]
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+The reason this proof is so funny is that we can reuse in the SVRG version.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Note that
+\begin_inset Formula 
+\[
+\|x^{(k+1)}-x^{*}\|^{2}=\|x^{(k)}-x^{*}\|^{2}-2h\left\langle x^{(k)}-x^{*},\nabla f(x^{(k)})\right\rangle +h^{2}\|\nabla f(x^{(k)})\|^{2}.
+\]
+
+\end_inset
+
+Taking expectation on 
+\begin_inset Formula $f$
+\end_inset
+
+ and using that 
+\begin_inset Formula 
+\begin{align*}
+\E\|\nabla f(x^{(k)})\|^{2} & \leq2\E\|\nabla f(x^{(k)})-\nabla f(x^{*})\|^{2}+2\E\|\nabla f(x^{*})\|^{2}\\
+ & \leq4L\cdot(F(x^{(k)})-F(x^{*}))+4\sigma^{2},
+\end{align*}
+
+\end_inset
+
+we have
+\begin_inset Formula 
+\begin{align}
+\E\|x^{(k+1)}-x^{*}\|^{2} & =\|x^{(k)}-x^{*}\|^{2}-2h\left\langle x^{(k)}-x^{*},\nabla F(x^{(k)})\right\rangle +4h^{2}\sigma^{2}+4Lh^{2}\cdot(F(x^{(k)})-F(x^{*}))\nonumber \\
+ & \leq\|x^{(k)}-x^{*}\|^{2}-(2h-4Lh^{2})(F(x^{(k)})-F(x^{*}))+4h^{2}\sigma^{2}.\label{eq:SGD_distance}
+\end{align}
+
+\end_inset
+
+Using 
+\begin_inset Formula $h\leq\frac{1}{4L}$
+\end_inset
+
+ and 
+\begin_inset Formula $F(x^{(k)})-F(x^{*})\leq\frac{1}{2\mu}\|\nabla F(x^{(k)})\|_{2}^{2}$
+\end_inset
+
+, we have
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+fixed some terms here.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\E\|x^{(k+1)}-x^{*}\|^{2}\leq4h^{2}\sigma^{2}+(1-\frac{h\mu}{2})\cdot\|x^{(k)}-x^{*}\|^{2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+The first conclusion follows.
+\end_layout
+
+\begin_layout Proof
+For the second conclusion, (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:SGD_distance"
+
+\end_inset
+
+) shows that
+\begin_inset Formula 
+\[
+\E F(x^{(k)})-F(x^{*})\leq\frac{\E\|x^{(k)}-x^{*}\|^{2}-\E\|x^{(k+1)}-x^{*}\|^{2}}{h}+4h\sigma^{2}.
+\]
+
+\end_inset
+
+Hence, we have
+\begin_inset Formula 
+\begin{align*}
+\frac{1}{T}\sum_{k=0}^{T-1}\E F(x^{(k)})-F(x^{*}) & \leq4h\sigma^{2}+\frac{\|x^{(0)}-x^{*}\|^{2}}{hT}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Applying the theorem above twice, show that one can achieve error 
+\begin_inset Formula $\tilde{O}(\frac{\sigma^{2}}{\mu T})$
+\end_inset
+
+, which is roughly same as the Cramer-Rao bound.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Get the precise bound here.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We note that for many algorithms in this book, such as mirror descent, the
+ stochastic version is obtained by replacing the gradient 
+\begin_inset Formula $\nabla F$
+\end_inset
+
+ by the gradient of a sample, 
+\begin_inset Formula $\nabla f$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Finite Sum Problem
+\end_layout
+
+\begin_layout Standard
+When 
+\begin_inset Formula $\nabla f(x^{*})=0$
+\end_inset
+
+ for all 
+\begin_inset Formula $f\sim\mathcal{D}$
+\end_inset
+
+, stochastic gradient descent converges exponentially.
+ When the function is given by a finite sum 
+\begin_inset Formula $F=\frac{1}{n}\sum f_{i}$
+\end_inset
+
+, we can reduce the variance at 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ by replacing 
+\begin_inset Formula 
+\[
+\nabla\widetilde{f}_{i}(x)=\nabla f_{i}(x)-\nabla f_{i}(x^{(0)})+\nabla F(x^{(0)}).
+\]
+
+\end_inset
+
+Note that if 
+\begin_inset Formula $x^{(0)}$
+\end_inset
+
+ is close to 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+, then 
+\begin_inset Formula $\nabla\widetilde{f}_{i}(x^{*})$
+\end_inset
+
+ is small because both 
+\begin_inset Formula $\nabla f_{i}(x^{*})-\nabla f_{i}(x^{(0)})$
+\end_inset
+
+ and 
+\begin_inset Formula $\nabla F(x^{(0)})$
+\end_inset
+
+ are small.
+ Formally, the variance for 
+\begin_inset Formula $\widetilde{f}$
+\end_inset
+
+ is bounded as follows:
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:variance_reduction"
+
+\end_inset
+
+Suppose 
+\begin_inset Formula $f$
+\end_inset
+
+ has 
+\begin_inset Formula $L$
+\end_inset
+
+-Lipschitz gradient for all 
+\begin_inset Formula $f\in\mathcal{D}$
+\end_inset
+
+.
+ For any 
+\begin_inset Formula $f\in\mathcal{D}$
+\end_inset
+
+, let 
+\begin_inset Formula $\nabla\widetilde{f}(x)=\nabla f(x)-\nabla f(x^{(0)})+\nabla F(x^{(0)})$
+\end_inset
+
+ for some fixed 
+\begin_inset Formula $x^{(0)}$
+\end_inset
+
+.
+ Then, we have
+\begin_inset Formula 
+\[
+\E\|\nabla\widetilde{f}(x^{*})\|^{2}\leq8L\cdot(F(x^{(0)})-F(x^{*})).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Note that
+\begin_inset Formula 
+\begin{align*}
+\E\|\nabla\widetilde{f}(x^{*})\|^{2} & \leq2\E\|\nabla f(x^{*})-\nabla f(x^{(0)})\|^{2}+2\|\nabla F(x^{(0)})-\nabla F(x^{*})\|^{2}\\
+ & =2\E\|\nabla f(x^{*})-\nabla f(x^{(0)})\|^{2}+2\E\|\nabla f(x^{(0)})-\nabla f(x^{*})\|^{2}\\
+ & \leq4L(F(x^{(0)})-F(x^{*}))+4L(F(x^{(0)})-F(x^{*}))
+\end{align*}
+
+\end_inset
+
+where we used Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:change_variance"
+
+\end_inset
+
+ at the end.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm2e}[H]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\mathtt{StochasticVarianceReducedGradient}$
+\end_inset
+
+ (SVRG)
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetAlgoLined
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Input:
+\series default
+ Initial point 
+\begin_inset Formula $x^{(0)}\in\R^{d}$
+\end_inset
+
+, step size 
+\begin_inset Formula $h>0$
+\end_inset
+
+, restart time 
+\begin_inset Formula $m$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\widetilde{x}=x^{(0)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+For{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $k=0,1,\cdots,T$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+If{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $k$
+\end_inset
+
+ is a multiple of 
+\begin_inset Formula $m$
+\end_inset
+
+ and 
+\begin_inset Formula $k\neq0$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $x^{(k)}=\frac{1}{m}\sum_{j=1}^{m}x^{(k-j)}$
+\end_inset
+
+.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Is this averaging needed?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\widetilde{x}=x^{(k)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Sample 
+\begin_inset Formula $f_{i}$
+\end_inset
+
+ for 
+\begin_inset Formula $i\in[n]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $x^{(k+1)}\leftarrow x^{(k)}-h\cdot(\nabla f(x^{(k)})-\nabla f(\widetilde{x})+\nabla F(\widetilde{x}))$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:stochastic_method"
+
+\end_inset
+
+Suppose 
+\begin_inset Formula $f$
+\end_inset
+
+ has 
+\begin_inset Formula $L$
+\end_inset
+
+-Lipschitz gradient for all 
+\begin_inset Formula $f_{i}$
+\end_inset
+
+ and 
+\begin_inset Formula $F$
+\end_inset
+
+ is 
+\begin_inset Formula $\mu$
+\end_inset
+
+ strongly convex.
+ Let 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ be the minimizer of 
+\begin_inset Formula $F$
+\end_inset
+
+.
+ For step size 
+\begin_inset Formula $h=\frac{1}{64L}$
+\end_inset
+
+ and 
+\begin_inset Formula $m=\frac{256L}{\mu}$
+\end_inset
+
+, the sequence 
+\begin_inset Formula $x^{(km)}$
+\end_inset
+
+ in 
+\begin_inset Formula $\mathtt{StochasticVarianceReducedGradient}$
+\end_inset
+
+ satisfies
+\begin_inset Formula 
+\[
+\E F(x^{(km)})-F(x^{*})\leq\frac{1}{2^{k}}\cdot(F(x^{(0)})-F(x^{*})).
+\]
+
+\end_inset
+
+In particular, it takes 
+\begin_inset Formula $O((n+\frac{L}{\mu})\log(\frac{1}{\epsilon}))$
+\end_inset
+
+ gradient computations to find 
+\begin_inset Formula $x$
+\end_inset
+
+ such that 
+\begin_inset Formula $\E F(x)-F(x^{*})\leq\epsilon\cdot(F(x^{(0)})-F(x^{*}))$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Remark*
+Gradient descent gives 
+\begin_inset Formula $O(n\frac{L}{\mu}\log(\frac{1}{\epsilon}))$
+\end_inset
+
+ instead because computing 
+\begin_inset Formula $\nabla F$
+\end_inset
+
+ involves computing 
+\begin_inset Formula $n$
+\end_inset
+
+ gradients 
+\begin_inset Formula $\nabla f$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+The algorithm consists of 
+\begin_inset Formula $\frac{T}{m}$
+\end_inset
+
+ phases.
+ For the first phase, we compute 
+\begin_inset Formula $\nabla F(x^{(0)})$
+\end_inset
+
+.
+ Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:variance_reduction"
+
+\end_inset
+
+ shows that 
+\begin_inset Formula 
+\[
+\E\|\nabla f(x^{(k)})-\nabla f(x^{(0)})+\nabla F(x^{(0)})\|^{2}\leq8L\cdot(F(x^{(0)})-F(x^{*})).
+\]
+
+\end_inset
+
+Hence, Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:sgd_convex_strongly"
+
+\end_inset
+
+ shows that
+\begin_inset Formula 
+\begin{align*}
+\frac{1}{m}\sum_{k=0}^{m-1}\E F(x^{(k)})-F(x^{*}) & \leq16hL\cdot(F(x^{(0)})-F(x^{*}))+\frac{F(x^{(0)})-F(x^{*})}{\mu hm}\\
+ & \leq\frac{1}{2}(F(x^{(0)})-F(x^{*})).
+\end{align*}
+
+\end_inset
+
+Hence, the error decreases by half each phase.
+ This shows the result.
+\end_layout
+
+\begin_layout Section
+Coordinate Descent
+\end_layout
+
+\begin_layout Standard
+If some of the coordinates are more important than others for optimization,
+ it makes sense to update the important coordinates more often.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:coordinate_descent"
+
+\end_inset
+
+Given a convex function 
+\begin_inset Formula $f$
+\end_inset
+
+, suppose that 
+\begin_inset Formula $\frac{\partial^{2}}{\partial x_{i}^{2}}f(x)\leq L_{i}$
+\end_inset
+
+ for all 
+\begin_inset Formula $x$
+\end_inset
+
+ and let 
+\begin_inset Formula $L=\sum L_{i}$
+\end_inset
+
+.
+ If we sample coordinate 
+\begin_inset Formula $i$
+\end_inset
+
+ with probability 
+\begin_inset Formula $p_{i}=\frac{L_{i}}{L}$
+\end_inset
+
+, then, 
+\begin_inset Formula 
+\[
+\E_{i}f(x-\frac{1}{L_{i}}\frac{\partial}{\partial x_{i}}f(x)e_{i})\leq f(x)-\frac{1}{2L}\norm{\nabla f(x)}_{2}^{2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Note that the function 
+\begin_inset Formula $\zeta(t)=f(x+te_{i})$
+\end_inset
+
+ is 
+\begin_inset Formula $L_{i}$
+\end_inset
+
+ smooth.
+ Hence, we have that
+\begin_inset Formula 
+\[
+f(x-\frac{1}{L_{i}}\frac{\partial}{\partial x_{i}}f(x)e_{i})\leq f(x)-\frac{1}{2L_{i}}\frac{\partial}{\partial x_{i}}f(x)^{2}.
+\]
+
+\end_inset
+
+Since we sample coordinate 
+\begin_inset Formula $i$
+\end_inset
+
+ with probability 
+\begin_inset Formula $p_{i}=\frac{L_{i}}{L}$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\begin{align*}
+\E f(x-\frac{1}{L_{i}}\frac{\partial}{\partial x_{i}}f(x)e_{i}) & =f(x)-\sum_{i}\frac{L_{i}}{L}\frac{1}{2L_{i}}\frac{\partial}{\partial x_{i}}f(x)^{2}\\
+ & =f(x)-\frac{1}{2L}\sum_{i}\frac{\partial}{\partial x_{i}}f(x)^{2}\\
+ & =f(x)-\frac{1}{2L}\norm{\nabla f(x)}_{2}^{2}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+By the same proof as Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:gd_convex"
+
+\end_inset
+
+, we have the following:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm2e}[H]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\mathtt{CoordinateDescent}$
+\end_inset
+
+ (CD)
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetAlgoLined
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Input:
+\series default
+ Initial point 
+\begin_inset Formula $x^{(0)}\in\R^{d}$
+\end_inset
+
+, step size 
+\begin_inset Formula $h>0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+For{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $k=0,1,\cdots,T$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Sample 
+\begin_inset Formula $i$
+\end_inset
+
+ with probability proportional to 
+\begin_inset Formula $L_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $x^{(k+1)}\leftarrow x^{(k)}-\frac{1}{L_{i}}\frac{\partial}{\partial x_{i}}f(x^{(k)})e_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:coordinate_descent"
+
+\end_inset
+
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Coordinate Descent Convergence
+\end_layout
+
+\end_inset
+
+Given a convex function 
+\begin_inset Formula $f$
+\end_inset
+
+, suppose that 
+\begin_inset Formula $\frac{\partial^{2}}{\partial x_{i}^{2}}f(x)\leq L_{i}$
+\end_inset
+
+ for all 
+\begin_inset Formula $x$
+\end_inset
+
+ and let 
+\begin_inset Formula $L=\sum L_{i}$
+\end_inset
+
+.
+ Consider the algorithm 
+\begin_inset Formula $x^{(k+1)}\leftarrow x^{(k)}-\frac{1}{L_{i}}\frac{\partial}{\partial x_{i}}f(x^{(k)})e_{i}$
+\end_inset
+
+.
+ Then, we have that 
+\begin_inset Formula 
+\[
+\E f(x^{(k)})-f(x^{*})\leq\frac{2LR^{2}}{k+4}\quad\text{with}\quad R=\max_{f(x)\leq f(x^{(0)})}\norm{x-x^{*}}_{2}
+\]
+
+\end_inset
+
+for any minimizer 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ of 
+\begin_inset Formula $f$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $f$
+\end_inset
+
+ is 
+\begin_inset Formula $\mu$
+\end_inset
+
+ strongly convex, then we also have 
+\begin_inset Formula 
+\[
+\E f(x^{(k)})-f(x^{*})\leq(1-\frac{\mu}{L})^{\Omega(k)}(f(x^{(0)})-f(x^{*})).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+Note that 
+\begin_inset Formula $\frac{L}{d}\leq\Lip(\nabla f)\leq L$
+\end_inset
+
+.
+ Therefore gradient descent takes at least 
+\begin_inset Formula $\frac{1}{d}$
+\end_inset
+
+ times as many steps as coordinate descent while each step takes 
+\begin_inset Formula $d$
+\end_inset
+
+ times longer (usually).
+\begin_inset Note Note
+status open
+
+\begin_layout Subsection
+Application to Laplacian systems (in progress)
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Use stochastic descent instead if that paper is public.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Given a graph 
+\begin_inset Formula $G=(V,E)$
+\end_inset
+
+ with 
+\begin_inset Formula $m$
+\end_inset
+
+ edges and 
+\begin_inset Formula $n$
+\end_inset
+
+ vertices.
+ We consider the problem
+\begin_inset Formula 
+\[
+\frac{1}{2}\sum_{(i,j)\sim E}(x_{i}-x_{j})^{2}-c^{\top}x.
+\]
+
+\end_inset
+
+For now, we can think this as a generalization of the worst-case function.
+ Directly applying accelerated gradient descent, accelerated coordinate
+ descent or accelerated stochastic descent all gives 
+\begin_inset Formula $O^{*}(mn)$
+\end_inset
+
+ time algorithm.
+ Roughly speaking, this is because of the 
+\begin_inset Quotes eld
+\end_inset
+
+diameter
+\begin_inset Quotes erd
+\end_inset
+
+ bottleneck for all first-order methods.
+\end_layout
+
+\begin_layout Plain Layout
+To get around the diameter issue, we let the incidence matrix 
+\begin_inset Formula $B\in\R^{|E|\times|V|}$
+\end_inset
+
+ defined by 
+\begin_inset Formula $B_{(i,j),i}=1$
+\end_inset
+
+ and 
+\begin_inset Formula $B_{(i,j),j}=-1$
+\end_inset
+
+.We consider the dual problem
+\begin_inset Formula 
+\[
+\min_{B^{T}f=d}\frac{1}{2}\sum_{e\in E}f_{e}^{2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Let pick a tree 
+\begin_inset Formula $T$
+\end_inset
+
+, by sending flow along the tree, it is easy to find 
+\begin_inset Formula $g$
+\end_inset
+
+ such that 
+\begin_inset Formula $B^{\top}g=d$
+\end_inset
+
+.
+ Hence, the problem can be rewritten as
+\begin_inset Formula 
+\[
+\min_{B^{T}f=0}\frac{1}{2}\sum_{e\in E}(f+g)_{e}^{2}.
+\]
+
+\end_inset
+
+We call any 
+\begin_inset Formula $f$
+\end_inset
+
+ satisfying 
+\begin_inset Formula $B^{\top}f=0$
+\end_inset
+
+ is a circulation.
+ For any edge 
+\begin_inset Formula $e\notin T$
+\end_inset
+
+, we define 
+\begin_inset Formula $c(e)$
+\end_inset
+
+ be an unit cycle on 
+\begin_inset Formula $\{e\}\cup T$
+\end_inset
+
+.
+ It is known that any circulation can be represented by
+\begin_inset Formula 
+\[
+f=\sum_{e\notin T}\alpha_{e}c(e).
+\]
+
+\end_inset
+
+Also, any such flow is a circulation.
+ Therefore, the problem now becomes
+\begin_inset Formula 
+\[
+\min_{\alpha}\ell(\alpha)\defeq\frac{1}{2}\sum_{e\in E}(\sum_{k\notin T}\alpha_{k}c(k)+g_{e})_{e}^{2}.
+\]
+
+\end_inset
+
+Now, we apply accelerated coordinate descent to solve this problem.
+ First, we note that 
+\begin_inset Formula $\ell$
+\end_inset
+
+ is 1-strongly convex.
+ Next, for any 
+\begin_inset Formula $k$
+\end_inset
+
+, 
+\begin_inset Formula $\frac{\partial^{2}}{\partial\alpha_{k}^{2}}\ell=\text{length}(c(k))$
+\end_inset
+
+.
+ Hence, the accelerated coordinate descent takes 
+\begin_inset Formula $O^{*}(\sum_{k\notin T}\text{length}(c(k)))$
+\end_inset
+
+ coordinate steps.
+ It is known that for any graph 
+\begin_inset Formula $G$
+\end_inset
+
+, we can find a tree such that 
+\begin_inset Formula $\sum_{k\notin T}\text{length}(c(k))=O^{*}(m)$
+\end_inset
+
+.
+ Using such a tree, the running time is 
+\begin_inset Formula $O^{*}(m)$
+\end_inset
+
+ coordinate steps.
+ It is also easy to implement the algorithm such that each step takes 
+\begin_inset Formula $O^{*}(1)$
+\end_inset
+
+ time.
+ Therefore, this gives a 
+\begin_inset Formula $O^{*}(m)$
+\end_inset
+
+ algorithm for the problem.
+ See 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "lee2013efficient"
+literal "true"
+
+\end_inset
+
+ for more details.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

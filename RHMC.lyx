@@ -1,0 +1,1699 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{url}
+\usepackage{xargs}
+\usepackage[pdftex,dvipsnames]{xcolor}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\usepackage[lined,boxed,ruled,norelsize,algo2e]{algorithm2e}
+\usepackage[small,bf]{caption}
+\usepackage{tikz}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=red,
+    filecolor=red,
+    linkcolor=red,
+    urlcolor=red
+}
+
+
+
+\usepackage{fancybox}
+\usepackage{multirow}
+\usepackage{nicefrac}
+\usepackage{hyperref}
+
+
+\expandafter\def\expandafter\normalsize\expandafter{%
+    \normalsize
+%	    \setlength\abovedisplayskip{5pt}
+    \setlength\belowdisplayskip{5pt}
+    % \setlength\abovedisplayshortskip{5pt}
+    \setlength\belowdisplayshortskip{5pt}
+}
+
+\usepackage{tocloft}
+\setlength{\cftsecnumwidth}{2.8em}%
+
+%%%%%
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{fix-cm}
+\makeatletter
+\newcommand\HUGE{\@setfontsize\Huge{38}{47}}
+\makeatother
+
+\titleclass{\part}{top}
+\titleformat{\part}[display]
+  {\normalfont\HUGE\sffamily}{\partname\ \thepart}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\HUGE\bfseries\filleft}
+%\titlespacing*{\part} {0pt}{20pt}{40pt}
+\titlespacing*{\part} {0pt}{30pt}{50pt}
+
+% chapter heading formatting
+\titleformat{\chapter}[display]
+  {\normalfont\LARGE\sffamily}{\chaptertitlename\ \thechapter}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\LARGE\bfseries\filleft}
+% section heading formatting
+\titleformat{\section}
+  {\normalfont\Large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesection}{0.5em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesubsection}{0.5em}{}
+\titlespacing*{\chapter} {0pt}{20pt}{30pt}
+
+% header/footer
+\fancyhf{}
+\fancyhead[ER]{\footnotesize\sffamily\leftmark}
+\fancyhead[OL]{\footnotesize\sffamily\nouppercase\rightmark}
+\fancyhead[EL,OR]{\bfseries\thepage}
+
+\setcounter{secnumdepth}{3}
+\end_preamble
+\options openany
+\use_default_options false
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+theorems-sec
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding default
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 0
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic true
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip 0.1in
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Hamiltonian Monte Carlo
+\end_layout
+
+\begin_layout Standard
+Hamiltonian dynamics is an alternative way to formulate Newtonian mechanics.
+ The Hamiltonian 
+\begin_inset Formula $H$
+\end_inset
+
+ captures both the potential and kinetic energy of a particle as a function
+ of its position and velocity.
+ The dynamics can be described by the following differential equations.
+ 
+\begin_inset Formula 
+\begin{align*}
+\frac{dx}{dt} & =\frac{\partial H(x,v)}{\partial v},\\
+\frac{dv}{dt} & =-\frac{\partial H(x,v)}{\partial x}.
+\end{align*}
+
+\end_inset
+
+These equations preserve the Hamiltonian function 
+\begin_inset Formula $H$
+\end_inset
+
+.
+ In the simplest Euclidean setting, it can be defined as follows.
+\begin_inset Formula 
+\[
+H(x,v)=f(x)+\frac{1}{2}\norm v^{2}
+\]
+
+\end_inset
+
+so that 
+\begin_inset Formula 
+\[
+\frac{dx}{dt}=v,\quad\frac{dv}{dt}=-\nabla f(x)
+\]
+
+\end_inset
+
+or
+\begin_inset Formula 
+\[
+\frac{d^{2}x}{dt^{2}}=-\nabla f(x).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\shape up
+More generally, the Hamiltonian can depend on a function that defines a
+ local metric:
+\begin_inset Formula 
+\[
+H(x,v)=f(x)+\frac{1}{2}\log((2\pi)^{n}\det g(x))+\frac{1}{2}v^{T}g(x)^{-1}v
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $g(x)$
+\end_inset
+
+ is a matrix, and when it is PSD, it defines a local norm at 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ In this sense, we can view the dynamics as evolving on a manifold with
+ local metric 
+\begin_inset Formula $g(x)$
+\end_inset
+
+.
+ Here in this chapter, we will focus on the case when 
+\begin_inset Formula $g(x)=I$
+\end_inset
+
+, the standard Euclidean metric.
+\end_layout
+
+\begin_layout Standard
+
+\shape up
+(Riemannian)
+\shape default
+ Hamiltonian Monte Carlo (or RHMC) 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Neal1996,Neal2012"
+literal "true"
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Girolami2009,Girolami2011"
+literal "true"
+
+\end_inset
+
+ is a Markov Chain Monte Carlo method for sampling from a desired distribution.
+ Each step of the method consists of the following: At a current point 
+\begin_inset Formula $x$
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Enumerate
+Pick a random velocity 
+\begin_inset Formula $y$
+\end_inset
+
+ according to a local distribution defined by 
+\begin_inset Formula $x$
+\end_inset
+
+ (in the simplest setting, this is the standard Gaussian distribution for
+ every 
+\begin_inset Formula $x$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Enumerate
+Move along the Hamiltonian curve defined by Hamiltonian dynamics at 
+\begin_inset Formula $(x,y)$
+\end_inset
+
+ for time (distance) 
+\begin_inset Formula $\delta$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+For the choice of 
+\begin_inset Formula $H$
+\end_inset
+
+ above, the marginal distribution of the current point 
+\begin_inset Formula $x$
+\end_inset
+
+ approaches the target distribution with density proportional to 
+\begin_inset Formula $e^{-f}$
+\end_inset
+
+.
+ Note that HMC does not require a Metropolis filter! Thus, unlike the walks
+ we have seen so far, its step sizes are not limited by this consideration
+ even in high dimension.
+ Hamiltonian Monte Carlo can be used for sampling from a general distribution
+ 
+\begin_inset Formula $e^{-H(x,y)}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Definition
+Given a continuous, twice-differentiable function 
+\begin_inset Formula $H:\mathcal{M}\times\Rn\subset\R^{n}\times\R^{n}\rightarrow\R$
+\end_inset
+
+ (
+\emph on
+Hamiltonian
+\emph default
+) where 
+\begin_inset Formula $\mathcal{M}$
+\end_inset
+
+ is the 
+\begin_inset Formula $x$
+\end_inset
+
+ domain of 
+\begin_inset Formula $H$
+\end_inset
+
+, we say 
+\begin_inset Formula $(x(t),y(t))$
+\end_inset
+
+ follows a 
+\emph on
+Hamiltonian curve
+\shape up
+\emph default
+ if it satisfies the
+\shape default
+ 
+\emph on
+Hamiltonian equations
+\end_layout
+
+\begin_layout Definition
+\begin_inset Formula 
+\begin{align}
+\frac{dx}{dt} & =\frac{\partial H(x,y)}{\partial y},\nonumber \\
+\frac{dy}{dt} & =-\frac{\partial H(x,y)}{\partial x}.\label{eq:ham}
+\end{align}
+
+\end_inset
+
+We define the map 
+\begin_inset Formula $T_{\step}(x,y)\defeq(x(\step),y(\step))$
+\end_inset
+
+ where the 
+\begin_inset Formula $(x(t),y(t))$
+\end_inset
+
+ follows the 
+\shape up
+Hamiltonian curve with
+\shape default
+ the initial condition 
+\begin_inset Formula $(x(0),y(0))=(x,y).$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Hamiltonian Monte Carlo is a Markov chain generated by a sequence of randomly
+ 
+\shape up
+Hamiltonian curves.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+Hamiltonian Monte Carlo
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetAlgoLined
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Input:
+\series default
+ some initial point 
+\begin_inset Formula $x^{(1)}\in\mathcal{M}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+For{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $i=1,2,\cdots,T$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Sample 
+\begin_inset Formula $y$
+\end_inset
+
+ according to 
+\begin_inset Formula $e^{-H(x^{(k)},y)}/\pi(x^{(k)})$
+\end_inset
+
+ where 
+\begin_inset Formula $\pi(x)=\int_{\Rn}e^{-H(x,y)}dy$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+With probability 
+\begin_inset Formula $\frac{1}{2}$
+\end_inset
+
+, set 
+\begin_inset Formula $(x^{(k+1)},y^{(k+1)})=T_{\step}(x^{(k)},y)$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Otherwise, 
+\begin_inset Formula $(x^{(k+1)},y^{(k+1)})=T_{-\step}(x^{(k)},y)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Output:
+\series default
+ 
+\begin_inset Formula $(x^{(T+1)},y^{(T+1)})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Time-reversibility 
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:ham_eng_pre"
+
+\end_inset
+
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Energy Conservation
+\end_layout
+
+\end_inset
+
+For any Hamiltonian curve 
+\begin_inset Formula $(x(t),y(t))$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+\frac{d}{dt}H(x(t),y(t))=0.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Note that
+\begin_inset Formula 
+\[
+\frac{d}{dt}H(x(t),y(t))=\frac{\partial H}{\partial x}\frac{dx}{dt}+\frac{\partial H}{\partial y}\frac{dy}{dt}=\frac{\partial H}{\partial x}\frac{\partial H}{\partial y}-\frac{\partial H}{\partial y}\frac{\partial H}{\partial x}=0.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:ham_measure_pre"
+
+\end_inset
+
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Measure Preservation
+\end_layout
+
+\end_inset
+
+For any 
+\begin_inset Formula $t\geq0$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+\det\left(DT_{t}(x,y)\right)=1
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $DT_{t}(x,y)$
+\end_inset
+
+ is the Jacobian of the map 
+\begin_inset Formula $T_{t}$
+\end_inset
+
+ at the point 
+\begin_inset Formula $(x,y)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $(x(t,s),y(t,s))$
+\end_inset
+
+ be a family of 
+\shape up
+Hamiltonian curves
+\shape default
+ given by 
+\begin_inset Formula $T_{t}(x+sd_{x},y+sd_{y})$
+\end_inset
+
+.
+ We write 
+\begin_inset Formula 
+\[
+u(t)=\frac{\partial}{\partial s}x(t,s)|_{s=0}\,,\,v(t)=\frac{\partial}{\partial s}y(t,s)|_{s=0}.
+\]
+
+\end_inset
+
+By differentiating the 
+\shape up
+Hamiltonian equations (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:ham"
+
+\end_inset
+
+) w.r.t.
+ 
+\begin_inset Formula $s$
+\end_inset
+
+, we have that
+\shape default
+
+\begin_inset Formula 
+\begin{align*}
+\frac{du}{dt} & =\frac{\partial^{2}H(x,y)}{\partial y\partial x}u+\frac{\partial^{2}H(x,y)}{\partial y\partial y}v,\\
+\frac{dv}{dt} & =-\frac{\partial^{2}H(x,y)}{\partial x\partial x}u-\frac{\partial^{2}H(x,y)}{\partial x\partial y}v,\\
+(u(0),v(0)) & =(d_{x},d_{y}).
+\end{align*}
+
+\end_inset
+
+This can be captured by the following matrix ODE
+\begin_inset Formula 
+\begin{align*}
+\frac{d\Phi}{dt} & =\left(\begin{array}{cc}
+\frac{\partial^{2}H(x(t),y(t))}{\partial y\partial x} & \frac{\partial^{2}H(x(t),y(t))}{\partial y\partial y}\\
+-\frac{\partial^{2}H(x(t),y(t))}{\partial x\partial x} & -\frac{\partial^{2}H(x(t),y(t))}{\partial x\partial y}
+\end{array}\right)\Phi(t)\\
+\Phi(0) & =I
+\end{align*}
+
+\end_inset
+
+using the equation
+\begin_inset Formula 
+\[
+DT_{t}(x,y)\left(\begin{array}{c}
+d_{x}\\
+d_{y}
+\end{array}\right)=\left(\begin{array}{c}
+u(t)\\
+v(t)
+\end{array}\right)=\Phi(t)\left(\begin{array}{c}
+d_{x}\\
+d_{y}
+\end{array}\right).
+\]
+
+\end_inset
+
+Therefore, 
+\begin_inset Formula $DT_{t}(x,y)=\Phi(t)$
+\end_inset
+
+.
+ Next, we observe that
+\begin_inset Formula 
+\[
+\frac{d}{dt}\log\det\Phi(t)=\tr\left(\Phi(t)^{-1}\frac{d}{dt}\Phi(t)\right)=\tr\left(\begin{array}{cc}
+\frac{\partial^{2}H(x(t),y(t))}{\partial y\partial x} & \frac{\partial^{2}H(x(t),y(t))}{\partial y\partial y}\\
+-\frac{\partial^{2}H(x(t),y(t))}{\partial x\partial x} & -\frac{\partial^{2}H(x(t),y(t))}{\partial x\partial y}
+\end{array}\right)=0.
+\]
+
+\end_inset
+
+Hence,
+\begin_inset Formula 
+\[
+\det\Phi(t)=\det\Phi(0)=1.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Using the previous two lemmas, we can see that Hamiltonian Monte Carlo indeed
+ converges to the desired distribution.
+ 
+\end_layout
+
+\begin_layout Lemma
+*
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:time_reversibility"
+
+\end_inset
+
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Time reversibility
+\end_layout
+
+\end_inset
+
+Let 
+\begin_inset Formula $p_{x}(x')$
+\end_inset
+
+ denote the probability density of one step of the Hamiltonian Monte Carlo
+ starting at 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ We have that
+\shape up
+
+\begin_inset Formula 
+\[
+\pi(x)p_{x}(x')=\pi(x')p_{x'}(x)
+\]
+
+\end_inset
+
+for almost everywhere in 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $x'$
+\end_inset
+
+ where 
+\begin_inset Formula $\pi(x)=\int_{\Rn}e^{-H(x,y)}dy$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Fix 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $x'$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $F_{\step}^{x}(y)$
+\end_inset
+
+ be the 
+\begin_inset Formula $x$
+\end_inset
+
+ component of 
+\begin_inset Formula $T_{\step}(x,y)$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $V_{+}=\{y:\text{ }F_{\step}^{x}(y)=x'\}$
+\end_inset
+
+ and 
+\begin_inset Formula $V_{-}=\{y:\text{ }F_{-\step}^{x}(y)=x')\}$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula 
+\[
+\pi(x)p_{x}(x')=\frac{1}{2}\int_{y\in V_{+}}\frac{e^{-H(x,y)}}{\left|\det\left(DF_{\step}^{x}(y)\right)\right|}+\frac{1}{2}\int_{y\in V_{-}}\frac{e^{-H(x,y)}}{\left|\det\left(DF_{-\step}^{x}(y)\right)\right|}.
+\]
+
+\end_inset
+
+We note that this formula assumed that 
+\begin_inset Formula $DF_{\step}^{x}$
+\end_inset
+
+ is invertible.
+ Sard's theorem showed that 
+\begin_inset Formula $F_{\step}^{x}(N)$
+\end_inset
+
+ is measure 
+\begin_inset Formula $0$
+\end_inset
+
+ where 
+\begin_inset Formula $N\defeq\{y:\,DF_{s}^{x}(y)\text{ is not invertible}\}$
+\end_inset
+
+.
+ Therefore, the formula is correct except for a measure zero subset.
+\end_layout
+
+\begin_layout Proof
+By reversing time for the Hamiltonian curve, we have that for the same 
+\begin_inset Formula $V_{\pm}$
+\end_inset
+
+, 
+\begin_inset Formula 
+\begin{equation}
+\pi(x')p_{x'}(x)=\frac{1}{2}\int_{y\in V_{+}}\frac{e^{-H(x',y')}}{\left|\det\left(DF_{-\step}^{x'}(y')\right)\right|}+\frac{1}{2}\int_{y\in V_{-}}\frac{e^{-H(x',y')}}{\left|\det\left(DF_{\step}^{x'}(y')\right)\right|}\label{eq:ham_transit}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $y'$
+\end_inset
+
+ denotes the 
+\begin_inset Formula $y$
+\end_inset
+
+ component of 
+\begin_inset Formula $T_{\step}(x,y)$
+\end_inset
+
+ and 
+\begin_inset Formula $T_{-\step}(x,y)$
+\end_inset
+
+ in the first and second sum respectively.
+\end_layout
+
+\begin_layout Proof
+We compare the first terms in both equations.
+ Let 
+\begin_inset Formula $DT_{\step}(x,y)=\left(\begin{array}{cc}
+A & B\\
+C & D
+\end{array}\right)$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $T_{\step}\circ T_{-\step}=I$
+\end_inset
+
+ and 
+\begin_inset Formula $T_{\step}(x,y)=(x',y')$
+\end_inset
+
+, the inverse function theorem shows that 
+\begin_inset Formula $DT_{-\step}(x',y')$
+\end_inset
+
+ is the inverse map of 
+\begin_inset Formula $DT_{\step}(x,y)$
+\end_inset
+
+.
+ Hence, we have that
+\begin_inset Formula 
+\[
+DT_{-\step}(x',y')=\left(\begin{array}{cc}
+A & B\\
+C & D
+\end{array}\right)^{-1}=\left(\begin{array}{cc}
+\cdots & -A^{-1}B(D-CA^{-1}B)^{-1}\\
+\cdots & \cdots
+\end{array}\right).
+\]
+
+\end_inset
+
+Therefore, we have that 
+\begin_inset Formula $F_{\step}^{x}(y)=B$
+\end_inset
+
+ and 
+\begin_inset Formula $F_{-\step}^{x'}(y')=-A^{-1}B(D-CA^{-1}B)^{-1}$
+\end_inset
+
+.
+ Hence, we have that
+\begin_inset Formula 
+\begin{align*}
+\left|\det\left(DF_{-\step}^{x'}(y')\right)\right| & =\left|\det A^{-1}\det B\det\left(D-CA^{-1}B\right)^{-1}\right|=\frac{\left|\det B\right|}{\left|\det\left(\begin{array}{cc}
+A & B\\
+C & D
+\end{array}\right)\right|}.
+\end{align*}
+
+\end_inset
+
+Using that 
+\begin_inset Formula $\det\left(DT_{t}(x,y)\right)=\det\left(\begin{array}{cc}
+A & B\\
+C & D
+\end{array}\right)=1$
+\end_inset
+
+ (Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:ham_measure_pre"
+
+\end_inset
+
+), we have that
+\begin_inset Formula 
+\[
+\left|\det\left(DF_{-\step}^{x'}(y')\right)\right|=\left|\det\left(DF_{\step}^{x}(y)\right)\right|.
+\]
+
+\end_inset
+
+Hence, we have that
+\begin_inset Formula 
+\begin{align*}
+\frac{1}{2}\int_{y\in V_{+}}\frac{e^{-H(x,y)}}{\left|\det\left(DF_{\step}^{x}(y)\right)\right|} & =\frac{1}{2}\int_{y\in V_{+}}\frac{e^{-H(x,y)}}{\left|\det\left(DF_{-\step}^{x'}(y')\right)\right|}\\
+ & =\frac{1}{2}\int_{y\in V_{+}}\frac{e^{-H(x',y')}}{\left|\det\left(DF_{-\step}^{x'}(y')\right)\right|}
+\end{align*}
+
+\end_inset
+
+where we used that 
+\begin_inset Formula $e^{-H(x,y)}=e^{-H(x',y')}$
+\end_inset
+
+ (Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:ham_eng_pre"
+
+\end_inset
+
+) at the end.
+ 
+\end_layout
+
+\begin_layout Proof
+For the second term in 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ham_transit"
+
+\end_inset
+
+, by the same calculation, we have that
+\begin_inset Formula 
+\[
+\frac{1}{2}\int_{y\in V_{-}}\frac{e^{-H(x,y)}}{\left|\det\left(DF_{-\step}^{x}(y)\right)\right|}=\frac{1}{2}\int_{y\in V_{+}}\frac{e^{-H(x',y')}}{\left|\det\left(DF_{\step}^{x'}(y')\right)\right|}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Convergence
+\end_layout
+
+\begin_layout Standard
+First we consider the convergence in the case when 
+\begin_inset Formula $H(x,v)=f(x)+\frac{1}{2}\norm v^{2}$
+\end_inset
+
+ for a strongly convex function 
+\begin_inset Formula $f$
+\end_inset
+
+.
+ So the marginal of the stationary distribution along 
+\begin_inset Formula $x$
+\end_inset
+
+ is proportional to 
+\begin_inset Formula $e^{-f}$
+\end_inset
+
+.
+ The idea here is coupling (as we did for Langevin dynamics).
+ We consider two separate processes 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $y$
+\end_inset
+
+, with their next step directions chosen to be identical.
+ The key lemma is that with this setting the squared distance decreases
+ up to a certain time that depends on the condition number.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:hmc_contraction"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+Let 
+\begin_inset Formula $x(t)$
+\end_inset
+
+ and 
+\begin_inset Formula $y(t)$
+\end_inset
+
+ be the solution of HMC dynamics starting at 
+\begin_inset Formula $x(0)$
+\end_inset
+
+ and 
+\begin_inset Formula $y(0)$
+\end_inset
+
+ with initial direction 
+\begin_inset Formula $x'(0)=y'(0)$
+\end_inset
+
+.
+ Suppose that 
+\begin_inset Formula $f$
+\end_inset
+
+ satisfies 
+\begin_inset Formula 
+\[
+\mu\cdot I\preceq\nabla^{2}f(x)\preceq L\cdot I
+\]
+
+\end_inset
+
+for all 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ Then, for 
+\begin_inset Formula $0\leq t\leq\frac{\mu^{1/4}}{2L^{3/4}}$
+\end_inset
+
+, we have that 
+\begin_inset Formula 
+\[
+\|x(t)-y(t)\|_{2}^{2}\leq\left(1-\frac{\mu}{4}t^{2}\right)\|x(0)-y(0)\|_{2}^{2}.
+\]
+
+\end_inset
+
+With T set to the upper bound above, we have 
+\begin_inset Formula 
+\[
+\|x(T)-y(T)\|_{2}^{2}\leq\left(1-\frac{1}{16}\left(\frac{\mu}{L}\right)^{\frac{3}{2}}\right)\|x(0)-y(0)\|_{2}^{2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This gives us the following bound, by induction.
+\end_layout
+
+\begin_layout Theorem
+Suppose 
+\begin_inset Formula $f$
+\end_inset
+
+ satisfies 
+\begin_inset Formula 
+\[
+\mu\cdot I\preceq\nabla^{2}f(x)\preceq L\cdot I.
+\]
+
+\end_inset
+
+For step-size 
+\begin_inset Formula $\delta=\frac{\mu^{1/4}}{2L^{3/4}}$
+\end_inset
+
+ , let 
+\begin_inset Formula $X^{T}$
+\end_inset
+
+ be and HMC sequence and 
+\begin_inset Formula $Y\sim e^{-f}$
+\end_inset
+
+.
+ Then, after 
+\begin_inset Formula $T=O\left(\left(\frac{L}{\mu}\right)^{\frac{3}{2}}\log\frac{n}{\mu\epsilon}\right)$
+\end_inset
+
+ steps, we have 
+\begin_inset Formula $W_{2}(X,Y)\leq\epsilon.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Besides the one-step contraction above, we need a bound on the initial distance.
+ Let 
+\begin_inset Formula $x^{(\min)}$
+\end_inset
+
+ be the minimum of 
+\begin_inset Formula $f$
+\end_inset
+
+.
+ Then, we have 
+\begin_inset Formula 
+\[
+\|x^{(0)}-y^{(0)}\|_{2}^{2}\leq2\|x^{(0)}-x^{(\min)}\|_{2}^{2}+2\|y^{(0)}-x^{(\min)}\|_{2}^{2}.
+\]
+
+\end_inset
+
+The strong convexity of 
+\begin_inset Formula $f$
+\end_inset
+
+ shows that 
+\begin_inset Formula 
+\[
+\|x^{(0)}-x^{(\min)}\|_{2}^{2}\leq\frac{1}{\mu^{2}}\|\nabla f(x^{(0)})\|_{2}^{2}.
+\]
+
+\end_inset
+
+For the second term, we use the following bound
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula 
+\[
+\E\left[\|y^{(0)}-x^{(\min)}\|_{2}^{2}\right]\leq\frac{d}{\mu}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We now turn to the proof of the contraction bound.
+ The following simple ODE bound will be useful for proving the main convergence
+ lemma.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:cosh"
+
+\end_inset
+
+Given a continuous function 
+\begin_inset Formula $v(t)$
+\end_inset
+
+ and positive scalars 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ such that 
+\begin_inset Formula 
+\[
+0\leq v(t)\leq\beta+\gamma\int_{0}^{t}(t-s)v(s)\,ds,
+\]
+
+\end_inset
+
+ then we have that 
+\begin_inset Formula $v(t)\leq\beta\cosh(\sqrt{\gamma}t)$
+\end_inset
+
+ for all 
+\begin_inset Formula $t\geq0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Exercise
+Prove the above lemma.
+ [Hint: first do it assuming the upper bound for each 
+\begin_inset Formula $t$
+\end_inset
+
+ is equality.]
+\end_layout
+
+\begin_layout Proof
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Proof of Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:hmc_contraction"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ Let the error function be 
+\begin_inset Formula $u(t)=y(t)-x(t)$
+\end_inset
+
+.
+ The definition of HMC shows that 
+\begin_inset Formula 
+\[
+u''(t)=-(\nabla f(y(t))-\nabla f(x(t)))=-H(t)\cdot u(t)
+\]
+
+\end_inset
+
+ where
+\begin_inset Formula 
+\[
+H(t)=\int_{0}^{1}\nabla^{2}f(x(t)+s(y(t)-x(t)))\:ds
+\]
+
+\end_inset
+
+We have that 
+\begin_inset Formula $\mu\cdot I\preceq H(t)\preceq L\cdot I.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Without loss of generality, we can assume 
+\begin_inset Formula $\|u(0)\|_{2}=1\mbox{ and }u(0)=e_{1}$
+\end_inset
+
+.
+ We first get a rough bound on 
+\begin_inset Formula $\|u(t)\|_{2}$
+\end_inset
+
+ saying that it does not change by more than a constant factor, and then
+ use it to get a strong bound showing contraction.
+\end_layout
+
+\begin_deeper
+\begin_layout Proof
+Integrating both sides of 
+\begin_inset Formula $u''(t)=-H(t)\cdot u(t)$
+\end_inset
+
+ twice and using 
+\begin_inset Formula $u'(0)=0$
+\end_inset
+
+ gives 
+\begin_inset Formula 
+\[
+u(t)=u(0)-\int_{0}^{t}(t-s)H(s)u(s)\,ds.
+\]
+
+\end_inset
+
+Therefore, 
+\begin_inset Formula 
+\[
+\|u(t)\|_{2}\leq1+L\cdot\int_{0}^{t}(t-s)\|u(s)\|_{2}\,ds.
+\]
+
+\end_inset
+
+Applying Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:cosh"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ to this equation with 
+\begin_inset Formula $t\leq\frac{1}{2\sqrt{L}}$
+\end_inset
+
+ gives 
+\begin_inset Formula 
+\[
+\|u(t)\|_{2}\leq\cosh(\sqrt{L}t)\leq\frac{6}{5}.
+\]
+
+\end_inset
+
+Putting it back in the integral equation, 
+\begin_inset Formula 
+\[
+\|u(t)-e_{1}\|_{2}\leq\int_{0}^{t}(t-s)\|H(s)\cdot u(s)\|_{2}\,ds=\int_{0}^{t}(t-s)\cdot L\cdot\frac{6}{5}\,ds=\frac{6}{10}Lt^{2}.
+\]
+
+\end_inset
+
+In particular, for any 
+\begin_inset Formula $0\leq t\leq\frac{1}{2\sqrt{L}}$
+\end_inset
+
+, we have that 
+\begin_inset Formula 
+\[
+\frac{5}{6}\leq u_{1}(t)\leq\frac{7}{6}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $P_{1}$
+\end_inset
+
+ be the orthogonal projection to the first coordinate and 
+\begin_inset Formula $P_{-1}=I-P_{1}$
+\end_inset
+
+.
+ We write 
+\begin_inset Formula $u(t)=u_{1}(t)+u_{-1}(t)$
+\end_inset
+
+ with 
+\begin_inset Formula $u_{1}(t)=P_{1}u(t)$
+\end_inset
+
+ and 
+\begin_inset Formula $u_{-1}(t)=P_{-1}u(t)$
+\end_inset
+
+, namely, 
+\begin_inset Formula $u_{1}(t)$
+\end_inset
+
+ is parallel to 
+\begin_inset Formula $e_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $u_{-1}(t)$
+\end_inset
+
+ is orthogonal to 
+\begin_inset Formula $e_{1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Fix any 
+\begin_inset Formula $0\leq t\leq T$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $\beta(t)=e_{1}^{\top}u(t)$
+\end_inset
+
+.
+ By the definition of 
+\begin_inset Formula $u$
+\end_inset
+
+, we have 
+\begin_inset Formula $u''(t)=-\beta(t)\cdot H(t)e_{1}-H(t)u_{-1}(t).$
+\end_inset
+
+ Integrating both sides twice and using 
+\begin_inset Formula $u_{-1}(0)=0$
+\end_inset
+
+, we have 
+\begin_inset Formula 
+\begin{align*}
+u_{-1}(t) & =\int_{0}^{t}(t-s)P_{-1}u''(s)\,ds\\
+ & =-\int_{0}^{t}(t-s)\cdot\beta(s)\cdot P_{-1}H(s)e_{1}\,ds-\int_{0}^{t}(t-s)P_{-1}H(s)u_{-1}(s)\,ds.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Using 
+\begin_inset Formula $0\preceq H(t)\preceq L\cdot I$
+\end_inset
+
+ and 
+\begin_inset Formula $\frac{5}{6}\leq\beta(s)\leq\frac{7}{6}$
+\end_inset
+
+, we have that 
+\begin_inset Formula 
+\begin{align}
+\|u_{-1}(t)\|_{2}\leq & ~\int_{0}^{t}(t-s)\cdot\beta(s)\cdot\|H(s)e_{1}\|_{2}\,ds+L\cdot\int_{0}^{t}(t-s)\cdot\|u_{-1}(s)\|_{2}\,ds\nonumber \\
+\leq & ~\frac{7}{6}\int_{0}^{t}(t-s)\cdot\|H(s)e_{1}\|_{2}\,ds+L\cdot\int_{0}^{t}(t-s)\cdot\|u_{-1}(s)\|_{2}\,ds\nonumber \\
+\leq & ~\frac{7}{6}\alpha(T)+L\cdot\int_{0}^{t}(t-s)\cdot\|u_{-1}(s)\|_{2}\,ds\label{eq:u-1_bound}
+\end{align}
+
+\end_inset
+
+where 
+\begin_inset Formula $\alpha(T)\defeq\int_{0}^{T}(T-s)\cdot\|H(s)e_{1}\|_{2}\,ds$
+\end_inset
+
+.
+ Solving this integral inequality using Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:cosh"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we get 
+\begin_inset Formula 
+\begin{equation}
+\|u_{-1}(t)\|_{2}\leq\frac{7}{6}\alpha(T)\cdot\cosh(\sqrt{L}t)\leq\frac{7}{6}\alpha(T)\cdot\cosh(1/2)\leq\frac{4}{3}\alpha(T)\label{eq:u-1_bound2}
+\end{equation}
+
+\end_inset
+
+where the second step follows from 
+\begin_inset Formula $t\leq\frac{1}{2\sqrt{L}}$
+\end_inset
+
+, and the last step follows from 
+\begin_inset Formula $\cosh(1/2)\leq\frac{8}{7}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Next we look at the first coordinate.
+ 
+\begin_inset Formula 
+\begin{align}
+\beta''(t) & =-\beta(t)\cdot e_{1}^{\top}H(t)e_{1}-e_{1}^{\top}H(t)u_{-1}(t)\nonumber \\
+ & \leq-\frac{5}{6}e_{1}^{\top}H(t)e_{1}+\|H(t)e_{1}\|_{2}\cdot\|u_{-1}(t)\|_{2}.\label{eq:ideal_HMC_beta}
+\end{align}
+
+\end_inset
+
+To bound the last term, we note that 
+\begin_inset Formula 
+\begin{align*}
+\|H(t)e_{1}\|_{2}= & ~\sqrt{e_{1}^{\top}H^{2}(t)e_{1}}\\
+\leq & ~\sqrt{L\cdot e_{1}^{\top}H(t)e_{1}} & \text{~since~}H^{2}(t)\preceq L\cdot H(t)\\
+%=
+ & ~\sqrt{\frac{L}{\mu}}\sqrt{\frac{\mu}{e_{1}^{\top}H(t)e_{1}}}e_{1}^{\top}H(t)e_{1}\\
+\le & ~\sqrt{\frac{L}{\mu}}\cdot e_{1}^{\top}H(t)e_{1} & \text{~since~}\mu\leq e_{1}^{\top}H(t)e_{1}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+We bound 
+\begin_inset Formula $\alpha(t)$
+\end_inset
+
+ as follows 
+\begin_inset Formula 
+\[
+\alpha(t)=\frac{1}{\|e(0)\|_{2}}\int_{0}^{t}(t-s)\cdot\|H(s)e(0)\|_{2}\,ds\leq L\int_{0}^{t}(t-s)\,ds=L\frac{t^{2}}{2}.
+\]
+
+\end_inset
+
+Therefore, for 
+\begin_inset Formula $0\leq t\leq\frac{\mu^{1/4}}{2L^{3/4}}$
+\end_inset
+
+, we have that 
+\begin_inset Formula $\alpha(T)\leq\frac{1}{8}\sqrt{\frac{\mu}{L}}$
+\end_inset
+
+.
+ Using these bounds,
+\begin_inset Formula 
+\[
+\beta''(t)\leq-e_{1}^{\top}H(t)e_{1}\cdot\left(\frac{5}{6}-\frac{4}{3}\sqrt{\frac{L}{\mu}}\alpha(T)\right)\leq-\frac{2}{3}e_{1}^{\top}H(t)e_{1}.
+\]
+
+\end_inset
+
+Hence, 
+\begin_inset Formula 
+\begin{equation}
+\beta(t)\leq1-\frac{2}{3}\int_{0}^{t}(t-s)\cdot e_{1}^{\top}H(s)e_{1}\,ds.\label{eq:alpha_bound}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Using this, 
+\begin_inset Formula $\beta(t)\geq\frac{5}{6}$
+\end_inset
+
+ and (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:u-1_bound2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), 
+\begin_inset Formula 
+\begin{align*}
+\|u(t)\|_{2}^{2} & =\beta^{2}(t)+\|u_{-1}(t)\|_{2}^{2}\\
+ & \leq1-\int_{0}^{t}(t-s)\cdot e_{1}^{\top}H(s)e_{1}\,ds+\left(\frac{4}{3}\int_{0}^{T}(T-s)\cdot\|H(s)e_{1}\|_{2}\,ds\right)^{2}\\
+ & \leq1-\int_{0}^{t}(t-s)\cdot e_{1}^{\top}H(s)e_{1}\,ds+2\sqrt{\frac{L}{\mu}}\int_{0}^{T}(T-s)\cdot e_{1}^{\top}H(s)e_{1}\,ds\cdot\alpha(T)\\
+ & =1-\int_{0}^{t}(t-s)\cdot e_{1}^{\top}H(s)e_{1}\,ds\left(1-2\sqrt{\frac{L}{\mu}}\alpha(T)\right)\\
+ & \leq1-\frac{1}{2}\int_{0}^{t}(t-s)\cdot e_{1}^{\top}H(s)e_{1}\,ds
+\end{align*}
+
+\end_inset
+
+where we used the bound on 
+\begin_inset Formula $\norm{H(t)e_{1}}_{2}$
+\end_inset
+
+at the second step and 
+\begin_inset Formula $\alpha(T)\leq\frac{1}{8}\sqrt{\frac{\mu}{L}}$
+\end_inset
+
+ at the end.
+\end_layout
+
+\begin_layout Proof
+Now we can bound 
+\begin_inset Formula $e_{1}^{\top}H(s)e_{1}\geq L$
+\end_inset
+
+ and get 
+\begin_inset Formula 
+\begin{align*}
+\int_{0}^{t}(t-s)\cdot e_{1}^{\top}H(s)e_{1}\,ds\geq\frac{\mu}{2}t^{2}
+\end{align*}
+
+\end_inset
+
+which implies 
+\begin_inset Formula 
+\begin{align*}
+\|u(t)\|_{2}^{2}\leq1-\frac{\mu}{4}t^{2}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_body
+\end_document

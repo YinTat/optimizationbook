@@ -1,0 +1,2061 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{url}
+\usepackage{xargs}
+\usepackage[pdftex,dvipsnames]{xcolor}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\usepackage[lined,boxed,ruled,norelsize,algo2e]{algorithm2e}
+\usepackage[small,bf]{caption}
+\usepackage{tikz}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=red,
+    filecolor=red,
+    linkcolor=red,
+    urlcolor=red
+}
+
+
+
+\usepackage{fancybox}
+\usepackage{multirow}
+\usepackage{nicefrac}
+\usepackage{hyperref}
+
+
+\expandafter\def\expandafter\normalsize\expandafter{%
+    \normalsize
+%	    \setlength\abovedisplayskip{5pt}
+    \setlength\belowdisplayskip{5pt}
+    % \setlength\abovedisplayshortskip{5pt}
+    \setlength\belowdisplayshortskip{5pt}
+}
+
+\usepackage{tocloft}
+\setlength{\cftsecnumwidth}{2.8em}%
+
+%%%%%
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{fix-cm}
+\makeatletter
+\newcommand\HUGE{\@setfontsize\Huge{38}{47}}
+\makeatother
+
+\titleclass{\part}{top}
+\titleformat{\part}[display]
+  {\normalfont\HUGE\sffamily}{\partname\ \thepart}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\HUGE\bfseries\filleft}
+%\titlespacing*{\part} {0pt}{20pt}{40pt}
+\titlespacing*{\part} {0pt}{30pt}{50pt}
+
+% chapter heading formatting
+\titleformat{\chapter}[display]
+  {\normalfont\LARGE\sffamily}{\chaptertitlename\ \thechapter}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\LARGE\bfseries\filleft}
+% section heading formatting
+\titleformat{\section}
+  {\normalfont\Large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesection}{0.5em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesubsection}{0.5em}{}
+\titlespacing*{\chapter} {0pt}{20pt}{30pt}
+
+% header/footer
+\fancyhf{}
+\fancyhead[ER]{\footnotesize\sffamily\leftmark}
+\fancyhead[OL]{\footnotesize\sffamily\nouppercase\rightmark}
+\fancyhead[EL,OR]{\bfseries\thepage}
+
+\setcounter{secnumdepth}{3}
+\end_preamble
+\options openany
+\use_default_options false
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+theorems-sec
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding default
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 0
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic true
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip 0.1in
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+In this chapter, we study some randomization techniques for faster convex
+ optimization.
+\end_layout
+
+\begin_layout Section
+Subspace embedding
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Subspace-embedding"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this section and next section, we consider the least squares regression
+ problem
+\begin_inset Formula 
+\[
+\min_{x}\|Ax-b\|_{2}^{2}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $A\in\R^{n\times d}$
+\end_inset
+
+ with 
+\begin_inset Formula $n\gg d$
+\end_inset
+
+.
+ The gradient of the function is 
+\begin_inset Formula $2A^{\top}Ax-2A^{\top}b$
+\end_inset
+
+.
+ Therefore, the solution is given by 
+\begin_inset Formula 
+\[
+x=(A^{\top}A)^{-1}A^{\top}b.
+\]
+
+\end_inset
+
+If the matrix 
+\begin_inset Formula $A^{\top}A\in\R^{d\times d}$
+\end_inset
+
+ is given, then, we can solve the equation above in time 
+\begin_inset Formula $d^{\omega}$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $n>d^{\omega}$
+\end_inset
+
+, then the bottleneck is simply to compute 
+\begin_inset Formula $A^{\top}A$
+\end_inset
+
+.
+ The following lemma shows that it suffices to approximate 
+\begin_inset Formula $A^{\top}A$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+The simplest iteration is the Richardson iteration: 
+\begin_inset Formula 
+\[
+x^{(k+1)}=A^{T}b+(I-A^{\top}A)x^{(k)}=x^{(k)}+A^{T}b-A^{\top}Ax^{(k)}.
+\]
+
+\end_inset
+
+To ensure this converges, we scale down 
+\begin_inset Formula $A^{T}A$
+\end_inset
+
+ by its largest eigenvalue so that 
+\begin_inset Formula $A^{T}A\prec I$
+\end_inset
+
+.
+ This gives a bound of 
+\begin_inset Formula $O(\kappa(A^{\top}A)\log(1/\epsilon))$
+\end_inset
+
+ on the number of iterations to get 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ error where 
+\begin_inset Formula $\kappa(A^{\top}A)=\lambda_{\max}(A^{\top}A)/\lambda_{\min}(A^{\top}A)$
+\end_inset
+
+.
+ More generally, one can use 
+\emph on
+pre-conditioning.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:Richardson"
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Maybe put it earlier next time.
+\end_layout
+
+\end_inset
+
+Given a matrix 
+\begin_inset Formula $M$
+\end_inset
+
+ such that 
+\begin_inset Formula $A^{\top}A\preceq M\preceq\kappa\cdot A^{\top}A$
+\end_inset
+
+ for some 
+\begin_inset Formula $\kappa\geq1$
+\end_inset
+
+.
+ Consider the algorithm 
+\begin_inset Formula $x^{(k+1)}=x^{(k)}-M^{-1}(A^{\top}Ax^{(k)}-A^{\top}b)$
+\end_inset
+
+ .
+ Then, we have that
+\begin_inset Formula 
+\[
+\|x^{(k)}-x^{*}\|_{M}\leq\left(1-\frac{1}{\kappa}\right)^{k}\|x^{(0)}-x^{*}\|_{M}.
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $r^{(k)}=A^{\top}Ax^{(k)}-A^{\top}b$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Remark
+The proof also shows why the choice of norm above is the natural one.
+ In this norm, the residual drops geometrically.
+\end_layout
+
+\begin_layout Proof
+Using 
+\begin_inset Formula $x^{*}=(A^{\top}A)^{-1}A^{\top}b$
+\end_inset
+
+ and the formula of 
+\begin_inset Formula $x^{(k+1)}$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\begin{align*}
+x^{(k+1)}-x^{*} & =x^{(k)}-M^{-1}(A^{\top}Ax^{(k)}-A^{\top}b)-x^{*}\\
+ & =x^{(k)}-M^{-1}(A^{\top}Ax^{(k)}-A^{\top}Ax^{*})-x^{*}\\
+ & =\left(I-M^{-1}A^{\top}A\right)\left(x^{(k)}-x^{*}\right).
+\end{align*}
+
+\end_inset
+
+Therefore, the norm of error is
+\begin_inset Formula 
+\begin{align*}
+\|x^{(k+1)}-x^{*}\|_{M}^{2} & =r^{(k)\top}(I-A^{\top}AM^{-1})M(I-M^{-1}A^{\top}A)r^{(k)}\\
+ & =r^{(k)}M^{\frac{1}{2}}(I-H)^{2}M^{\frac{1}{2}}r^{(k)}
+\end{align*}
+
+\end_inset
+
+where 
+\begin_inset Formula $H=M^{-\frac{1}{2}}A^{\top}AM^{-\frac{1}{2}}$
+\end_inset
+
+.
+ Note that the eigenvalues of 
+\begin_inset Formula $H$
+\end_inset
+
+ lie between 
+\begin_inset Formula $1/\kappa$
+\end_inset
+
+ and 
+\begin_inset Formula $1$
+\end_inset
+
+ and hence 
+\begin_inset Formula 
+\[
+\lambda_{\max}(I-H)^{2}\leq\left(1-\frac{1}{\kappa}\right){}^{2}.
+\]
+
+\end_inset
+
+This gives the conclusion.
+\end_layout
+
+\begin_layout Standard
+Note that 
+\begin_inset Formula $x^{\top}A^{\top}Ax=\|Ax\|^{2}$
+\end_inset
+
+.
+ Alternatively, we can think that our goal is to approximate 
+\begin_inset Formula $A$
+\end_inset
+
+ by a smaller matrix 
+\begin_inset Formula $B$
+\end_inset
+
+ s.t.
+ 
+\begin_inset Formula $\|Ax\|^{2}$
+\end_inset
+
+ is close to 
+\begin_inset Formula $\|Bx\|^{2}$
+\end_inset
+
+ for all 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ In this section, we show that we can simply take 
+\begin_inset Formula $B=\Pi A$
+\end_inset
+
+ for a random matrix 
+\begin_inset Formula $\Pi$
+\end_inset
+
+ with relatively few rows.
+ With this choice of 
+\begin_inset Formula $M$
+\end_inset
+
+, we can run the Richardson iteration.
+ We need to see if this will make the entire procedure more efficient.
+\end_layout
+
+\begin_layout Definition
+A matrix 
+\begin_inset Formula $\Pi\in\R^{m\times n}$
+\end_inset
+
+ is an embedding for a set 
+\begin_inset Formula $S\subset\R^{n}$
+\end_inset
+
+ with distortion 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ if 
+\begin_inset Formula 
+\[
+(1-\epsilon)\|y\|^{2}\leq\|\Pi y\|^{2}\leq(1+\epsilon)\|y\|^{2}
+\]
+
+\end_inset
+
+for all 
+\begin_inset Formula $y\in S$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+In this section, we focus on the case that 
+\begin_inset Formula $S$
+\end_inset
+
+ is a 
+\begin_inset Formula $d$
+\end_inset
+
+-dimensional subspace in 
+\begin_inset Formula $\Rn$
+\end_inset
+
+, namely 
+\begin_inset Formula $S=\{Ax:x\in\R^{d}\}$
+\end_inset
+
+.
+ Consider the SVD 
+\begin_inset Formula $A=U\Sigma V^{\top}$
+\end_inset
+
+.
+ For any 
+\begin_inset Formula $y\in S$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+\|U^{\top}y\|_{2}^{2}=\|U^{\top}U\Sigma V^{\top}x\|_{2}^{2}=x^{\top}V\Sigma^{2}V^{\top}x=\|Ax\|^{2}.
+\]
+
+\end_inset
+
+Therefore, any 
+\begin_inset Formula $d$
+\end_inset
+
+-dimensional subspace has a zero distortion embedding of size 
+\begin_inset Formula $d\times n$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Exercise
+For any 
+\begin_inset Formula $d$
+\end_inset
+
+-dimensional subspace 
+\begin_inset Formula $S$
+\end_inset
+
+, any embedding with distortion 
+\begin_inset Formula $\epsilon<1$
+\end_inset
+
+ must have at least 
+\begin_inset Formula $d$
+\end_inset
+
+ rows.
+\end_layout
+
+\begin_layout Standard
+This embedding is not useful for solving the least squares problem because
+ the solution of the least square problem is simply a closed form of the
+ SVD decomposition 
+\begin_inset Formula $x=V\Sigma^{-1}U^{\top}b$
+\end_inset
+
+ and that finding the SVD is usually more expensive.
+\end_layout
+
+\begin_layout Subsection
+Oblivious Subspace Embedding via Johnson-Lindenstrauss
+\end_layout
+
+\begin_layout Standard
+Surprisingly, there are random embeddings that have a small distortion without
+ knowledge of the subspace.
+\end_layout
+
+\begin_layout Definition
+A random matrix 
+\begin_inset Formula $\Pi\in\R^{m\times n}$
+\end_inset
+
+ is a 
+\begin_inset Formula $(d,\epsilon,\delta)$
+\end_inset
+
+-oblivious subspace embedding (OSE) if for any fixed 
+\begin_inset Formula $d$
+\end_inset
+
+-dimensional subspace 
+\begin_inset Formula $S\subset\R^{n}$
+\end_inset
+
+, 
+\begin_inset Formula $\Pi$
+\end_inset
+
+ is an embedding for 
+\begin_inset Formula $S$
+\end_inset
+
+ with distortion 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ with probability at least 
+\begin_inset Formula $1-\delta$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The next lemma provides an equivalent definition.
+\end_layout
+
+\begin_layout Lemma
+We call 
+\begin_inset Formula $\Pi$
+\end_inset
+
+ is a 
+\begin_inset Formula $(d,\epsilon,\delta)$
+\end_inset
+
+ OSE if for any matrix 
+\begin_inset Formula $U\in\R^{n\times d}$
+\end_inset
+
+ with orthonormal columns, we have that
+\begin_inset Formula 
+\[
+\P(\|U^{\top}\Pi^{\top}\Pi U-I_{d}\|_{\op}\leq\epsilon)\geq\delta.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $S$
+\end_inset
+
+ be the subspace with an orthonormal basis 
+\begin_inset Formula $U\in\R^{n\times d}$
+\end_inset
+
+, namely 
+\begin_inset Formula $S=\{y:Uz\}$
+\end_inset
+
+ Then, the condition
+\begin_inset Formula 
+\[
+(1-\epsilon)\|y\|^{2}\leq\|\Pi y\|^{2}\leq(1+\epsilon)\|y\|^{2}
+\]
+
+\end_inset
+
+can be rewritten as
+\begin_inset Formula 
+\[
+(1-\epsilon)U^{\top}U\preceq U^{\top}\Pi^{\top}\Pi U\preceq(1+\epsilon)U^{\top}U.
+\]
+
+\end_inset
+
+Using 
+\begin_inset Formula $U^{\top}U=I_{d}$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+(1-\epsilon)I_{d}\preceq U^{\top}\Pi^{\top}\Pi U\preceq(1+\epsilon)I_{d}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For the special case 
+\begin_inset Formula $d=1$
+\end_inset
+
+, the definition becomes
+\begin_inset Formula 
+\[
+\P\left[|\|\Pi a\|_{2}^{2}-1|\leq\epsilon\right]\geq1-\delta
+\]
+
+\end_inset
+
+for all unit vectors 
+\begin_inset Formula $a$
+\end_inset
+
+.
+ An OSE for 
+\begin_inset Formula $d=1$
+\end_inset
+
+ is given by the Johnson-Lindenstrauss Lemma.
+ The original version was for a uniform random subspace of dimension 
+\begin_inset Formula $d$
+\end_inset
+
+, but later versions extended this extended this to Gaussian, Bermoulli
+ and more general random matrices 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Vempala04"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Johnson-Lindenstrauss Lemma
+\end_layout
+
+\end_inset
+
+Let 
+\begin_inset Formula $\Pi\in\R^{m\times n}$
+\end_inset
+
+ be a random matrix with i.i.d entries from 
+\begin_inset Formula $N(0,\frac{1}{\sqrt{m}})$
+\end_inset
+
+ or uniformly sampled from 
+\begin_inset Formula $\pm\frac{1}{\sqrt{m}}$
+\end_inset
+
+ with 
+\begin_inset Formula $m=\Theta(\frac{1}{\epsilon^{2}}\log(\frac{1}{\delta}))$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula $\Pi$
+\end_inset
+
+ is a 
+\begin_inset Formula $(1,\epsilon,\delta)$
+\end_inset
+
+ OSE.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+I should add a proof here.
+\end_layout
+
+\end_inset
+
+We will skip the proof for this as we will prove a more general result later.
+ Next, we show that any OSE for 
+\begin_inset Formula $d=1$
+\end_inset
+
+ is a OSE for general 
+\begin_inset Formula $d$
+\end_inset
+
+.
+ Therefore, it suffices to focus on the case 
+\begin_inset Formula $d=1$
+\end_inset
+
+.
+ First, we need a lemma about 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+-net on 
+\begin_inset Formula $S^{n-1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+For any 
+\begin_inset Formula $\epsilon>0$
+\end_inset
+
+ and any 
+\begin_inset Formula $n\in\mathbb{N}$
+\end_inset
+
+, there are 
+\begin_inset Formula $(1+\frac{2}{\epsilon})^{n}$
+\end_inset
+
+ unit vectors 
+\begin_inset Formula $x_{i}\in\Rn$
+\end_inset
+
+ such that for any unit vector 
+\begin_inset Formula $x\in\Rn$
+\end_inset
+
+, there is an 
+\begin_inset Formula $i$
+\end_inset
+
+ such that 
+\begin_inset Formula $\|x-x_{i}\|_{2}\leq\epsilon$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Remark*
+We call the points 
+\begin_inset Formula $\{x_{i}\}_{i}$
+\end_inset
+
+ the 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+-net on 
+\begin_inset Formula $S^{n-1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+We consider the following algorithm:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $V=S^{n-1}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $i\leftarrow1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+While there is 
+\begin_inset Formula $x_{i}\in V$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $V\leftarrow V\backslash B(x_{i},\epsilon)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $i\leftarrow i+1$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Proof
+Let 
+\begin_inset Formula $\{x_{1},x_{2},\cdots,x_{N}\}$
+\end_inset
+
+ be the points it found.
+ By the construction, it is clear that 
+\begin_inset Formula $\|x-x_{i}\|\leq\epsilon$
+\end_inset
+
+ for some 
+\begin_inset Formula $i$
+\end_inset
+
+ (else the procedure would continue).
+ Now consider balls of radius 
+\begin_inset Formula $\epsilon/2$
+\end_inset
+
+ centered at each 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+.
+ To bound the number of points, we note that all 
+\begin_inset Formula $B(x_{i},\frac{\epsilon}{2})$
+\end_inset
+
+ are disjoint and that all balls lie in 
+\begin_inset Formula $B(0,1+\frac{\epsilon}{2})$
+\end_inset
+
+.
+ Therefore,
+\begin_inset Formula 
+\[
+N\cdot\vol(B(0,\frac{\epsilon}{2}))\leq\vol(B(0,1+\frac{\epsilon}{2})).
+\]
+
+\end_inset
+
+and hence 
+\begin_inset Formula $N\leq(1+\frac{2}{\epsilon})^{n}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:OSE_reduction"
+
+\end_inset
+
+Suppose that 
+\begin_inset Formula $\Pi$
+\end_inset
+
+ is a 
+\begin_inset Formula $(1,\epsilon,\delta)$
+\end_inset
+
+ OSE.
+ Then, 
+\begin_inset Formula $\Pi$
+\end_inset
+
+ is a 
+\begin_inset Formula $(d,4\epsilon,5^{d}\delta)$
+\end_inset
+
+ OSE.
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $N=\{x_{i}\}_{i=1}$
+\end_inset
+
+ be a 
+\begin_inset Formula $\frac{1}{2}$
+\end_inset
+
+-net for 
+\begin_inset Formula $S^{d-1}$
+\end_inset
+
+.
+ Then, for any 
+\begin_inset Formula $x$
+\end_inset
+
+, we have 
+\begin_inset Formula $x_{1}\in N$
+\end_inset
+
+ such that 
+\begin_inset Formula $\|x-x_{1}\|_{2}\leq\frac{1}{2}$
+\end_inset
+
+.
+ Using the 
+\begin_inset Formula $\frac{1}{2}$
+\end_inset
+
+-net guarantee on the vector 
+\begin_inset Formula $x-x_{1}$
+\end_inset
+
+, we can find 
+\begin_inset Formula $x_{2}\in N$
+\end_inset
+
+ and 
+\begin_inset Formula $0\leq t_{2}\leq\frac{1}{2}$
+\end_inset
+
+ such that
+\begin_inset Formula 
+\[
+\|x-x_{1}-t_{2}x_{2}\|\leq\frac{1}{4}.
+\]
+
+\end_inset
+
+Continuing similarly, we have 
+\begin_inset Formula $x=\sum_{i=1}^{\infty}t_{i}x_{i}$
+\end_inset
+
+ with 
+\begin_inset Formula $0\leq t_{i}\leq\frac{1}{2^{i-1}}$
+\end_inset
+
+.
+ Hence, we have that
+\begin_inset Formula 
+\begin{align*}
+x^{\top}(U^{\top}\Pi^{\top}\Pi U-I_{d})x & =\sum_{i,j}t_{i}t_{j}x_{i}^{\top}(U^{\top}\Pi^{\top}\Pi U-I_{d})x_{j}\\
+ & \leq\sum_{i,j}t_{i}t_{j}\cdot\max_{x\in N}\left|x^{\top}\left|U^{\top}\Pi^{\top}\Pi U-I_{d}\right|x\right|\\
+ & \le4\max_{x\in N}\left|x^{\top}\left|U^{\top}\Pi^{\top}\Pi U-I_{d}\right|x\right|\\
+ & =4\max_{x\in UN}\left|\|\Pi x\|^{2}-1\right|
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Now, using that 
+\begin_inset Formula $\Pi$
+\end_inset
+
+ is 
+\begin_inset Formula $(1,\epsilon,\delta)$
+\end_inset
+
+ OSE, we have that
+\begin_inset Formula 
+\[
+\P(\left|\|\Pi x\|^{2}-1\right|\leq\epsilon)\geq1-\delta.
+\]
+
+\end_inset
+
+Take a union bound over all 
+\begin_inset Formula $x\in UN$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+\P(x^{\top}(U^{\top}\Pi^{\top}\Pi U-I_{d})x\leq4\epsilon)\geq1-5^{d}\delta.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This reduction and the Johnson-Lindenstrauss Lemma shows that a random 
+\begin_inset Formula $\pm\frac{1}{\sqrt{m}}$
+\end_inset
+
+ is a 
+\begin_inset Formula $(d,\epsilon,\delta)$
+\end_inset
+
+ OSE with
+\begin_inset Formula 
+\[
+m=\Theta(\frac{1}{\epsilon^{2}}(d+\log(\frac{1}{\delta}))).
+\]
+
+\end_inset
+
+As we discussed before that any 
+\begin_inset Formula $(d,\epsilon,\delta)$
+\end_inset
+
+ OSE should have at least 
+\begin_inset Formula $d$
+\end_inset
+
+ rows.
+ Therefore, the number of rows of this OSE is tight for the regime 
+\begin_inset Formula $\epsilon=\Theta(1)$
+\end_inset
+
+.
+ We only need an OSE for 
+\begin_inset Formula $\epsilon=\Theta(1)$
+\end_inset
+
+ because of Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:Richardson"
+
+\end_inset
+
+; by iterating we can get any 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ with an overhead of 
+\begin_inset Formula $\log(1/\epsilon)$
+\end_inset
+
+.
+ Unfortunately, computing 
+\begin_inset Formula $\Pi A$
+\end_inset
+
+ is in fact more expensive than 
+\begin_inset Formula $A^{\top}A$
+\end_inset
+
+.
+ The first involves multiplying 
+\begin_inset Formula $\Theta(d)\times n$
+\end_inset
+
+ and 
+\begin_inset Formula $n\times d$
+\end_inset
+
+ matrix, the second one involves multiplying 
+\begin_inset Formula $d\times n$
+\end_inset
+
+ and 
+\begin_inset Formula $n\times d$
+\end_inset
+
+ matrix.
+\end_layout
+
+\begin_layout Subsection
+Sparse JL
+\end_layout
+
+\begin_layout Standard
+We consider the sparse matrix 
+\begin_inset Formula $\Pi\in\R^{m\times n}$
+\end_inset
+
+ where each entry is 
+\begin_inset Formula $\pm\frac{1}{\sqrt{s}}$
+\end_inset
+
+ with probability 
+\begin_inset Formula $\frac{s}{m}$
+\end_inset
+
+ and 
+\begin_inset Formula $0$
+\end_inset
+
+ otherwise.
+ We will show that this random matrix is a 
+\begin_inset Formula $(d,\epsilon,\delta)$
+\end_inset
+
+ OSE for 
+\begin_inset Formula $s=\Theta(\log^{2}(d/\delta)/\epsilon^{2})$
+\end_inset
+
+ and 
+\begin_inset Formula $m=\Theta(d\log(\frac{d}{\delta})/\epsilon^{2})$
+\end_inset
+
+.
+ When 
+\begin_inset Formula $n=d=1$
+\end_inset
+
+, 
+\begin_inset Formula $\|\Pi x\|^{2}$
+\end_inset
+
+ is the number of non-zeros in the only column.
+ Therefore, we indeed need that 
+\begin_inset Formula $s$
+\end_inset
+
+ scales like 
+\begin_inset Formula $1/\epsilon^{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Remark
+It turns out that one can select exactly 
+\begin_inset Formula $s$
+\end_inset
+
+ non-zeros for each column.
+ This allows us to use 
+\begin_inset Formula $s=\Theta(\frac{\log(d/\delta)}{\epsilon})$
+\end_inset
+
+.
+ The proof of this is a slightly more complicated due to the lack of independenc
+e 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "cohen2016nearly"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+To analyze 
+\begin_inset Formula $U^{\top}\Pi^{\top}\Pi U$
+\end_inset
+
+, we note that 
+\begin_inset Formula 
+\[
+U^{\top}\Pi^{\top}\Pi U=\sum_{r=1}^{m}(\Pi U)_{r}^{\top}(\Pi U)_{r}.
+\]
+
+\end_inset
+
+Since each row of 
+\begin_inset Formula $\Pi$
+\end_inset
+
+ is independent, we can use two matrix concentration bounds to analyze the
+ sum above.
+ See 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "tropp2015introduction"
+literal "false"
+
+\end_inset
+
+ for a survey on matrix concentration bounds.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Matrix Chernoff
+\end_layout
+
+\end_inset
+
+Suppose we have a sequence of independent random self-adjoint matrices 
+\begin_inset Formula $M_{j}\in\R^{n\times n}$
+\end_inset
+
+ such that 
+\begin_inset Formula $\E M_{j}=I$
+\end_inset
+
+ and 
+\begin_inset Formula $0\preceq M_{j}\preceq R\cdot I$
+\end_inset
+
+.
+ Then for 
+\begin_inset Formula $T=\frac{R}{\varepsilon^{2}}\log\frac{n}{\delta}$
+\end_inset
+
+, 
+\begin_inset Formula 
+\[
+(1-O(\varepsilon))I\preceq\frac{1}{T}\sum_{j=1}^{T}M_{j}\preceq(1+O(\varepsilon))I
+\]
+
+\end_inset
+
+with probability 
+\begin_inset Formula $1-\delta$
+\end_inset
+
+.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+I don't like this statement.
+ I should always do two term like below.
+ variance and absolute bound.
+\end_layout
+
+\begin_layout Plain Layout
+Why?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Hanson-Wright Inequality
+\end_layout
+
+\end_inset
+
+For 
+\begin_inset Formula $\sigma_{1},\cdots,\sigma_{n}$
+\end_inset
+
+ are independent random variables with 
+\begin_inset Formula $\E\sigma_{i}=0$
+\end_inset
+
+, 
+\begin_inset Formula $|\sigma_{i}|\leq1$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $A\in\R^{n\times n}$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+\left|\sigma^{\top}A\sigma-\E\sigma^{\top}A\sigma\right|\lesssim\|A\|_{F}\sqrt{\log(\frac{1}{\delta})}+\|A\|_{\op}\log(\frac{1}{\delta})
+\]
+
+\end_inset
+
+with probability 
+\begin_inset Formula $1-\delta$
+\end_inset
+
+.
+ (Here we use 
+\begin_inset Formula $A\lesssim B$
+\end_inset
+
+ to denote 
+\begin_inset Formula $A=O(B)$
+\end_inset
+
+.)
+\backslash
+
+\end_layout
+
+\begin_layout Standard
+For our problem, we set 
+\begin_inset Formula $M_{r}=m\cdot U^{\top}\pi_{r}\pi_{r}^{\top}U$
+\end_inset
+
+ where 
+\begin_inset Formula $\pi_{r}$
+\end_inset
+
+ is the 
+\begin_inset Formula $r$
+\end_inset
+
+-th row of 
+\begin_inset Formula $\Pi$
+\end_inset
+
+.
+ One can check that 
+\begin_inset Formula $M_{r}\succeq0$
+\end_inset
+
+ and that 
+\begin_inset Formula $\E M_{r}=I$
+\end_inset
+
+.
+ Next, we note that
+\begin_inset Formula 
+\[
+M_{r}\preceq m\cdot\pi_{r}^{\top}UU^{\top}\pi_{r}\cdot I.
+\]
+
+\end_inset
+
+With small probability, 
+\begin_inset Formula $\pi_{r}^{\top}UU^{\top}\pi_{r}$
+\end_inset
+
+ can be huge.
+ However, as long as 
+\begin_inset Formula $\pi_{r}^{\top}UU^{\top}\pi_{r}$
+\end_inset
+
+ is bounded by 
+\begin_inset Formula $R$
+\end_inset
+
+ with probability 
+\begin_inset Formula $1-\delta$
+\end_inset
+
+, then we can still use the matrix Chernoff bound above.
+ To bound 
+\begin_inset Formula $\pi_{r}^{\top}UU^{\top}\pi_{r}$
+\end_inset
+
+, we will use the following large deviation inequality.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Now, we can bound 
+\begin_inset Formula $R$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+Assume that 
+\begin_inset Formula $s\gg\frac{m}{n}\log(\frac{1}{\delta}),$
+\end_inset
+
+
+\begin_inset Formula $\log^{2}(\frac{1}{\delta})/\epsilon^{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $m\gg d\log(\frac{1}{\delta})/\epsilon^{2}$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula 
+\[
+\pi_{r}^{\top}UU^{\top}\pi_{r}\leq\frac{\epsilon^{2}}{\log(d/\delta)}
+\]
+
+\end_inset
+
+with probability 
+\begin_inset Formula $1-\delta$
+\end_inset
+
+.
+ (Here 
+\begin_inset Formula $\gg$
+\end_inset
+
+ means greater by a sufficiently large constant factor).
+\end_layout
+
+\begin_layout Proof
+Note that 
+\begin_inset Formula $\pi_{r}\in\Rn$
+\end_inset
+
+ with each entry non-zero with probability 
+\begin_inset Formula $\frac{s}{m}$
+\end_inset
+
+.
+ By the Chernoff bound, one can show that 
+\begin_inset Formula $\pi_{r}$
+\end_inset
+
+ has at most 
+\begin_inset Formula $2sn/m$
+\end_inset
+
+ non-zeros with probability 
+\begin_inset Formula $1-\delta$
+\end_inset
+
+ using that 
+\begin_inset Formula $sn/m\gg\log(\frac{1}{\delta})$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $I$
+\end_inset
+
+ be the indices that 
+\begin_inset Formula $\pi_{r}$
+\end_inset
+
+ are non-zero.
+ Conditional on the set 
+\begin_inset Formula $I$
+\end_inset
+
+ and that 
+\begin_inset Formula $|I|\leq2sn/m$
+\end_inset
+
+, note that 
+\begin_inset Formula $\sigma\defeq\pi_{r}|_{I}$
+\end_inset
+
+ is a random 
+\begin_inset Formula $\pm\frac{1}{\sqrt{s}}$
+\end_inset
+
+ vector.
+ Let 
+\begin_inset Formula $P=(UU^{\top})|_{I\times I}$
+\end_inset
+
+.
+ Then, we have that
+\begin_inset Formula 
+\[
+\pi_{r}^{\top}UU^{\top}\pi_{r}=\sigma^{\top}P\sigma.
+\]
+
+\end_inset
+
+The Hanson-Wright inequality shows that
+\begin_inset Formula 
+\[
+\left|\sigma^{\top}P\sigma-\E\sigma^{\top}P\sigma\right|\lesssim\frac{1}{s}\|P\|_{F}\sqrt{\log(\frac{1}{\delta})}+\frac{1}{s}\|P\|_{\op}\log(\frac{1}{\delta}).
+\]
+
+\end_inset
+
+Note that 
+\begin_inset Formula $UU^{\top}$
+\end_inset
+
+ is a projection matrix and hence 
+\begin_inset Formula $\|P\|_{\op}\leq1$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $P\succeq0$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+\|P\|_{F}=\sqrt{\tr P^{2}}\leq\sqrt{\|P\|_{\op}\cdot\tr P}\leq\sqrt{\tr P}.
+\]
+
+\end_inset
+
+Also, we have that 
+\begin_inset Formula $\E\sigma^{\top}P\sigma=\frac{1}{s}\tr P$
+\end_inset
+
+.
+ Hence, we have
+\begin_inset Formula 
+\[
+\sigma^{\top}P\sigma\leq\frac{1}{s}\left(\tr P+O\left(\sqrt{\tr P\cdot\log\frac{1}{\delta}}+\log\frac{1}{\delta}\right)\right)
+\]
+
+\end_inset
+
+with probability 
+\begin_inset Formula $1-\delta$
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula $\tr UU^{\top}=\tr U^{\top}U=d$
+\end_inset
+
+ and that 
+\begin_inset Formula $P$
+\end_inset
+
+ is a random diagonal block of 
+\begin_inset Formula $UU^{\top}$
+\end_inset
+
+of size at most 
+\begin_inset Formula $2sn/m$
+\end_inset
+
+.
+ By the Chernoff bound, one can show that
+\begin_inset Formula 
+\[
+\tr P\leq\frac{4sd}{m}.
+\]
+
+\end_inset
+
+Hence, we have
+\begin_inset Formula 
+\[
+\sigma^{\top}P\sigma\leq\frac{4d}{m}+\frac{1}{s}O\left(\sqrt{\frac{sd}{m}\cdot\log\frac{1}{\delta}}+\log\frac{1}{\delta}\right)
+\]
+
+\end_inset
+
+with probability 
+\begin_inset Formula $1-\delta$
+\end_inset
+
+.
+ Using 
+\begin_inset Formula $s\gg\log^{2}(\frac{d}{\delta})/\epsilon^{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $m\gg d\log(\frac{d}{\delta})/\epsilon^{2}$
+\end_inset
+
+ , we have 
+\begin_inset Formula $\sigma^{\top}P\sigma\leq\frac{\epsilon^{2}}{\log(d/\delta)}$
+\end_inset
+
+ with probability 
+\begin_inset Formula $1-\delta$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Now we can prove the main theorem.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:sparse_OSE"
+
+\end_inset
+
+Consider a random sparse matrix 
+\begin_inset Formula $\Pi\in\R^{m\times n}$
+\end_inset
+
+ where each entry is 
+\begin_inset Formula $\pm\frac{1}{\sqrt{s}}$
+\end_inset
+
+ with probability 
+\begin_inset Formula $\frac{s}{m}$
+\end_inset
+
+ and 
+\begin_inset Formula $0$
+\end_inset
+
+ otherwise.
+ There exist constants 
+\begin_inset Formula $c_{1},c_{2}$
+\end_inset
+
+ such that for 
+\begin_inset Formula $m=c_{1}\frac{d\log(\frac{d}{\delta})}{\epsilon^{2}}$
+\end_inset
+
+ and 
+\begin_inset Formula $s=c_{2}\frac{\log^{2}(\frac{d}{\delta})}{\epsilon^{2}}$
+\end_inset
+
+ 
+\begin_inset Formula $\Pi$
+\end_inset
+
+ is an 
+\begin_inset Formula $O(d,\epsilon,\delta)$
+\end_inset
+
+-OSE.
+\end_layout
+
+\begin_layout Proof
+By the previous lemma, we have that
+\begin_inset Formula 
+\[
+\pi_{r}^{\top}UU^{\top}\pi_{r}\leq\frac{\epsilon^{2}}{\log(d/\delta)}
+\]
+
+\end_inset
+
+with high probability.
+ Under this event, we have that
+\begin_inset Formula 
+\[
+(1-O(\varepsilon))I\preceq\sum_{r=1}^{m}\pi_{r}^{\top}UU^{\top}\pi_{r}\preceq(1+O(\varepsilon))I.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Back to Regression
+\end_layout
+
+\begin_layout Standard
+In the last subsection, we presented a proof sketch of a suboptimal OSE.
+ For completeness, we state a tighter version here:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm2e}[H]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\mathtt{RegressionUsingOSE}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetAlgoLined
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Input:
+\series default
+ a matrix 
+\begin_inset Formula $A\in\R^{n\times d}$
+\end_inset
+
+, a vector 
+\begin_inset Formula $b\in\R^{d}$
+\end_inset
+
+, success probability 
+\begin_inset Formula $\delta$
+\end_inset
+
+ and target accuracy 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $\Pi$
+\end_inset
+
+ be a 
+\begin_inset Formula $O(d,\frac{1}{4},\delta)$
+\end_inset
+
+ OSE constructed by Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:sparse_OSE"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Compute 
+\begin_inset Formula $A'=2\Pi A$
+\end_inset
+
+, 
+\begin_inset Formula $M=A'^{\top}A'$
+\end_inset
+
+ and 
+\begin_inset Formula $M^{-1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $x^{(1)}=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+For{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $k=1,2,\cdots,4\log(\frac{1}{\epsilon})$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $x^{(k+1)}=x^{(k)}-M^{-1}(A^{\top}Ax^{(k)}-A^{\top}b)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Return
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $x^{\last}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+Given any matrix 
+\begin_inset Formula $A\in\R^{n\times d}$
+\end_inset
+
+, any vector 
+\begin_inset Formula $b\in\R^{d}$
+\end_inset
+
+, the algorithm 
+\begin_inset Formula $\mathtt{RegressionUsingOSE}$
+\end_inset
+
+ returns a vector 
+\begin_inset Formula $x$
+\end_inset
+
+ such that 
+\begin_inset Formula 
+\[
+\|A^{\top}Ax-A^{\top}b\|_{(A^{\top}A)^{-1}}\leq\epsilon\|A^{\top}b\|_{(A^{\top}A)^{-1}}.
+\]
+
+\end_inset
+
+with probability 
+\begin_inset Formula $1-\delta$
+\end_inset
+
+ in 
+\begin_inset Formula $\widetilde{O}(\nnz(A)+d^{\omega})$
+\end_inset
+
+ time.
+\end_layout
+
+\begin_layout Proof
+The guarantee of 
+\begin_inset Formula $x$
+\end_inset
+
+ follows from the definition of OSE and Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:Richardson"
+
+\end_inset
+
+.
+ We note that 
+\begin_inset Formula $\Pi A$
+\end_inset
+
+ simply involves duplicating each row of 
+\begin_inset Formula $A$
+\end_inset
+
+ into roughly 
+\begin_inset Formula $s$
+\end_inset
+
+ many rows in 
+\begin_inset Formula $\Pi A$
+\end_inset
+
+.
+ Hence, the cost of computing 
+\begin_inset Formula $\Pi A$
+\end_inset
+
+ is 
+\begin_inset Formula $O(s\cdot\nnz(A))=\widetilde{O}(\nnz(A))$
+\end_inset
+
+.
+ The cost of computing 
+\begin_inset Formula $M$
+\end_inset
+
+ takes 
+\begin_inset Formula $\widetilde{O}(d^{\omega})$
+\end_inset
+
+ time.
+ Computing 
+\begin_inset Formula $M^{-1}$
+\end_inset
+
+ takes 
+\begin_inset Formula $\widetilde{O}(d^{\omega})$
+\end_inset
+
+ time.
+ The loop takes 
+\begin_inset Formula $\widetilde{O}(\nnz(A))$
+\end_inset
+
+ time.
+ This explain the total time.
+\end_layout
+
+\begin_layout Standard
+Linear regression can also be solved in time 
+\begin_inset Formula $O\left(\nnz(A)+d^{O(1)}\right)$
+\end_inset
+
+ via a very sparse embedding: each column of 
+\begin_inset Formula $\Pi$
+\end_inset
+
+ picks exactly one nonzero entry in a random location.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+I changed 
+\begin_inset Formula $d^{\omega}$
+\end_inset
+
+ to 
+\begin_inset Formula $d^{O(1)}$
+\end_inset
+
+.
+ Is it the case?
+\end_layout
+
+\end_inset
+
+ This was analyzed by Clarkson and Woodruff 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "woodruff2014sketching"
+literal "false"
+
+\end_inset
+
+.
+ See also 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "kannan_vempala_2017"
+literal "false"
+
+\end_inset
+
+ for a survey.
+\end_layout
+
+\end_body
+\end_document

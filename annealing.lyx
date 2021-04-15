@@ -1,0 +1,532 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{url}
+\usepackage{xargs}
+\usepackage[pdftex,dvipsnames]{xcolor}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\usepackage[lined,boxed,ruled,norelsize,algo2e]{algorithm2e}
+\usepackage[small,bf]{caption}
+\usepackage{tikz}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=red,
+    filecolor=red,
+    linkcolor=red,
+    urlcolor=red
+}
+
+
+
+\usepackage{fancybox}
+\usepackage{multirow}
+\usepackage{nicefrac}
+\usepackage{hyperref}
+
+
+\expandafter\def\expandafter\normalsize\expandafter{%
+    \normalsize
+%	    \setlength\abovedisplayskip{5pt}
+    \setlength\belowdisplayskip{5pt}
+    % \setlength\abovedisplayshortskip{5pt}
+    \setlength\belowdisplayshortskip{5pt}
+}
+
+\usepackage{tocloft}
+\setlength{\cftsecnumwidth}{2.8em}%
+
+%%%%%
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{fix-cm}
+\makeatletter
+\newcommand\HUGE{\@setfontsize\Huge{38}{47}}
+\makeatother
+
+\titleclass{\part}{top}
+\titleformat{\part}[display]
+  {\normalfont\HUGE\sffamily}{\partname\ \thepart}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\HUGE\bfseries\filleft}
+%\titlespacing*{\part} {0pt}{20pt}{40pt}
+\titlespacing*{\part} {0pt}{30pt}{50pt}
+
+% chapter heading formatting
+\titleformat{\chapter}[display]
+  {\normalfont\LARGE\sffamily}{\chaptertitlename\ \thechapter}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\LARGE\bfseries\filleft}
+% section heading formatting
+\titleformat{\section}
+  {\normalfont\Large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesection}{0.5em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesubsection}{0.5em}{}
+\titlespacing*{\chapter} {0pt}{20pt}{30pt}
+
+% header/footer
+\fancyhf{}
+\fancyhead[ER]{\footnotesize\sffamily\leftmark}
+\fancyhead[OL]{\footnotesize\sffamily\nouppercase\rightmark}
+\fancyhead[EL,OR]{\bfseries\thepage}
+
+\setcounter{secnumdepth}{3}
+\end_preamble
+\options openany
+\use_default_options false
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+theorems-sec
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding default
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 0
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic true
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip 0.1in
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Simulated Annealing
+\end_layout
+
+\begin_layout Standard
+In this chapter we study a sampling-based approach for optimization and
+ integration in high dimension.
+ The main idea is to sample a sequence of logconcave distributions, starting
+ with one that is easy to integrate and ending with the function whose integral
+ is desired.
+ This process is known as 
+\emph on
+simulated annealing.
+ 
+\emph default
+The same high-level algorithm can be used for optimization, volume computation/i
+ntegration or rounding.
+ For integration, the desired integral can be expressed as the following
+ telescoping product:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\int_{\R^{n}}f=\int f_{0}\frac{\int f_{i}}{\int f_{0}}\frac{\int f_{2}}{\int f_{3}}\ldots\frac{\int f_{m}}{\int f_{m-1}}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $f_{m}=f$
+\end_inset
+
+.
+ Each ratio 
+\begin_inset Formula $\int f_{i+1}/\int f_{i}$
+\end_inset
+
+ is the expectation of the estimator 
+\begin_inset Formula $Y=\frac{f_{i+1}(X)}{f_{i}(X)}$
+\end_inset
+
+ for 
+\begin_inset Formula $X$
+\end_inset
+
+ drawn from the density proportional to 
+\begin_inset Formula $f_{i}$
+\end_inset
+
+.
+ What sequence of functions should we use?
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm2e}[H]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\mathtt{SimulatedAnnealing}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetAlgoLined
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+For 
+\begin_inset Formula $i=0,\ldots,m$
+\end_inset
+
+, define
+\begin_inset Formula 
+\[
+a_{i}=b\left(1+\frac{1}{\sqrt{n}}\right)^{i}\mbox{ and }f_{i}(x)=f(x)^{a_{i}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Let 
+\begin_inset Formula $X_{0}^{1},\ldots,X_{0}^{k}$
+\end_inset
+
+ be independent random points with density proportional to 
+\begin_inset Formula $f_{0}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+For 
+\begin_inset Formula $i=0,\ldots,m-1$
+\end_inset
+
+: starting with 
+\begin_inset Formula $X_{i}^{1},\ldots,X_{i}^{k}$
+\end_inset
+
+, generate random points 
+\begin_inset Formula $X_{i+1}=\{X_{i+1}^{1},\ldots,X_{i+1}^{k}\}$
+\end_inset
+
+; update a running estimate 
+\begin_inset Formula $g$
+\end_inset
+
+ based on these samples; update the isotropy transformation using the samples.
+\end_layout
+
+\begin_layout Enumerate
+Output the final estimate of 
+\begin_inset Formula $g$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Return
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $x$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For optimization, the function 
+\begin_inset Formula $f_{m}$
+\end_inset
+
+ is set to be a sufficiently high power of 
+\begin_inset Formula $f$
+\end_inset
+
+, the function to be maximized while 
+\begin_inset Formula $g$
+\end_inset
+
+ is simply the maximum objective value so far.
+ For integration and rounding, 
+\begin_inset Formula $f_{m}=f$
+\end_inset
+
+, the target function to be integrated or rounded.
+ For integration, the function 
+\begin_inset Formula $g$
+\end_inset
+
+ starts out as the integral of 
+\begin_inset Formula $f_{0}$
+\end_inset
+
+ and is multiplied by the ratio 
+\begin_inset Formula $\int f_{i+1}/\int f_{i}$
+\end_inset
+
+ in each step.
+ For rounding, 
+\begin_inset Formula $g$
+\end_inset
+
+ is simply the estimate of the isotropic transformation for the current
+ function.
+\end_layout
+
+\begin_layout Standard
+For sampling and optimization, it is natural to ask why one uses a sequence
+ of functions rather than jumping straight to the target function 
+\begin_inset Formula $f_{m}$
+\end_inset
+
+.
+ For optimizing a linear function 
+\begin_inset Formula $c^{T}x$
+\end_inset
+
+ over a convex set 
+\begin_inset Formula $K$
+\end_inset
+
+, all we need to do is sample according to the density proportional to 
+\begin_inset Formula $e^{-a(c^{T}x)}$
+\end_inset
+
+ for a sufficiently large coefficient 
+\begin_inset Formula $a$
+\end_inset
+
+ (recall Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:OPTviaSampling"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ The reason for using a sequence is that the function 
+\begin_inset Formula $f_{m}$
+\end_inset
+
+ and corresponding density 
+\begin_inset Formula $p_{m}$
+\end_inset
+
+ can be very far from the starting function or distribution, and hence the
+ mixing time can be high.
+ The sequence ensures that samples from the current function provide a good
+ (warm) start for sampling from the next function.
+ This is captured in the next lemma.
+\end_layout
+
+\begin_layout Theorem
+Let 
+\begin_inset Formula $p_{i}(x)=f_{i}(x)/\int f_{i}$
+\end_inset
+
+ with 
+\begin_inset Formula $f_{i}$
+\end_inset
+
+ defined as in the annealing algorithm for some logconcave function 
+\begin_inset Formula $f:\R^{n}\rightarrow\R_{+}$
+\end_inset
+
+.
+ Then a random sample 
+\begin_inset Formula $X\sim p_{i}$
+\end_inset
+
+ satisfies
+\begin_inset Formula 
+\[
+\E_{p_{i}}\left(\frac{p_{i}(x)}{p_{i+1}(x)}\right)=O(1).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The underlying mathematical property behind this lemma is the following.
+\end_layout
+
+\begin_layout Lemma
+Let 
+\begin_inset Formula $f$
+\end_inset
+
+ be a logconcave function in 
+\begin_inset Formula $\R^{n}.$
+\end_inset
+
+ Then 
+\begin_inset Formula $Z(a)=a^{n}\int_{\R^{n}}f(x)^{a}$
+\end_inset
+
+ is logconcave for 
+\begin_inset Formula $a\ge0$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $f$
+\end_inset
+
+ has support 
+\begin_inset Formula $K$
+\end_inset
+
+, then 
+\begin_inset Formula $Z(a)=a^{n}\int_{K}f(ax)$
+\end_inset
+
+ is logconcave for 
+\begin_inset Formula $a>0$
+\end_inset
+
+.
+\end_layout
+
+\end_body
+\end_document

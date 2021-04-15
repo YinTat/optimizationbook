@@ -1,0 +1,3174 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{url}
+\usepackage{xargs}
+\usepackage[pdftex,dvipsnames]{xcolor}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\usepackage[lined,boxed,ruled,norelsize,algo2e]{algorithm2e}
+\usepackage[small,bf]{caption}
+\usepackage{tikz}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=red,
+    filecolor=red,
+    linkcolor=red,
+    urlcolor=red
+}
+
+
+
+\usepackage{fancybox}
+\usepackage{multirow}
+\usepackage{nicefrac}
+\usepackage{hyperref}
+
+
+\expandafter\def\expandafter\normalsize\expandafter{%
+    \normalsize
+%	    \setlength\abovedisplayskip{5pt}
+    \setlength\belowdisplayskip{5pt}
+    % \setlength\abovedisplayshortskip{5pt}
+    \setlength\belowdisplayshortskip{5pt}
+}
+
+\usepackage{tocloft}
+\setlength{\cftsecnumwidth}{2.8em}%
+
+%%%%%
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{fix-cm}
+\makeatletter
+\newcommand\HUGE{\@setfontsize\Huge{38}{47}}
+\makeatother
+
+\titleclass{\part}{top}
+\titleformat{\part}[display]
+  {\normalfont\HUGE\sffamily}{\partname\ \thepart}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\HUGE\bfseries\filleft}
+%\titlespacing*{\part} {0pt}{20pt}{40pt}
+\titlespacing*{\part} {0pt}{30pt}{50pt}
+
+% chapter heading formatting
+\titleformat{\chapter}[display]
+  {\normalfont\LARGE\sffamily}{\chaptertitlename\ \thechapter}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\LARGE\bfseries\filleft}
+% section heading formatting
+\titleformat{\section}
+  {\normalfont\Large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesection}{0.5em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesubsection}{0.5em}{}
+\titlespacing*{\chapter} {0pt}{20pt}{30pt}
+
+% header/footer
+\fancyhf{}
+\fancyhead[ER]{\footnotesize\sffamily\leftmark}
+\fancyhead[OL]{\footnotesize\sffamily\nouppercase\rightmark}
+\fancyhead[EL,OR]{\bfseries\thepage}
+
+\setcounter{secnumdepth}{3}
+\end_preamble
+\options openany
+\use_default_options false
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+theorems-sec
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding default
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 0
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic true
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip 0.1in
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Cutting Plane Methods
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Cutting-Plane-Methods"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The goal of this chapter is to present some polynomial-time algorithms for
+ convex optimization.
+ These algorithms use the knowledge of the function in a minimal way, essentiall
+y by querying the function value and knowing some (weak) bounds on its support/v
+alue.
+\end_layout
+
+\begin_layout Standard
+Given a continuously differentiable convex function 
+\begin_inset Formula $f$
+\end_inset
+
+, Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:first_order"
+
+\end_inset
+
+ shows that
+\begin_inset Formula 
+\begin{equation}
+f(y)\geq f(x)+\left\langle \nabla f(x),y-x\right\rangle \text{ for all }y.\label{eq:sub_grad_def}
+\end{equation}
+
+\end_inset
+
+Let 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ be any minimizer of 
+\begin_inset Formula $f$
+\end_inset
+
+.
+ Replacing 
+\begin_inset Formula $y$
+\end_inset
+
+ with 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+, we have that 
+\begin_inset Formula 
+\[
+f(x)\geq f(x^{*})\geq f(x)+\left\langle \nabla f(x),x^{*}-x\right\rangle .
+\]
+
+\end_inset
+
+Therefore, we know that 
+\begin_inset Formula $\left\langle \nabla f(x),x^{*}-x\right\rangle \leq0$
+\end_inset
+
+.
+ Namely, 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ lies in a halfspace 
+\begin_inset Formula $H$
+\end_inset
+
+ with normal vector 
+\begin_inset Formula $-\nabla f(x)$
+\end_inset
+
+.
+ Roughly speaking, this shows that each gradient computation cuts the set
+ of possible solutions in half.
+ In one dimension, this allows us to do a binary search to minimize convex
+ functions.
+ 
+\end_layout
+
+\begin_layout Standard
+It turns out that in 
+\begin_inset Formula $\Rn$
+\end_inset
+
+, binary search still works.
+ In this chapter, we will cover several ways to do this binary search.
+ All of them follow the same framework, called the 
+\emph on
+cutting plane method
+\emph default
+.
+ 
+\end_layout
+
+\begin_layout Standard
+More generally, cutting plane methods solves the following class of problems:
+\end_layout
+
+\begin_layout Problem
+\begin_inset CommandInset label
+LatexCommand label
+name "prob:abstract_convex_problem"
+
+\end_inset
+
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Finding a point in a convex set
+\end_layout
+
+\end_inset
+
+Given a convex set 
+\begin_inset Formula $K\subset\Rn$
+\end_inset
+
+.
+ Suppose for any 
+\begin_inset Formula $x\notin K$
+\end_inset
+
+, we can find a vector 
+\begin_inset Formula $g(x)$
+\end_inset
+
+ such that
+\begin_inset Formula 
+\[
+g(x)^{\top}(y-x)\leq0\text{ for all }y\in K.
+\]
+
+\end_inset
+
+Our goal is to find some 
+\begin_inset Formula $y\in K$
+\end_inset
+
+ or prove that 
+\begin_inset Formula $\vol K\leq\epsilon^{n}$
+\end_inset
+
+ using as few calls to 
+\begin_inset Formula $g$
+\end_inset
+
+ as possible.
+\end_layout
+
+\begin_layout Remark*
+When apply to convex functions, we have 
+\begin_inset Formula $g(x)=\nabla f(x)$
+\end_inset
+
+ and 
+\begin_inset Formula $K$
+\end_inset
+
+ be the set of minimizer of 
+\begin_inset Formula $f$
+\end_inset
+
+.
+ In chapter 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:vol2val"
+
+\end_inset
+
+, we relate the problem of proving 
+\begin_inset Formula $\vol K$
+\end_inset
+
+ is small and the problem of finding an approximate minimizer of 
+\begin_inset Formula $f$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+In this framework, we maintain a convex set 
+\begin_inset Formula $E^{(k)}$
+\end_inset
+
+ that contains the set 
+\begin_inset Formula $K$
+\end_inset
+
+.
+ Each iteration, we compute 
+\begin_inset Formula $g(x^{(k)})$
+\end_inset
+
+ with 
+\begin_inset Formula $x^{(k)}$
+\end_inset
+
+ chosen based on 
+\begin_inset Formula $E^{(k)}$
+\end_inset
+
+.
+ The guarantee of 
+\begin_inset Formula $g$
+\end_inset
+
+ shows that 
+\begin_inset Formula $K$
+\end_inset
+
+ lies in the halfspace 
+\begin_inset Formula $H^{(k)}=\{y:g(x^{(k)})^{\top}(y-x^{(k)})\leq0\}$
+\end_inset
+
+ and hence 
+\begin_inset Formula $K\subset H^{(k)}\cap E^{(k)}.$
+\end_inset
+
+ The algorithm continues by choosing 
+\begin_inset Formula $E^{(k+1)}$
+\end_inset
+
+ which contains 
+\begin_inset Formula $H^{(k)}\cap E^{(k)}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm2e}[H]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\mathtt{CuttingPlaneFramework}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:cutting_plane"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetAlgoLined
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Input:
+\series default
+ Initial set 
+\begin_inset Formula $E^{(0)}\subseteq\Rn$
+\end_inset
+
+ containing 
+\begin_inset Formula $K$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+For{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $k=0,\cdots$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Find a point 
+\begin_inset Formula $x^{(k)}\in E^{(k)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lIf{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $E^{(k)}$
+\end_inset
+
+ is 
+\begin_inset Quotes eld
+\end_inset
+
+small
+\begin_inset Quotes erd
+\end_inset
+
+ enough
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\backslash
+Return
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $x^{(k)}$
+\end_inset
+
+.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Find 
+\begin_inset Formula $E^{(k+1)}\supset E^{(k)}\cap H^{(k)}$
+\end_inset
+
+ where
+\begin_inset Formula 
+\begin{equation}
+H^{(k)}\defeq\{x\in\Rn\text{ such that }g(x^{(k)})^{\top}(x-x^{(k)})\leq0\}.\label{eq:Hk}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The main questions are
+\end_layout
+
+\begin_layout Enumerate
+How do we choose 
+\begin_inset Formula $x^{(k)}$
+\end_inset
+
+ and 
+\begin_inset Formula $E^{(k+1)}$
+\end_inset
+
+?
+\end_layout
+
+\begin_layout Enumerate
+How do we measure progress?
+\end_layout
+
+\begin_layout Enumerate
+How quickly does the method converge?
+\end_layout
+
+\begin_layout Enumerate
+How expensive is each step?
+\end_layout
+
+\begin_layout Standard
+Progress on the cutting plane method is shown in the next table.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+
+\size footnotesize
+\begin_inset Tabular
+<lyxtabular version="3" rows="9" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Year
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\begin_inset Formula $E^{(k)}$
+\end_inset
+
+ and 
+\begin_inset Formula $x^{(k)}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Iter
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Cost/Iter
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+1965 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "levin1965algorithm,newman1965location"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Center of gravity
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\begin_inset Formula $n$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\begin_inset Formula $n^{n}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+1979 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "yudin1976evaluation,shor1977cut,khachiyan1980polynomial"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Center of ellipsoid
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\begin_inset Formula $n^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\begin_inset Formula $n^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+1988 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "khachiyan1988inscribed"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Center of John ellipsoid
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\begin_inset Formula $n$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\begin_inset Formula $n^{2.878}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+1989 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "vaidya1989new"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Volumetric center
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\begin_inset Formula $n$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\begin_inset Formula $n^{2.378}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+1995 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "atkinson1995cutting"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Analytic center
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\begin_inset Formula $n$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\begin_inset Formula $n^{2.378}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+2004 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "bertsimas2004solving"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Center of gravity
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\begin_inset Formula $n$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\begin_inset Formula $n^{6}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+2015 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "lee2015faster"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Hybrid center
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\begin_inset Formula $n$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\begin_inset Formula $n^{2}$
+\end_inset
+
+ (amortized)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+2020 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "jiang2020improved"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Volumetric center
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\begin_inset Formula $n$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+\begin_inset Formula $n^{2}$
+\end_inset
+
+ (amortized)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\noindent
+\align center
+
+\size footnotesize
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Different Cutting Plane Methods.
+ Omitted polylogarithmic terms.
+ The number of iterations follows from the rate.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Ellipsoid Method
+\end_layout
+
+\begin_layout Standard
+We first start by explaining the simplest algorithm, the Ellipsoid method.
+ We maintain an ellipsoid
+\begin_inset Formula 
+\[
+E^{(k)}\defeq\{x\in\Rn:\ (x-x^{(k)})^{\top}\left(A^{(k)}\right)^{-1}(x-x^{(k)})\leq1\}
+\]
+
+\end_inset
+
+that contains 
+\begin_inset Formula $K$
+\end_inset
+
+.
+ After we compute 
+\begin_inset Formula $g(x^{(k)})$
+\end_inset
+
+ and 
+\begin_inset Formula $H^{(k)}$
+\end_inset
+
+ via (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Hk"
+
+\end_inset
+
+), we define 
+\begin_inset Formula $E^{(k+1)}$
+\end_inset
+
+ to be the smallest volume ellipsoid containing 
+\begin_inset Formula $E^{(k)}\cap H^{(k)}$
+\end_inset
+
+.
+ The key observation is that the volume of the ellipsoid 
+\begin_inset Formula $E^{(k)}$
+\end_inset
+
+ decreases by 
+\begin_inset Formula $1-\Theta(\frac{1}{n})$
+\end_inset
+
+ every iteration.
+ This volume property holds for any halfspace through the center of the
+ current ellipsoid (not only for the one whose normal is the gradient),
+ a property we will exploit in the next chapter.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm2e}[H]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\mathtt{Ellipsoid}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:ellipsoid_method"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetAlgoLined
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Input:
+\series default
+ Initial ellipsoid 
+\begin_inset Formula $E^{(0)}=\{x\in\Rn:\ (x-x^{(0)})^{\top}\left(A^{(0)}\right)^{-1}(x-x^{(0)})\leq1\}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+For{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $k=0,\cdots$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lIf{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $E^{(k)}$
+\end_inset
+
+ is 
+\begin_inset Quotes eld
+\end_inset
+
+small
+\begin_inset Quotes erd
+\end_inset
+
+ enough
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\backslash
+Return
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $x^{(k)}$
+\end_inset
+
+.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $x^{(k+1)}\leftarrow x^{(k)}-\frac{1}{n+1}\frac{A^{(k)}g(x^{(k)})}{\sqrt{g(x^{(k)})^{\top}A^{(k)}g(x^{(k)})}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $A^{(k+1)}\leftarrow\frac{n^{2}}{n^{2}-1}\left(A^{(k)}-\frac{2}{n+1}\frac{A^{(k)}g(x^{(k)})g(x^{(k)})^{\top}A^{(k)}}{g(x^{(k)})^{\top}A^{(k)}(x^{(k)})}\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:ellipsoid_vol_decrease"
+
+\end_inset
+
+For the Ellipsoid method (Algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:ellipsoid_method"
+
+\end_inset
+
+), we have 
+\begin_inset Formula $\vol E^{(k+1)}<e^{-\frac{1}{2n+2}}\vol E^{(k)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Remark
+Note that the proof below also shows that 
+\begin_inset Formula $\vol E^{(k+1)}=e^{-\Theta(\frac{1}{n})}\vol E^{(k)}$
+\end_inset
+
+.
+ Therefore, the ellipsoid method does not run faster for nice functions,
+ making it provably slow in practice.
+\end_layout
+
+\begin_layout Proof
+Note that the ratio of 
+\begin_inset Formula $\vol E^{(k+1)}/\vol E^{(k)}$
+\end_inset
+
+ does not change under any affine transformation.
+ Therefore, we can do a transformation so that 
+\begin_inset Formula $A^{(k)}=I$
+\end_inset
+
+, 
+\begin_inset Formula $x^{(k)}=0$
+\end_inset
+
+ and 
+\begin_inset Formula $g(x^{(k)})=e_{1}$
+\end_inset
+
+.
+ This simplifies our calculation.
+ We need to prove two statements: 
+\begin_inset Formula $\vol E^{(k+1)}<e^{-\frac{1}{2n+2}}\vol E^{(k)}$
+\end_inset
+
+ and that 
+\begin_inset Formula $E^{(k)}\cap H^{(k)}\subset E^{(k+1)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Claim 1: 
+\begin_inset Formula $\vol E^{(k+1)}<e^{-\frac{1}{2(n+1)}}\vol E^{(k)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Note that since 
+\begin_inset Formula $g(x^{(k)})=e_{1},$
+\end_inset
+
+we have 
+\begin_inset Formula $A^{(k+1)}=\frac{n^{2}}{n^{2}-1}\left(I-\frac{2}{n+1}e_{1}e_{1}^{\top}\right)$
+\end_inset
+
+.
+ Therefore, we have that
+\begin_inset Formula 
+\begin{align*}
+\left(\frac{\vol E^{(k+1)}}{\vol E^{(k)}}\right)^{2}=\left|\frac{\det A^{(k+1)}}{\det A^{(k)}}\right| & =\left(\frac{n^{2}}{n^{2}-1}\right)^{n}\det\left(I-\frac{2}{n+1}e_{1}e_{1}^{\top}\right)\\
+ & =\left(\frac{n^{2}}{n^{2}-1}\right)^{n-1}\frac{n^{2}}{n^{2}-1}\left(\frac{n-1}{n+1}\right)\\
+ & =\left(1+\frac{1}{n^{2}-1}\right)^{n-1}\left(1-\frac{1}{n+1}\right)^{2}\\
+ & <\exp(\frac{n-1}{n^{2}-1}-\frac{2}{n+1})=\exp(-\frac{1}{n+1})
+\end{align*}
+
+\end_inset
+
+where we used 
+\begin_inset Formula $1+x\leq e^{x}$
+\end_inset
+
+ for all 
+\begin_inset Formula $x$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Claim 2.
+ 
+\begin_inset Formula $E^{(k)}\cap H^{(k)}\subset E^{(k+1)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+By the definition of 
+\begin_inset Formula $E^{(k)}$
+\end_inset
+
+and the assumption 
+\begin_inset Formula $A^{(k)}=I$
+\end_inset
+
+, we have 
+\begin_inset Formula 
+\[
+x^{(k+1)}=-\frac{e_{1}}{n+1}
+\]
+
+\end_inset
+
+and, for any 
+\begin_inset Formula $x\in E^{(k)}\cap H^{(k)}$
+\end_inset
+
+, we have that 
+\begin_inset Formula $\|x\|_{2}\leq1$
+\end_inset
+
+ and 
+\begin_inset Formula $x_{1}\leq0$
+\end_inset
+
+.
+ By direct computation, we have
+\begin_inset Formula 
+\begin{align*}
+ & (x+\frac{e_{1}}{n+1})^{\top}\left(1-\frac{1}{n^{2}}\right)\left(I+\frac{2}{n-1}e_{1}e_{1}^{\top}\right)(x+\frac{e_{1}}{n+1})\\
+= & \left(1-\frac{1}{n^{2}}\right)\left(\|x\|^{2}+\frac{2x_{1}(1+x_{1})}{n-1}+\frac{1}{n^{2}-1}\right)\\
+\leq & \left(1-\frac{1}{n^{2}}\right)\left(1+0+\frac{1}{n^{2}-1}\right)=1
+\end{align*}
+
+\end_inset
+
+where we used that 
+\begin_inset Formula $\|x\|_{2}\leq1$
+\end_inset
+
+ and 
+\begin_inset Formula $x_{1}(1+x_{1})\leq0$
+\end_inset
+
+ (because 
+\begin_inset Formula $-1\leq x_{1}\leq0$
+\end_inset
+
+) at the end.
+ This shows that 
+\begin_inset Formula $x\in E^{(k+1)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Exercise
+Show that the ellipsoid 
+\begin_inset Formula $E^{(k+1)}$
+\end_inset
+
+ computed above is the minimum volume ellipsoid containing 
+\begin_inset Formula $E^{(k)}\cap H^{(k)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+From Volume to Function Value
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:vol2val"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:ellipsoid_vol_decrease"
+
+\end_inset
+
+ shows that the volume of a set containing all minimizers decreases by a
+ constant factor every 
+\begin_inset Formula $n$
+\end_inset
+
+ steps.
+ In general, knowing that the optimal 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ lies in a small volume set does not provide enough information to find
+ a point with small function value.
+ For example, if we only knew that 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ lies in the plane 
+\begin_inset Formula $\{x:x_{1}=0\}$
+\end_inset
+
+, we would still need to search for 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ over an 
+\begin_inset Formula $n-1$
+\end_inset
+
+ dimensional space.
+ However, if the set is constructed by the cutting plane framework (Algorithm
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:cutting_plane"
+
+\end_inset
+
+), then we can guarantee that small volume implies that any point in the
+ set has close to optimal function value.
+\end_layout
+
+\begin_layout Standard
+This in turns implies that we can minimize any convex function with 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ additive error in 
+\begin_inset Formula $O(n^{2}\log(1/\varepsilon))$
+\end_inset
+
+ iterations.
+ To make the statement more general, we note that ellipsoid method can be
+ used for non-differentiable functions.
+ 
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:conv_opt"
+
+\end_inset
+
+Let 
+\begin_inset Formula $x^{(k)}$
+\end_inset
+
+ be the sequence of points produced by the cutting plane framework (Algorithm
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:cutting_plane"
+
+\end_inset
+
+) for a convex function 
+\begin_inset Formula $f$
+\end_inset
+
+.
+ Given a function 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ mapping subsets of 
+\begin_inset Formula $\Rn$
+\end_inset
+
+ to non-negative numbers such that
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+(Linearity) For any set 
+\begin_inset Formula $E\subseteq\R^{n}$
+\end_inset
+
+, any vector 
+\begin_inset Formula $v$
+\end_inset
+
+ and any scalar 
+\begin_inset Formula $\alpha\geq0$
+\end_inset
+
+, we have 
+\begin_inset Formula $\mathcal{V}(\alpha E+v)=\alpha\mathcal{V}(E)$
+\end_inset
+
+ where 
+\begin_inset Formula $\alpha E+v=\{\alpha x+v:x\in E\}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+(Monotonic) For any set 
+\begin_inset Formula $F\subset E$
+\end_inset
+
+, we have that 
+\begin_inset Formula $\mathcal{V}(F)\leq\mathcal{V}(E)$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Theorem
+Then, for any set 
+\begin_inset Formula $\Omega\subset E^{(0)}$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+\min_{i=1,2,\cdots k}f(x^{(i)})-\min_{y\in\Omega}f(y)\leq\frac{\mathcal{V}(E^{(k)})}{\mathcal{V}(\Omega)}\cdot\left(\max_{z\in\Omega}f(z)-\min_{x\in\Omega}f(x)\right)\enspace.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+We can think 
+\begin_inset Formula $\mathcal{V}(E)$
+\end_inset
+
+ as some way to measure the size of 
+\begin_inset Formula $E$
+\end_inset
+
+.
+ It can be radius, mean-width or any other way to measure 
+\begin_inset Quotes eld
+\end_inset
+
+size
+\begin_inset Quotes erd
+\end_inset
+
+.
+ For the ellipsoid method, we use 
+\begin_inset Formula $\mathcal{V}(E)=\vol(E)^{\frac{1}{n}}$
+\end_inset
+
+ because we have proved the volume decreases in Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:ellipsoid_vol_decrease"
+
+\end_inset
+
+.
+ We raise the volume to 
+\begin_inset Formula $\frac{1}{n}$
+\end_inset
+
+-th power to satisfy linearity.
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ be any minimizer of 
+\begin_inset Formula $f$
+\end_inset
+
+ over 
+\begin_inset Formula $\Omega$
+\end_inset
+
+.
+ For any 
+\begin_inset Formula $\alpha>\frac{\mathcal{V}(E^{(k)})}{\mathcal{V}(\Omega)}$
+\end_inset
+
+ and 
+\begin_inset Formula $S=(1-\alpha)x^{*}+\alpha\Omega$
+\end_inset
+
+.
+ By the linearity of 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+, we have that 
+\begin_inset Formula 
+\[
+\mathcal{V}(S)=\alpha\mathcal{V}(\Omega)>\mathcal{V}(E^{(k)})
+\]
+
+\end_inset
+
+Therefore, 
+\begin_inset Formula $S$
+\end_inset
+
+ is not a subset of 
+\begin_inset Formula $E^{(k)}$
+\end_inset
+
+ and hence there is a point 
+\begin_inset Formula $y\in S\backslash E^{(k)}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $y$
+\end_inset
+
+ is not in 
+\begin_inset Formula $E^{(k)}$
+\end_inset
+
+.
+ This means it is separated by the gradient at some step 
+\begin_inset Formula $i\leq k$
+\end_inset
+
+, namely
+\begin_inset Formula 
+\[
+\nabla f(x^{(i)})^{\top}(y-x^{(i)})>0.
+\]
+
+\end_inset
+
+By the convexity of 
+\begin_inset Formula $f$
+\end_inset
+
+, we have 
+\begin_inset Formula $f(x^{(i)})\leq f(y).$
+\end_inset
+
+ Since 
+\begin_inset Formula $y\in S$
+\end_inset
+
+, we have 
+\begin_inset Formula $y=(1-\alpha)x^{*}+\alpha z$
+\end_inset
+
+ for some 
+\begin_inset Formula $z\in\Omega$
+\end_inset
+
+.
+ Thus, the convexity of 
+\begin_inset Formula $f$
+\end_inset
+
+ implies that
+\begin_inset Formula 
+\[
+f(x^{(i)})\leq f(y)\leq(1-\alpha)f(x^{*})+\alpha f(z).
+\]
+
+\end_inset
+
+Therefore, we have
+\begin_inset Formula 
+\[
+\min_{i=1,2,\cdots k}f(x^{(i)})-\min_{x\in\Omega}f(x)\leq\alpha\left(\max_{z\in\Omega}f(z)-\min_{x\in\Omega}f(x)\right).
+\]
+
+\end_inset
+
+Since this holds for any 
+\begin_inset Formula $\alpha>\frac{\mathcal{V}(E^{(k)})}{\mathcal{V}(\Omega)}$
+\end_inset
+
+, we have the result.
+\end_layout
+
+\begin_layout Standard
+Combining Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:ellipsoid_vol_decrease"
+
+\end_inset
+
+ and Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:conv_opt"
+
+\end_inset
+
+, we have the following rate of convergence.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:ellipsoid"
+
+\end_inset
+
+Let 
+\begin_inset Formula $f$
+\end_inset
+
+ be a convex function on 
+\begin_inset Formula $\Rn$
+\end_inset
+
+, 
+\begin_inset Formula $E^{(0)}$
+\end_inset
+
+ be any initial ellipsoid and 
+\begin_inset Formula $\Omega\subset E^{(0)}$
+\end_inset
+
+ be any convex set.
+ Suppose that for any 
+\begin_inset Formula $x\in E^{(0)}$
+\end_inset
+
+, we can find, in time 
+\begin_inset Formula $\mathcal{T}$
+\end_inset
+
+, a nonzero vector 
+\begin_inset Formula $g(x)$
+\end_inset
+
+ such that 
+\begin_inset Formula 
+\[
+f(y)\geq f(x)\text{ for any }y\text{ such that }g(x)^{\top}(y-x)\geq0.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+Then, we have
+\begin_inset Formula 
+\[
+\min_{i=1,2,\cdots k}f(x^{(i)})-\min_{y\in\Omega}f(y)\leq\left(\frac{\vol(E^{(0)})}{\vol(\Omega)}\right)^{\frac{1}{n}}\exp\left(-\frac{k}{2n(n+1)}\right)\left(\max_{z\in\Omega}f(z)-\min_{x\in\Omega}f(x)\right)\enspace.
+\]
+
+\end_inset
+
+Furthermore, each iteration takes 
+\begin_inset Formula $O(n^{2}+\mathcal{T})$
+\end_inset
+
+ time.
+\end_layout
+
+\begin_layout Remark
+We usually obtain 
+\begin_inset Formula $g(x)$
+\end_inset
+
+ from a 
+\emph on
+separation oracle
+\emph default
+.
+\end_layout
+
+\begin_layout Proof
+Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:ellipsoid_vol_decrease"
+
+\end_inset
+
+ shows that the volume of the ellipsoid maintained decreases by 
+\begin_inset Formula $\exp(-\frac{1}{2n+2})$
+\end_inset
+
+ every iteration.
+ Hence, 
+\begin_inset Formula $\vol^{\frac{1}{n}}$
+\end_inset
+
+ decreases by 
+\begin_inset Formula $\exp(-\frac{1}{2n(n+1)})$
+\end_inset
+
+ every iteration.
+ The bound follows by applying Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:conv_opt"
+
+\end_inset
+
+ with 
+\begin_inset Formula $\mathcal{V}(E)\defeq\vol(E)^{\frac{1}{n}}$
+\end_inset
+
+.
+ Next, we note the proof of Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:conv_opt"
+
+\end_inset
+
+ only used the fact that one side of halfspace defined by the gradient has
+ higher value.
+ Therefore, we can replace the gradient with the vector 
+\begin_inset Formula $g(x)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+This theorem can be used to solve many problems in polynomial time.
+ As an illustration, we show how to solve linear programs in polynomial
+ time here.
+ 
+\end_layout
+
+\begin_layout Theorem
+Given a linear program 
+\begin_inset Formula $\min_{x\in\Omega}c^{\top}x$
+\end_inset
+
+ where 
+\begin_inset Formula $\Omega=\{x\text{ such that }Ax\geq b\}$
+\end_inset
+
+.
+ Let the diameter 
+\begin_inset Formula $R\defeq\max_{x\in\Omega}\norm x_{2}$
+\end_inset
+
+ and the volume radius 
+\begin_inset Formula $r=\vol(\Omega)^{\frac{1}{n}}$
+\end_inset
+
+.
+ Then, we can find 
+\begin_inset Formula $x$
+\end_inset
+
+ such that 
+\begin_inset Formula 
+\[
+f(x)-\min_{x\in\Omega}f(x)\leq\varepsilon\cdot(\max_{x\in\Omega}c^{\top}x-\min_{x\in\Omega}c^{\top}x)
+\]
+
+\end_inset
+
+in 
+\begin_inset Formula $O(n^{2}(n^{2}+\nnz(A))\log(\frac{R}{r\varepsilon}))$
+\end_inset
+
+ time where 
+\begin_inset Formula $\nnz(A)$
+\end_inset
+
+ is the number of non-zero elements in 
+\begin_inset Formula $A$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Remark
+If the dimension 
+\begin_inset Formula $n$
+\end_inset
+
+ is constant, this algorithm is nearly linear time (linear to the number
+ of constraints)!
+\end_layout
+
+\begin_layout Proof
+For the linear program 
+\begin_inset Formula $\min_{Ax\geq b}c^{\top}x$
+\end_inset
+
+, the function we want to minimize is
+\begin_inset Formula 
+\begin{equation}
+L(x)=c^{\top}x+\delta_{Ax\geq b}\quad\text{where}\quad\delta_{Ax\geq b}(x)=\begin{cases}
+0 & \text{if }a_{i}^{\top}x\geq b_{i}\text{ for all }i\\
++\infty & \text{otherwise.}
+\end{cases}.\label{eq:LP_func}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+For this function 
+\begin_inset Formula $L$
+\end_inset
+
+, we can use the separation oracle 
+\begin_inset Formula $g(x)=c$
+\end_inset
+
+ if 
+\begin_inset Formula $Ax\geq b$
+\end_inset
+
+ and 
+\begin_inset Formula $g(x)=-a_{i}$
+\end_inset
+
+ if 
+\begin_inset Formula $a_{i}^{\top}x<b$
+\end_inset
+
+.
+ If there are many violated constraints, any one of the corresponding 
+\begin_inset Formula $a_{i}$
+\end_inset
+
+'s will do.
+\end_layout
+
+\begin_layout Proof
+We can simply pick 
+\begin_inset Formula $E^{(0)}$
+\end_inset
+
+ be a unit ball centered at 
+\begin_inset Formula $0$
+\end_inset
+
+ with radius 
+\begin_inset Formula $R$
+\end_inset
+
+ and apply Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:ellipsoid"
+
+\end_inset
+
+ to find 
+\begin_inset Formula $x$
+\end_inset
+
+ such that
+\begin_inset Formula 
+\[
+f(x)-\min_{x\in\Omega}f(x)\leq\varepsilon(\max_{x\in\Omega}c^{\top}x-\min_{x\in\Omega}c^{\top}x)
+\]
+
+\end_inset
+
+in time 
+\begin_inset Formula $O(n^{2}(n^{2}+\nnz(A))\log(\frac{R}{r\varepsilon})).$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+To get the solution exactly, i.e., 
+\begin_inset Formula $\varepsilon=0$
+\end_inset
+
+, we need to assume the linear program has integral (or rational) coefficients
+ and the running time depends on the bound of the numbers in the matrix
+ 
+\begin_inset Formula $A$
+\end_inset
+
+ and the vectors 
+\begin_inset Formula $b$
+\end_inset
+
+ and 
+\begin_inset Formula $c$
+\end_inset
+
+.
+ It is still open how to solve linear programs in time bounded by a polynomial
+ in only the number of variables and constraints (and not the bit sizes
+ of the coefficients).
+ Such a running time is called 
+\emph on
+strongly polynomial
+\emph default
+.
+\end_layout
+
+\begin_layout Problem*
+Can we solve linear programs in strongly polynomial time?
+\end_layout
+
+\begin_layout Section
+Center of Gravity Method
+\end_layout
+
+\begin_layout Standard
+In the Ellipsoid method, we used an ellipsoid as the current set, and its
+ center as the next query point.
+\end_layout
+
+\begin_layout Standard
+In the center of gravity method, we start with any bounded convex set containing
+ a minimizer, e.g., a large enough cube, and the set maintained is simply
+ the intersection of all halfspaces used so far.
+ The query point will be the center of gravity (or barycenter) of the current
+ set.
+ The measure of progress will once again be the volume (or more precisely,
+ volume radius) of the current set.
+\end_layout
+
+\begin_layout Standard
+It is clear that the volume can only decrease in each iteration.
+ But at what rate? The following classical theorem shows that the volume
+ of the convex body decreases by at least a 
+\begin_inset Formula $1-\frac{1}{e}$
+\end_inset
+
+ factor when using the exact center of gravity.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:Grunbaum"
+
+\end_inset
+
+Let 
+\begin_inset Formula $K$
+\end_inset
+
+ be a convex body in 
+\begin_inset Formula $\R^{n}$
+\end_inset
+
+ with center of gravity 
+\begin_inset Formula $z$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $H$
+\end_inset
+
+ be any halfspace containing 
+\begin_inset Formula $z$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula 
+\[
+\vol(K\cap H)\ge\left(\frac{n}{n+1}\right)^{n}\vol(K).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note that the RHS is at least 
+\begin_inset Formula $1/e$
+\end_inset
+
+.
+ We prove the theorem later in this chapter.
+ Unfortunately, computing the center of gravity even of a polytope is #P-hard
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "rademacher2007approximating"
+literal "false"
+
+\end_inset
+
+.
+ For the purpose of efficient approximations, it is important to establish
+ a stable version of the theorem that does not require an exact center of
+ gravity.
+\end_layout
+
+\begin_layout Standard
+Recall that a nonnegative function is logconcave if its logarithm is concave,
+ i.e., for any 
+\begin_inset Formula $x,y\in\R^{n}$
+\end_inset
+
+ and any 
+\begin_inset Formula $\lambda\in[0,1]$
+\end_inset
+
+, 
+\begin_inset Formula 
+\[
+f(\lambda x+(1-\lambda)y)\ge f(x)^{\lambda}f(y)^{1-\lambda}.
+\]
+
+\end_inset
+
+We refer to Sections 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Logconcave-functions"
+
+\end_inset
+
+ for some background on logconcave functions.
+ A distribution 
+\begin_inset Formula $p$
+\end_inset
+
+ is 
+\emph on
+isotropic
+\emph default
+ if the mean of a random variable drawn from the distribution is zero and
+ the covariance is the identity matrix.
+\end_layout
+
+\begin_layout Standard
+The randomized center of gravity method defined as follows: Let 
+\begin_inset Formula $y^{1},\ldots,y^{N}$
+\end_inset
+
+ be uniform random points from 
+\begin_inset Formula $E^{(k)}$
+\end_inset
+
+ and define
+\begin_inset Formula 
+\begin{align*}
+x^{(k)} & =\frac{1}{N}\sum_{i=1}^{N}y^{i},\\
+E^{(k+1)} & =E^{(k)}\cap H^{(k)}
+\end{align*}
+
+\end_inset
+
+To prove its convergence, we will use a robust version of the following
+ classical theorem of Grunbaum.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:grun-1"
+
+\end_inset
+
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Robust Grunbaum
+\end_layout
+
+\end_inset
+
+Let 
+\begin_inset Formula $p$
+\end_inset
+
+ be an isotropic logconcave distribution, namely 
+\begin_inset Formula $\E_{x\sim p}x=0$
+\end_inset
+
+ and 
+\begin_inset Formula $\E_{x\sim p}x^{2}=1$
+\end_inset
+
+.
+ For any 
+\begin_inset Formula $\theta\in\R^{n}$
+\end_inset
+
+, 
+\begin_inset Formula $t\in\R$
+\end_inset
+
+ we have
+\begin_inset Formula 
+\[
+\P_{x\sim p}(x^{\top}\theta\geq t)\geq\frac{1}{e}-t.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+By taking the marginal with respect to the direction 
+\begin_inset Formula $\theta$
+\end_inset
+
+, we can assume the distribution is one-dimensional.
+ Let 
+\begin_inset Formula $P(t)=\P_{x\sim p}(x^{\top}\theta\le t)$
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula $P(t)$
+\end_inset
+
+ is the convolution of 
+\begin_inset Formula $p$
+\end_inset
+
+ and 
+\begin_inset Formula $1_{(-\infty,0]}$
+\end_inset
+
+.
+ Hence, it is logconcave (Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:marginal"
+
+\end_inset
+
+).
+ By some limit arguments, we can assume 
+\begin_inset Formula $P(-M)=0$
+\end_inset
+
+ and 
+\begin_inset Formula $P(M)=1$
+\end_inset
+
+ for some large enough 
+\begin_inset Formula $M$
+\end_inset
+
+ (to be rigorous, we do the proof below for finite 
+\begin_inset Formula $M$
+\end_inset
+
+ and a RHS 
+\begin_inset Formula $\epsilon(M)$
+\end_inset
+
+ instead of zero, then take the limit 
+\begin_inset Formula $M\rightarrow\infty$
+\end_inset
+
+).
+ Since 
+\begin_inset Formula $\E_{x\sim p}x=0$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+\int_{-M}^{M}tP'(t)\,dt=0
+\]
+
+\end_inset
+
+Integration by parts gives that 
+\begin_inset Formula $\int_{-M}^{M}P(t)dt=M$
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula $P(t)$
+\end_inset
+
+ is increasing logconcave, if 
+\begin_inset Formula $P(0)$
+\end_inset
+
+ is too small, it would make 
+\begin_inset Formula $\int_{-M}^{M}P(t)dt$
+\end_inset
+
+ too small.
+ To be precise, since 
+\begin_inset Formula $P$
+\end_inset
+
+ is logconcave, we have that
+\begin_inset Formula 
+\[
+-\log P(t)\geq-\log P(0)-\frac{P'(0)}{P(0)}t.
+\]
+
+\end_inset
+
+Or we simply write 
+\begin_inset Formula $P(t)\leq P(0)e^{\alpha t}$
+\end_inset
+
+ for some 
+\begin_inset Formula $\alpha$
+\end_inset
+
+.
+ Hence,
+\begin_inset Formula 
+\[
+M=\int_{-M}^{M}P(t)dt\leq\int_{-\infty}^{\frac{1}{\alpha}}P(0)e^{\alpha t}dt+\int_{1/\alpha}^{M}1dt=\frac{eP(0)}{\alpha}+M-\frac{1}{\alpha}.
+\]
+
+\end_inset
+
+This shows that 
+\begin_inset Formula $P(0)\geq\frac{1}{e}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Next, Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:logcon_max-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows that 
+\begin_inset Formula $\max_{x}p(x)\le1$
+\end_inset
+
+.
+ Therefore, the cumulative distribution 
+\begin_inset Formula $P$
+\end_inset
+
+ is 
+\begin_inset Formula $1$
+\end_inset
+
+-Lipschitz and we have
+\begin_inset Formula 
+\[
+\P_{x\sim p}(x^{\top}\theta\geq t)\ge\P_{x\sim p}(x^{\top}\theta\geq0)-t\geq\frac{1}{e}-t.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:logcon_max-1"
+
+\end_inset
+
+Let 
+\begin_inset Formula $p$
+\end_inset
+
+ be a one-dimensional isotropic logconcave density
+\begin_inset Formula $.$
+\end_inset
+
+ Then 
+\begin_inset Formula $\max p(x)\le1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+For a proof of this (and for other properties of logconcave functions),
+ we refer the reader to 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "lovasz2007geometry"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Exercise
+Give a short proof that 
+\begin_inset Formula $\max_{x}p(x)=O(1)$
+\end_inset
+
+ for any one-dimensional isotropic logconcave density.
+\end_layout
+
+\begin_layout Standard
+Using the robust Grunbaum theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:grun-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we get the following algorithm, which uses uniform random points from
+ the current set.
+ Obtaining such a random sample algorithmically is an interesting problem
+ that we will study in the second part of this book.
+\end_layout
+
+\begin_layout Lemma
+Suppose 
+\begin_inset Formula $y^{1},\ldots,y^{N}$
+\end_inset
+
+ are i.i.d.
+ uniform random points from a convex body 
+\begin_inset Formula $K$
+\end_inset
+
+ and 
+\begin_inset Formula $y=\frac{1}{N}\sum_{i=1}^{N}y^{i}$
+\end_inset
+
+.
+ Then for any halfspace 
+\begin_inset Formula $H$
+\end_inset
+
+ not containing 
+\begin_inset Formula $y$
+\end_inset
+
+, 
+\begin_inset Formula 
+\[
+\E(\vol(K\cap H))\le\left(1-\frac{1}{e}+\sqrt{\frac{n}{N}}\right)\vol(K).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Without loss of generality, we assume that 
+\begin_inset Formula $K$
+\end_inset
+
+ is in isotropic position, i.e., 
+\begin_inset Formula $\E_{K}(y^{i})=0$
+\end_inset
+
+ and 
+\begin_inset Formula $\E_{K}(y^{i}(y^{i})^{\top})=I$
+\end_inset
+
+.
+ Then we have 
+\begin_inset Formula $\E(y)=0$
+\end_inset
+
+ and
+\begin_inset Formula 
+\begin{align*}
+\E\norm y^{2} & =\frac{1}{N}\E\norm{y^{i}}^{2}=\frac{n}{N}.
+\end{align*}
+
+\end_inset
+
+Therefore,
+\begin_inset Formula 
+\[
+\E\norm y\le\sqrt{\E\left(\norm y^{2}\right)}=\sqrt{\frac{n}{N}}.
+\]
+
+\end_inset
+
+Thus, we can apply Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:grun-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ with 
+\begin_inset Formula $t=\sqrt{\frac{n}{N}}.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:conv_opt"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ readily gives the following guarantee for convex optimization, again using
+ volume radius as the measure of progress.
+\end_layout
+
+\begin_layout Theorem
+Let 
+\begin_inset Formula $f$
+\end_inset
+
+ be a convex function on 
+\begin_inset Formula $\Rn$
+\end_inset
+
+, 
+\begin_inset Formula $E^{(0)}$
+\end_inset
+
+ be any initial set and 
+\begin_inset Formula $\Omega\subset E^{(0)}$
+\end_inset
+
+ be any convex set.
+ Suppose that for any 
+\begin_inset Formula $x\in E^{(0)}$
+\end_inset
+
+, we can find a nonzero vector 
+\begin_inset Formula $g(x)$
+\end_inset
+
+ such that 
+\begin_inset Formula 
+\[
+f(y)\geq f(x)\text{ for any }y\text{ such that }g(x)^{\top}(y-x)\geq0.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+Then, for the center of gravity method with 
+\begin_inset Formula $N=10n$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+\E\min_{i=1,2,\cdots k}f(x^{(i)})-\min_{y\in\Omega}f(y)\leq\left(\frac{\vol(E^{(0)})}{\vol(\Omega)}\right)^{\frac{1}{n}}\left(0.95\right)^{\frac{k}{n}}\left(\max_{z\in\Omega}f(z)-\min_{x\in\Omega}f(x)\right)\enspace.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now, we give a geometric proof Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:Grunbaum"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Note that one can modify the proof of Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:grun-1"
+
+\end_inset
+
+ to get another proof.
+\end_layout
+
+\begin_layout Proof
+Without loss of generality, assume that the center of gravity of 
+\begin_inset Formula $K$
+\end_inset
+
+ is the origin and 
+\begin_inset Formula $H$
+\end_inset
+
+ is the halfspace 
+\begin_inset Formula $\left\{ x:\:x_{1}\le0\right\} $
+\end_inset
+
+.
+ For each point 
+\begin_inset Formula $t\in\R$
+\end_inset
+
+, let 
+\begin_inset Formula $A(t)=K\cap\left\{ x:\ x_{1}=t\right\} $
+\end_inset
+
+ be the 
+\begin_inset Formula $(n-1)$
+\end_inset
+
+-dimensional slice of 
+\begin_inset Formula $K$
+\end_inset
+
+ with 
+\begin_inset Formula $x_{1}=t$
+\end_inset
+
+.
+ Define 
+\begin_inset Formula $r(t)$
+\end_inset
+
+ as the radius of the 
+\begin_inset Formula $(n-1)$
+\end_inset
+
+-dimensional ball with the same 
+\begin_inset Formula $(n-1)$
+\end_inset
+
+-dimensional volume as 
+\begin_inset Formula $A(t)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+The goal of the proof is to show that the smallest possible halfspace volume
+ is achieved for a cone by a cut perpendicular to its axis.
+ In the first step, we will symmetrize 
+\begin_inset Formula $K$
+\end_inset
+
+ as follows: replace each cross-section 
+\begin_inset Formula $A(t)$
+\end_inset
+
+ by a ball of the same volume, centered at 
+\begin_inset Formula $(t,0,\ldots,0)^{T}$
+\end_inset
+
+.
+ We claim that the resulting rotationally symmetric body is convex.
+ To see this, note that all we have to show is that the radius function
+ 
+\begin_inset Formula $r(t)$
+\end_inset
+
+ is concave.
+ For any 
+\begin_inset Formula $s,t\in\R,$
+\end_inset
+
+ and any 
+\begin_inset Formula $\lambda\in[0,1]$
+\end_inset
+
+, we have by convexity of 
+\begin_inset Formula $K$
+\end_inset
+
+ that
+\begin_inset Formula 
+\[
+\lambda A(s)+(1-\lambda)A(t)\subseteq A(\lambda s+(1-\lambda)t)
+\]
+
+\end_inset
+
+and by the Brunn-Minkowski theorem (Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:Brunn-Minkowski"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) applied to 
+\begin_inset Formula $A(s),A(t)$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+\vol_{n-1}(A(\lambda s+(1-\lambda)t))^{\frac{1}{n-1}}\ge\lambda\vol_{n-1}(A(s))^{\frac{1}{n-1}}+(1-\lambda)\vol_{n-1}(A(t))^{\frac{1}{n-1}}.
+\]
+
+\end_inset
+
+From this and the definition of 
+\begin_inset Formula $r(t)$
+\end_inset
+
+, it follows that
+\begin_inset Formula 
+\[
+r(\lambda s+(1-\lambda)t)\ge\lambda r(s)+(1-\lambda)r(t)
+\]
+
+\end_inset
+
+as desired.
+\end_layout
+
+\begin_layout Proof
+Next consider the subset 
+\begin_inset Formula $K_{1}=K\cap\left\{ x:\:x_{1}\le0\right\} $
+\end_inset
+
+.
+ We replace this subset with a cone 
+\begin_inset Formula $C$
+\end_inset
+
+ having the same base 
+\begin_inset Formula $A(0)$
+\end_inset
+
+ and apex at some point along the 
+\begin_inset Formula $e_{1}$
+\end_inset
+
+ axis so that the volume of the cone is the same as 
+\begin_inset Formula $\vol(K_{1}).$
+\end_inset
+
+ Using the concavity of the radial function, this transformation can only
+ decrease the center of gravity along 
+\begin_inset Formula $e_{1}$
+\end_inset
+
+.
+ Therefore, proving a lower bound on the transformed body 
+\begin_inset Formula $K_{1}$
+\end_inset
+
+ will give a lower bound for 
+\begin_inset Formula $K$
+\end_inset
+
+.
+ So assume we do this and the center of gravity is the origin.
+ Next, extend the cone to the right, so that it remains a rotational cone,
+ and the volume in the positive halfspace along 
+\begin_inset Formula $e_{1}$
+\end_inset
+
+ is the same as 
+\begin_inset Formula $\vol(K\setminus K_{1})$
+\end_inset
+
+.
+ Once again, the center of gravity can only move to the left, and so the
+ volume of 
+\begin_inset Formula $K_{1}$
+\end_inset
+
+ can only decrease by this transformation.
+ At the end we have shown that the lower bound for any convex body follows
+ by proving for a rotational cone with axis along the normal to the halfspace.
+ Now we compute the volume ratio:
+\begin_inset Formula 
+\[
+\frac{\vol(K_{1})}{\vol(K)}=\left(\frac{n}{n+1}\right)^{n}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Discussion
+\end_layout
+
+\begin_layout Standard
+In later chapters we will see how to implement each iteration of the center
+ of gravity method in polynomial time.
+ Computing the exact center of gravity is #P-hard even for a polytope 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "rademacher2007approximating"
+literal "false"
+
+\end_inset
+
+, but we can find an arbitrarily close approximation in randomized polynomial
+ time via sampling.
+ The method generalizes to certain noisy computation models, e.g., when the
+ oracle reports a function value that is within a bounded additive error,
+ i.e., a noisy function oracle.
+\end_layout
+
+\begin_layout Standard
+We will also see that the iteration complexity of the center of gravity
+ method, 
+\begin_inset Formula $O(n)$
+\end_inset
+
+ iterations, is asymptotically optimal.
+\end_layout
+
+\end_body
+\end_document

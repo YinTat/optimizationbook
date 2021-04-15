@@ -1,0 +1,1189 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{url}
+\usepackage{xargs}
+\usepackage[pdftex,dvipsnames]{xcolor}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\usepackage[lined,boxed,ruled,norelsize,algo2e]{algorithm2e}
+\usepackage[small,bf]{caption}
+\usepackage{tikz}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=red,
+    filecolor=red,
+    linkcolor=red,
+    urlcolor=red
+}
+
+
+
+\usepackage{fancybox}
+\usepackage{multirow}
+\usepackage{nicefrac}
+\usepackage{hyperref}
+
+
+\expandafter\def\expandafter\normalsize\expandafter{%
+    \normalsize
+%	    \setlength\abovedisplayskip{5pt}
+    \setlength\belowdisplayskip{5pt}
+    % \setlength\abovedisplayshortskip{5pt}
+    \setlength\belowdisplayshortskip{5pt}
+}
+
+\usepackage{tocloft}
+\setlength{\cftsecnumwidth}{2.8em}%
+
+%%%%%
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{fix-cm}
+\makeatletter
+\newcommand\HUGE{\@setfontsize\Huge{38}{47}}
+\makeatother
+
+\titleclass{\part}{top}
+\titleformat{\part}[display]
+  {\normalfont\HUGE\sffamily}{\partname\ \thepart}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\HUGE\bfseries\filleft}
+%\titlespacing*{\part} {0pt}{20pt}{40pt}
+\titlespacing*{\part} {0pt}{30pt}{50pt}
+
+% chapter heading formatting
+\titleformat{\chapter}[display]
+  {\normalfont\LARGE\sffamily}{\chaptertitlename\ \thechapter}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\LARGE\bfseries\filleft}
+% section heading formatting
+\titleformat{\section}
+  {\normalfont\Large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesection}{0.5em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesubsection}{0.5em}{}
+\titlespacing*{\chapter} {0pt}{20pt}{30pt}
+
+% header/footer
+\fancyhf{}
+\fancyhead[ER]{\footnotesize\sffamily\leftmark}
+\fancyhead[OL]{\footnotesize\sffamily\nouppercase\rightmark}
+\fancyhead[EL,OR]{\bfseries\thepage}
+
+\setcounter{secnumdepth}{3}
+\end_preamble
+\options openany
+\use_default_options false
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+theorems-sec
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding default
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 0
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic true
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip 0.1in
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Leverage Score Sampling
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Leverage-Score-Sampling"
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+I should put the Yuval proof here instead.
+ Make the parameter here more precise.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Here we give a way to reduce solving a tall linear regression system into
+ a sequence of submatrices:
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+\begin_inset CommandInset citation
+LatexCommand cite
+key "cohen2015uniform"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Given a matrix 
+\begin_inset Formula $A\in\R^{n\times d}$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $T(m)$
+\end_inset
+
+ be the cost of solving 
+\begin_inset Formula $B^{\top}Bx=b$
+\end_inset
+
+ among all 
+\begin_inset Formula $m$
+\end_inset
+
+ distinct subrows 
+\begin_inset Formula $B$
+\end_inset
+
+ of 
+\begin_inset Formula $A$
+\end_inset
+
+.
+ Then, we have that
+\begin_inset Formula 
+\[
+T(n)=O^{*}(\nnz(A)+T(O(d\log d))).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+Here we use 
+\begin_inset Formula $O^{*}$
+\end_inset
+
+ to emphasize there is some dependence on 
+\begin_inset Formula $\log(\frac{1}{\epsilon})$
+\end_inset
+
+ suppressed for notational simplicity.
+ Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:Richardson"
+
+\end_inset
+
+ shows that once we can solve the system with constant approximation, we
+ can repeat 
+\begin_inset Formula $\log(\frac{1}{\epsilon})$
+\end_inset
+
+ times to get an 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+-accurate solution.
+\end_layout
+
+\begin_layout Subsection
+Leverage scores
+\end_layout
+
+\begin_layout Standard
+The key concept in this reduction is leverage score.
+\end_layout
+
+\begin_layout Definition
+Given a matrix 
+\begin_inset Formula $A\in\R^{n\times d}$
+\end_inset
+
+, let 
+\begin_inset Formula $a_{i}^{\top}$
+\end_inset
+
+ be the 
+\begin_inset Formula $i^{th}$
+\end_inset
+
+ row of 
+\begin_inset Formula $A$
+\end_inset
+
+.
+ The leverage score of the 
+\begin_inset Formula $i^{th}$
+\end_inset
+
+ row of 
+\begin_inset Formula $A$
+\end_inset
+
+ is
+\begin_inset Formula 
+\[
+\sigma_{i}(A)\defeq a_{i}^{\top}(A^{\top}A)^{+}a_{i}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note that 
+\begin_inset Formula $\sigma(A)$
+\end_inset
+
+ is the diagonal of the projection matrix 
+\begin_inset Formula $A(A^{\top}A)^{+}A^{\top}$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $0\preceq A(A^{\top}A)^{+}A^{\top}\preceq I$
+\end_inset
+
+, we have that 
+\begin_inset Formula $0\leq\sigma_{i}(A)\leq1$
+\end_inset
+
+.
+ Moreover, since 
+\begin_inset Formula $A(A^{\top}A)^{+}A^{\top}$
+\end_inset
+
+ is a projection matrix, the sum of 
+\begin_inset Formula $A$
+\end_inset
+
+'s leverage scores (its trace) is equal to the rank of 
+\begin_inset Formula $A$
+\end_inset
+
+: 
+\begin_inset Formula 
+\begin{align}
+\sum_{i=1}^{n}\sigma_{i}(A)=\tr(A(A^{\top}A)^{+}A^{\top}) & =\text{rank}(A(A^{\top}A)^{+}A^{\top})=\text{rank}(A)\le d.\label{rank_bound}
+\end{align}
+
+\end_inset
+
+The leverage score measures the 
+\begin_inset Quotes eld
+\end_inset
+
+importance
+\begin_inset Quotes erd
+\end_inset
+
+ of a row in forming the row space of 
+\begin_inset Formula $A$
+\end_inset
+
+.
+ If a row has a component orthogonal to all other rows, its leverage score
+ is 
+\begin_inset Formula $1$
+\end_inset
+
+.
+ Removing it would decrease the rank of 
+\begin_inset Formula $A$
+\end_inset
+
+, completely changing its row space.
+ The 
+\emph on
+coherence
+\emph default
+ of 
+\begin_inset Formula $A$
+\end_inset
+
+ is 
+\begin_inset Formula $\norm{\sigma(A)}_{\infty}$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $A$
+\end_inset
+
+ has low coherence, no particular row is especially important.
+ If 
+\begin_inset Formula $A$
+\end_inset
+
+ has high coherence, it contains at least one row whose removal would significan
+tly affect the composition of 
+\begin_inset Formula $A$
+\end_inset
+
+'s row space.
+ The following two characterizations that helps with this intuition.
+ 
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "leverage_score_opt"
+
+\end_inset
+
+ For all 
+\begin_inset Formula $A\in\R^{n\times d}$
+\end_inset
+
+ and 
+\begin_inset Formula $i\in[n]$
+\end_inset
+
+ we have that
+\begin_inset Formula 
+\[
+\sigma_{i}(A)=\min_{A^{\top}x=a_{i}}\norm x_{2}^{2}.
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $a_{i}$
+\end_inset
+
+ is the 
+\begin_inset Formula $i^{th}$
+\end_inset
+
+ row of 
+\begin_inset Formula $A$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "leverage_score_opt_2"
+
+\end_inset
+
+ For all 
+\begin_inset Formula $A\in\R^{n\times d}$
+\end_inset
+
+ and 
+\begin_inset Formula $i\in[n]$
+\end_inset
+
+, we have that 
+\begin_inset Formula $\sigma_{i}(A)$
+\end_inset
+
+ is the smallest 
+\begin_inset Formula $t$
+\end_inset
+
+ such that 
+\begin_inset Formula 
+\begin{equation}
+a_{i}a_{i}^{\top}\preceq t\cdot A^{\top}A.\label{eq:leverage_score_spectral_upper}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Sampling rows from 
+\begin_inset Formula $A$
+\end_inset
+
+ according to their exact leverage scores gives a spectral approximation
+ for 
+\begin_inset Formula $A$
+\end_inset
+
+ with high probability.
+ Sampling by leverage score overestimates also suffices.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:leveragescoresampling"
+
+\end_inset
+
+Given a vector 
+\begin_inset Formula $u$
+\end_inset
+
+ of leverage score overestimates, i.e., 
+\begin_inset Formula $\sigma_{i}(A)\le u_{i}$
+\end_inset
+
+ for all 
+\begin_inset Formula $i$
+\end_inset
+
+, define 
+\begin_inset Formula 
+\[
+X=\frac{1}{p_{i}}a_{i}a_{i}^{\top}\quad\mbox{ with probability }p_{i}=\frac{u_{i}}{\norm u_{1}}.
+\]
+
+\end_inset
+
+For 
+\begin_inset Formula $T=\Omega(\frac{\norm u_{1}\log n}{\varepsilon^{2}})$
+\end_inset
+
+, with probability 
+\begin_inset Formula $1-\frac{1}{n^{O(1)}}$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+(1-\varepsilon)A^{\top}A\preceq\frac{1}{T}\sum_{i=1}^{T}X_{i}\preceq(1+\varepsilon)A^{\top}A
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $X_{i}$
+\end_inset
+
+ are independent copies of 
+\begin_inset Formula $X$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Note that 
+\begin_inset Formula $\E X=A^{\top}A$
+\end_inset
+
+ and that 
+\begin_inset Formula 
+\[
+0\preceq X=\frac{1}{p_{i}}a_{i}a_{i}^{\top}\preceq\frac{\norm u_{1}}{\sigma_{i}}a_{i}a_{i}^{\top}\preceq\norm u_{1}\cdot A^{\top}A.
+\]
+
+\end_inset
+
+Now, the statement simply follows from the matrix Chernoff bound with 
+\begin_inset Formula $M_{k}=(A^{\top}A)^{-\frac{1}{2}}X_{k}(A^{\top}A)^{-\frac{1}{2}}$
+\end_inset
+
+ and 
+\begin_inset Formula $R=\norm u_{1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Combining Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:leveragescoresampling"
+
+\end_inset
+
+ and Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:Richardson"
+
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\begin{equation}
+T(n)=\text{cost of computing }\sigma_{i}+O^{*}(\nnz(A)+T(d\log d))\label{eq:TmnS1}
+\end{equation}
+
+\end_inset
+
+where we used that 
+\begin_inset Formula $\norm{\sigma}_{1}=O(d)$
+\end_inset
+
+.
+ However, computing 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ exactly is too expensive for many purposes.
+ In 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "spielmanS08sparsRes"
+literal "true"
+
+\end_inset
+
+, they showed that we can compute leverage scores approximately by solving
+ only polylogarithmically many regression problems.
+ This result uses the fact that 
+\begin_inset Formula 
+\[
+\sigma_{i}(A)=\norm{A(A^{\top}A)^{+}A^{\top}e_{i}}_{2}^{2}
+\]
+
+\end_inset
+
+and that by the Johnson-Lindenstrauss Lemma these lengths are preserved
+ up to a multiplicative error if we project these vectors to a random low-dimens
+ional subspace.
+\end_layout
+
+\begin_layout Standard
+In particular, this lemma shows that we can approximate 
+\begin_inset Formula $\sigma_{i}(A)$
+\end_inset
+
+ via 
+\begin_inset Formula $\norm{\Pi A(A^{\top}A)^{+}A^{\top}e_{i}}_{2}^{2}$
+\end_inset
+
+.
+ The benefit of this is that we can compute 
+\begin_inset Formula $\Pi A(A^{\top}A)^{+}$
+\end_inset
+
+ by solving 
+\begin_inset Formula $\frac{\log n}{\varepsilon^{2}}$
+\end_inset
+
+ many linear systems.
+ In other words, we have that 
+\begin_inset Formula 
+\[
+\text{cost of approximating }\sigma_{i}=O^{*}(\nnz(A))+O^{*}(T(n)).
+\]
+
+\end_inset
+
+Putting it into (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:TmnS1"
+
+\end_inset
+
+), we have this useless formula
+\begin_inset Formula 
+\[
+T(n)=O^{*}(\nnz(A)+T(n)+T(d\log d)).
+\]
+
+\end_inset
+
+This is a chicken and egg problem.
+ To solve an overdetermined system faster, we want to use leverage score
+ to sample the rows.
+ And to approximate the leverage score, we need to solve the original overdeterm
+ined system.
+ (Even worse, we need to solve it a few times.)
+\end_layout
+
+\begin_layout Subsection
+Uniform Sampling
+\end_layout
+
+\begin_layout Standard
+The key idea to break this chicken and egg problem is to use uniform sampling
+ of the rows of 
+\begin_inset Formula $A$
+\end_inset
+
+.
+ We define
+\begin_inset Formula 
+\[
+\sigma_{i,S}=a_{i}^{\top}(A_{S}^{\top}A_{S})^{-1}a_{i}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $A_{S}$
+\end_inset
+
+ is 
+\begin_inset Formula $A$
+\end_inset
+
+ restricted to rows in 
+\begin_inset Formula $S$
+\end_inset
+
+.
+ The set 
+\begin_inset Formula $S$
+\end_inset
+
+ will be a random sample of 
+\begin_inset Formula $k$
+\end_inset
+
+ rows of 
+\begin_inset Formula $A$
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula $A_{S}^{\top}A_{S}$
+\end_inset
+
+ is an overestimate of 
+\begin_inset Formula $\sigma_{i}$
+\end_inset
+
+.
+ Hence, it suffices to bound 
+\begin_inset Formula $\norm{\sigma_{i,S}}_{1}$
+\end_inset
+
+.
+ The key lemma is the following:
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:sigmaSi"
+
+\end_inset
+
+We have that
+\begin_inset Formula 
+\[
+\E_{|S|=k}\sum_{i=1}^{n}\sigma_{i,S\cup\{i\}}\leq\frac{nd}{k}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Note that
+\begin_inset Formula 
+\begin{align*}
+\E_{|S|=k}\sum_{i=1}^{n}\sigma_{i,S\cup\{i\}} & =\E_{|S|=k}\sum_{i\notin S}\sigma_{i,S\cup\{i\}}+\E_{|S|=k}\sum_{i\in S}\sigma_{i,S\cup\{i\}}.
+\end{align*}
+
+\end_inset
+
+Note that 
+\begin_inset Formula $\sum_{i\in S}\sigma_{i,S\cup\{i\}}=\sum_{i\in S}\sigma_{i,S}\leq d$
+\end_inset
+
+.
+ Hence, the second term is bounded by 
+\begin_inset Formula $n$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+For the first term, we note that 
+\begin_inset Quotes eld
+\end_inset
+
+sample a set 
+\begin_inset Formula $S$
+\end_inset
+
+ of size 
+\begin_inset Formula $k$
+\end_inset
+
+, then sample 
+\begin_inset Formula $i\notin S$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+ is same as 
+\begin_inset Quotes eld
+\end_inset
+
+sample a set 
+\begin_inset Formula $T$
+\end_inset
+
+ of size 
+\begin_inset Formula $k+1$
+\end_inset
+
+, then sample 
+\begin_inset Formula $i\in T$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Hence, we have
+\begin_inset Formula 
+\begin{align*}
+\E_{|S|=k}\E_{i\notin S}\sigma_{i,S\cup\{i\}} & =\E_{|T|=k+1}\E_{i\in T}\sigma_{i,T}\\
+ & \leq\E_{|T|=k+1}\frac{d}{k+1}=\frac{d}{k+1}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Hence, we have that
+\begin_inset Formula 
+\[
+\E_{|S|=k}\sum_{i=1}^{n}\sigma_{i,S\cup\{i\}}\leq\frac{d}{k+1}(n-k)+d=d\cdot\frac{n+1}{k+1}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Next, using Sherman-Morrison formula, we have that
+\begin_inset Formula 
+\[
+\sigma_{i,S\cup\{i\}}=\begin{cases}
+\sigma_{i,S} & \text{if }i\in S\\
+\frac{1}{1+\frac{1}{\sigma_{i,S}}} & \mbox{otherwise}
+\end{cases}.
+\]
+
+\end_inset
+
+Namely, we can compute 
+\begin_inset Formula $\sigma_{i,S\cup\{i\}}$
+\end_inset
+
+ using 
+\begin_inset Formula $\sigma_{i,S}$
+\end_inset
+
+.
+ Therefore, we have that
+\begin_inset Formula 
+\[
+\text{cost of approximating }\sigma_{i,S\cup\{i\}}=O^{*}(\nnz(A))+O^{*}(T(k)).
+\]
+
+\end_inset
+
+Using Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:sigmaSi"
+
+\end_inset
+
+, we have now
+\begin_inset Formula 
+\[
+T(n)=O^{*}(\nnz(A)+T(k)+T(\frac{nd}{k}\log d)).
+\]
+
+\end_inset
+
+Picking 
+\begin_inset Formula $k=\sqrt{nd\log d}$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+T(n)=O^{*}(\nnz(A)+T(\sqrt{nd\log d})).
+\]
+
+\end_inset
+
+Repeating this process 
+\begin_inset Formula $\tilde{O}(1)$
+\end_inset
+
+ times, we have
+\begin_inset Formula 
+\[
+T(n)=O^{*}(\nnz(A)+T(O(d\log d))).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Make the following better.
+\end_layout
+
+\begin_layout Subsection
+Low-rank approximation (in progress)
+\end_layout
+
+\begin_layout Plain Layout
+Here is another application of leverage score.
+ Suppose we are given a matrix 
+\begin_inset Formula $A$
+\end_inset
+
+ that is close to rank 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ Our goal is to find a subset 
+\begin_inset Formula $S$
+\end_inset
+
+ of rows of 
+\begin_inset Formula $A$
+\end_inset
+
+ and some diagonal 
+\begin_inset Formula $D$
+\end_inset
+
+ such that
+\begin_inset Formula 
+\begin{equation}
+(1-\varepsilon)AA^{\top}-\frac{\varepsilon}{k}\norm{A-A_{k}}_{F}^{2}\cdot I\preceq A_{S}^{\top}DA_{S}\preceq(1+\varepsilon)AA^{\top}+\frac{\varepsilon}{k}\norm{A-A_{k}}_{F}^{2}\cdot I\label{eq:rank_k_spectral}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $A_{k}$
+\end_inset
+
+ is the best rank 
+\begin_inset Formula $k$
+\end_inset
+
+ approximation to 
+\begin_inset Formula $A$
+\end_inset
+
+, namely 
+\begin_inset Formula $A_{k}=\argmin_{\text{rank}B=k}\norm{A-B}_{F}^{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+To understand the guarantee, we note that the additive error of 
+\begin_inset Formula $A_{S}^{\top}DA_{S}$
+\end_inset
+
+ and 
+\begin_inset Formula $AA^{\top}$
+\end_inset
+
+ on any rank 
+\begin_inset Formula $k$
+\end_inset
+
+ has nuclear norm 
+\begin_inset Formula $2\varepsilon\cdot\norm{A-A_{k}}_{F}^{2}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+To find a rank 
+\begin_inset Formula $k$
+\end_inset
+
+ matrix 
+\begin_inset Formula $B$
+\end_inset
+
+ such that 
+\begin_inset Formula $\norm{A-B}_{F}^{2}\leq(1+\varepsilon)\norm{A-A_{k}}_{F}^{2}$
+\end_inset
+
+ requires more calculations 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "cohen2017input"
+literal "true"
+
+\end_inset
+
+, so we focus on proving the guarantee (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:rank_k_spectral"
+
+\end_inset
+
+).
+ 
+\end_layout
+
+\begin_layout Plain Layout
+The idea of finding (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:rank_k_spectral"
+
+\end_inset
+
+) is this: given 
+\begin_inset Formula $\norm{A-A_{k}}_{F}^{2}$
+\end_inset
+
+, we can roughly think
+\begin_inset Formula 
+\[
+AA^{\top}=\text{rank }k\text{ matrix}\pm\frac{\norm{A-A_{k}}_{F}^{2}}{k}\cdot I.
+\]
+
+\end_inset
+
+If 
+\begin_inset Formula $AA^{\top}$
+\end_inset
+
+ is exactly rank 
+\begin_inset Formula $k$
+\end_inset
+
+, we would have 
+\begin_inset Formula $\sum_{i}\sigma_{i}(A)=k$
+\end_inset
+
+ and hence sampling from 
+\begin_inset Formula $\sigma_{i}(A)$
+\end_inset
+
+ would gives us a rank 
+\begin_inset Formula $\tilde{O}(k)$
+\end_inset
+
+ matrix that approximate 
+\begin_inset Formula $AA^{\top}$
+\end_inset
+
+ really well.
+ To avoid the effect of noise term, we consider the ridge leverage scores
+\begin_inset Formula 
+\[
+\sigma_{i}^{\lambda}(A)=a_{i}^{\top}(A^{\top}A+\lambda I)^{+}a_{i}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Again, to show how many samples we need, we need to compute 
+\begin_inset Formula $\norm{\sigma^{\lambda}}_{1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+We have that
+\begin_inset Formula 
+\[
+\sum_{i}\sigma_{i}^{\lambda}(A)\leq k+\frac{1}{\lambda}\norm{A-A_{k}}_{F}^{2}.
+\]
+
+\end_inset
+
+In particular, putting 
+\begin_inset Formula $\lambda=\frac{1}{k}\norm{A-A_{k}}_{F}^{2}$
+\end_inset
+
+ gives 
+\begin_inset Formula $\norm{\sigma^{\lambda}(A)}_{1}\leq2k$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $\mu_{i}$
+\end_inset
+
+ be the eigenvalues of 
+\begin_inset Formula $A^{\top}A$
+\end_inset
+
+.
+ Note that
+\begin_inset Formula 
+\begin{align*}
+\sum_{i}\sigma_{i}^{\lambda}(A) & =\tr((A^{\top}A+\lambda I)^{+}A^{\top}A)\\
+ & =\sum_{i}\frac{\mu_{i}}{\mu_{i}+\lambda}\\
+ & =k+\frac{1}{\lambda}\sum_{i>k}\mu_{i}\\
+ & =k+\frac{1}{\lambda}\norm{A-A_{k}}_{F}^{2}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Next, using this 
+\begin_inset Formula $\lambda$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+\frac{1}{\sigma_{i}^{\lambda}(A)}a_{i}a_{i}^{\top}\preceq A^{\top}A+\lambda I\preceq A^{\top}A+\frac{1}{k}\norm{A-A_{k}}_{F}^{2}\cdot I.
+\]
+
+\end_inset
+
+Using this and following the proof of Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:leveragescoresampling"
+
+\end_inset
+
+, we get (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:rank_k_spectral"
+
+\end_inset
+
+).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

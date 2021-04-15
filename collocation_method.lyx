@@ -1,0 +1,2455 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{url}
+\usepackage{xargs}
+\usepackage[pdftex,dvipsnames]{xcolor}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\usepackage[lined,boxed,ruled,norelsize,algo2e]{algorithm2e}
+\usepackage[small,bf]{caption}
+\usepackage{tikz}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=red,
+    filecolor=red,
+    linkcolor=red,
+    urlcolor=red
+}
+
+
+
+\usepackage{fancybox}
+\usepackage{multirow}
+\usepackage{nicefrac}
+\usepackage{hyperref}
+
+
+\expandafter\def\expandafter\normalsize\expandafter{%
+    \normalsize
+%	    \setlength\abovedisplayskip{5pt}
+    \setlength\belowdisplayskip{5pt}
+    % \setlength\abovedisplayshortskip{5pt}
+    \setlength\belowdisplayshortskip{5pt}
+}
+
+\usepackage{tocloft}
+\setlength{\cftsecnumwidth}{2.8em}%
+
+%%%%%
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{fix-cm}
+\makeatletter
+\newcommand\HUGE{\@setfontsize\Huge{38}{47}}
+\makeatother
+
+\titleclass{\part}{top}
+\titleformat{\part}[display]
+  {\normalfont\HUGE\sffamily}{\partname\ \thepart}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\HUGE\bfseries\filleft}
+%\titlespacing*{\part} {0pt}{20pt}{40pt}
+\titlespacing*{\part} {0pt}{30pt}{50pt}
+
+% chapter heading formatting
+\titleformat{\chapter}[display]
+  {\normalfont\LARGE\sffamily}{\chaptertitlename\ \thechapter}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\LARGE\bfseries\filleft}
+% section heading formatting
+\titleformat{\section}
+  {\normalfont\Large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesection}{0.5em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesubsection}{0.5em}{}
+\titlespacing*{\chapter} {0pt}{20pt}{30pt}
+
+% header/footer
+\fancyhf{}
+\fancyhead[ER]{\footnotesize\sffamily\leftmark}
+\fancyhead[OL]{\footnotesize\sffamily\nouppercase\rightmark}
+\fancyhead[EL,OR]{\bfseries\thepage}
+
+\setcounter{secnumdepth}{3}
+\end_preamble
+\options openany
+\use_default_options false
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+theorems-sec
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding default
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 0
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic true
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip 0.1in
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Collocation Method
+\end_layout
+
+\begin_layout Standard
+From the definition of (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:def_T_d_operator"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), we note that 
+\begin_inset Formula $\mathcal{T}_{\varphi}(x)$
+\end_inset
+
+ depends only on 
+\begin_inset Formula $x(t)$
+\end_inset
+
+ at 
+\begin_inset Formula $t=c_{j}$
+\end_inset
+
+.
+ Therefore, we can only need to calculate 
+\begin_inset Formula $\mathcal{T}_{\varphi}(x)(t)$
+\end_inset
+
+ at 
+\begin_inset Formula $t=c_{j}$
+\end_inset
+
+.
+ To simplify the notation, for any 
+\begin_inset Formula $x\in\mathcal{C}([0,T],\R^{d})$
+\end_inset
+
+, we define a corresponding matrix 
+\begin_inset Formula $[x]\in\R^{d\times D}$
+\end_inset
+
+ by 
+\begin_inset Formula $[x]_{i,j}=x_{i}(c_{j})$
+\end_inset
+
+.
+ For any 
+\begin_inset Formula $d\times D$
+\end_inset
+
+ matrix 
+\begin_inset Formula $X$
+\end_inset
+
+, we define 
+\begin_inset Formula $F(X,c)$
+\end_inset
+
+ as an 
+\begin_inset Formula $d\times D$
+\end_inset
+
+ matrix 
+\begin_inset Formula 
+\begin{equation}
+F(X,c)_{i,j}=F(X_{*,j},c_{j})_{i}.\label{eq:bF}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $X_{*,j}$
+\end_inset
+
+ is the 
+\begin_inset Formula $j$
+\end_inset
+
+-th column of 
+\begin_inset Formula $X$
+\end_inset
+
+.
+ We also define 
+\begin_inset Formula $A_{\varphi}$
+\end_inset
+
+ as a 
+\begin_inset Formula $D\times D$
+\end_inset
+
+ matrix 
+\begin_inset Formula 
+\begin{equation}
+(A_{\varphi})_{i,j}=\int_{0}^{c_{j}}\varphi_{i}(s)\d s.\label{eq:Aphi}
+\end{equation}
+
+\end_inset
+
+Note that 
+\begin_inset Formula $A_{\phi}$
+\end_inset
+
+ can be pre-computed.
+ By inspecting the definition of (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:def_T_d_operator"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:bF"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) and (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:Aphi"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), we have that 
+\begin_inset Formula 
+\[
+[\mathcal{T}_{\varphi}(x)]=v\cdot1_{D}^{\top}+F([x],c)A_{\varphi}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $1_{D}$
+\end_inset
+
+ is a column of all 1 vector of length 
+\begin_inset Formula $D$
+\end_inset
+
+.
+ Hence, we can apply the map 
+\begin_inset Formula $\mathcal{T}_{\varphi}$
+\end_inset
+
+ by simply multiply 
+\begin_inset Formula $F([x],c)$
+\end_inset
+
+ by a pre-compute 
+\begin_inset Formula $D\times D$
+\end_inset
+
+ matrix 
+\begin_inset Formula $A_{\varphi}$
+\end_inset
+
+.
+ For the basis we consider here, each iteration takes only 
+\begin_inset Formula $\tilde{O}(dD)$
+\end_inset
+
+ which is nearly linear in the size of our representation of the solution.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm2e}[H]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\mathtt{CollocationMethod\}}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetAlgoLined
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Input: 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $F,v,T,\text{\ensuremath{\varphi}},c$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+.
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $N=\left\lceil \log\left(\frac{T}{\epsilon}\max_{s\in[0,T]}\left\Vert F(v,s)\right\Vert \right)\right\rceil $
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $(A_{\varphi})_{i,j}=\int_{0}^{c_{j}}\varphi_{i}(s)\d s.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula $X^{(0)}\leftarrow v\cdot1_{D}^{\top}.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For 
+\begin_inset Formula $j=1,2,\cdots,N-1$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+X^{(j)}\leftarrow v\cdot1_{D}^{\top}+F(X^{(j-1)},c)A_{\varphi}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $x^{(N)}(t)\leftarrow v+\int_{0}^{t}\sum_{i=1}^{D}F(X_{*,i}^{(N)},c_{i})\varphi_{i}(s)\mathrm{d}s$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Return
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $x^{(N)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We state our guarantee for a first-order ODE.
+ It can be extended to a 
+\begin_inset Formula $k$
+\end_inset
+
+'th order ODE.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:first_order_ode"
+
+\end_inset
+
+ Let 
+\begin_inset Formula $x^{*}(t)$
+\end_inset
+
+ be the solution of an 
+\begin_inset Formula $d$
+\end_inset
+
+ dimensional ODE 
+\begin_inset Formula 
+\begin{align*}
+x(0)=v,\frac{\d x(t)}{\d t}=F(x(t),t)\quad\text{for all \ensuremath{0\leq t\leq T}}.
+\end{align*}
+
+\end_inset
+
+We are given a 
+\begin_inset Formula $D$
+\end_inset
+
+ dimensional subspace 
+\begin_inset Formula $\mathcal{V}\subset\mathcal{C}([0,T],\R)$
+\end_inset
+
+, node points 
+\begin_inset Formula $\{c_{j}\}_{j=1}^{D}\subset[0,T]$
+\end_inset
+
+ and a 
+\begin_inset Formula $\gamma_{\varphi}$
+\end_inset
+
+ bounded basis 
+\begin_inset Formula $\{\varphi_{j}\}_{j=1}^{D}\subset\mathcal{V}$
+\end_inset
+
+ (Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:basis"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ Let 
+\begin_inset Formula $L$
+\end_inset
+
+ and 
+\begin_inset Formula $\epsilon>0$
+\end_inset
+
+ be such that there exists a function 
+\begin_inset Formula $q\in\mathcal{V}$
+\end_inset
+
+ such that 
+\begin_inset Formula 
+\begin{align*}
+\left\Vert q(t)-\frac{\d}{\d t}x^{*}(t)\right\Vert \leq\frac{\epsilon}{T},\forall t\in[0,T]
+\end{align*}
+
+\end_inset
+
+and for any 
+\begin_inset Formula $y,z\in\R^{d}$
+\end_inset
+
+, 
+\begin_inset Formula 
+\begin{align*}
+\|F(y,t)-F(z,t)\|\leq L\|y-z\|,\forall t\in[0,T].
+\end{align*}
+
+\end_inset
+
+Assume 
+\begin_inset Formula $\gamma_{\varphi}LT\leq1/2$
+\end_inset
+
+.
+ Then Algorithm 
+\begin_inset Formula $\textsc{CollocationMethod}$
+\end_inset
+
+ outputs a function 
+\begin_inset Formula $x^{(N)}\in\mathcal{V}$
+\end_inset
+
+ such that 
+\begin_inset Formula 
+\begin{align*}
+\max_{t\in[0,T]}\|x^{(N)}(t)-x^{*}(t)\|\leq20\gamma_{\varphi}\epsilon
+\end{align*}
+
+\end_inset
+
+using 
+\begin_inset Formula $O\left(D\log\left(\frac{T}{\epsilon}\max_{s\in[0,T]}\left\Vert F(v,s)\right\Vert \right)\right)$
+\end_inset
+
+ evaluations of 
+\begin_inset Formula $F$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Next we state the general result for a 
+\begin_inset Formula $k$
+\end_inset
+
+-th order ODE.
+ We prove this via a reduction from higher order ODE to first-order ODE.
+ See the proof in Appendix
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:app_ode"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{theorem}[$k$-th order ODE]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:kth_order_ode"
+
+\end_inset
+
+ Let 
+\begin_inset Formula $x^{*}(t)\in\R^{d}$
+\end_inset
+
+ be the solution of the ODE 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%
+\backslash
+eqref{eq:kth_order_ode}.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+%\label{eq:kth_{o}rder_{o}de}
+\frac{\d^{k}}{\d t^{k}}x(t)= & ~F\left(\frac{\d^{k-1}}{\d t^{k-1}}x(t),\cdots,x(t),t\right)\\
+\frac{\d^{i}}{\d t^{i}}x(0)= & ~v_{i},\forall i\in\{k-1,\cdots,1,0\}.
+\end{align*}
+
+\end_inset
+
+where 
+\begin_inset Formula $F:\R^{kd+1}\rightarrow\R^{d}$
+\end_inset
+
+, 
+\begin_inset Formula $x(t)\in\R^{d}$
+\end_inset
+
+, and 
+\begin_inset Formula $v_{0},v_{1},\cdots,v_{k-1}\in\R^{d}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+We are given a 
+\begin_inset Formula $D$
+\end_inset
+
+ dimensional subspace 
+\begin_inset Formula $\mathcal{V}\subset\mathcal{C}([0,T],\R)$
+\end_inset
+
+, node points 
+\begin_inset Formula $\{c_{j}\}_{j=1}^{D}\subset[0,T]$
+\end_inset
+
+ and a 
+\begin_inset Formula $\gamma_{\varphi}$
+\end_inset
+
+ bounded basis 
+\begin_inset Formula $\{\varphi_{j}\}_{j=1}^{D}\subset\mathcal{V}$
+\end_inset
+
+ (Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:basis"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ Given some 
+\begin_inset Formula $L$
+\end_inset
+
+ and 
+\begin_inset Formula $\epsilon>0$
+\end_inset
+
+ such that
+\end_layout
+
+\begin_layout Plain Layout
+1.
+ For 
+\begin_inset Formula $i\in[k]$
+\end_inset
+
+, there exists a function 
+\begin_inset Formula $q^{(i)}\in\mathcal{V}$
+\end_inset
+
+ such that 
+\begin_inset Formula 
+\begin{align*}
+\left\Vert q^{(i)}(t)-\frac{\d^{i}}{\d t^{i}}x^{*}(t)\right\Vert \leq\frac{\epsilon}{T^{i}},\forall t\in[0,T].
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+2.
+ For any 
+\begin_inset Formula $y,z\in\R^{kd}$
+\end_inset
+
+, 
+\begin_inset Formula 
+\begin{align*}
+\|F(y,t)-F(z,t)\|\leq\sum_{i=1}^{k}L_{i}\|y_{i}(t)-z_{i}(t)\|,\forall t\in[0,T].
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Assume 
+\begin_inset Formula $\gamma_{\varphi}LT\leq1/8$
+\end_inset
+
+ with 
+\begin_inset Formula $L=\sum_{i=1}^{k}L_{i}^{1/i}$
+\end_inset
+
+.
+ Then, we can find functions 
+\begin_inset Formula $\{q^{(i)}\}_{i\in\{0,1,\cdots,k-1\}}\subset\mathcal{V}$
+\end_inset
+
+ such that 
+\begin_inset Formula 
+\begin{align*}
+\max_{t\in[0,T]}\left\Vert q^{(i)}(t)-\frac{\d^{i}}{\d t^{i}}x^{*}(t)\right\Vert _{p}=20(1+2k)\gamma_{\varphi}\frac{\epsilon}{T^{i}},\forall i\in\{0,1,\cdots,k-1\}.
+\end{align*}
+
+\end_inset
+
+The algorithm takes 
+\begin_inset Formula $O(D\log(C/\epsilon))$
+\end_inset
+
+ evaluations of 
+\begin_inset Formula $F$
+\end_inset
+
+ where 
+\begin_inset Formula 
+\[
+C=(4\gamma_{\varphi}T)^{k}\cdot\max_{s\in[0,T]}\left\Vert F(v_{k-1},v_{k-2},\cdots,v_{0},s)\right\Vert +\sum_{i=1}^{k-1}(4\gamma_{\varphi}T)^{i}\left\Vert v_{i}\right\Vert .
+\]
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{theorem}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Note that the statement is a bit awkward.
+ Instead of finding a function whose derivatives are same as the derivatives
+ of 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+, the algorithm approximates the derivatives of 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ individually.
+ This is because we do not know if derivatives/integrals of functions in
+ 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ remain in 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+.
+ For piece-wise polynomials, we can approximate the 
+\begin_inset Formula $j$
+\end_inset
+
+-th derivative of the solution by taking 
+\begin_inset Formula $(k-j)$
+\end_inset
+
+-th iterated integral of 
+\begin_inset Formula $q^{(k)}$
+\end_inset
+
+, which is still a piece-wise polynomial.
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%
+\backslash
+tat{Santosh: See if this explanation is clear.}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+ In section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:piecewise_poly"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we give a basis for piece-wise polynomials (Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:basis_piecewise_poly"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ Using this basis, we have the following Theorem.
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+define
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+thm:kthorderodepiecewise
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Theorem
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\family roman
+(
+\begin_inset Formula $k$
+\end_inset
+
+-th order ODE)
+\family default
+ Let 
+\begin_inset Formula $x^{*}(t)\in\R^{d}$
+\end_inset
+
+ be the solution of the ODE 
+\begin_inset Formula 
+\begin{align*}
+\frac{\d^{k}}{\d t^{k}}x(t)= & ~F\left(\frac{\d^{k-1}}{\d t^{k-1}}x(t),\cdots,x(t),t\right)\\
+\frac{\d^{i}}{\d t^{i}}x(0)= & ~v_{i},\forall i\in\{k-1,\cdots,1,0\}.
+\end{align*}
+
+\end_inset
+
+where 
+\begin_inset Formula $F:\R^{kd+1}\rightarrow\R^{d}$
+\end_inset
+
+, 
+\begin_inset Formula $x(t)\in\R^{d}$
+\end_inset
+
+, and 
+\begin_inset Formula $v_{0},v_{1},\cdots,v_{k-1}\in\R^{d}$
+\end_inset
+
+.
+ Given some 
+\begin_inset Formula $L$
+\end_inset
+
+ and 
+\begin_inset Formula $\epsilon>0$
+\end_inset
+
+ such that
+\end_layout
+
+\begin_layout Plain Layout
+1.
+ There exists a piece-wise polynomial 
+\begin_inset Formula $q(t)$
+\end_inset
+
+ such that 
+\begin_inset Formula $q(t)$
+\end_inset
+
+ on 
+\begin_inset Formula $[T_{j-1},T_{j}]$
+\end_inset
+
+ is a degree 
+\begin_inset Formula $D_{j}$
+\end_inset
+
+ polynomial with 
+\begin_inset Formula 
+\[
+0=T_{0}<T_{1}<\cdots<T_{n}=T
+\]
+
+\end_inset
+
+and that 
+\begin_inset Formula 
+\begin{align*}
+\left\Vert q(t)-\frac{\d^{k}}{\d t^{k}}x^{*}(t)\right\Vert \leq\frac{\epsilon}{T^{k}},\forall t\in[0,T]
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+2.
+ The algorithm knows about the intervals 
+\begin_inset Formula $[T_{j-1},T_{j}]$
+\end_inset
+
+ and the degree 
+\begin_inset Formula $D_{j}$
+\end_inset
+
+ for all 
+\begin_inset Formula $j\in[n]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+3.
+ For any 
+\begin_inset Formula $y,z\in\R^{kd}$
+\end_inset
+
+, 
+\begin_inset Formula 
+\begin{align*}
+\|F(y,t)-F(z,t)\|\leq\sum_{i=1}^{k}L_{i}\|y_{i}-z_{i}\|,\forall t\in[0,T].
+\end{align*}
+
+\end_inset
+
+Assume 
+\begin_inset Formula $LT\leq1/16000$
+\end_inset
+
+ with 
+\begin_inset Formula $L=\sum_{i=1}^{k}L_{i}^{1/i}$
+\end_inset
+
+.
+ Then, we can find a piece-wise polynomial 
+\begin_inset Formula $x(t)$
+\end_inset
+
+ such that 
+\begin_inset Formula 
+\begin{align*}
+\max_{t\in[0,T]}\left\Vert \frac{\d^{i}}{\d t^{i}}x(t)-\frac{\d^{i}}{\d t^{i}}x^{*}(t)\right\Vert _{p}\lesssim\frac{\epsilon k}{T^{i}},\forall i\in\{0,1,\cdots,k-1\}.
+\end{align*}
+
+\end_inset
+
+using 
+\begin_inset Formula $O(D\log(C/\epsilon))$
+\end_inset
+
+ evaluations of 
+\begin_inset Formula $F$
+\end_inset
+
+ with the size of basis 
+\begin_inset Formula $D=\sum_{i=1}^{n}(1+D_{i})$
+\end_inset
+
+ and 
+\begin_inset Formula 
+\[
+O\left(d\min\left(\sum_{i=1}^{n}(1+D_{i})^{2},D\log(CD/\epsilon)\right)\log(C/\epsilon)\right)
+\]
+
+\end_inset
+
+time where 
+\begin_inset Formula 
+\begin{align*}
+C=O(T)^{k}\cdot\max_{s\in[0,T]}\left\Vert F(v_{k-1},v_{k-2},\cdots,v_{0},s)\right\Vert +\sum_{i=1}^{k-1}O(T)^{i}\left\Vert v_{i}\right\Vert .
+\end{align*}
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+state
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+thm:kthorderodepiecewise
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{remark}
+\end_layout
+
+\end_inset
+
+ The two different runtime come from two different ways to the integrate
+ of basis in Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:basis_piecewise_poly"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The first one is an navie method which is good enough for all our application.
+ The second one follows from multipole method which gives an nearly linear
+ time to the size of the basis with an extra log dependence on the accuracy.
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{remark}
+\end_layout
+
+\end_inset
+
+ In the rest of this section, we prove the first-order guarantee, Theorem
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:first_order_ode"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Proof for first-order ODE
+\end_layout
+
+\begin_layout Standard
+First, we bound the Lipschitz constant of the map 
+\begin_inset Formula $\T_{\varphi}$
+\end_inset
+
+.
+ Unlike in the Picard-Lindelöf theorem, we are not able to get an improved
+ bound of the Lipschitz constant by composing many copies of 
+\begin_inset Formula $\T_{\varphi}$
+\end_inset
+
+.
+ Fortunately, the Lipschitz constant of the map 
+\begin_inset Formula $\T_{\varphi}$
+\end_inset
+
+ can be bounded.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:Lipschitz_Tphi"
+
+\end_inset
+
+ Given any norm 
+\begin_inset Formula $\|\cdot\|$
+\end_inset
+
+ on 
+\begin_inset Formula $\R^{d}$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $L$
+\end_inset
+
+ be the Lipschitz constant of 
+\begin_inset Formula $F$
+\end_inset
+
+ in 
+\begin_inset Formula $x$
+\end_inset
+
+, i.e.
+ 
+\begin_inset Formula 
+\[
+\|F(x,s)-F(y,s)\|\leq L\|x-y\|\quad\text{for all }x,y\in\R^{d},s\in[0,T].
+\]
+
+\end_inset
+
+Then, the Lipschitz constant of 
+\begin_inset Formula $\T_{\varphi}$
+\end_inset
+
+ in this norm is upper bounded by 
+\begin_inset Formula $\gamma_{\varphi}LT$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+For any 
+\begin_inset Formula $0\leq t\leq T$
+\end_inset
+
+, 
+\begin_inset Formula 
+\begin{align*}
+\|\T_{\varphi}(x)(t)-\T_{\varphi}(y)(t)\|= & ~\left\Vert \int_{0}^{t}\sum_{j=1}^{D}F(x(c_{j}),c_{j})\varphi_{j}(s)\d s-\int_{0}^{t}\sum_{j=1}^{D}F(y(c_{j}),c_{j})\varphi_{j}(s)\d s\right\Vert \\
+\leq & ~\sum_{j=1}^{D}\left|\int_{0}^{t}\varphi_{j}(s)\d s\right|\cdot\max_{t\in[0,T]}\|F(x(t),t)-F(y(t),t)\|\\
+\leq & ~\gamma_{\varphi}LT\cdot\max_{t\in[0,T]}\|x(t)-y(t)\|\\
+\leq & ~\gamma_{\varphi}LT\|x-y\|.
+\end{align*}
+
+\end_inset
+
+where the third step follows using 
+\begin_inset Formula $\sum_{j=1}^{D}|\int_{0}^{t}\varphi_{j}(s)\d s|\leq\gamma_{\varphi}T$
+\end_inset
+
+ for all 
+\begin_inset Formula $0\leq t\leq T$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+For the rest of the proof, let 
+\begin_inset Formula $x_{\varphi}^{*}$
+\end_inset
+
+ denote the fixed point of 
+\begin_inset Formula $\T_{\varphi}$
+\end_inset
+
+, i.e., 
+\begin_inset Formula $\T_{\varphi}(x_{\varphi}^{*})=x_{\varphi}^{*}$
+\end_inset
+
+.
+ The Banach fixed point theorem and Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:Lipschitz_Tphi"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ imply that 
+\begin_inset Formula $x_{\varphi}^{*}$
+\end_inset
+
+ exists and is unique if 
+\begin_inset Formula $T\leq\frac{1}{L\gamma_{\varphi}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ denote the solution of the ODE, i.e., the fixed point of 
+\begin_inset Formula $\T$
+\end_inset
+
+, with 
+\begin_inset Formula $\T(x^{*})=x^{*}$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $x^{(0)}$
+\end_inset
+
+ denote the initial solution given by 
+\begin_inset Formula $x^{(0)}(t)=v$
+\end_inset
+
+ and 
+\begin_inset Formula $x^{(N)}$
+\end_inset
+
+ denote the solution obtained by applying operator 
+\begin_inset Formula $\T_{\varphi}$
+\end_inset
+
+ for 
+\begin_inset Formula $N$
+\end_inset
+
+ times.
+ Note that 
+\begin_inset Formula $x^{(N)}(t)$
+\end_inset
+
+ is the output of 
+\shape smallcaps
+CollocationMethod
+\shape default
+.
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $q\in\mathcal{V}$
+\end_inset
+
+ denote an approximation of 
+\begin_inset Formula $\frac{\d}{\d t}x^{*}$
+\end_inset
+
+ such that 
+\begin_inset Formula 
+\begin{align*}
+\left\Vert q(t)-\frac{\d}{\d t}x^{*}(t)\right\Vert \leq & ~\frac{\epsilon}{T}.\forall t\in[0,T]
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The next lemma summarizes how these objects are related and will allow us
+ to prove the main guarantee for first-order ODEs.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:helper"
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%
+\backslash
+tat{Check at the end if we always use the first three lemma in order.}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+Let 
+\begin_inset Formula $L^{(j)}$
+\end_inset
+
+ be the Lipschitz constant of the map 
+\begin_inset Formula $\T_{\varphi}^{\circ j}$
+\end_inset
+
+.
+ Assume that 
+\begin_inset Formula $L^{(N)}\leq1/2$
+\end_inset
+
+.
+ Then, we have 
+\begin_inset Formula 
+\begin{eqnarray}
+\|x^{(N)}-x^{*}\| & \leq & L^{(N)}\|x^{(0)}-x^{*}\|+2\|x_{\varphi}^{*}-x^{*}\|,\label{cla:ode_1_claim_1}\\
+\|x_{\varphi}^{*}-x^{*}\| & \leq & 2\cdot\|\T_{\varphi}^{\circ N}(x^{*})-x^{*}\|,\label{cla:ode_1_claim_2}\\
+\|x^{*}-\T_{\varphi}^{\circ N}(x^{*})\| & \leq & \sum_{i=0}^{N-1}L^{(i)}\cdot\|x^{*}-\T_{\varphi}(x^{*})\|,\label{cla:ode_1_claim_3}\\
+\|x^{*}-\T_{\varphi}(x^{*})\| & \leq & 2\gamma_{\varphi}\cdot\epsilon.\label{cla:ode_1_claim_4}
+\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+We prove the claims in order.
+ For the first claim, 
+\begin_inset Formula 
+\begin{align*}
+\|x^{(N)}-x^{*}\|\leq & ~\|x^{(N)}-x_{\varphi}^{*}\|+\|x_{\varphi}^{*}-x^{*}\| & \text{~by~triangle~inequality}\\
+= & ~\|\T_{\varphi}^{\circ N}(x^{(0)})-\T_{\varphi}^{\circ N}(x_{\varphi}^{*})\|+\|x_{\varphi}^{*}-x^{*}\|\\
+\leq & ~L^{(N)}\|x^{(0)}-x_{\varphi}^{*}\|+\|x_{\varphi}^{*}-x^{*}\|\\
+\leq & ~L^{(N)}\|x^{(0)}-x^{*}\|+L^{(N)}\|x^{*}-x_{\varphi}^{*}\|+\|x_{\varphi}^{*}-x^{*}\|\\
+\leq & ~L^{(N)}\|x^{(0)}-x^{*}\|+2\|x_{\varphi}^{*}-x^{*}\|
+\end{align*}
+
+\end_inset
+
+where the last step follows by 
+\begin_inset Formula $L^{(N)}\leq1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+For the second claim, 
+\begin_inset Formula 
+\begin{align*}
+\|x_{\varphi}^{*}-x^{*}\|= & ~\|\T_{\varphi}^{\circ N}(x_{\varphi}^{*})-x^{*}\| & \text{~by~}x_{\varphi}^{*}=\T_{\varphi}^{\circ N}(x_{\varphi}^{*})\\
+\leq & ~\|\T_{\varphi}^{\circ N}(x_{\varphi}^{*})-\T_{\varphi}^{\circ N}(x^{*})\|+\|\T_{\varphi}^{\circ N}(x^{*})-x^{*}\| & \text{~by~triangle~inequality}\\
+\leq & ~L^{(N)}\cdot\|x_{\varphi}^{*}-x^{*}\|+\|\T_{\varphi}^{\circ N}(x^{*})-x^{*}\| & \text{~by the definition of \ensuremath{L^{(N)}}}\\
+\leq & ~\frac{1}{2}\|x_{\varphi}^{*}-x^{*}\|+\|\T_{\varphi}^{\circ N}(x^{*})-x^{*}\| & \text{~by~}L^{(N)}\leq1/2
+\end{align*}
+
+\end_inset
+
+For the third claim, 
+\begin_inset Formula 
+\begin{align*}
+\|x^{*}-\T_{\varphi}^{\circ N}(x^{*})\|\leq & ~\sum_{i=0}^{N-1}\|\T_{\varphi}^{\circ i}(x^{*})-\T_{\varphi}^{\circ(i+1)}(x^{*})\|\\
+\leq & ~\sum_{i=0}^{N-1}L^{(i)}\cdot\|x^{*}-\T_{\varphi}(x^{*})\|.
+\end{align*}
+
+\end_inset
+
+For the last claim, 
+\begin_inset Formula 
+\begin{align*}
+~\|x^{*}(t)-\T_{\varphi}(x^{*})(t)\|= & ~\|\T(x^{*})(t)-\T_{\varphi}(x^{*})(t)\|\\
+%
+= & ~\left\Vert \int_{0}^{t}F(x^{*}(s),s)\d s-\int_{0}^{t}\sum_{j=1}^{D}F(x^{*}(c_{j}),c_{j})\varphi_{j}(s)\d s\right\Vert \\
+%
+= & ~\left\Vert \int_{0}^{t}\frac{\d}{\d t}x^{*}(s)\d s-\int_{0}^{t}\sum_{j=1}^{D}\frac{\d}{\d t}x^{*}(c_{j})\varphi_{j}(s)\d s\right\Vert \\
+%
+\leq & ~\left\Vert \int_{0}^{t}(\frac{\d}{\d t}x^{*}(s)-q(s))\d s-\int_{0}^{t}\sum_{j=1}^{D}(\frac{\d}{\d t}x^{*}(c_{j})-q(c_{j}))\varphi_{j}(s)\d s\right\Vert \\
++ & ~\left\Vert \int_{0}^{t}q(s)\d s-\int_{0}^{t}\sum_{j=1}^{D}q(c_{j})\varphi_{j}(s)\d s\right\Vert \\
+%
+\leq & ~\int_{0}^{t}\left\Vert \frac{\d}{\d t}x^{*}(s)-q(s)\right\Vert \d s+\sum_{j=1}^{D}\left\Vert \frac{\d}{\d t}x^{*}(c_{j})-q(c_{j})\right\Vert \left|\int_{0}^{t}\varphi_{j}(s)\d s\right|+0\\
+\leq & ~(1+\gamma_{\varphi})\cdot\epsilon+0
+\end{align*}
+
+\end_inset
+
+where the first step uses 
+\begin_inset Formula ${\cal T}(x^{*})=x^{*}$
+\end_inset
+
+, the second step follows by the definition of 
+\begin_inset Formula ${\cal T}$
+\end_inset
+
+ and 
+\begin_inset Formula ${\cal T}_{\varphi}$
+\end_inset
+
+, the third step follows by 
+\begin_inset Formula $x^{*}(t)$
+\end_inset
+
+ is the solution of ODE, the fourth step follows by triangle inequality,
+ the second last step uses 
+\begin_inset Formula $q\in\mathcal{V}$
+\end_inset
+
+, and the last step follows from the assumption 
+\begin_inset Formula $\|\frac{\d}{\d t}x^{*}-q\|\leq\frac{\epsilon}{T}$
+\end_inset
+
+ and the definition of 
+\begin_inset Formula $\gamma_{\varphi}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Now, we are ready to prove Theorem
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:first_order_ode"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Using Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:helper"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we have 
+\begin_inset Formula 
+\begin{align*}
+\|x^{(N)}-x^{*}\|\leq & ~L^{(N)}\|x^{(0)}-x^{*}\|+2\|x_{\varphi}^{*}-x^{*}\| & \text{~by~Eq.~\eqref{cla:ode_1_claim_1}}\\
+\leq & ~L^{(N)}\|x^{(0)}-x^{*}\|+4\|\T_{\varphi}^{\circ N}(x^{*})-x^{*}\| & \text{~by~Eq.~\eqref{cla:ode_1_claim_2}}\\
+\leq & ~L^{(N)}\|x^{(0)}-x^{*}\|+4\sum_{i=0}^{N-1}L^{(i)}\cdot\|x^{*}-\T_{\varphi}(x^{*})\| & \text{~by~Eq.~\eqref{cla:ode_1_claim_3}}\\
+\leq & ~L^{(N)}\|x^{(0)}-x^{*}\|+8\sum_{i=0}^{N-1}L^{(i)}\cdot\gamma_{\varphi}\cdot\epsilon. & \text{~by~Eq.~\eqref{cla:ode_1_claim_4}}
+\end{align*}
+
+\end_inset
+
+Using the assumption that 
+\begin_inset Formula $\gamma_{\varphi}LT\leq\frac{1}{2}$
+\end_inset
+
+, Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:Lipschitz_Tphi"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows that 
+\begin_inset Formula $L^{(1)}\leq\frac{1}{2}$
+\end_inset
+
+ and hence 
+\begin_inset Formula $L^{(j)}\leq\frac{1}{2^{j}}$
+\end_inset
+
+.
+ Therefore, we have 
+\begin_inset Formula 
+\begin{equation}
+\|x^{(N)}-x^{*}\|\leq\frac{1}{2^{N}}\|x^{(0)}-x^{*}\|+16\gamma_{\varphi}\cdot\epsilon=\frac{1}{2^{N}}\|x^{*}-x^{*}(0)\|+16\gamma_{\varphi}\cdot\epsilon\label{eq:first_order_error}
+\end{equation}
+
+\end_inset
+
+To bound 
+\begin_inset Formula $\|x^{*}-x^{*}(0)\|$
+\end_inset
+
+, for any 
+\begin_inset Formula $0\leq t\leq T$
+\end_inset
+
+ 
+\begin_inset Formula 
+\[
+x^{*}(t)=x^{*}(0)+\int_{0}^{t}F(x^{*}(s),s)\d s.
+\]
+
+\end_inset
+
+Hence, we have that 
+\begin_inset Formula 
+\begin{align*}
+\|x^{*}(t)-x^{*}(0)\| & \leq\left\Vert \int_{0}^{T}F(x^{*}(0),s)\d s\right\Vert +\left\Vert \int_{0}^{t}\left(F(x^{*}(s),s)-F(x^{*}(0),s)\right)\d s\right\Vert \\
+ & \leq\left\Vert \int_{0}^{T}F(x^{*}(0),s)\d s\right\Vert +L\int_{0}^{t}\|x^{*}(s)-x^{*}(0)\|\d s.
+\end{align*}
+
+\end_inset
+
+Solving this integral inequality (see Lemma
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:exp_ODE"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), we have that 
+\begin_inset Formula 
+\[
+\|x^{*}(t)-x^{*}(0)\|\leq e^{Lt}\left\Vert \int_{0}^{T}F(x^{*}(0),s)\d s\right\Vert .
+\]
+
+\end_inset
+
+Now, we use 
+\begin_inset Formula $LT\leq\frac{1}{2}$
+\end_inset
+
+ and get 
+\begin_inset Formula 
+\[
+\|x^{*}(t)-x^{*}(0)\|\leq2\left\Vert \int_{0}^{T}F(x^{*}(0),s)\d s\right\Vert .
+\]
+
+\end_inset
+
+Picking 
+\begin_inset Formula $N=\left\lceil \log_{2}\left(\frac{T}{\epsilon}\max_{s\in[0,T]}\left\Vert F(x^{*}(0),s)\right\Vert \right)\right\rceil $
+\end_inset
+
+, (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:first_order_error"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) shows that the error is less than 
+\begin_inset Formula $20\gamma_{\varphi}\epsilon$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:exp_ODE"
+
+\end_inset
+
+ Given a continuous function 
+\begin_inset Formula $v(t)$
+\end_inset
+
+ and positive scalars 
+\begin_inset Formula $\beta,\gamma$
+\end_inset
+
+ such that 
+\begin_inset Formula 
+\[
+0\leq v(t)\leq\beta+\gamma\int_{0}^{t}v(s)\d s.
+\]
+
+\end_inset
+
+We have that 
+\begin_inset Formula $v(t)\leq\beta e^{\gamma t}$
+\end_inset
+
+ for all 
+\begin_inset Formula $t\geq0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Exercise
+Prove the above lemma.
+\end_layout
+
+\begin_layout Subsection
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Subsection
+A basis for piece-wise polynomials
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:piecewise_poly"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+In this section, we discuss how to construct a bounded basis for low-degree
+ piece-wise polynomials.
+ We are given 
+\begin_inset Formula $n$
+\end_inset
+
+ intervals 
+\begin_inset Formula $\{[I_{i-1},I_{i}]\}_{i=1}^{n}$
+\end_inset
+
+ where 
+\begin_inset Formula $I_{0}=0$
+\end_inset
+
+ and 
+\begin_inset Formula $I_{n}=T$
+\end_inset
+
+.
+ In the 
+\begin_inset Formula $i^{th}$
+\end_inset
+
+ interval 
+\begin_inset Formula $[I_{i-1},I_{i}]$
+\end_inset
+
+, we represent the function by a degree 
+\begin_inset Formula $D_{i}$
+\end_inset
+
+ polynomial.
+ Formally, we define the function subspace by 
+\begin_inset Formula 
+\begin{align}
+\mathcal{V} & \defeq\bigoplus_{i=1}^{n}\mathcal{V}_{i}\quad\text{with}\quad\mathcal{V}_{i}\defeq\left\{ \left(\sum_{j=0}^{D_{i}}\alpha_{j}t^{j}\right)\cdot1_{[I_{i-1},I_{i}]}:\alpha_{j}\in\R\right\} .\label{eq:piece_wise_poly}
+\end{align}
+
+\end_inset
+
+The following Lemma shows we can construct the basis for 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ by concatenating the basis for 
+\begin_inset Formula $\mathcal{V}_{i}$
+\end_inset
+
+.
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lemma}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:concat_basis"
+
+\end_inset
+
+For 
+\begin_inset Formula $i\in[n]$
+\end_inset
+
+, we are given a 
+\begin_inset Formula $\gamma_{i}$
+\end_inset
+
+ bounded basis 
+\begin_inset Formula $\{\varphi_{j,i}\}_{j=0}^{D_{i}}$
+\end_inset
+
+ for the subspace 
+\begin_inset Formula $\mathcal{V}_{i}\subset\mathcal{C}([I_{i-1},I_{i}],\R)$
+\end_inset
+
+ on nodes point 
+\begin_inset Formula $\{c_{j,i}\}_{j=0}^{D_{i}}$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula $\{\varphi_{j,i}\}_{i,j}$
+\end_inset
+
+ is a 
+\begin_inset Formula $\sum_{i=1}^{n}\gamma_{i}(I_{i}-I_{i-1})$
+\end_inset
+
+ bounded basis for the subspace 
+\begin_inset Formula $\bigoplus_{i=1}^{n}\mathcal{V}_{i}\subset\mathcal{C}([I_{0},I_{n}],\R)$
+\end_inset
+
+.
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lemma}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{proof}
+\end_layout
+
+\end_inset
+
+ For any 
+\begin_inset Formula $t\geq0$
+\end_inset
+
+, we have 
+\begin_inset Formula 
+\begin{align*}
+\sum_{i=1}^{n}\sum_{j=0}^{D_{i}}\left|\int_{I_{0}}^{t}\varphi_{i,j}(s)\d s\right| & \leq\sum_{i=1}^{n}\left(\sum_{j=0}^{D_{i}}\left|\int_{I_{i-1}}^{t}\varphi_{i,j}(s)\d s\right|1_{t\geq I_{i-1}}\right)\\
+ & \leq\sum_{i=1}^{n}\gamma_{i}(I_{i}-I_{i-1})
+\end{align*}
+
+\end_inset
+
+where we used that 
+\begin_inset Formula $\varphi_{i,j}$
+\end_inset
+
+ is supported on 
+\begin_inset Formula $[I_{i-1},I_{i}]$
+\end_inset
+
+ in the first inequality.
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{proof}
+\end_layout
+
+\end_inset
+
+ Next, we note that the boundedness for basis is shift and scale invariant.
+ Hence, we will focus on obtaining a basis for 
+\begin_inset Formula $(t-1)$
+\end_inset
+
+-degree polynomial on 
+\begin_inset Formula $[-1,1]$
+\end_inset
+
+ for notation convenience.
+\end_layout
+
+\begin_layout Plain Layout
+For 
+\begin_inset Formula $[-1,1]$
+\end_inset
+
+, we choose the node points 
+\begin_inset Formula $c_{j}=\cos(\frac{2j-1}{2t}\pi)$
+\end_inset
+
+ and the basis are 
+\begin_inset Formula 
+\[
+\varphi_{j}(x)=\frac{\sqrt{1-c_{j}^{2}}\cos(t\cos^{-1}x)}{t(x-c_{j})}.
+\]
+
+\end_inset
+
+It is easy to see that 
+\begin_inset Formula $\varphi_{j}(c_{i})=\delta_{i,j}$
+\end_inset
+
+.
+ To bound the integral, Lemma 91 in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "lv17a"
+literal "false"
+
+\end_inset
+
+ shows that 
+\begin_inset Formula 
+\[
+\left|\int_{-1}^{y}\varphi_{j}(x)dx\right|\leq\frac{2000}{t}\text{ for all }y\in[-1,1].
+\]
+
+\end_inset
+
+Summing it over 
+\begin_inset Formula $t$
+\end_inset
+
+ basis functions, we have that 
+\begin_inset Formula $\gamma_{\varphi}\leq2000$
+\end_inset
+
+.
+ Together with Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:concat_basis"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we have the following result: 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lemma}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:basis_piecewise_poly"
+
+\end_inset
+
+Let 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+ be a subspace of piecewise polynomials on 
+\begin_inset Formula $[0,T]$
+\end_inset
+
+ with fixed nodes.
+ Then, there is a 
+\begin_inset Formula $2000$
+\end_inset
+
+ bounded basis 
+\begin_inset Formula $\{\varphi\}$
+\end_inset
+
+ for 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+.
+ Furthermore, for any vector 
+\begin_inset Formula $v$
+\end_inset
+
+, it takes 
+\begin_inset Formula $O(\sum_{i=1}^{n}(1+D_{i})^{2})$
+\end_inset
+
+ time to compute 
+\begin_inset Formula $v^{\top}A_{\varphi}$
+\end_inset
+
+ where 
+\begin_inset Formula $D_{i}$
+\end_inset
+
+ is the maximum degree of the 
+\begin_inset Formula $i$
+\end_inset
+
+-th piece.
+\end_layout
+
+\begin_layout Plain Layout
+Alternatively, one can find 
+\begin_inset Formula $u$
+\end_inset
+
+ such that 
+\begin_inset Formula $\|u-v^{\top}A_{\varphi}\|\leq\epsilon T\|v\|_{\infty}$
+\end_inset
+
+ in time 
+\begin_inset Formula 
+\[
+O\left(\mathrm{rank}(\mathcal{V})\log(\frac{\mathrm{rank}(\mathcal{V})}{\epsilon})\right).
+\]
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lemma}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{proof}
+\end_layout
+
+\end_inset
+
+ The bound follows from previous discussion.
+ For the computation cost, note that 
+\begin_inset Formula 
+\[
+(v^{\top}A_{\varphi})_{(i,j)}=\sum_{i',j'}\int_{0}^{c_{(i,j)}}v_{(i',j')}\varphi_{(i',j')}(s)\d s.
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $(i,j)$
+\end_inset
+
+ is the 
+\begin_inset Formula $j$
+\end_inset
+
+-th node at the 
+\begin_inset Formula $i$
+\end_inset
+
+-th piece.
+ For any 
+\begin_inset Formula $i\neq i'$
+\end_inset
+
+, the support of 
+\begin_inset Formula $\varphi_{(i',j')}(s)$
+\end_inset
+
+ is either disjoint from 
+\begin_inset Formula $[0,c_{(i,j)}]$
+\end_inset
+
+ (if 
+\begin_inset Formula $i'>i$
+\end_inset
+
+) or included in 
+\begin_inset Formula $[0,c_{(i,j)}]$
+\end_inset
+
+ (if 
+\begin_inset Formula $i'<i$
+\end_inset
+
+).
+ Hence, we have that 
+\begin_inset Formula 
+\[
+\int_{0}^{c_{(i,j)}}\varphi_{(i',j')}(s)\d s=\begin{cases}
+0 & \text{if }i'>i\\
+\int_{-\infty}^{\infty}\varphi_{(i',j')}(s)\d s & \text{if }i'<i
+\end{cases}.
+\]
+
+\end_inset
+
+Therefore, we have 
+\begin_inset Formula 
+\[
+(v^{\top}A_{\varphi})_{(i,j)}=\sum_{i'<i,j'}v_{(i',j')}\cdot\int_{-\infty}^{\infty}\varphi_{(i',j')}(s)\d s+\sum_{j'}v_{(i,j')}\cdot\int_{0}^{c_{(i,j)}}\varphi_{(i,j')}(s)\d s.
+\]
+
+\end_inset
+
+Note that 
+\begin_inset Formula $\int_{0}^{c_{(i,j)}}\varphi_{(i',j')}(s)\d s$
+\end_inset
+
+ can precomputed.
+ Since there are 
+\begin_inset Formula $\sum_{i=1}^{n}(1+D_{i})$
+\end_inset
+
+ many pairs of 
+\begin_inset Formula $(i,j)$
+\end_inset
+
+, the first term can be computed in 
+\begin_inset Formula $\sum_{i=1}^{n}(1+D_{i})$
+\end_inset
+
+ time.
+ Since there are 
+\begin_inset Formula $\sum_{i=1}^{n}(1+D_{i})^{2}$
+\end_inset
+
+ many pairs of 
+\begin_inset Formula $(i,j,j')$
+\end_inset
+
+, the second term can be computed in 
+\begin_inset Formula $\sum_{i=1}^{n}(1+D_{i})^{2}$
+\end_inset
+
+ time.
+\end_layout
+
+\begin_layout Plain Layout
+Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:multipole"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ gives another way to compute the integration and its runtime is 
+\begin_inset Formula 
+\[
+O\left(\mathrm{rank}(\mathcal{V})\log(\frac{\mathrm{rank}(\mathcal{V})}{\epsilon})\right).
+\]
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{proof}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{remark}
+\end_layout
+
+\end_inset
+
+ Experiment seems to suggest the basis we proposed is 
+\begin_inset Formula $1$
+\end_inset
+
+ bounded.
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{remark}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Here is the theorem we used above to compute the Lagrange polynomials.
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{theorem}[
+\backslash
+cite[Section 5]dutt1996fast]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:multipole"
+
+\end_inset
+
+ Let 
+\begin_inset Formula $\phi_{i}$
+\end_inset
+
+ be the Lagrange basis polynomials on the Chebyshev nodes 
+\begin_inset Formula $c_{j}=\cos(\frac{2j-1}{2t}\pi)$
+\end_inset
+
+ for 
+\begin_inset Formula $j\in[t]$
+\end_inset
+
+, namely, 
+\begin_inset Formula $\phi_{i}(s)=\prod_{j\neq i}\frac{s-c_{j}}{c_{i}-c_{j}}$
+\end_inset
+
+.
+ Given a polynomial 
+\begin_inset Formula $p(s)=\sum_{j=1}^{t}\alpha_{j}\phi_{j}(s)$
+\end_inset
+
+ represented by 
+\begin_inset Formula $\{\alpha_{j}\}_{j=1}^{t}$
+\end_inset
+
+, one can compute 
+\begin_inset Formula $\{\ell_{i}\}_{i=1}^{t}$
+\end_inset
+
+ such that 
+\begin_inset Formula 
+\[
+\left|\ell_{i}-\int_{0}^{c_{i}}p(s)ds\right|\leq\epsilon\|\alpha\|_{\infty}
+\]
+
+\end_inset
+
+in time 
+\begin_inset Formula $O(t\log(\frac{t}{\epsilon}))$
+\end_inset
+
+.
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{theorem}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

@@ -1,0 +1,2064 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{url}
+\usepackage{xargs}
+\usepackage[pdftex,dvipsnames]{xcolor}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\usepackage[lined,boxed,ruled,norelsize,algo2e]{algorithm2e}
+\usepackage[small,bf]{caption}
+\usepackage{tikz}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=red,
+    filecolor=red,
+    linkcolor=red,
+    urlcolor=red
+}
+
+
+
+\usepackage{fancybox}
+\usepackage{multirow}
+\usepackage{nicefrac}
+\usepackage{hyperref}
+
+
+\expandafter\def\expandafter\normalsize\expandafter{%
+    \normalsize
+%	    \setlength\abovedisplayskip{5pt}
+    \setlength\belowdisplayskip{5pt}
+    % \setlength\abovedisplayshortskip{5pt}
+    \setlength\belowdisplayshortskip{5pt}
+}
+
+\usepackage{tocloft}
+\setlength{\cftsecnumwidth}{2.8em}%
+
+%%%%%
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{fix-cm}
+\makeatletter
+\newcommand\HUGE{\@setfontsize\Huge{38}{47}}
+\makeatother
+
+\titleclass{\part}{top}
+\titleformat{\part}[display]
+  {\normalfont\HUGE\sffamily}{\partname\ \thepart}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\HUGE\bfseries\filleft}
+%\titlespacing*{\part} {0pt}{20pt}{40pt}
+\titlespacing*{\part} {0pt}{30pt}{50pt}
+
+% chapter heading formatting
+\titleformat{\chapter}[display]
+  {\normalfont\LARGE\sffamily}{\chaptertitlename\ \thechapter}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\LARGE\bfseries\filleft}
+% section heading formatting
+\titleformat{\section}
+  {\normalfont\Large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesection}{0.5em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesubsection}{0.5em}{}
+\titlespacing*{\chapter} {0pt}{20pt}{30pt}
+
+% header/footer
+\fancyhf{}
+\fancyhead[ER]{\footnotesize\sffamily\leftmark}
+\fancyhead[OL]{\footnotesize\sffamily\nouppercase\rightmark}
+\fancyhead[EL,OR]{\bfseries\thepage}
+
+\setcounter{secnumdepth}{3}
+\end_preamble
+\options openany
+\use_default_options false
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+theorems-sec
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding default
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 0
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic true
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip 0.1in
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Accelerated Gradient Descent via Plane Search
+\end_layout
+
+\begin_layout Standard
+According to legend, the first proof for accelerated gradient descent is
+ due to Nemirovski in the 70s.
+ The first proof involves a 
+\begin_inset Formula $2$
+\end_inset
+
+-dimensional plane search subroutine.
+ Later on this was improved to line search and finally Nesterov showed how
+ to get rid of line search in 1982.
+ We change the proof slightly to get rid of all uses of parameters.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm2e}[H]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\mathtt{NemAGD}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetAlgoLined
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Input:
+\series default
+ Initial point 
+\begin_inset Formula $x^{(1)}\in\Rn$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+For{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $k=1,2,\cdots$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $x^{(k)+}\leftarrow\text{argmin}_{x=x^{(k)}+t\nabla f(x^{(k)})}f(x).$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $P^{(k)}\leftarrow x^{(1)}+\mathrm{span}(x^{(k)+}-x^{(1)},\sum_{s=1}^{k}\frac{\nabla f(x^{(s)})}{\|\nabla f(x^{(s)})\|})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tcp{
+\end_layout
+
+\end_inset
+
+Alternatively, one can use 
+\begin_inset Formula $P^{(k)}\leftarrow x^{(k)}+\mathrm{span}(x^{(k)}-x^{(1)},\nabla f(x^{(k)}),\sum_{s=1}^{k}\frac{\nabla f(x^{(s)})}{\|\nabla f(x^{(s)})\|})$
+\end_inset
+
+ without defining 
+\begin_inset Formula $x^{(k)+}$
+\end_inset
+
+.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $x^{(k+1)}=\arg\min_{x\in P^{(k)}}f(x)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+Assume that 
+\begin_inset Formula $f$
+\end_inset
+
+ is convex with 
+\begin_inset Formula $\nabla^{2}f(x)\preceq L\cdot I$
+\end_inset
+
+ for all 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ Then, we have that 
+\begin_inset Formula 
+\[
+f(x^{(k)})-f(x^{*})\lesssim\frac{L\|x^{*}-x^{(1)}\|^{2}}{k^{2}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $\delta_{k}=f(x^{(k)})-f(x^{*})$
+\end_inset
+
+.
+ By the convexity of 
+\begin_inset Formula $f$
+\end_inset
+
+, we have
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula 
+\begin{align*}
+\delta_{k} & \leq\nabla f(x^{(k)})^{\top}(x^{(k)}-x^{*})\\
+ & =\nabla f(x^{(k)})^{\top}(x^{(k)}-x^{(1)})+\nabla f(x^{(k)})^{\top}(x^{(1)}-x^{*}).
+\end{align*}
+
+\end_inset
+
+Since 
+\begin_inset Formula $x^{(k)}$
+\end_inset
+
+ is the minimizer on 
+\begin_inset Formula $P^{(k-1)}$
+\end_inset
+
+ which contains 
+\begin_inset Formula $x^{(1)}$
+\end_inset
+
+, we have 
+\begin_inset Formula $\nabla f(x^{(k)})^{\top}(x^{(k)}-x^{(1)})=0$
+\end_inset
+
+ and hence
+\begin_inset Formula 
+\[
+\delta_{k}\leq\nabla f(x^{(k)})^{\top}(x^{(1)}-x^{*}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $\lambda_{t}=\frac{1}{\|\nabla f(x^{(t)})\|}$
+\end_inset
+
+.
+ Note that
+\begin_inset Formula 
+\[
+\sum_{k=1}^{T}\lambda_{k}\delta_{k}\leq\left\langle \sum_{k=1}^{T}\frac{\nabla f(x^{(k)})}{\|\nabla f(x^{(k)})\|},x^{(1)}-x^{*}\right\rangle \leq\|x^{*}-x^{(1)}\|_{2}\cdot\norm{\sum_{k=1}^{T}\frac{\nabla f(x^{(k)})}{\|\nabla f(x^{(k)})\|}}_{2}.
+\]
+
+\end_inset
+
+Finally, we note that 
+\begin_inset Formula $\nabla f(x^{(k+1)})\perp P^{(k)}$
+\end_inset
+
+ and hence 
+\begin_inset Formula $\nabla f(x^{(k+1)})\perp\sum_{s=1}^{k}\frac{\nabla f(x^{(s)})}{\|\nabla f(x^{(s)})\|}$
+\end_inset
+
+.
+ Therefore, we have 
+\begin_inset Formula 
+\[
+\norm{\sum_{k=1}^{T}\frac{\nabla f(x^{(k)})}{\|\nabla f(x^{(k)})\|}}_{2}^{2}=\sum_{k=1}^{T}\norm{\frac{\nabla f(x^{(k)})}{\|\nabla f(x^{(k)})\|}}_{2}^{2}=T.
+\]
+
+\end_inset
+
+Hence, we have
+\begin_inset Formula 
+\[
+\sum_{k=1}^{T}\lambda_{k}\delta_{k}\leq\sqrt{T}\cdot\|x^{*}-x^{(1)}\|_{2}.
+\]
+
+\end_inset
+
+Since 
+\begin_inset Formula $x^{(k)+}\in P$
+\end_inset
+
+, we have that 
+\begin_inset Formula 
+\[
+\delta_{k+1}=f(x^{(k+1)})-f(x^{*})\leq f(x^{(k)+})-f(x^{*})\leq\delta_{k}-\frac{1}{2L}\|\nabla f(x^{(k)})\|_{2}^{2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Hence, we have 
+\begin_inset Formula $\|\nabla f(x^{(k)})\|_{2}^{2}\leq2L(\delta_{k}-\delta_{k+1})$
+\end_inset
+
+.
+ This gives
+\begin_inset Formula 
+\[
+\sum_{k=1}^{T}\frac{\delta_{k}}{\sqrt{\delta_{k}-\delta_{k+1}}}\leq\sqrt{2LT}\cdot\|x^{*}-x^{(1)}\|_{2}
+\]
+
+\end_inset
+
+for all 
+\begin_inset Formula $T$
+\end_inset
+
+.
+ Solving this recursion gives the result.
+\end_layout
+
+\begin_layout Exercise
+Solve the recursion omitted at the end of the proof.
+\end_layout
+
+\begin_layout Standard
+Note that the proof above used only the fact that 
+\begin_inset Formula $\{x^{(1)},x^{(k)+},\sum_{s=1}^{k}\frac{\nabla f(x^{(s)})}{\|\nabla f(x^{(s)})\|}\}\subset P$
+\end_inset
+
+.
+ Therefore, one can put extra vectors in 
+\begin_inset Formula $P$
+\end_inset
+
+ to obtain extra features.
+ For example, if we use the subspace
+\begin_inset Formula 
+\[
+P=x^{(k)}+\mathrm{span}(x^{(k)}-x^{(1)},\nabla f(x^{(k)}),\sum_{s=1}^{k}\frac{\nabla f(x^{(s)})}{\|\nabla f(x^{(s)})\|},x^{(k)}-x^{(k-1)}),
+\]
+
+\end_inset
+
+then one can prove that this algorithm is equivalently to conjugate gradient
+ when 
+\begin_inset Formula $f$
+\end_inset
+
+ is a quadratic function.
+\end_layout
+
+\begin_layout Section
+Accelerated Gradient Descent
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Accelerated-Gradient-Descent"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Gradient Mapping
+\end_layout
+
+\begin_layout Standard
+To give a general version of acceleration, we consider problem of the form
+\begin_inset Formula 
+\[
+\min_{x}\phi(x)\defeq f(x)+h(x)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ is strongly convex and smooth and 
+\begin_inset Formula $h(x)$
+\end_inset
+
+ is convex.
+ We assume that we access the function 
+\begin_inset Formula $f$
+\end_inset
+
+ and 
+\begin_inset Formula $h$
+\end_inset
+
+ differently via:
+\end_layout
+
+\begin_layout Enumerate
+Let 
+\begin_inset Formula $\mathcal{T}_{f}$
+\end_inset
+
+ be the cost of computing 
+\begin_inset Formula $\nabla f(x)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Let 
+\begin_inset Formula $\mathcal{T}_{h,\lambda}$
+\end_inset
+
+ be the cost of minimizing 
+\begin_inset Formula $h(x)+\frac{\lambda}{2}\norm{x-c}_{2}^{2}$
+\end_inset
+
+ exactly.
+\end_layout
+
+\begin_layout Standard
+The idea is to move whatever we can optimize in 
+\begin_inset Formula $\phi$
+\end_inset
+
+ to 
+\begin_inset Formula $h$
+\end_inset
+
+ and hopefully this makes the remaining part of 
+\begin_inset Formula $\phi$
+\end_inset
+
+, 
+\begin_inset Formula $f$
+\end_inset
+
+, as smooth and strongly convex as possible.
+ To make the statement general, we only assume 
+\begin_inset Formula $h$
+\end_inset
+
+ is convex and hence 
+\begin_inset Formula $h$
+\end_inset
+
+ may not be differentiable.
+ To handle this issue, we need to define an approximate derivative of 
+\begin_inset Formula $h$
+\end_inset
+
+ that we can compute.
+\end_layout
+
+\begin_layout Definition
+We define the gradient step
+\begin_inset Formula 
+\[
+p_{x}=\argmin_{y}f(x)+\nabla f(x)^{\top}(y-x)+\frac{L}{2}\norm{y-x}^{2}+h(y)
+\]
+
+\end_inset
+
+and the gradient mapping
+\begin_inset Formula 
+\[
+g_{x}=L(x-p_{x}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+Note that if 
+\begin_inset Formula $h=0$
+\end_inset
+
+, then 
+\begin_inset Formula $p_{x}=x-\frac{1}{L}\nabla f(x)$
+\end_inset
+
+ and 
+\begin_inset Formula $g_{x}=\nabla f(x)$
+\end_inset
+
+.
+ In general, if 
+\begin_inset Formula $\phi\in\mathcal{C}^{2}$
+\end_inset
+
+, then we have that
+\begin_inset Formula 
+\[
+p_{x}=x-\frac{1}{L}\nabla\phi(x)+O(\frac{1}{L^{2}}).
+\]
+
+\end_inset
+
+Therefore, we have that 
+\begin_inset Formula $g_{x}=\nabla\phi(x)+O(\frac{1}{L})$
+\end_inset
+
+.
+ Hence, the gradient mapping is an approximation of the gradient of 
+\begin_inset Formula $\phi$
+\end_inset
+
+ that is computable in time 
+\begin_inset Formula $\mathcal{T}_{g}+\mathcal{T}_{h,L}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Definition
+The key lemma we use here is that 
+\begin_inset Formula $\phi$
+\end_inset
+
+ satisfies a lower bound defining using 
+\begin_inset Formula $g_{x}$
+\end_inset
+
+.
+ Ideally, we would love to get a lower bound as follows:
+\begin_inset Formula 
+\[
+\phi(z)\geq\phi(x)+g_{x}^{\top}(z-x)+\frac{\mu}{2}\norm{z-x}_{2}^{2}.
+\]
+
+\end_inset
+
+But it is WRONG.
+ If that was true for all 
+\begin_inset Formula $z$
+\end_inset
+
+, then we would have 
+\begin_inset Formula $g_{x}=\nabla\phi(x)$
+\end_inset
+
+.
+ However, if 
+\begin_inset Formula $\phi\in\mathcal{C}^{2}$
+\end_inset
+
+ is 
+\begin_inset Formula $\mu$
+\end_inset
+
+ strongly convex, then we have
+\begin_inset Formula 
+\begin{align}
+\phi(z) & \geq\phi(x)+\nabla\phi(x)^{\top}(z-x)+\frac{\mu}{2}\norm{z-x}_{2}^{2}\nonumber \\
+ & \geq\phi(x-\frac{1}{L}\nabla\phi(x))+\frac{1}{2L}\norm{\nabla\phi(x)}^{2}+\nabla\phi(x)^{\top}(z-x)+\frac{\mu}{2}\norm{z-x}_{2}^{2}.\label{eq:gradient_lower_bound}
+\end{align}
+
+\end_inset
+
+It turns out that this is true and is exactly what we need for proving gradient
+ descent, mirror descent and accelerated gradient descent.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:gradient_mapping_lower_bound"
+
+\end_inset
+
+Given 
+\begin_inset Formula $\phi=f+h$
+\end_inset
+
+.
+ Suppose that 
+\begin_inset Formula $f$
+\end_inset
+
+ is 
+\begin_inset Formula $\mu$
+\end_inset
+
+ strongly convex with 
+\begin_inset Formula $L$
+\end_inset
+
+-Lipschitz gradient.
+ Then, for any 
+\begin_inset Formula $z$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+\phi(z)\geq\phi(p_{x})+g_{x}^{\top}(z-x)+\frac{1}{2L}\norm{g_{x}}_{2}^{2}+\frac{\mu}{2}\norm{z-x}_{2}^{2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $\overline{f}(y)=f(x)+\nabla f(x)^{\top}(y-x)+\frac{L}{2}\norm{y-x}_{2}^{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $p_{t}=p_{x}+t(z-p_{x})$
+\end_inset
+
+.
+ Using that 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ is the minimizer of 
+\begin_inset Formula $\overline{f}+h$
+\end_inset
+
+, we have that 
+\begin_inset Formula 
+\[
+\overline{f}(p_{0})+h(p_{0})\leq\overline{f}(p_{t})+h(p_{t})\leq\overline{f}(p_{0})+\nabla\overline{f}(p_{0})^{\top}(p_{t}-p_{0})+\frac{L}{2}\norm{p_{t}-p_{0}}^{2}+h(p_{t}).
+\]
+
+\end_inset
+
+Hence, we have that
+\begin_inset Formula 
+\begin{align*}
+0 & \leq\nabla\overline{f}(p_{0})^{\top}(p_{t}-p_{0})+\frac{L}{2}\norm{p_{t}-p_{0}}^{2}+h(p_{t})-h(p_{0})\\
+ & \leq t\cdot\left(\nabla\overline{f}(p_{0})^{\top}(z-p_{0})+h(z)-h(p_{0})\right)+\frac{Lt^{2}}{2}\norm{z-p_{0}}^{2}.
+\end{align*}
+
+\end_inset
+
+Taking 
+\begin_inset Formula $t\rightarrow0^{+}$
+\end_inset
+
+, we have 
+\begin_inset Formula 
+\[
+\nabla\overline{f}(p_{x})^{\top}(z-p_{x})+h(z)-h(p_{x})\geq0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Expanding the term 
+\begin_inset Formula $\nabla\overline{f}(p_{x})$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+\nabla f(x)^{\top}(z-p_{x})+L(p_{x}-x)^{\top}(z-p_{x})+h(z)-h(p_{x})\geq0.
+\]
+
+\end_inset
+
+Equivalently,
+\begin_inset Formula 
+\begin{align*}
+h(z) & \geq h(p_{x})+\nabla f(x)^{\top}(p_{x}-z)+L(p_{x}-x)^{\top}(p_{x}-z)\\
+ & =h(p_{x})+\nabla f(x)^{\top}(p_{x}-z)+\frac{1}{L}\|g_{x}\|^{2}+L(p_{x}-x)^{\top}(x-z)\\
+ & =h(p_{x})+\nabla f(x)^{\top}(p_{x}-z)+\frac{1}{L}\|g_{x}\|^{2}+g_{x}^{\top}(z-x).
+\end{align*}
+
+\end_inset
+
+Using that 
+\begin_inset Formula 
+\[
+f(z)\geq f(x)+\nabla f(x)^{\top}(z-x)+\frac{\mu}{2}\|z-x\|^{2}
+\]
+
+\end_inset
+
+and that
+\begin_inset Formula 
+\[
+f(p_{x})\leq f(x)+\nabla f(x)^{\top}(p_{x}-x)+\frac{1}{2L}\|g_{x}\|^{2},
+\]
+
+\end_inset
+
+we have the result:
+\begin_inset Formula 
+\begin{align*}
+\phi(z) & \geq h(p_{x})+f(x)+\nabla f(x)^{\top}(p_{x}-x)+\frac{1}{L}\|g_{x}\|^{2}+g_{x}^{\top}(z-x)+\frac{\mu}{2}\|z-x\|^{2}\\
+ & \geq\phi(p_{x})+\frac{1}{2L}\|g_{x}\|^{2}+g_{x}^{\top}(z-x)+\frac{\mu}{2}\|z-x\|^{2}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+To prove this, naturally, we want to follow the calculation in (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:gradient_lower_bound"
+
+\end_inset
+
+) and this corresponds to the following:
+\begin_inset Formula 
+\begin{align*}
+\phi(z)-\frac{\mu}{2}\norm{z-x}_{2}^{2} & \geq f(x)+\nabla f(x)^{\top}(z-x)+h(z)\\
+ & =f(x)+\nabla f(x)^{\top}(p_{x}-x)+\nabla f(x)^{\top}(z-p_{x})+h(z)\\
+ & \geq f(p_{x})-\frac{L}{2}\norm{p_{x}-x}^{2}+\nabla f(x)^{\top}(z-p_{x})+h(z)\\
+ & =\phi(p_{x})-\frac{1}{2L}\norm{g_{x}}^{2}+\nabla f(x)^{\top}(z-p_{x})+h(z)-h(p_{x})
+\end{align*}
+
+\end_inset
+
+where we used 
+\begin_inset Formula $\Lip\nabla f\leq L$
+\end_inset
+
+.
+ Unfortunately, this is not what we needed.
+ Comparing this to what we need, it suffices to prove that
+\begin_inset Formula 
+\[
+-\frac{1}{2L}\norm{g_{x}}^{2}+\nabla f(x)^{\top}(z-p_{x})+h(z)-h(p_{x})\geq g_{x}^{\top}(z-x)+\frac{1}{2L}\norm{g_{x}}_{2}^{2}.
+\]
+
+\end_inset
+
+Let 
+\begin_inset Formula $\overline{f}(y)=f(x)+\nabla f(x)^{\top}(y-x)+\frac{L}{2}\norm{y-x}_{2}^{2}$
+\end_inset
+
+, then this is same as 
+\begin_inset Formula 
+\begin{equation}
+\nabla\overline{f}(p_{x})^{\top}(z-p_{x})+h(z)-h(p_{x})\geq0\label{eq:grad_map_claim}
+\end{equation}
+
+\end_inset
+
+Let 
+\begin_inset Formula $p_{t}=p_{x}+t(z-p_{x})$
+\end_inset
+
+.
+ Using that 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+ is the minimizer of 
+\begin_inset Formula $\overline{f}+h$
+\end_inset
+
+, we have that 
+\begin_inset Formula 
+\[
+\overline{f}(p_{0})+h(p_{0})\leq\overline{f}(p_{t})+h(p_{t})\leq\overline{f}(p_{0})+\nabla\overline{f}(p_{0})^{\top}(p_{t}-p_{0})+\frac{L}{2}\norm{p_{t}-p_{0}}^{2}+h(p_{t}).
+\]
+
+\end_inset
+
+Hence, we have that
+\begin_inset Formula 
+\begin{align*}
+0 & \leq\nabla\overline{f}(p_{0})^{\top}(p_{t}-p_{0})+\frac{L}{2}\norm{p_{t}-p_{0}}^{2}+h(p_{t})-h(p_{0})\\
+ & \leq t\cdot\left(\nabla\overline{f}(p_{0})^{\top}(z-p_{0})+h(z)-h(p_{0})\right)+\frac{Lt^{2}}{2}\norm{z-p_{0}}^{2}.
+\end{align*}
+
+\end_inset
+
+Taking 
+\begin_inset Formula $t\rightarrow0^{+}$
+\end_inset
+
+, we have (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:grad_map_claim"
+
+\end_inset
+
+).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The next lemma shows that 
+\begin_inset Formula $\norm{g_{x}}_{2}\leq2G$
+\end_inset
+
+ if 
+\begin_inset Formula $\phi$
+\end_inset
+
+ is 
+\begin_inset Formula $G$
+\end_inset
+
+-Lipschitz.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:Lipschitz_constant_g"
+
+\end_inset
+
+If 
+\begin_inset Formula $\phi$
+\end_inset
+
+ is 
+\begin_inset Formula $G$
+\end_inset
+
+-Lipschitz, then 
+\begin_inset Formula $\norm{g_{x}}_{2}\leq2G$
+\end_inset
+
+ for all 
+\begin_inset Formula $x$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+By the definition of gradient mapping (namely, 
+\begin_inset Formula $p_{x}$
+\end_inset
+
+ is the minimizer of a function), we have that
+\begin_inset Formula 
+\[
+f(x)+\nabla f(x)^{\top}(p_{x}-x)+\frac{L}{2}\norm{p_{x}-x}^{2}+h(p_{x})\leq f(x)+h(x).
+\]
+
+\end_inset
+
+Using 
+\begin_inset Formula $h(p_{x})\geq h(x)+\nabla h(x)^{\top}(p_{x}-x)$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+0\geq\nabla\phi(x)^{\top}(p_{x}-x)+\frac{L}{2}\norm{p_{x}-x}^{2}\geq-G\norm{p_{x}-x}_{2}+\frac{L}{2}\norm{p_{x}-x}^{2}.
+\]
+
+\end_inset
+
+Hence, we have that 
+\begin_inset Formula $\norm{p_{x}-x}_{2}\leq\frac{2}{L}G$
+\end_inset
+
+ and hence 
+\begin_inset Formula $\norm{g_{x}}_{2}\leq2G$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Gradient Descent Using Gradient Mapping
+\end_layout
+
+\begin_layout Standard
+Putting 
+\begin_inset Formula $z=x$
+\end_inset
+
+ in Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:gradient_mapping_lower_bound"
+
+\end_inset
+
+, we have the following:
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Gradient Descent Lemma
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:gradient_descent_lemma"
+
+\end_inset
+
+We have that
+\begin_inset Formula 
+\[
+\phi(p_{x})\leq\phi(x)-\frac{1}{2L}\norm{g_{x}}_{2}^{2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This shows that each step of the gradient step decreases the function value
+ by 
+\begin_inset Formula $\frac{1}{2L}\norm{g_{x}}_{2}^{2}$
+\end_inset
+
+.
+ Therefore, if the gradient is large, then we decrease the function value
+ by a lot.
+ On the other hand, Putting 
+\begin_inset Formula $z=x^{*}$
+\end_inset
+
+ for Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:gradient_mapping_lower_bound"
+
+\end_inset
+
+ shows that
+\begin_inset Formula 
+\[
+\phi(x^{*})\geq\phi(p_{x})+g_{x}^{\top}(x^{*}-x).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If the gradient is small and domain is bounded, this shows that we are close
+ to the optimal.
+ Combining these two facts, we can get the gradient descent.
+\end_layout
+
+\begin_layout Subsection
+Mirror Descent Using Gradient Mapping
+\end_layout
+
+\begin_layout Standard
+Consider the mirror descent as
+\begin_inset Formula 
+\begin{equation}
+x^{(k+1)}=x^{(k)}-\eta g_{x^{(k)}}.\label{eq:mirror_step}
+\end{equation}
+
+\end_inset
+
+The main difference between this and gradient descent is that we will take
+ a larger step size 
+\begin_inset Formula $\eta$
+\end_inset
+
+.
+ To analyze the mirror descent, we use Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:gradient_mapping_lower_bound"
+
+\end_inset
+
+ and the convexity of 
+\begin_inset Formula $\phi$
+\end_inset
+
+ to get that
+\begin_inset Formula 
+\begin{equation}
+\phi(\frac{1}{k}\sum_{i=1}^{k}p_{x^{(i)}})-\phi(x^{*})\leq\frac{1}{k}\sum_{i=1}^{k}(\phi(p_{x^{(i)}})-\phi(x^{*}))\leq\frac{1}{k}\sum_{i=1}^{k}g_{x^{(i)}}^{\top}(x^{(i)}-x^{*}).\label{eq:mirror_lemma}
+\end{equation}
+
+\end_inset
+
+Therefore, it suffices to upper bound 
+\begin_inset Formula $g_{x^{(i)}}^{\top}(x^{(i)}-x^{*})$
+\end_inset
+
+.
+ The following lemma shows that if 
+\begin_inset Formula $g_{x^{(i)}}^{\top}(x^{(i)}-x^{*})$
+\end_inset
+
+ is large, then either the gradient is large or the distance to optimum
+ moves a lot.
+ It turns out this holds for any vector 
+\begin_inset Formula $g$
+\end_inset
+
+, not necessarily an approximate gradient.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Mirror Descent Lemma
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:mirror_step"
+
+\end_inset
+
+Let 
+\begin_inset Formula $p=x-\eta g$
+\end_inset
+
+.
+ Then, we have that
+\begin_inset Formula 
+\[
+g^{\top}(x-u)=\frac{\eta}{2}\norm g_{2}^{2}+\frac{1}{2\eta}\left(\norm{x-u}_{2}^{2}-\norm{p-u}_{2}^{2}\right)
+\]
+
+\end_inset
+
+for any 
+\begin_inset Formula $u$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Algorithm and Analysis
+\end_layout
+
+\begin_layout Standard
+Recall Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:gradient_descent_lemma"
+
+\end_inset
+
+ shows that if the gradient is large, gradient descent makes a large progress.
+ On the other hand, if the gradient is small, (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:mirror_lemma"
+
+\end_inset
+
+) shows that mirror descent makes a large progress.
+ Therefore, it is natural to combine two approaches.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm2e}[H]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\mathtt{AGD}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetAlgoLined
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Input:
+\series default
+ Initial point 
+\begin_inset Formula $x^{(1)}\in\Rn$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $y^{(1)}\leftarrow x^{(1)}$
+\end_inset
+
+, 
+\begin_inset Formula $z^{(1)}\leftarrow x^{(1)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+For{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $k=1,2,\cdots,T$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $x^{(k+1)}\leftarrow\tau z^{(k)}+(1-\tau)y^{(k)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Perform a gradient step: 
+\begin_inset Formula $y^{(k+1)}=x^{(k+1)}-\frac{1}{L}g_{x^{(k+1)}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Perform a mirror step: 
+\begin_inset Formula $z^{(k+1)}=z^{(k)}-\eta g_{x^{(k+1)}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Return 
+\begin_inset Formula $\frac{1}{T}\sum_{k=1}^{T}p_{x^{(k+1)}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note that if 
+\begin_inset Formula $\tau=1$
+\end_inset
+
+, the algorithm is simply mirror descent and if 
+\begin_inset Formula $\tau=0$
+\end_inset
+
+, the algorithm is gradient descent.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:AGD"
+
+\end_inset
+
+Setting 
+\begin_inset Formula $\frac{1-\tau}{\tau}=\eta L$
+\end_inset
+
+ and 
+\begin_inset Formula $\eta=\frac{1}{\sqrt{\mu L}}$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+\phi(\frac{1}{T}\sum_{k=1}^{T}p_{x^{(k+1)}})-\phi(x^{*})\leq\frac{2}{T}\sqrt{\frac{L}{\mu}}\left(\phi(x^{(1)})-\phi(x^{*})\right).
+\]
+
+\end_inset
+
+In particular, if we restart the algorithm every 
+\begin_inset Formula $4\sqrt{\frac{L}{\mu}}$
+\end_inset
+
+ iterations, we can find 
+\begin_inset Formula $x$
+\end_inset
+
+ such that 
+\begin_inset Formula 
+\[
+\phi(x)-\phi(x^{*})\leq2(1-\sqrt{\frac{\mu}{L}})^{\Omega(T)}\left(\phi(x^{(1)})-\phi(x^{*})\right)
+\]
+
+\end_inset
+
+in 
+\begin_inset Formula $T$
+\end_inset
+
+ steps.
+ Furthermore, each step takes 
+\begin_inset Formula $\mathcal{T}_{f}+\mathcal{T}_{h,L}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:mirror_step"
+
+\end_inset
+
+ showed that
+\begin_inset Formula 
+\begin{align}
+g_{x^{(k+1)}}^{\top}(z^{(k)}-x^{*}) & \leq\frac{\eta}{2}\norm{g_{x^{(k+1)}}}_{2}^{2}+\frac{1}{2\eta}\left(\norm{z^{(k)}-x^{*}}_{2}^{2}-\norm{z^{(k+1)}-x^{*}}_{2}^{2}\right)\label{eq:AGD_1}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+This shows that if the mirror descent has large error 
+\begin_inset Formula $g_{x^{(k+1)}}^{\top}(z^{(k)}-x^{*})$
+\end_inset
+
+, then the gradient descent makes a large progress (
+\begin_inset Formula $\frac{\eta}{2}\norm{g_{x^{(k+1)}}}_{2}^{2}$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Proof
+To make the left-hand side usable, note that 
+\begin_inset Formula $x^{(k+1)}=z^{(k)}+\frac{1-\tau}{\tau}\cdot(y^{(k)}-x^{(k+1)})$
+\end_inset
+
+ and hence
+\begin_inset Formula 
+\begin{align*}
+g_{x^{(k+1)}}^{\top}(x^{(k+1)}-x^{*}) & =g_{x^{(k+1)}}^{\top}(z^{(k)}-x^{*})+\frac{1-\tau}{\tau}\cdot g_{x^{(k+1)}}^{\top}(y^{(k)}-x^{(k+1)})\\
+ & \leq g_{x^{(k+1)}}^{\top}(z^{(k)}-x^{*})+\frac{1-\tau}{\tau}(\phi(y^{(k)})-\phi(y^{(k+1)})-\frac{1}{2L}\norm{g_{x^{(k+1)}}}_{2}^{2})\\
+ & \leq\frac{\eta}{2}\norm{g_{x^{(k+1)}}}_{2}^{2}+\frac{1}{2\eta}\left(\norm{z^{(k)}-x^{*}}_{2}^{2}-\norm{z^{(k+1)}-x^{*}}_{2}^{2}\right)+\frac{1-\tau}{\tau}(\phi(y^{(k)})-\phi(y^{(k+1)})-\frac{1}{2L}\norm{g_{x^{(k+1)}}}_{2}^{2}).
+\end{align*}
+
+\end_inset
+
+where we used Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:gradient_mapping_lower_bound"
+
+\end_inset
+
+ in the middle and (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:AGD_1"
+
+\end_inset
+
+) at the end.
+\end_layout
+
+\begin_layout Proof
+Now, we set 
+\begin_inset Formula $\frac{1-\tau}{\tau}=\eta L$
+\end_inset
+
+ and get
+\begin_inset Formula 
+\[
+g_{x^{(k+1)}}^{\top}(x^{(k+1)}-x^{*})\leq\eta L(\phi(y^{(k)})-\phi(y^{(k+1)}))+\frac{1}{2\eta}\left(\norm{z^{(k)}-x^{*}}_{2}^{2}-\norm{z^{(k+1)}-x^{*}}_{2}^{2}\right).
+\]
+
+\end_inset
+
+Taking a sum on both side and let 
+\begin_inset Formula $\overline{x}=\frac{1}{T}\sum_{k=1}^{T}p_{x^{(k+1)}}$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\begin{align*}
+\phi(\overline{x})-\phi(x^{*}) & \leq\frac{1}{T}\sum_{k=1}^{T}(\phi(p_{x^{(k+1)}})-\phi(x^{*}))\\
+ & \leq\frac{1}{T}\sum_{k=1}^{T}g_{x^{(k+1)}}^{\top}(x^{(k+1)}-x^{*})\\
+ & \leq\frac{\eta L}{T}\left(\phi(y^{(1)})-\phi(y^{(T+1)})\right)+\frac{1}{2\eta T}\norm{z^{(1)}-x^{*}}_{2}^{2}\\
+ & \leq\left(\frac{\eta L}{T}+\frac{1}{2\eta T\mu}\right)\left(\phi(x^{(1)})-\phi(x^{*})\right)
+\end{align*}
+
+\end_inset
+
+The conclusion follows from our setting of 
+\begin_inset Formula $\eta$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Accelerated Coordinate Descent
+\end_layout
+
+\begin_layout Standard
+Recall from Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:coordinate_descent"
+
+\end_inset
+
+ that if 
+\begin_inset Formula $\frac{\partial^{2}}{\partial x_{i}^{2}}\ell(x)\leq L_{i}$
+\end_inset
+
+ for all 
+\begin_inset Formula $x$
+\end_inset
+
+ and that 
+\begin_inset Formula $\ell$
+\end_inset
+
+ is 
+\begin_inset Formula $\mu$
+\end_inset
+
+ strongly convex, then we can find 
+\begin_inset Formula $x^{(k)}$
+\end_inset
+
+ in 
+\begin_inset Formula $k$
+\end_inset
+
+ coordinate steps such that 
+\begin_inset Formula 
+\[
+\E\ell(x^{(k)})-\ell(x^{*})\leq(1-\frac{\mu}{L})^{\Omega(k)}(\ell(x^{(0)})-f(x^{*}))
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $L=\sum_{i}L_{i}$
+\end_inset
+
+.
+ Now, the really fun part is here.
+ Consider the function 
+\begin_inset Formula 
+\[
+\phi(x)=f(x)+h(x)\quad\text{with}\quad f(x)=\frac{\mu}{2}\norm x_{2}^{2}\text{ and }h(x)=\ell(x)-\frac{\mu}{2}\norm x_{2}^{2}.
+\]
+
+\end_inset
+
+Since 
+\begin_inset Formula $f$
+\end_inset
+
+ is 
+\begin_inset Formula $\mu+\frac{L}{n}$
+\end_inset
+
+ smooth (YES!, I know this is also 
+\begin_inset Formula $\mu$
+\end_inset
+
+ smooth) and 
+\begin_inset Formula $\mu$
+\end_inset
+
+ strongly convex and since 
+\begin_inset Formula $h$
+\end_inset
+
+ is convex, we apply Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:AGD"
+
+\end_inset
+
+ and get an algorithm that takes 
+\begin_inset Formula $O^{*}(\sqrt{\frac{L}{n\mu}})$
+\end_inset
+
+ steps.
+ Note that each step involves 
+\begin_inset Formula $\mathcal{T}_{f}+\mathcal{T}_{h,\mu+\frac{L}{n}}$
+\end_inset
+
+.
+ Obviously, 
+\begin_inset Formula $\mathcal{T}_{f}=0$
+\end_inset
+
+.
+ Next, note that 
+\begin_inset Formula $\mathcal{T}_{h,\mu+\frac{L}{n}}$
+\end_inset
+
+ involves solving a problem of the form
+\begin_inset Formula 
+\begin{align*}
+y_{x} & =\argmin_{y}(\frac{\mu}{2}+\frac{L}{2n})\norm{y-x}^{2}+(\ell(y)-\frac{\mu}{2}\norm x^{2})\\
+ & =\argmin_{y}\ell(y)-\mu y^{\top}x+\frac{L}{2n}\norm{y-x}^{2}.
+\end{align*}
+
+\end_inset
+
+Now, we can apply Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:coordinate_descent"
+
+\end_inset
+
+ to solve this problem.
+ It takes 
+\begin_inset Formula 
+\[
+O^{*}(\frac{L+(L/n)\cdot n}{L/n})=O^{*}(n)\text{ coordinate steps.}
+\]
+
+\end_inset
+
+Therefore, in total it takes
+\begin_inset Formula 
+\[
+O^{*}(\sqrt{\frac{L}{n\mu}})\cdot O^{*}(n)=O^{*}(\sqrt{\frac{Ln}{\mu}})\text{ coordinate steps}.
+\]
+
+\end_inset
+
+Hence, we have the following theorem
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:coordinate_descent_linear_acc"
+
+\end_inset
+
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Accelerated Coordinate Descent Convergence
+\end_layout
+
+\end_inset
+
+Given an 
+\begin_inset Formula $\mu$
+\end_inset
+
+ strongly-convex function 
+\begin_inset Formula $\ell$
+\end_inset
+
+.
+ Suppose that 
+\begin_inset Formula $\frac{\partial^{2}}{\partial x_{i}^{2}}\ell(x)\leq L_{i}$
+\end_inset
+
+ for all 
+\begin_inset Formula $x$
+\end_inset
+
+ and let 
+\begin_inset Formula $L=\sum L_{i}$
+\end_inset
+
+.
+ We can minimize 
+\begin_inset Formula $\ell$
+\end_inset
+
+ in 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $O^{*}(\sqrt{\frac{Ln}{\mu}})$
+\end_inset
+
+ coordinate steps.
+\end_layout
+
+\begin_layout Remark
+It is known how to do it in 
+\begin_inset Formula $O^{*}(\sum_{i}\sqrt{\frac{L_{i}}{\mu}})$
+\end_inset
+
+ steps 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "allen2016even"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Accelerated Stochastic Descent
+\end_layout
+
+\begin_layout Standard
+Recall from Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:stochastic_method"
+
+\end_inset
+
+ that if 
+\begin_inset Formula $\nabla^{2}\ell_{i}(x)\leq L$
+\end_inset
+
+ for all 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $i$
+\end_inset
+
+ and that 
+\begin_inset Formula $\ell(x)=\frac{1}{n}\sum_{i=1}^{n}\ell_{i}(x)$
+\end_inset
+
+ is 
+\begin_inset Formula $\mu$
+\end_inset
+
+ strongly convex, then we can find 
+\begin_inset Formula $x$
+\end_inset
+
+ in 
+\begin_inset Formula $O((n+\frac{L}{\mu})\log(\frac{1}{\epsilon}))$
+\end_inset
+
+ stochastic steps such that 
+\begin_inset Formula 
+\[
+\E\ell(x)-\ell(x^{*})\leq\epsilon(\ell(x^{(0)})-\ell(x^{*})).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Similar to the coordinate descent, we can accelerate it using the accelerated
+ gradient descent (Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:AGD"
+
+\end_inset
+
+).
+ To apply Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:AGD"
+
+\end_inset
+
+, we consider the function 
+\begin_inset Formula 
+\[
+\phi(x)=f(x)+h(x)\quad\text{with}\quad f(x)=\frac{\mu}{2}\norm x_{2}^{2}\text{ and }h(x)=\ell(x)-\frac{\mu}{2}\norm x_{2}^{2}.
+\]
+
+\end_inset
+
+Since 
+\begin_inset Formula $f$
+\end_inset
+
+ is 
+\begin_inset Formula $\mu+\frac{L}{n}$
+\end_inset
+
+ smooth (YES!, I know this is also 
+\begin_inset Formula $\mu$
+\end_inset
+
+ smooth) and 
+\begin_inset Formula $\mu$
+\end_inset
+
+ strongly convex and since 
+\begin_inset Formula $h$
+\end_inset
+
+ is convex, we apply Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:AGD"
+
+\end_inset
+
+ and get an algorithm that takes 
+\begin_inset Formula $O^{*}(1+\sqrt{\frac{L}{n\mu}})$
+\end_inset
+
+ steps.
+ Note that each step involves 
+\begin_inset Formula $\mathcal{T}_{f}+\mathcal{T}_{h,\mu+\frac{L}{n}}$
+\end_inset
+
+.
+ Obviously, 
+\begin_inset Formula $\mathcal{T}_{f}=0$
+\end_inset
+
+.
+ Next, note that 
+\begin_inset Formula $\mathcal{T}_{h,\mu+\frac{L}{n}}$
+\end_inset
+
+ involves solving a problem of the form
+\begin_inset Formula 
+\begin{align*}
+y_{x} & =\argmin_{y}(\frac{\mu}{2}+\frac{L}{2n})\norm{y-x}^{2}+(\ell(y)-\frac{\mu}{2}\norm x^{2})\\
+ & =\argmin_{y}\ell(y)-\mu y^{\top}x+\frac{L}{2n}\norm{y-x}^{2}\\
+ & =\argmin_{y}\frac{1}{n}\sum_{i}(\ell_{i}(y)+\frac{L}{2n}\norm{y-x}^{2}-\mu y^{\top}x)
+\end{align*}
+
+\end_inset
+
+Now, we can apply Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:stochastic_method"
+
+\end_inset
+
+ to solve this problem.
+ It takes 
+\begin_inset Formula 
+\[
+O^{*}(n+\frac{L+\frac{L}{n}}{\mu+\frac{L}{n}})=O^{*}(n)
+\]
+
+\end_inset
+
+Therefore, in total it takes
+\begin_inset Formula 
+\[
+O^{*}(1+\sqrt{\frac{L}{n\mu}})\cdot O^{*}(n)=O^{*}(n+\sqrt{n\frac{L}{\mu}}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:acc_stochastic_method"
+
+\end_inset
+
+Given a convex function 
+\begin_inset Formula $\ell=\frac{1}{n}\sum\ell_{i}$
+\end_inset
+
+.
+ Suppose that 
+\begin_inset Formula $\nabla^{2}\ell_{i}(x)\leq L$
+\end_inset
+
+ for all 
+\begin_inset Formula $i$
+\end_inset
+
+ and 
+\begin_inset Formula $x$
+\end_inset
+
+ and that 
+\begin_inset Formula $\ell$
+\end_inset
+
+ is 
+\begin_inset Formula $\mu$
+\end_inset
+
+ strongly convex.
+ Suppose we can compute 
+\begin_inset Formula $\nabla\ell_{i}$
+\end_inset
+
+ in 
+\begin_inset Formula $O(1)$
+\end_inset
+
+ time.
+ We have an algorithm that outputs an 
+\begin_inset Formula $x$
+\end_inset
+
+ such that 
+\begin_inset Formula 
+\[
+\E\ell(x)-\ell(x^{*})\leq\varepsilon(\ell(x^{(0)})-\ell(x^{*}))
+\]
+
+\end_inset
+
+in 
+\begin_inset Formula $O^{*}(n+\sqrt{n\frac{L}{\mu}})$
+\end_inset
+
+ stochastic steps.
+\end_layout
+
+\end_body
+\end_document

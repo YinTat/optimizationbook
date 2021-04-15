@@ -1,0 +1,3064 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{url}
+\usepackage{xargs}
+\usepackage[pdftex,dvipsnames]{xcolor}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\usepackage[lined,boxed,ruled,norelsize,algo2e]{algorithm2e}
+\usepackage[small,bf]{caption}
+\usepackage{tikz}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=red,
+    filecolor=red,
+    linkcolor=red,
+    urlcolor=red
+}
+
+
+
+\usepackage{fancybox}
+\usepackage{multirow}
+\usepackage{nicefrac}
+\usepackage{hyperref}
+
+
+\expandafter\def\expandafter\normalsize\expandafter{%
+    \normalsize
+%	    \setlength\abovedisplayskip{5pt}
+    \setlength\belowdisplayskip{5pt}
+    % \setlength\abovedisplayshortskip{5pt}
+    \setlength\belowdisplayshortskip{5pt}
+}
+
+\usepackage{tocloft}
+\setlength{\cftsecnumwidth}{2.8em}%
+
+%%%%%
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{fix-cm}
+\makeatletter
+\newcommand\HUGE{\@setfontsize\Huge{38}{47}}
+\makeatother
+
+\titleclass{\part}{top}
+\titleformat{\part}[display]
+  {\normalfont\HUGE\sffamily}{\partname\ \thepart}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\HUGE\bfseries\filleft}
+%\titlespacing*{\part} {0pt}{20pt}{40pt}
+\titlespacing*{\part} {0pt}{30pt}{50pt}
+
+% chapter heading formatting
+\titleformat{\chapter}[display]
+  {\normalfont\LARGE\sffamily}{\chaptertitlename\ \thechapter}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\LARGE\bfseries\filleft}
+% section heading formatting
+\titleformat{\section}
+  {\normalfont\Large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesection}{0.5em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesubsection}{0.5em}{}
+\titlespacing*{\chapter} {0pt}{20pt}{30pt}
+
+% header/footer
+\fancyhf{}
+\fancyhead[ER]{\footnotesize\sffamily\leftmark}
+\fancyhead[OL]{\footnotesize\sffamily\nouppercase\rightmark}
+\fancyhead[EL,OR]{\bfseries\thepage}
+
+\setcounter{secnumdepth}{3}
+
+\usepackage{environ}
+\makeatletter
+\newsavebox{\measure@tikzpicture}
+\NewEnviron{scaletikzpicturetowidth}[1]{%
+  \def\tikz@width{#1}%
+  \def\tikzscale{1}\begin{lrbox}{\measure@tikzpicture}%
+      \BODY
+  \end{lrbox}%
+  \pgfmathparse{#1/\wd\measure@tikzpicture}%
+  \edef\tikzscale{\pgfmathresult}%
+  \BODY
+}
+\makeatother
+
+\DeclareMathOperator{\epi}{epi}
+\end_preamble
+\options openany
+\use_default_options false
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+theorems-sec
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding default
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 0
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic true
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip 0.1in
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+In this book
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+In the UW course, only the optimization part is covered.
+\end_layout
+
+\end_inset
+
+, we will study two topics involving convexity, namely optimization and
+ sampling.
+ Given a multivariate, real-valued function 
+\begin_inset Formula $f$
+\end_inset
+
+, (1) how fast can we find a point that minimizes 
+\begin_inset Formula $f$
+\end_inset
+
+? (2) how fast can we sample a point according to the distribution with
+ density defined by 
+\begin_inset Formula $f$
+\end_inset
+
+, e.g., proportional to 
+\begin_inset Formula $e^{-f}$
+\end_inset
+
+? These problems are quite closely connected, e.g., sampling from such distributio
+ns can be used to find near-optimal points.
+ These problems are intractable in full generality, and have exponential
+ (in dimension) complexity even under smoothness assumptions.
+\end_layout
+
+\begin_layout Standard
+Convexity and its natural extensions are a current frontier of tractable,
+ i.e., polynomial-time, computation.
+ The assumption of convexity induces structure in instances that makes them
+ amenable to efficient algorithms.
+ For example, the local minimum of a convex function is a global minimum.
+ Convexity is maintained by natural operations such as intersection (for
+ sets) and addition (for functions).
+ Perhaps less obvious, but also crucial, is that convex sets can be approximated
+ by ellipsoids in various ways.
+\end_layout
+
+\begin_layout Standard
+We will learn several techniques that lead us to some polynomial-time algorithms
+ for both problems and (nearly) linear-time algorithms for the case 
+\begin_inset Formula $f$
+\end_inset
+
+ is close to a quadratic function.
+\end_layout
+
+\begin_layout Standard
+Although convex optimization has been studied since the 19th century
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Augustin-Louis Cauchy introduced gradient descent in 1847.
+\end_layout
+
+\end_inset
+
+ with many tight results emerging, there are still many basic open problems.
+ Here is an example:
+\end_layout
+
+\begin_layout Problem*
+Given an 
+\begin_inset Formula $n\times n$
+\end_inset
+
+ random 
+\begin_inset Formula $0/1$
+\end_inset
+
+ matrix 
+\begin_inset Formula $A$
+\end_inset
+
+ with 
+\begin_inset Formula $O(n)$
+\end_inset
+
+ nonzero entries, can we solve 
+\begin_inset Formula $Ax=b$
+\end_inset
+
+ in 
+\begin_inset Formula $o(n^{2})$
+\end_inset
+
+ time?
+\end_layout
+
+\begin_layout Standard
+Computing the volume is an ancient problem, the early Egyptians and Greeks
+ developed formulas for specific shapes of interest.
+ Unlike convex optimization, even computing the volume of a convex body
+ is intractable, as we will see later.
+ Nevertheless, there are efficient randomized algorithms that can estimate
+ the volume of convex bodies to arbitrary accuracy in time polynomial in
+ the dimension and the desired accuracy.
+ This extends to efficient algorithms for integrating 
+\emph on
+logconcave
+\emph default
+ functions, i.e., functions of the form 
+\begin_inset Formula $e^{-f}$
+\end_inset
+
+ where 
+\begin_inset Formula $f$
+\end_inset
+
+ is convex.
+ The core ingredient is sampling in high dimension.
+ Sampling and volume computation will be the motivating problems for the
+ second part of this book.
+ Again, many basic problems remain open.
+ To illustrate:
+\end_layout
+
+\begin_layout Problem*
+Given a polytope defined by 
+\begin_inset Formula $\left\{ x:\,Ax\le b\right\} $
+\end_inset
+
+, can we estimate its volume to within a constant factor in nearly linear
+ time?
+\end_layout
+
+\begin_layout Section
+Why non-convex functions can be difficult
+\end_layout
+
+\begin_layout Standard
+Before discussing convex functions, we note that optimizing general functions
+ can be difficult.
+ Consider the function
+\begin_inset Formula 
+\[
+f(x)=\begin{cases}
+1 & \text{if }x\neq x^{*}\\
+0 & \text{if }x=x^{*}
+\end{cases}
+\]
+
+\end_inset
+
+and suppose that we can only access the function by computing its function
+ value.
+ This function 
+\begin_inset Formula $f$
+\end_inset
+
+ always returns 
+\begin_inset Formula $1$
+\end_inset
+
+ unless we know 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+.
+ Hence, one can prove that it takes infinitely many calls to 
+\begin_inset Formula $f$
+\end_inset
+
+ to find 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+This function is difficult to optimize, and not merely because of its discontinu
+ity.
+ Similar functions can be constructed that are continuous.
+ Consider the function 
+\begin_inset Formula $f:B(0_{n},1)\rightarrow\R$
+\end_inset
+
+ defined by
+\begin_inset Formula 
+\begin{equation}
+f(x)=\min(\|x-x^{*}\|_{2},\epsilon)\label{eq:f_lower_bound}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $B(0_{n},1)$
+\end_inset
+
+ is the unit ball centered at the origin, 
+\begin_inset Formula $0_{n}$
+\end_inset
+
+.
+ This function is 
+\begin_inset Formula $1$
+\end_inset
+
+-Lipschitz and unless we query 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ with 
+\begin_inset Formula $x$
+\end_inset
+
+ that is 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+-close to 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+, it will always return 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+.
+ Since the region where 
+\begin_inset Formula $f$
+\end_inset
+
+ is not 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ has volume 
+\begin_inset Formula $\frac{1}{\epsilon^{n}}$
+\end_inset
+
+ times the volume of the unit ball, one can show that it takes 
+\begin_inset Formula $\Omega\left(\frac{1}{\epsilon^{n}}\right)$
+\end_inset
+
+ calls to 
+\begin_inset Formula $f$
+\end_inset
+
+ to find 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+.
+ The following exercise asks you to prove that this bound is tight.
+\end_layout
+
+\begin_layout Exercise
+Show that if 
+\begin_inset Formula $f$
+\end_inset
+
+ is 
+\begin_inset Formula $1$
+\end_inset
+
+-Lipschitz on 
+\begin_inset Formula $B(0_{n},1)$
+\end_inset
+
+, we can find 
+\begin_inset Formula $x$
+\end_inset
+
+ such that 
+\begin_inset Formula $f(x)-\min_{x}f(x)\leq\epsilon$
+\end_inset
+
+ by calling 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ at 
+\begin_inset Formula $O(\frac{1}{\epsilon})^{n}$
+\end_inset
+
+ points.
+ 
+\end_layout
+
+\begin_layout Standard
+Thus 
+\begin_inset Formula $O(1/\epsilon)^{n}$
+\end_inset
+
+ is the best possible bound for optimizing general 
+\begin_inset Formula $1$
+\end_inset
+
+-Lipschitz functions.
+ Similar constructions can also be made for infinitely differentiable functions.
+ We note that it is easy to find local minima for all the functions above.
+ In Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Gradient-Descent"
+
+\end_inset
+
+, we will show that it is easy to find an approximate local minimum of a
+ continuously differentiable function.
+\end_layout
+
+\begin_layout Section
+Why is Convexity Useful? Linear Separability!
+\end_layout
+
+\begin_layout Standard
+In the last section, we saw that general functions are difficult to optimize
+ because we can only find the minimum via exhaustive search.
+ Now we define convex sets, convex functions and convex problems.
+ One benefit of convexity is that it enables binary search.
+\end_layout
+
+\begin_layout Definition
+A set 
+\begin_inset Formula $K$
+\end_inset
+
+ in 
+\begin_inset Formula $\R^{n}$
+\end_inset
+
+ is 
+\emph on
+convex
+\emph default
+ if for every pair of points 
+\begin_inset Formula $x,y\in K$
+\end_inset
+
+, we have 
+\begin_inset Formula $[x,y]\subseteq K$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset CommandInset label
+LatexCommand label
+name "def:convex_func"
+
+\end_inset
+
+A function 
+\begin_inset Formula $f:\R^{n}\rightarrow\R\cup\{+\infty\}$
+\end_inset
+
+ is 
+\emph on
+convex
+\emph default
+ if for any 
+\begin_inset Formula $\lambda\in[0,1]$
+\end_inset
+
+, we have 
+\begin_inset Formula 
+\[
+f(\lambda x+(1-\lambda)y)\le\lambda f(x)+(1-\lambda)f(y).
+\]
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+I should either use 
+\begin_inset Formula $\lambda x+(1-\lambda)y$
+\end_inset
+
+ or 
+\begin_inset Formula $tx+(1-t)y$
+\end_inset
+
+ in all the book.
+ Seems 
+\begin_inset Formula $t$
+\end_inset
+
+ is better coz 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ is eigenvalue.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+    
+\backslash
+begin{minipage}[t]{0.47
+\backslash
+linewidth}         
+\backslash
+centering         
+\backslash
+begin{scaletikzpicturetowidth}{
+\backslash
+linewidth}             
+\backslash
+begin{tikzpicture}[label distance = 2pt, scale = 
+\backslash
+tikzscale]                 
+\backslash
+draw[-, thick, red] (-1.5, 0) -- (3.5, 0);                 
+\backslash
+draw[-, thick, {black!50!green}] (-1, 0.75) -- (2, 1.5);                 
+\backslash
+draw[blue] (-1.5, 1.0625) node[label=left:$f$] {};                 
+\backslash
+draw[domain=-1.5:3, smooth, variable=
+\backslash
+x, blue] plot ({
+\backslash
+x},{
+\backslash
+x * 
+\backslash
+x / 4 + 0.5});                 
+\backslash
+draw node[mark size=1.5pt, color={black!50!green}] at (-1, 0.75) {
+\backslash
+pgfuseplotmark{*}};                 
+\backslash
+draw node[mark size=1.5pt, color={black!50!green}] at (2, 1.5) {
+\backslash
+pgfuseplotmark{*}};                 
+\backslash
+draw node[mark size=1.5pt, color={black!50!green}] at (0.5, 0.5625) {
+\backslash
+pgfuseplotmark{*}};                 
+\backslash
+draw node[mark size=5pt, color={black!50!green}, thick, label={[black!50!green]b
+elow:$x$}] at (-1, 0) {
+\backslash
+pgfuseplotmark{|}};                 
+\backslash
+draw node[mark size=5pt, color={black!50!green}, thick, label={[black!50!green]b
+elow:$y$}] at (2, 0) {
+\backslash
+pgfuseplotmark{|}};                 
+\backslash
+draw node[mark size=5pt, color={black!50!green}, thick] at (0.5, 0) {
+\backslash
+pgfuseplotmark{|}};             
+\backslash
+end{tikzpicture}         
+\backslash
+end{scaletikzpicturetowidth}         % 
+\backslash
+caption*{Convex function}     
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{minipage}
+\end_layout
+
+\begin_layout Plain Layout
+
+ 
+\backslash
+hfill     
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{minipage}[t]{0.47
+\backslash
+linewidth}         
+\backslash
+centering         
+\backslash
+begin{scaletikzpicturetowidth}{
+\backslash
+linewidth}             
+\backslash
+begin{tikzpicture}[label distance = 2pt, scale = 
+\backslash
+tikzscale]                 
+\backslash
+draw[-, thick, red] (-4, 0) -- (5, 5.196152423);                 
+\backslash
+draw node[mark size=1.5pt, color={black!50!green}, thick, label={[black!50!green]
+left:$y$}] at (0, 3.464101615) {
+\backslash
+pgfuseplotmark{*}};                 
+\backslash
+draw[-, thick, blue] (0, 0) -- (1, 1.732050808) -- (3, 1.732050808) -- (4,
+ 0) -- (3, -1.732050808) -- (1, -1.732050808) -- (0, 0);                 
+\backslash
+draw[blue] (1.5, 0) node[label=$K$] {};             
+\backslash
+end{tikzpicture}         
+\backslash
+end{scaletikzpicturetowidth}         % 
+\backslash
+caption*{Convex set}     
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{minipage}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Convex function; Convex set
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:convex"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+An optimization problem 
+\begin_inset Formula $\min_{x\in K}f(x)$
+\end_inset
+
+ is convex if 
+\begin_inset Formula $K$
+\end_inset
+
+ and 
+\begin_inset Formula $f$
+\end_inset
+
+ are convex.
+\end_layout
+
+\begin_layout Standard
+Any point not in a convex set can be separated by a hyperplane from the
+ set.
+ We will see in Chapter 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:Elimination"
+
+\end_inset
+
+ that separating hyperplanes allow us to do binary search to find a point
+ in a convex set.
+ This is the basis of all polynomial-time algorithms for optimizing general
+ convex functions.
+ We will explore these binary search algorithms in Chapter 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:Elimination"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Hyperplane separation theorem
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:sep"
+
+\end_inset
+
+Let 
+\begin_inset Formula $K$
+\end_inset
+
+ be a closed convex set in 
+\begin_inset Formula $\Rn$
+\end_inset
+
+ and 
+\begin_inset Formula $y\notin K$
+\end_inset
+
+.
+ There is a non-zero 
+\begin_inset Formula $\theta\in\Rn$
+\end_inset
+
+ such that 
+\begin_inset Formula 
+\[
+\left\langle \theta,y\right\rangle >\max_{x\in K}\left\langle \theta,x\right\rangle .
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ be a point in 
+\begin_inset Formula $K$
+\end_inset
+
+ closest to 
+\begin_inset Formula $y$
+\end_inset
+
+, namely 
+\begin_inset Formula $x^{*}\in\arg\min_{x\in K}\norm{x-y}_{2}^{2}$
+\end_inset
+
+ (such a minimizer always exists for closed convex sets; this is sometimes
+ called Hilbert's projection theorem).
+ Using convexity of 
+\begin_inset Formula $K$
+\end_inset
+
+, for any 
+\begin_inset Formula $x\in K$
+\end_inset
+
+ and any 
+\begin_inset Formula $0\leq t\leq1$
+\end_inset
+
+, we have that 
+\begin_inset Formula $(1-t)x^{*}+tx\in K$
+\end_inset
+
+ and hence
+\begin_inset Formula 
+\[
+\norm{y-(1-t)x^{*}-tx}_{2}^{2}\geq\min_{x\in K}\norm{y-x}_{2}^{2}=\norm{y-x^{*}}_{2}^{2}.
+\]
+
+\end_inset
+
+Expanding the LHS, we have
+\begin_inset Formula 
+\begin{align*}
+\norm{y-(1-t)x^{*}-tx}_{2}^{2} & =\norm{y-x^{*}+t(x^{*}-x)}_{2}^{2}\\
+ & =\norm{y-x^{*}}_{2}^{2}+2t\left\langle y-x^{*},x^{*}-x\right\rangle +t^{2}\norm{x^{*}-x}_{2}^{2}.
+\end{align*}
+
+\end_inset
+
+Canceling the term 
+\begin_inset Formula $\norm{x^{*}-y}_{2}^{2}$
+\end_inset
+
+ and dividing both sides by 
+\begin_inset Formula $t$
+\end_inset
+
+, 
+\begin_inset Formula 
+\[
+2\left\langle y-x^{*},x^{*}-x\right\rangle +t\norm{x^{*}-x}_{2}^{2}\ge0.
+\]
+
+\end_inset
+
+Taking 
+\begin_inset Formula $t\rightarrow0^{+}$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\begin{equation}
+\left\langle y-x^{*},x^{*}-x\right\rangle \geq0\text{ for all }x\in K.\label{eq:seq_1}
+\end{equation}
+
+\end_inset
+
+Taking 
+\begin_inset Formula $\theta=y-x^{*}$
+\end_inset
+
+ and using 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:seq_1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, for all 
+\begin_inset Formula $x\in K$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\begin{align*}
+\left\langle \theta,y-x\right\rangle  & =\left\langle \theta,y-x^{*}\right\rangle +\left\langle y-x^{*},x^{*}-x\right\rangle \\
+ & =\|\theta\|^{2}+\left\langle y-x^{*},x^{*}-x\right\rangle \\
+ & >0
+\end{align*}
+
+\end_inset
+
+where we used that 
+\begin_inset Formula $y\notin K$
+\end_inset
+
+ and hence 
+\begin_inset Formula $\|\theta\|^{2}>0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:sep"
+
+\end_inset
+
+ shows that a polytope (a finite intersection of halfspaces) is essentially
+ as general as a convex set.
+\end_layout
+
+\begin_layout Corollary
+\begin_inset CommandInset label
+LatexCommand label
+name "cor:convex_function_intersection"
+
+\end_inset
+
+Any closed convex set 
+\begin_inset Formula $K$
+\end_inset
+
+ can be written as the intersection of halfspaces as follows
+\begin_inset Formula 
+\[
+K=\bigcap_{\theta\in\Rn}\left\{ x:\ \left\langle \theta,x\right\rangle \leq\max_{y\in K}\left\langle \theta,y\right\rangle \right\} .
+\]
+
+\end_inset
+
+In other words, any convex set is a limit of a sequence of polyhedra.
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $L\defeq\bigcap_{\theta\in\Rn}\left\{ x:\ \left\langle \theta,x\right\rangle \leq\max_{y\in K}\left\langle \theta,y\right\rangle \right\} $
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $K\subset\left\{ x:\ \left\langle \theta,x\right\rangle \leq\max_{y\in K}\left\langle \theta,y\right\rangle \right\} $
+\end_inset
+
+, we have 
+\begin_inset Formula $K\subset L$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+For any 
+\begin_inset Formula $x\notin K$
+\end_inset
+
+, Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:sep"
+
+\end_inset
+
+ shows that there is a 
+\begin_inset Formula $\theta$
+\end_inset
+
+ such that 
+\begin_inset Formula $\theta^{\top}x>\max_{y\in K}\theta^{\top}y$
+\end_inset
+
+.
+ Hence, we have 
+\begin_inset Formula $x\notin L$
+\end_inset
+
+ and hence 
+\begin_inset Formula $L\subset K$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+This shows that convex optimization is related to linear programs (optimize
+ linear functions over polytopes) as follows:
+\begin_inset Formula 
+\[
+\min_{x\in K}f(x)=\min_{(x,y)\in\{x\in K,y\in\R:y\geq f(x)\}}y
+\]
+
+\end_inset
+
+where the set 
+\begin_inset Formula $\{x\in K,y\in\R:y\geq f(x)\}$
+\end_inset
+
+ then can be approximated by intersection of halfspaces, namely 
+\begin_inset Formula $\{A\binom{x}{y}\leq b\}$
+\end_inset
+
+ for some matrix 
+\begin_inset Formula $A\in\R^{m\times(n+1)}$
+\end_inset
+
+ and vector 
+\begin_inset Formula $b\in\R^{m}$
+\end_inset
+
+ with 
+\begin_inset Formula $m\rightarrow+\infty$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Similar to convex sets, we have a separation theorem similar to Theorem
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:sep"
+
+\end_inset
+
+ for convex functions.
+ This shows that one can use binary search to find minimum of convex functions.
+ (See Chapter 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:Elimination"
+
+\end_inset
+
+.)
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:first_order"
+
+\end_inset
+
+Let 
+\begin_inset Formula $f\in\mathcal{C}^{1}(\Rn)$
+\end_inset
+
+ be convex.
+ Then, 
+\begin_inset Formula 
+\begin{equation}
+f(y)\geq f(x)+\nabla f(x)^{\top}(y-x)\text{ for all }x,y\in\Rn\label{eq:f_lower}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Fix any 
+\begin_inset Formula $x,y\in\Rn$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $g(t)=f((1-t)x+ty)$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $f$
+\end_inset
+
+ is convex, so is 
+\begin_inset Formula $g$
+\end_inset
+
+ over 
+\begin_inset Formula $[0,1]$
+\end_inset
+
+.
+ Then, we have
+\begin_inset Formula 
+\[
+g(t)\leq(1-t)g(0)+tg(1)
+\]
+
+\end_inset
+
+which implies that
+\begin_inset Formula 
+\[
+g(1)\geq g(0)+\frac{g(t)-g(0)}{t}.
+\]
+
+\end_inset
+
+Taking 
+\begin_inset Formula $t\rightarrow0^{+}$
+\end_inset
+
+, we have that 
+\begin_inset Formula $g(1)\geq g(0)+g'(0)$
+\end_inset
+
+.
+ In other words, using the chain rule for derivatives, we have 
+\begin_inset Formula $g'(0)=\left\langle \nabla f(x),y-x\right\rangle $
+\end_inset
+
+ and hence
+\begin_inset Formula 
+\[
+f(y)\geq f(x)+\left\langle \nabla f(x),y-x\right\rangle .
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This theorem shows that 
+\begin_inset Formula $\nabla f(x)=0$
+\end_inset
+
+ (local minimum) implies 
+\begin_inset Formula $x$
+\end_inset
+
+ is a global minimum.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Optimality condition for unconstrained problems
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:optimality_condition"
+
+\end_inset
+
+Let 
+\begin_inset Formula $f\in\mathcal{C}^{1}(\Rn)$
+\end_inset
+
+ be convex.
+ Then, 
+\begin_inset Formula $x\in\R^{n}$
+\end_inset
+
+ is a minimizer of 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ if and only if 
+\begin_inset Formula $\nabla f(x)=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+If 
+\begin_inset Formula $\nabla f(x)\neq0$
+\end_inset
+
+, then 
+\begin_inset Formula 
+\[
+f(x-\varepsilon\nabla f(x))=f(x)-\varepsilon\norm{\nabla f(x)}_{2}^{2}+O(\varepsilon^{2})\norm{\nabla f(x)}_{2}^{2}<f(x)
+\]
+
+\end_inset
+
+for small enough 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+.
+ Hence, such a point cannot be the minimizer.
+\end_layout
+
+\begin_layout Proof
+On the other hand, if 
+\begin_inset Formula $\nabla f(x)=0$
+\end_inset
+
+, Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:first_order"
+
+\end_inset
+
+ shows that
+\begin_inset Formula 
+\[
+f(y)\geq f(x)+\nabla f(x)^{\top}(y-x)=f(x)\text{ for all }y.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We note that the proof above is in fact a constructive proof.
+ If 
+\begin_inset Formula $x$
+\end_inset
+
+ is not a minimum, it suggests a point that has better function value.
+ This will be the discussion of an upcoming section.
+ For continuous convex functions, there is a weaker notion of gradient called
+ sub-differential, which is a set instead of a vector.
+ Both theorems above holds with gradients replaced by sub-differentials.
+\end_layout
+
+\begin_layout Section
+Convex Problems are Everywhere!
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+YinTat: TODO: Add computing 
+\begin_inset Formula $W_{2}$
+\end_inset
+
+ distance and Markov decision process later.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this section, we give a few examples of convex problems to illustrate
+ the wide applicability of convex optimization.
+ 
+\end_layout
+
+\begin_layout Subsection
+Minimum Cost Flow Problem (Computer Science)
+\end_layout
+
+\begin_layout Standard
+The min cost flow problem has lots of applications such as route planning,
+ airline scheduling, image segmentation, recommendation systems, etc.
+ In this problem, we are given a graph 
+\begin_inset Formula $G=(V,E)$
+\end_inset
+
+ with 
+\begin_inset Formula $m\defeq|E|$
+\end_inset
+
+ edges and 
+\begin_inset Formula $n\defeq|V|$
+\end_inset
+
+ vertices.
+ Each edge 
+\begin_inset Formula $e\in E$
+\end_inset
+
+ has capacity 
+\begin_inset Formula $u_{e}>0$
+\end_inset
+
+ and cost 
+\begin_inset Formula $c_{e}$
+\end_inset
+
+.
+ The problem is to minimize the total cost of sending 
+\begin_inset Formula $d$
+\end_inset
+
+ amount of flow from a source vertex 
+\begin_inset Formula $s\in V$
+\end_inset
+
+ to a sink vertex 
+\begin_inset Formula $t\in V$
+\end_inset
+
+.
+ Formally, the problem can be written as an optimization problem 
+\begin_inset Formula $\min_{f\in\R^{|E|}}\sum_{e\in E}c_{e}\cdot f_{e}$
+\end_inset
+
+ subject to the constraints:
+\end_layout
+
+\begin_layout Itemize
+Capacity constraints: 
+\begin_inset Formula $0\leq f_{e}\leq u_{e}$
+\end_inset
+
+ for all 
+\begin_inset Formula $e\in E$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Flow conservation: 
+\begin_inset Formula $\sum_{e\text{ enters }v}f_{e}=\sum_{e\text{ leaves }v}f_{e}$
+\end_inset
+
+ for all 
+\begin_inset Formula $v\in V\setminus\left\{ s,t\right\} $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Demand: 
+\begin_inset Formula $\sum_{e\text{ enters }t}f_{e}=\sum_{e\text{ leaves }s}f_{e}=d$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+To check this is a convex problem, we note that the objective function is
+ a linear function 
+\begin_inset Formula $c^{\top}f$
+\end_inset
+
+ which is convex.
+ The domain is the intersection of three sets (the three set of equations
+ above).
+ The first set is a scaled hypercube, the second and last set is a linear
+ subspace.
+ All of them are convex and so is their intersection.
+ Therefore, this is a convex problem.
+\end_layout
+
+\begin_layout Subsection
+Linear Programs (Operation Research/Economics)
+\end_layout
+
+\begin_layout Standard
+Consider the diet problem: find a cheapest diet plan that satisfies the
+ nutrients requirements.
+ Formally, suppose there are 
+\begin_inset Formula $n$
+\end_inset
+
+ different foods and 
+\begin_inset Formula $m$
+\end_inset
+
+ different nutrients.
+ The food 
+\begin_inset Formula $i$
+\end_inset
+
+ has unit cost 
+\begin_inset Formula $c_{i}$
+\end_inset
+
+, 
+\begin_inset Formula $a_{1i}$
+\end_inset
+
+ unit of nutrient 
+\begin_inset Formula $1$
+\end_inset
+
+, 
+\begin_inset Formula $a_{2i}$
+\end_inset
+
+ unit of nutrient 
+\begin_inset Formula $2$
+\end_inset
+
+, 
+\begin_inset Formula $\cdots$
+\end_inset
+
+.
+ Furthermore, every day we need 
+\begin_inset Formula $b_{j}$
+\end_inset
+
+ unit of the nutrient 
+\begin_inset Formula $j$
+\end_inset
+
+.
+ Then, the problem is simply find an assignment 
+\begin_inset Formula $x$
+\end_inset
+
+ such that
+\begin_inset Formula 
+\[
+\min_{x\geq0,Ax\geq b}c^{\top}x
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $c\in\Rn$
+\end_inset
+
+ is the cost vector, 
+\begin_inset Formula $b\in\Rm$
+\end_inset
+
+ is the intake requirement vector and 
+\begin_inset Formula $A\in\R^{m\times n}$
+\end_inset
+
+ is the matrix of nutrients contents of each food.
+ Unfortunately, Nobel Laureate Stigler showed that 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "stigler1945cost"
+literal "false"
+
+\end_inset
+
+ the optimal meal is evaporated milk, cabbage, dried navy beans, and beef
+ liver.
+\end_layout
+
+\begin_layout Standard
+Joking aside, both the diet problem and the minimum cost flow problem can
+ be reformulated into the form
+\begin_inset Formula 
+\begin{equation}
+\min_{Ax=b,x\geq0}c^{\top}x\label{eq:LP_standard}
+\end{equation}
+
+\end_inset
+
+for some vectors 
+\begin_inset Formula $c,b$
+\end_inset
+
+ and some matrix 
+\begin_inset Formula $A$
+\end_inset
+
+.
+ These problems are called linear programs and have many applications in
+ resource allocation.
+ Special cases of linear programs are also of great interest; for example
+ the diet problem is a packing/covering LP.
+\end_layout
+
+\begin_layout Exercise
+Show that both the minimum cost flow problem and the diet problem can be
+ written as 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:LP_standard"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Also, show that 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:LP_standard"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is a convex problem.
+\end_layout
+
+\begin_layout Subsection
+Logistic Regression (Machine Learning)
+\end_layout
+
+\begin_layout Standard
+Consider the problem of predicting the likelihood of getting diabetes in
+ the future.
+ Suppose we have collected many examples 
+\begin_inset Formula $\{(x_{i},y_{i})\}_{i=1}^{n}$
+\end_inset
+
+ where 
+\begin_inset Formula $x_{i}\in\R^{d}$
+\end_inset
+
+ represents the features of a person and 
+\begin_inset Formula $y_{i}\in\{\pm1\}$
+\end_inset
+
+ represents whether that person gets diabetes.
+ For example, the feature vector can be (age, weight, height, BMI, fasting
+ glucose level, ...).
+ The features in the vector may be redundant and the purpose of extra variables
+ is to make linear functions expressive enough to be able to classify.
+ In particular, we assume that there is a vector 
+\begin_inset Formula $\theta$
+\end_inset
+
+ such that for most 
+\begin_inset Formula $i$
+\end_inset
+
+, we have 
+\begin_inset Formula $\langle x^{i},\theta\rangle<0$
+\end_inset
+
+ if 
+\begin_inset Formula $y_{i}=1$
+\end_inset
+
+ and 
+\begin_inset Formula $\langle x^{i},\theta\rangle>0$
+\end_inset
+
+ if 
+\begin_inset Formula $y_{i}=-1$
+\end_inset
+
+ .
+ The error of the vector 
+\begin_inset Formula $\theta$
+\end_inset
+
+ is
+\begin_inset Formula 
+\[
+\frac{1}{n}\sum_{i=1}^{n}1_{y_{i}\langle x^{i},\theta\rangle>0}.
+\]
+
+\end_inset
+
+This function is not convex in 
+\begin_inset Formula $\theta$
+\end_inset
+
+.
+ More generally, one considers the objective function (to be minimized over
+ 
+\begin_inset Formula $\theta$
+\end_inset
+
+)
+\begin_inset Formula 
+\begin{equation}
+R(\theta)=\frac{1}{n}\sum_{i=1}^{n}f(y_{i}\langle x^{i},\theta\rangle)+\lambda\|\theta\|_{1}\label{eq:logistic_regression}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $f$
+\end_inset
+
+ is some function such that 
+\begin_inset Formula $f(z)$
+\end_inset
+
+ is large when 
+\begin_inset Formula $z$
+\end_inset
+
+ is positive and large and 
+\begin_inset Formula $f(z)=0$
+\end_inset
+
+ when 
+\begin_inset Formula $z$
+\end_inset
+
+ is highly negative, and 
+\begin_inset Formula $\lambda\|\theta\|_{1}$
+\end_inset
+
+ is a 
+\emph on
+regularization
+\emph default
+ term to make sure 
+\begin_inset Formula $\theta$
+\end_inset
+
+ is bounded.
+ One popular function is 
+\begin_inset Formula $f(z)=\log(1+e^{z})$
+\end_inset
+
+, and this problem is called logistic regression.
+ In the section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Checking-Convexity"
+
+\end_inset
+
+, we prove that the function 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:logistic_regression"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is indeed convex when 
+\begin_inset Formula $f(z)=\log(1+e^{z})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Minimal Surface (Physics)
+\end_layout
+
+\begin_layout Standard
+A surface 
+\begin_inset Formula $M\subset\R^{3}$
+\end_inset
+
+ is a minimal surface if it has the minimum surface area among all surfaces
+ with the same boundary.
+ These surfaces appear naturally and has been studied extensively not just
+ for 
+\begin_inset Formula $\R^{3}$
+\end_inset
+
+ but also for different manifold.
+ For simplicity, we consider the case that the surface is parameterized
+ by 
+\begin_inset Formula 
+\[
+M=\{(x,y,f(x,y)):0\leq x\leq1,0\leq y\leq1\}.
+\]
+
+\end_inset
+
+In this case, 
+\begin_inset Formula $f$
+\end_inset
+
+ is a minimal surface if
+\begin_inset Formula 
+\[
+f=\argmin_{\text{feasible }g}\text{SurfaceArea}(g)
+\]
+
+\end_inset
+
+where we say 
+\begin_inset Formula $g$
+\end_inset
+
+ is feasible if 
+\begin_inset Formula $g(x,y)=f(x,y)$
+\end_inset
+
+ for all 
+\begin_inset Formula $x,y$
+\end_inset
+
+ on the boundary of 
+\begin_inset Formula $[0,1]^{2}$
+\end_inset
+
+.
+ One natural question (called Plateau's problem) is to find a minimal surface
+ with a given boundary.
+ For this particular case we consider, we can simply use convex optimization.
+ Note that the constraint (
+\begin_inset Formula $g$
+\end_inset
+
+ is feasible) is exactly a linear subspace on the space of functions on
+ 
+\begin_inset Formula $[0,1]^{2}$
+\end_inset
+
+.
+ Furthermore, the objective is convex by using the fact that
+\begin_inset Formula 
+\[
+\text{SurfaceArea}(f)=\int_{0}^{1}\int_{0}^{1}\sqrt{(\frac{\partial f(x,y)}{\partial x})^{2}+(\frac{\partial f(x,y)}{\partial y})^{2}+1}dxdy.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Show that surface area is convex by using the definition.
+\end_layout
+
+\begin_layout Exercise
+Calculus of variations is an area in mathematics studies the optimization
+ on function spaces and there are many common theorems between this and
+ convex optimization.
+\end_layout
+
+\begin_layout Section
+Examples of Convex Sets and Functions
+\end_layout
+
+\begin_layout Standard
+There are many important convex sets and here we only list some that appear
+ in this course.
+ One of the most important classes of convex functions comes from convex
+ sets.
+\end_layout
+
+\begin_layout Definition
+For a convex set 
+\begin_inset Formula $K$
+\end_inset
+
+, we define the indicator function of 
+\begin_inset Formula $K$
+\end_inset
+
+ by
+\begin_inset Formula 
+\[
+\delta_{K}(x)=\begin{cases}
+0 & \text{if }x\in K\\
++\infty & \text{otherwise}
+\end{cases}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We can also construct convex sets by convex functions.
+ We let the domain 
+\begin_inset Formula $\dom f\defeq\{x\in\Rn:\ f(x)<+\infty\}$
+\end_inset
+
+.
+ The definition of a convex function shows that 
+\begin_inset Formula $\dom f$
+\end_inset
+
+ is a convex set if 
+\begin_inset Formula $f$
+\end_inset
+
+ is a convex function.
+ Alternatively, by looking at the set of points above the graph of the function,
+ we obtain a convex set called an epigraph.
+\end_layout
+
+\begin_layout Definition
+\begin_inset CommandInset label
+LatexCommand label
+name "def:epigraph"
+
+\end_inset
+
+The 
+\emph on
+epigraph
+\emph default
+ of 
+\begin_inset Formula $f:\Rn\rightarrow\R$
+\end_inset
+
+ is 
+\begin_inset Formula $\epi f\defeq\{(x,t)\subset\Rn\times\R:\ t\geq f(x)\}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Definition
+A function 
+\begin_inset Formula $f$
+\end_inset
+
+ is convex if and only if  
+\begin_inset Formula $\epi f$
+\end_inset
+
+ is a convex set.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+ 
+\backslash
+begin{minipage}[t]{0.47
+\backslash
+linewidth}         
+\backslash
+centering         
+\backslash
+begin{scaletikzpicturetowidth}{
+\backslash
+linewidth}             
+\backslash
+begin{tikzpicture}[label distance = 2pt, scale = 
+\backslash
+tikzscale]                 
+\backslash
+draw[-, thick, {black!50!green}] (-1.5, 1.375) -- (-1.5, 3);              
+   
+\backslash
+draw[-, thick, {black!50!green}] (-1, 0.75) -- (-1, 3);                 
+\backslash
+draw[-, thick, {black!50!green}] (-0.5, 0.375) -- (-0.5, 3);              
+   
+\backslash
+draw[-, thick, {black!50!green}] (0, 0.25) -- (0, 3);                 
+\backslash
+draw[-, thick, {black!50!green}] (0.5, 0.375) -- (0.5, 3);                
+ 
+\backslash
+draw[-, thick, {black!50!green}] (1, 0.75) -- (1, 3);                 
+\backslash
+draw[-, thick, {black!50!green}] (1.5, 1.375) -- (1.5, 3);                
+ 
+\backslash
+draw[black!50!green] (1.5, 2.5) node[label=right:$
+\backslash
+epi(f)$] {};                 
+\backslash
+draw[blue] (2, 2) node[label=right:$f$] {};                 
+\backslash
+draw[domain=-2:2, smooth, variable=
+\backslash
+x, blue] plot ({
+\backslash
+x},{
+\backslash
+x * 
+\backslash
+x / 2});             
+\backslash
+end{tikzpicture}         
+\backslash
+end{scaletikzpicturetowidth}         % 
+\backslash
+caption*{Epigraph of $f$}     
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{minipage}     
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+hfill     
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{minipage}[t]{0.47
+\backslash
+linewidth}         
+\backslash
+centering         
+\backslash
+begin{scaletikzpicturetowidth}{
+\backslash
+linewidth}             
+\backslash
+begin{tikzpicture}[label distance = 2pt, scale = 
+\backslash
+tikzscale]                 
+\backslash
+draw[-, thick, red] (0, 0) -- (10, 0);                 
+\backslash
+draw[blue] (1, 4) node[label=below left:$f$] {};                 
+\backslash
+draw[-, thick, blue] (0, 5) -- (1, 5) -- (1, 4) -- (2, 4) -- (3, 3) -- (4,
+ 3);                 
+\backslash
+draw[thick, blue] plot [smooth, tension=2] coordinates{(4, 3) (5, 2) (6,
+ 3)};                 
+\backslash
+draw[-, thick, blue, rounded corners=7pt] (6, 3) -- (7, 3) -- (7.5, 4) --
+ (8.5, 4) -- (9, 5) -- (10, 5);             
+\backslash
+end{tikzpicture}         
+\backslash
+end{scaletikzpicturetowidth}         
+\end_layout
+
+\begin_layout Plain Layout
+
+% 
+\backslash
+caption*{Quasiconvex function}     
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{minipage}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Epigraph of 
+\begin_inset Formula $f$
+\end_inset
+
+; quasiconvex function
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:rel-1-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This characterization shows that 
+\begin_inset Formula $\min_{x}f(x)$
+\end_inset
+
+ is the same as 
+\begin_inset Formula $\min_{(t,x)\in\epi f}t$
+\end_inset
+
+.
+ Therefore, convex optimization is the same as optimizing a linear function
+ over a convex set.
+ Another important feature of a convex set is the following.
+\end_layout
+
+\begin_layout Fact
+Any level set 
+\begin_inset Formula $\{x\in\Rn:\ f(x)\leq t\}$
+\end_inset
+
+ of a convex function 
+\begin_inset Formula $f$
+\end_inset
+
+ is convex.
+\end_layout
+
+\begin_layout Standard
+In particular, this shows that the set of minimizers is connected.
+ Therefore, any local minimum is a global minimum.
+ We note that the converse of the fact above is not true.
+ A function is 
+\emph on
+quasiconvex
+\emph default
+ if every level set is convex.
+ For example, Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:rel-1-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows a function that is quasiconvex but not convex.
+\end_layout
+
+\begin_layout Standard
+Finally, we note that many operations preserve convexity.
+ Here is an example.
+\end_layout
+
+\begin_layout Exercise
+Given a matrix 
+\begin_inset Formula $A$
+\end_inset
+
+, a vector 
+\begin_inset Formula $b$
+\end_inset
+
+, positive scalars 
+\begin_inset Formula $t_{1},t_{2}\geq0$
+\end_inset
+
+, convex functions 
+\begin_inset Formula $f_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $f_{2}$
+\end_inset
+
+, then 
+\begin_inset Formula $g(x)=t_{1}f_{1}(Ax+b)+t_{2}f_{2}(x)$
+\end_inset
+
+ is convex.
+\end_layout
+
+\begin_layout Standard
+Here are some convex sets and functions.
+ In Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Checking-Convexity"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we illustrate how to check convexity.
+\end_layout
+
+\begin_layout Example*
+Convex sets: polyhedron 
+\begin_inset Formula $\{x:\,Ax\leq b\}$
+\end_inset
+
+, polytope 
+\begin_inset Formula $\conv\left(\left\{ v_{1},\ldots,v_{m}\right\} \right)$
+\end_inset
+
+ with 
+\begin_inset Formula $v_{1},\ldots,v_{m}\in\R^{n}$
+\end_inset
+
+, ellipsoid 
+\begin_inset Formula $\{x:\,x^{\top}Ax\leq1\}$
+\end_inset
+
+ with 
+\begin_inset Formula $A\succeq0$
+\end_inset
+
+, positive semidefinite cone 
+\begin_inset Formula $\{X\in\R^{n\times n}\text{ : }X\succeq0\}$
+\end_inset
+
+, norm ball 
+\begin_inset Formula $\{x:\ \norm x_{p}\leq1\}$
+\end_inset
+
+ for all 
+\begin_inset Formula $p\geq1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example*
+Convex functions: 
+\begin_inset Formula $x$
+\end_inset
+
+, 
+\begin_inset Formula $\max(x,0)$
+\end_inset
+
+, 
+\begin_inset Formula $e^{x}$
+\end_inset
+
+, 
+\begin_inset Formula $|x|^{a}$
+\end_inset
+
+ for 
+\begin_inset Formula $a\geq1$
+\end_inset
+
+, 
+\begin_inset Formula $-\log(x)$
+\end_inset
+
+, 
+\begin_inset Formula $x\log x$
+\end_inset
+
+, 
+\begin_inset Formula $\norm x_{p}$
+\end_inset
+
+ for 
+\begin_inset Formula $p\geq1$
+\end_inset
+
+, 
+\begin_inset Formula $(x,y)\rightarrow\frac{x^{2}}{y}$
+\end_inset
+
+ (for 
+\begin_inset Formula $y>0$
+\end_inset
+
+), 
+\begin_inset Formula $A\rightarrow-\log\det A$
+\end_inset
+
+ over PSD matrices 
+\begin_inset Formula $A$
+\end_inset
+
+, 
+\begin_inset Formula $(x,Y)\rightarrow x^{\top}Y^{-1}x$
+\end_inset
+
+ (for 
+\begin_inset Formula $Y\succ0$
+\end_inset
+
+), 
+\begin_inset Formula $\log\sum_{i}e^{x_{i}}$
+\end_inset
+
+, 
+\begin_inset Formula $(\prod_{i}^{n}x_{i})^{\frac{1}{n}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Exercise
+Show that the above sets and functions are all convex.
+\end_layout
+
+\begin_layout Section
+Checking Convexity
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Checking-Convexity"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+It is often cumbersome to check if a function is convex via 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "def:convex_func"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The major benefit of that definition is that it works for non-differentiable
+ functions and infinite dimensional space.
+ However, when a function is twice differentiable, one can check the convexity
+ by simply checking if the Hessian is positive semi-definite.
+ (Recall the definition of 
+\begin_inset Formula $A\succeq0$
+\end_inset
+
+ in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:PSD"
+
+\end_inset
+
+.)
+\end_layout
+
+\begin_layout Standard
+To show this, we first prove the following second-order Taylor theorem.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:second_order"
+
+\end_inset
+
+For any 
+\begin_inset Formula $f\in\mathcal{C}^{2}(\R^{n})$
+\end_inset
+
+, and any 
+\begin_inset Formula $x,y\in\R^{n}$
+\end_inset
+
+, there is a 
+\begin_inset Formula $z\in[x,y]$
+\end_inset
+
+ s.t.
+ 
+\begin_inset Formula 
+\[
+f(y)=f(x)+\nabla f(x)^{\top}(y-x)+\frac{1}{2}(y-x)^{\top}\nabla^{2}f(z)(y-x).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $g(t)=f((1-t)x+ty)$
+\end_inset
+
+.
+ Taylor expansion (Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:taylor_expansion"
+
+\end_inset
+
+) shows that
+\begin_inset Formula 
+\[
+g(1)=g(0)+g'(0)+\frac{1}{2}g''(\zeta)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\zeta\in[0,1]$
+\end_inset
+
+.
+ To see the result, note that 
+\begin_inset Formula $g(0)=f(x)$
+\end_inset
+
+, 
+\begin_inset Formula $g'(0)=\nabla f(x)^{\top}(y-x)$
+\end_inset
+
+ and 
+\begin_inset Formula $g''(\zeta)=(y-x)^{\top}\nabla^{2}f((1-\zeta)x+\zeta y)(y-x)$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Now, we show that 
+\begin_inset Formula $f$
+\end_inset
+
+ is convex if and only if 
+\begin_inset Formula $\nabla^{2}f(x)\succeq0$
+\end_inset
+
+ for all 
+\begin_inset Formula $x$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:equ_convex"
+
+\end_inset
+
+Let 
+\begin_inset Formula $f\in\mathcal{C}^{2}(\Rn)$
+\end_inset
+
+.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Yin Tat.
+ TODO.
+ Make it into more general domain..(I forget why).
+\end_layout
+
+\end_inset
+
+Then, the following are equivalent:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $f$
+\end_inset
+
+ is convex.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $f(y)\geq f(x)+\nabla f(x)^{\top}(y-x)\text{ for all }x,y\in\Rn$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\nabla^{2}f(x)\succeq0$
+\end_inset
+
+ for all 
+\begin_inset Formula $x\in\Rn$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Proof
+We have proved (1) implies (2) in Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:first_order"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Suppose (2) holds.
+ Then, for any 
+\begin_inset Formula $x,h\in\Rn$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+f(x+th)\geq f(x)+t\nabla f(x)^{\top}h.
+\]
+
+\end_inset
+
+By Taylor expansion (Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:second_order"
+
+\end_inset
+
+), we have that
+\begin_inset Formula 
+\[
+f(x+th)=f(x)+t\nabla f(x)^{\top}h+\frac{t^{2}}{2}h^{\top}\nabla^{2}f(z)h
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $z\in[x,x+th]$
+\end_inset
+
+.
+ By comparing two equations, we have that 
+\begin_inset Formula $h^{\top}\nabla^{2}f(z)h\geq0$
+\end_inset
+
+.
+ Taking 
+\begin_inset Formula $t\rightarrow0$
+\end_inset
+
+, we have 
+\begin_inset Formula $z\rightarrow x$
+\end_inset
+
+ and hence 
+\begin_inset Formula $\nabla^{2}f(z)\rightarrow\nabla^{2}f(x)$
+\end_inset
+
+.
+ Therefore, we have that
+\begin_inset Formula 
+\[
+h^{\top}\nabla^{2}f(x)h\geq0
+\]
+
+\end_inset
+
+for all 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $h$
+\end_inset
+
+.
+ Hence, this gives (3).
+\end_layout
+
+\begin_layout Proof
+Suppose (3) holds.
+ Fix 
+\begin_inset Formula $x,y\in\Rn$
+\end_inset
+
+.
+ Consider the function
+\begin_inset Formula 
+\[
+g(\lambda)=f(\lambda x+(1-\lambda)y)-\lambda f(x)-(1-\lambda)f(y).
+\]
+
+\end_inset
+
+Consider 
+\begin_inset Formula $\lambda^{*}=\argmax_{\lambda\in[0,1]}g(\lambda)$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $\lambda^{*}$
+\end_inset
+
+ is either 
+\begin_inset Formula $0$
+\end_inset
+
+ or 
+\begin_inset Formula $1$
+\end_inset
+
+, then we have 
+\begin_inset Formula $g(\lambda^{*})=0$
+\end_inset
+
+.
+ Otherwise, by Taylor's theorem, there is a 
+\begin_inset Formula $\zeta\in[\lambda^{*},1]$
+\end_inset
+
+ such that
+\begin_inset Formula 
+\begin{align*}
+g(1) & =g(\lambda^{*})+g'(\lambda^{*})(1-\lambda^{*})+\frac{1}{2}g''(\zeta)(1-\lambda^{*})^{2}\\
+ & =g(\lambda^{*})+\frac{1}{2}g''(\zeta)(1-\lambda^{*})^{2}
+\end{align*}
+
+\end_inset
+
+where we used that 
+\begin_inset Formula $g'(\lambda^{*})=0$
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula 
+\begin{align*}
+g'(\zeta) & =\nabla f(\zeta x+(1-\zeta)y)^{\top}(x-y)-f(x)+f(y),\\
+g''(\zeta) & =(x-y)^{\top}\nabla^{2}f(\zeta x+(1-\zeta)y)(x-y).
+\end{align*}
+
+\end_inset
+
+By the assumption (3), we have that 
+\begin_inset Formula $g''(\zeta)\geq0$
+\end_inset
+
+ and hence 
+\begin_inset Formula $0=g(1)\geq g(\lambda^{*})$
+\end_inset
+
+.
+ Hence, in both cases, 
+\begin_inset Formula $\max_{\lambda\in[0,1]}g(\lambda)=g(\lambda^{*})\leq0$
+\end_inset
+
+.
+ This gives (1).
+\end_layout
+
+\begin_layout Standard
+Now, as an example, we prove that the function 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:logistic_regression"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is convex.
+\end_layout
+
+\begin_layout Example
+The function 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:logistic_regression"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is convex for 
+\begin_inset Formula $f(z)=\log(1+\exp(z))$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+We write 
+\begin_inset Formula $R(\theta)=R_{1}(\theta)+R_{2}(\theta)$
+\end_inset
+
+ where 
+\begin_inset Formula $R_{1}(\theta)=\frac{1}{n}\sum_{i=1}^{n}f(y_{i}\cdot\left\langle x^{i},\theta\right\rangle )$
+\end_inset
+
+ and 
+\begin_inset Formula $R_{2}(\theta)=\lambda\|\theta\|_{1}$
+\end_inset
+
+.
+ It is easy to check 
+\begin_inset Formula $R_{2}$
+\end_inset
+
+ is convex.
+ So, it suffices to prove 
+\begin_inset Formula $R_{1}$
+\end_inset
+
+ is convex.
+ Now, we use Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:equ_convex"
+
+\end_inset
+
+ to prove that 
+\begin_inset Formula $R_{1}$
+\end_inset
+
+ is convex.
+ Note that
+\begin_inset Formula 
+\begin{align*}
+\nabla R_{1}(\theta) & =\frac{1}{n}\sum_{i=1}^{n}f'(\left\langle x^{i},\theta\right\rangle )x^{i},\\
+\nabla^{2}R_{1}(\theta) & =\frac{1}{n}\sum_{i=1}^{n}f''(\left\langle x^{i},\theta\right\rangle )x^{i}(x^{i})^{\top}.
+\end{align*}
+
+\end_inset
+
+Since 
+\begin_inset Formula $x^{i}(x^{i})^{\top}\succeq0$
+\end_inset
+
+, it suffices to prove that 
+\begin_inset Formula $f''(\left\langle x^{i},\theta\right\rangle )\geq0$
+\end_inset
+
+.
+ This follows from the calculation: 
+\begin_inset Formula $f'(z)=\frac{\exp(z)}{1+\exp(z)}=1-\frac{1}{1+\exp(z)}$
+\end_inset
+
+ and 
+\begin_inset Formula $f''(z)=\frac{\exp(z)}{(1+\exp(z))^{2}}\geq0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Logconcave Functions
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Logconcave-functions"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+A function 
+\begin_inset Formula $f:\R^{n}\rightarrow\R_{+}$
+\end_inset
+
+ is 
+\emph on
+logconcave
+\emph default
+ if 
+\begin_inset Formula $\log f$
+\end_inset
+
+ is concave, i.e., 
+\begin_inset Formula $f$
+\end_inset
+
+ is nonnegative and for any 
+\begin_inset Formula $\lambda\in[0,1]$
+\end_inset
+
+, we have 
+\begin_inset Formula $f(\lambda x+(1-\lambda)y)\ge f(x)^{\lambda}f(y)^{1-\lambda}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+The indicator function of a convex set 
+\begin_inset Formula $1_{K}(x)=\begin{cases}
+1 & \text{if }x\in K\\
+0 & \text{otherwise}
+\end{cases}$
+\end_inset
+
+ is logconcave.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Dinghas; Prékopa; Leindler
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:marginal"
+
+\end_inset
+
+ The product, minimum and convolution of two logconcave functions is also
+ logconcave; in particular, any linear transformation or any marginal of
+ a logconcave density is logconcave; the distribution function of any logconcave
+ density is logconcave.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Define convolution somewhere?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We next describe the basic theorem underlying the above properties.
+ We will see their proofs in a later chapter.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:Prekopa-Leindler"
+
+\end_inset
+
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Prékopa-Leindler
+\end_layout
+
+\end_inset
+
+Fix 
+\begin_inset Formula $\lambda\in[0,1].$
+\end_inset
+
+ Let 
+\begin_inset Formula $f,g,h:\R^{n}\rightarrow\R_{+}$
+\end_inset
+
+ be functions satisfying 
+\begin_inset Formula $h(\lambda x+(1-\lambda)y)\ge f(x)^{\lambda}g(x)^{1-\lambda}$
+\end_inset
+
+ for all 
+\begin_inset Formula $x\in\R^{n}$
+\end_inset
+
+.
+ Then,
+\begin_inset Formula 
+\[
+\int_{\R^{n}}h\ge\left(\int_{\R^{n}}f\right)^{\lambda}\left(\int_{\R^{n}}g\right)^{1-\lambda}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+An equivalent version of the lemma for sets in 
+\begin_inset Formula $\R^{n}$
+\end_inset
+
+ is often useful.
+ By a 
+\emph on
+measurable 
+\emph default
+set below, we mean Lebesgue measurable, which coincides with the definition
+ of volume (for an axis aligned box, it is the product of the axis lengths;
+ for any other set, it is the limit over increasingly finer partitions into
+ boxes, of the sum of volumes of boxes that intersect the set).
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:Brunn-Minkowski"
+
+\end_inset
+
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Brunn-Minkowski
+\end_layout
+
+\end_inset
+
+For any 
+\begin_inset Formula $\lambda\in[0,1]$
+\end_inset
+
+ and measurable sets 
+\begin_inset Formula $A,B\subset\R^{n}$
+\end_inset
+
+, we have 
+\begin_inset Formula 
+\[
+\vol(\lambda A+(1-\lambda)B)^{1/n}\ge\lambda\vol(A)^{1/n}+(1-\lambda)\vol(B)^{1/n}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+An immediate consequence of the first theorem above is that any one-dimensional
+ marginal distribution of a convex body is logconcave; the second implies
+ that it is in fact 
+\begin_inset Formula $(1/(n-1))$
+\end_inset
+
+-concave (a function is 
+\begin_inset Formula $s$
+\end_inset
+
+-concave if 
+\begin_inset Formula $f^{s}$
+\end_inset
+
+ is concave) if the body is in 
+\begin_inset Formula $\R^{n}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Exercise
+Prove both corollaries just mentioned.
+\end_layout
+
+\begin_layout Example
+We give one example problem related to Bayesian inference.
+ Suppose we have a signal 
+\begin_inset Formula $\theta=\left(\theta_{1},\theta_{2},\cdots,\theta_{n}\right)$
+\end_inset
+
+ and that we can take a measurement 
+\begin_inset Formula $y_{i}$
+\end_inset
+
+ of 
+\begin_inset Formula $\theta_{i}$
+\end_inset
+
+.
+ The measurement only incurs unbiased Gaussian noise, i.e., 
+\begin_inset Formula $y_{i}=\theta_{i}+\epsilon_{i}$
+\end_inset
+
+ where 
+\begin_inset Formula $\epsilon_{i}\sim N(0,1)$
+\end_inset
+
+.
+ The question is to recover the signal 
+\begin_inset Formula $\theta$
+\end_inset
+
+ using 
+\begin_inset Formula $y$
+\end_inset
+
+.
+ Without any prior on 
+\begin_inset Formula $\theta$
+\end_inset
+
+, the only sensible recovery is 
+\begin_inset Formula $\theta=y$
+\end_inset
+
+.
+ With a prior, one can apply Bayes' theorem:
+\begin_inset Formula 
+\[
+\P(\theta|y)=\frac{\P(y|\theta)\P(\theta)}{\P(y)}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+The Bayesian choice is to find 
+\begin_inset Formula $\theta$
+\end_inset
+
+ with maximum likelihood, namely 
+\begin_inset Formula $\theta=\argmax_{\theta}\log\P(\theta|y)=\argmin_{\theta}-\log\P(\theta|y)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+Using the noise assumption, we have that 
+\begin_inset Formula 
+\[
+\P(y|\theta)\varpropto\exp(-\frac{1}{2}\sum_{i}(y_{i}-\theta_{i})^{2}).
+\]
+
+\end_inset
+
+Now, say we know the signal is smooth and we model the prior as 
+\begin_inset Formula $\P(\theta)\varpropto\exp(-\lambda\sum_{i}(\theta_{i}-\theta_{i+1})^{2})$
+\end_inset
+
+ where 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ controls how smooth the signal is.
+ Hence, 
+\begin_inset Formula 
+\[
+-\log\P(\theta|y)=c+\sum_{i}(y_{i}-\theta_{i})^{2}+\lambda\sum_{i}(\theta_{i}-\theta_{i+1})^{2}.
+\]
+
+\end_inset
+
+Since each term in the function above is convex, so is the whole formula.
+ Hence, the recovery question becomes a convex optimization problem
+\begin_inset Formula 
+\[
+\min_{\theta}\sum_{i}(y_{i}-\theta_{i})^{2}+\lambda\sum_{i}(\theta_{i}-\theta_{i+1})^{2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+When we recover a signal, we want to know how confident we are because there
+ are many choices of 
+\begin_inset Formula $\theta$
+\end_inset
+
+ that could explain the same measurement 
+\begin_inset Formula $y$
+\end_inset
+
+.
+ One way to do this is to sample multiple 
+\begin_inset Formula $\theta\varpropto\P(\theta|y)$
+\end_inset
+
+ and compute the empirical variance or other statistics.
+ Note that
+\begin_inset Formula 
+\[
+\P(\theta|y)\varpropto e^{-\sum_{i}(y_{i}-\theta_{i})^{2}-\lambda\sum_{i}(\theta_{i}-\theta_{i+1})^{2}}
+\]
+
+\end_inset
+
+which is a logconcave distribution.
+ Therefore, one can study the signal and quality of signal recovery via
+ logconcave sampling.
+\end_layout
+
+\end_body
+\end_document

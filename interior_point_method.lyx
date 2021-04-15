@@ -1,0 +1,3907 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{url}
+\usepackage{xargs}
+\usepackage[pdftex,dvipsnames]{xcolor}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\usepackage[lined,boxed,ruled,norelsize,algo2e]{algorithm2e}
+\usepackage[small,bf]{caption}
+\usepackage{tikz}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=red,
+    filecolor=red,
+    linkcolor=red,
+    urlcolor=red
+}
+
+
+
+\usepackage{fancybox}
+\usepackage{multirow}
+\usepackage{nicefrac}
+\usepackage{hyperref}
+
+
+\expandafter\def\expandafter\normalsize\expandafter{%
+    \normalsize
+%	    \setlength\abovedisplayskip{5pt}
+    \setlength\belowdisplayskip{5pt}
+    % \setlength\abovedisplayshortskip{5pt}
+    \setlength\belowdisplayshortskip{5pt}
+}
+
+\usepackage{tocloft}
+\setlength{\cftsecnumwidth}{2.8em}%
+
+%%%%%
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{fix-cm}
+\makeatletter
+\newcommand\HUGE{\@setfontsize\Huge{38}{47}}
+\makeatother
+
+\titleclass{\part}{top}
+\titleformat{\part}[display]
+  {\normalfont\HUGE\sffamily}{\partname\ \thepart}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\HUGE\bfseries\filleft}
+%\titlespacing*{\part} {0pt}{20pt}{40pt}
+\titlespacing*{\part} {0pt}{30pt}{50pt}
+
+% chapter heading formatting
+\titleformat{\chapter}[display]
+  {\normalfont\LARGE\sffamily}{\chaptertitlename\ \thechapter}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\LARGE\bfseries\filleft}
+% section heading formatting
+\titleformat{\section}
+  {\normalfont\Large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesection}{0.5em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesubsection}{0.5em}{}
+\titlespacing*{\chapter} {0pt}{20pt}{30pt}
+
+% header/footer
+\fancyhf{}
+\fancyhead[ER]{\footnotesize\sffamily\leftmark}
+\fancyhead[OL]{\footnotesize\sffamily\nouppercase\rightmark}
+\fancyhead[EL,OR]{\bfseries\thepage}
+
+\setcounter{secnumdepth}{3}
+\end_preamble
+\options openany
+\use_default_options false
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+theorems-sec
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding default
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 0
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic true
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip 0.1in
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Interior Point Method for Linear Programs
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:IPM"
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+mention the relation between IPM and mirror descent? Need to make this section
+ more concrete.
+ No algorithm box for now...
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this section, we study interior point methods.
+ In practice, this method reduces the problem of optimizing a convex function
+ to solving a small number (often less than 
+\begin_inset Formula $30$
+\end_inset
+
+) linear systems.
+ In theory, it reduces the problem to 
+\begin_inset Formula $\tilde{O}(\sqrt{n})$
+\end_inset
+
+ linear systems.
+ 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Although it has many numerical stability issues in practice and it rarely
+ offers a nearly linear time algorithm, it is the current best framework
+ for optimizing general (explicit) convex functions in both theory and practice
+ for the high accuracy regime.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We start by describing interior point method for linear programs.
+ We establish a polynomial bound and then later discuss implementation details.
+\end_layout
+
+\begin_layout Subsection
+Basic Properties
+\end_layout
+
+\begin_layout Standard
+We first consider the primal problem
+\begin_inset Formula 
+\[
+(\mathrm{P}):\quad\quad\min_{x}c^{\top}x\text{ subject to }Ax=b,x\geq0
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $A\in\R^{m\times n}$
+\end_inset
+
+.
+ The difficulty of linear programs is the constraint 
+\begin_inset Formula $x\geq0$
+\end_inset
+
+.
+ Without this constraint, we can simply solve it as a linear system.
+ One natural idea to solve linear programs is to replace the hard constraint
+ 
+\begin_inset Formula $x\geq0$
+\end_inset
+
+ by some smooth function.
+ So, let us consider the following 
+\begin_inset Quotes eld
+\end_inset
+
+regularized
+\begin_inset Quotes erd
+\end_inset
+
+ version of the linear program
+\begin_inset Formula 
+\[
+(\mathrm{P}_{t}):\quad\quad\min_{x}c^{\top}x-t\sum_{i=1}^{n}\ln x_{i}\text{ subject to }Ax=b.
+\]
+
+\end_inset
+
+We will explain the reason of choosing 
+\begin_inset Formula $\ln x$
+\end_inset
+
+ in more detail later.
+ For now, we can think it as a nice function that blows up at 
+\begin_inset Formula $x=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+One can think that 
+\begin_inset Formula $-\ln x$
+\end_inset
+
+ gives a force from every constraint 
+\begin_inset Formula $x\geq0$
+\end_inset
+
+ to make sure 
+\begin_inset Formula $x\geq0$
+\end_inset
+
+ is true.
+ Since the gradient of 
+\begin_inset Formula $-\ln x$
+\end_inset
+
+ blows up when 
+\begin_inset Formula $x=0$
+\end_inset
+
+, when 
+\begin_inset Formula $x$
+\end_inset
+
+ is close enough, the force is large enough to counter the cost 
+\begin_inset Formula $c$
+\end_inset
+
+.
+ When 
+\begin_inset Formula $t\rightarrow0$
+\end_inset
+
+, then the problem 
+\begin_inset Formula $(\mathrm{P}_{t})$
+\end_inset
+
+ is closer to the original problem 
+\begin_inset Formula $(\mathrm{P})$
+\end_inset
+
+ and hence the minimizer of 
+\begin_inset Formula $(\mathrm{P}_{t})$
+\end_inset
+
+ is closer to a minimizer of 
+\begin_inset Formula $(\mathrm{P})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+First, we give a formula for the minimizer of 
+\begin_inset Formula $(\mathrm{P}_{t})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Existence and Uniqueness of central path
+\end_layout
+
+\end_inset
+
+If the polytope 
+\begin_inset Formula $\{Ax=b,x\geq0\}$
+\end_inset
+
+ has an interior, then the optimum of 
+\begin_inset Formula $(\mathrm{P}_{t})$
+\end_inset
+
+ is uniquely given by
+\begin_inset Formula 
+\begin{align*}
+xs & =t,\\
+Ax & =b,\\
+A^{\top}y+s & =c,\\
+(x,s) & \geq0
+\end{align*}
+
+\end_inset
+
+where 
+\begin_inset Formula $xs=t$
+\end_inset
+
+ is a shorthand of 
+\begin_inset Formula $x_{i}s_{i}=t$
+\end_inset
+
+ for all 
+\begin_inset Formula $i$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+The optimality condition, using dual variables 
+\begin_inset Formula $y$
+\end_inset
+
+ for the Lagrangian of 
+\begin_inset Formula $Ax=b$
+\end_inset
+
+ is given by
+\begin_inset Formula 
+\[
+c-\frac{t}{x}=A^{\top}y.
+\]
+
+\end_inset
+
+Write 
+\begin_inset Formula $s_{i}=\frac{t}{x_{i}}$
+\end_inset
+
+, to get the formula.
+ The solution is unique because the function 
+\begin_inset Formula $-\ln x$
+\end_inset
+
+ is strictly convex.
+\end_layout
+
+\begin_layout Definition
+We define the central path 
+\begin_inset Formula ${\cal C}_{t}=(x^{(t)},y^{(t)},s^{(t)})$
+\end_inset
+
+ as the sequence of points satisfying
+\begin_inset Formula 
+\begin{align*}
+x^{(t)}s^{(t)} & =t,\\
+Ax^{(t)} & =b,\\
+A^{\top}y^{(t)}+s^{(t)} & =c,\\
+(x^{(t)},s^{(t)}) & \geq0.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To give another interpretation of the central path, note that the dual problem
+ is
+\begin_inset Formula 
+\[
+(\mathrm{D}):\quad\quad\max_{y,s}b^{\top}y\text{ subject to }A^{\top}y+s=c,s\geq0.
+\]
+
+\end_inset
+
+Note that for any feasible 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $y$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+0\leq c^{\top}x-b^{\top}y=c^{\top}x-x^{\top}A^{\top}y=x^{\top}s.
+\]
+
+\end_inset
+
+Hence, 
+\begin_inset Formula $(x,y,s)$
+\end_inset
+
+ solves the linear program if it satisfies the central path equation with
+ 
+\begin_inset Formula $t=0$
+\end_inset
+
+.
+ Therefore, central path is a balanced way to decrease 
+\begin_inset Formula $x_{i}s_{i}$
+\end_inset
+
+ uniformly to 
+\begin_inset Formula $0$
+\end_inset
+
+.
+ We can formalize the intuition that for small 
+\begin_inset Formula $t$
+\end_inset
+
+, 
+\begin_inset Formula $x^{(t)}$
+\end_inset
+
+ is a good approximation of the primal solution.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Duality Gap
+\end_layout
+
+\end_inset
+
+We have that
+\begin_inset Formula 
+\[
+\text{Duality Gap}=c^{\top}x^{(t)}-b^{\top}y^{(t)}=c^{\top}x^{(t)}-\left(x^{(t)}\right)^{\top}A^{\top}y^{(t)}=\left(x^{(t)}\right)^{\top}s^{(t)}=tn.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The interior point method follows the following framework:
+\end_layout
+
+\begin_layout Enumerate
+Find 
+\begin_inset Formula $\mathcal{C}_{1}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Until 
+\begin_inset Formula $t<\frac{\varepsilon}{n}$
+\end_inset
+
+,
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Use 
+\begin_inset Formula $\mathcal{C}_{t}$
+\end_inset
+
+ to find 
+\begin_inset Formula $\mathcal{C}_{(1-h)t}$
+\end_inset
+
+ for 
+\begin_inset Formula $h=\frac{1}{10\sqrt{n}}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+Note that this algorithm only finds a solution with 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ error.
+ If the linear program is integral, we can simply stop at small enough 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ and round it off to the closest integral point.
+\end_layout
+
+\begin_layout Subsection
+Finding the initial point
+\end_layout
+
+\begin_layout Standard
+The first question is to find 
+\begin_inset Formula $\mathcal{C}_{1}$
+\end_inset
+
+.
+ This can be handled by extending the problem to slightly higher dimension.
+ To the reader familiar with the Simplex method, this might be reminiscent
+ of the two phases of the simplex method, where the purpose of the first
+ phase is to find a feasible initial solution.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+We need to say the idea of the construction below.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:feasible_LP"
+
+\end_inset
+
+ Consider a linear program 
+\begin_inset Formula $\min_{Ax=b,x\geq0}c^{\top}x$
+\end_inset
+
+ with 
+\begin_inset Formula $n$
+\end_inset
+
+ variables and 
+\begin_inset Formula $d$
+\end_inset
+
+ constraints.
+ Assume that 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Diameter: For any 
+\begin_inset Formula $x\geq0$
+\end_inset
+
+ with 
+\begin_inset Formula $Ax=b$
+\end_inset
+
+, we have that 
+\begin_inset Formula $\|x\|_{\infty}\leq R$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Lipschitz constant of the objective: 
+\begin_inset Formula $\|c\|_{\infty}\leq L$
+\end_inset
+
+.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Lemma
+For any 
+\begin_inset Formula $0<\delta\leq1$
+\end_inset
+
+, the modified linear program 
+\begin_inset Formula $\min_{\overline{A}\overline{x}=\overline{b},\overline{x}\geq0}\overline{c}^{\top}\overline{x}$
+\end_inset
+
+ with 
+\begin_inset Formula 
+\[
+\overline{A}=\left[\begin{array}{ccc}
+A & 0 & \frac{1}{R}b-A1_{n}\\
+1_{n}^{\top} & 1 & 0
+\end{array}\right],\overline{b}=\left[\begin{array}{c}
+\frac{1}{R}b\\
+n+1
+\end{array}\right]\text{, and }\overline{c}=\left[\begin{array}{c}
+\delta/L\cdot c\\
+0\\
+1
+\end{array}\right]
+\]
+
+\end_inset
+
+satisfies the following:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $\overline{x}=\left[\begin{array}{c}
+1_{n}\\
+1\\
+1
+\end{array}\right]$
+\end_inset
+
+, 
+\begin_inset Formula $\overline{y}=\left[\begin{array}{c}
+0_{d}\\
+-1
+\end{array}\right]$
+\end_inset
+
+ and 
+\begin_inset Formula $\overline{s}=\left[\begin{array}{c}
+1_{n}+\frac{\delta}{L}\cdot c\\
+1\\
+1
+\end{array}\right]$
+\end_inset
+
+ are feasible primal dual vectors.
+\end_layout
+
+\begin_layout Enumerate
+For any feasible primal dual vectors 
+\begin_inset Formula $(\overline{x},\overline{y},\overline{s})$
+\end_inset
+
+ with duality gap at most 
+\begin_inset Formula $\delta^{2}$
+\end_inset
+
+, the vector 
+\begin_inset Formula $\hat{x}=R\cdot\overline{x}_{1:n}$
+\end_inset
+
+ (
+\begin_inset Formula $\overline{x}_{1:n}$
+\end_inset
+
+ are the first 
+\begin_inset Formula $n$
+\end_inset
+
+ coordinates of 
+\begin_inset Formula $\overline{x}$
+\end_inset
+
+) is an approximate solution to the original linear program in the following
+ sense 
+\begin_inset Formula 
+\begin{align*}
+c^{\top}\hat{x} & \leq\min_{Ax=b,x\geq0}c^{\top}x+LR\cdot\delta,\\
+\|A\hat{x}-b\|_{1} & \leq4n\delta\cdot\left(R\sum_{i,j}|A_{i,j}|+\|b\|_{1}\right),\\
+\hat{x} & \geq0.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+
+\series bold
+Part 1.
+
+\series default
+ For the first result, straightforward calculations show that 
+\begin_inset Formula $(\overline{x},\overline{y},\overline{s})\in\R^{(n+2)\times(d+1)\times(n+2)}$
+\end_inset
+
+ are feasible, i.e.,
+\begin_inset Formula 
+\[
+\overline{A}\overline{x}=\begin{bmatrix}A & 0 & \frac{1}{R}b-A1_{n}\\
+1_{n}^{\top} & 1 & 0
+\end{bmatrix}\cdot\begin{bmatrix}1_{n}\\
+1\\
+1
+\end{bmatrix}=\begin{bmatrix}\frac{1}{R}b\\
+n+1
+\end{bmatrix}=\overline{b}
+\]
+
+\end_inset
+
+and 
+\begin_inset Formula 
+\begin{align*}
+\overline{A}^{\top}\overline{y}+\overline{s}= & ~\begin{bmatrix}A^{\top} & 1_{n}\\
+0 & 1\\
+\frac{1}{R}b^{\top}-1_{n}^{\top}A^{\top} & 0
+\end{bmatrix}\cdot\begin{bmatrix}0_{d}\\
+-1
+\end{bmatrix}+\begin{bmatrix}1_{n}+\frac{\delta}{L}\cdot c\\
+1\\
+1
+\end{bmatrix}\\
+= & ~\begin{bmatrix}-1_{n}\\
+-1\\
+0
+\end{bmatrix}+\begin{bmatrix}1_{n}+\frac{\delta}{L}\cdot c\\
+1\\
+1
+\end{bmatrix}\\
+= & ~\begin{bmatrix}\frac{\delta}{L}\cdot c\\
+0\\
+1
+\end{bmatrix}=\overline{c}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Part 2.
+
+\series default
+ For the second result, we let 
+\begin_inset Formula 
+\[
+\text{OPT}=\min_{Ax=b,x\geq0}c^{\top}x,\text{~~~and,~~~}\overline{\text{OPT}}=\min_{\overline{A}\overline{x}=\overline{b},\overline{x}\geq0}\overline{c}^{\top}\overline{x}
+\]
+
+\end_inset
+
+For any optimal 
+\begin_inset Formula $x\in\R^{n}$
+\end_inset
+
+ in the original LP, we consider the following 
+\begin_inset Formula $\overline{x}\in\R^{n+2}$
+\end_inset
+
+ 
+\begin_inset Formula 
+\begin{align}
+\overline{x}=\begin{bmatrix}\frac{1}{R}x\\
+n+1-\frac{1}{R}\sum_{i=1}^{n}x_{i}\\
+0
+\end{bmatrix}\label{eq:another_ov_x_in_appendix}
+\end{align}
+
+\end_inset
+
+and 
+\begin_inset Formula $\overline{c}\in\R^{n+2}$
+\end_inset
+
+ 
+\begin_inset Formula 
+\begin{align}
+\overline{c}=\begin{bmatrix}\frac{\delta}{L}\cdot c^{\top}\\
+0\\
+1
+\end{bmatrix}\label{eq:another_ov_c_in_appendix}
+\end{align}
+
+\end_inset
+
+We want to argue that 
+\begin_inset Formula $\overline{x}\in\R^{n+2}$
+\end_inset
+
+ is feasible in the modified LP.
+ It is obvious that 
+\begin_inset Formula $\overline{x}\geq0$
+\end_inset
+
+, it remains to show 
+\begin_inset Formula $\overline{A}\overline{x}=\overline{b}\in\R^{d+1}$
+\end_inset
+
+.
+ We have 
+\begin_inset Formula 
+\begin{align*}
+\overline{A}\overline{x}=\begin{bmatrix}A & 0 & \frac{1}{R}b-A1_{n}\\
+1_{n}^{\top} & 1 & 0
+\end{bmatrix}\cdot\begin{bmatrix}\frac{1}{R}x\\
+n+1-\frac{1}{R}\sum_{i=1}^{n}x_{i}\\
+0
+\end{bmatrix}=\begin{bmatrix}\frac{1}{R}Ax\\
+n+1
+\end{bmatrix}=\begin{bmatrix}\frac{1}{R}b\\
+n+1
+\end{bmatrix}=\overline{b},
+\end{align*}
+
+\end_inset
+
+where the third step follows from 
+\begin_inset Formula $Ax=b$
+\end_inset
+
+, and the last step follows from definition of 
+\begin_inset Formula $\overline{b}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Therefore, using the definition of 
+\begin_inset Formula $\overline{x}$
+\end_inset
+
+ in 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:another_ov_x_in_appendix"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ we have that 
+\begin_inset Formula 
+\begin{align}
+\overline{\text{OPT}}\leq\overline{c}^{\top}\overline{x}=\begin{bmatrix}\frac{\delta}{L}\cdot c^{\top} & 0 & 1\end{bmatrix}\cdot\begin{bmatrix}\frac{1}{R}x\\
+n+1-\frac{1}{R}\sum_{i=1}^{n}x_{i}\\
+0
+\end{bmatrix}=\frac{\delta}{LR}\cdot c^{\top}x=\frac{\delta}{LR}\cdot\text{OPT}.\label{eq:bounding_ov_OPT_by_OPT}
+\end{align}
+
+\end_inset
+
+where the first step follows from modified program is solving a minimization
+ problem, the second step follows from definition of 
+\begin_inset Formula $\overline{x}\in\R^{n+2}$
+\end_inset
+
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:another_ov_x_in_appendix"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset Formula $\overline{c}\in\R^{n+2}$
+\end_inset
+
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:another_ov_c_in_appendix"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, the last step follows from 
+\begin_inset Formula $x\in\R^{n}$
+\end_inset
+
+ is an optimal solution in the original linear program.
+\end_layout
+
+\begin_layout Standard
+Given a feasible 
+\begin_inset Formula $(\overline{x},\overline{y},\overline{s})\in\R^{(n+2)\times(d+1)\times(n+2)}$
+\end_inset
+
+ with duality gap 
+\begin_inset Formula $\delta^{2}$
+\end_inset
+
+, we can write 
+\begin_inset Formula $\overline{x}=\begin{bmatrix}\overline{x}_{1:n}\\
+\tau\\
+\theta
+\end{bmatrix}\in\R^{n+2}$
+\end_inset
+
+ for some 
+\begin_inset Formula $\tau\geq0$
+\end_inset
+
+, 
+\begin_inset Formula $\theta\geq0$
+\end_inset
+
+.
+ We can compute 
+\begin_inset Formula $\overline{c}^{\top}\overline{x}$
+\end_inset
+
+ which is 
+\begin_inset Formula $\frac{\delta}{L}\cdot c^{\top}\overline{x}_{1:n}+\theta$
+\end_inset
+
+.
+ Then, we have 
+\begin_inset Formula 
+\begin{align}
+\frac{\delta}{L}\cdot c^{\top}\overline{x}_{1:n}+\theta\leq\overline{\text{OPT}}+\delta^{2}\leq\frac{\delta}{LR}\cdot\overline{\text{OPT}}+\delta^{2},\label{eq:eq1_in_appendix}
+\end{align}
+
+\end_inset
+
+where the first step follows from definition of duality gap, the last step
+ follows from 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:bounding_ov_OPT_by_OPT"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Hence, we can upper bound the 
+\begin_inset Formula $\overline{\text{OPT}}$
+\end_inset
+
+ of the transformed program as follows: 
+\begin_inset Formula 
+\begin{align*}
+c^{\top}\hat{x}=R\cdot c^{\top}\overline{x}_{1:n}=\frac{LR}{\delta}\cdot\frac{\delta}{L}c^{\top}\overline{x}_{1:n}\leq\frac{RL}{\delta}(\frac{\delta}{LR}\cdot\text{OPT}+\delta^{2})=\text{OPT}+LR\cdot\delta,
+\end{align*}
+
+\end_inset
+
+where the first step follows by 
+\begin_inset Formula $\hat{x}=R\cdot\overline{x}_{1:n}$
+\end_inset
+
+, the third step follows by 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:eq1_in_appendix"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%For the feasibility, we have that $
+\backslash
+theta 
+\backslash
+leq 
+\backslash
+frac{ 
+\backslash
+delta }{ L R } 
+\backslash
+cdot 
+\backslash
+OPT _ 
+\backslash
+delta^2 
+\backslash
+leq 2 n 
+\backslash
+delta $ because $
+\backslash
+OPT = 
+\backslash
+min_{A x = b, x 
+\backslash
+geq 0} c^
+\backslash
+top x 
+\backslash
+leq n L R$.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note that 
+\begin_inset Formula 
+\begin{align}
+\frac{\delta}{L}c^{\top}\overline{x}_{1:n}\geq-\frac{\delta}{L}\|c\|_{\infty}\|\overline{x}_{1:n}\|_{1}=-\frac{\delta}{L}\|c\|_{\infty}\|\frac{1}{R}x\|_{1}\geq-\frac{\delta}{L}\|c\|_{\infty}\frac{n}{R}\|x\|_{\infty}\geq-\delta n,\label{eq:lower_bound_on_delta_L_c_ovx}
+\end{align}
+
+\end_inset
+
+where the second step follows from definition 
+\begin_inset Formula $\overline{x}\in\R^{n+2}$
+\end_inset
+
+, and the last step follows from 
+\begin_inset Formula $\|c\|_{\infty}\leq L$
+\end_inset
+
+ and 
+\begin_inset Formula $\|x\|_{\infty}\leq R$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+We can upper bound the 
+\begin_inset Formula $\theta$
+\end_inset
+
+ in the following sense, 
+\begin_inset Formula 
+\begin{align}
+\theta\leq\frac{\delta}{LR}\cdot\overline{\text{OPT}}+\delta^{2}+\delta n\leq2n\delta+\delta^{2}\leq4n\delta\label{eq:theta_is_at_most_4n_delta}
+\end{align}
+
+\end_inset
+
+where the first step follows from 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:eq1_in_appendix"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:lower_bound_on_delta_L_c_ovx"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, the second step follows by 
+\begin_inset Formula $\text{OPT}=\min_{Ax=b,x\geq0}c^{\top}x\leq nLR$
+\end_inset
+
+ (because 
+\begin_inset Formula $\|c\|_{\infty}\leq L$
+\end_inset
+
+ and 
+\begin_inset Formula $\|x\|_{\infty}\leq R$
+\end_inset
+
+), and the last step follows from 
+\begin_inset Formula $\delta\leq1\leq n$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The constraint in the new polytope shows that 
+\begin_inset Formula 
+\begin{align*}
+A\overline{x}_{1:n}+(\frac{1}{R}b-A1_{n})\theta=\frac{1}{R}b.
+\end{align*}
+
+\end_inset
+
+Using 
+\begin_inset Formula $\hat{x}=Rx_{1:n}\in\R^{n}$
+\end_inset
+
+, we have 
+\begin_inset Formula 
+\begin{align*}
+A\frac{1}{R}\hat{x}+(\frac{1}{R}b-A1_{n})\theta=\frac{1}{R}b.
+\end{align*}
+
+\end_inset
+
+Rewriting it, we have 
+\begin_inset Formula $A\hat{x}-b=(RA1_{n}-b)\theta\in\R^{d}$
+\end_inset
+
+ and hence 
+\begin_inset Formula 
+\begin{align*}
+\|A\hat{x}-b\|_{1}=\|(RA1_{n}-b)\theta\|_{1}\leq\theta(\|RA1_{n}\|_{1}+\|b\|_{1})\leq\theta\cdot(R\|A\|_{1}+\|b\|_{1})\leq4n\delta\cdot(R\|A\|_{1}+\|b\|_{1}),
+\end{align*}
+
+\end_inset
+
+where the second step follows from triangle inequality, the third step follows
+ from 
+\begin_inset Formula $\|A1_{n}\|_{1}\leq\|A\|_{1}$
+\end_inset
+
+ (because the definition of entry-wise 
+\begin_inset Formula $\ell_{1}$
+\end_inset
+
+ norm), and the last step follows from 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:theta_is_at_most_4n_delta"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Thus, we complete the proof.
+\end_layout
+
+\begin_layout Subsection
+Following the central path
+\end_layout
+
+\begin_layout Standard
+During the algorithm, we maintain a point 
+\begin_inset Formula $(x,y,s)$
+\end_inset
+
+ such that 
+\begin_inset Formula $Ax=b$
+\end_inset
+
+, 
+\begin_inset Formula $A^{\top}y+s=c$
+\end_inset
+
+ and 
+\begin_inset Formula $x_{i}s_{i}$
+\end_inset
+
+ is close to 
+\begin_inset Formula $t$
+\end_inset
+
+ for all 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ We show how to find a feasible 
+\begin_inset Formula $(x+\delta_{x},y+\delta_{y},s+\delta_{s})$
+\end_inset
+
+ such that it is even closer to 
+\begin_inset Formula $t$
+\end_inset
+
+.
+ We can write the equation as follows:
+\begin_inset Formula 
+\begin{align*}
+(x+\delta_{x})(s+\delta_{s}) & \thickapprox t,\\
+A(x+\delta_{x}) & =b,\\
+A^{\top}(y+\delta_{y})+(s+\delta_{s}) & =c.
+\end{align*}
+
+\end_inset
+
+(Omitted the non-negative conditions.) Using our assumption on 
+\begin_inset Formula $(x,y,s)$
+\end_inset
+
+ and noting that 
+\begin_inset Formula $\delta_{x}\cdot\delta_{s}$
+\end_inset
+
+ is small, the equation can simplified as follows.
+ We use the notation 
+\begin_inset Formula $X=\Diag(x)$
+\end_inset
+
+, 
+\begin_inset Formula $S=\Diag(s)$
+\end_inset
+
+.
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+0 & A^{\top} & I\\
+A & 0 & 0\\
+S & 0 & X
+\end{array}\right]\left[\begin{array}{c}
+\delta_{x}\\
+\delta_{y}\\
+\delta_{s}
+\end{array}\right]=\left[\begin{array}{c}
+0\\
+0\\
+t-xs
+\end{array}\right].
+\]
+
+\end_inset
+
+This is a linear system and hence we can solve it exactly.
+\end_layout
+
+\begin_layout Exercise
+\begin_inset CommandInset label
+LatexCommand label
+name "exer:d_central"
+
+\end_inset
+
+Let 
+\begin_inset Formula $r=t-xs$
+\end_inset
+
+.
+ Prove that 
+\begin_inset Formula $S\delta_{x}=(I-\overline{P})r$
+\end_inset
+
+ and 
+\begin_inset Formula $X\delta_{s}=\overline{P}r$
+\end_inset
+
+ where 
+\begin_inset Formula $\overline{P}=XA^{\top}(AS^{-1}XA^{\top})^{-1}AS^{-1}$
+\end_inset
+
+.
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+I change 
+\begin_inset Formula $P$
+\end_inset
+
+ to 
+\begin_inset Formula $\overline{P}$
+\end_inset
+
+.
+ Coz it is only used here.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+First, we show that 
+\begin_inset Formula $x^{\new}=x+\delta_{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $s^{\new}=s+\delta_{s}$
+\end_inset
+
+ are feasible.
+\end_layout
+
+\begin_layout Lemma
+Suppose 
+\begin_inset Formula $\sum_{i}\left(x_{i}s{}_{i}-t\right)^{2}\leq\varepsilon^{2}t^{2}$
+\end_inset
+
+ with 
+\begin_inset Formula $\varepsilon<\frac{1}{2}$
+\end_inset
+
+.
+ Then,
+\begin_inset Formula $x_{i}^{\new}>0$
+\end_inset
+
+ and 
+\begin_inset Formula $s_{i}^{\new}>0$
+\end_inset
+
+ for all 
+\begin_inset Formula $i$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Consider the orthogonal projection matrix 
+\begin_inset Formula $P=S^{-\frac{1}{2}}X^{\frac{1}{2}}A^{\top}(AS^{-1}XA^{\top})^{-1}AS^{-\frac{1}{2}}X^{\frac{1}{2}}$
+\end_inset
+
+.
+ Note that
+\begin_inset Formula 
+\[
+X^{-1}\delta_{x}=S^{-\frac{1}{2}}X^{-\frac{1}{2}}(I-P)S^{-\frac{1}{2}}X^{-\frac{1}{2}}r.
+\]
+
+\end_inset
+
+By the assumption for each 
+\begin_inset Formula $i$
+\end_inset
+
+, 
+\begin_inset Formula $x_{i}s_{i}\ge(1-\varepsilon)t$
+\end_inset
+
+.
+ Therefore, we have
+\begin_inset Formula 
+\begin{align*}
+\|X^{-1}\delta_{x}\|_{2} & \leq\frac{1}{\sqrt{(1-\epsilon)t}}\|(I-P)S^{-\frac{1}{2}}X^{-\frac{1}{2}}r\|_{2}\\
+ & \leq\frac{1}{\sqrt{(1-\epsilon)t}}\|S^{-\frac{1}{2}}X^{-\frac{1}{2}}r\|_{2}\\
+ & \leq\frac{1}{(1-\epsilon)t}\|r\|_{2}\leq\frac{\epsilon}{1-\epsilon}.
+\end{align*}
+
+\end_inset
+
+Similarly, we have 
+\begin_inset Formula $S^{-1}\delta_{s}=S^{-\frac{1}{2}}X^{-\frac{1}{2}}PS^{-\frac{1}{2}}X^{-\frac{1}{2}}r$
+\end_inset
+
+.
+ Hence, we have 
+\begin_inset Formula $\|S^{-1}\delta_{s}\|_{2}\leq\frac{\epsilon}{1-\epsilon}$
+\end_inset
+
+.
+ Therefore, when 
+\begin_inset Formula $\epsilon<\frac{1}{2}$
+\end_inset
+
+, we have both 
+\begin_inset Formula $\|X^{-1}\delta_{x}\|_{\infty}$
+\end_inset
+
+ and 
+\begin_inset Formula $\|S^{-1}\delta_{s}\|_{\infty}$
+\end_inset
+
+ less than 
+\begin_inset Formula $1$
+\end_inset
+
+, which shows that both 
+\begin_inset Formula $x^{\new}$
+\end_inset
+
+ and 
+\begin_inset Formula $s^{\new}$
+\end_inset
+
+ are positive.
+\end_layout
+
+\begin_layout Proof
+Next, we show that 
+\begin_inset Formula $xs$
+\end_inset
+
+ is closer to 
+\begin_inset Formula $t$
+\end_inset
+
+ after one Newton step.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:IPM_progress"
+
+\end_inset
+
+ If 
+\begin_inset Formula $\sum_{i}\left(x_{i}s{}_{i}-t\right)^{2}\leq\varepsilon^{2}t^{2}$
+\end_inset
+
+ with 
+\begin_inset Formula $\epsilon<\frac{1}{4}$
+\end_inset
+
+, we have that 
+\begin_inset Formula 
+\[
+\sum_{i}\left(x_{i}^{\new}s_{i}^{\new}-t\right)^{2}\leq\left(\epsilon^{4}+16\epsilon^{5}\right)t^{2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+We have that 
+\begin_inset Formula $x_{i}\delta_{s,i}+s_{i}\delta_{x,i}=t-x_{i}s_{i}$
+\end_inset
+
+.
+ Using this, 
+\begin_inset Formula 
+\[
+\text{LHS}=\sum_{i}\left(x_{i}^{\new}s_{i}^{\new}-t\right)^{2}=\sum_{i}(x_{i}s_{i}+x_{i}\delta_{s,i}+s_{i}\delta_{x,i}+\delta_{x,i}\delta_{s,i}-t)^{2}=\sum_{i}\delta_{x,i}^{2}\delta_{s,i}^{2}\leq\left((1+\epsilon)t\right)^{2}\cdot\sum_{i}\left(\frac{\delta_{x,i}}{x_{i}}\right)^{2}\left(\frac{\delta_{s,i}}{s_{i}}\right)^{2}
+\]
+
+\end_inset
+
+where in the last step we used 
+\begin_inset Formula $x_{i}^{2}s_{i}^{2}\leq(1+\varepsilon)^{2}t^{2}$
+\end_inset
+
+.
+ Using the previous lemma, we have that
+\begin_inset Formula 
+\begin{align*}
+\text{LHS} & \leq\left((1+\epsilon)t\right)^{2}\cdot\|X^{-1}\delta_{x}\|_{4}^{2}\|S^{-1}\delta_{s}\|_{4}^{2}\\
+ & \leq\left((1+\epsilon)t\right)^{2}\cdot\|X^{-1}\delta_{x}\|_{2}^{2}\|S^{-1}\delta_{s}\|_{2}^{2}\\
+ & \leq\left((1+\epsilon)t\right)^{2}\left(\frac{\epsilon}{1-\epsilon}\right)^{4}\\
+ & \leq\left(\epsilon^{4}+16\epsilon^{5}\right)t^{2}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Using this, we have the main theorem.
+\end_layout
+
+\begin_layout Theorem
+We can solve a linear program to within 
+\begin_inset Formula $\delta$
+\end_inset
+
+ 
+\begin_inset Quotes eld
+\end_inset
+
+error
+\begin_inset Quotes erd
+\end_inset
+
+ (see Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:feasible_LP"
+
+\end_inset
+
+) in 
+\begin_inset Formula $O(\sqrt{n}\log(\frac{1}{\delta}))$
+\end_inset
+
+ iterations and each iteration only needs to solve a linear system.
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $\Phi=\sum_{i}\left(x_{i}s{}_{i}-t\right)^{2}$
+\end_inset
+
+ be the error of the current iteration.
+ We always maintain 
+\begin_inset Formula $\Phi\leq\frac{t^{2}}{16}$
+\end_inset
+
+ for the current 
+\begin_inset Formula $(x,y,s)$
+\end_inset
+
+ and 
+\begin_inset Formula $t$
+\end_inset
+
+.
+ At each step, we use Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:IPM_progress"
+
+\end_inset
+
+ which makes 
+\begin_inset Formula $\Phi\leq\frac{t^{2}}{50}$
+\end_inset
+
+.
+ Then, we decrease 
+\begin_inset Formula $t$
+\end_inset
+
+ by 
+\begin_inset Formula $t(1-\frac{1}{10\sqrt{n}})$
+\end_inset
+
+.
+ Note that
+\begin_inset Formula 
+\[
+\sum_{i}\left(x_{i}s{}_{i}-t(1-h)\right)^{2}\leq2\Phi+2t^{2}h^{2}n\leq\frac{2t^{2}}{50}+\frac{2t^{2}}{100}\leq\frac{(t(1-h))^{2}}{16}.
+\]
+
+\end_inset
+
+Therefore, the invariant is preserved after each step.
+ Since 
+\begin_inset Formula $t$
+\end_inset
+
+ is decreased by a 
+\begin_inset Formula $(1-\frac{1}{10\sqrt{n}})$
+\end_inset
+
+ factor each step, it takes 
+\begin_inset Formula $O(\sqrt{n}\log(\frac{1}{\delta}))$
+\end_inset
+
+ to decrease 
+\begin_inset Formula $t$
+\end_inset
+
+ from 
+\begin_inset Formula $1$
+\end_inset
+
+ to 
+\begin_inset Formula $\delta^{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+For many problems, this factor is polynomial and hence the total running
+ time is still 
+\begin_inset Formula $O(\sqrt{n}\log(\frac{n}{\varepsilon}))$
+\end_inset
+
+.
+ However, for some problem such as circuit evaluation, the factor can be
+ exponentially large and hence we only get a 
+\begin_inset Formula $n^{1.5}$
+\end_inset
+
+ time algorithm.
+ This is natural because otherwise, we would prove that any program can
+ be run in 
+\begin_inset Formula $\sqrt{n}$
+\end_inset
+
+ depth!
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Why 
+\begin_inset Formula $\sqrt{n}$
+\end_inset
+
+?
+\end_layout
+
+\begin_layout Standard
+The central path is the solution to the following ODE
+\begin_inset Formula 
+\begin{align*}
+S_{t}\frac{d}{dt}x_{t}+X_{t}\frac{d}{dt}s_{t} & =1,\\
+A\frac{d}{dt}x_{t} & =0,\\
+A^{\top}\frac{d}{dt}y_{t}+\frac{d}{dt}s_{t} & =0.
+\end{align*}
+
+\end_inset
+
+Solving this linear system, we have that 
+\begin_inset Formula $S_{t}\frac{dx_{t}}{dt}=(I-P_{t})1$
+\end_inset
+
+ and 
+\begin_inset Formula $X_{t}\frac{ds_{t}}{dt}=P_{t}1$
+\end_inset
+
+ where 
+\begin_inset Formula $P_{t}=X_{t}A^{\top}(AS_{t}^{-1}X_{t}A^{\top})^{-1}AS_{t}^{-1}$
+\end_inset
+
+.
+ Using that 
+\begin_inset Formula $x_{t}s_{t}=t$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+P_{t}=X_{t}A^{\top}(AX_{t}^{2}A^{T})^{-1}AX_{t}=S_{t}^{-1}A^{\top}(AS_{t}^{-2}A)^{-1}AS_{t}^{-1}
+\]
+
+\end_inset
+
+and that 
+\begin_inset Formula $X_{t}^{-1}\frac{dx_{t}}{dt}=\frac{1}{t}(I-P_{t})1$
+\end_inset
+
+ and 
+\begin_inset Formula $S_{t}^{-1}\frac{ds_{t}}{dt}=\frac{1}{t}P_{t}1$
+\end_inset
+
+.
+ Equivalently, we have
+\begin_inset Formula 
+\[
+\frac{d\ln x_{t}}{d\ln t}=(I-P_{t})1\text{ and }\frac{d\ln s_{t}}{d\ln t}=P_{t}1.
+\]
+
+\end_inset
+
+Note that 
+\begin_inset Formula 
+\[
+\norm{P_{t}1}_{\infty}\leq\norm{P_{t}1}_{2}=\sqrt{n}.
+\]
+
+\end_inset
+
+Hence, 
+\begin_inset Formula $x_{t}$
+\end_inset
+
+ and 
+\begin_inset Formula $s_{t}$
+\end_inset
+
+ can change by at most a constant factor when we change 
+\begin_inset Formula $t$
+\end_inset
+
+ by a 
+\begin_inset Formula $1\pm\frac{1}{\sqrt{n}}$
+\end_inset
+
+ factor.
+\end_layout
+
+\begin_layout Exercise
+If we are given 
+\begin_inset Formula $x$
+\end_inset
+
+ such that 
+\begin_inset Formula $\norm{\ln x-\ln x_{t}}_{\infty}=O(1)$
+\end_inset
+
+, then we can find 
+\begin_inset Formula $x_{t}$
+\end_inset
+
+ by solving 
+\begin_inset Formula $\tilde{O}(1)$
+\end_inset
+
+ linear systems.
+\end_layout
+
+\begin_layout Exercise
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+If 
+\begin_inset Formula $v$
+\end_inset
+
+ is a random vector with length 
+\begin_inset Formula $\sqrt{n}$
+\end_inset
+
+, then we have 
+\begin_inset Formula $\norm{P_{t}v}_{\infty}=O(\sqrt{\log n})$
+\end_inset
+
+.
+ Maybe this is the reason we see the running time of interior point closer
+ to nearly constant number of iterations instead of polynomial.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Section
+Mehrotra predictor–corrector method*
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset FormulaMacro
+\newcommand{\aff}{\mathrm{aff}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\cc}{\mathrm{cc}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+In practice, we implement the interior point slightly differently.
+ First, we do not need to find an initial point that is feasible.
+ Hence, we do not need to do that reduction.
+ Second, our step is not aiming at 
+\begin_inset Formula $xs=t$
+\end_inset
+
+.
+ Instead, every step, we first aim at 
+\begin_inset Formula $xs=0$
+\end_inset
+
+ (called affine direction).
+ Then, we check if we can take a large step on this affine direction.
+ This is used to evaluation how long step size 
+\begin_inset Formula $h$
+\end_inset
+
+ we can take.
+ Finally, we compute a second order update step.
+\end_layout
+
+\begin_layout Plain Layout
+Formally, the algorithm as follows:
+\end_layout
+
+\begin_layout Itemize
+Compute initial point:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Set 
+\begin_inset Formula $x$
+\end_inset
+
+, 
+\begin_inset Formula $y$
+\end_inset
+
+ and 
+\begin_inset Formula $s$
+\end_inset
+
+ are the minimizer of the problem 
+\begin_inset Formula $\min_{Ax=b}\norm x^{2}$
+\end_inset
+
+ and the problem 
+\begin_inset Formula $\min_{A^{\top}y+s=c}\norm s^{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Set 
+\begin_inset Formula $\delta_{x}=\max(-1.5\min_{i}x_{i},0)$
+\end_inset
+
+ and 
+\begin_inset Formula $\delta_{s}=\max(-1.5\min_{i}s_{i},0)$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Itemize
+Set 
+\begin_inset Formula $y^{(0)}=y$
+\end_inset
+
+, 
+\begin_inset Formula $x^{(0)}=x+\delta_{x}+0.5\frac{(x+\delta_{x}e)^{\top}(s+\delta_{s}e)}{\sum_{i}(s_{i}+\delta_{s})}$
+\end_inset
+
+ and 
+\begin_inset Formula $s^{(0)}=s+\delta_{s}+0.5\frac{(x+\delta_{x}e)^{\top}(s+\delta_{s}e)}{\sum_{i}(x_{i}+\delta_{x})}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+For 
+\begin_inset Formula $k=0,1,2,\cdots$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Solve the equation
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+0 & A^{\top} & I\\
+A & 0 & 0\\
+S^{(k)} & 0 & X^{(k)}
+\end{array}\right]\left[\begin{array}{c}
+\Delta x^{\aff}\\
+\Delta y^{\aff}\\
+\Delta s^{\aff}
+\end{array}\right]=\left[\begin{array}{c}
+-r_{c}\\
+-r_{b}\\
+-X^{(k)}S^{(k)}e
+\end{array}\right]
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $r_{b}=Ax^{(k)}-b$
+\end_inset
+
+ and 
+\begin_inset Formula $r_{c}=A^{\top}y^{(k)}+s^{(k)}-c$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Calculate
+\begin_inset Formula 
+\begin{align*}
+\alpha_{\aff}^{\mathrm{pri}} & =\arg\max\{\alpha\in[0,1]|x^{(k)}+\alpha\Delta x^{\aff}\geq0\};\\
+\alpha_{\aff}^{\mathrm{dual}} & =\arg\max\{\alpha\in[0,1]|s^{(k)}+\alpha\Delta s^{\aff}\geq0\};\\
+\mu & =x^{(k)\top}s^{(k)}/n;\\
+\mu_{\aff} & =(x^{(k)}+\alpha_{\aff}^{\mathrm{pri}}\Delta x^{\aff})^{\top}(s^{(k)}+\alpha_{\aff}^{\mathrm{dual}}\Delta s^{\aff})/n;
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Set centering parameter to 
+\begin_inset Formula $\sigma=\min\left(\left(\frac{\mu_{\aff}}{\mu}\right)^{3},1\right)$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Itemize
+Solve the equation
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+0 & A^{\top} & I\\
+A & 0 & 0\\
+S^{(k)} & 0 & X^{(k)}
+\end{array}\right]\left[\begin{array}{c}
+\Delta x^{\cc}\\
+\Delta y^{\cc}\\
+\Delta s^{\cc}
+\end{array}\right]=\left[\begin{array}{c}
+0\\
+0\\
+\sigma\mu e-\Delta X^{\aff}\Delta S^{\aff}e
+\end{array}\right];
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Calculate
+\begin_inset Formula 
+\begin{align*}
+(\Delta x^{(k)},\Delta y^{(k)},\Delta s^{(k)}) & =(\Delta x^{\aff}+\Delta x^{\cc},\Delta y^{\aff}+\Delta y^{\cc},\Delta s^{\aff}+\Delta s^{\cc});\\
+\alpha_{\max}^{\mathrm{pri}} & =\arg\max\{\alpha\in[0,1]|x^{(k)}+\alpha\Delta x^{(k)}\geq0\};\\
+\alpha_{\max}^{\mathrm{dual}} & =\arg\max\{\alpha\in[0,1]|s^{(k)}+\alpha\Delta s^{(k)}\geq0\};
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Set 
+\begin_inset Formula $\alpha_{k}^{\mathrm{pri}}=\min(0.99\cdot\alpha_{\max}^{\mathrm{pri}},1)$
+\end_inset
+
+ and 
+\begin_inset Formula $\alpha_{k}^{\mathrm{dual}}=\min(0.99\cdot\alpha_{\max}^{\mathrm{dual}},1)$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Itemize
+Set
+\begin_inset Formula 
+\begin{align*}
+x^{(k+1)} & =x^{(k)}+\alpha_{k}^{\mathrm{pri}}\Delta x^{(k)};\\
+(y^{(k+1)},s^{(k+1)}) & =(y^{(k)},s^{(k)})+\alpha_{k}^{\mathrm{dual}}(\Delta y^{(k)},\Delta s^{(k)});
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lstinputlisting[caption = {Mehrotra predictor corrector method}]{lp_solver/solve
+LP.m}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Newpage newpage
+\end_inset
+
+We note the following:
+\end_layout
+
+\begin_layout Enumerate
+Usually linear programs are given by 
+\begin_inset Formula $\min_{Ax=b,l\leq x\leq u}c^{\top}x$
+\end_inset
+
+.
+ The best way is to handle them directly.
+ But for the simplicity of the code, we convert the linear program to 
+\begin_inset Formula $\min_{Ax=b,x\geq0}c^{\top}x$
+\end_inset
+
+ as follows:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+For any unconstrained 
+\begin_inset Formula $x$
+\end_inset
+
+, replaced it by 
+\begin_inset Formula $x=x^{+}-x^{-}$
+\end_inset
+
+ with new constraints 
+\begin_inset Formula $x^{+}\geq0$
+\end_inset
+
+ and 
+\begin_inset Formula $x^{-}\geq0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+For any two sided constraints 
+\begin_inset Formula $l\leq x\leq u$
+\end_inset
+
+, we replace it to 
+\begin_inset Formula $x'=u-x$
+\end_inset
+
+, 
+\begin_inset Formula $x\geq l$
+\end_inset
+
+ and 
+\begin_inset Formula $x'\geq0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+For any one-sided constraints 
+\begin_inset Formula $x\geq l$
+\end_inset
+
+, shift it to 
+\begin_inset Formula $x\geq0$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+This code is barely stable enough to pass all test cases in netlib problems
+ if we perturb 
+\begin_inset Formula $c$
+\end_inset
+
+ by 
+\begin_inset Formula $c+\varepsilon1$
+\end_inset
+
+ where 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ is some tiny positive number.
+ This avoided the issue that the set of optimum point can be unbounded.
+ All examples are solved in 70 iterations, most of them solved in 40 iterations.
+ (for 
+\begin_inset Formula $10^{-6}$
+\end_inset
+
+ error).
+\end_layout
+
+\begin_layout Enumerate
+I have not implement the test for infeasibility (See 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "xu1996simplified"
+literal "true"
+
+\end_inset
+
+) and the procedure of rounding (See 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "andersen1999exploiting"
+literal "true"
+
+\end_inset
+
+).
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Add remark for detecting tight constraints.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+I have not implement methods to simplify the linear program or to rescale
+ the program.
+ However, to make the algorithm faster for problems with dense col in 
+\begin_inset Formula $A$
+\end_inset
+
+, we split the corresponding columns into many copies and duplicate the
+ corresponding variables (not shown in the matlab code above, but in the
+ zip.).
+ Usually this is not done in this way, but modify the linear system algorithm
+ to handle those columns separately.
+ 
+\end_layout
+
+\begin_layout Enumerate
+One may able to slightly improve the running time by doing a higher order
+ approximation of the central path.
+\end_layout
+
+\begin_layout Plain Layout
+For more implementation details, see 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "wright1997primal"
+literal "true"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Newton Method and Self-concordance
+\end_layout
+
+\begin_layout Standard
+In this section, we give a general analysis for the Newton method.
+ In the next section, we will use this to show that interior point method
+ can be generalized to convex optimization.
+ A key property of the Newton method is that it is invariant under linear
+ transformation.
+ In general, whenever a method uses 
+\begin_inset Formula $k^{th}$
+\end_inset
+
+ order information, we need to assume the 
+\begin_inset Formula $k^{th}$
+\end_inset
+
+ derivative is continuous.
+ Otherwise, the 
+\begin_inset Formula $k^{th}$
+\end_inset
+
+ derivative is not useful for algorithmic purposes.
+ For the Newton method, it is convenient to assume that the Hessian is Lipschitz.
+ Since the method is invariant under linear transformation, it only makes
+ sense to impose an assumption that is invariant under linear transformation.
+\end_layout
+
+\begin_layout Definition
+Given a convex function 
+\begin_inset Formula $f:\R^{n}\rightarrow\R$
+\end_inset
+
+, and any point 
+\begin_inset Formula $x\in\R^{n},$
+\end_inset
+
+ define the norm 
+\begin_inset Formula $\norm ._{x}$
+\end_inset
+
+ as 
+\begin_inset Formula 
+\[
+\norm v_{x}^{2}=v^{\top}\nabla^{2}f(x)v.
+\]
+
+\end_inset
+
+We call a function 
+\begin_inset Formula $f$
+\end_inset
+
+ self-concordant if for any 
+\begin_inset Formula $h\in\Rn$
+\end_inset
+
+ and any 
+\begin_inset Formula $x$
+\end_inset
+
+ in 
+\begin_inset Formula $\dom f$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+D^{3}f(x)[h,h,h]\leq2\norm h_{x}^{3}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $D^{k}f(x)[h_{1},h_{2},\cdots,h_{k}]$
+\end_inset
+
+ is the directional 
+\begin_inset Formula $k^{th}$
+\end_inset
+
+ derivative of 
+\begin_inset Formula $f$
+\end_inset
+
+ along the directions 
+\begin_inset Formula $h_{1},h_{2},\cdots,h_{k}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Remark*
+The constant 
+\begin_inset Formula $2$
+\end_inset
+
+ is chosen so that 
+\begin_inset Formula $-\ln(x)$
+\end_inset
+
+ exactly satisfies the assumption and it is not very important, in that
+ by scaling 
+\begin_inset Formula $f$
+\end_inset
+
+, we can change any constant to any other constant.
+\end_layout
+
+\begin_layout Exercise
+Show that the following property is equivalent fo self-concordance as defined
+ above: restricted on any straight line 
+\begin_inset Formula $g(t)=f(x+th)$
+\end_inset
+
+, we have 
+\begin_inset Formula $g'''(t)\leq g''(t)^{3/2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Show that the functions 
+\begin_inset Formula $x^{\top}Ax$
+\end_inset
+
+, 
+\begin_inset Formula $-\ln x$
+\end_inset
+
+, 
+\begin_inset Formula $-\ln(1-\sum x_{i}^{2})$
+\end_inset
+
+, 
+\begin_inset Formula $-\ln\det X$
+\end_inset
+
+ are self-concordant under suitable nonnegativity conditions.
+\end_layout
+
+\begin_layout Standard
+The self-concordance condition says that locally, the Hessian does not change
+ too fast, i.e., the change in the Hessian is bounded by its magnitude (to
+ the power 
+\begin_inset Formula $1.5$
+\end_inset
+
+).
+ We will skip the proof of the lemma below.
+\end_layout
+
+\begin_layout Lemma
+Given a self-concordant function 
+\begin_inset Formula $f$
+\end_inset
+
+, for any 
+\begin_inset Formula $h_{1},h_{2},h_{3}\in\Rn$
+\end_inset
+
+, we have 
+\begin_inset Formula 
+\[
+D^{3}f(x)[h_{1},h_{2},h_{3}]\leq2\norm{h_{1}}_{x}\norm{h_{2}}_{x}\norm{h_{3}}_{x}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+I don't like the proof in the nesterov nem book.
+ It seems too complicated.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+From the self-concordance condition, we have the following more directly
+ usable property.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:self_con_global"
+
+\end_inset
+
+For a self-concordant function 
+\begin_inset Formula $f$
+\end_inset
+
+ and any 
+\begin_inset Formula $x\in\dom f$
+\end_inset
+
+ and any 
+\begin_inset Formula $\norm{y-x}_{x}<1$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+(1-\norm{y-x}_{x})^{2}\nabla^{2}f(x)\preceq\nabla^{2}f(y)\preceq\frac{1}{(1-\norm{y-x}_{x})^{2}}\nabla^{2}f(x).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $\alpha(t)=\left\langle \nabla^{2}f(x+t(y-x))u,u\right\rangle $
+\end_inset
+
+.
+ Then, we have that 
+\begin_inset Formula 
+\[
+\alpha'(t)=D^{3}f(x+t(y-x))[y-x,u,u].
+\]
+
+\end_inset
+
+By self-concordance, we have
+\begin_inset Formula 
+\begin{equation}
+\left|\alpha'(t)\right|\leq2\norm{y-x}_{x+t(y-x)}\norm u_{x+t(y-x)}^{2}.\label{eq:self_con_global_alpha}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+For 
+\begin_inset Formula $u=y-x$
+\end_inset
+
+, we have 
+\begin_inset Formula $\left|\alpha'(t)\right|\leq2\alpha(t)^{\frac{3}{2}}$
+\end_inset
+
+.
+ Hence, we have 
+\begin_inset Formula $\frac{d}{dt}\frac{1}{\sqrt{\alpha(t)}}\geq-1.$
+\end_inset
+
+ Integrating both on 
+\begin_inset Formula $t$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+\frac{1}{\sqrt{\alpha(t)}}\geq\frac{1}{\sqrt{\alpha(0)}}-t=\frac{1}{\norm{x-y}_{x}}-t.
+\]
+
+\end_inset
+
+Rearranging it gives
+\begin_inset Formula 
+\[
+\norm{y-x}_{x+t(y-x)}^{2}=\alpha(t)\leq\frac{1}{(\frac{1}{\norm{x-y}_{x}}-t)^{2}}=\frac{\norm{x-y}_{x}^{2}}{(1-t\norm{x-y}_{x})^{2}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+For general 
+\begin_inset Formula $u$
+\end_inset
+
+, (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:self_con_global_alpha"
+
+\end_inset
+
+) gives
+\begin_inset Formula 
+\[
+\left|\alpha'(t)\right|\leq2\frac{\norm{x-y}_{x}}{1-t\norm{x-y}_{x}}\alpha(t).
+\]
+
+\end_inset
+
+Rearranging,
+\begin_inset Formula 
+\[
+\left|\frac{d}{dt}\ln\alpha(t)\right|\leq2\frac{\norm{x-y}_{x}}{1-t\norm{x-y}_{x}}=-2\frac{d}{dt}\ln(1-t\norm{x-y}_{x})
+\]
+
+\end_inset
+
+Integrating both from 
+\begin_inset Formula $t=0$
+\end_inset
+
+ to 
+\begin_inset Formula $1$
+\end_inset
+
+ gives the result.
+\end_layout
+
+\begin_layout Standard
+Now we are ready to study the convergence of Newton method:
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:Newton_improvement"
+
+\end_inset
+
+Given a self-concordant convex function 
+\begin_inset Formula $f$
+\end_inset
+
+, consider the iteration 
+\begin_inset Formula 
+\[
+x'=x-(\nabla^{2}f(x))^{-1}\nabla f(x).
+\]
+
+\end_inset
+
+Suppose that 
+\begin_inset Formula $r=\norm{\nabla f(x)}_{\nabla^{2}f(x)^{-1}}<1$
+\end_inset
+
+, then we have
+\begin_inset Formula 
+\[
+\norm{\nabla f(x')}_{\nabla^{2}f(x')^{-1}}\leq\frac{r^{2}}{1-r}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+Note that 
+\begin_inset Formula $\norm{\nabla f(x)}_{\nabla^{2}f(x)^{-1}}=\norm{\nabla^{2}f(x)^{-1}\nabla f(x)}_{x}$
+\end_inset
+
+ is the step size of the Newton method.
+ This is a measurement of the error, since the goal is to find 
+\begin_inset Formula $x$
+\end_inset
+
+ with 
+\begin_inset Formula $\nabla f(x)=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:self_con_global"
+
+\end_inset
+
+ shows that
+\begin_inset Formula 
+\[
+\nabla^{2}f(x')\succeq(1-r)^{2}\nabla^{2}f(x).
+\]
+
+\end_inset
+
+and hence
+\begin_inset Formula 
+\[
+\norm{\nabla f(x')}_{\nabla^{2}f(x')^{-1}}\leq\frac{\norm{\nabla f(x')}_{\nabla^{2}f(x)^{-1}}}{1-r}.
+\]
+
+\end_inset
+
+To bound 
+\begin_inset Formula $\nabla f(x')$
+\end_inset
+
+, we calculate that
+\begin_inset Formula 
+\begin{align}
+\nabla f(x') & =\nabla f(x)+\int_{0}^{1}\nabla^{2}f(x+t(x'-x))(x'-x)dt\nonumber \\
+ & =\nabla f(x)-\int_{0}^{1}\nabla^{2}f(x+t(x'-x))(\nabla^{2}f(x))^{-1}\nabla f(x)dt\nonumber \\
+ & =\left(\nabla^{2}f(x)-\int_{0}^{1}\nabla^{2}f(x+t(x'-x))dt\right)(\nabla^{2}f(x))^{-1}\nabla f(x).\label{eq:grad_f_sc}
+\end{align}
+
+\end_inset
+
+For the first term in the bracket, we use Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:self_con_global"
+
+\end_inset
+
+ to get that
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula $\int_{0}^{1}(1-r)^{2}dr=1-r+\frac{1}{3}r^{2}$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+(1-r+\frac{1}{3}r^{2})\nabla^{2}f(x)\preceq\int_{0}^{1}\nabla^{2}f(x+t(x'-x))dt\preceq\frac{1}{1-r}\nabla^{2}f(x).
+\]
+
+\end_inset
+
+Therefore, we have
+\begin_inset Formula 
+\[
+\norm{(\nabla^{2}f(x))^{-\frac{1}{2}}\left(\nabla^{2}f(x)-\int_{0}^{1}\nabla^{2}f(x+t(x'-x))dt\right)(\nabla^{2}f(x))^{-\frac{1}{2}}}_{\text{op}}\leq\max(\frac{r}{1-r},r-\frac{1}{3}r^{2})=\frac{r}{1-r}.
+\]
+
+\end_inset
+
+Putting it into (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:grad_f_sc"
+
+\end_inset
+
+) gives
+\begin_inset Formula 
+\begin{align*}
+\norm{\nabla f(x')}_{\nabla^{2}f(x)^{-1}} & =\norm{\nabla^{2}f(x)^{-\frac{1}{2}}\nabla f(x')}_{2}\\
+ & \le\norm{(\nabla^{2}f(x))^{-\frac{1}{2}}\left(\nabla^{2}f(x)-\int_{0}^{1}\nabla^{2}f(x+t(x'-x))dt\right)(\nabla^{2}f(x))^{-\frac{1}{2}}}_{\text{op}}\norm{(\nabla^{2}f(x))^{-\frac{1}{2}}\nabla f(x)}_{2}\\
+ & \leq\frac{r}{1-r}\cdot r\\
+ & =\frac{r^{2}}{1-r}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Finally, we bound the error of the current iterate in terms of 
+\begin_inset Formula $\|\nabla f(x)\|_{\nabla^{2}f(x)^{-1}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:self_concordant_err"
+
+\end_inset
+
+Given 
+\begin_inset Formula $x$
+\end_inset
+
+ such that 
+\begin_inset Formula $\|\nabla f(x)\|_{\nabla^{2}f(x)^{-1}}\leq\frac{1}{6}$
+\end_inset
+
+, we have that
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\|x-x^{*}\|_{x^{*}}\leq2\|\nabla f(x)\|_{\nabla^{2}f(x)^{-1}}$
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\|x-x^{*}\|_{x}\leq2\|\nabla f(x)\|_{\nabla^{2}f(x)^{-1}}$
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $f(x)\leq f(x^{*})+2\|\nabla f(x)\|_{\nabla^{2}f(x)^{-1}}^{2}.$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Proof
+Let 
+\begin_inset Formula $r=\|x-x^{*}\|_{x}$
+\end_inset
+
+.
+ Suppose that 
+\begin_inset Formula $r\leq\frac{1}{4}$
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula 
+\[
+\nabla f(x)=\nabla f(x)-\nabla f(x^{*})=\int_{0}^{1}\nabla^{2}f(x^{*}+t(x-x^{*}))(x-x^{*})dt.
+\]
+
+\end_inset
+
+Using that 
+\begin_inset Formula $\nabla^{2}f(x^{*}+t(x-x^{*}))\succeq(1-(1-t)r)^{2}\nabla^{2}f(x)$
+\end_inset
+
+ (Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:self_con_global"
+
+\end_inset
+
+), we have
+\begin_inset Formula 
+\begin{align*}
+\|\nabla f(x)\|_{\nabla^{2}f(x)^{-1}} & =\int_{0}^{1}\|\nabla^{2}f(x^{*}+t(x-x^{*}))(x-x^{*})\|_{\nabla^{2}f(x)^{-1}}dt\\
+ & \geq\int_{0}^{1}(1-(1-t)r)^{2}\|x-x^{*}\|_{x}dt\\
+ & =\left(1-r+\frac{r^{2}}{3}\right)r\geq\frac{3r}{4}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Using 
+\begin_inset Formula $\|\nabla f(x)\|_{\nabla^{2}f(x)^{-1}}\leq\frac{1}{6}$
+\end_inset
+
+, we have indeed 
+\begin_inset Formula $r\leq\frac{1}{4}$
+\end_inset
+
+ (our lower bound above is a non-decreasing function) Using Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:self_con_global"
+
+\end_inset
+
+ again, we have
+\begin_inset Formula 
+\[
+\|x-x^{*}\|_{x^{*}}\leq\frac{\|x-x^{*}\|_{x}}{1-r}\leq\frac{4}{3}\frac{1}{1-\frac{1}{4}}\|\nabla f(x)\|_{\nabla^{2}f(x)^{-1}}\leq2\|\nabla f(x)\|_{\nabla^{2}f(x)^{-1}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+For the bound for 
+\begin_inset Formula $f(x)$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+f(x)=f(x^{*})+\left\langle \nabla f(x^{*}),x-x^{*}\right\rangle +\int_{0}^{1}(1-t)(x-x^{*})^{\top}\nabla^{2}f(x^{*}+t(x-x^{*}))(x-x^{*})dt.
+\]
+
+\end_inset
+
+Using that 
+\begin_inset Formula $\nabla^{2}f(x^{*}+t(x-x^{*}))\preceq\frac{1}{(1-(1-t)r)^{2}}\nabla^{2}f(x)$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\begin{align*}
+f(x) & \leq f(x^{*})+\int_{0}^{1}\frac{1-t}{(1-(1-t)r)^{2}}dt\cdot\|x-x^{*}\|_{x}^{2}\\
+ & =f(x^{*})+\frac{1}{r^{2}}(\frac{r}{1-r}+\log(1-r))\|x-x^{*}\|_{x}^{2}\\
+ & \leq f(x^{*})+(\frac{1}{2}+r)\|x-x^{*}\|_{x}^{2}
+\end{align*}
+
+\end_inset
+
+where we used 
+\begin_inset Formula $r\leq\frac{1}{4}$
+\end_inset
+
+ at the end.
+\end_layout
+
+\begin_layout Section
+Interior Point Method for Convex Programs
+\end_layout
+
+\begin_layout Standard
+The interior point method can be used to optimize any convex function.
+ For more in-depth treatment, please see the structural programming section
+ in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nesterov1998introductory"
+literal "true"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Recall that any convex optimization problem
+\begin_inset Formula 
+\[
+\min_{x}f(x)
+\]
+
+\end_inset
+
+can be rewritten in the epigraph form as
+\begin_inset Formula 
+\[
+\min_{\{(x,t):\ f(x)\leq t\}}t.
+\]
+
+\end_inset
+
+Hence, it suffices to study the problem 
+\begin_inset Formula $\min_{x\in K}c^{\top}x$
+\end_inset
+
+.
+ Similar to the case of linear programs, we replace the hard constraint
+ 
+\begin_inset Formula $x\in K$
+\end_inset
+
+ by a soft constraint as follows:
+\begin_inset Formula 
+\[
+\min_{x}\phi_{t}(x)\text{ where }\phi_{t}(x)=tc^{\top}x+\phi(x).
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\phi(x)$
+\end_inset
+
+ is a convex function such that 
+\begin_inset Formula $\phi(x)\rightarrow+\infty$
+\end_inset
+
+ as 
+\begin_inset Formula $x\rightarrow\partial K$
+\end_inset
+
+.
+ Note that we put the parameter 
+\begin_inset Formula $t$
+\end_inset
+
+ in front of the cost 
+\begin_inset Formula $c^{\top}x$
+\end_inset
+
+ instead of 
+\begin_inset Formula $\phi$
+\end_inset
+
+ as in the last lecture, it is slightly more convenient here.
+ We say 
+\begin_inset Formula $\phi$
+\end_inset
+
+ is a 
+\emph on
+barrier
+\emph default
+ for 
+\begin_inset Formula $K$
+\end_inset
+
+.
+ To be concrete, we can always keep in mind 
+\begin_inset Formula $\phi(x)=-\sum_{i=1}^{n}\ln x_{i}$
+\end_inset
+
+.
+ As before, we define the central path.
+\end_layout
+
+\begin_layout Definition
+The central path 
+\begin_inset Formula $x_{t}=\arg\min_{x}\phi_{t}(x)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The interior point method follows the following framework:
+\end_layout
+
+\begin_layout Enumerate
+Find 
+\begin_inset Formula $x$
+\end_inset
+
+ close to 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+While 
+\begin_inset Formula $t$
+\end_inset
+
+ is not tiny,
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Move 
+\begin_inset Formula $x$
+\end_inset
+
+ closer to 
+\begin_inset Formula $x_{t}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $t\rightarrow(1+h)\cdot t$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Self-concordant barrier function
+\end_layout
+
+\begin_layout Standard
+To analyze the algorithm above, we need to assume that 
+\begin_inset Formula $\phi$
+\end_inset
+
+ is well-behaved.
+ We measure the quality of 
+\begin_inset Formula $\phi$
+\end_inset
+
+ by 
+\begin_inset Formula $\|\nabla\phi\|_{\nabla^{2}\phi(x)^{-1}}$
+\end_inset
+
+.
+ One can think this as the Lipschitz constant of 
+\begin_inset Formula $\phi$
+\end_inset
+
+ but measured in the local norm.
+ 
+\end_layout
+
+\begin_layout Definition
+We call 
+\begin_inset Formula $\phi$
+\end_inset
+
+ is a 
+\begin_inset Formula $\nu$
+\end_inset
+
+-self-concordant barrier for 
+\begin_inset Formula $K$
+\end_inset
+
+ if 
+\begin_inset Formula $\phi$
+\end_inset
+
+ is self-concordant, 
+\begin_inset Formula $\phi(x)\rightarrow+\infty$
+\end_inset
+
+ as 
+\begin_inset Formula $x\rightarrow\partial K$
+\end_inset
+
+ and that 
+\begin_inset Formula $\|\nabla\phi(x)\|_{\nabla^{2}\phi(x)^{-1}}^{2}\leq\nu$
+\end_inset
+
+ for all 
+\begin_inset Formula $x$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Not all convex functions are self-concordant.
+ However, for our purpose, it suffices to show that we can construct a self-conc
+ordant barrier for any convex set.
+\end_layout
+
+\begin_layout Theorem
+Any convex set has an 
+\begin_inset Formula $n$
+\end_inset
+
+-self concordant barrier.
+\end_layout
+
+\begin_layout Standard
+Unfortunately, this is an existence result and the barrier function is expensive
+ to compute.In practice, we construct self-concordant barriers out of simpler
+ ones:
+\end_layout
+
+\begin_layout Lemma
+We have the following self-concordant barriers.
+ We use 
+\begin_inset Formula $\nu$
+\end_inset
+
+-sc as a short form for 
+\begin_inset Formula $\nu$
+\end_inset
+
+-self-concordant barrier.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $-\ln x$
+\end_inset
+
+ is 
+\begin_inset Formula $1$
+\end_inset
+
+-sc for 
+\begin_inset Formula $\{x\geq0\}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $-\ln\cos(x)$
+\end_inset
+
+ is 
+\begin_inset Formula $1$
+\end_inset
+
+-sc for 
+\begin_inset Formula $\{\left|x\right|\leq\frac{\pi}{2}\}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $-\ln(t^{2}-\norm x^{2})$
+\end_inset
+
+ is 
+\begin_inset Formula $2$
+\end_inset
+
+-sc for 
+\begin_inset Formula $\{t\geq\norm x_{2}\}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $-\ln\det X$
+\end_inset
+
+ is 
+\begin_inset Formula $n$
+\end_inset
+
+-sc for 
+\begin_inset Formula $\{X\in\R^{n\times n},X\succeq0\}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $-\ln x-\ln(\ln x+t)$
+\end_inset
+
+ is 
+\begin_inset Formula $2$
+\end_inset
+
+-sc for 
+\begin_inset Formula $\{x\geq0,t\geq-\ln x\}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $-\ln t-\ln(\ln t-x)$
+\end_inset
+
+ is 
+\begin_inset Formula $2$
+\end_inset
+
+-sc for 
+\begin_inset Formula $\{t\geq e^{x}\}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $-\ln x-\ln(t-x\ln x)$
+\end_inset
+
+ is 
+\begin_inset Formula $2$
+\end_inset
+
+-sc for 
+\begin_inset Formula $\{x\geq0,t\geq x\ln x\}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $-2\ln t-\ln(t^{2/p}-x^{2})$
+\end_inset
+
+ is 
+\begin_inset Formula $4$
+\end_inset
+
+-sc for 
+\begin_inset Formula $\{t\geq|x|^{p}\}$
+\end_inset
+
+ for 
+\begin_inset Formula $p\geq1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $-\ln x-\ln(t^{p}-x)$
+\end_inset
+
+ is 
+\begin_inset Formula $2$
+\end_inset
+
+-sc for 
+\begin_inset Formula $\{t^{p}\geq x\geq0\}$
+\end_inset
+
+ for 
+\begin_inset Formula $0<p\leq1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $-\ln t-\ln(x-t^{-1/p})$
+\end_inset
+
+ is 
+\begin_inset Formula $2$
+\end_inset
+
+-sc for 
+\begin_inset Formula $\{x>0,t\geq x^{-p}\}$
+\end_inset
+
+ for 
+\begin_inset Formula $p\geq1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $-\ln x-\ln(t-x^{-p})$
+\end_inset
+
+ is 
+\begin_inset Formula $2$
+\end_inset
+
+-sc for 
+\begin_inset Formula $\{x>0,t\geq x^{-p}\}$
+\end_inset
+
+ for 
+\begin_inset Formula $p\geq1$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+The following lemma shows how we can combine barriers:
+\end_layout
+
+\begin_layout Lemma
+If 
+\begin_inset Formula $\phi_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\phi_{2}$
+\end_inset
+
+ are 
+\begin_inset Formula $\nu_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\nu_{2}$
+\end_inset
+
+-self concordant barriers on 
+\begin_inset Formula $K_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $K_{2}$
+\end_inset
+
+ with respectively, then 
+\begin_inset Formula $\phi_{1}+\phi_{2}$
+\end_inset
+
+ is a 
+\begin_inset Formula $\nu_{1}+\nu_{2}$
+\end_inset
+
+ self concordant barrier on 
+\begin_inset Formula $K_{1}\cap K_{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Lemma
+If 
+\begin_inset Formula $\phi$
+\end_inset
+
+ is a 
+\begin_inset Formula $\nu$
+\end_inset
+
+-self concordant barrier on 
+\begin_inset Formula $K$
+\end_inset
+
+, then 
+\begin_inset Formula $\phi(Ax)$
+\end_inset
+
+ is a 
+\begin_inset Formula $\nu$
+\end_inset
+
+-self concordant on 
+\begin_inset Formula $\{y:Ay\in K\}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Exercise
+Using the lemmas above, prove that 
+\begin_inset Formula $-\sum_{i=1}^{m}\ln(a_{i}^{\top}x-b_{i})$
+\end_inset
+
+ is an 
+\begin_inset Formula $m$
+\end_inset
+
+-self concordant barrier on 
+\begin_inset Formula $\{Ax\geq b\}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Subsection*
+Main Algorithm and Analysis
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm2e}[H]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\mathtt{InteriorPointMethod}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetAlgoLined
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Input:
+\series default
+ A 
+\begin_inset Formula $\nu$
+\end_inset
+
+-self-concordant barrier 
+\begin_inset Formula $\phi$
+\end_inset
+
+ for 
+\begin_inset Formula $K$
+\end_inset
+
+, the minimizer 
+\begin_inset Formula $x$
+\end_inset
+
+ of 
+\begin_inset Formula $\phi$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Define 
+\begin_inset Formula $f_{t}(x)=tc^{\top}x+\phi(x)$
+\end_inset
+
+.
+ 
+\begin_inset Formula $t=\frac{1}{6}\|c\|_{\nabla^{2}\phi(x)^{-1}}^{-1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+While{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $t\leq\frac{\nu+1}{\epsilon}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $x\leftarrow x-\nabla^{2}f_{t}(x)^{-1}\nabla f_{t}(x)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $t\leftarrow(1+h)t$
+\end_inset
+
+ with 
+\begin_inset Formula $h=\frac{1}{9\sqrt{\nu}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Return
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $x$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We first explain the termination condition.
+ Intuitively, we should think 
+\begin_inset Formula $\min f_{t}(x_{t})$
+\end_inset
+
+ tends to optimality as 
+\begin_inset Formula $t\rightarrow\infty$
+\end_inset
+
+.
+ We first need a lemma showing that the gradient of 
+\begin_inset Formula $\phi$
+\end_inset
+
+ is small.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Duality Gap
+\end_layout
+
+\end_inset
+
+Suppose that 
+\begin_inset Formula $\phi$
+\end_inset
+
+ is a 
+\begin_inset Formula $\nu$
+\end_inset
+
+-self concordant barrier.
+ For any 
+\begin_inset Formula $x,y\in K$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+\left\langle \nabla\phi(x),y-x\right\rangle \leq\nu.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $\alpha(t)=\left\langle \nabla\phi(z_{t}),y-x\right\rangle $
+\end_inset
+
+ where 
+\begin_inset Formula $z_{t}=x+t(y-x)$
+\end_inset
+
+.
+ Then, we have
+\begin_inset Formula 
+\[
+\alpha'(t)=\left\langle \nabla^{2}\phi(z_{t})(y-x),y-x\right\rangle .
+\]
+
+\end_inset
+
+Note that
+\begin_inset Formula 
+\[
+\alpha(t)\leq\norm{\nabla\phi(z_{t})}_{\nabla^{2}\phi(z_{t})^{-1}}\norm{y-x}_{\nabla^{2}\phi(z_{t})}\leq\sqrt{v}\norm{y-x}_{\nabla^{2}\phi(z_{t})}.
+\]
+
+\end_inset
+
+Hence, we have 
+\begin_inset Formula $\alpha'(t)\geq\frac{1}{v}\alpha(t)^{2}.$
+\end_inset
+
+ If 
+\begin_inset Formula $\alpha(0)\leq0$
+\end_inset
+
+, then we are done.
+ Otherwise, 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ is increasing and hence 
+\begin_inset Formula $\alpha(1)>0$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $\frac{1}{\alpha(1)}\leq\frac{1}{\alpha(0)}-\frac{1}{v}$
+\end_inset
+
+.
+ So, 
+\begin_inset Formula $\alpha(0)\leq v$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Duality Gap
+\end_layout
+
+\end_inset
+
+Suppose that 
+\begin_inset Formula $\phi$
+\end_inset
+
+ is a 
+\begin_inset Formula $\nu$
+\end_inset
+
+-self concordant barrier, we have that
+\begin_inset Formula 
+\[
+\left\langle c,x_{t}\right\rangle \leq\left\langle c,x^{*}\right\rangle +\frac{\nu}{t}.
+\]
+
+\end_inset
+
+More generally, for any 
+\begin_inset Formula $x$
+\end_inset
+
+ such that 
+\begin_inset Formula $\|tc+\nabla\phi(x)\|_{(\nabla^{2}\phi(x))^{-1}}\leq\frac{1}{6}$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+\left\langle c,x\right\rangle \leq\left\langle c,x^{*}\right\rangle +\frac{\nu+\sqrt{\nu}}{t}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ be a minimizer of 
+\begin_inset Formula $c^{\top}x$
+\end_inset
+
+ on 
+\begin_inset Formula $K$
+\end_inset
+
+.
+ By optimality, we have 
+\begin_inset Formula $tc+\nabla\phi(x)=0$
+\end_inset
+
+.
+ Therefore, we have 
+\begin_inset Formula 
+\[
+\left\langle c,x_{t}\right\rangle -\left\langle c,x^{*}\right\rangle =\frac{1}{t}\left\langle \nabla\phi(x_{t}),x^{*}-x_{t}\right\rangle \leq\frac{\nu}{t}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+For the second result, let 
+\begin_inset Formula $f(x)=tc^{T}x+\phi(x)$
+\end_inset
+
+.
+ Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:self_concordant_err"
+
+\end_inset
+
+ shows that
+\begin_inset Formula 
+\[
+\|x-x_{t}\|_{x}\leq2\|\nabla f(x)\|_{\nabla^{2}f(x)^{-1}}\leq\frac{1}{3}.
+\]
+
+\end_inset
+
+Hence,
+\begin_inset Formula 
+\begin{align*}
+\left\langle c,x-x_{t}\right\rangle  & \leq\|c\|_{\nabla^{2}\phi(x)^{-1}}\|x-x_{t}\|_{x}\leq\frac{1}{3}\|c\|_{\nabla^{2}\phi(x)^{-1}}
+\end{align*}
+
+\end_inset
+
+Using 
+\begin_inset Formula $c=\frac{tc+\nabla\phi(x)}{t}-\frac{\nabla\phi(x)}{t}$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\begin{align*}
+\left\langle c,x-x_{t}\right\rangle  & \leq\frac{1}{3t}\left(\|tc+\nabla\phi(x)\|_{\nabla^{2}\phi(x)^{-1}}+\|\nabla\phi(x)\|_{\nabla^{2}\phi(x)^{-1}}\right)\\
+ & \leq\frac{1}{3t}\left(\frac{1}{6}+\sqrt{\nu}\right)\leq\frac{\sqrt{\nu}}{t}.
+\end{align*}
+
+\end_inset
+
+This gives the result.
+\end_layout
+
+\begin_layout Standard
+Hence, it suffices to end with 
+\begin_inset Formula $t=(\nu+1)/\varepsilon$
+\end_inset
+
+, which is exactly same as the previous lecture.
+\end_layout
+
+\begin_layout Theorem
+Given a 
+\begin_inset Formula $\nu$
+\end_inset
+
+-self concordant barrier 
+\begin_inset Formula $\phi$
+\end_inset
+
+ and its minimizer.
+ We can find 
+\begin_inset Formula $x\in K$
+\end_inset
+
+ such that 
+\begin_inset Formula $c^{\top}x\leq c^{\top}x^{*}+\epsilon$
+\end_inset
+
+ in 
+\begin_inset Formula 
+\[
+O(\sqrt{\nu}\log(\frac{\nu}{\epsilon}\|c\|_{\nabla^{2}\phi(x)^{-1}}))
+\]
+
+\end_inset
+
+many iterations.
+\end_layout
+
+\begin_layout Proof
+We prove by induction that 
+\begin_inset Formula $\|\nabla f_{t}(x)\|_{\nabla^{2}f_{t}(x))^{-1}}\leq\frac{1}{6}$
+\end_inset
+
+ at the beginning of each iteration.
+ This is true at the beginning by the definition of initial 
+\begin_inset Formula $t$
+\end_inset
+
+.
+ By Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:Newton_improvement"
+
+\end_inset
+
+, after the Newton step, we have
+\begin_inset Formula 
+\[
+\|\nabla f_{t}(x)\|_{\nabla^{2}f_{t}(x)^{-1}}\leq(\frac{1/6}{1-1/6})^{2}=\frac{1}{25}.
+\]
+
+\end_inset
+
+Let 
+\begin_inset Formula $t'=(1+h)t$
+\end_inset
+
+ with 
+\begin_inset Formula $h=\frac{1}{9\sqrt{\nu}}$
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula $\nabla f_{t'}(x)=(1+h)tc+\nabla\phi(x)$
+\end_inset
+
+ and hence 
+\begin_inset Formula $\nabla f_{t'}(x)=(1+h)\nabla f_{t}(x)-h\nabla\phi(x).$
+\end_inset
+
+ Therefore, we have that
+\begin_inset Formula 
+\begin{align*}
+\|\nabla f_{t'}(x)\|_{\nabla^{2}f_{t'}(x)^{-1}} & =\|(1+h)\nabla f_{t}(x)-h\nabla\phi(x)\|_{\nabla^{2}f_{t}(x)^{-1}}\\
+ & \leq(1+h)\|\nabla f_{t}(x)\|_{\nabla^{2}f_{t}(x)^{-1}}+h\|\nabla\phi(x)\|_{\nabla^{2}\phi(x)^{-1}}\\
+ & \leq\frac{1+h}{25}+h\sqrt{\nu}\leq\frac{1}{6}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+This complete the induction.
+\end_layout
+
+\end_body
+\end_document

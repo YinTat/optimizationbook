@@ -1,0 +1,1000 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{url}
+\usepackage{xargs}
+\usepackage[pdftex,dvipsnames]{xcolor}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\usepackage[lined,boxed,ruled,norelsize,algo2e]{algorithm2e}
+\usepackage[small,bf]{caption}
+\usepackage{tikz}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=red,
+    filecolor=red,
+    linkcolor=red,
+    urlcolor=red
+}
+
+
+
+\usepackage{fancybox}
+\usepackage{multirow}
+\usepackage{nicefrac}
+\usepackage{hyperref}
+
+
+\expandafter\def\expandafter\normalsize\expandafter{%
+    \normalsize
+%	    \setlength\abovedisplayskip{5pt}
+    \setlength\belowdisplayskip{5pt}
+    % \setlength\abovedisplayshortskip{5pt}
+    \setlength\belowdisplayshortskip{5pt}
+}
+
+\usepackage{tocloft}
+\setlength{\cftsecnumwidth}{2.8em}%
+
+%%%%%
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{fix-cm}
+\makeatletter
+\newcommand\HUGE{\@setfontsize\Huge{38}{47}}
+\makeatother
+
+\titleclass{\part}{top}
+\titleformat{\part}[display]
+  {\normalfont\HUGE\sffamily}{\partname\ \thepart}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\HUGE\bfseries\filleft}
+%\titlespacing*{\part} {0pt}{20pt}{40pt}
+\titlespacing*{\part} {0pt}{30pt}{50pt}
+
+% chapter heading formatting
+\titleformat{\chapter}[display]
+  {\normalfont\LARGE\sffamily}{\chaptertitlename\ \thechapter}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\LARGE\bfseries\filleft}
+% section heading formatting
+\titleformat{\section}
+  {\normalfont\Large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesection}{0.5em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesubsection}{0.5em}{}
+\titlespacing*{\chapter} {0pt}{20pt}{30pt}
+
+% header/footer
+\fancyhf{}
+\fancyhead[ER]{\footnotesize\sffamily\leftmark}
+\fancyhead[OL]{\footnotesize\sffamily\nouppercase\rightmark}
+\fancyhead[EL,OR]{\bfseries\thepage}
+
+\setcounter{secnumdepth}{3}
+\end_preamble
+\options openany
+\use_default_options false
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+theorems-sec
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding default
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 0
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic true
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip 0.1in
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Volume Computation
+\end_layout
+
+\begin_layout Standard
+For volume computation, we can apply annealing as follows.
+ We assume that the input convex body 
+\begin_inset Formula $K$
+\end_inset
+
+ contains a unit ball, has diameter bounded by 
+\begin_inset Formula $D$
+\end_inset
+
+ and is given by a membership oracle.
+ The polynomial-time algorithm of Dyer, Frieze and Kannan 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DyerFK89"
+literal "true"
+
+\end_inset
+
+ uses a sequence of uniform distributions on convex bodies, starting with
+ the ball contained inside the input body 
+\begin_inset Formula $K$
+\end_inset
+
+.
+ Each body in the sequence is a ball intersected with the given convex body
+ 
+\begin_inset Formula $K$
+\end_inset
+
+: 
+\begin_inset Formula $K_{i}=2^{\frac{i}{n}}rB\cap K$
+\end_inset
+
+ and 
+\begin_inset Formula $f_{i}(x)$
+\end_inset
+
+ is the indicator of 
+\begin_inset Formula $K_{i}.$
+\end_inset
+
+ The length the sequence is 
+\begin_inset Formula $m=O(n\log D)$
+\end_inset
+
+ so that the final body is just 
+\begin_inset Formula $K$
+\end_inset
+
+.
+ A variance computation shows that 
+\begin_inset Formula $O(m/\epsilon^{2}$
+\end_inset
+
+) samples per distribution suffice to get an overall 
+\begin_inset Formula $1+\epsilon$
+\end_inset
+
+ multiplicative error approximation with high probability.
+ The total number of samples is 
+\begin_inset Formula $O^{*}(m^{2})=O^{*}(n^{2})$
+\end_inset
+
+ and the complexity of the resulting algorithm is 
+\begin_inset Formula $O^{*}(n^{5})$
+\end_inset
+
+ as shown in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "KLS97"
+literal "true"
+
+\end_inset
+
+.
+ Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:volume"
+
+\end_inset
+
+ below summarizes progress on the volume problem over the past three decades.
+ Besides improving the complexity of volume computation, each step has typically
+ resulted in new techniques.
+ For more details, we refer the reader to surveys on the topic 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Simonovits03,VemSurvey"
+literal "true"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="11" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="left" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Year/Authors
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+New ingredients
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Steps
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1989/Dyer-Frieze-Kannan 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DyerFK89"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Everything
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n^{23}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1990/Lovász-Simonovits 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "LS90"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Better isoperimetry
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n^{16}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1990/Lovász 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "L90"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Ball walk
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n^{10}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1991/Applegate-Kannan 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ApplegateK91"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Logconcave sampling
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n^{10}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1990/Dyer-Frieze 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DyerF90"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Better error analysis
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n^{8}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1993/Lovász-Simonovits 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "LS93"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Localization lemma
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n^{7}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1997/Kannan-Lovász-Simonovits 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "KLS97"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Speedy walk, isotropy
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n^{5}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2003/Lovász-Vempala 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "LV2"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Annealing, hit-and-run
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n^{4}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2015/Cousins-Vempala 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "CV2015"
+literal "true"
+
+\end_inset
+
+ (well-rounded)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Gaussian Cooling
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n^{3}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2017/Lee-Vempala (polytopes)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Hamiltonian Walk
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $mn^{\frac{2}{3}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:volume"
+
+\end_inset
+
+ The complexity of volume estimation, each step uses 
+\begin_inset Formula $\widetilde{O}(n)$
+\end_inset
+
+ bit of randomness.
+ The last algorithm needs 
+\begin_inset Formula $\widetilde{O}\left(mn^{\omega-1}\right)$
+\end_inset
+
+ steps per iteration while the rest need 
+\begin_inset Formula $O(n^{2})$
+\end_inset
+
+ per oracle query.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "LV2"
+literal "true"
+
+\end_inset
+
+ this was improved by sampling from a sequence of nonuniform distributions.
+ Then we consider the following estimator:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+Y=\frac{f_{i+1}(X)}{f_{i}(X)}.
+\]
+
+\end_inset
+
+We see that 
+\begin_inset Formula 
+\[
+\E_{f_{i}}(Y)=\frac{\int f_{i+1}}{\int f_{i}}.
+\]
+
+\end_inset
+
+In the algorithm of DFK and KLS, this ratio is bounded by a constant in
+ each phase, giving a total of 
+\begin_inset Formula $O^{*}(n)$
+\end_inset
+
+ phases since the ratio of final to initial integrals is exponential.
+ Instead of uniform densities, we consider 
+\begin_inset Formula 
+\[
+f_{i}(x)\propto\exp(-a_{i}\norm x)\chi_{K}(x)\mbox{ or }f_{i}(x)\propto\exp(-a_{i}\norm x^{2})\chi_{K}(x).
+\]
+
+\end_inset
+
+The coefficient 
+\begin_inset Formula $a_{i}$
+\end_inset
+
+ (inverse 
+\begin_inset Quotes eld
+\end_inset
+
+temperature
+\begin_inset Quotes erd
+\end_inset
+
+) will be changed by a factor of 
+\begin_inset Formula $(1+\frac{1}{\sqrt{n}})$
+\end_inset
+
+ in each phase, which implies that 
+\begin_inset Formula $m=\widetilde{O}(\sqrt{n})$
+\end_inset
+
+ phases suffice to reach the target distribution.
+ This is perhaps surprising since the ratio of the initial integral to the
+ final is typically 
+\begin_inset Formula $n^{\Omega(n)}$
+\end_inset
+
+.
+ Yet the algorithm uses only 
+\begin_inset Formula $\widetilde{O}(\sqrt{n})$
+\end_inset
+
+ phases, and hence estimates a ratio of 
+\begin_inset Formula $n^{\tilde{\Omega}(\sqrt{n})}$
+\end_inset
+
+ in one or more phases.
+ The key insight is that even though the expected ratio might be large,
+ its variance is not.
+\end_layout
+
+\begin_layout Lemma
+For 
+\begin_inset Formula $X\sim f_{i}$
+\end_inset
+
+ with 
+\begin_inset Formula $f_{i}(x)=e^{-a_{i}\norm x}\chi_{K}(x)$
+\end_inset
+
+ for a convex body 
+\begin_inset Formula $K$
+\end_inset
+
+, or 
+\begin_inset Formula $f_{i}(x)=f(x)^{a_{i}}$
+\end_inset
+
+ for a logconcave function 
+\begin_inset Formula $f$
+\end_inset
+
+, we have that the estimator 
+\begin_inset Formula $Y=\frac{f_{i+1}(X)}{f_{i}(X)}$
+\end_inset
+
+ satisfies 
+\begin_inset Formula 
+\[
+\frac{\E\left(Y^{2}\right)}{\E\left(Y\right)}\le\left(\frac{a_{i+1}^{2}}{(2a_{i+1}-a_{i})a_{i}}\right)^{n}
+\]
+
+\end_inset
+
+which is bounded by a constant for 
+\begin_inset Formula $a_{i}=a_{i+1}\left(1+\frac{1}{\sqrt{n}}\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+\begin_inset CommandInset citation
+LatexCommand cite
+key "LV2"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+The volume of a convex body in 
+\begin_inset Formula $\R^{n}$
+\end_inset
+
+ (given by a membership oracle) can be computed to relative error 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ using 
+\begin_inset Formula $\widetilde{O}(n^{4}/\varepsilon^{2})$
+\end_inset
+
+ oracle queries and 
+\begin_inset Formula $\widetilde{O}(n^{2})$
+\end_inset
+
+ arithmetic operations per query.
+\end_layout
+
+\begin_layout Standard
+The LV algorithm has two parts.
+ In the first it finds a transformation that puts the body in near-isotropic
+ position.
+ The complexity of this part is 
+\begin_inset Formula $\widetilde{O}(n^{4})$
+\end_inset
+
+.
+ In the second part, it runs the annealing schedule, while maintaining that
+ the distribution being sampled is 
+\emph on
+well-rounded
+\emph default
+, a weaker condition than isotropy.
+ Well-roundedness requires that a level set of measure 
+\begin_inset Formula $\frac{1}{8}$
+\end_inset
+
+ contains a constant-radius ball and the trace of the covariance (expected
+ squared distance of a random point from the mean) to be bounded by 
+\begin_inset Formula $O(n)$
+\end_inset
+
+, so that 
+\begin_inset Formula $R/r$
+\end_inset
+
+ is effectively 
+\begin_inset Formula $O(\sqrt{n})$
+\end_inset
+
+.
+ To achieve the complexity guarantee for the second phase, it suffices to
+ use the KLS bound of 
+\begin_inset Formula $\psi_{p}\gtrsim n^{-\frac{1}{2}}$
+\end_inset
+
+.
+ Connecting improvements in the Cheeger constant directly to the complexity
+ of volume computation is an open question.
+ To apply improvements in the Cheeger constant, one would need to replace
+ well-roundedness with (near-)isotropy and maintain that.
+ However, maintaining isotropy appears to be much harder — possibly requiring
+ a sequence of 
+\begin_inset Formula $\Omega(n)$
+\end_inset
+
+ distributions and 
+\begin_inset Formula $\Omega(n$
+\end_inset
+
+) samples from each, providing no gain over the current complexity of 
+\begin_inset Formula $O^{*}(n^{4})$
+\end_inset
+
+ even if the KLS conjecture turns out to be true.
+\end_layout
+
+\begin_layout Standard
+A faster algorithm is known for well-rounded convex bodies (any isotropic
+ logconcave density satisfies 
+\begin_inset Formula $\frac{R}{r}=O(\sqrt{n})$
+\end_inset
+
+ and is well-rounded).
+ This variant of simulated annealing, called Gaussian cooling utilizes the
+ fact that the KLS conjecture holds for a Gaussian density restricted by
+ any convex body, and completely avoids computing an isotropic transformation.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+\begin_inset CommandInset citation
+LatexCommand cite
+key "CV2015"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+The volume of a well-rounded convex body, i.e., with 
+\begin_inset Formula $R/r=O^{*}(\sqrt{n})$
+\end_inset
+
+, can be computed using 
+\begin_inset Formula $O^{*}(n^{3})$
+\end_inset
+
+ oracle calls.
+\end_layout
+
+\end_body
+\end_document

@@ -1,0 +1,1166 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\use_default_options true
+\begin_modules
+theorems-ams
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+I really don't like this section...Need to reorganize next time.
+\end_layout
+
+\begin_layout Plain Layout
+Maybe reorganize in this way:
+\end_layout
+
+\begin_layout Plain Layout
+Tips for doing calculations:
+\end_layout
+
+\begin_layout Plain Layout
+1)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Not sure if it is useful.
+\end_layout
+
+\begin_layout Section
+Multivariate Calculus
+\end_layout
+
+\begin_layout Plain Layout
+Taylor expansion shows that we can approximate a function locally by its
+ derivatives.
+\end_layout
+
+\begin_layout Plain Layout
+As a illustration, we give a formula for approximating integration (Simpson's
+ rule).
+\end_layout
+
+\begin_layout Corollary
+Given a function 
+\begin_inset Formula $f\in\mathcal{C}^{4}(\R)$
+\end_inset
+
+ with 
+\begin_inset Formula $\max_{x\in[0,1]}|f''''(x)|\leq M_{4}$
+\end_inset
+
+.
+ For any even 
+\begin_inset Formula $n$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+\int_{0}^{1}f(x)dx=\frac{1}{3n}\left(f(0)+4f(\frac{1}{n})+2f(\frac{2}{n})+4f(\frac{3}{n})+2f(\frac{4}{n})+\cdots+4f(\frac{n-1}{n})+f(1)\right)+R_{n}
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $R_{n}\leq\frac{O(M_{4})}{n^{4}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Note that the right hand side comes from approximating 
+\begin_inset Formula $\int_{0}^{1}f(x)dx$
+\end_inset
+
+ piece by piece where each piece has length 
+\begin_inset Formula $\frac{2}{n}$
+\end_inset
+
+.
+ Hence, it suffices to bound the error for one piece and sum them together.
+ Notionally, it is easier to handle a piece that is centered at 
+\begin_inset Formula $0$
+\end_inset
+
+.
+ Hence, it suffices to prove that
+\begin_inset Formula 
+\begin{equation}
+\left|\int_{-1/n}^{1/n}f(x)dx-\frac{1}{3n}\left(f(\frac{1}{n})+4f(0)+f(-\frac{1}{n})\right)\right|\leq\frac{M_{4}}{9n^{5}}.\label{eq:simpsons_claim}
+\end{equation}
+
+\end_inset
+
+We prove it by studying how the error changes as we change the length 
+\begin_inset Formula $1/n$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $F(x)=\int_{0}^{x}f(y)dy$
+\end_inset
+
+ and 
+\begin_inset Formula 
+\[
+g(x)=F(x)-F(-x)-\frac{x}{3}(f(x)+4f(0)+f(-x)).
+\]
+
+\end_inset
+
+To apply Taylor expansion, we compute the derivatives of 
+\begin_inset Formula $g$
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{align*}
+g'(x) & =\frac{2}{3}(f(x)-2f(0)+f(-x))-\frac{x}{3}(f'(x)-f'(-x)),\\
+g''(x) & =\frac{1}{3}(f'(x)-f'(-x))-\frac{x}{3}(f''(x)+f''(-x)),\\
+g'''(x) & =-\frac{x}{3}(f'''(x)-f'''(-x)).
+\end{align*}
+
+\end_inset
+
+By Taylor expansion, we have
+\begin_inset Formula 
+\[
+g(\frac{1}{n})=g(0)+g'(0)\frac{1}{n}+\frac{g''(0)}{2n^{2}}+\frac{g'''(\zeta)}{6n^{3}}
+\]
+
+\end_inset
+
+for some 
+\begin_inset Formula $\zeta$
+\end_inset
+
+ between 
+\begin_inset Formula $0$
+\end_inset
+
+ to 
+\begin_inset Formula $\frac{1}{n}$
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula $g(0)=g'(0)=g''(0)=0$
+\end_inset
+
+.
+ By the assumption, we have
+\begin_inset Formula 
+\[
+\left|g'''(\zeta)\right|\leq\frac{\zeta}{3}(2\zeta M_{4})\leq\frac{2}{3n^{2}}M_{4}
+\]
+
+\end_inset
+
+Hence, this gives 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:simpsons_claim"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Summing up all the intervals gives the result.
+\end_layout
+
+\begin_layout Remark*
+In general, the integral form for Taylor expansion
+\begin_inset Formula 
+\[
+g(y)=\sum_{j=0}^{k}g^{(j)}(x)\frac{(y-x)^{j}}{j!}+\int_{x}^{y}\frac{f^{(k+1)}(\zeta)}{k!}(y-\zeta)^{k}d\zeta
+\]
+
+\end_inset
+
+gives a better constant.
+ Repeating the above proof, one get 
+\begin_inset Formula 
+\[
+\left|g(\frac{1}{n})\right|=\left|\int_{0}^{\frac{1}{n}}\frac{g'''(\zeta)}{2}(\frac{1}{n}-\zeta)^{2}d\zeta\right|\leq\frac{M_{4}}{3}\int_{0}^{\frac{1}{n}}\zeta^{2}(\frac{1}{n}-\zeta)^{2}d\zeta=\frac{M_{4}}{90n^{5}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Throughout this book, we used the Taylor expansion a lot (see Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:second_order"
+
+\end_inset
+
+ as an example).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Tips for Computing Gradient
+\end_layout
+
+\begin_layout Standard
+In this section, we give some tips on how to do calculations.
+\end_layout
+
+\begin_layout Subsection
+Computing Gradient via Directional Derivatives
+\end_layout
+
+\begin_layout Standard
+Usually, computing gradient coordinate-by-coordinate is not the best way
+ and we should avoid using summation notation as much as possible as it
+ creates too many subscripts and is prone to mistakes.
+ Instead, it is usually better to compute the gradient via directional deriative
+s.
+ Here, we give few examples for this.
+ We define 
+\begin_inset Formula $Df(x)[h]$
+\end_inset
+
+ be the directional derivative of 
+\begin_inset Formula $f$
+\end_inset
+
+ at 
+\begin_inset Formula $x$
+\end_inset
+
+ along the direction 
+\begin_inset Formula $h$
+\end_inset
+
+.
+ Namely, 
+\begin_inset Formula 
+\[
+Df(x)[h]\defeq\left.\frac{d}{dt}\right|_{t=0}f(x+th).
+\]
+
+\end_inset
+
+Similarly, we use 
+\begin_inset Formula $D^{k}f(x)[h_{1},h_{2},\cdots,h_{k}]$
+\end_inset
+
+ to denote the directional 
+\begin_inset Formula $k$
+\end_inset
+
+-th derivative of 
+\begin_inset Formula $f$
+\end_inset
+
+ at 
+\begin_inset Formula $x$
+\end_inset
+
+ along directions 
+\begin_inset Formula $h_{1},\cdots,h_{k}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+Given 
+\begin_inset Formula $A\in\R^{n\times d}$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $\Phi(x)=\sum_{i=1}^{n}f(a_{i}^{\top}x)$
+\end_inset
+
+ where 
+\begin_inset Formula $a_{i}$
+\end_inset
+
+ is the 
+\begin_inset Formula $i$
+\end_inset
+
+-th row of 
+\begin_inset Formula $A$
+\end_inset
+
+.
+ Then, we have 
+\begin_inset Formula $\nabla\Phi(x)=A^{\top}f'(Ax)$
+\end_inset
+
+ and 
+\begin_inset Formula $\nabla^{2}\Phi(x)=A^{\top}\diag(f''(Ax))A$
+\end_inset
+
+ where 
+\begin_inset Formula $f'(Ax)$
+\end_inset
+
+ is the vector defined by 
+\begin_inset Formula $(f'(Ax))_{i}=f'(a_{i}^{\top}x)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Note that
+\begin_inset Formula 
+\begin{align*}
+D\Phi(x)[h] & =\sum_{i=1}^{n}f'(a_{i}^{\top}x)a_{i}^{\top}h,\\
+D^{2}\Phi(x)[h,h] & =\sum_{i=1}^{n}f''(a_{i}^{\top}x)(a_{i}^{\top}h)^{2}.
+\end{align*}
+
+\end_inset
+
+To write it in the traditional form, we note that
+\begin_inset Formula 
+\begin{align*}
+\nabla\Phi(x)^{\top}h & =D\Phi(x)[h]=f'(Ax)^{\top}Ah=(A^{\top}f'(Ax))^{\top}h.
+\end{align*}
+
+\end_inset
+
+Since both side are the same for all 
+\begin_inset Formula $h$
+\end_inset
+
+, we have 
+\begin_inset Formula $\nabla\Phi(x)=A^{\top}f'(Ax)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Similarly, we have
+\begin_inset Formula 
+\begin{align*}
+h^{\top}\nabla^{2}\Phi(x)h & =D^{2}\Phi(x)[h,h]\\
+ & =\sum_{i=1}^{n}(f''(Ax))_{i}(Ah)_{i}^{2}\\
+ & =h^{\top}A^{\top}\diag(f''(Ax))Ah.
+\end{align*}
+
+\end_inset
+
+Since 
+\begin_inset Formula $\nabla^{2}\Phi(x)-A^{\top}\diag(f''(Ax))A$
+\end_inset
+
+ is symmetric and both side are the same for all 
+\begin_inset Formula $h$
+\end_inset
+
+, we have 
+\begin_inset Formula $\nabla^{2}\Phi(x)=A^{\top}\diag(f''(Ax))A$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Exercise
+Use the above method to compute the gradient and Hessian of 
+\begin_inset Formula $f(X)=\log\det A^{T}XA$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Here is a more complicated example:
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Brachistochrone Problem
+\end_layout
+
+\end_inset
+
+Let 
+\begin_inset Formula $(x,u(x))$
+\end_inset
+
+ be the curve from 
+\begin_inset Formula $(0,0)$
+\end_inset
+
+ to 
+\begin_inset Formula $(1,-1)$
+\end_inset
+
+ where the first coordinate is the 
+\begin_inset Formula $x$
+\end_inset
+
+ axis and the second coordinate is the 
+\begin_inset Formula $y$
+\end_inset
+
+ axis.
+ Suppose that this is the curve that takes the shortest time for a bead
+ to slide along the curve frictionlessly from 
+\begin_inset Formula $(0,0)$
+\end_inset
+
+ to 
+\begin_inset Formula $(1,-1)$
+\end_inset
+
+ under uniform gravity.
+ Then, we have that
+\begin_inset Formula 
+\[
+2uu''+(u')^{2}+1=0.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+Take a look at Wikipedia for Brachistochrone curve.
+ It is very counterintuitive!
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename fig3.png
+	width 4in
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The 
+\begin_inset Quotes eld
+\end_inset
+
+fastest
+\begin_inset Quotes erd
+\end_inset
+
+ curve
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:rel-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Given a curve 
+\begin_inset Formula $u=u(x)$
+\end_inset
+
+, the total travel time is
+\begin_inset Formula 
+\[
+T(u)=\int_{0}^{1}\frac{ds(x)}{v(x)}=\int_{0}^{1}\frac{\sqrt{1+(u'(x))^{2}}}{v(x)}dx
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $ds$
+\end_inset
+
+ is the arc length element and 
+\begin_inset Formula $v(x)$
+\end_inset
+
+ is the velocity at 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ By conservation of energy, i.e., the gained kinetic energy must equal the
+ lost potential energy for every point along the curve, we know that 
+\begin_inset Formula 
+\[
+\frac{1}{2}mv(x)^{2}=-mgu(x).
+\]
+
+\end_inset
+
+Hence, we have 
+\begin_inset Formula $v(x)=\sqrt{-2gu(x)}$
+\end_inset
+
+ and so 
+\begin_inset Formula 
+\[
+T(u)=\int_{0}^{1}\sqrt{\frac{1+(u'(x))^{2}}{-2gu(x)}}dx.
+\]
+
+\end_inset
+
+Since 
+\begin_inset Formula $u$
+\end_inset
+
+ is a 
+\emph on
+shortest
+\emph default
+ curve, any local change in 
+\begin_inset Formula $u$
+\end_inset
+
+ cannot reduce the time, i.e., 
+\begin_inset Formula 
+\[
+DT(u)[h]=0
+\]
+
+\end_inset
+
+for any change 
+\begin_inset Formula $h$
+\end_inset
+
+ of the curve 
+\begin_inset Formula $u$
+\end_inset
+
+.
+ We next compute the directional derivative of 
+\begin_inset Formula $T(u)$
+\end_inset
+
+, i.e., 
+\begin_inset Formula $\frac{d}{dt}\vert_{t=0}T(u+th)$
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{align*}
+DT(u)[h] & =\int_{0}^{1}-\frac{1}{2}\frac{\sqrt{1+u'(x)^{2}}}{\sqrt{-2g}u(x)^{3/2}}\frac{d}{dt}u(x)dx+\int_{0}^{1}\frac{1}{2}\frac{2u'(x)}{\sqrt{-2gu(x)}\sqrt{1+u'(x)^{2}}}\frac{d}{dt}u'(x)dx.\\
+ & =\int_{0}^{1}-\frac{1}{2}\frac{\sqrt{1+u'(x)^{2}}}{\sqrt{-2gu(x)}u(x)}h(x)dx+\int_{0}^{1}\frac{u'(x)h'(x)}{\sqrt{-2gu(x)}\sqrt{1+u'(x)^{2}}}dx.
+\end{align*}
+
+\end_inset
+
+Note that the second term involves 
+\begin_inset Formula $h'(x)$
+\end_inset
+
+.
+ To change the term 
+\begin_inset Formula $h'(x)$
+\end_inset
+
+ to 
+\begin_inset Formula $h(x)$
+\end_inset
+
+, we use the integration by parts (with respect to 
+\begin_inset Formula $x$
+\end_inset
+
+, not 
+\begin_inset Formula $t$
+\end_inset
+
+!):
+\begin_inset Formula 
+\[
+\int_{0}^{1}\frac{u'(x)h'(x)}{\sqrt{-2gu(x)}\sqrt{1+(u'(x))^{2}}}dx=\left[\frac{u'(x)h(x)}{\sqrt{-2gu(x)}\sqrt{1+(u'(x))^{2}}}\right]_{0}^{1}-\int_{0}^{1}\frac{d}{dx}\left(\frac{u'(x)}{\sqrt{-2gu(x)}\sqrt{1+(u'(x))^{2}}}\right)h(x)dx.
+\]
+
+\end_inset
+
+Since the endpoints of the curve are fixed, we have 
+\begin_inset Formula $h(1)=h(0)=0$
+\end_inset
+
+.
+ Hence, the first term on the right hand side is 
+\begin_inset Formula $0$
+\end_inset
+
+.
+ Continuing, 
+\begin_inset Formula 
+\begin{align*}
+DT(u)[h]= & \int_{0}^{1}-\frac{1}{2}\frac{\sqrt{1+u'(x)^{2}}}{\sqrt{-2gu(x)}u(x)}h(x)dx-\int_{0}^{1}\frac{d}{dx}\left(\frac{u'(x)}{\sqrt{-2gu(x)}\sqrt{1+u'(x)^{2}}}\right)h(x)dx\\
+= & \int_{0}^{1}-\frac{1}{2}\frac{\sqrt{1+(u'(x))^{2}}}{\sqrt{-2gu(x)}u(x)}h(x)dx-\int_{0}^{1}\frac{u''(x)}{\sqrt{-2gu(x)}\sqrt{1+u'(x)^{2}}}h(x)dx\\
+ & +\int_{0}^{1}\frac{1}{2}\frac{u'(x)^{2}}{\sqrt{-2gu(x)}u(x)\sqrt{1+u'(x)^{2}}}h(x)dx\\
+ & +\int_{0}^{1}\frac{u'(x)u'(x)u''(x)}{\sqrt{-2gu(x)}(1+u'(x){}^{2})^{3/2}}h(x)dx.
+\end{align*}
+
+\end_inset
+
+Hence, we have 
+\begin_inset Formula $DT(u)[h]=\int_{0}^{1}a(x)h(x)dx$
+\end_inset
+
+ where
+\begin_inset Formula 
+\begin{align}
+a(x)= & \frac{-1}{2}\frac{\sqrt{1+(u'(x))^{2}}}{\sqrt{-2gu(x)}u(x)}-\frac{u''(x)}{\sqrt{-2gu(x)}\sqrt{1+u'(x)^{2}}}+\frac{1}{2}\frac{u'(x)^{2}}{\sqrt{-2gu(x)}u(x)\sqrt{1+u'(x)^{2}}}\nonumber \\
+ & +\frac{u'(x)u'(x)u''(x)}{\sqrt{-2gu(x)}(1+u'(x){}^{2})^{3/2}}.\label{brach_d}
+\end{align}
+
+\end_inset
+
+Note that 
+\begin_inset Formula $a(x)$
+\end_inset
+
+ is the gradient of 
+\begin_inset Formula $T$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $DT(u)[h]=0$
+\end_inset
+
+ for all 
+\begin_inset Formula $h(x)$
+\end_inset
+
+, we have that 
+\begin_inset Formula $a(x)=0$
+\end_inset
+
+ for all 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ Multiplying both sides of 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "brach_d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ by 
+\begin_inset Formula $2\sqrt{-2gu(x)}(1+(u'(x))^{2})^{3/2}u(x)$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\begin{align*}
+0= & -(1+(u'(x))^{2})^{2}-2u(x)u''(x)(1+(u'(x))^{2})+u'(x)^{2}(1+(u'(x))^{2})+2u(x)u'(x)^{2}u''(x)\\
+= & -1-u'(x)^{2}-2u(x)u''(x).
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Taking Derivatives on Both Sides
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Why this is removed?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Suppose we have a function 
+\begin_inset Formula $f(x,y)$
+\end_inset
+
+ and 
+\begin_inset Formula $g(x)$
+\end_inset
+
+ such that 
+\begin_inset Formula $f(x,g(x))=0$
+\end_inset
+
+.
+ The implicit function theorem shows that
+\begin_inset Formula 
+\[
+D_{x}f(x,g(x))+D_{y}f(x,g(x))Dg(x)=0
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $D_{x}f$
+\end_inset
+
+ is the Jacobian of 
+\begin_inset Formula $f$
+\end_inset
+
+ with respect to 
+\begin_inset Formula $x$
+\end_inset
+
+ variables and 
+\begin_inset Formula $Dg(x)$
+\end_inset
+
+ is the Jacobian of 
+\begin_inset Formula $g$
+\end_inset
+
+.
+ We note that the formula can be obtained from taking derivative on both
+ sides with respective to 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ Sometimes, taking derivatives on the both sides can greatly simplify calculatio
+ns.
+ Here are some examples.
+\end_layout
+
+\begin_layout Lemma
+Consider 
+\begin_inset Formula $x_{t}=\argmin_{x\in\Rn}f_{t}(x)$
+\end_inset
+
+ where 
+\begin_inset Formula $f_{t}$
+\end_inset
+
+ are strictly convex.
+ Then, we have
+\begin_inset Formula 
+\[
+\frac{dx_{t}}{dt}=(\nabla^{2}f_{t}(x_{t}))^{-1}\nabla\frac{df_{t}}{dt}(x_{t}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+By the optimality condition, we have 
+\begin_inset Formula $\nabla f_{t}(x_{t})=0$
+\end_inset
+
+.
+ Taking derivatives on both sides, we have
+\begin_inset Formula 
+\[
+\nabla^{2}f_{t}(x_{t})\frac{dx_{t}}{dt}+\nabla\frac{df_{t}}{dt}(x_{t})=0.
+\]
+
+\end_inset
+
+Since 
+\begin_inset Formula $f_{t}$
+\end_inset
+
+ are strictly convex, 
+\begin_inset Formula $\nabla^{2}f_{t}(x_{t})$
+\end_inset
+
+ is positive definite and is invertible.
+ Hence, we have that the result.
+\end_layout
+
+\begin_layout Standard
+In section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:IPM"
+
+\end_inset
+
+, we used this to compute the derivative of central path.
+\end_layout
+
+\begin_layout Section
+Solving Optimization Problems by Hand
+\end_layout
+
+\begin_layout Standard
+In this section, we introduce the KKT condition and show how to use it to
+ solve optimization problem by hand.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Karush–Kuhn–Tucker theorem
+\end_layout
+
+\end_inset
+
+Consider the following optimization problem
+\begin_inset Formula 
+\[
+\min_{x\in\Omega}f(x)\text{ subject to }h_{i}(x)\leq0\text{ and }\ell_{j}(x)=0\text{ for all }i,j
+\]
+
+\end_inset
+
+for some open set 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ and continuously differentiable functions 
+\begin_inset Formula $f$
+\end_inset
+
+, 
+\begin_inset Formula $h_{i}$
+\end_inset
+
+ and 
+\begin_inset Formula $\ell_{j}$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $x$
+\end_inset
+
+ is a local minimum, 
+\begin_inset Formula $x$
+\end_inset
+
+ satisfies the KKT conditions:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Stationary: 
+\begin_inset Formula $\nabla f(x)+\sum_{i}u_{i}\nabla h_{i}(x)+\sum_{j}v_{j}\nabla\ell_{j}(x)=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Complementary Slackness: 
+\begin_inset Formula $u_{i}h_{i}(x)=0$
+\end_inset
+
+ for all 
+\begin_inset Formula $i$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Primal Feasibility: 
+\begin_inset Formula $h_{i}(x)\leq0$
+\end_inset
+
+ and 
+\begin_inset Formula $\ell_{j}(x)=0$
+\end_inset
+
+ for all 
+\begin_inset Formula $i,j$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Dual Feasibility: 
+\begin_inset Formula $u_{i}\geq0$
+\end_inset
+
+ for all 
+\begin_inset Formula $i$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Theorem
+We prove Holder's inequality as an example:
+\end_layout
+
+\begin_layout Fact
+For any vector 
+\begin_inset Formula $x,y\in\R^{n}$
+\end_inset
+
+, we have 
+\begin_inset Formula $\|xy\|_{1}\leq\|x\|_{p}\|y\|_{q}$
+\end_inset
+
+ for any 
+\begin_inset Formula $1\leq p\leq\infty$
+\end_inset
+
+ and 
+\begin_inset Formula $1\leq q\leq\infty$
+\end_inset
+
+ with 
+\begin_inset Formula $\frac{1}{p}+\frac{1}{q}=1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+By symmetries, it suffices to compute
+\begin_inset Formula 
+\[
+\max_{\|x\|_{p}\leq1}\sum_{i}x_{i}y_{i}
+\]
+
+\end_inset
+
+for non-zero 
+\begin_inset Formula $y$
+\end_inset
+
+.
+ Now, we use the KKT theorem with 
+\begin_inset Formula $f(x)=-\sum_{i}x_{i}y_{i}$
+\end_inset
+
+, 
+\begin_inset Formula $h(x)=\|x\|_{p}-1$
+\end_inset
+
+ and 
+\begin_inset Formula $\Omega=\R^{n}$
+\end_inset
+
+.
+ By the KKT conditions, for any maximizer 
+\begin_inset Formula $x$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\begin{align*}
+-\nabla f(x)+u\nabla h(x) & =0,\\
+uh(x) & =0,\\
+h(x)\leq0, & u\geq0.
+\end{align*}
+
+\end_inset
+
+Note that 
+\begin_inset Formula $\nabla f(x)=y$
+\end_inset
+
+ and 
+\begin_inset Formula $(\nabla h(x))_{i}=\frac{1}{p}\|x\|_{p}^{1-p}\cdot px_{i}^{p-1}=\|x\|_{p}^{1-p}\cdot x^{p-1}$
+\end_inset
+
+.
+ From the stationary condition, we have
+\begin_inset Formula 
+\[
+y=u\|x\|_{p}^{1-p}\cdot x^{p-1}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+To compute 
+\begin_inset Formula $u$
+\end_inset
+
+, we note that 
+\begin_inset Formula $y$
+\end_inset
+
+ is non-zero and hence 
+\begin_inset Formula $u\neq0$
+\end_inset
+
+.
+ From the complementary slackness, we have 
+\begin_inset Formula $h(x)=0$
+\end_inset
+
+ and hence 
+\begin_inset Formula $\|x\|_{p}=1$
+\end_inset
+
+.
+ Therefore, we have
+\begin_inset Formula 
+\[
+y=u\cdot x^{p-1}.
+\]
+
+\end_inset
+
+Hence, we have 
+\begin_inset Formula $1=\sum_{i}x_{i}^{p}=\sum_{i}(y_{i}/u)^{\frac{p}{p-1}}=\sum_{i}(y_{i}/u)^{q}$
+\end_inset
+
+.
+ Hence, we have 
+\begin_inset Formula $u=\|y\|_{q}$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Proof
+Now, we can compute 
+\begin_inset Formula $\sum_{i}x_{i}y_{i}$
+\end_inset
+
+ as follows
+\begin_inset Formula 
+\[
+\sum_{i}x_{i}y_{i}=\sum_{i}(\frac{y_{i}}{u})^{\frac{1}{p-1}}y_{i}=\frac{1}{u^{1/(p-1)}}\sum_{i}y_{i}^{p/(p-1)}=\|y\|_{q}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

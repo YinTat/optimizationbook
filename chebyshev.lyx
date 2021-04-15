@@ -1,0 +1,659 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{url}
+\usepackage{xargs}
+\usepackage[pdftex,dvipsnames]{xcolor}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\usepackage[lined,boxed,ruled,norelsize,algo2e]{algorithm2e}
+\usepackage[small,bf]{caption}
+\usepackage{tikz}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=red,
+    filecolor=red,
+    linkcolor=red,
+    urlcolor=red
+}
+
+
+
+\usepackage{fancybox}
+\usepackage{multirow}
+\usepackage{nicefrac}
+\usepackage{hyperref}
+
+
+\expandafter\def\expandafter\normalsize\expandafter{%
+    \normalsize
+%	    \setlength\abovedisplayskip{5pt}
+    \setlength\belowdisplayskip{5pt}
+    % \setlength\abovedisplayshortskip{5pt}
+    \setlength\belowdisplayshortskip{5pt}
+}
+
+\usepackage{tocloft}
+\setlength{\cftsecnumwidth}{2.8em}%
+
+%%%%%
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{fix-cm}
+\makeatletter
+\newcommand\HUGE{\@setfontsize\Huge{38}{47}}
+\makeatother
+
+\titleclass{\part}{top}
+\titleformat{\part}[display]
+  {\normalfont\HUGE\sffamily}{\partname\ \thepart}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\HUGE\bfseries\filleft}
+%\titlespacing*{\part} {0pt}{20pt}{40pt}
+\titlespacing*{\part} {0pt}{30pt}{50pt}
+
+% chapter heading formatting
+\titleformat{\chapter}[display]
+  {\normalfont\LARGE\sffamily}{\chaptertitlename\ \thechapter}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\LARGE\bfseries\filleft}
+% section heading formatting
+\titleformat{\section}
+  {\normalfont\Large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesection}{0.5em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesubsection}{0.5em}{}
+\titlespacing*{\chapter} {0pt}{20pt}{30pt}
+
+% header/footer
+\fancyhf{}
+\fancyhead[ER]{\footnotesize\sffamily\leftmark}
+\fancyhead[OL]{\footnotesize\sffamily\nouppercase\rightmark}
+\fancyhead[EL,OR]{\bfseries\thepage}
+
+\setcounter{secnumdepth}{3}
+\end_preamble
+\options openany
+\use_default_options false
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+theorems-sec
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding default
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 0
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic true
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip 0.1in
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Chebyshev Polynomials
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Chebyshev-Polynomials"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The goal of this section is to introduce some basic results in approximation
+ theory.
+ Suppose magically there was a polynomial 
+\begin_inset Formula $q(x)$
+\end_inset
+
+ such that 
+\begin_inset Formula $q(0)=1$
+\end_inset
+
+ and 
+\begin_inset Formula $q(x)=0$
+\end_inset
+
+ for all 
+\begin_inset Formula $x>0$
+\end_inset
+
+.
+ By assumption, we know that the constant term in 
+\begin_inset Formula $q$
+\end_inset
+
+ is 
+\begin_inset Formula $1$
+\end_inset
+
+ and hence we can write 
+\begin_inset Formula 
+\[
+q(x)=1-xp(x)
+\]
+
+\end_inset
+
+for some 
+\begin_inset Formula $p(x)$
+\end_inset
+
+.
+ Therefore, for any positive definite matrix 
+\begin_inset Formula $A$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+I-Ap(A)=0
+\]
+
+\end_inset
+
+and hence 
+\begin_inset Formula $A^{-1}=p(A).$
+\end_inset
+
+ Therefore, we could compute 
+\begin_inset Formula $A^{-1}b$
+\end_inset
+
+ by calculating 
+\begin_inset Formula $p(A)b$
+\end_inset
+
+ which takes 
+\begin_inset Formula $\text{deg}(p)\cdot\nnz(A)$
+\end_inset
+
+ time.
+ Unfortunately, there is no such polynomial 
+\begin_inset Formula $q$
+\end_inset
+
+.
+ In this section, we will discuss if there is such polynomial that satisfies
+ the condition above approximately.
+ 
+\end_layout
+
+\begin_layout Standard
+We will bound 
+\begin_inset Formula $\inf_{q(0)=1}\left(\max_{i}\left|q(\lambda_{i})\right|\right)$
+\end_inset
+
+ for matrices 
+\begin_inset Formula $A$
+\end_inset
+
+ satisfying 
+\begin_inset Formula $\mu\cdot I\preceq A\preceq L\cdot I$
+\end_inset
+
+.
+ First, we note that we can choose 
+\begin_inset Formula $q(x)=\left(1-\frac{x}{L}\right)^{k}$
+\end_inset
+
+ and get
+\begin_inset Formula 
+\[
+\inf_{q(0)=1}\max_{\mu\leq x\leq L}\left|q(x)\right|\leq\left(1-\frac{\mu}{L}\right)^{k}.
+\]
+
+\end_inset
+
+This corresponds to the Richardson iteration, and the above bound shows
+ that it takes 
+\begin_inset Formula $O(\frac{L}{\mu}\log(\frac{1}{\epsilon}))$
+\end_inset
+
+ degree to make the error bounded by 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+.
+ The key fact we will use is that we can in general approximate a polynomial
+ of degree 
+\begin_inset Formula $k$
+\end_inset
+
+ by a polynomial of degree 
+\begin_inset Formula $\tilde{O}(\sqrt{k})$
+\end_inset
+
+.
+ The construction uses Chebyshev polynomials.
+ This will imply an 
+\begin_inset Formula $\tilde{O}(\sqrt{\frac{L}{\mu}})$
+\end_inset
+
+ iteration bound for the conjugate gradient method of the next section.
+\end_layout
+
+\begin_layout Definition
+For any integer 
+\begin_inset Formula $d$
+\end_inset
+
+, the 
+\begin_inset Formula $d$
+\end_inset
+
+'th Chebyshev polynomial is defined as the unique polynomial that satisfies
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+need a picture for Chebyshev polynomial.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+T_{d}(\cos\theta)=\cos(d\theta).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Show that 
+\begin_inset Formula $T_{d}(x)$
+\end_inset
+
+ is a degree 
+\begin_inset Formula $|d|$
+\end_inset
+
+ polynomial in 
+\begin_inset Formula $x$
+\end_inset
+
+ and that
+\begin_inset Formula 
+\begin{equation}
+xT_{d}(x)=\frac{T_{d+1}(x)+T_{d-1}(x)}{2}.\label{eq:T_avg_recursion}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:chernoff"
+
+\end_inset
+
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Chernoff Bound
+\end_layout
+
+\end_inset
+
+For independent random variables 
+\begin_inset Formula $Y_{1},\cdots,Y_{s}$
+\end_inset
+
+ such that 
+\begin_inset Formula $\P(Y_{i}=1)=\P(Y_{i}=-1)=\frac{1}{2}$
+\end_inset
+
+, for any 
+\begin_inset Formula $a\geq0$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+\P(\left|\sum_{i=1}^{s}Y_{i}\right|\geq a)\leq2\exp(-\frac{a^{2}}{2s}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now we are ready to show that there is a degree 
+\begin_inset Formula $\tilde{O}(\sqrt{s})$
+\end_inset
+
+ polynomial that estimates 
+\begin_inset Formula $x^{s}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:approximate_mono"
+
+\end_inset
+
+For any positive integers 
+\begin_inset Formula $s$
+\end_inset
+
+ and 
+\begin_inset Formula $d$
+\end_inset
+
+, there is a polynomial 
+\begin_inset Formula $p$
+\end_inset
+
+ of degree 
+\begin_inset Formula $d$
+\end_inset
+
+ such that
+\begin_inset Formula 
+\[
+\max_{x\in[-1,1]}|p(x)-x^{s}|\leq2\exp(-\frac{d^{2}}{2s}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $Y_{i}$
+\end_inset
+
+ are i.i.d.
+ random variable uniform on 
+\begin_inset Formula $\{-1,1\}$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $Z_{s}=\sum_{i=1}^{s}Y_{i}$
+\end_inset
+
+.
+ Note that
+\begin_inset Formula 
+\[
+\E_{z\sim Z_{s}}T_{z}=\E_{z\sim Z_{s-1}}\frac{1}{2}(T_{z+1}+T_{z-1})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Now, (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:T_avg_recursion"
+
+\end_inset
+
+) shows that 
+\begin_inset Formula $\E_{z\sim Z_{s}}T_{z}(x)=\E_{z\sim Z_{s-1}}xT_{z}(x)$
+\end_inset
+
+.
+ By induction, we have
+\begin_inset Formula 
+\begin{equation}
+\E_{z\sim Z_{s}}T_{z}(x)=x^{s}T_{0}(x)=x^{s}.\label{eq:E_z_x_s}
+\end{equation}
+
+\end_inset
+
+Now, we define the polynomial 
+\begin_inset Formula $p(x)=\E_{z\sim Z_{s}}T_{z}(x)1_{|z|\leq d}$
+\end_inset
+
+.
+ The error of the polynomial can be bounded as follows
+\begin_inset Formula 
+\begin{align*}
+\max_{x\in[-1,1]}|p(x)-x^{s}| & =\max_{x\in[-1,1]}|\E_{z\sim Z_{s}}T_{z}(x)1_{|z|>d}|\\
+ & \leq\max_{x\in[-1,1]}\E_{z\sim Z_{s}}|T_{z}(x)|1_{|z|>d}\\
+ & \leq\P_{z\sim Z_{s}}(|z|>d)\\
+ & \leq2\exp(-\frac{d^{2}}{2s})
+\end{align*}
+
+\end_inset
+
+where we used (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:E_z_x_s"
+
+\end_inset
+
+) on the first line, 
+\begin_inset Formula $|T_{z}(x)|\leq1$
+\end_inset
+
+ for all 
+\begin_inset Formula $x\in[-1,1]$
+\end_inset
+
+ on the third line and Chernoff bound (Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:chernoff"
+
+\end_inset
+
+) on the last line.
+\end_layout
+
+\begin_layout Remark*
+This proof comes from 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "sachdeva2014faster"
+literal "false"
+
+\end_inset
+
+.
+ Please see 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "sachdeva2014faster"
+literal "false"
+
+\end_inset
+
+ for the approximation of other functions.
+\end_layout
+
+\begin_layout Standard
+By scaling and translating Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:approximate_mono"
+
+\end_inset
+
+, we have the following guarantee.
+\end_layout
+
+\begin_layout Theorem
+For any 
+\begin_inset Formula $0<\mu\leq L$
+\end_inset
+
+ and any 
+\begin_inset Formula $0\leq\epsilon\leq1$
+\end_inset
+
+, there is a polynomial 
+\begin_inset Formula $q$
+\end_inset
+
+ of degree 
+\begin_inset Formula $O(\sqrt{\frac{L}{\mu}}\log(\frac{1}{\epsilon}))$
+\end_inset
+
+ such that 
+\begin_inset Formula 
+\[
+\inf_{q(0)=1}\max_{\mu\leq x\leq L}\left|q(x)\right|\leq\epsilon.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:approximate_mono"
+
+\end_inset
+
+ shows that there is 
+\begin_inset Formula $q$
+\end_inset
+
+ such that 
+\begin_inset Formula 
+\[
+\max_{x\in[0,L]}\left|q(x)-\left(1-\frac{x}{L}\right)^{s}\right|\leq2\exp(-\frac{d^{2}}{2s}).
+\]
+
+\end_inset
+
+Hence, we have that 
+\begin_inset Formula $\left|q(0)-1\right|\leq2\exp(-\frac{d^{2}}{2s})$
+\end_inset
+
+ and that
+\begin_inset Formula 
+\[
+\max_{x\in[\mu,L]}\left|q(x)\right|\leq\left(1-\frac{\mu}{L}\right)^{s}+2\exp(-\frac{d^{2}}{2s}).
+\]
+
+\end_inset
+
+To make both 
+\begin_inset Formula $|q(0)-1|\leq\frac{\epsilon}{3}$
+\end_inset
+
+ and 
+\begin_inset Formula $\max_{x\in[\mu,L]}\left|q(x)\right|\leq\frac{\epsilon}{3}$
+\end_inset
+
+, we set 
+\begin_inset Formula $d=O(\sqrt{s}\log\frac{1}{\epsilon})$
+\end_inset
+
+ and 
+\begin_inset Formula $s=O(\frac{L}{\mu}\log(\frac{1}{\epsilon}))$
+\end_inset
+
+.
+ By rescaling 
+\begin_inset Formula $q$
+\end_inset
+
+, we have 
+\begin_inset Formula $q(0)=1$
+\end_inset
+
+.
+\end_layout
+
+\end_body
+\end_document

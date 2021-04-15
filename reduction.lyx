@@ -1,0 +1,2602 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{url}
+\usepackage{xargs}
+\usepackage[pdftex,dvipsnames]{xcolor}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\usepackage[lined,boxed,ruled,norelsize,algo2e]{algorithm2e}
+\usepackage[small,bf]{caption}
+\usepackage{tikz}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=red,
+    filecolor=red,
+    linkcolor=red,
+    urlcolor=red
+}
+
+
+
+\usepackage{fancybox}
+\usepackage{multirow}
+\usepackage{nicefrac}
+\usepackage{hyperref}
+
+
+\expandafter\def\expandafter\normalsize\expandafter{%
+    \normalsize
+%	    \setlength\abovedisplayskip{5pt}
+    \setlength\belowdisplayskip{5pt}
+    % \setlength\abovedisplayshortskip{5pt}
+    \setlength\belowdisplayshortskip{5pt}
+}
+
+\usepackage{tocloft}
+\setlength{\cftsecnumwidth}{2.8em}%
+
+%%%%%
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{fix-cm}
+\makeatletter
+\newcommand\HUGE{\@setfontsize\Huge{38}{47}}
+\makeatother
+
+\titleclass{\part}{top}
+\titleformat{\part}[display]
+  {\normalfont\HUGE\sffamily}{\partname\ \thepart}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\HUGE\bfseries\filleft}
+%\titlespacing*{\part} {0pt}{20pt}{40pt}
+\titlespacing*{\part} {0pt}{30pt}{50pt}
+
+% chapter heading formatting
+\titleformat{\chapter}[display]
+  {\normalfont\LARGE\sffamily}{\chaptertitlename\ \thechapter}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\LARGE\bfseries\filleft}
+% section heading formatting
+\titleformat{\section}
+  {\normalfont\Large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesection}{0.5em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesubsection}{0.5em}{}
+\titlespacing*{\chapter} {0pt}{20pt}{30pt}
+
+% header/footer
+\fancyhf{}
+\fancyhead[ER]{\footnotesize\sffamily\leftmark}
+\fancyhead[OL]{\footnotesize\sffamily\nouppercase\rightmark}
+\fancyhead[EL,OR]{\bfseries\thepage}
+
+\setcounter{secnumdepth}{3}
+\end_preamble
+\options openany
+\use_default_options false
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+theorems-sec
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding default
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 0
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic true
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip 0.1in
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+In the previous two chapters, we saw various algorithms to minimize a convex
+ function.They have different runtimes and seems difficult to compare.
+ Before going deeper and discussing more results, in this chapter, we will
+ focus on how to understand these different results and their relationships,
+ via reductions between them.
+ We will do this at three different levels.
+ The most abstract is the level of oracles, which we will define presently;
+ the second is black-box algorithms which access the function in restricted
+ ways, e.g., via the gradient; and the last is with full information and under
+ additional structural assumptions.
+\end_layout
+
+\begin_layout Section
+State of the Art
+\end_layout
+
+\begin_layout Standard
+Here we summarize the state-of-the-art.
+ We tried to keep the table short, and there are many important results
+ omitted.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="11" columns="5">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="middle" width="15page%">
+<column alignment="center" valignment="middle" width="15page%">
+<column alignment="center" valignment="middle" width="15page%">
+<column alignment="center" valignment="middle" width="10page%">
+<column alignment="center" valignment="middle" width="15page%">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+Convex Problem
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+Assumption
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+Algorithm
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+Iter
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+Cost/Iter
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula 
+\[
+\min_{x}f(x)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\noindent
+\align center
+
+\size scriptsize
+-
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+Hybrid Center Cutting Plane
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $n\log(\frac{n}{\epsilon})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $\mathcal{T}_{f}+n^{2}\log^{O(1)}(\frac{n}{\epsilon})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula 
+\[
+\min_{x\in\Omega_{1}\cap\Omega_{2}}c^{\top}x
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\noindent
+\align center
+
+\size scriptsize
+-
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+Hybrid Center Cutting Plane
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $n\log(\frac{n}{\epsilon})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $\mathcal{T}_{\Omega_{1}}+\mathcal{T}_{\Omega_{2}}+n^{2}\log^{O(1)}(\frac{n}{\epsilon})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula 
+\[
+\min_{x}f(x)+g(x)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $\|\nabla f\|_{2}\leq G$
+\end_inset
+
+, 
+\begin_inset Formula $\|x^{*}\|_{2}\leq R$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+Gradient Descent
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $\left(\frac{GR}{\epsilon}\right)^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $\mathcal{T}_{\nabla f}+\mathcal{T}_{g}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula 
+\[
+\min_{x}f(x)+g(x)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $\|\nabla f\|_{2}\leq G$
+\end_inset
+
+, 
+\begin_inset Formula $\nabla^{2}f\succeq\mu\cdot I$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+Gradient Descent
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $\frac{G^{2}}{\mu\epsilon}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $\mathcal{T}_{\nabla f}+\mathcal{T}_{g}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula 
+\[
+\min_{x}f(x)+g(x)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\noindent
+\align center
+
+\size scriptsize
+\begin_inset Formula $\nabla^{2}f\preceq L\cdot I$
+\end_inset
+
+, 
+\begin_inset Formula $\|x^{*}\|_{2}\leq R$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+Accelerated Gradient Descent
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $\sqrt{\frac{LR^{2}}{\epsilon}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $\mathcal{T}_{\nabla f}+\mathcal{T}_{g}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula 
+\[
+\min_{x}f(x)+g(x)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\noindent
+\align center
+
+\size scriptsize
+\begin_inset Formula $\mu\cdot I\preceq\nabla^{2}f\preceq L\cdot I$
+\end_inset
+
+, 
+\begin_inset Formula $\|x^{*}\|_{2}\leq R$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+Accelerated Gradient Descent
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $\sqrt{\frac{L}{\mu}}\log(\frac{LR^{2}}{\epsilon})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $\mathcal{T}_{\nabla f}+\mathcal{T}_{g}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula 
+\[
+\min_{x\in\Omega}f(x)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $\nabla f$
+\end_inset
+
+ is 
+\begin_inset Formula $L$
+\end_inset
+
+ Lipschitz in 
+\begin_inset Formula $\|\cdot\|$
+\end_inset
+
+, 
+\begin_inset Formula $\max_{x,y\in\Omega}\|x-y\|\leq R$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+Frank Wolfe
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $\frac{LR^{2}}{\epsilon}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $\mathcal{T}_{\nabla f}+\mathcal{T}_{\Omega}$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula 
+\[
+\min_{x}\E_{\omega}f_{\omega}(x)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $\E_{\omega}\|\nabla f_{\omega}\|_{2}^{2}\leq G^{2}$
+\end_inset
+
+, 
+\begin_inset Formula $\|x^{*}\|_{2}\leq R$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+Stochastic Gradient Descent
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $\left(\frac{GR}{\epsilon}\right)^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $\mathcal{T}_{\nabla f_{\omega}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula 
+\[
+\min_{x}f(x)\defeq\frac{1}{n}\sum_{i}f_{i}(x)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $\nabla^{2}f\succeq\mu\cdot I,\nabla^{2}f_{i}\preceq L_{i}\cdot I$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+Accelerated Stochastic Descent
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+Total Cost: 
+\begin_inset Formula $(\mathcal{T}_{\nabla f}+\sqrt{\frac{1}{\mu}\sum_{i}L_{i}}\mathcal{T}_{\nabla f_{i}})\log(\frac{1}{\epsilon})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula 
+\[
+\min_{x\in\Rn}f(x)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $\nabla^{2}f\succeq\mu\cdot I,\partial_{i}^{2}f\leq L_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+Accelerated Coordinate Descent
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+Total Cost: 
+\begin_inset Formula $\sum_{i}\sqrt{\beta_{i}/\mu}\mathcal{T}_{\partial_{i}f}\log(\frac{1}{\epsilon})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Black Box Problems.
+ The goal is to find 
+\begin_inset Formula $x$
+\end_inset
+
+ such that 
+\begin_inset Formula $f(x)-\min_{x}f\leq\epsilon$
+\end_inset
+
+ with initial point 
+\begin_inset Formula $x^{(0)}=0$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\mathcal{T}_{\nabla f}$
+\end_inset
+
+ is the cost of computing 
+\begin_inset Formula $\nabla f(x)$
+\end_inset
+
+ for any 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\mathcal{T}_{g}$
+\end_inset
+
+ is the cost of computing 
+\begin_inset Formula $\arg\min_{x}g(x)+\frac{\lambda}{2}\|x-c\|^{2}$
+\end_inset
+
+ for any 
+\begin_inset Formula $c$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\mathcal{T}_{\Omega}$
+\end_inset
+
+ is the cost of computing 
+\begin_inset Formula $\arg\min_{x\in\Omega}c^{\top}x$
+\end_inset
+
+ for any 
+\begin_inset Formula $c$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\mathcal{T}_{\nabla f_{\omega}}$
+\end_inset
+
+, 
+\begin_inset Formula $\mathcal{T}_{\nabla f_{i}}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathcal{T}_{\partial_{i}f}$
+\end_inset
+
+ are the cost of computing 
+\begin_inset Formula $\nabla f_{\omega}$
+\end_inset
+
+, 
+\begin_inset Formula $\nabla f_{i}$
+\end_inset
+
+ and 
+\begin_inset Formula $\partial_{i}f$
+\end_inset
+
+ for one of the 
+\begin_inset Formula $\omega$
+\end_inset
+
+ or 
+\begin_inset Formula $i$
+\end_inset
+
+.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Black-Box-Problems"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="9" columns="5">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="middle" width="10page%">
+<column alignment="center" valignment="middle" width="15page%">
+<column alignment="center" valignment="middle" width="15page%">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+Convex Problem
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+Assumption
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+Algorithm
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+Depth
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+Total Work
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="3" alignment="left" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\noindent
+\align center
+
+\size scriptsize
+\begin_inset Formula 
+\[
+Ax=b
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\noindent
+\align center
+
+\size scriptsize
+-
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+Fast Matrix Multiplication
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $\log^{O(1)}(n)\log(\frac{1}{\epsilon})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $n^{2.3728\cdots}\log(\frac{1}{\epsilon})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="left" valignment="top" topline="true" leftline="true" rotate="90" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\noindent
+\align center
+
+\size scriptsize
+\begin_inset Formula $\mu\cdot I\preceq A\preceq L\cdot I$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+Conjugate Gradient
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $\sqrt{\frac{L}{\mu}}\log(\frac{1}{\epsilon})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $\nnz(A)\sqrt{\frac{L}{\mu}}\log(\frac{1}{\epsilon})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $A_{ii}\geq\sum_{j\neq i}|A_{ji}|$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+Sparse LU Factorization
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $\log^{O(1)}(\frac{nL}{\mu})\log(\frac{1}{\epsilon})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $\nnz(A)\log^{O(1)}(\frac{nL}{\mu})\log(\frac{1}{\epsilon})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="3" alignment="left" valignment="middle" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\noindent
+\align center
+
+\size scriptsize
+\begin_inset Formula 
+\[
+\min_{x}\|Ax-b\|_{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\noindent
+\align center
+
+\size scriptsize
+-
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+Subspace Embedding / Row Sampling
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $\log^{O(1)}(n)\log(\frac{1}{\epsilon})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $(\nnz(A)+r^{2.3728\cdots})\log(\frac{1}{\epsilon})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="left" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\noindent
+\align center
+
+\size scriptsize
+Each row of 
+\begin_inset Formula $A$
+\end_inset
+
+ has 
+\begin_inset Formula $\leq2$
+\end_inset
+
+ non-zeros
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+Sparse Cholesky Factorization
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $\log^{O(1)}(n)\log(\frac{1}{\epsilon})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $\nnz(A)\log^{O(1)}(n)\log(\frac{1}{\epsilon})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="3" alignment="left" valignment="middle" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\noindent
+\align center
+
+\size scriptsize
+\begin_inset Formula 
+\[
+\min_{Ax=b,x\in\Rn_{+}}c^{\top}x
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="3" alignment="left" valignment="middle" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\noindent
+\align center
+
+\size scriptsize
+-
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+Interior Point Method
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $\sqrt{n}\log^{O(1)}(n)\log(\frac{1}{\epsilon})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $n^{2.3728\cdots}\log(\frac{1}{\epsilon})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="left" valignment="middle" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+Interior Point Method
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $\sqrt{r}\log^{O(1)}(n)\log(\frac{1}{\epsilon})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $\sqrt{r}(\nnz(A)+r^{2})\log^{O(1)}n\log(\frac{1}{\epsilon})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\noindent
+\align center
+
+\size scriptsize
+\begin_inset Formula 
+\[
+\min_{x}\sum_{i=1}^{n}f_{i}(a_{i}^{\top}x)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\noindent
+\align center
+
+\size scriptsize
+-
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+Interior Point Method
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $\sqrt{n}\log^{O(1)}(n)\log(\frac{1}{\epsilon})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size scriptsize
+\begin_inset Formula $n^{2.3728\cdots}\log(\frac{1}{\epsilon})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Structured Problems.
+ 
+\begin_inset Formula $r=\mathrm{rank}(A)$
+\end_inset
+
+.
+ We omit the precise definition of 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+, but all algorithms depend on 
+\begin_inset Formula $\log(1/\epsilon)$
+\end_inset
+
+.
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Structured-Problems"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Remarks on the Runtime
+\end_layout
+
+\begin_layout Subsection
+Structured vs black-box problems
+\end_layout
+
+\begin_layout Standard
+Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Black-Box-Problems"
+
+\end_inset
+
+ shows the runtime for some convex problems assuming some restricted way
+ to access the input convex function.
+ We call the way to access the function an 
+\emph on
+oracle
+\emph default
+.
+ For example, we say we only have a first-order oracle if we can only access
+ the function using the gradient of the function.
+ In this setting, we are particularly interested in how many times we need
+ to use the oracle, such as how many gradients we need to compute.
+ Since the function is only accessed through an oracle, we can usually bound
+ how many calls are needed to 
+\begin_inset Quotes eld
+\end_inset
+
+learn
+\begin_inset Quotes erd
+\end_inset
+
+ the function.
+ In fact, all algorithms in the table are optimal in terms of the number
+ of oracle calls.
+ This is in huge contrast to the structured problems where all of the results
+ are open.
+\end_layout
+
+\begin_layout Standard
+Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Structured-Problems"
+
+\end_inset
+
+ has the runtimes for some general convex problems.
+ Unlike black-box problems, these algorithms assume the full description
+ of the problem.
+ For this setting, we usually aim at getting a runtime that depends on the
+ structure of the problem instead of the numerical values of the input.
+ Usually, such algorithms converge with a rate of 
+\begin_inset Formula $\log(1/\epsilon)$
+\end_inset
+
+.
+ For all of these problem, the best possible runtime is open.
+ Finally, we note that the last two problems, linear programs and empirical
+ risk minimization are complete in the sense that they can be used to approximat
+e any convex function.
+ Therefore, the last results seem to suggest that general convex problems
+ are as easy as general linear systems for now.
+\end_layout
+
+\begin_layout Subsection
+Understanding the bounds
+\end_layout
+
+\begin_layout Standard
+All the runtimes should have the correct 
+\begin_inset Quotes eld
+\end_inset
+
+units
+\begin_inset Quotes erd
+\end_inset
+
+.
+ For instance, if the unit of the function value is 
+\begin_inset Formula $J$
+\end_inset
+
+ (Joule) and the unit of the space is 
+\begin_inset Formula $m$
+\end_inset
+
+, then the units of 
+\begin_inset Formula $G$
+\end_inset
+
+, 
+\begin_inset Formula $R$
+\end_inset
+
+ and 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ are 
+\begin_inset Formula $Jm^{-1}$
+\end_inset
+
+, 
+\begin_inset Formula $m$
+\end_inset
+
+ and 
+\begin_inset Formula $J$
+\end_inset
+
+ respectively.
+ Therefore, the number of iterations of gradient descent 
+\begin_inset Formula $\frac{GR}{\epsilon}$
+\end_inset
+
+ is unitless.
+ In the table, we ignored some entries inside the 
+\begin_inset Formula $\log$
+\end_inset
+
+ which leads to an 
+\begin_inset Quotes eld
+\end_inset
+
+incorrect
+\begin_inset Quotes erd
+\end_inset
+
+ unit.
+ However, when everything is written correctly, the number of iterations
+ must be unitless.
+ Furthermore, we can view 
+\begin_inset Formula $GR$
+\end_inset
+
+, 
+\begin_inset Formula $LR^{2}$
+\end_inset
+
+, 
+\begin_inset Formula $\frac{G^{2}}{\mu}$
+\end_inset
+
+ all as upper bounds of the initial error 
+\begin_inset Formula $f(x^{(0)})-f^{*}$
+\end_inset
+
+.
+ For example, we know that
+\begin_inset Formula 
+\[
+f(x^{(0)})-f^{*}\leq\left\langle \nabla f(x^{(0)}),x^{(0)}-x^{*}\right\rangle \leq GR
+\]
+
+\end_inset
+
+and that
+\begin_inset Formula 
+\[
+f(x^{(0)})-f^{*}\leq\left\langle \nabla f(x^{*}),x^{(0)}-x^{*}\right\rangle +\frac{L}{2}\|x^{(0)}-x^{*}\|^{2}\leq LR^{2}.
+\]
+
+\end_inset
+
+Therefore, the terms 
+\begin_inset Formula $\frac{GR}{k}$
+\end_inset
+
+, 
+\begin_inset Formula $\frac{G^{2}}{\mu k}$
+\end_inset
+
+ and 
+\begin_inset Formula $\frac{LR^{2}}{k}$
+\end_inset
+
+ are all just measuring how much we need to decrease multiplicatively from
+ the initial error.
+ With this view, we can think the number of iteration required for Lipschitz
+ convex functions, strongly convex functions and smooth functions are exactly
+ 
+\begin_inset Formula $\frac{1}{\epsilon_{\mathrm{relative}}^{2}}$
+\end_inset
+
+ , 
+\begin_inset Formula $\frac{1}{\epsilon_{\mathrm{relative}}}$
+\end_inset
+
+ and 
+\begin_inset Formula $\frac{1}{\sqrt{\epsilon_{\mathrm{relative}}}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+\begin_inset Formula $L/\mu$
+\end_inset
+
+ can be dimension dependent
+\end_layout
+
+\begin_layout Standard
+The ratio 
+\begin_inset Formula $L/\mu$
+\end_inset
+
+ heavily depends on the application.
+ For some easy problems, it can be as small as 
+\begin_inset Formula $O(1)$
+\end_inset
+
+.
+ However, it can be very large for many natural problems.
+ Here we give a few examples of natural convex functions with huge 
+\begin_inset Formula $\frac{L}{\mu}$
+\end_inset
+
+.
+ One very simple example is 
+\begin_inset Formula 
+\[
+f(x)=\frac{1}{2}x_{1}^{2}+\frac{1}{2}\sum_{k=1}^{n-1}(x_{k}-x_{k+1})^{2}+\frac{1}{2}x_{n}^{2}
+\]
+
+\end_inset
+
+This problem appears everywhere from physical systems, graph problems, signal
+ denoising to statistics.
+ For this problem, we have 
+\begin_inset Formula $L=\Theta(1)$
+\end_inset
+
+ and 
+\begin_inset Formula $\mu=\Theta(\frac{1}{n^{2}})$
+\end_inset
+
+.
+ This example shows that you can have large 
+\begin_inset Formula $\frac{L}{\mu}$
+\end_inset
+
+ even with small description coefficients in the problem.
+ Here is another example:
+\begin_inset Formula 
+\[
+f(x)=\norm{Ax-b}_{2}^{2}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $A$
+\end_inset
+
+ is a random 
+\begin_inset Formula $n\times n$
+\end_inset
+
+ matrix with independent Gaussian entries.
+ For this problem, we have 
+\begin_inset Formula $L=\Theta(n)$
+\end_inset
+
+ and 
+\begin_inset Formula $\mu=\Theta(\frac{1}{n})$
+\end_inset
+
+ with high probability.
+ For an extreme example, the function 
+\begin_inset Formula $|x|$
+\end_inset
+
+ has both 
+\begin_inset Formula $L=+\infty$
+\end_inset
+
+ and 
+\begin_inset Formula $\mu=0$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Subsection
+Accuracy of analysis
+\end_layout
+
+\begin_layout Standard
+For gradient descent and accelerated gradient descent, the convergence rate
+ is asymptotically accurate if we take 
+\begin_inset Formula $L\sim\lambda_{\max}(\nabla^{2}f(x^{*}))$
+\end_inset
+
+ and 
+\begin_inset Formula $\mu\sim\lambda_{\min}(\nabla^{2}f(x^{*}))$
+\end_inset
+
+ and 
+\begin_inset Formula $f\in\mathcal{C}^{2}$
+\end_inset
+
+.
+ This is because any 
+\begin_inset Formula $\mathcal{C}^{2}$
+\end_inset
+
+ function locally looks like a quadratic around its minimum.
+ We take gradient descent as an example.
+ Note that gradient descent is invariant under any rotation and translation
+ transformation.
+ Therefore, we can assume 
+\begin_inset Formula $x^{*}=0$
+\end_inset
+
+ and that 
+\begin_inset Formula $\nabla^{2}f(x^{*})$
+\end_inset
+
+ is a diagonal matrix with diagonals 
+\begin_inset Formula $\lambda_{1},\lambda_{2},\cdots,\lambda_{n}$
+\end_inset
+
+.
+ When 
+\begin_inset Formula $x$
+\end_inset
+
+ is close to the optimal 
+\begin_inset Formula $x^{*}=0$
+\end_inset
+
+, gradient descent 
+\begin_inset Formula $x^{\new}=x-h\nabla f(x)$
+\end_inset
+
+ is similar to a coordinate-wise iteration 
+\begin_inset Formula $x_{i}^{\new}=(1-h\lambda_{i})x_{i}$
+\end_inset
+
+.
+ This gives a precise description of the convergence rate.
+\end_layout
+
+\begin_layout Standard
+For more complicated algorithms, the theory of convergence rate and cost
+ per iteration sometimes gives a bad estimate of the reality.
+ For example, the interior point method often takes 
+\begin_inset Formula $O(\log n)$
+\end_inset
+
+ iterations to converge despite its 
+\begin_inset Formula $\sqrt{n}$
+\end_inset
+
+ bound on convergence rate; simplex method is often the best of choice for
+ solving linear programs despite its exponential complexity bound.
+\end_layout
+
+\begin_layout Standard
+The cost per iterations sometimes can be misleading also.
+ Each iteration of interior point methods takes 
+\begin_inset Formula $\nnz(A)+\mathrm{rank}(A)^{2}$
+\end_inset
+
+ in theory while it takes nearly linear time in practice for sparse matrices
+ due to the effectiveness of Cholesky decomposition.
+ The 
+\begin_inset Formula $k^{th}$
+\end_inset
+
+ iteration of cutting plane methods often takes 
+\begin_inset Formula $nk+k^{O(1)}$
+\end_inset
+
+ if implemented correctly despite its super-linear bound.
+\end_layout
+
+\begin_layout Standard
+Finally, the error of floating point computation gradually starts to have
+ an effect when the target accuracy 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ is small.
+\end_layout
+
+\begin_layout Section
+Relations Between Different First-order Methods
+\end_layout
+
+\begin_layout Standard
+In the table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:Black-Box-Problems"
+
+\end_inset
+
+, we omitted many cases.
+ For example, what is the runtime if we have a stochastic function 
+\begin_inset Formula $\min_{x}\E_{\omega}f_{\omega}(x)$
+\end_inset
+
+ such that 
+\begin_inset Formula $\E_{\omega}f_{\omega}(x)$
+\end_inset
+
+ is strongly convex? What is the runtime if we have a finite sum problem
+ 
+\begin_inset Formula $\frac{1}{n}\sum_{i}f_{i}(x)$
+\end_inset
+
+ which is not strongly convex? In this section, we show that one can reduce
+ runtime of one case to the another case.
+ To highlight the idea, we will be informal and ignore polylogarithmic terms.
+ We note that some of the reduction ideas are not just useful for proving
+ theorem, but are practical tricks to speed up algorithm and to avoid the
+ knowledge of parameters.
+ See 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "lin2015universal,frostig2015regularizing,o2015adaptive,allen2016optimal"
+literal "true"
+
+\end_inset
+
+ for more reduction tricks for first-order methods.
+\end_layout
+
+\begin_layout Subsection*
+From Strongly Convex to Convex
+\end_layout
+
+\begin_layout Standard
+Suppose we have an algorithm 
+\begin_inset Formula $\mathcal{A}(f,x^{(0)})$
+\end_inset
+
+ that inputs a 
+\begin_inset Formula $\mu$
+\end_inset
+
+-strongly convex function 
+\begin_inset Formula $f$
+\end_inset
+
+ such that 
+\begin_inset Formula $\|\nabla f(x)\|_{2}\leq G$
+\end_inset
+
+ for the domain of 
+\begin_inset Formula $f$
+\end_inset
+
+ (such as a ball of radius 
+\begin_inset Formula $R$
+\end_inset
+
+ around 
+\begin_inset Formula $x^{(0)}$
+\end_inset
+
+)
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Any strongly convex function on 
+\begin_inset Formula $\Rn$
+\end_inset
+
+ cannot be uniformly Lipschitz on 
+\begin_inset Formula $\Rn$
+\end_inset
+
+.
+ Therefore, we must assume the domain is bounded in some way.
+\end_layout
+
+\end_inset
+
+ and outputs a point 
+\begin_inset Formula $x$
+\end_inset
+
+ such that 
+\begin_inset Formula $f(x)\leq\min_{x}f(x)+\epsilon$
+\end_inset
+
+ in 
+\begin_inset Formula $\frac{G^{2}}{\mu\epsilon}$
+\end_inset
+
+ calls to 
+\begin_inset Formula $\nabla f$
+\end_inset
+
+.
+ Equivalently, 
+\begin_inset Formula $f(x)\leq\min_{x}f(x)+\frac{G^{2}}{\mu k}$
+\end_inset
+
+ in 
+\begin_inset Formula $k$
+\end_inset
+
+ calls to 
+\begin_inset Formula $\nabla f$
+\end_inset
+
+.
+ Now, we show how to recover the result 
+\begin_inset Formula $(\frac{GR}{\epsilon})^{2}$
+\end_inset
+
+ by the following algorithm:
+\end_layout
+
+\begin_layout Itemize
+Output 
+\begin_inset Formula $\mathcal{A}(\widetilde{f},x^{(0)})$
+\end_inset
+
+ where 
+\begin_inset Formula $\widetilde{f}(x)=f(x)+\frac{G}{R\sqrt{2k}}\|x\|_{2}^{2}.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To understand the result, we let 
+\begin_inset Formula $f_{\sigma}(x)=f(x)+\frac{\sigma}{2}\|x\|_{2}^{2}$
+\end_inset
+
+ and let 
+\begin_inset Formula $x$
+\end_inset
+
+ be the output of 
+\begin_inset Formula $\mathcal{A}(f_{\sigma})$
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula $f_{\sigma}$
+\end_inset
+
+ is 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ strongly convex.
+ Hence, in 
+\begin_inset Formula $k$
+\end_inset
+
+ iterations, we have that
+\begin_inset Formula 
+\[
+f_{\sigma}(x)\leq\min_{x}f_{\sigma}(x)+\frac{G^{2}}{\sigma k}\leq f_{\sigma}(x^{*})+\frac{G^{2}}{\sigma k}=f(x^{*})+\frac{\sigma}{2}R^{2}+\frac{G^{2}}{\sigma k}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ is the minimum of 
+\begin_inset Formula $f(x)$
+\end_inset
+
+.
+ To get the best runtime for the fix 
+\begin_inset Formula $k$
+\end_inset
+
+, we choose 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ such that 
+\begin_inset Formula 
+\[
+\frac{\sigma}{2}R^{2}=\frac{G^{2}}{\sigma k}
+\]
+
+\end_inset
+
+which leads to 
+\begin_inset Formula $\sigma=\sqrt{\frac{2}{k}}\frac{G}{R}$
+\end_inset
+
+ and hence the total error is 
+\begin_inset Formula $\sqrt{2}\frac{GR}{\sqrt{k}}$
+\end_inset
+
+ which is exactly what we expect to get (up to constant).
+\end_layout
+
+\begin_layout Subsection*
+From Convex to Strongly Convex
+\end_layout
+
+\begin_layout Standard
+Suppose we have an algorithm 
+\begin_inset Formula $\mathcal{A}(f,x^{(0)})$
+\end_inset
+
+ that inputs a Lipschitz function 
+\begin_inset Formula $f$
+\end_inset
+
+ such that 
+\begin_inset Formula $\|\nabla f(x)\|_{2}\leq G$
+\end_inset
+
+ and that 
+\begin_inset Formula $\|x^{(0)}-x^{*}\|_{2}\leq R$
+\end_inset
+
+ and outputs a point 
+\begin_inset Formula $x$
+\end_inset
+
+ such that 
+\begin_inset Formula $f(x)\leq\min_{x}f(x)+\epsilon$
+\end_inset
+
+ in 
+\begin_inset Formula $(\frac{GR}{\epsilon})^{2}$
+\end_inset
+
+ calls to 
+\begin_inset Formula $\nabla f$
+\end_inset
+
+.
+ Equivalently, 
+\begin_inset Formula $f(x)\leq\min_{x}f(x)+\frac{GR}{\sqrt{k}}$
+\end_inset
+
+ in 
+\begin_inset Formula $k$
+\end_inset
+
+ calls to 
+\begin_inset Formula $\nabla f$
+\end_inset
+
+.
+ Now, we show how to recover the result 
+\begin_inset Formula $\widetilde{O}(\frac{G^{2}}{\mu\epsilon})$
+\end_inset
+
+ by the following algorithm:
+\end_layout
+
+\begin_layout Itemize
+For 
+\begin_inset Formula $i=1,2,\cdots,\widetilde{O}(1)$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $x^{(i)}\leftarrow\mathcal{A}(f,x^{(i-1)})$
+\end_inset
+
+ for 
+\begin_inset Formula $\frac{G^{2}}{\mu\epsilon}$
+\end_inset
+
+ iterations
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+By the guarantee of 
+\begin_inset Formula $\mathcal{A}$
+\end_inset
+
+, we have that 
+\begin_inset Formula 
+\begin{equation}
+f(x^{(i)})\leq\min_{x}f(x)+\frac{G\|x^{(i-1)}-x^{*}\|_{2}}{\sqrt{k}}=\min_{x}f(x)+\sqrt{\mu\epsilon}\|x^{(i-1)}-x^{*}\|_{2}.\label{eq:convex2strongly}
+\end{equation}
+
+\end_inset
+
+On the other hand, the strong convexity of 
+\begin_inset Formula $f$
+\end_inset
+
+ shows that 
+\begin_inset Formula $f(x^{(i)})-\min_{x}f(x)\geq\frac{\mu}{2}\cdot\|x^{(i)}-x^{*}\|_{2}^{2}$
+\end_inset
+
+.
+ Therefore, we have that
+\begin_inset Formula 
+\[
+\|x^{(i)}-x^{*}\|_{2}^{2}\leq2\sqrt{\frac{\epsilon}{\mu}}\|x^{(i-1)}-x^{*}\|_{2}.
+\]
+
+\end_inset
+
+Therefore, if 
+\begin_inset Formula $\|x^{(i-1)}-x^{*}\|_{2}\geq8\sqrt{\frac{\epsilon}{\mu}}$
+\end_inset
+
+, then the distance to OPT decreases by at least a factor of two.
+ After 
+\begin_inset Formula $\widetilde{O}(1)$
+\end_inset
+
+ iterations, we have that 
+\begin_inset Formula $\|x^{(i-1)}-x^{*}\|_{2}=O\left(\sqrt{\frac{\epsilon}{\mu}}\right)$
+\end_inset
+
+ and hence 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:convex2strongly"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows that 
+\begin_inset Formula $f(x^{(i)})\leq\min_{x}f(x)+\sqrt{\mu\epsilon}\cdot O\left(\sqrt{\frac{\epsilon}{\mu}}\right)=\min_{x}f(x)+O(\epsilon)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Exercise
+Given an algorithm that can minimize convex 
+\begin_inset Formula $f$
+\end_inset
+
+ with 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ additive error in 
+\begin_inset Formula $\sqrt{\frac{LR^{2}}{\epsilon}}$
+\end_inset
+
+ iterations, show how to use this algorithm to minimize 
+\begin_inset Formula $f$
+\end_inset
+
+ again with 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ additive error in 
+\begin_inset Formula $\widetilde{O}\left(\sqrt{\frac{L}{\mu}}\log\left(\frac{LR^{2}}{\epsilon}\right)\right)$
+\end_inset
+
+ iterations.
+\end_layout
+
+\begin_layout Subsection*
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Subsection*
+Discussion for non-first-order methods
+\end_layout
+
+\begin_layout Plain Layout
+Maybe put some examples here for next draft...
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

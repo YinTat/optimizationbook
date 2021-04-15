@@ -1,0 +1,3590 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{url}
+\usepackage{xargs}
+\usepackage[pdftex,dvipsnames]{xcolor}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\usepackage[lined,boxed,ruled,norelsize,algo2e]{algorithm2e}
+\usepackage[small,bf]{caption}
+\usepackage{tikz}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=red,
+    filecolor=red,
+    linkcolor=red,
+    urlcolor=red
+}
+
+
+
+\usepackage{fancybox}
+\usepackage{multirow}
+\usepackage{nicefrac}
+\usepackage{hyperref}
+
+
+\expandafter\def\expandafter\normalsize\expandafter{%
+    \normalsize
+%	    \setlength\abovedisplayskip{5pt}
+    \setlength\belowdisplayskip{5pt}
+    % \setlength\abovedisplayshortskip{5pt}
+    \setlength\belowdisplayshortskip{5pt}
+}
+
+\usepackage{tocloft}
+\setlength{\cftsecnumwidth}{2.8em}%
+
+%%%%%
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{fix-cm}
+\makeatletter
+\newcommand\HUGE{\@setfontsize\Huge{38}{47}}
+\makeatother
+
+\titleclass{\part}{top}
+\titleformat{\part}[display]
+  {\normalfont\HUGE\sffamily}{\partname\ \thepart}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\HUGE\bfseries\filleft}
+%\titlespacing*{\part} {0pt}{20pt}{40pt}
+\titlespacing*{\part} {0pt}{30pt}{50pt}
+
+% chapter heading formatting
+\titleformat{\chapter}[display]
+  {\normalfont\LARGE\sffamily}{\chaptertitlename\ \thechapter}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\LARGE\bfseries\filleft}
+% section heading formatting
+\titleformat{\section}
+  {\normalfont\Large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesection}{0.5em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesubsection}{0.5em}{}
+\titlespacing*{\chapter} {0pt}{20pt}{30pt}
+
+% header/footer
+\fancyhf{}
+\fancyhead[ER]{\footnotesize\sffamily\leftmark}
+\fancyhead[OL]{\footnotesize\sffamily\nouppercase\rightmark}
+\fancyhead[EL,OR]{\bfseries\thepage}
+
+\setcounter{secnumdepth}{3}
+\end_preamble
+\options openany
+\use_default_options false
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+theorems-sec
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding default
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 0
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic true
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip 0.1in
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Equivalences between Oracles
+\end_layout
+
+\begin_layout Subsection
+Oracles for Convex Sets
+\end_layout
+
+\begin_layout Standard
+Grötschel, Lovasz and Schrijver 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "grotschel2012geometric"
+literal "true"
+
+\end_inset
+
+ introduced five different ways to access convex sets, showed they are equivalen
+t and used them to get polynomial-time algorithms for a variety of combinatorial
+ problems (including the first ones in many cases).
+ Here are four basic oracles for a convex set 
+\begin_inset Formula $K\subseteq\R^{n}$
+\end_inset
+
+.
+ The original definitions are more general, allowing for error parameters
+ in each oracle, i.e., approximate versions of all the oracles below.
+ Here we will focus on exact oracles for simplicity.
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+We also omit the fifth oracle VIOL defined by 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "grotschel2012geometric"
+literal "true"
+
+\end_inset
+
+, which checks whether the convex set satisfies a given inequality or gives
+ a violating point in the convex set, since this is equivalent to the OPT
+ oracle below up to a logarithmic factor.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Membership Oracle (MEM)
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "def:MEM"
+
+\end_inset
+
+Queried with a vector 
+\begin_inset Formula $y\in\Rn$
+\end_inset
+
+, the oracle either
+\begin_inset Separator latexpar
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+asserts that 
+\begin_inset Formula $y\in K$
+\end_inset
+
+, or
+\end_layout
+
+\begin_layout Itemize
+asserts that 
+\begin_inset Formula $y\notin K$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Separation Oracle (SEP)
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "def:SEP"
+
+\end_inset
+
+Queried with a vector 
+\begin_inset Formula $y\in\Rn$
+\end_inset
+
+, the oracle either
+\begin_inset Separator latexpar
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+asserts that 
+\begin_inset Formula $y\in K$
+\end_inset
+
+, or
+\end_layout
+
+\begin_layout Itemize
+finds a unit vector 
+\begin_inset Formula $c\in\Rn$
+\end_inset
+
+ such that 
+\begin_inset Formula $c^{T}x\leq c^{T}y$
+\end_inset
+
+ for all 
+\begin_inset Formula $x\in K$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Validity Oracle (VAL)
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "def:VAL"
+
+\end_inset
+
+Queried with a unit vector 
+\begin_inset Formula $c\in\Rn$
+\end_inset
+
+, the oracle either
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+We use a slightly different definition than 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "grotschel2012geometric"
+literal "true"
+
+\end_inset
+
+ for clarity.
+ 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Separator latexpar
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+outputs 
+\begin_inset Formula $\max_{x\in K}c^{\top}x$
+\end_inset
+
+, or
+\end_layout
+
+\begin_layout Itemize
+asserts that 
+\begin_inset Formula $K$
+\end_inset
+
+ is empty.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Optimization Oracle (OPT)
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "def:OPT"
+
+\end_inset
+
+Queried with a unit vector 
+\begin_inset Formula $c\in\Rn$
+\end_inset
+
+, the oracle either
+\begin_inset Separator latexpar
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+finds a vector 
+\begin_inset Formula $y\in\Rn$
+\end_inset
+
+ such that 
+\begin_inset Formula $y\in K$
+\end_inset
+
+ and 
+\begin_inset Formula $c^{T}x\leq c^{T}y$
+\end_inset
+
+ for all 
+\begin_inset Formula $x\in K$
+\end_inset
+
+, or
+\end_layout
+
+\begin_layout Itemize
+asserts that 
+\begin_inset Formula $K$
+\end_inset
+
+ is empty.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+According to the definition, the separation oracle gives strictly more informati
+on than the membership oracle and the optimization oracle gives more information
+ than the validity oracle.
+ Depending on the problem, usually one of the oracles will be the preferred
+ way to access the convex set.
+ For example, for the polytope given by 
+\begin_inset Formula $\{Ax\geq b\}$
+\end_inset
+
+, the separation oracle is the preferred way because the membership oracle
+ takes as much time as the separation oracle, and both validity and optimization
+ involve solving a linear program.
+ On the contrary, the preferred oracle for the convex set 
+\begin_inset Formula $\conv(\{a_{i}\})$
+\end_inset
+
+ is the optimization oracle because 
+\begin_inset Formula $\max_{x\in\conv(\{a_{i}\})}\theta^{\top}x$
+\end_inset
+
+ can be solved by checking 
+\begin_inset Formula $x=a_{i}$
+\end_inset
+
+ for each 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ In combinatorial optimization, many polytopes have exponentially many vertices
+ and constraints but one can use combinatorial structure to solve the optimizati
+on problem.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Give an example about zonotope here
+\end_layout
+
+\begin_layout Plain Layout
+Just to be more concrete.
+\end_layout
+
+\begin_layout Plain Layout
+Imagine you have 
+\begin_inset Formula $k$
+\end_inset
+
+ machines.
+\end_layout
+
+\begin_layout Plain Layout
+Each machine uses resources 
+\begin_inset Formula $(r_{1},r_{2},\cdots,r_{k})$
+\end_inset
+
+ and produces goods 
+\begin_inset Formula $(g_{1},g_{2},\cdots,g_{\ell})$
+\end_inset
+
+.
+ We represent the machine by simply a vector 
+\begin_inset Formula $a=(r_{1},r_{2},\cdots,r_{k},g_{1},g_{2},\cdots,g_{\ell})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+Say we have vectors 
+\begin_inset Formula $a_{1},a_{2},\cdots,a_{n}\in\R^{k+\ell}$
+\end_inset
+
+, the polytope
+\begin_inset Formula 
+\[
+K=\{\sum_{i=1}^{n}\lambda_{i}a_{i}\in\R^{k+\ell}|0\leq\lambda_{i}\leq1\text{ for all }i\}
+\]
+
+\end_inset
+
+represents the set of possible feasible (input, output) pairs.
+ Many production problems can be written as
+\begin_inset Formula 
+\[
+\min_{z\in K}f(z).
+\]
+
+\end_inset
+
+Question: Which oracle for 
+\begin_inset Formula $K$
+\end_inset
+
+ is easy to implement?
+\end_layout
+
+\begin_layout Plain Layout
+Membership: ???
+\end_layout
+
+\begin_layout Plain Layout
+Separation: ???
+\end_layout
+
+\begin_layout Plain Layout
+Value: Easy.
+ The problem is independent
+\end_layout
+
+\begin_layout Plain Layout
+Optimization: Easy.
+ The problem is independent
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+The spanning tree polytope of an undirected graph 
+\begin_inset Formula $G=(V,E)$
+\end_inset
+
+ is given by
+\begin_inset Formula 
+\[
+P=\{x\in\R_{+}^{E}|\sum_{e\in E}x_{e}=|V|-1,\sum_{(u,v)\in E\cap(S\times S)}x_{(u,v)}\leq|S|-1\quad\forall S\subseteq V\}.
+\]
+
+\end_inset
+
+The extreme points of this polytope are exactly the indicator vectors of
+ spanning trees of 
+\begin_inset Formula $G$
+\end_inset
+
+.
+ Thus, the optimization oracle in this case is to simply find a maximum
+ cost spanning tree.
+\end_layout
+
+\begin_layout Exercise
+Design a membership oracle for the spanning tree polytope.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[node distance = 1.8cm]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikzstyle{block} = [rectangle, draw, text width=6.5em, text centered, rounded
+ corners, minimum height=4em]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikzstyle{line} = [draw, -tonew,arrowhead=0.085cm]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikzstyle{dot_line} = [draw, -tonew,dashed,arrowhead=0.085cm]
+\end_layout
+
+\begin_layout Plain Layout
+
+% Place nodes
+\end_layout
+
+\begin_layout Plain Layout
+
+   
+\backslash
+node [block] (opt) {
+\backslash
+scriptsize $OPT(K) = 
+\backslash
+partial {
+\backslash
+delta_K}*$};
+\end_layout
+
+\begin_layout Plain Layout
+
+   
+\backslash
+node [block, below of=opt, node distance=1.8cm] (val) {
+\backslash
+scriptsize $VAL(K) = {
+\backslash
+delta_K}*$};
+\end_layout
+
+\begin_layout Plain Layout
+
+   
+\backslash
+node [block, right of=opt, node distance=3cm] (sepp) {
+\backslash
+scriptsize $SEP(K) = 
+\backslash
+partial{
+\backslash
+delta_K}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+   
+\backslash
+node [block, below of=sepp, node distance=1.8cm] (mem) {
+\backslash
+scriptsize $MEM(K) = {
+\backslash
+delta_K}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+   
+\backslash
+node [left of=opt, node distance=3cm] (viol) {};
+\end_layout
+
+\begin_layout Plain Layout
+
+   
+\backslash
+node [below of=viol, node distance=1.5cm] {$
+\backslash
+xrightarrow{
+\backslash
+quad
+\backslash
+quad} 
+\backslash
+mbox{ is } 
+\backslash
+tilde{O}(1)$};
+\end_layout
+
+\begin_layout Plain Layout
+
+   
+\backslash
+node [below of=viol, node distance=2.1cm] {$
+\backslash
+xdashrightarrow{
+\backslash
+quad
+\backslash
+quad} 
+\backslash
+mbox{ is } 
+\backslash
+tilde{O}(n)$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+   % Draw edges
+\end_layout
+
+\begin_layout Plain Layout
+
+%   
+\backslash
+path [line] (opt) -- (viol);
+\end_layout
+
+\begin_layout Plain Layout
+
+%   
+\backslash
+path [line] (viol) -- (opt);
+\end_layout
+
+\begin_layout Plain Layout
+
+   
+\backslash
+path [line,transform canvas={xshift=-0.25cm}] (sepp) -- (mem);
+\end_layout
+
+\begin_layout Plain Layout
+
+   
+\backslash
+path [line,transform canvas={xshift=-0.25cm}] (opt) -- (val);
+\end_layout
+
+\begin_layout Plain Layout
+
+   
+\backslash
+path [dot_line,transform canvas={xshift=0.25cm}] (mem) -- (sepp);
+\end_layout
+
+\begin_layout Plain Layout
+
+   
+\backslash
+path [dot_line,transform canvas={xshift=0.25cm}] (val) -- (opt);
+\end_layout
+
+\begin_layout Plain Layout
+
+   
+\backslash
+path [dot_line,transform canvas={yshift=-0.25cm}] (opt) -- (sepp);
+\end_layout
+
+\begin_layout Plain Layout
+
+   
+\backslash
+path [dot_line,transform canvas={yshift=0.25cm}] (sepp) -- (opt);  
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The relationships among the four oracles for convex sets.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:rel-1-1"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Oracles for Convex Functions
+\end_layout
+
+\begin_layout Standard
+Now, we generalize the oracles for convex sets to convex functions.
+ The membership oracle and separation oracle can be generalized as follows
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Evaluation Oracle (EVAL)
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "def:EVAL"
+
+\end_inset
+
+Queried with a vector 
+\begin_inset Formula $y$
+\end_inset
+
+, the oracle outputs 
+\begin_inset Formula $f(y)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The next oracle generalizes gradients to subgradients so that they can be
+ computed for general convex functions.
+ Any vector output by the oracle is a subgradient of the function at the
+ query point.
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Subgradient Oracle (GRAD)
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "def:GRAD"
+
+\end_inset
+
+Queried with a vector 
+\begin_inset Formula $y$
+\end_inset
+
+, the oracle outputs 
+\begin_inset Formula $f(y)$
+\end_inset
+
+ and a vector 
+\begin_inset Formula $g\in\Rn$
+\end_inset
+
+ such that
+\begin_inset Formula 
+\begin{equation}
+f(x)\geq f(y)+g^{\top}(x-y)\text{ for all }x\in\Rn\label{eq:grad_guarantee}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To generalize the validity oracle, we define the convex (Fenchel) conjugate
+ of 
+\begin_inset Formula $f$
+\end_inset
+
+:
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Add figure with 1-d example.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Convex Conjugate
+\end_layout
+
+\end_inset
+
+For any function 
+\begin_inset Formula $f$
+\end_inset
+
+, we define the convex conjugate 
+\begin_inset Formula 
+\[
+f^{*}(\theta)\defeq\sup_{x\in\R^{n}}\theta^{\top}x-f(x).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note that 
+\begin_inset Formula $f^{*}$
+\end_inset
+
+ is convex because it is the maximum of linear functions.
+ Also, we have 
+\begin_inset Formula $f^{*}(0)=-\inf_{x\in\R^{n}}f(x)$
+\end_inset
+
+.
+ Note that
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Recall that 
+\begin_inset Formula $\delta_{C}(x)=0$
+\end_inset
+
+ if 
+\begin_inset Formula $x\in C$
+\end_inset
+
+ and 
+\begin_inset Formula $+\infty$
+\end_inset
+
+ otherwise.
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\delta_{K}^{*}(c)=\sup_{x\in K}c^{\top}x$
+\end_inset
+
+.
+ Therefore, the validity oracle is simply the evaluation oracle for 
+\begin_inset Formula $\delta_{K}^{*}$
+\end_inset
+
+.
+ The following lemma shows that the optimization oracle is simply the (sub)gradi
+ent oracle for 
+\begin_inset Formula $\delta_{K}^{*}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:gradient_conjugate"
+
+\end_inset
+
+For any continuously differentiable function 
+\begin_inset Formula $f$
+\end_inset
+
+ with differentiable 
+\begin_inset Formula $f^{*}$
+\end_inset
+
+, we have that 
+\begin_inset Formula $\nabla f^{*}(\theta)=\arg\max_{x}\theta^{\top}x-f(x)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $x_{\theta}=\arg\sup_{x}\theta^{\top}x-f(x)$
+\end_inset
+
+.
+ By definition, we have that 
+\begin_inset Formula $f^{*}(\theta)=\theta^{\top}x_{\theta}-f(x_{\theta})$
+\end_inset
+
+ and that 
+\begin_inset Formula $f^{*}(\eta)\geq\eta^{\top}x_{\theta}-f(x_{\theta})$
+\end_inset
+
+ for all 
+\begin_inset Formula $\eta$
+\end_inset
+
+.
+ Therefore, 
+\begin_inset Formula 
+\[
+f^{*}(\eta)\geq f^{*}(\theta)+x_{\theta}^{\top}(\eta-\theta)\text{ for all }\eta.
+\]
+
+\end_inset
+
+Therefore, 
+\begin_inset Formula $\nabla f^{*}(\theta)=x_{\theta}$
+\end_inset
+
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+This part is not rigorous.
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Note that this lemma shows that 
+\begin_inset Formula $\nabla\delta_{K}^{*}(\theta)=\arg\max_{x\in K}\theta^{\top}x$
+\end_inset
+
+.
+ So, the gradient oracle for 
+\begin_inset Formula $\delta_{K}^{*}$
+\end_inset
+
+ is exactly the optimization oracle for 
+\begin_inset Formula $K$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:rel"
+
+\end_inset
+
+ shows the current best reduction between these four function oracles.
+ Note that according to our definition of the GRAD oracle, it also outputs
+ the function value (EVAL).
+ It is not hard to show that you can use 
+\begin_inset Formula $n+1$
+\end_inset
+
+ calls to evaluation oracle to compute one gradient (using finite difference)
+ and that you can use 
+\begin_inset Formula $\tilde{O}(n)$
+\end_inset
+
+ calls to gradient oracle of 
+\begin_inset Formula $f$
+\end_inset
+
+ to compute one gradient of 
+\begin_inset Formula $f^{*}$
+\end_inset
+
+ (using the cutting plane method).
+ In the next section (Sec.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:From-EVAL-to"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), we will show the rest of the reduction.
+ However, it is still open whether all of these reductions are tight:
+\end_layout
+
+\begin_layout Problem*
+Prove that it takes 
+\begin_inset Formula $\Omega(n^{2})$
+\end_inset
+
+ calls to the evaluation oracle of 
+\begin_inset Formula $f$
+\end_inset
+
+ to compute the gradient of 
+\begin_inset Formula $f^{*}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[node distance = 1.8cm]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikzstyle{block} = [rectangle, draw, text width=6.5em, text centered, rounded
+ corners, minimum height=4em]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikzstyle{line} = [draw, -tonew,arrowhead=0.085cm]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+tikzstyle{dot_line} = [draw, -tonew,dashed,arrowhead=0.085cm]
+\end_layout
+
+\begin_layout Plain Layout
+
+% Place nodes
+\end_layout
+
+\begin_layout Plain Layout
+
+   
+\backslash
+node [block] (opt) {
+\backslash
+scriptsize $GRAD(f^*)$};
+\end_layout
+
+\begin_layout Plain Layout
+
+   
+\backslash
+node [block, below of=opt, node distance=1.8cm] (val) {
+\backslash
+scriptsize $EVAL(f^*)$};
+\end_layout
+
+\begin_layout Plain Layout
+
+   
+\backslash
+node [block, right of=opt, node distance=3cm] (sepp) {
+\backslash
+scriptsize $GRAD(f)$};
+\end_layout
+
+\begin_layout Plain Layout
+
+   
+\backslash
+node [block, below of=sepp, node distance=1.8cm] (mem) {
+\backslash
+scriptsize $EVAL(f)$};
+\end_layout
+
+\begin_layout Plain Layout
+
+   
+\backslash
+node [left of=opt, node distance=3cm] (viol) {};
+\end_layout
+
+\begin_layout Plain Layout
+
+   
+\backslash
+node [below of=viol, node distance=1.5cm] {$
+\backslash
+xrightarrow{
+\backslash
+quad
+\backslash
+quad} 
+\backslash
+mbox{ is } 
+\backslash
+tilde{O}(1)$};
+\end_layout
+
+\begin_layout Plain Layout
+
+   
+\backslash
+node [below of=viol, node distance=2.1cm] {$
+\backslash
+xdashrightarrow{
+\backslash
+quad
+\backslash
+quad} 
+\backslash
+mbox{ is } 
+\backslash
+tilde{O}(n)$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+   %
+\backslash
+node [below of=viol, node distance=1.5cm] {$
+\backslash
+tilde{O}(1) 
+\backslash
+xrightarrow{
+\backslash
+quad
+\backslash
+quad}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+   %
+\backslash
+node [below of=viol, node distance=2.1cm] {$
+\backslash
+tilde{O}(n) 
+\backslash
+xdashrightarrow{
+\backslash
+quad
+\backslash
+quad}$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+   % Draw edges
+\end_layout
+
+\begin_layout Plain Layout
+
+   
+\backslash
+path [line,transform canvas={xshift=-0.25cm}] (sepp) -- (mem);
+\end_layout
+
+\begin_layout Plain Layout
+
+   
+\backslash
+path [line,transform canvas={xshift=-0.25cm}] (opt) -- (val);
+\end_layout
+
+\begin_layout Plain Layout
+
+   
+\backslash
+path [dot_line,transform canvas={xshift=0.25cm}] (mem) -- (sepp);
+\end_layout
+
+\begin_layout Plain Layout
+
+   
+\backslash
+path [dot_line,transform canvas={xshift=0.25cm}] (val) -- (opt);
+\end_layout
+
+\begin_layout Plain Layout
+
+   
+\backslash
+path [dot_line,transform canvas={yshift=-0.25cm}] (opt) -- (sepp);
+\end_layout
+
+\begin_layout Plain Layout
+
+   
+\backslash
+path [dot_line,transform canvas={yshift=0.25cm}] (sepp) -- (opt);  
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+This illustrates the relationships of oracles for a convex function 
+\begin_inset Formula $f$
+\end_inset
+
+ and its convex conjugate 
+\begin_inset Formula $f^{*}$
+\end_inset
+
+.
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:rel"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Convex Conjugate and Equivalences
+\end_layout
+
+\begin_layout Standard
+Here are some examples of conjugates.
+\end_layout
+
+\begin_layout Exercise
+Show that
+\end_layout
+
+\begin_layout Itemize
+The conjugate of 
+\begin_inset Formula $f(x)=\frac{1}{p}\|x\|_{p}^{p}$
+\end_inset
+
+ is 
+\begin_inset Formula $f^{*}(\theta)=\frac{1}{q}\|\theta\|_{q}^{q}$
+\end_inset
+
+ where 
+\begin_inset Formula $\frac{1}{p}+\frac{1}{q}=1$
+\end_inset
+
+ (with 
+\begin_inset Formula $p,q\ge1)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+The conjugate of 
+\begin_inset Formula $f(x)=\left\langle a,x\right\rangle -b$
+\end_inset
+
+ is 
+\begin_inset Formula $f^{*}(\theta)=\begin{cases}
+b, & \theta=a\\
++\infty & \mbox{otherwise}
+\end{cases}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+The conjugate of 
+\begin_inset Formula $f(x)=\sum_{i}e^{x_{i}}$
+\end_inset
+
+ is 
+\begin_inset Formula $f^{*}(\theta)=\begin{cases}
+\sum_{i}\theta_{i}\log\theta_{i}-\theta_{i} & \text{if }\theta_{i}\geq0\text{ for all }i\\
++\infty & \mbox{otherwise}
+\end{cases}.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+For any 
+\begin_inset Formula $x,\theta$
+\end_inset
+
+, we have 
+\begin_inset Formula $\theta^{\top}x\leq f(x)+f^{*}(\theta)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Prove that the gradient of 
+\begin_inset Formula $f$
+\end_inset
+
+ is 
+\begin_inset Formula $L$
+\end_inset
+
+-Lipschitz if and only if 
+\begin_inset Formula $f^{*}$
+\end_inset
+
+ is 
+\begin_inset Formula $\frac{1}{L}$
+\end_inset
+
+ strongly convex.
+\end_layout
+
+\begin_layout Standard
+The following lemma shows that indeed one can recover 
+\begin_inset Formula $f$
+\end_inset
+
+ from 
+\begin_inset Formula $f^{*}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:involution"
+
+\end_inset
+
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Involution property
+\end_layout
+
+\end_inset
+
+For any convex function 
+\begin_inset Formula $f$
+\end_inset
+
+ with a closed epigraph, we have that 
+\begin_inset Formula $f^{**}=f$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+The proof is not exactly rigorous.
+ There can be vertical cutting plane
+\end_layout
+
+\end_inset
+
+Since 
+\begin_inset Formula $\epi f$
+\end_inset
+
+ is closed and convex, Corollary 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "cor:convex_function_intersection"
+
+\end_inset
+
+ shows that it is an intersection of halfspaces, i.e., 
+\begin_inset Formula 
+\[
+f(x)=\sup_{\{\theta,b\}\in\mathcal{H}}\theta^{\top}x-b
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\mathcal{H}$
+\end_inset
+
+ is the set of supporting planes of 
+\begin_inset Formula $\epi f$
+\end_inset
+
+ and contains all affine lower bounds on 
+\begin_inset Formula $f$
+\end_inset
+
+, namely, 
+\begin_inset Formula $f(x)\geq\theta^{\top}x-b$
+\end_inset
+
+ for all 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ For a fixed 
+\begin_inset Formula $\theta$
+\end_inset
+
+, any feasible 
+\begin_inset Formula $b$
+\end_inset
+
+ satisfies 
+\begin_inset Formula $b\geq\theta^{\top}x-f(x)$
+\end_inset
+
+ for all 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ So, the smallest feasible value satisfies 
+\begin_inset Formula 
+\[
+b^{*}=\sup_{x}\theta^{\top}x-f(x)=f^{*}(\theta).
+\]
+
+\end_inset
+
+Hence, 
+\begin_inset Formula 
+\[
+f(x)=\sup_{\{\theta,b\}\in\mathcal{H}}\theta^{\top}x-b^{*}=\sup_{\theta}\theta^{\top}x-f^{*}(\theta)=f^{**}(x).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Since we can use the gradient, 
+\begin_inset Formula $\nabla f$
+\end_inset
+
+, to compute the gradient of the dual, 
+\begin_inset Formula $\nabla f^{*}$
+\end_inset
+
+ (via cutting plane method)
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Maybe make this part more explicit with an algorithm box?
+\end_layout
+
+\end_inset
+
+, the involution property shows that we can do the reverse – use 
+\begin_inset Formula $\nabla f^{*}$
+\end_inset
+
+ to compute 
+\begin_inset Formula $\nabla f$
+\end_inset
+
+.
+ Going back to the example about 
+\begin_inset Formula $\conv(\{a_{i}\})$
+\end_inset
+
+, since we know how to compute 
+\begin_inset Formula $\max_{x\in\conv(\{a_{i}\})}\theta^{\top}x=\delta_{\conv(\{a_{i}\})}^{*}(\theta)$
+\end_inset
+
+, this reduction gives us a way to separate 
+\begin_inset Formula $\conv(\{a_{i}\})$
+\end_inset
+
+, or equivalently, to compute the (sub)gradient of 
+\begin_inset Formula $\delta_{\conv(\{a_{i}\})}^{*}$
+\end_inset
+
+.
+ In combinatorial optimization, many convex sets are given by the convex
+ hull for some discrete objects.
+ In many cases, the only known way to do the separation is via such reductions.
+\end_layout
+
+\begin_layout Standard
+Recall that for any linear space 
+\begin_inset Formula $X$
+\end_inset
+
+, 
+\begin_inset Formula $X^{*}$
+\end_inset
+
+ denotes the dual space, i.e., the set of all linear functions on 
+\begin_inset Formula $X$
+\end_inset
+
+ and that under mild assumptions
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+The dual of the dual of a vector space 
+\begin_inset Formula $X$
+\end_inset
+
+ is isomorphic to 
+\begin_inset Formula $X$
+\end_inset
+
+ if and only if 
+\begin_inset Formula $X$
+\end_inset
+
+ is a finite-dimensional vector space.
+\end_layout
+
+\end_inset
+
+, we have 
+\begin_inset Formula $X^{**}=X$
+\end_inset
+
+.
+ Therefore, there are two natural 
+\begin_inset Quotes eld
+\end_inset
+
+coordinate systems
+\begin_inset Quotes erd
+\end_inset
+
+ to record a convex function, the primal space 
+\begin_inset Formula $X$
+\end_inset
+
+ and the dual space 
+\begin_inset Formula $X^{*}$
+\end_inset
+
+.
+ Under these 
+\begin_inset Quotes eld
+\end_inset
+
+coordinate systems
+\begin_inset Quotes erd
+\end_inset
+
+, we have the dual functions 
+\begin_inset Formula $f$
+\end_inset
+
+ and 
+\begin_inset Formula $f^{*}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Exercise
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Order reversal
+\end_layout
+
+\end_inset
+
+ Show that 
+\begin_inset Formula $f\geq g\iff f^{*}\leq g^{*}$
+\end_inset
+
+ (both for all 
+\begin_inset Formula $x\in\R^{n})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Exercise
+Interestingly, the convex conjugate is the unique transformation on convex
+ functions that satisfies both involution and order reversal.
+ 
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+\begin_inset CommandInset citation
+LatexCommand cite
+key "artstein2009concept"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Given a transformation 
+\begin_inset Formula $\mathcal{T}$
+\end_inset
+
+ that maps the set of lower-semi-continuous convex functions onto itself
+ such that 
+\begin_inset Formula $\mathcal{T}\mathcal{T}\phi=\phi$
+\end_inset
+
+ and 
+\begin_inset Formula $\phi\leq\psi\implies\mathcal{T}\phi\geq\mathcal{T}\psi$
+\end_inset
+
+ for all lower-semi-continuous convex functions 
+\begin_inset Formula $\phi$
+\end_inset
+
+ and 
+\begin_inset Formula $\psi$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula $\mathcal{T}$
+\end_inset
+
+ is essentially the convex conjugate, namely, there is an invertible symmetric
+ linear transformation 
+\begin_inset Formula $B$
+\end_inset
+
+, a vector 
+\begin_inset Formula $v_{0}$
+\end_inset
+
+ and a constant 
+\begin_inset Formula $C_{0}$
+\end_inset
+
+ such that 
+\begin_inset Formula 
+\[
+(\mathcal{T}\phi)(x)=\phi^{*}(Bx+v_{0})+v_{0}^{\top}x+C_{0}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Gradient from Evaluation via Finite Difference
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:From-EVAL-to"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+When the function 
+\begin_inset Formula $f$
+\end_inset
+
+ is in 
+\begin_inset Formula $\mathcal{C}^{1}$
+\end_inset
+
+, we can approximate the gradient of a function by calculating a finite
+ difference
+\begin_inset Formula 
+\[
+\frac{\partial f}{\partial x_{i}}=\frac{f(x+he_{i})-f(x)}{h}+o(1)
+\]
+
+\end_inset
+
+which only takes 
+\begin_inset Formula $n+1$
+\end_inset
+
+ calls to the evaluation oracle (for computing 
+\begin_inset Formula $f(x),f(x+he_{1}),\cdots,f(x+he_{n})$
+\end_inset
+
+).
+ The only issue is that the convex function may not be differentiable.
+ However, any convex Lipschitz function is twice differentiable almost everywher
+e (see the proof below).
+ Therefore, we can simply perturb 
+\begin_inset Formula $x$
+\end_inset
+
+ with random noise, then apply a finite difference.
+ To see the idea more precisely, we first observe that the norm of the Hessian
+ can be bounded in expectation for a Lipschitz function.
+ Note that this is Lipschitzness of the function, not its gradient.
+ The proof below uses the basic fact that the gradient is defined almost
+ everywhere for Lipschitz functions.
+ 
+\end_layout
+
+\begin_layout Lemma
+For any 
+\begin_inset Formula $L$
+\end_inset
+
+-Lipschitz convex function 
+\begin_inset Formula $f$
+\end_inset
+
+ defined in a unit ball, we have 
+\begin_inset Formula $\nabla^{2}f(x)$
+\end_inset
+
+ exists almost everywhere and that 
+\begin_inset Formula $\E_{x\in B(0,1)}\|\nabla^{2}f(x)\|_{F}\leq nL$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+We will only prove the part 
+\begin_inset Formula $\E_{x\in B(0,1)}\|\nabla^{2}f(x)\|_{F}\leq nL$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $\nabla^{2}f\succeq0$
+\end_inset
+
+ (where defined), we have 
+\begin_inset Formula $\|\nabla^{2}f(x)\|_{F}\leq\tr\nabla^{2}f(x)$
+\end_inset
+
+.
+ Therefore, 
+\begin_inset Formula 
+\[
+\int_{B(0,1)}\|\nabla^{2}f(x)\|_{F}dx\leq\int_{B(0,1)}\tr\nabla^{2}f(x)dx=\int_{B(0,1)}\Delta f(x)dx.
+\]
+
+\end_inset
+
+Using Stokes' Theorem, and letting 
+\begin_inset Formula $\nu(x)$
+\end_inset
+
+ be the normal vector at 
+\begin_inset Formula $x$
+\end_inset
+
+, we have 
+\begin_inset Formula 
+\[
+\int_{B(0,1)}\Delta f(x)dx=\int_{\partial B(0,1)}\left\langle \nabla f(x),\nu(x)\right\rangle dx\leq|\partial B(0,1)|\cdot L.
+\]
+
+\end_inset
+
+Hence, we have
+\begin_inset Formula 
+\[
+\E_{x\in B(0,1)}\|\nabla^{2}f(x)\|_{F}\leq\frac{|\partial B(0,1)|}{|B(0,1)|}L=nL.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To turn this into an algorithm, we need to develop it a bit further.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+\begin_inset CommandInset citation
+LatexCommand cite
+key "lee2017efficient"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:convex_almost_flat"
+
+\end_inset
+
+Let 
+\begin_inset Formula $B_{\infty}(x,r)=\{y:\ \norm{x-y}_{\infty}\leq r\}$
+\end_inset
+
+.
+ For any 
+\begin_inset Formula $0<r_{2}\leq r_{1}$
+\end_inset
+
+ and any convex function 
+\begin_inset Formula $f$
+\end_inset
+
+ defined on 
+\begin_inset Formula $B_{\infty}(x,r_{1}+r_{2})$
+\end_inset
+
+ with 
+\begin_inset Formula $\norm{\nabla f(z)}_{\infty}\leq L$
+\end_inset
+
+ for any 
+\begin_inset Formula $z\in B_{\infty}(x,r_{1}+r_{2})$
+\end_inset
+
+ we have 
+\begin_inset Formula 
+\[
+\E_{y\in B_{\infty}(x,r_{1})}\E_{z\in B_{\infty}(y,r_{2})}\norm{\nabla f(z)-g(y)}_{1}\leq n^{3/2}\frac{r_{2}}{r_{1}}L
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $g(y)$
+\end_inset
+
+ is the average of 
+\begin_inset Formula $\nabla f$
+\end_inset
+
+ over 
+\begin_inset Formula $B_{\infty}(y,r_{2})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $\omega_{i}(z)=\left\langle \nabla f(z)-g(y),e_{i}\right\rangle $
+\end_inset
+
+ for all 
+\begin_inset Formula $i\in[n]$
+\end_inset
+
+.
+ Then, we have that
+\begin_inset Formula 
+\[
+\int_{B_{\infty}(y,r_{2})}\norm{\nabla f(z)-g(y)}_{1}dz\leq\sum_{i}\int_{B_{\infty}(y,r_{2})}\left|\omega_{i}(z)\right|dz.
+\]
+
+\end_inset
+
+Since 
+\begin_inset Formula $\int_{B_{\infty}(y,r_{2})}\omega_{i}(z)dz=0$
+\end_inset
+
+, the Poincar
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+'e
+\end_layout
+
+\end_inset
+
+ inequality for a box (Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:box-poincare"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ below) shows that
+\begin_inset Formula 
+\begin{align*}
+\int_{B_{\infty}(y,r_{2})}\left|\omega_{i}(z)\right|dz & \leq r_{2}\int_{B_{\infty}(y,r_{2})}\norm{\nabla\omega_{i}(z)}_{2}dz\\
+ & =r_{2}\int_{B_{\infty}(y,r_{2})}\norm{\nabla^{2}f(z)e_{i}}_{2}dz\\
+\sum_{i}\int_{B_{\infty}(y,r_{2})}\left|\omega_{i}(z)\right|dz & \le\sqrt{n}r_{2}\int_{B_{\infty}(y,r_{2})}\norm{\nabla^{2}f(z)}_{F}dz
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Since 
+\begin_inset Formula $f$
+\end_inset
+
+ is convex, we have that 
+\begin_inset Formula $\norm{\nabla^{2}f(z)}_{F}\leq\tr\nabla^{2}f(z)=\Delta f(z)$
+\end_inset
+
+.
+ Therefore, we have
+\begin_inset Formula 
+\begin{align*}
+\E_{z\in B_{\infty}(y,r_{2})}\norm{\nabla f(z)-g(y)}_{1}dz & \leq\sqrt{n}r_{2}\E_{z\in B_{\infty}(y,r_{2})}\Delta f(z)dz\\
+ & =\sqrt{n}r_{2}\Delta h(y)
+\end{align*}
+
+\end_inset
+
+where 
+\begin_inset Formula $h=\frac{1}{(2r_{2})^{n}}f\ast\chi_{B_{\infty}(0,r_{2})}$
+\end_inset
+
+ where 
+\begin_inset Formula $\chi_{B_{\infty}(0,r_{2})}$
+\end_inset
+
+ is 
+\begin_inset Formula $1$
+\end_inset
+
+ on the set 
+\begin_inset Formula $B_{\infty}(0,r_{2})$
+\end_inset
+
+ and 
+\begin_inset Formula $0$
+\end_inset
+
+ on outside.
+\end_layout
+
+\begin_layout Proof
+Integrating by parts, we have that
+\begin_inset Formula 
+\[
+\int_{B_{\infty}(x,r_{1})}\Delta h(y)dy=\int_{\partial B_{\infty}(x,r_{1})}\left\langle \nabla h(y),n(y)\right\rangle dy
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\Delta h(y)=\sum_{i}\frac{d^{2}h}{dx_{i}^{2}}(y)$
+\end_inset
+
+ and 
+\begin_inset Formula $n(y)$
+\end_inset
+
+ is the normal vector on 
+\begin_inset Formula $\partial B_{\infty}(x,r_{1})$
+\end_inset
+
+ the boundary of the box 
+\begin_inset Formula $B_{\infty}(x,r_{1})$
+\end_inset
+
+, i.e.
+ standard basis vectors.
+ Since 
+\begin_inset Formula $f$
+\end_inset
+
+ is 
+\begin_inset Formula $L$
+\end_inset
+
+-Lipschitz with respect to 
+\begin_inset Formula $\norm{\cdot}_{\infty}$
+\end_inset
+
+ so is 
+\begin_inset Formula $h$
+\end_inset
+
+, i.e.
+ 
+\begin_inset Formula $\norm{\nabla h(z)}_{\infty}\leq L$
+\end_inset
+
+.
+ Hence, we have that
+\begin_inset Formula 
+\[
+\E_{y\in B_{\infty}(x,r_{1})}\Delta h(y)\leq\frac{1}{(2r_{1})^{n}}\int_{\partial B_{\infty}(x,r_{1})}\norm{\nabla h(y)}_{\infty}\norm{n(y)}_{1}dy\leq\frac{1}{(2r_{1})^{n}}\cdot2n(2r_{1})^{n-1}\cdot L=\frac{nL}{r_{1}}.
+\]
+
+\end_inset
+
+Therefore, we have that
+\begin_inset Formula 
+\[
+\E_{y\in B_{\infty}(x,r_{1})}\E_{z\in B_{\infty}(y,r_{2})}\norm{\nabla f(z)-g(y)}_{1}dz\leq n^{3/2}\frac{r_{2}}{r_{1}}L.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This lemma shows that we can implement an approximate gradient oracle (GRAD)
+ using an evaluation oracle (EVAL) even for non-differentiable functions.
+ By the involution property again, this completes all the reductions in
+ Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:rel"
+
+\end_inset
+
+.
+ This argument can also be used to construct an approximate separation oracle
+ for a convex set from a membership oracle.
+\end_layout
+
+\begin_layout Theorem
+Let 
+\begin_inset Formula $K$
+\end_inset
+
+ be a convex body s.t.
+ 
+\begin_inset Formula $B(0,1)\subseteq K\subseteq B(0,R)$
+\end_inset
+
+.
+ Then, for any 
+\begin_inset Formula $0<\eta\leq1/2$
+\end_inset
+
+, we can compute an 
+\begin_inset Formula $\eta$
+\end_inset
+
+-approximate separation oracle for K using 
+\begin_inset Formula $O(n\log(nR/\eta))$
+\end_inset
+
+ queries to a membership oracle for 
+\begin_inset Formula $K$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+By an approximate separation oracle we mean that either the queried point
+ 
+\begin_inset Formula $x$
+\end_inset
+
+ lies within distance 
+\begin_inset Formula $\eta$
+\end_inset
+
+ of 
+\begin_inset Formula $K$
+\end_inset
+
+, or the oracle provides a halfspace 
+\begin_inset Formula $c^{T}y\le c^{T}x+\eta$
+\end_inset
+
+ for all points 
+\begin_inset Formula $y\in K$
+\end_inset
+
+ at distance at least 
+\begin_inset Formula $\eta$
+\end_inset
+
+ from the boundary of 
+\begin_inset Formula $K$
+\end_inset
+
+.
+ We sketch the proof here.
+ To separate 
+\begin_inset Formula $x$
+\end_inset
+
+ from the set 
+\begin_inset Formula $K$
+\end_inset
+
+, we consider the convex function 
+\begin_inset Formula $h_{x}:K\rightarrow\R$
+\end_inset
+
+ defined as follows: 
+\begin_inset Formula 
+\[
+h_{x}(y)=-\max\left\{ \alpha:d+\alpha x\in K\right\} .
+\]
+
+\end_inset
+
+We then use Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:convex_almost_flat"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ to compute an approximate gradient of 
+\begin_inset Formula $h$
+\end_inset
+
+ at the origin.
+ For more details, including dependence on approximation parameters, see
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "lee2017efficient"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Exercise
+What is the best possible bound in Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:convex_almost_flat"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+?
+\end_layout
+
+\begin_layout Standard
+In the proof of Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:convex_almost_flat"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we used the following fact applied to the case when 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ is a cube.
+ In this case, the coefficient on the RHS is given by the Cheeger or KLS
+ constant of the cube and is 
+\begin_inset Formula $1$
+\end_inset
+
+.
+ This is an example of an isoperimetric inequality.
+ Such inequalities will play an important role later in this book.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:box-poincare"
+
+\end_inset
+
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+\begin_inset Formula $L^{1}$
+\end_inset
+
+-Poincar
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+'e
+\end_layout
+
+\end_inset
+
+ inequality
+\end_layout
+
+\end_inset
+
+ Let 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ be connected, bounded and open.
+ Then the following (best-possible) inequality holds for any smooth function
+ 
+\begin_inset Formula $f:\Omega\rightarrow\R$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\norm{f-\frac{1}{\left|\Omega\right|}\int_{\Omega}f(x)\,dx}_{L^{1}(\Omega)}\le\left(\sup_{S\subset\Omega}\frac{2|S||\Omega\setminus S|}{|\partial S||\Omega|}\right)\norm{\nabla f}_{L^{1}(\Omega)}
+\]
+
+\end_inset
+
+ where the supremum is over all subsets 
+\begin_inset Formula $S$
+\end_inset
+
+ s.t.
+ 
+\begin_inset Formula $S$
+\end_inset
+
+ and 
+\begin_inset Formula $\Omega\setminus S$
+\end_inset
+
+ are both connected.
+\end_layout
+
+\begin_layout Exercise
+Prove the inequality in Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:box-poincare"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ using the classical coarea formula.
+\end_layout
+
+\begin_layout Section
+Gradient from Evaluation via Auto Differentiation 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+here
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this section, we give yet another way to compute gradients using evaluations.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:auto_diff"
+
+\end_inset
+
+ Given a function 
+\begin_inset Formula $f:\R^{n}\rightarrow\R$
+\end_inset
+
+ represented by a circuit.
+ Suppose that 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ can be computed in time 
+\begin_inset Formula $\mathcal{T}$
+\end_inset
+
+ (namely, the circuit has 
+\begin_inset Formula $\mathcal{T}$
+\end_inset
+
+ edges).
+ Then we can compute 
+\begin_inset Formula $\nabla f(x)$
+\end_inset
+
+ in 
+\begin_inset Formula $O(\mathcal{T})$
+\end_inset
+
+ time.
+\end_layout
+
+\begin_layout Remark*
+In practice, the runtime is roughly like 
+\begin_inset Formula $2\mathcal{T}$
+\end_inset
+
+ assuming we have enough memory.
+ Check out google/jax for a modern implementation.
+\end_layout
+
+\begin_layout Remark*
+Before proving it formally, we first go through an example.
+ Consider the function 
+\begin_inset Formula $f(x_{1},x_{2})=\sin(x_{1}/x_{2})+x_{1}x_{2}$
+\end_inset
+
+.
+ We use 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ to denote both the input and all intermediate variables.
+ Then, we can write the program in 
+\begin_inset Formula $\mathcal{T}=6$
+\end_inset
+
+ steps:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $x_{1}=x_{1}$
+\end_inset
+
+, 
+\begin_inset Formula $x_{2}=x_{2}$
+\end_inset
+
+, 
+\begin_inset Formula $x_{3}=x_{1}/x_{2}$
+\end_inset
+
+, 
+\begin_inset Formula $x_{4}=\sin(x_{3})$
+\end_inset
+
+, 
+\begin_inset Formula $x_{5}=x_{1}x_{2}$
+\end_inset
+
+, Output 
+\begin_inset Formula $x_{6}=x_{4}+x_{5}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Note that each step involves computing
+\begin_inset Formula 
+\[
+x_{i}=f_{i}(\overset{\text{only few }x_{j}}{\overbrace{x_{1},\cdots,x_{i-1}}})
+\]
+
+\end_inset
+
+with simple functions 
+\begin_inset Formula $f_{i}$
+\end_inset
+
+ whose derivatives we know how to compute.
+ The key idea is compute 
+\begin_inset Formula $\frac{\partial f}{\partial x_{1}}$
+\end_inset
+
+ not just for the inputs 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $x_{2}$
+\end_inset
+
+, but also for all intermediate variables.
+ Here, we use 
+\begin_inset Formula $\frac{\partial f}{\partial x_{i}}$
+\end_inset
+
+ to denote the derivative of 
+\begin_inset Formula $f$
+\end_inset
+
+ with respect to 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ while fixing 
+\begin_inset Formula $x_{1},x_{2},\cdots,x_{i-1}$
+\end_inset
+
+ (and other inputs if 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ is an input).
+ For the example above, suppose we want to compute 
+\begin_inset Formula $\nabla f(\pi,2)$
+\end_inset
+
+, we can simply compute first compute all 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ from 
+\begin_inset Formula $i=1,2,\cdots,6$
+\end_inset
+
+, then 
+\begin_inset Formula $\frac{\partial f}{\partial x_{i}}$
+\end_inset
+
+ in the reverse order from 
+\begin_inset Formula $i=6,5,\cdots,1$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $x_{1}=\pi$
+\end_inset
+
+, 
+\begin_inset Formula $x_{2}=2$
+\end_inset
+
+, 
+\begin_inset Formula $x_{3}=\pi/2$
+\end_inset
+
+, 
+\begin_inset Formula $x_{4}=\sin(x_{3})=1$
+\end_inset
+
+, 
+\begin_inset Formula $x_{5}=x_{1}x_{2}=2\pi$
+\end_inset
+
+, 
+\begin_inset Formula $x_{6}=x_{4}+x_{5}=2\pi+1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\frac{\partial f}{\partial x_{6}}=1$
+\end_inset
+
+, 
+\begin_inset Formula $\frac{\partial f}{\partial x_{5}}=\frac{\partial\left(x_{4}+x_{5}\right)}{\partial x_{5}}=1$
+\end_inset
+
+, 
+\begin_inset Formula $\frac{\partial f}{\partial x_{4}}=\frac{\partial\left(x_{4}+x_{5}\right)}{\partial x_{4}}=1$
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\frac{\partial f}{\partial x_{3}}=\frac{\partial f}{\partial x_{4}}\frac{\partial x_{4}}{\partial x_{3}}=1\cdot\cos(x_{3})=0$
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\frac{\partial f}{\partial x_{2}}=\frac{\partial f}{\partial x_{3}}\frac{\partial x_{3}}{\partial x_{2}}+\frac{\partial f}{\partial x_{5}}\frac{\partial x_{5}}{\partial x_{2}}=0\cdot(-\frac{x_{1}}{x_{2}^{2}})+1\cdot x_{1}=\pi$
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\frac{\partial f}{\partial x_{1}}=\frac{\partial f}{\partial x_{3}}\frac{\partial x_{3}}{\partial x_{1}}+\frac{\partial f}{\partial x_{5}}\frac{\partial x_{5}}{\partial x_{1}}=0\cdot(\frac{1}{x_{2}})+1\cdot x_{2}=2$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The general case is similar.
+ See 
+\begin_inset Formula $\mathtt{AutoDifferentiation}$
+\end_inset
+
+ for the algorithm.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm2e}[H]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\mathtt{AutoDifferentiation}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetAlgoLined
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Input:
+\series default
+ a function 
+\begin_inset Formula $f(x_{1},x_{2},\cdots,x_{n})$
+\end_inset
+
+ given by 
+\begin_inset Formula $f(x_{1},x_{2},\cdots,x_{n})=x_{m}$
+\end_inset
+
+ and
+\begin_inset Formula 
+\[
+x_{i}=f_{i}(x_{1},\cdots,x_{i-1})\text{ for }i=n+1,n+2,\cdots,m
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+For{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $i=n+1,n+2,\cdots,m$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Compute 
+\begin_inset Formula $x_{i}=f_{i}(x_{1},\cdots,x_{i-1})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $\frac{\partial f}{\partial x_{m}}=1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+For{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $i=m-1,\cdots,1$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $L_{i}$
+\end_inset
+
+ be the set of 
+\begin_inset Formula $j$
+\end_inset
+
+ such that 
+\begin_inset Formula $f_{j}$
+\end_inset
+
+ depends on 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ (i.e.
+ 
+\begin_inset Formula $x_{j}$
+\end_inset
+
+ directly depends on 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+Compute 
+\begin_inset Formula $\frac{\partial f}{\partial x_{i}}=\sum_{j\in L_{i}}\frac{\partial f}{\partial x_{j}}\frac{\partial x_{j}}{\partial x_{i}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Proof of Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:auto_diff"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+We prove by induction that the formula 
+\begin_inset Formula $\frac{\partial f}{\partial x_{i}}=\sum_{j\in L_{i}}\frac{\partial f}{\partial x_{j}}\frac{\partial x_{j}}{\partial x_{i}}$
+\end_inset
+
+ is correct.
+ For the base case 
+\begin_inset Formula $i=m$
+\end_inset
+
+, we have 
+\begin_inset Formula $f=x_{m}$
+\end_inset
+
+ and hence 
+\begin_inset Formula $\frac{\partial f}{\partial x_{m}}=1$
+\end_inset
+
+.
+ For the induction, we let 
+\begin_inset Formula $L_{i}=\{x_{j_{1}},x_{j_{2}},\cdots,x_{j_{k}}\}$
+\end_inset
+
+.
+ If we fix variables 
+\begin_inset Formula $x_{1},x_{2},\cdots,x_{i-1}$
+\end_inset
+
+, then 
+\begin_inset Formula $f$
+\end_inset
+
+ is a function of 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ (and of other inputs if 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ is an input).
+ Since only 
+\begin_inset Formula $x_{j_{1}},x_{j_{2}},\cdots,x_{j_{k}}$
+\end_inset
+
+ depend on 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+, we can also view 
+\begin_inset Formula $f$
+\end_inset
+
+ as a function of 
+\begin_inset Formula $x_{j_{1}},x_{j_{2}},\cdots,x_{j_{k}}$
+\end_inset
+
+.
+ More precisely, we have
+\begin_inset Formula 
+\[
+f(x_{i})=f(x_{j_{1}}(x_{i},x_{j_{-1}}),x_{j_{2}}(x_{i},x_{j_{-2}}),\cdots,x_{j_{k}}(x_{i},x_{j_{-k}}))
+\]
+
+\end_inset
+
+where we use 
+\begin_inset Formula $x_{j_{-1}}$
+\end_inset
+
+ to denote the variables 
+\begin_inset Formula $x_{j_{2}},x_{j_{3}},\cdots,x_{j_{k}}$
+\end_inset
+
+.
+ By chain rule, we have
+\begin_inset Formula 
+\[
+\frac{\partial f}{\partial x_{i}}=\sum_{j\in L_{i}}\frac{\partial f}{\partial x_{j}}\frac{\partial x_{j}}{\partial x_{i}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+To bound the runtime, we define the computation graph 
+\begin_inset Formula $G$
+\end_inset
+
+ be a graph on 
+\begin_inset Formula $x_{1},x_{2},\cdots,x_{m}$
+\end_inset
+
+ such that 
+\begin_inset Formula $i\rightarrow j$
+\end_inset
+
+ if 
+\begin_inset Formula $f_{j}$
+\end_inset
+
+ depends on 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+.
+ Note that both the cost of computing 
+\begin_inset Formula $f$
+\end_inset
+
+ and the cost of our algorithm is 
+\begin_inset Formula $\Theta(m)$
+\end_inset
+
+ where 
+\begin_inset Formula $m$
+\end_inset
+
+ is the number of edges in 
+\begin_inset Formula $G$
+\end_inset
+
+.
+ This completes the proof.
+\end_layout
+
+\begin_layout Standard
+We note that Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:auto_diff"
+
+\end_inset
+
+ is surprising even for some simple explicit functions.
+\end_layout
+
+\begin_layout Corollary
+If we can compute 
+\begin_inset Formula $f(A)=\det A$
+\end_inset
+
+ exactly in time 
+\begin_inset Formula $\mathcal{T}$
+\end_inset
+
+, then we can compute 
+\begin_inset Formula $A^{-1}$
+\end_inset
+
+ exactly in 
+\begin_inset Formula $O(\mathcal{T})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Note that 
+\begin_inset Formula $\frac{\partial}{\partial A_{ij}}\det A=\text{adj}(A)_{ji}=\det A\cdot(A^{-1})_{ji}$
+\end_inset
+
+.
+ Hence, 
+\begin_inset Formula $\nabla\log\det A=A^{-\top}$
+\end_inset
+
+.
+ Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:auto_diff"
+
+\end_inset
+
+ shows that computing 
+\begin_inset Formula $A^{-\top}$
+\end_inset
+
+ can be done as fast as 
+\begin_inset Formula $\det A$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Gradient from Evaluation via Complex Step Differentiation
+\end_layout
+
+\begin_layout Standard
+Auto differentiation is great if the function can be computed exactly.
+ However, it does not work well if 
+\begin_inset Formula $f$
+\end_inset
+
+ can be only approximated or the computation of 
+\begin_inset Formula $f$
+\end_inset
+
+ involves too many variables.
+ For example, if 
+\begin_inset Formula $f$
+\end_inset
+
+ is the energy usage of some aircraft design.
+ Then, 
+\begin_inset Formula $f$
+\end_inset
+
+ can only be computed approximately via simulation and such computation
+ is memory extensive (if we need to store all intermediate variables) and
+ not exact.
+ To introduce complex step differentiation, we recall the formula of finite
+ difference:
+\end_layout
+
+\begin_layout Itemize
+Forward/Backward difference: 
+\begin_inset Formula $\frac{f(x\pm h)-f(x)}{\pm h}=f'(x)+hf''(\zeta)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Central difference: 
+\begin_inset Formula $\frac{f(x+h)-f(x-h)}{2h}=f'(x)+O(h^{2})f'''(\zeta)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Note that the error analysis above assumes no numerical error involved.
+ The formula involves subtracting two close numbers and dividing by a small
+ number and this step creates lots of error.
+ If we are computing 
+\begin_inset Formula $f$
+\end_inset
+
+ as floating point, we have
+\begin_inset Formula 
+\[
+\frac{(1\pm\epsilon)f(x\pm h)-(1\pm\epsilon)f(x)}{\pm h}=f'(x)+O(\frac{\epsilon}{h})f(\zeta_{1})+O(h)f''(\zeta_{2})
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{(1\pm\epsilon)f(x+h)-(1\pm\epsilon)f(x-h)}{2h}=f'(x)+O(\frac{\epsilon}{h})f(\zeta_{1})+O(h^{2})f'''(\zeta_{2})
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ is the floating point precision.
+ Suppose that both 
+\begin_inset Formula $f,f',f'',f'''$
+\end_inset
+
+ are bounded by constants and suppose 
+\begin_inset Formula $\epsilon=(10)^{-8}$
+\end_inset
+
+ (single precision floating point), then we should pick 
+\begin_inset Formula $h=\sqrt{\epsilon}$
+\end_inset
+
+ for the first case and 
+\begin_inset Formula $h=\epsilon^{1/3}$
+\end_inset
+
+ in the second case.
+ Hence, forward/backward difference gives only accuracy 
+\begin_inset Formula $\epsilon^{1/2}\approx(10)^{-4}$
+\end_inset
+
+ and the central difference gives only accuracy 
+\begin_inset Formula $\epsilon^{2/3}\approx(10)^{-5}$
+\end_inset
+
+.
+ In reality, the error will be larger because 
+\begin_inset Formula $f''$
+\end_inset
+
+ and 
+\begin_inset Formula $f'''$
+\end_inset
+
+ usually are large.
+\end_layout
+
+\begin_layout Standard
+The complex complex step differentiation uses the step
+\begin_inset Formula 
+\[
+\frac{\mathrm{Im}f(x+ih)}{h}\approx f'(x)+O(h^{2})f''(\zeta).
+\]
+
+\end_inset
+
+This formula works only for complex analytic functions, but it avoids subtractin
+g numbers.
+ In practice, this really allows us to compute 
+\begin_inset Formula $f'(x)$
+\end_inset
+
+ close to machine accuracy.
+ In general, ensuring algorithms give close to machine accuracy is important
+ because algorithms often stack on top of each others.
+\end_layout
+
+\begin_layout Section
+Optimization from Membership via Sampling
+\end_layout
+
+\begin_layout Standard
+In this chapter, we assumed the oracle can be computed exactly.
+ However, it is still open to determine the best runtime for reductions
+ between 
+\emph on
+noisy
+\emph default
+ oracles, where the oracle provides answers to within some bounded error.
+ In particular, the question about minimizing (approximately) convex functions
+ under noisy oracles is an active research area, and the gaps between the
+ lower bound and upper bound for many problems are still quite large (
+\begin_inset CommandInset citation
+LatexCommand cite
+key "belloni2015escaping,Feldman2015statistical,bubeck2016kernel"
+literal "true"
+
+\end_inset
+
+ based on 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Kalai2006simulated"
+literal "false"
+
+\end_inset
+
+).
+ We will see these methods in detail later.
+ For now, to put them in the context of oracles, we just discuss the following
+ theorem.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+OPT via sampling
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:OPTviaSampling"
+
+\end_inset
+
+ Let 
+\begin_inset Formula $F(x)=e^{-\alpha c^{T}x}1_{K}(x)$
+\end_inset
+
+ for some convex set 
+\begin_inset Formula $K$
+\end_inset
+
+ in 
+\begin_inset Formula $\R^{n}$
+\end_inset
+
+ and vector 
+\begin_inset Formula $c\in\R^{n}.$
+\end_inset
+
+ Suppose 
+\begin_inset Formula $\min_{x\in K}c^{T}x$
+\end_inset
+
+ is bounded.
+ Let x be a random sample from the distribution with density proportional
+ to 
+\begin_inset Formula $F(x)$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula 
+\[
+\E\left(c^{T}x\right)\le\min_{K}c^{T}x+\frac{n}{\alpha}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+We will show that the worst case is when the convex set 
+\begin_inset Formula $K$
+\end_inset
+
+ is an infinite cone.
+ WLOG assume that the minimum is at 
+\begin_inset Formula $x=0.$
+\end_inset
+
+ Replace every cross-section of 
+\begin_inset Formula $K$
+\end_inset
+
+ along 
+\begin_inset Formula $c$
+\end_inset
+
+ with an 
+\begin_inset Formula $(n-1)$
+\end_inset
+
+-dimensional ball of the same volume as the cross-section.
+ This does not affect the expectation.
+ Suppose the expectation is 
+\begin_inset Formula $\E(c^{T}x)=a$
+\end_inset
+
+.
+ Next, replace the subset of 
+\begin_inset Formula $K$
+\end_inset
+
+ with 
+\begin_inset Formula $c^{T}x\le a$
+\end_inset
+
+ with a cone whose base is the cross-section at 
+\begin_inset Formula $a$
+\end_inset
+
+ and apex is at zero.
+ This only makes the expectation larger.
+ Next, replace the subset of 
+\begin_inset Formula $K$
+\end_inset
+
+ on the right of 
+\begin_inset Formula $a$
+\end_inset
+
+ with the infinite conical extension of the cone to the left of 
+\begin_inset Formula $a$
+\end_inset
+
+.
+ Again, this expectation can only be higher.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+add figure!
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Now for this infinite cone, we compute, using 
+\begin_inset Formula $y=c^{T}x$
+\end_inset
+
+, 
+\begin_inset Formula 
+\begin{align*}
+\E\left(c^{T}x\right) & =\frac{\int_{0}^{\infty}ye^{-\alpha y}y^{n-1}\,dy}{\int_{0}^{\infty}e^{-\alpha y}y^{n-1}\,dy}\\
+ & =\frac{1}{\alpha}\frac{\int_{0}^{\infty}e^{-y}y^{n}\,dy}{\int_{0}^{\infty}e^{-y}y^{n-1}\,dy}\\
+ & =\frac{1}{\alpha}\frac{n!}{(n-1)!}=\frac{n}{\alpha}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The theorem says that if we sample according to 
+\begin_inset Formula $e^{-\alpha c^{T}x}$
+\end_inset
+
+ for 
+\begin_inset Formula $\alpha=n/\varepsilon$
+\end_inset
+
+, we will get an 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+-approximation to the optimum.
+ However, sampling from such a density is not trivial.
+ Instead, we will have to go through a sequence of overlapping distributions,
+ starting with one that is easy to sample and ending with a distribution
+ that is focused close to the minimum.
+ The complexity of sampling is polynomial in the dimension and in a suitable
+ notion of probabilistic distance between the starting distribution and
+ the target distribution.
+ The sampling algorithm only uses a membership (EVAL) oracle.
+\end_layout
+
+\begin_layout Exercise
+Extend Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:OPTviaSampling"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ by replacing 
+\begin_inset Formula $c^{T}x$
+\end_inset
+
+ with any convex function 
+\begin_inset Formula $f(x)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Problem*
+Given an approximately convex function 
+\begin_inset Formula $F$
+\end_inset
+
+ on unit ball such that 
+\begin_inset Formula $\max_{\norm x_{2}\leq1}|f(x)-F(x)|\leq\varepsilon/n$
+\end_inset
+
+ for some convex function 
+\begin_inset Formula $f$
+\end_inset
+
+, how efficiently can we find 
+\begin_inset Formula $x$
+\end_inset
+
+ in the unit ball such that 
+\begin_inset Formula $F(x)\leq\min_{\norm x_{2}\leq1}F(x)+O(\varepsilon)$
+\end_inset
+
+? The current fastest algorithm takes 
+\begin_inset Formula $O(n^{4.5}\log^{O(1)}(n/\varepsilon))$
+\end_inset
+
+ calls to the noisy EVAL oracle for 
+\begin_inset Formula $F$
+\end_inset
+
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Reference?
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\end_body
+\end_document

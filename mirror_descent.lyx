@@ -1,0 +1,2167 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{url}
+\usepackage{xargs}
+\usepackage[pdftex,dvipsnames]{xcolor}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\usepackage[lined,boxed,ruled,norelsize,algo2e]{algorithm2e}
+\usepackage[small,bf]{caption}
+\usepackage{tikz}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=red,
+    filecolor=red,
+    linkcolor=red,
+    urlcolor=red
+}
+
+
+
+\usepackage{fancybox}
+\usepackage{multirow}
+\usepackage{nicefrac}
+\usepackage{hyperref}
+
+
+\expandafter\def\expandafter\normalsize\expandafter{%
+    \normalsize
+%	    \setlength\abovedisplayskip{5pt}
+    \setlength\belowdisplayskip{5pt}
+    % \setlength\abovedisplayshortskip{5pt}
+    \setlength\belowdisplayshortskip{5pt}
+}
+
+\usepackage{tocloft}
+\setlength{\cftsecnumwidth}{2.8em}%
+
+%%%%%
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{fix-cm}
+\makeatletter
+\newcommand\HUGE{\@setfontsize\Huge{38}{47}}
+\makeatother
+
+\titleclass{\part}{top}
+\titleformat{\part}[display]
+  {\normalfont\HUGE\sffamily}{\partname\ \thepart}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\HUGE\bfseries\filleft}
+%\titlespacing*{\part} {0pt}{20pt}{40pt}
+\titlespacing*{\part} {0pt}{30pt}{50pt}
+
+% chapter heading formatting
+\titleformat{\chapter}[display]
+  {\normalfont\LARGE\sffamily}{\chaptertitlename\ \thechapter}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\LARGE\bfseries\filleft}
+% section heading formatting
+\titleformat{\section}
+  {\normalfont\Large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesection}{0.5em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesubsection}{0.5em}{}
+\titlespacing*{\chapter} {0pt}{20pt}{30pt}
+
+% header/footer
+\fancyhf{}
+\fancyhead[ER]{\footnotesize\sffamily\leftmark}
+\fancyhead[OL]{\footnotesize\sffamily\nouppercase\rightmark}
+\fancyhead[EL,OR]{\bfseries\thepage}
+
+\setcounter{secnumdepth}{3}
+\end_preamble
+\options openany
+\use_default_options false
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+theorems-sec
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding default
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 0
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic true
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip 0.1in
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+In this chapter, we study techniques that further exploit the geometry of
+ convex functions and associated norms.
+ Many of these techniques are effective in practice for large scale problems.
+\end_layout
+
+\begin_layout Section
+Mirror Descent
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:mirror_descent"
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+I should mention some geometry is bad..i.e.
+ no strongly convex map...
+\end_layout
+
+\begin_layout Plain Layout
+Also, optimal mirror map is given by some martingale
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The cutting plane method is well-suited for minimizing non-smooth convex
+ functions with high accuracy.
+ However, its relatively large polynomial time complexity and quadratic
+ space requirement are not favorable for large scale problems.
+ Here we discuss a different approach to minimize a non-smooth function
+ with low accuracy.
+\end_layout
+
+\begin_layout Subsection
+Subgradient method (a.k.a.
+ projected GD)
+\end_layout
+
+\begin_layout Standard
+In this section, we consider the constrained non-smooth minimization problem
+ 
+\begin_inset Formula $\min_{x\in\mathcal{D}}f(x)$
+\end_inset
+
+.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Mention what difficulty to minimize a non-smooth function and explain the
+ change made to deal with the non-smooth settings.
+ highlight that the subgradient is not guaranteed to converge
+\end_layout
+
+\end_inset
+
+Recall how to define gradient for non-smooth functions:
+\end_layout
+
+\begin_layout Definition
+For any convex function 
+\begin_inset Formula $f$
+\end_inset
+
+, we define 
+\begin_inset Formula $\partial f(x)$
+\end_inset
+
+ be the set of vectors 
+\begin_inset Formula $g$
+\end_inset
+
+ such that
+\begin_inset Formula 
+\[
+f(y)\geq f(x)+g^{\top}(y-x)\text{ for all }y\in\Rn.
+\]
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm2e}[H]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\mathtt{SubgradientMethod}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetAlgoLined
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Input:
+\series default
+ Initial point 
+\begin_inset Formula $x^{(0)}\in\Rn$
+\end_inset
+
+, step size 
+\begin_inset Formula $h>0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+For{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $k=0,1,\cdots,T-2$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Pick any 
+\begin_inset Formula $g^{(k)}\in\partial f(x^{(k)})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $y^{(k+1)}\leftarrow x^{(k)}-h\cdot g^{(k)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $x^{(k+1)}\leftarrow\pi_{\mathcal{D}}(y^{(k+1)})$
+\end_inset
+
+ where 
+\begin_inset Formula $\pi_{\mathcal{D}}(y)=arg\min_{x\in\mathcal{D}}\|x-y\|_{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Return
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\frac{1}{T}\sum_{k=0}^{T-1}x^{(k)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note that we return the average of all iterates, rather than the last iterate,
+ as the average is better behaved in the worst case.
+ To analyze the algorithm, we first need the following Pythagorean theorem.
+ This shows that when we project a point to a convex set, we get closer
+ to any point in the convex set, and how much closer depends on how much
+ we move.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:Pythagorean"
+
+\end_inset
+
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Pythagorean Theorem
+\end_layout
+
+\end_inset
+
+Given a convex set 
+\begin_inset Formula $\mathcal{D}$
+\end_inset
+
+ and a point 
+\begin_inset Formula $y$
+\end_inset
+
+, let 
+\begin_inset Formula $\pi(y)=arg\min_{x\in\mathcal{D}}\|x-y\|_{2}$
+\end_inset
+
+.
+ For any 
+\begin_inset Formula $z\in\mathcal{D}$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+\|z-\pi(y)\|_{2}^{2}+\|\pi(y)-y\|_{2}^{2}\leq\|z-y\|_{2}^{2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $h(t)=\|(\pi(y)+t(z-\pi(y)))-y\|^{2}$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $\pi(y)$
+\end_inset
+
+ is the closest point to 
+\begin_inset Formula $y$
+\end_inset
+
+, 
+\begin_inset Formula $h(t)$
+\end_inset
+
+ must be minimized at 
+\begin_inset Formula $t=0$
+\end_inset
+
+.
+ So, we have that 
+\begin_inset Formula $h'(0)\geq0$
+\end_inset
+
+.
+ i.e.,
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula 
+\[
+(\pi(y)-y)^{\top}(z-\pi(y))\geq0.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+(If 
+\begin_inset Formula $y$
+\end_inset
+
+ is in the set, then the statement is trivial since 
+\begin_inset Formula $\pi(y)=y$
+\end_inset
+
+.
+ Otherwise, since 
+\begin_inset Formula $\pi(y)$
+\end_inset
+
+ is the closest point in 
+\begin_inset Formula ${\cal D}$
+\end_inset
+
+ to 
+\begin_inset Formula $y$
+\end_inset
+
+, the hyperplane normal to 
+\begin_inset Formula $\pi(y)-y$
+\end_inset
+
+ through 
+\begin_inset Formula $\pi(y)$
+\end_inset
+
+ separates 
+\begin_inset Formula $y$
+\end_inset
+
+ from 
+\begin_inset Formula $z$
+\end_inset
+
+.).
+ Hence,
+\begin_inset Formula 
+\begin{align*}
+\|z-y\|_{2}^{2} & =\|z-\pi(y)+\pi(y)-y\|_{2}^{2}\\
+ & =\|z-\pi(y)\|_{2}^{2}+2(z-\pi(y))^{\top}(\pi(y)-y)+\|\pi(y)-y\|_{2}^{2}\\
+ & \geq\|z-\pi(y)\|_{2}^{2}+\|\pi(y)-y\|_{2}^{2}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now, we are ready to analyze the subgradient method.
+ It basically involves tracking the squared distance to the optimum, 
+\begin_inset Formula $\|x^{(k+1)}-x^{*}\|_{2}^{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:projected_gradient_descent"
+
+\end_inset
+
+Let 
+\begin_inset Formula $f$
+\end_inset
+
+ be a convex function that is 
+\begin_inset Formula $G$
+\end_inset
+
+-Lipschitz in 
+\begin_inset Formula $\ell_{2}$
+\end_inset
+
+ norm.
+ After 
+\begin_inset Formula $T$
+\end_inset
+
+ steps, the subgradient method outputs a point 
+\begin_inset Formula $x$
+\end_inset
+
+ such that
+\begin_inset Formula 
+\[
+f(x)\leq f(x^{*})+\frac{\|x^{(0)}-x^{*}\|_{2}^{2}}{2hT}+\frac{h}{2}G^{2}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ is any point that minimizes 
+\begin_inset Formula $f$
+\end_inset
+
+ over 
+\begin_inset Formula ${\cal D}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Remark*
+If the distance 
+\begin_inset Formula $\|x^{(0)}-x^{*}\|$
+\end_inset
+
+ and the Lipschitz constant 
+\begin_inset Formula $G$
+\end_inset
+
+ are known, we can pick 
+\begin_inset Formula $h=\frac{\|x^{(0)}-x^{*}\|_{2}}{G\sqrt{T}}$
+\end_inset
+
+ and get
+\begin_inset Formula 
+\[
+f(x)\leq f(x^{*})+\frac{G\cdot\|x^{(0)}-x^{*}\|_{2}}{\sqrt{T}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ be any point that minimizes 
+\begin_inset Formula $f$
+\end_inset
+
+.
+ Then, we have
+\begin_inset Formula 
+\begin{align*}
+\|x^{(k+1)}-x^{*}\|_{2}^{2} & =\|\pi_{\mathcal{D}}(y^{(k+1)})-x^{*}\|_{2}^{2}\\
+ & \leq\|y^{(k+1)}-x^{*}\|_{2}^{2}\\
+ & =\|x^{(k)}-hg^{(k)}-x^{*}\|_{2}^{2}\\
+ & =\|x^{(k)}-x^{*}\|_{2}^{2}-2h\left\langle g^{(k)},x^{(k)}-x^{*}\right\rangle +h^{2}\|g^{(k)}\|_{2}^{2}.
+\end{align*}
+
+\end_inset
+
+where we used Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:Pythagorean"
+
+\end_inset
+
+ in the inequality.
+ Using the definition of subgradient, we have that
+\begin_inset Formula 
+\[
+f(x^{*})\geq f(x^{(k)})+\left\langle g^{(k)},x^{*}-x^{(k)}\right\rangle .
+\]
+
+\end_inset
+
+Therefore, we have that
+\begin_inset Formula 
+\begin{align*}
+\|x^{(k+1)}-x^{*}\|_{2}^{2} & \leq\|x^{(k)}-x^{*}\|_{2}^{2}-2h\cdot(f(x^{(k)})-f(x^{*}))+h^{2}\|g^{(k)}\|_{2}^{2}\\
+ & \leq\|x^{(k)}-x^{*}\|_{2}^{2}-2h\cdot(f(x^{(k)})-f(x^{*}))+h^{2}G^{2}.
+\end{align*}
+
+\end_inset
+
+Note that this equation shows that if the error 
+\begin_inset Formula $f(x^{(k)})-f(x^{*})$
+\end_inset
+
+ is larger, then we move faster towards the optimum.
+ Rearranging the terms, we have
+\begin_inset Formula 
+\[
+f(x^{(k)})-f(x^{*})\leq\frac{1}{2h}\left(\|x^{(k)}-x^{*}\|_{2}^{2}-\|x^{(k+1)}-x^{*}\|_{2}^{2}\right)+\frac{h}{2}G^{2}.
+\]
+
+\end_inset
+
+We sum over all iterations, to get
+\begin_inset Formula 
+\begin{align*}
+\frac{1}{T}\sum_{k=0}^{T-1}(f(x^{(k)})-f(x^{*})) & \leq\frac{1}{T}\cdot\frac{1}{2h}(\|x^{(0)}-x^{*}\|_{2}^{2}-\|x^{(T)}-x^{*}\|_{2}^{2})+\frac{h}{2}G^{2}\\
+ & \leq\frac{\|x^{(0)}-x^{*}\|_{2}^{2}}{2hT}+\frac{h}{2}G^{2}.
+\end{align*}
+
+\end_inset
+
+The result follows from observing that for a convex function, 
+\begin_inset Formula 
+\[
+f\left(\frac{1}{T}\sum_{k=0}^{T-1}x^{(k)}\right)-f(x^{*})\leq\frac{1}{T}\sum_{k=0}^{T-1}(f(x^{(k)})-f(x^{*})).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Intuition of Mirror Descent
+\end_layout
+
+\begin_layout Standard
+Consider using the subgradient method above to minimize 
+\begin_inset Formula $f(x)=\sum_{i}|x_{i}|$
+\end_inset
+
+ over the unit ball 
+\begin_inset Formula $B(0,1)$
+\end_inset
+
+.
+ The subgradient of 
+\begin_inset Formula $f$
+\end_inset
+
+ is given by 
+\begin_inset Formula $\text{sign}(x)$
+\end_inset
+
+ (assuming 
+\begin_inset Formula $x_{i}\neq0$
+\end_inset
+
+ for all 
+\begin_inset Formula $i$
+\end_inset
+
+).
+ Therefore, we have that the Lipshitz constant is bounded by the Euclidean
+ norm of a vector with 
+\begin_inset Formula $\pm1$
+\end_inset
+
+ entries, i.e., 
+\begin_inset Formula $G=\sqrt{n}$
+\end_inset
+
+ and the set is contained in a ball of radius 
+\begin_inset Formula $R=1$
+\end_inset
+
+.
+ Hence, the convergence rate is 
+\begin_inset Formula $\sqrt{\frac{n}{k}}$
+\end_inset
+
+ which grows with the dimension.
+ Intuitively, the dimension dependence comes from the fact that we must
+ take a tiny step size to avoid affecting all 
+\begin_inset Formula $n$
+\end_inset
+
+ variables.
+ For example, if we take a constant step size 
+\begin_inset Formula $h$
+\end_inset
+
+ and start at the point 
+\begin_inset Formula $x=(1,\frac{1}{n},\frac{1}{n},\cdots,\frac{1}{n})$
+\end_inset
+
+, then we will get a point with 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ constant in all directions 
+\begin_inset Formula $i\neq1$
+\end_inset
+
+, and this increases the function 
+\begin_inset Formula $f$
+\end_inset
+
+ dramatically from 
+\begin_inset Formula $\Theta(1)$
+\end_inset
+
+ to 
+\begin_inset Formula $\Theta(nh)$
+\end_inset
+
+.
+ Therefore, to get constant error, we need to take step size 
+\begin_inset Formula $h\le\frac{1}{n}$
+\end_inset
+
+ and hence we need 
+\begin_inset Formula $\Omega(n)$
+\end_inset
+
+ iterations.
+\end_layout
+
+\begin_layout Standard
+Conceptually, the step 
+\begin_inset Formula $x=x-\eta g$
+\end_inset
+
+ does not make sense either.
+ Imagine the problem is infinitely dimensional.
+ Note that 
+\begin_inset Formula $f(x)<+\infty$
+\end_inset
+
+ for any 
+\begin_inset Formula 
+\[
+x\in\ell_{1}=\{x\in\R^{\mathbb{N}}:\sum_{i}|x_{i}|<\infty\}.
+\]
+
+\end_inset
+
+On the other hand, its gradient 
+\begin_inset Formula $g$
+\end_inset
+
+ lives in 
+\begin_inset Formula $\ell_{\infty}$
+\end_inset
+
+ space; the dual space of 
+\begin_inset Formula $\ell_{1}$
+\end_inset
+
+ is 
+\begin_inset Formula $\ell_{\infty}$
+\end_inset
+
+ (in general, 
+\begin_inset Formula $\ell_{p}$
+\end_inset
+
+ is dual to 
+\begin_inset Formula $\ell_{q}$
+\end_inset
+
+ where 
+\begin_inset Formula $(1/p)+(1/q)=1$
+\end_inset
+
+).
+ Since 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $g$
+\end_inset
+
+ are not in the same space, the term 
+\begin_inset Formula $x-\eta g$
+\end_inset
+
+ does not make sense.
+ More precisely, we have the following tautology (directly follows from
+ the definition of dual space, namely the set of all linear maps in the
+ original space).
+\end_layout
+
+\begin_layout Fact
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:grad_dual"
+
+\end_inset
+
+Given any Banach space 
+\begin_inset Formula $\mathcal{D}$
+\end_inset
+
+ over the reals and a continuously differentiable function 
+\begin_inset Formula $f$
+\end_inset
+
+ from 
+\begin_inset Formula $\mathcal{D}$
+\end_inset
+
+ to 
+\begin_inset Formula $\R$
+\end_inset
+
+, its gradient 
+\begin_inset Formula $\nabla f(x)\in\mathcal{D}^{*}$
+\end_inset
+
+ for any 
+\begin_inset Formula $x$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+In general, if the function 
+\begin_inset Formula $f$
+\end_inset
+
+ is on the primal space 
+\begin_inset Formula $\mathcal{D}$
+\end_inset
+
+, then the gradient 
+\begin_inset Formula $g$
+\end_inset
+
+ lives in the dual space 
+\begin_inset Formula $\mathcal{D}^{*}$
+\end_inset
+
+.
+ Therefore, we need to map 
+\begin_inset Formula $x$
+\end_inset
+
+ from the primal space 
+\begin_inset Formula $\mathcal{D}$
+\end_inset
+
+ to the dual space 
+\begin_inset Formula $\mathcal{D}^{*}$
+\end_inset
+
+, update its position, then map the point back to the original space 
+\begin_inset Formula $\mathcal{D}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+In fact, Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:grad_dual"
+
+\end_inset
+
+ gives us one such map, 
+\begin_inset Formula $\nabla f$
+\end_inset
+
+.
+ Consider the following algorithm: Starting at 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ We use 
+\begin_inset Formula $\nabla f(x)$
+\end_inset
+
+ to map 
+\begin_inset Formula $x$
+\end_inset
+
+ to the dual space 
+\begin_inset Formula $y=\nabla f(x)$
+\end_inset
+
+.
+ Then, we apply the gradient step on the dual 
+\begin_inset Formula $y^{\new}=y-\nabla f(x)$
+\end_inset
+
+ and map it back to the primal space, namely finding 
+\begin_inset Formula $x^{\new}$
+\end_inset
+
+ such that 
+\begin_inset Formula $\nabla f(x^{\new})=y^{\new}$
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula $y^{\new}=0$
+\end_inset
+
+ and hence 
+\begin_inset Formula $x^{\new}$
+\end_inset
+
+ is exactly a minimizer of 
+\begin_inset Formula $f$
+\end_inset
+
+.
+ So, if we can map it back, this algorithm solves the problem in one step.
+ Unfortunately, the task of mapping it back is exactly our original problem.
+\end_layout
+
+\begin_layout Standard
+Instead of using the same 
+\begin_inset Formula $f$
+\end_inset
+
+, mirror descent uses some other convex function 
+\begin_inset Formula $\Phi$
+\end_inset
+
+, called the 
+\emph on
+mirror map
+\emph default
+.
+ For constrained problems, the mirror map may not bring the point back to
+ a point in 
+\begin_inset Formula $\mathcal{D}$
+\end_inset
+
+.
+ Naively, one may consider the algorithm 
+\begin_inset Formula 
+\begin{align*}
+\nabla\Phi(y^{(t+1)}) & =\nabla\Phi(x^{(t)})-h\cdot\nabla f(x^{(t)}),\\
+x^{(t+1)} & =\arg\min_{x\in\mathcal{D}}\|x-y^{(t+1)}\|_{2}.
+\end{align*}
+
+\end_inset
+
+Note that the first step of finding 
+\begin_inset Formula $y^{(t+1)}$
+\end_inset
+
+ involves solving an optimization problem.
+ We will show how to do this (See 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:mirror_descent"
+
+\end_inset
+
+) but not for this version.
+ This algorithm does not consider the geometry of the function 
+\begin_inset Formula $\Phi$
+\end_inset
+
+.
+ Instead we should measure the distance according to 
+\begin_inset Formula $\Phi$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Definition
+For any strictly convex function 
+\begin_inset Formula $\Phi$
+\end_inset
+
+, we define the Bregman divergence as
+\begin_inset Formula 
+\[
+D_{\Phi}(y,x)=\Phi(y)-\Phi(x)-\left\langle \nabla\Phi(x),y-x\right\rangle .
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+Note that 
+\begin_inset Formula $D_{\Phi}(y,x)$
+\end_inset
+
+ is the error of the first order Taylor expansion of 
+\begin_inset Formula $\Phi$
+\end_inset
+
+ at 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ Due to the convexity of 
+\begin_inset Formula $\Phi$
+\end_inset
+
+, we have that 
+\begin_inset Formula $D_{\Phi}(y,x)\geq0$
+\end_inset
+
+.
+ Also, we note that 
+\begin_inset Formula $D_{\Phi}(y,x)$
+\end_inset
+
+ is convex in 
+\begin_inset Formula $y$
+\end_inset
+
+, but not necessarily in 
+\begin_inset Formula $x$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+\begin_inset Formula $D_{\Phi}(y,x)=\|y-x\|^{2}$
+\end_inset
+
+ for 
+\begin_inset Formula $\Phi(x)=\|x\|^{2}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $D_{\Phi}(y,x)=\sum_{i}y_{i}\log\frac{y_{i}}{x_{i}}-\sum y_{i}+\sum x_{i}$
+\end_inset
+
+ for 
+\begin_inset Formula $\Phi(x)=\sum x_{i}\log x_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm2e}[H]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\mathtt{MirrorDescent}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetAlgoLined
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Input:
+\series default
+ Initial point 
+\begin_inset Formula $x^{(0)}=\arg\min_{x\in\mathcal{D}}\Phi(x)$
+\end_inset
+
+, step size 
+\begin_inset Formula $h>0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+For{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $k=0,1,\cdots,T-2$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Pick any 
+\begin_inset Formula $g^{(k)}\in\partial f(x^{(k)})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tcp{As shown in 
+\end_layout
+
+\end_inset
+
+(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:mirror_descent"
+
+\end_inset
+
+)
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+, the next 2 steps can be implemented by an optimization over 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $D_{\Phi}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+.}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Find 
+\begin_inset Formula $y^{(k+1)}$
+\end_inset
+
+ such that 
+\begin_inset Formula $\nabla\Phi(y^{(k+1)})=\nabla\Phi(x^{(k)})-h\cdot g^{(k)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $x^{(k+1)}\in\pi_{\mathcal{D}}^{\Phi}(y^{(k+1)})$
+\end_inset
+
+ where 
+\begin_inset Formula $\pi_{\mathcal{D}}^{\Phi}(y)=\arg\min_{x\in\mathcal{D}}D_{\Phi}(x,y)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Return
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\frac{1}{T}\sum_{k=0}^{T-1}x^{(k)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The Mirror Descent step can be written as follows.
+ In the second step below, we use the fact that the optimization is only
+ over 
+\begin_inset Formula $x$
+\end_inset
+
+ (and hence all terms in 
+\begin_inset Formula $y$
+\end_inset
+
+ can be ignored):
+\begin_inset Formula 
+\begin{align}
+x^{(k+1)} & =\arg\min_{x\in\mathcal{D}}D_{\Phi}(x,y^{(k+1)})\nonumber \\
+ & =\arg\min_{x\in\mathcal{D}}\Phi(x)-\Phi(y^{(k+1)})-\nabla\Phi(y^{(k+1)})^{\top}(x-y^{(k+1)})\nonumber \\
+ & =\arg\min_{x\in\mathcal{D}}\Phi(x)-\nabla\Phi(y^{(k+1)})^{\top}x\nonumber \\
+ & =\arg\min_{x\in\mathcal{D}}\Phi(x)-\nabla\Phi(x^{(k)})^{\top}x+hg^{(k)\top}x\nonumber \\
+ & =\arg\min_{x\in\mathcal{D}}hg^{(k)\top}x+D_{\Phi}(x,x^{(k)}).\label{eq:mirror_descent}
+\end{align}
+
+\end_inset
+
+Note that this is a natural generalization of 
+\begin_inset Formula $x^{(k+1)}=\arg\min_{x\in\mathcal{D}}hg^{(k)\top}x+\|x-x^{(k)}\|^{2}.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Analysis of Mirror Descent
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:Pythagorean2"
+
+\end_inset
+
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Pythagorean Theorem
+\end_layout
+
+\end_inset
+
+Given a convex set 
+\begin_inset Formula $\mathcal{D}$
+\end_inset
+
+ and a point 
+\begin_inset Formula $y$
+\end_inset
+
+, let 
+\begin_inset Formula $\pi(y)=\arg\min D_{\Phi}(x,y)$
+\end_inset
+
+.
+ For any 
+\begin_inset Formula $z\in\mathcal{D}$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+D_{\Phi}(z,\pi(y))+D_{\Phi}(\pi(y),y)\leq D_{\Phi}(z,y).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $h(t)=D_{\Phi}(\pi(y)+t(z-\pi(y)),y)$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $h(t)$
+\end_inset
+
+ is minimized at 
+\begin_inset Formula $t=0$
+\end_inset
+
+, we have that 
+\begin_inset Formula $h'(0)\geq0$
+\end_inset
+
+.
+ Hence, we have
+\begin_inset Formula 
+\[
+h'(0)=(\nabla\Phi(\pi(y))-\nabla\Phi(y))^{\top}(z-\pi(y))\geq0.
+\]
+
+\end_inset
+
+Hence,
+\begin_inset Formula 
+\begin{align*}
+D_{\Phi}(z,y) & =D_{\Phi}(z,\pi(y))+2(z-\pi(y))^{\top}(\nabla\Phi(\pi(y))-\nabla\Phi(y))+D_{\Phi}(\pi(y),y)\\
+ & \geq D_{\Phi}(z,\pi(y))+D_{\Phi}(\pi(y),y).
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:mirror_descent"
+
+\end_inset
+
+Let 
+\begin_inset Formula $f$
+\end_inset
+
+ be a 
+\begin_inset Formula $G$
+\end_inset
+
+-Lipschitz convex function on 
+\begin_inset Formula ${\cal D}$
+\end_inset
+
+ with respect to some norm 
+\begin_inset Formula $\|\cdot\|$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $\Phi$
+\end_inset
+
+ be a 
+\begin_inset Formula $\rho$
+\end_inset
+
+-strongly convex function on 
+\begin_inset Formula $\mathcal{D}$
+\end_inset
+
+ with respect to 
+\begin_inset Formula $\|\cdot\|$
+\end_inset
+
+ with squared diameter 
+\begin_inset Formula $R^{2}=\sup_{x\in\mathcal{D}}\Phi(x)-\Phi(x^{(0)})$
+\end_inset
+
+.
+ Then, mirror descent outputs 
+\begin_inset Formula $x$
+\end_inset
+
+ such that
+\begin_inset Formula 
+\[
+f(x)-\min_{x}f(x)\leq\frac{R^{2}}{hT}+\frac{h}{2\rho}G^{2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+We say a function 
+\begin_inset Formula $f$
+\end_inset
+
+ is 
+\begin_inset Formula $\rho$
+\end_inset
+
+ strongly convex with respect to the norm 
+\begin_inset Formula $\|\cdot\|$
+\end_inset
+
+ if for any 
+\begin_inset Formula $x,y$
+\end_inset
+
+, we have 
+\begin_inset Formula 
+\[
+f(y)\geq f(x)+\left\langle \nabla f(x),y-x\right\rangle +\frac{\rho}{2}\|y-x\|^{2}.
+\]
+
+\end_inset
+
+The usual strong convexity is with respect to the Euclidean norm.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+Picking 
+\begin_inset Formula $h=\frac{R}{G}\sqrt{\frac{2\rho}{T}}$
+\end_inset
+
+, we get the rate 
+\begin_inset Formula $f(x)\leq\min_{x}f(x)+GR\sqrt{\frac{2}{\rho T}}.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+This proof is a complete 
+\begin_inset Quotes eld
+\end_inset
+
+mirror
+\begin_inset Quotes erd
+\end_inset
+
+ of the proof in Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:projected_gradient_descent"
+
+\end_inset
+
+.
+\begin_inset Formula 
+\begin{align*}
+D_{\Phi}(x^{*},x^{(k+1)}) & \leq D_{\Phi}(x^{*},y^{(k+1)})-D_{\Phi}(x^{(k+1)},y^{(k+1)})\\
+ & =D_{\Phi}(x^{*},x^{(k)})+(x^{*}-x^{(k)})^{\top}(\nabla\Phi(x^{(k)})-\nabla\Phi(y^{(k+1)}))+D_{\Phi}(x^{(k)},y^{(k+1)})-D_{\Phi}(x^{(k+1)},y^{(k+1)})\\
+ & =D_{\Phi}(x^{*},x^{(k)})-h\cdot\left\langle g^{(k)},x^{(k)}-x^{*}\right\rangle +D_{\Phi}(x^{(k)},y^{(k+1)})-D_{\Phi}(x^{(k+1)},y^{(k+1)})
+\end{align*}
+
+\end_inset
+
+where we used Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:Pythagorean2"
+
+\end_inset
+
+ in the inequality.
+ Using the definition of subgradient, we have that
+\begin_inset Formula 
+\[
+f(x^{*})\geq f(x^{(k)})+\left\langle g^{(k)},x^{*}-x^{(k)}\right\rangle .
+\]
+
+\end_inset
+
+Therefore, we have that
+\begin_inset Formula 
+\begin{align*}
+D_{\Phi}(x^{*},x^{(k+1)}) & \leq D_{\Phi}(x^{*},x^{(k)})-h\cdot(f(x^{(k)})-f(x^{*}))+D_{\Phi}(x^{(k)},y^{(k+1)})-D_{\Phi}(x^{(k+1)},y^{(k+1)}).
+\end{align*}
+
+\end_inset
+
+Next we note that
+\begin_inset Formula 
+\begin{align*}
+ & D_{\Phi}(x^{(k)},y^{(k+1)})-D_{\Phi}(x^{(k+1)},y^{(k+1)})\\
+= & \Phi(x^{(k)})-\Phi(x^{(k+1)})-\nabla\Phi(y^{(k+1)})^{\top}(x^{(k)}-x^{(k+1)})\\
+\leq & \left\langle \nabla\Phi(x^{(k)})-\nabla\Phi(y^{(k+1)}),x^{(k)}-x^{(k+1)}\right\rangle -\frac{\rho}{2}\|x^{(k)}-x^{(k+1)}\|^{2}\\
+= & h\cdot\left\langle g^{(k)},x^{(k)}-x^{(k+1)}\right\rangle -\frac{\rho}{2}\|x^{(k)}-x^{(k+1)}\|^{2}\\
+\leq & hG\|x^{(k)}-x^{(k+1)}\|-\frac{\rho}{2}\|x^{(k)}-x^{(k+1)}\|^{2}\\
+\leq & \frac{(hG)^{2}}{2\rho}.
+\end{align*}
+
+\end_inset
+
+Hence, we have
+\begin_inset Formula 
+\begin{align*}
+D_{\Phi}(x^{*},x^{(k+1)}) & \leq D_{\Phi}(x^{*},x^{(k)})-h\cdot(f(x^{(k)})-f(x^{*}))+\frac{(hG)^{2}}{2\rho}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Rearranging the terms, we have
+\begin_inset Formula 
+\[
+f(x^{(k)})-f(x^{*})\leq\frac{1}{h}\left(D_{\Phi}(x^{*},x^{(k)})-D_{\Phi}(x^{*},x^{(k+1)})\right)+\frac{hG^{2}}{2\rho}.
+\]
+
+\end_inset
+
+Summing over all iterations, we have
+\begin_inset Formula 
+\begin{align*}
+\frac{1}{T}\sum_{k=0}^{T-1}(f(x^{(k)})-f(x^{*})) & \leq\frac{1}{T}\cdot\frac{1}{h}(D_{\Phi}(x^{*},x^{(0)})-D_{\Phi}(x^{*},x^{(T)}))+\frac{h}{2\rho}G^{2}\\
+ & \leq\frac{1}{hT}D_{\Phi}(x^{*},x^{(0)})+\frac{h}{2\rho}G^{2}\\
+ & \leq\frac{R^{2}}{hT}+\frac{h}{2\rho}G^{2}.
+\end{align*}
+
+\end_inset
+
+Using the fact that 
+\begin_inset Formula $x^{(0)}$
+\end_inset
+
+ was chosen as a minimum of 
+\begin_inset Formula $\Phi(x)$
+\end_inset
+
+, 
+\begin_inset Formula 
+\begin{align*}
+D_{\Phi}(x^{*},x^{(0)})= & (\Phi(x^{*})-\Phi(x^{(0)})-\left\langle \nabla\Phi(x^{(0)}),x^{*}-x^{(0)}\right\rangle )\\
+= & \Phi(x^{*})-\Phi(x^{(0)})\\
+\le & R^{2}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+The result follows from the convexity of 
+\begin_inset Formula $f$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Multiplicative Weight Update
+\end_layout
+
+\begin_layout Standard
+In this section, we discuss mirror descent under the map 
+\begin_inset Formula $\Phi(x)=\sum x_{i}\log x_{i}$
+\end_inset
+
+ with the convex set being the simplex 
+\begin_inset Formula $\mathcal{D}=\{x_{i}\geq0,\sum x_{i}=1\}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Paragraph
+Step Formula
+\end_layout
+
+\begin_layout Standard
+As we showed in (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:mirror_descent"
+
+\end_inset
+
+), we have that
+\begin_inset Formula 
+\[
+x^{(k+1)}=\arg\min_{x\in\mathcal{D}}hg^{(k)\top}x+D_{\Phi}(x,x^{(k)}).
+\]
+
+\end_inset
+
+Note that
+\begin_inset Formula 
+\begin{align*}
+D_{\Phi}(x,x^{(k)}) & =\sum x_{i}\log x_{i}-\sum x_{i}^{(k)}\log x_{i}^{(k)}-\sum_{i}(1+\log x_{i}^{(k)})(x_{i}-x_{i}^{(k)})\\
+ & =\sum x_{i}\log\frac{x_{i}}{x_{i}^{(k)}}
+\end{align*}
+
+\end_inset
+
+where we used that 
+\begin_inset Formula $\sum_{i}x_{i}=\sum_{i}x_{i}^{(k)}$
+\end_inset
+
+.
+ Hence, the step is simply 
+\begin_inset Formula 
+\[
+x^{(k+1)}=\arg\min_{\sum x_{i}=1,x_{i}\geq0}hg^{(k)\top}x+\sum x_{i}\log\frac{x_{i}}{x_{i}^{(k)}}.
+\]
+
+\end_inset
+
+Note that the optimality condition is given by
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+need to add some basics on Lagrange multipliers.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+hg_{i}^{(k)}+\log\frac{x_{i}^{(k+1)}}{x_{i}^{(k)}}+1-\lambda=0
+\]
+
+\end_inset
+
+for some Lagrangian multiplier 
+\begin_inset Formula $\lambda$
+\end_inset
+
+.
+ Rewriting, we have
+\begin_inset Formula 
+\[
+x_{i}^{(k+1)}=e^{-hg_{i}^{(k)}}x_{i}^{(k)}/Z
+\]
+
+\end_inset
+
+for some normalization constant 
+\begin_inset Formula $Z$
+\end_inset
+
+.
+ Note that this algorithm multiplies the current 
+\begin_inset Formula $x$
+\end_inset
+
+ with a multiplicative factor and hence it is also called multiplicative
+ weight update.
+\end_layout
+
+\begin_layout Paragraph
+Strong Convexity
+\end_layout
+
+\begin_layout Standard
+To bound the strong convexity parameter, we note that
+\begin_inset Formula 
+\[
+\Phi(y)-\Phi(x)-\left\langle \nabla\Phi(x),y-x\right\rangle =\frac{1}{2}(y-x)^{\top}\nabla^{2}\Phi(\zeta)(y-x)
+\]
+
+\end_inset
+
+for some 
+\begin_inset Formula $\zeta$
+\end_inset
+
+ between 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $y$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $\nabla^{2}\Phi(\zeta)=\frac{1}{\zeta}$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+(y-x)^{\top}\nabla^{2}\Phi(\zeta)(y-x)=\sum\frac{(y_{i}-x_{i})^{2}}{\zeta_{i}}\geq\frac{(\sum_{i}|y_{i}-x_{i}|)^{2}}{\sum_{i}\zeta_{i}}=(\sum_{i}|y_{i}-x_{i}|)^{2}
+\]
+
+\end_inset
+
+where we used that 
+\begin_inset Formula $\sum_{i}x_{i}=\sum_{i}y_{i}=1$
+\end_inset
+
+ and so 
+\begin_inset Formula $\sum_{i}\zeta_{i}=1$
+\end_inset
+
+.
+ Hence, 
+\begin_inset Formula 
+\[
+\Phi(y)-\Phi(x)-\left\langle \nabla\Phi(x),y-x\right\rangle \geq\frac{1}{2}\|y-x\|_{1}^{2}.
+\]
+
+\end_inset
+
+Therefore, 
+\begin_inset Formula $\Phi$
+\end_inset
+
+ is 
+\begin_inset Formula $1$
+\end_inset
+
+-strongly convex in 
+\begin_inset Formula $\|\cdot\|_{1}$
+\end_inset
+
+.
+ Hence, 
+\begin_inset Formula $\rho=1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Paragraph
+Diameter
+\end_layout
+
+\begin_layout Standard
+Direct calculation shows that 
+\begin_inset Formula $-\log n\leq\Phi(x)\leq0$
+\end_inset
+
+.
+ We start at 
+\begin_inset Formula $x^{(0)}=\frac{1}{n}(1,\ldots,1)^{T}$
+\end_inset
+
+.
+ Hence, 
+\begin_inset Formula $R^{2}=\log n$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Paragraph
+Result
+\end_layout
+
+\begin_layout Theorem
+Let 
+\begin_inset Formula $f$
+\end_inset
+
+ be a 
+\begin_inset Formula $1$
+\end_inset
+
+-Lipschitz function on 
+\begin_inset Formula $\|\cdot\|_{1}$
+\end_inset
+
+.
+ Then, mirror descent with the mirror map 
+\begin_inset Formula $\Phi(x)=\sum_{i}x_{i}\log x_{i}$
+\end_inset
+
+.
+\begin_inset Formula 
+\[
+f(x^{T})-\min_{x}f(x)\leq\sqrt{\frac{2\log n}{T}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In comparison, projected gradient descent had the bound of 
+\begin_inset Formula $\sqrt{\frac{n}{T}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Imay make this an exercise...
+\end_layout
+
+\begin_layout Subsection
+Online Guarantee
+\end_layout
+
+\begin_layout Plain Layout
+We note that the proof of Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:projected_gradient_descent"
+
+\end_inset
+
+ and Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:mirror_descent"
+
+\end_inset
+
+ do not use the fact that we are solving the same convex function in each
+ step, except for the very last step.
+ Suppose at the 
+\begin_inset Formula $k$
+\end_inset
+
+-th step, the function for which we compute the gradient is 
+\begin_inset Formula $f^{(k)}$
+\end_inset
+
+.
+ Then, we proved that
+\begin_inset Formula 
+\begin{equation}
+\frac{1}{T}\sum_{k=0}^{T-1}(f^{(k)}(x^{(k)})-f^{(k)}(x))\leq GR\sqrt{\frac{2}{\rho T}}\label{eq:regret}
+\end{equation}
+
+\end_inset
+
+for any 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ Also, we note that the point 
+\begin_inset Formula $x^{(k)}$
+\end_inset
+
+ depends on 
+\begin_inset Formula $f^{(1)},f^{(2)},\cdots,f^{(k-1)}$
+\end_inset
+
+ but not 
+\begin_inset Formula $f^{(k)}$
+\end_inset
+
+.
+ Therefore, we can view the whole sequence as a game:
+\end_layout
+
+\begin_layout Itemize
+The player chooses a point 
+\begin_inset Formula $x^{(k)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+The adversary reveals 
+\begin_inset Formula $\nabla f^{(k)}(x^{(k)})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+The player gets the loss 
+\begin_inset Formula $f^{(k)}(x^{(k)})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+In general, we call 
+\begin_inset Formula $\sum_{k=0}^{T-1}(f^{(k)}(x^{(k)})-f^{(k)}(x))$
+\end_inset
+
+ is the regret of not choosing the best point 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ The equation (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:regret"
+
+\end_inset
+
+) shows that mirror descent gives a strategy with regret 
+\begin_inset Formula $GR\sqrt{\frac{2T}{\rho}}$
+\end_inset
+
+.
+ If the domain is the unit ball, all functions are 
+\begin_inset Formula $1$
+\end_inset
+
+-Lipschitz in 
+\begin_inset Formula $\ell_{2}$
+\end_inset
+
+ norm, this shows that a regret bound 
+\begin_inset Formula $O(\sqrt{T})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Problem
+If the domain is the unit ball, all functions are 
+\begin_inset Formula $1$
+\end_inset
+
+-Lipschitz in 
+\begin_inset Formula $\ell_{2}$
+\end_inset
+
+ norm and if the adversary reveals only 
+\begin_inset Formula $f^{(k)}(x^{(k)})$
+\end_inset
+
+, what is the best possible regret bound? The current best bound 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "bubeck2016kernel"
+literal "false"
+
+\end_inset
+
+ is 
+\begin_inset Formula $O(n^{c}\sqrt{T})$
+\end_inset
+
+ for some pretty large constant 
+\begin_inset Formula $c$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

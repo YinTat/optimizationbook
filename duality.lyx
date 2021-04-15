@@ -1,0 +1,1364 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{url}
+\usepackage{xargs}
+\usepackage[pdftex,dvipsnames]{xcolor}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\usepackage[lined,boxed,ruled,norelsize,algo2e]{algorithm2e}
+\usepackage[small,bf]{caption}
+\usepackage{tikz}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=red,
+    filecolor=red,
+    linkcolor=red,
+    urlcolor=red
+}
+
+
+
+\usepackage{fancybox}
+\usepackage{multirow}
+\usepackage{nicefrac}
+\usepackage{hyperref}
+
+
+\expandafter\def\expandafter\normalsize\expandafter{%
+    \normalsize
+%	    \setlength\abovedisplayskip{5pt}
+    \setlength\belowdisplayskip{5pt}
+    % \setlength\abovedisplayshortskip{5pt}
+    \setlength\belowdisplayshortskip{5pt}
+}
+
+\usepackage{tocloft}
+\setlength{\cftsecnumwidth}{2.8em}%
+
+%%%%%
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{fix-cm}
+\makeatletter
+\newcommand\HUGE{\@setfontsize\Huge{38}{47}}
+\makeatother
+
+\titleclass{\part}{top}
+\titleformat{\part}[display]
+  {\normalfont\HUGE\sffamily}{\partname\ \thepart}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\HUGE\bfseries\filleft}
+%\titlespacing*{\part} {0pt}{20pt}{40pt}
+\titlespacing*{\part} {0pt}{30pt}{50pt}
+
+% chapter heading formatting
+\titleformat{\chapter}[display]
+  {\normalfont\LARGE\sffamily}{\chaptertitlename\ \thechapter}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\LARGE\bfseries\filleft}
+% section heading formatting
+\titleformat{\section}
+  {\normalfont\Large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesection}{0.5em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesubsection}{0.5em}{}
+\titlespacing*{\chapter} {0pt}{20pt}{30pt}
+
+% header/footer
+\fancyhf{}
+\fancyhead[ER]{\footnotesize\sffamily\leftmark}
+\fancyhead[OL]{\footnotesize\sffamily\nouppercase\rightmark}
+\fancyhead[EL,OR]{\bfseries\thepage}
+
+\setcounter{secnumdepth}{3}
+\end_preamble
+\options openany
+\use_default_options false
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+theorems-sec
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding default
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 0
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic true
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip 0.1in
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Composite Problem via Duality
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Mention Alternative Projection.
+ (Copy some material from here https://web.stanford.edu/class/ee392o/alt_proj.pdf)
+\end_layout
+
+\begin_layout Plain Layout
+Create an algorithm box at least for the duality and convex hull section.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Motivation
+\end_layout
+
+\begin_layout Standard
+In this section, we will discuss a few algorithmic applications of duality.
+ Suppose we have a 
+\begin_inset Quotes eld
+\end_inset
+
+difficult
+\begin_inset Quotes erd
+\end_inset
+
+ convex problem 
+\begin_inset Formula $\min_{x}f(x)$
+\end_inset
+
+.
+ Often, we can decompose the difficult problem as 
+\begin_inset Formula $f(x)=g(x)+h(Ax)$
+\end_inset
+
+ such that 
+\begin_inset Formula $\nabla g^{*}(x)$
+\end_inset
+
+ and 
+\begin_inset Formula $\nabla h^{*}(x)$
+\end_inset
+
+ are easy to compute.
+ We can compute its dual as follows:
+\begin_inset Formula 
+\begin{align*}
+\min_{x}g(x)+h(Ax) & =\min_{x}\max_{\theta}g(x)+\theta^{\top}Ax-h^{*}(\theta)\\
+ & =\max_{\theta}\min_{x}g(x)+(A^{\top}\theta)^{\top}x-h^{*}(\theta)\\
+ & =\max_{\theta}-g^{*}(-A^{\top}\theta)-h^{*}(\theta)\\
+ & =-\min_{\theta}g^{*}(-A^{\top}\theta)+h^{*}(\theta)
+\end{align*}
+
+\end_inset
+
+where we used 
+\begin_inset Formula $h=h^{**}$
+\end_inset
+
+ in the first line, the following minimax theorem on the second line, and
+ the definition of 
+\begin_inset Formula $g^{*}$
+\end_inset
+
+ on the third line.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Sion's minimax theorem
+\end_layout
+
+\end_inset
+
+Let 
+\begin_inset Formula $X\subset\Rn$
+\end_inset
+
+ be a compact convex set and 
+\begin_inset Formula $Y\subset\Rm$
+\end_inset
+
+ be a convex set.
+ If 
+\begin_inset Formula $f:X\times Y\rightarrow\R\cup\{+\infty\}$
+\end_inset
+
+ such that 
+\begin_inset Formula $f(x,\cdot)$
+\end_inset
+
+ is upper semi-continuous and quasi-concave on 
+\begin_inset Formula $Y$
+\end_inset
+
+ for all 
+\begin_inset Formula $x\in X$
+\end_inset
+
+ and 
+\begin_inset Formula $f(\cdot,y)$
+\end_inset
+
+ is lower semi-continuous and quasi-convex on 
+\begin_inset Formula $X$
+\end_inset
+
+ for all 
+\begin_inset Formula $y\in Y$
+\end_inset
+
+.
+ Then, we have
+\begin_inset Formula 
+\[
+\min_{x\in X}\sup_{y\in Y}f(x,y)=\sup_{y\in Y}\min_{x\in X}f(x,y).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+Compactness is necessary.
+ Consider 
+\begin_inset Formula $f(x,y)=x+y$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+We call 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Formula $g(x)+h(Ax)$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+ the primal problem and 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Formula $g^{*}(-A^{\top}\theta)+h^{*}(\theta)$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+ the dual problem.
+ Often, the dual problem gives us some insight on the primal problem.
+ However, we note that there are many ways to split a problem into two and
+ hence many dual problems.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Need to clarify this example!!
+\end_layout
+
+\begin_layout Plain Layout
+As an example, consider the unit capacity flow problem on a graph 
+\begin_inset Formula $G=(V,E)$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\max_{Af=d,-1\leq f\leq1}c^{\top}f
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $f\in\R^{E}$
+\end_inset
+
+ is the flow vector, 
+\begin_inset Formula $A\in\R^{V\times E}$
+\end_inset
+
+ encodes the flow conservation constraints, 
+\begin_inset Formula $d$
+\end_inset
+
+ is the demand vector and 
+\begin_inset Formula $c$
+\end_inset
+
+ is the cost vector.
+ We can take the dual as follows:
+\begin_inset Formula 
+\begin{align*}
+\max_{Af=d,-1\leq f\leq1}c^{\top}f & =\max_{-1\leq f\leq1}\min_{\phi}c^{\top}f-\phi^{\top}(Af-d)\\
+ & =\min_{\phi}\max_{-1\leq f\leq1}\phi^{\top}d+(c-A^{\top}\phi)^{\top}f\\
+ & =\min_{\phi}\phi^{\top}d+\sum_{e\in E}|c-A^{\top}\phi|_{e}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+For the case 
+\begin_inset Formula $c=0$
+\end_inset
+
+ and 
+\begin_inset Formula $d=F\cdot1_{st}$
+\end_inset
+
+ (the maximum flow problem
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Why?
+\end_layout
+
+\end_inset
+
+), the dual problem is the minimum 
+\begin_inset Formula $s-t$
+\end_inset
+
+ cut problem with the cut given by 
+\begin_inset Formula $\{v\in V\text{ such that }\phi(v)\geq t\}$
+\end_inset
+
+.
+ Note that there are 
+\begin_inset Formula $|E|$
+\end_inset
+
+ variables in primal and 
+\begin_inset Formula $|V|$
+\end_inset
+
+ variables in dual.
+ So, in some sense, the dual problem is easier for dense graphs.
+\end_layout
+
+\begin_layout Plain Layout
+Although we do not have a way to turn a minimum 
+\begin_inset Formula $s-t$
+\end_inset
+
+ cut to a maximum 
+\begin_inset Formula $s-t$
+\end_inset
+
+ flow in general, we will see various tricks to reconstruct the primal solution
+ from the dual solution by modifying the problem.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Example: Semidefinite Programming
+\end_layout
+
+\begin_layout Standard
+When you can solve the dual problem, the proof of the optimality of the
+ dual problem often directly gives you the solution of the primal problem,
+ or gives you some way to solve the primal problem efficiently.
+ Here, we use the semidefinite programming as an concrete example.
+ Define 
+\begin_inset Formula $\bullet$
+\end_inset
+
+ as the inner product of matrices, i.e., 
+\begin_inset Formula 
+\[
+A\bullet B=\sum_{i,j}A_{ij}B_{ij}.
+\]
+
+\end_inset
+
+Consider the semidefinite programming (SDP) problem:
+\begin_inset Formula 
+\begin{equation}
+\max_{X\succeq0}C\bullet X\text{ s.t. }A_{i}\bullet X=b_{i}\text{ for }i=1,2,\cdots,m\label{eq:SDP}
+\end{equation}
+
+\end_inset
+
+and its dual
+\begin_inset Formula 
+\begin{equation}
+\min_{y}b^{\top}y\text{ s.t. }\sum_{i=1}^{m}y_{i}A_{i}\succeq C\label{eq:dual_SDP}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $X$
+\end_inset
+
+, 
+\begin_inset Formula $C$
+\end_inset
+
+, 
+\begin_inset Formula $A_{i}$
+\end_inset
+
+ are 
+\begin_inset Formula $n\times n$
+\end_inset
+
+ symmetric matrices and 
+\begin_inset Formula $b,y\in\Rm$
+\end_inset
+
+.
+ SDP is a generalization of linear programming and is useful for various
+ problems involving matrices.
+ If we apply the current-best cutting plane method naively on the primal
+ problem, we would get 
+\begin_inset Formula $\tilde{O}(n^{2}(Z+n^{4}))$
+\end_inset
+
+ time algorithm for the primal (because there are 
+\begin_inset Formula $n^{2}$
+\end_inset
+
+ variables) and 
+\begin_inset Formula $\tilde{O}(m(Z+n^{\omega}+m^{2}))$
+\end_inset
+
+ for the dual where 
+\begin_inset Formula $Z$
+\end_inset
+
+ is the total number of non-zeros in 
+\begin_inset Formula $A_{i}$
+\end_inset
+
+.
+ (The term 
+\begin_inset Formula $Z+n^{\omega}$
+\end_inset
+
+ is the cost of computing 
+\begin_inset Formula $\sum y_{i}A_{i}$
+\end_inset
+
+ and finding its minimum eigenvalue.) Generally, 
+\begin_inset Formula $n^{2}\gg m$
+\end_inset
+
+ and hence it takes much less time to solve the dual.
+\end_layout
+
+\begin_layout Standard
+We note that
+\begin_inset Formula 
+\[
+\min_{\sum_{i=1}^{m}y_{i}A_{i}\succeq C}b^{\top}y=\min_{v^{\top}(\sum_{i=1}^{m}y_{i}A_{i}-C)v\geq0\ \forall\norm v_{2}=1}b^{\top}y.
+\]
+
+\end_inset
+
+In each step of the cutting plane method, the (sub)gradient oracle either
+ outputs 
+\begin_inset Formula $b$
+\end_inset
+
+ or outputs one of the cutting planes
+\begin_inset Formula 
+\[
+v^{\top}(\sum_{i=1}^{m}y_{i}A_{i}-C)v\geq0.
+\]
+
+\end_inset
+
+Let 
+\begin_inset Formula $S$
+\end_inset
+
+ be the set of all cutting planes used in the algorithm.
+ Then, the proof of the cutting plane method 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Make it more explicit.
+ Also, make the proof rigr
+\end_layout
+
+\end_inset
+
+shows that
+\begin_inset Formula 
+\begin{equation}
+\min_{\sum_{i=1}^{m}y_{i}A_{i}\succeq C}b^{\top}y=\min_{v^{\top}(\sum_{i=1}^{m}y_{i}A_{i}-C)v\geq0\ \forall v\in\mathcal{S}}b^{\top}y\pm\varepsilon.\label{eq:SDP_apx}
+\end{equation}
+
+\end_inset
+
+The key idea to obtaining the primal solution is to take the dual of the
+ right hand side (which is an approximate dual of the original problem).
+ Now, we have
+\begin_inset Formula 
+\begin{align*}
+\min_{v^{\top}(\sum_{i=1}^{m}y_{i}A_{i}-C)v\geq0\ \forall v\in\mathcal{S}}b^{\top}y & =\min_{y}\max_{\lambda_{v}\geq0}b^{\top}y-\sum_{v\in\mathcal{S}}\lambda_{v}v^{\top}(\sum_{i=1}^{m}y_{i}A_{i}-C)v\\
+ & =\max_{\lambda_{v}\geq0}\min_{y}C\bullet\sum_{v\in\mathcal{S}}\lambda_{v}vv^{\top}+b^{\top}y-\sum_{i=1}^{m}y_{i}\sum_{v\in\mathcal{S}}\lambda_{v}vv^{\top}\bullet A_{i}\\
+ & =\max_{X=\sum_{v\in\mathcal{S}}\lambda_{v}vv^{\top},\lambda_{v}\geq0}\min_{y}C\bullet X+\sum_{i=1}^{m}y_{i}(b_{i}-X\bullet A_{i})\\
+ & =\max_{X=\sum_{v\in\mathcal{S}}\lambda_{v}vv^{\top},\lambda_{v}\geq0,X\bullet A_{i}=b_{i}}C\bullet X.
+\end{align*}
+
+\end_inset
+
+Note that this is exactly the primal SDP problem, except that we restrict
+ the set of solutions to the form 
+\begin_inset Formula $\sum_{v\in\mathcal{S}}\lambda_{v}vv^{\top}$
+\end_inset
+
+ with 
+\begin_inset Formula $\lambda_{v}\geq0$
+\end_inset
+
+.
+ Also, we can write this problem as a linear program:
+\begin_inset Formula 
+\begin{equation}
+\max_{\sum_{v}\lambda_{v}v^{\top}A_{i}v=b_{i}\text{ for all }i,\lambda_{v}\geq0}\sum_{v}\lambda_{v}v^{\top}Cv.\label{eq:SDP_LP}
+\end{equation}
+
+\end_inset
+
+Therefore, we can simply solve this linear program and recover an approximate
+ solution for the SDP.
+ By (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:SDP_apx"
+
+\end_inset
+
+), we know that this is an approximate solution with the same guarantee
+ as the dual SDP.
+ 
+\end_layout
+
+\begin_layout Standard
+Now, we analyze the runtime of this algorithm.
+ This algorithm contains two phases: solve the dual SDP via cutting plane
+ method, and solve the primal linear program.
+ Note that each step of the cutting plane method involves finding a separating
+ hyperplane of 
+\begin_inset Formula $\sum_{i=1}^{m}y_{i}A_{i}\succeq C$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Exercise
+Let 
+\begin_inset Formula $\Omega=\{y\in\Rm:\ \sum_{i=1}^{m}y_{i}A_{i}\succeq C\}$
+\end_inset
+
+.
+ Show that one can implement the separation oracle in time 
+\begin_inset Formula $O^{*}(Z+n^{\omega})$
+\end_inset
+
+ via eigenvalue computation.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+This is arithmetic complexity, not bit complexity!
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Therefore, the first phase takes 
+\begin_inset Formula $O^{*}(m(Z+n^{\omega}+m^{2}))$
+\end_inset
+
+ time in total.
+ Since the cutting plane method takes 
+\begin_inset Formula $O^{*}(m)$
+\end_inset
+
+ steps, we have 
+\begin_inset Formula $|\mathcal{S}|=O^{*}(m)$
+\end_inset
+
+.
+ In the second phase, we need to solve a linear program (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:SDP_LP"
+
+\end_inset
+
+) with 
+\begin_inset Formula $O^{*}(m)$
+\end_inset
+
+ variables with 
+\begin_inset Formula $O(m)$
+\end_inset
+
+ constraints.
+ It is known how to solve such linear programs in time 
+\begin_inset Formula $O^{*}(m^{2.38})$
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "cohen2018solving"
+literal "true"
+
+\end_inset
+
+.
+ Hence, the total cost is dominated by the first phase 
+\begin_inset Formula 
+\[
+O^{*}\left(mZ+mn^{\omega}+m^{3}\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Problem
+In the first phase, each step involves computing an eigenvector of similar
+ matrices.
+ So, can we use matrix update formulas to decrease the cost per step in
+ the cutting plane to 
+\begin_inset Formula $O^{*}(Z+n^{2})$
+\end_inset
+
+? Namely, can we solve SDP in time 
+\begin_inset Formula $O^{*}\left(mZ+m^{3}\right)?$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Duality and Convex Hull
+\end_layout
+
+\begin_layout Standard
+The problem 
+\begin_inset Formula $\min_{x}g(x)+h(Ax)$
+\end_inset
+
+ in general can be solved by a similar trick.
+ To make this geometric picture clearer, we consider its linear optimization
+ version: 
+\begin_inset Formula $\min_{(x,t_{1})\in\epi\,g,(Ax,t_{2})\in\epi\,h}t_{1}+t_{2}.$
+\end_inset
+
+ To simplify the notation, we consider the problem
+\begin_inset Formula 
+\[
+\min_{x\in K_{1},Mx\in K_{2}}c^{\top}x
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $M\in\R^{m\times n}$
+\end_inset
+
+, and we have convex sets 
+\begin_inset Formula $K_{1}\subset\Rn$
+\end_inset
+
+ and 
+\begin_inset Formula $K_{2}\subset\Rm$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+To be concrete, let us consider the following example.
+ Let 
+\begin_inset Formula $V_{1}$
+\end_inset
+
+ be a set of students, 
+\begin_inset Formula $V_{2}$
+\end_inset
+
+ be a set of schools.
+ Each edge 
+\begin_inset Formula $e\in E$
+\end_inset
+
+ represents a possible choice of a student.
+ Let 
+\begin_inset Formula $w_{e}$
+\end_inset
+
+ be the happiness of a school/student if the student is assigned to that
+ school.
+ Suppose that every student can only be assigned to one school and school
+ 
+\begin_inset Formula $b$
+\end_inset
+
+ can accept 
+\begin_inset Formula $c_{b}$
+\end_inset
+
+ students.
+ Then, the problem can be formulated as
+\begin_inset Formula 
+\[
+\max_{x_{e}\geq0}\sum_{e\in E}w_{e}x_{e}\text{ subject to }\sum_{(a,b)\in E}x_{(a,b)}\leq1\ \forall a\in V_{1},\sum_{(a,b)\in E}x_{(a,b)}\leq c_{b}\ \forall b\in V_{2}.
+\]
+
+\end_inset
+
+This is the weighted b-matching problem.
+ Typically, the number of students is much more than the number of schools.
+ Therefore, an algorithm with running time linear in the number of students
+ is preferable.
+ To apply our framework, we let
+\begin_inset Formula 
+\begin{align*}
+K_{1} & =\{x\in\R^{E},x_{e}\geq0,\sum_{(a,b)\in E}x_{(a,b)}\leq1\ \forall a\in V_{1}\},\\
+K_{2} & =\{y\in\R^{V_{2}},y_{b}\leq c_{b}\},
+\end{align*}
+
+\end_inset
+
+and 
+\begin_inset Formula $M\in\R^{E}\rightarrow\R^{V_{2}}$
+\end_inset
+
+ is the map 
+\begin_inset Formula $(Tx)_{b}=\sum_{a:(a,b)\in E}x_{(a,b)}.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To further emphasize its importance, consider some general examples here:
+\end_layout
+
+\begin_layout Itemize
+Linear programming: 
+\begin_inset Formula $\min_{Ax=b,x\geq0}c^{\top}x$
+\end_inset
+
+: 
+\begin_inset Formula $K_{1}=\{x\geq0\}$
+\end_inset
+
+, 
+\begin_inset Formula $K_{2}=\{b\}$
+\end_inset
+
+ and 
+\begin_inset Formula $M=A$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Semidefinite programming: 
+\begin_inset Formula $\min_{A_{i}\bullet X=b_{i},X\succeq0}C\bullet X$
+\end_inset
+
+: 
+\begin_inset Formula $K_{1}=\{X\succeq0\}$
+\end_inset
+
+, 
+\begin_inset Formula $K_{2}=\{b\}$
+\end_inset
+
+ and 
+\begin_inset Formula $M:\R^{n\times n}\rightarrow\Rm$
+\end_inset
+
+ defined by 
+\begin_inset Formula $(MX)_{i}=A_{i}\bullet X$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Matroid intersection: 
+\begin_inset Formula $\min_{x\in M_{1}\cap M_{2}}1^{\top}x$
+\end_inset
+
+: 
+\begin_inset Formula $K_{1}=M_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $K_{2}=M_{2}$
+\end_inset
+
+, 
+\begin_inset Formula $M=I$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Submodular minimization: 
+\begin_inset Formula $K_{1}=\{y\in\Rn:\sum_{i\in S}y_{i}\leq f(S)\text{ for all }S\subset[n]\}$
+\end_inset
+
+, 
+\begin_inset Formula $K_{2}=\{y\leq0\}$
+\end_inset
+
+, 
+\begin_inset Formula $M=I$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Submodular flow: 
+\begin_inset Formula $K_{1}=\{\varphi\in\R^{E},\ell_{e}\leq\varphi_{e}\leq u_{e}\text{ for all }e\in E\}$
+\end_inset
+
+, 
+\begin_inset Formula $K_{2}=\{y\in\R^{V}:\sum_{i\in S}y_{i}\leq f(S)\text{ for all }S\subset[n]\}$
+\end_inset
+
+, 
+\begin_inset Formula $M$
+\end_inset
+
+ is the incidence matrix.
+\end_layout
+
+\begin_layout Standard
+In all of these examples, it is easy to compute the gradient of 
+\begin_inset Formula $\delta_{K_{1}}^{*}$
+\end_inset
+
+ and 
+\begin_inset Formula $\delta_{K_{2}}^{*}$
+\end_inset
+
+.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+why? what is 
+\begin_inset Formula $\nabla\delta_{K}^{*}$
+\end_inset
+
+ for these examples?
+\end_layout
+
+\end_inset
+
+ For the last three examples, it is not clear how to compute gradient of
+ 
+\begin_inset Formula $\delta_{K_{1}}$
+\end_inset
+
+ and/or 
+\begin_inset Formula $\delta_{K_{2}}$
+\end_inset
+
+ directly.
+ Furthermore, in all examples, 
+\begin_inset Formula $M$
+\end_inset
+
+ maps from a larger space to the same or smaller space.
+ Therefore, it is good to take advantage of the smaller space.
+\end_layout
+
+\begin_layout Standard
+Before 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "lee2015faster"
+literal "true"
+
+\end_inset
+
+, the standard way was to use the equivalence of 
+\begin_inset Formula $\nabla\delta_{K_{1}}^{*}$
+\end_inset
+
+ and 
+\begin_inset Formula $\nabla\delta_{K_{1}}$
+\end_inset
+
+ , and apply cutting plane methods.
+ With the running time of cutting plane methods, such an algorithm usually
+ had theoretical running time at least 
+\begin_inset Formula $n^{5}$
+\end_inset
+
+ and was of little practical value.
+ 
+\end_layout
+
+\begin_layout Standard
+Now we rewrite the problem as we did in the beginning:
+\begin_inset Formula 
+\begin{align*}
+\min_{x\in K_{1},Mx\in K_{2}}c^{\top}x & =\min_{x\in\Rn}c^{\top}x+\delta_{K_{1}}(x)+\delta_{K_{2}}(Mx)\\
+ & =\min_{x\in\Rn}\max_{\theta\in\Rm}c^{\top}x+\delta_{K_{1}}(x)+\theta^{\top}Mx-\delta_{K_{2}}^{*}(\theta)\\
+ & =\max_{\theta\in\Rm}\min_{x\in\Rn}c^{\top}x+\delta_{K_{1}}(x)+\theta^{\top}Mx-\delta_{K_{2}}^{*}(\theta)\\
+ & =\max_{\theta\in\Rm}-\delta_{K_{1}}^{*}(-c-M^{\top}\theta)-\delta_{K_{2}}^{*}(\theta).
+\end{align*}
+
+\end_inset
+
+Taking the dual has two benefits.
+ First, the number of variables is smaller.
+ Second, the gradient oracle is something we can compute efficiently.
+ Hence, cutting plane methods can be used to solve it in 
+\begin_inset Formula $O^{*}(m\mathcal{T}+m^{3})$
+\end_inset
+
+ where 
+\begin_inset Formula $\mathcal{T}$
+\end_inset
+
+ is the time to evaluate 
+\begin_inset Formula $\nabla\delta_{K_{1}}^{*}$
+\end_inset
+
+ and 
+\begin_inset Formula $\nabla\delta_{K_{2}}^{*}$
+\end_inset
+
+.
+ The only problem left is to recover the primal 
+\begin_inset Formula $x$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The key observation is the following lemma:
+\end_layout
+
+\begin_layout Lemma
+Let 
+\begin_inset Formula $x_{i}\in K_{1}$
+\end_inset
+
+ be the set of points output by the oracle 
+\begin_inset Formula $\nabla\delta_{K_{1}}^{*}$
+\end_inset
+
+ during the cutting plane method.
+ Define 
+\begin_inset Formula $y_{i}\in K_{2}$
+\end_inset
+
+ similarly.
+ Suppose that the cutting plane method ends with the guarantee that the
+ additive error is less than 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+.
+ Then, we have that
+\begin_inset Formula 
+\[
+\min_{x\in K_{1},Tx\in K_{2}}c^{\top}x\leq\min_{x\in\widetilde{K_{1}},Tx\in\widetilde{K_{2}}}c^{\top}x\leq\min_{x\in K_{1},Tx\in K_{2}}c^{\top}x+\varepsilon
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\widetilde{K_{1}}=\conv(x_{i})$
+\end_inset
+
+ and 
+\begin_inset Formula $\widetilde{K_{2}}=\conv(y_{i})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $\theta_{i}$
+\end_inset
+
+ be the set of directions queried by the oracle for 
+\begin_inset Formula $\nabla\delta_{K_{1}}^{*}$
+\end_inset
+
+ and 
+\begin_inset Formula $\varphi_{i}$
+\end_inset
+
+ be the directions queried by the oracle for 
+\begin_inset Formula $\nabla\delta_{K_{2}}^{*}$
+\end_inset
+
+.
+ We claim that 
+\begin_inset Formula $x_{i}\in\nabla\delta_{\widetilde{K_{1}}}^{*}(\theta_{i})$
+\end_inset
+
+ and 
+\begin_inset Formula $y_{i}\in\nabla\delta_{\widetilde{K_{2}}}^{*}(\varphi_{i})$
+\end_inset
+
+.
+ Having this, the algorithm cannot distinguish between 
+\begin_inset Formula $\widetilde{K_{1}}$
+\end_inset
+
+ and 
+\begin_inset Formula $K_{1}$
+\end_inset
+
+, and between 
+\begin_inset Formula $\widetilde{K_{2}}$
+\end_inset
+
+ and 
+\begin_inset Formula $K_{2}$
+\end_inset
+
+.
+ Hence, the algorithm runs exactly the same, i.e., uses the same sequence
+ of points.
+ Therefore, we get the same value 
+\begin_inset Formula $c^{\top}x$
+\end_inset
+
+.
+ However, by the guarantee of cutting plane method, we have that
+\begin_inset Formula 
+\[
+\min_{x\in\widetilde{K_{1}},Tx\in\widetilde{K_{2}}}c^{\top}x\leq c^{\top}x\leq\min_{x\in K_{1},Tx\in K_{2}}c^{\top}x+\varepsilon.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+To prove the claim, we note that 
+\begin_inset Formula $x_{i}\in\nabla\delta_{\widetilde{K_{1}}}^{*}(\theta_{i})$
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula $\widetilde{K_{1}}\subset K_{1}$
+\end_inset
+
+ and hence 
+\begin_inset Formula $\min_{x\in\widetilde{K_{1}}}\theta_{i}^{\top}x\geq\min_{x\in K_{1}}\theta_{i}^{\top}x$
+\end_inset
+
+.
+ Also, note that 
+\begin_inset Formula 
+\[
+x_{i}=\arg\min_{x\in K_{1}}\theta_{i}^{\top}x\in\widetilde{K_{1}}
+\]
+
+\end_inset
+
+and hence 
+\begin_inset Formula $\min_{x\in\widetilde{K_{1}}}\theta_{i}^{\top}x\leq\min_{x\in K_{1}}\theta_{i}^{\top}x$
+\end_inset
+
+.
+ Therefore, we have that 
+\begin_inset Formula $\min_{x\in\widetilde{K_{1}}}\theta_{i}^{\top}x=\min_{x\in K_{1}}\theta_{i}^{\top}x$
+\end_inset
+
+.
+ Therefore, 
+\begin_inset Formula $x_{i}\in\arg\min_{x\in K_{1}}\theta_{i}^{\top}x$
+\end_inset
+
+.
+ This proves the claim for 
+\begin_inset Formula $\widetilde{K_{1}}$
+\end_inset
+
+.
+ The proof for 
+\begin_inset Formula $\widetilde{K_{2}}$
+\end_inset
+
+ is the same.
+\end_layout
+
+\begin_layout Standard
+This reduces the problem into the form 
+\begin_inset Formula $\min_{x\in\widetilde{K_{1}},Tx\in\widetilde{K_{2}}}c^{\top}x$
+\end_inset
+
+.
+ For the second phase, we let 
+\begin_inset Formula $z_{i}=Mx_{i}\in\Rm$
+\end_inset
+
+.
+ Then, we have
+\begin_inset Formula 
+\begin{align*}
+\min_{x\in\widetilde{K_{1}},Mx\in\widetilde{K_{2}}}c^{\top}x= & \min_{t_{i}\geq0,s_{i}\geq0,M\sum_{i}t_{i}x_{i}=\sum_{i}s_{i}y_{i}}c^{\top}(\sum_{i}t_{i}x_{i})\\
+= & \min_{t_{i}\geq0,s_{i}\geq0,\sum_{i}t_{i}z_{i}=\sum_{i}s_{i}y_{i}}\sum t_{i}\cdot c^{\top}x_{i}.
+\end{align*}
+
+\end_inset
+
+Note that it takes 
+\begin_inset Formula $O^{*}(mZ)$
+\end_inset
+
+ time to write down this linear program where 
+\begin_inset Formula $Z$
+\end_inset
+
+ is the number of non-zeros in 
+\begin_inset Formula $M$
+\end_inset
+
+.
+ Next, we note that this linear program has 
+\begin_inset Formula $O^{*}(m)$
+\end_inset
+
+ variables and 
+\begin_inset Formula $m$
+\end_inset
+
+ constraints.
+ Therefore, we can solve it in 
+\begin_inset Formula $O^{*}(m^{2.38})$
+\end_inset
+
+ time.
+ 
+\end_layout
+
+\begin_layout Standard
+Therefore, the total running time is 
+\begin_inset Formula 
+\[
+O^{*}(m(\mathcal{T}+m^{2})+(mZ+m^{2.38})).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To conclude, we have the following theorem.
+\end_layout
+
+\begin_layout Theorem
+Given convex sets 
+\begin_inset Formula $K_{1}\subset\Rn$
+\end_inset
+
+ and 
+\begin_inset Formula $K_{2}\subset\Rm$
+\end_inset
+
+ with 
+\begin_inset Formula $m\leq n$
+\end_inset
+
+ and a matrix 
+\begin_inset Formula $M:\Rn\rightarrow\Rm$
+\end_inset
+
+ with 
+\begin_inset Formula $Z$
+\end_inset
+
+ non-zeros, let 
+\begin_inset Formula $\mathcal{T}$
+\end_inset
+
+ be the cost to compute 
+\begin_inset Formula $\nabla\delta_{K_{1}}^{*}$
+\end_inset
+
+ and 
+\begin_inset Formula $\nabla\delta_{K_{2}}^{*}$
+\end_inset
+
+.
+ Then, we can solve the problem
+\begin_inset Formula 
+\[
+\min_{x\in K_{1},Mx\in K_{2}}c^{\top}x
+\]
+
+\end_inset
+
+in time 
+\begin_inset Formula $O^{*}(m\mathcal{T}+mZ+m^{3}).$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+We hid all sorts of terms in the log term hidden in 
+\begin_inset Formula $O^{*}$
+\end_inset
+
+ such as the diameter of the set.
+ Also this is the number of arithmetic operations, not the bit complexity.
+\end_layout
+
+\begin_layout Standard
+Going back to the school/student problem, this algorithm gives a running
+ time of
+\begin_inset Formula 
+\[
+O^{*}(|V_{2}||E|+|V_{2}|^{3})
+\]
+
+\end_inset
+
+which is linear in the number of students!
+\end_layout
+
+\begin_layout Standard
+In general, this statement says that if we can split a convex problem into
+ two parts, with both being easy to solve and one part has fewer variables,
+ then we can solve it in time proportional to the smaller dimension.
+\end_layout
+
+\begin_layout Exercise
+How fast can we solve 
+\begin_inset Formula $\min_{x\in\cap_{i=1}^{k}K_{i}}c^{\top}x$
+\end_inset
+
+ given the oracles 
+\begin_inset Formula $\nabla\delta_{K_{i}}^{*}$
+\end_inset
+
+?
+\end_layout
+
+\end_body
+\end_document

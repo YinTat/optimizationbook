@@ -1,0 +1,723 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{url}
+\usepackage{xargs}
+\usepackage[pdftex,dvipsnames]{xcolor}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\usepackage[lined,boxed,ruled,norelsize,algo2e]{algorithm2e}
+\usepackage[small,bf]{caption}
+\usepackage{tikz}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=red,
+    filecolor=red,
+    linkcolor=red,
+    urlcolor=red
+}
+
+
+
+\usepackage{fancybox}
+\usepackage{multirow}
+\usepackage{nicefrac}
+\usepackage{hyperref}
+
+
+\expandafter\def\expandafter\normalsize\expandafter{%
+    \normalsize
+%	    \setlength\abovedisplayskip{5pt}
+    \setlength\belowdisplayskip{5pt}
+    % \setlength\abovedisplayshortskip{5pt}
+    \setlength\belowdisplayshortskip{5pt}
+}
+
+\usepackage{tocloft}
+\setlength{\cftsecnumwidth}{2.8em}%
+
+%%%%%
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{fix-cm}
+\makeatletter
+\newcommand\HUGE{\@setfontsize\Huge{38}{47}}
+\makeatother
+
+\titleclass{\part}{top}
+\titleformat{\part}[display]
+  {\normalfont\HUGE\sffamily}{\partname\ \thepart}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\HUGE\bfseries\filleft}
+%\titlespacing*{\part} {0pt}{20pt}{40pt}
+\titlespacing*{\part} {0pt}{30pt}{50pt}
+
+% chapter heading formatting
+\titleformat{\chapter}[display]
+  {\normalfont\LARGE\sffamily}{\chaptertitlename\ \thechapter}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\LARGE\bfseries\filleft}
+% section heading formatting
+\titleformat{\section}
+  {\normalfont\Large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesection}{0.5em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesubsection}{0.5em}{}
+\titlespacing*{\chapter} {0pt}{20pt}{30pt}
+
+% header/footer
+\fancyhf{}
+\fancyhead[ER]{\footnotesize\sffamily\leftmark}
+\fancyhead[OL]{\footnotesize\sffamily\nouppercase\rightmark}
+\fancyhead[EL,OR]{\bfseries\thepage}
+
+\setcounter{secnumdepth}{3}
+\end_preamble
+\options openany
+\use_default_options false
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+theorems-sec
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding default
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 0
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic true
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip 0.1in
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Cutting Plane method for Volume Computation
+\end_layout
+
+\begin_layout Standard
+The cutting plane method gives a simple algorithm for computing the volume
+ of a bounded set, or the integral of a function.
+ The algorithm relies crucially on the ability to compute the center of
+ gravity of the original set/function restricted by halfspaces.
+ For simplicity we describe it here for the case when the input object is
+ a convex body.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm2e}[H]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\mathtt{CuttingPlaneVolume}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetAlgoLined
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Input:
+\series default
+ A body 
+\begin_inset Formula $K\subset\R^{n}$
+\end_inset
+
+, 
+\begin_inset Formula $r\in R$
+\end_inset
+
+, and an oracle for computing centroid.
+\end_layout
+
+\begin_layout Standard
+Fix an ordering on the axes: 
+\begin_inset Formula $e_{1},e_{2},\ldots e_{n}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $K^{(0)}=K,$
+\end_inset
+
+ 
+\begin_inset Formula $z^{(0)}=\mbox{centroid}(K^{(0)}),V=1,k=0.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+For{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $k=0,\cdots$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $e_{i}$
+\end_inset
+
+ be an axis vector so that the width of 
+\begin_inset Formula $K^{(k)}$
+\end_inset
+
+ along 
+\begin_inset Formula $e_{i}$
+\end_inset
+
+ is greater than 
+\begin_inset Formula $r$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lIf{
+\end_layout
+
+\end_inset
+
+There is no such 
+\begin_inset Formula $e_{i}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\series bold
+Break
+\series default
+.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $a$
+\end_inset
+
+ be 
+\begin_inset Formula $e_{i}$
+\end_inset
+
+ or 
+\begin_inset Formula $-e_{i}$
+\end_inset
+
+ with sign chosen so that 
+\begin_inset Formula $H^{(k)}\defeq\left\{ x\,:\,a^{\top}x\le a^{\top}z^{(k)}\right\} $
+\end_inset
+
+ contains 
+\begin_inset Formula $z^{(0)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $K^{(k+1)}\leftarrow K^{(k)}\cap H^{(k)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $z^{(k+1)}\leftarrow\mbox{centroid}(K^{(k+1)})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\widehat{z}\leftarrow\mbox{centroid}(K^{(k)}\setminus K^{(k+1)})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $V\leftarrow V\cdot\frac{\norm{\widehat{z}-z^{(k+1)}}}{\norm{\widehat{z}-z^{(k)}}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Return 
+\begin_inset Formula $V\cdot\prod_{i=1}^{n}w_{i}(K^{(k+1)})$
+\end_inset
+
+ where 
+\begin_inset Formula $w_{i}(\cdot)$
+\end_inset
+
+ is the width along 
+\begin_inset Formula $e_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The idea behind the algorithm is simple: when we cut a set with a hyperplane
+ through its centroid, the line joining the centroids of the two sides passes
+ through the original centroid; moreover, the ratio of the two segments
+ is exactly the ratio of the volumes of the two halfspaces.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:centroid"
+
+\end_inset
+
+For any measurable bounded set S in 
+\begin_inset Formula $\R^{n}$
+\end_inset
+
+ and any halfspace 
+\begin_inset Formula $H$
+\end_inset
+
+ with bounding hyperplane containing the centroid of 
+\begin_inset Formula $S$
+\end_inset
+
+, we have 
+\begin_inset Formula 
+\[
+\mbox{centroid}(S)=\frac{\vol(S\cap H)}{\vol(S)}\mbox{centroid}(S\cap H)+\frac{vol(S\cap\overline{H})}{\vol(S)}\mbox{centroid}(S\cap\overline{H}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The following lemma has a proof similar to that of the Grunbaum theorem.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:width"
+
+\end_inset
+
+Let 
+\begin_inset Formula $K\subseteq\R^{n}$
+\end_inset
+
+ be a convex body with centroid at the origin.
+ Suppose that for some unit vector 
+\begin_inset Formula $\theta$
+\end_inset
+
+, the support of 
+\begin_inset Formula $K$
+\end_inset
+
+ along 
+\begin_inset Formula $\theta$
+\end_inset
+
+ is 
+\begin_inset Formula $[a,b]$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula 
+\[
+|a|\ge\frac{b}{n}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Prove Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:width"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ [Hint: Use Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:Brunn-Minkowski"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.]
+\end_layout
+
+\begin_layout Standard
+Using the above property, we can show that the algorithm reaches a cuboid
+ in a small number of iterations.
+\end_layout
+
+\begin_layout Theorem
+Let 
+\begin_inset Formula $K$
+\end_inset
+
+ be a convex body in 
+\begin_inset Formula $\R^{n}$
+\end_inset
+
+ containing a cube of side length 
+\begin_inset Formula $r$
+\end_inset
+
+ around its centroid and contained in a cube of side length 
+\begin_inset Formula $R$
+\end_inset
+
+.
+ Algorithm 
+\begin_inset Formula $\mathtt{CuttingPlaneVolume}$
+\end_inset
+
+ correctly computes the volume of 
+\begin_inset Formula $K$
+\end_inset
+
+ using 
+\begin_inset Formula $O(n\log\frac{nR}{r})$
+\end_inset
+
+ centroid computations.
+\end_layout
+
+\begin_layout Proof
+By Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:grun"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, at each iteration, the volume of the remaining set 
+\begin_inset Formula $K^{(k)}$
+\end_inset
+
+ decreases by a factor of at most 
+\begin_inset Formula $(1-\frac{1}{e})$
+\end_inset
+
+.
+ When the directional width along any axis is less than 
+\begin_inset Formula $r/2$
+\end_inset
+
+ (namely 
+\begin_inset Formula $\max_{x\in K}\left|e_{i}^{\top}x\right|\leq\frac{r}{2}$
+\end_inset
+
+), the algorithm stops cutting along that axis.
+ Thus, by Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:width"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, the directional width along every axis is at least 
+\begin_inset Formula $r/2(n+1)$
+\end_inset
+
+.
+ Since the set always contains the origin, and the original set contains
+ a cube of side length 
+\begin_inset Formula $r$
+\end_inset
+
+, when the algorithm stops, it must be an axis-parallel cuboid.
+ So the final volume is at least 
+\begin_inset Formula $(r/2n)^{n}.$
+\end_inset
+
+ The initial volume is at most 
+\begin_inset Formula $R^{n}$
+\end_inset
+
+.
+ Therefore the number of iterations is at most 
+\begin_inset Formula 
+\[
+\log_{(1-\frac{1}{e})}\left(\frac{R^{n}}{(r/2(n+1))^{n}}\right)=O\left(n\log(nR/r)\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+In each iteration, by Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:centroid"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, the algorithm maintains the ratio of the volume of the original 
+\begin_inset Formula $K$
+\end_inset
+
+ to the current 
+\begin_inset Formula $K^{(k)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The above algorithm shows that computing the volume is polytime reducible
+ to computing the centroid.
+ Since volume is known to be #P-hard for explicit polytopes, this means
+ that centroid computation is also #P-hard for polytopes 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "rademacher2007approximating"
+literal "false"
+
+\end_inset
+
+.
+ In later chapters we will see randomized polytime algorithms for sampling
+ and hence for approximating centroid and volume.
+\end_layout
+
+\end_body
+\end_document

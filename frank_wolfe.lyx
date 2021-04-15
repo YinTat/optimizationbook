@@ -1,0 +1,1514 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{url}
+\usepackage{xargs}
+\usepackage[pdftex,dvipsnames]{xcolor}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\usepackage[lined,boxed,ruled,norelsize,algo2e]{algorithm2e}
+\usepackage[small,bf]{caption}
+\usepackage{tikz}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=red,
+    filecolor=red,
+    linkcolor=red,
+    urlcolor=red
+}
+
+
+
+\usepackage{fancybox}
+\usepackage{multirow}
+\usepackage{nicefrac}
+\usepackage{hyperref}
+
+
+\expandafter\def\expandafter\normalsize\expandafter{%
+    \normalsize
+%	    \setlength\abovedisplayskip{5pt}
+    \setlength\belowdisplayskip{5pt}
+    % \setlength\abovedisplayshortskip{5pt}
+    \setlength\belowdisplayshortskip{5pt}
+}
+
+\usepackage{tocloft}
+\setlength{\cftsecnumwidth}{2.8em}%
+
+%%%%%
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{fix-cm}
+\makeatletter
+\newcommand\HUGE{\@setfontsize\Huge{38}{47}}
+\makeatother
+
+\titleclass{\part}{top}
+\titleformat{\part}[display]
+  {\normalfont\HUGE\sffamily}{\partname\ \thepart}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\HUGE\bfseries\filleft}
+%\titlespacing*{\part} {0pt}{20pt}{40pt}
+\titlespacing*{\part} {0pt}{30pt}{50pt}
+
+% chapter heading formatting
+\titleformat{\chapter}[display]
+  {\normalfont\LARGE\sffamily}{\chaptertitlename\ \thechapter}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\LARGE\bfseries\filleft}
+% section heading formatting
+\titleformat{\section}
+  {\normalfont\Large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesection}{0.5em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesubsection}{0.5em}{}
+\titlespacing*{\chapter} {0pt}{20pt}{30pt}
+
+% header/footer
+\fancyhf{}
+\fancyhead[ER]{\footnotesize\sffamily\leftmark}
+\fancyhead[OL]{\footnotesize\sffamily\nouppercase\rightmark}
+\fancyhead[EL,OR]{\bfseries\thepage}
+
+\setcounter{secnumdepth}{3}
+\end_preamble
+\options openany
+\use_default_options false
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+theorems-sec
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding default
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 0
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic true
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip 0.1in
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Frank–Wolfe 
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:FrankWolfe"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Mirror descent is not suitable for all spaces.
+ The guarantee of mirror descent crucially depends on the fact that there
+ is a 
+\begin_inset Formula $1$
+\end_inset
+
+-strongly convex mirror map 
+\begin_inset Formula $\Phi$
+\end_inset
+
+ such that 
+\begin_inset Formula $\max_{x}\Phi(x)-\min_{x}\Phi(x)$
+\end_inset
+
+ is small on the domain.
+ For some domains such as 
+\begin_inset Formula $\{x:\|x\|_{\infty}\leq1\}$
+\end_inset
+
+, the range 
+\begin_inset Formula $\max_{x}\Phi(x)-\min_{x}\Phi(x)$
+\end_inset
+
+ can be large.
+\end_layout
+
+\begin_layout Lemma
+Let 
+\begin_inset Formula $\Phi$
+\end_inset
+
+ be a 
+\begin_inset Formula $1$
+\end_inset
+
+-strongly convex function on 
+\begin_inset Formula $\Rn$
+\end_inset
+
+ over 
+\begin_inset Formula $\|\cdot\|_{\infty}\leq1$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula 
+\[
+\max_{\|x\|_{\infty}\leq1}\Phi(x)\geq\min_{\|x\|_{\infty}\leq1}\Phi(x)+\frac{n}{2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+By the strong convexity of 
+\begin_inset Formula $\Phi$
+\end_inset
+
+, we have that 
+\begin_inset Formula 
+\begin{align*}
+\E_{s_{k}\in\{\pm1\}\ \forall k\in[n]}\Phi(s_{1},\cdots,s_{n}) & \geq\E_{s_{k}\in\{\pm1\}\ \forall k\in[n-1]}\Phi(s_{1},\cdots,s_{n-1},0)+\E_{s_{n}}\left\langle \nabla\Phi(s_{1},\cdots,s_{n-1},0),s_{n}\right\rangle +\frac{1}{2}\\
+ & =\E_{s_{k}\in\{\pm1\}\ \forall k\in[n-1]}\Phi(s_{1},\cdots,s_{n-1},0)+\frac{1}{2}\\
+ & \vdots\\
+ & \geq\Phi(0)+\frac{n}{2}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+This inequality is tight because 
+\begin_inset Formula $\frac{1}{2}\|x\|^{2}$
+\end_inset
+
+ is 
+\begin_inset Formula $1$
+\end_inset
+
+-strongly convex in 
+\begin_inset Formula $\|\cdot\|_{\infty}$
+\end_inset
+
+ and its value is between 
+\begin_inset Formula $0$
+\end_inset
+
+ and 
+\begin_inset Formula $\frac{n}{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Algorithm
+\end_layout
+
+\begin_layout Standard
+Now, we give another geometry dependent algorithm that relies on a different
+ set of assumptions.
+ The problem we study in this section is of the form
+\begin_inset Formula 
+\[
+\min_{x\in\mathcal{D}}f(x)
+\]
+
+\end_inset
+
+for 
+\begin_inset Formula $f$
+\end_inset
+
+ such that 
+\begin_inset Formula $\nabla f$
+\end_inset
+
+ is 
+\begin_inset Quotes eld
+\end_inset
+
+Lipschitz
+\begin_inset Quotes erd
+\end_inset
+
+ in a certain sense.
+ The algorithm reduces the problem to a sequence of linear optimization
+ problems.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm2e}[H]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\mathtt{FrankWolfe}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetAlgoLined
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Input:
+\series default
+ Initial point 
+\begin_inset Formula $x^{(0)}\in\Rn$
+\end_inset
+
+, step size 
+\begin_inset Formula $h>0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+For{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $k=0,1,\cdots,T-1$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Compute 
+\begin_inset Formula $y^{(k)}=\arg\min_{y\in\mathcal{D}}\left\langle y,\nabla f(x^{(k)})\right\rangle $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $x^{(k+1)}\leftarrow(1-h_{k})x^{(k)}+h_{k}y^{(k)}$
+\end_inset
+
+ with 
+\begin_inset Formula $h_{k}=\frac{2}{k+2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Return
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $x^{(T)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Analysis
+\end_layout
+
+\begin_layout Theorem
+Let 
+\begin_inset Formula $f$
+\end_inset
+
+ be a convex function on a convex set 
+\begin_inset Formula $\mathcal{D}$
+\end_inset
+
+ with a constant 
+\begin_inset Formula $C_{f}$
+\end_inset
+
+ such that
+\begin_inset Formula 
+\[
+f((1-h)x+hy))\leq f(x)+h\left\langle \nabla f(x),y-x\right\rangle +\frac{1}{2}C_{f}h^{2}.
+\]
+
+\end_inset
+
+Then, for any 
+\begin_inset Formula $x,y\in\mathcal{D}$
+\end_inset
+
+ and 
+\begin_inset Formula $h\in[0,1]$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+f(x^{(k)})-f(x^{*})\leq\frac{2C_{f}}{k+2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+If 
+\begin_inset Formula $\nabla f$
+\end_inset
+
+ is 
+\begin_inset Formula $L$
+\end_inset
+
+-Lipschitz with respect to the norm 
+\begin_inset Formula $\|\cdot\|$
+\end_inset
+
+ over the domain 
+\begin_inset Formula $\mathcal{D}$
+\end_inset
+
+, then 
+\begin_inset Formula $C_{f}\leq L\cdot\text{diam}_{\|\cdot\|}(\mathcal{D})^{2}.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+By the definition of 
+\begin_inset Formula $C_{f}$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+f(x^{(k+1)})\leq f(x^{(k)})+h_{k}\left\langle \nabla f(x^{(k)}),y^{(k)}-x^{(k)}\right\rangle +\frac{1}{2}C_{f}h_{k}^{2}.
+\]
+
+\end_inset
+
+Note that 
+\begin_inset Formula 
+\[
+f(x^{*})\geq f(x^{(k)})+\left\langle \nabla f(x^{(k)}),x^{*}-x^{(k)}\right\rangle \geq f(x^{(k)})+\left\langle \nabla f(x^{(k)}),y^{(k)}-x^{(k)}\right\rangle 
+\]
+
+\end_inset
+
+where we used the fact that 
+\begin_inset Formula $y^{(k)}=\arg\min_{y\in\mathcal{D}}\left\langle y,\nabla f(x^{(k)})\right\rangle $
+\end_inset
+
+ and that 
+\begin_inset Formula $x^{*}\in\mathcal{D}$
+\end_inset
+
+.
+ Hence, we have that
+\begin_inset Formula 
+\[
+f(x^{(k+1)})\leq f(x^{(k)})-h_{k}(f(x^{(k)})-f(x^{*}))+\frac{1}{2}C_{f}h_{k}^{2}.
+\]
+
+\end_inset
+
+Let 
+\begin_inset Formula $e_{k}=f(x^{(k)})-f(x^{*})$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula 
+\[
+e_{k+1}\leq(1-h_{k})e_{k}+\frac{1}{2}C_{f}h_{k}^{2}.
+\]
+
+\end_inset
+
+Note that 
+\begin_inset Formula $e_{0}=f(x^{(0)})-f^{*}\leq\frac{1}{2}C_{f}$
+\end_inset
+
+.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+change that from 
+\begin_inset Formula $e_{2}$
+\end_inset
+
+ to 
+\begin_inset Formula $e_{0}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ By induction, we have that 
+\begin_inset Formula $e_{k}\leq\frac{2C_{f}}{k+2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Remark*
+Note that this proof is in fact the same as Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:gd_convex"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Remark*
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+This looks nice, but need to add more context/details before including in
+ book?
+\end_layout
+
+\begin_layout Subsection
+Sparsity Analysis
+\end_layout
+
+\begin_layout Plain Layout
+When the domain 
+\begin_inset Formula $\mathcal{D}$
+\end_inset
+
+ is a simplex, the step 
+\begin_inset Formula $y^{(k)}$
+\end_inset
+
+ always has a single non-zero.
+ Hence, each step of Frank-Wolfe increases the sparsity by at most 
+\begin_inset Formula $1$
+\end_inset
+
+.
+ So, we can think that the convergence result of Frank Wolfe proves that
+ there is an approximate sparse solution of the optimization problem.
+ In particular, this shows that Frank Wolfe is optimal in the following
+ sense.
+\end_layout
+
+\begin_layout Lemma
+Let 
+\begin_inset Formula $f(x)=\|x\|_{2}^{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathcal{D}=\{\sum_{i=1}^{n}x_{i}=1,x_{i}\geq0\}$
+\end_inset
+
+.
+ Then 
+\begin_inset Formula $\min_{x\in\mathcal{D},\|x\|_{0}\leq k}f(x)=\frac{1}{k}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+The minimizer is given by setting 
+\begin_inset Formula $k$
+\end_inset
+
+ of the coordinates of 
+\begin_inset Formula $x$
+\end_inset
+
+ to 
+\begin_inset Formula $\frac{1}{k}$
+\end_inset
+
+ each and 
+\begin_inset Formula $0$
+\end_inset
+
+ otherwise.
+\end_layout
+
+\begin_layout Plain Layout
+More generally, if 
+\begin_inset Formula $\mathcal{D}=\conv(z_{i})$
+\end_inset
+
+, then the step 
+\begin_inset Formula $y^{(k)}$
+\end_inset
+
+ is always given by one of the points in 
+\begin_inset Formula $z_{i}$
+\end_inset
+
+.
+ Therefore, the solution is always given by a small combination of vertices
+ 
+\begin_inset Formula $z_{i}$
+\end_inset
+
+.
+ In particular, it shows that any point in a convex set can be approximated
+ by a small combination of vertices:
+\end_layout
+
+\begin_layout Lemma
+Let polytope 
+\begin_inset Formula $P=\conv(v_{i})$
+\end_inset
+
+ be a polytope that lies inside an unit ball.
+ For any 
+\begin_inset Formula $u\in P$
+\end_inset
+
+ and for any 
+\begin_inset Formula $\epsilon>0$
+\end_inset
+
+, there are 
+\begin_inset Formula $k=O(\frac{1}{\epsilon^{2}})$
+\end_inset
+
+ vertices 
+\begin_inset Formula $v_{1},\cdots,v_{k}$
+\end_inset
+
+ of 
+\begin_inset Formula $P$
+\end_inset
+
+ such that
+\begin_inset Formula 
+\[
+\|\sum_{i=1}^{k}\lambda_{i}v_{i}-u\|_{2}\leq\epsilon
+\]
+
+\end_inset
+
+for some 
+\begin_inset Formula $\sum_{i}\lambda_{i}=1$
+\end_inset
+
+, 
+\begin_inset Formula $\lambda_{i}\geq0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Remark*
+Using mirror descent instead, one can prove there are vertices with 
+\begin_inset Formula $\lambda_{i}=\frac{1}{k}$
+\end_inset
+
+ for all 
+\begin_inset Formula $i$
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "mirrokni2017tight"
+literal "false"
+
+\end_inset
+
+.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+How? Should be easy...but it is from a paper.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+We run Frank-Wolfe on 
+\begin_inset Formula $P$
+\end_inset
+
+ with the function 
+\begin_inset Formula $f(x)=\frac{1}{2}\|x-u\|_{2}^{2}$
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula $f$
+\end_inset
+
+ is 
+\begin_inset Formula $1$
+\end_inset
+
+ Lipschitz with respect to 
+\begin_inset Formula $\|x\|_{2}$
+\end_inset
+
+ and that the diameter of 
+\begin_inset Formula $P$
+\end_inset
+
+ is bounded by 
+\begin_inset Formula $1$
+\end_inset
+
+.
+ Hence, we have that
+\begin_inset Formula 
+\[
+C_{f}\leq1.
+\]
+
+\end_inset
+
+Therefore, Frank-Wolfe shows that
+\begin_inset Formula 
+\[
+f(x^{(k)})-f(u)\leq\frac{2}{k+2}.
+\]
+
+\end_inset
+
+Since 
+\begin_inset Formula $f(u)=0$
+\end_inset
+
+, we have that 
+\begin_inset Formula $\|x^{(k)}-u\|^{2}\leq\frac{4}{k+2}.$
+\end_inset
+
+ This gives the result.
+\end_layout
+
+\begin_layout Plain Layout
+Here, let us give another proof.
+ For any 
+\begin_inset Formula $x\in P$
+\end_inset
+
+, we can write 
+\begin_inset Formula $x=\sum_{i}c_{i}v_{i}$
+\end_inset
+
+ for 
+\begin_inset Formula $c_{i}$
+\end_inset
+
+ such that 
+\begin_inset Formula $\sum_{i}c_{i}=1$
+\end_inset
+
+, 
+\begin_inset Formula $c_{i}\geq0$
+\end_inset
+
+.
+ We can view 
+\begin_inset Formula $c$
+\end_inset
+
+ as a probability.
+ Let 
+\begin_inset Formula $X$
+\end_inset
+
+ be a random point constructed by sampling 
+\begin_inset Formula $v_{i}$
+\end_inset
+
+ with probability 
+\begin_inset Formula $c_{i}$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $X_{T}$
+\end_inset
+
+ be the average of 
+\begin_inset Formula $T$
+\end_inset
+
+ independent copies of 
+\begin_inset Formula $X$
+\end_inset
+
+.
+ Then, we have that
+\begin_inset Formula 
+\[
+\E\|X_{T}-x\|^{2}=\frac{1}{T}\E\|X-x\|^{2}\leq\frac{\E\|X\|^{2}}{T}=\frac{1}{T}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Therefore, any point in 
+\begin_inset Formula $P$
+\end_inset
+
+ can be approximated by combinations of 
+\begin_inset Formula $T$
+\end_inset
+
+ points with error at most 
+\begin_inset Formula $\frac{1}{\sqrt{T}}$
+\end_inset
+
+.
+ Note that this gives a tighter bound than Frank-wolfe, but one need to
+ solve a linear program to find the coefficients 
+\begin_inset Formula $c$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+\begin_inset Note Note
+status open
+
+\begin_layout Subsection
+Applications to Maximum Flow* (in progress)
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Probably need much more explanations...
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+In this section, we discuss how to approximate the maximum flow in an undirected
+ graph in almost linear time.
+ The key fact we use about flow is the following.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Maybe this lemma should come later?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Oblivious routing 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "madry2010fast,sherman2013nearly,kelner2014almost,racke2014computing"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+For any graph 
+\begin_inset Formula $G=(V,E)$
+\end_inset
+
+, there is a map 
+\begin_inset Formula $R:\R^{|V|}\rightarrow\R^{|E|}$
+\end_inset
+
+, called oblivious routing, such that for any demand 
+\begin_inset Formula $d\in\R^{|V|}$
+\end_inset
+
+ with 
+\begin_inset Formula $\sum_{v\in V}d_{V}=0$
+\end_inset
+
+, we have
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $B^{\top}Rd=d$
+\end_inset
+
+ (the routing meet the demand 
+\begin_inset Formula $d$
+\end_inset
+
+),
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\|Rd\|_{\infty}\leq n^{o(1)}\cdot\min_{B^{\top}f=d}\|f\|_{\infty}$
+\end_inset
+
+ (we call 
+\begin_inset Formula $n^{o(1)}$
+\end_inset
+
+ is the competitive ratio; it represents how good this routing compared
+ to the optimum).
+\end_layout
+
+\begin_layout Plain Layout
+Moreover, 
+\begin_inset Formula $Rv$
+\end_inset
+
+ and 
+\begin_inset Formula $R^{\top}v$
+\end_inset
+
+ can be computed in 
+\begin_inset Formula $n^{1+o(1)}$
+\end_inset
+
+ time.
+\end_layout
+
+\end_deeper
+\begin_layout Problem
+Do we have an oblivious routing that can be computed in 
+\begin_inset Formula $n\log^{O(1)}n$
+\end_inset
+
+ time with the competitive ratio 
+\begin_inset Formula $\log^{O(1)}n$
+\end_inset
+
+?
+\end_layout
+
+\begin_layout Plain Layout
+First, we note that the maximum flow problem is same as finding a unit flow
+ from 
+\begin_inset Formula $s$
+\end_inset
+
+ to 
+\begin_inset Formula $t$
+\end_inset
+
+ with minimum 
+\begin_inset Formula $\|f\|_{\infty}$
+\end_inset
+
+, namely, finding
+\begin_inset Formula 
+\[
+\min_{B^{\top}f=1_{st}}\norm f_{\infty}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $B:\R^{|V|}\rightarrow\R^{|E|}$
+\end_inset
+
+ is the incidence matrix of the graph and 
+\begin_inset Formula $1_{st}$
+\end_inset
+
+ is the vector with 
+\begin_inset Formula $+1$
+\end_inset
+
+ at 
+\begin_inset Formula $s$
+\end_inset
+
+ and 
+\begin_inset Formula $-1$
+\end_inset
+
+ at 
+\begin_inset Formula $t$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $v$
+\end_inset
+
+ be the value of the maximum flow.
+ Then the above problem has minimum value 
+\begin_inset Formula $\frac{1}{v}$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $f^{(0)}=R1_{st}$
+\end_inset
+
+.
+ Then, we know that 
+\begin_inset Formula $\|f^{(0)}\|_{\infty}\leq\frac{n^{o(1)}}{v}$
+\end_inset
+
+ because the oblivious routing is as good as the maximum flow up to 
+\begin_inset Formula $n^{o(1)}$
+\end_inset
+
+ factor.
+\end_layout
+
+\begin_layout Plain Layout
+Now, we can further simplify the problem by
+\begin_inset Formula 
+\[
+\min_{B^{\top}f=0}\norm{f+f^{(0)}}_{\infty}.
+\]
+
+\end_inset
+
+To remove the constraint, we note the following:
+\end_layout
+
+\begin_layout Lemma
+Let 
+\begin_inset Formula $R$
+\end_inset
+
+ be an oblivious routing.
+ Then 
+\begin_inset Formula $\{f:B^{\top}f=0\}=\{Pf:f\in\R^{|E|}\}$
+\end_inset
+
+ where 
+\begin_inset Formula $P=I-RB^{\top}$
+\end_inset
+
+.
+ Furthermore, we have that 
+\begin_inset Formula $\|P\|_{\infty\rightarrow\infty}=n^{o(1)}.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+The set 
+\begin_inset Formula $\{f:B^{\top}f=0\}$
+\end_inset
+
+ is simply the set of circulations.
+ Note that 
+\begin_inset Formula $B^{\top}Pf=B^{\top}-B^{\top}RB^{\top}=B^{\top}-B^{\top}=0$
+\end_inset
+
+.
+ Hence, all 
+\begin_inset Formula $Pf$
+\end_inset
+
+ are circulations.
+\end_layout
+
+\begin_layout Proof
+On the other any, given any circulation 
+\begin_inset Formula $f$
+\end_inset
+
+, then, 
+\begin_inset Formula $Pf=f-RB^{\top}f=f$
+\end_inset
+
+.
+ Hence, any circulation 
+\begin_inset Formula $f$
+\end_inset
+
+ is given by 
+\begin_inset Formula $Pf$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+For the last result, we note that 
+\begin_inset Formula $\|Pf\|_{\infty\rightarrow\infty}\leq1+\|RB^{\top}\|_{\infty\rightarrow\infty}$
+\end_inset
+
+.
+ For the last term, note that for any 
+\begin_inset Formula $g$
+\end_inset
+
+, 
+\begin_inset Formula $\|RB^{\top}g\|_{\infty}\leq n^{o(1)}\min_{B^{\top}f=B^{\top}g}\|f\|_{\infty}\leq n^{o(1)}\|g\|_{\infty}$
+\end_inset
+
+.
+ Hence, we have 
+\begin_inset Formula $\|RB^{\top}\|_{\infty\rightarrow\infty}\leq n^{o(1)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+Due to the lemma above, we have that
+\begin_inset Formula 
+\[
+\min_{B^{\top}f=0}\norm{f+f^{(0)}}_{\infty}=\min_{f}\norm{Pf+f^{(0)}}_{\infty}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Now, we can apply Frank-Wolfe on the right problem.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+\begin_inset CommandInset citation
+LatexCommand cite
+key "sherman2013nearly,kelner2014almost"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+We can find a flow with value at least 
+\begin_inset Formula $(1-\varepsilon)v$
+\end_inset
+
+ in time
+\begin_inset Formula 
+\[
+O^{*}(\frac{m}{\varepsilon^{2}}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark*
+\begin_inset CommandInset citation
+LatexCommand cite
+key "sherman2017area"
+literal "true"
+
+\end_inset
+
+ designed a specified first-order method for 
+\begin_inset Formula $\norm{\cdot}_{\infty}$
+\end_inset
+
+ and obtained a running time 
+\begin_inset Formula $O(m\log^{O(1)}n/\epsilon)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+To smoothen 
+\begin_inset Formula $\norm{\cdot}_{\infty}$
+\end_inset
+
+, we consider the potential 
+\begin_inset Formula 
+\[
+\ell_{\delta}(f)=\mathrm{smax}_{\delta}(Pf+f^{(0)})
+\]
+
+\end_inset
+
+where
+\begin_inset Formula 
+\[
+\mathrm{smax}_{\delta}(f)=\delta\log(\sum_{i}e^{f_{i}/\delta}+e^{-f_{i}/\delta}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Suppose that 
+\begin_inset Formula $\ell_{\delta}(f)\leq\min_{f}\ell_{\delta}(f)+\frac{\varepsilon}{2v}$
+\end_inset
+
+.
+ Then, we have that
+\begin_inset Formula 
+\[
+\norm{Pf+f^{(0)}}_{\infty}\leq\ell_{\delta}(t)\leq\min_{f}\ell_{\delta}(f)+\frac{\varepsilon}{2v}\leq\min_{f}\ell(f)+\frac{\varepsilon}{2v}+\delta\log(2m).
+\]
+
+\end_inset
+
+Setting 
+\begin_inset Formula $\delta=\frac{\varepsilon}{2v\log(2m)}$
+\end_inset
+
+, we have that 
+\begin_inset Formula $\norm{Pf+f^{(0)}}_{\infty}\leq\min_{f}\ell(f)+\frac{\varepsilon}{v}$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $B^{\top}(Pf+f^{(0)})=B^{\top}f^{(0)}=1_{st}$
+\end_inset
+
+, 
+\begin_inset Formula $Pf+f^{(0)}$
+\end_inset
+
+ satisfies the requirements.
+\end_layout
+
+\begin_layout Proof
+Now, we analyze how fast Frank-Wolfe takes to solve the problem.
+ It is easy to prove that 
+\begin_inset Formula $\nabla\ell_{\delta}$
+\end_inset
+
+ has Lipschitz constant in 
+\begin_inset Formula $\ell_{\infty}$
+\end_inset
+
+ bounded by
+\begin_inset Formula 
+\[
+O(\frac{\norm P_{\infty\rightarrow\infty}^{2}}{\delta})=O(\frac{v}{\varepsilon}n^{o(1)}).
+\]
+
+\end_inset
+
+Let 
+\begin_inset Formula $f^{*}$
+\end_inset
+
+ be the minimizer of 
+\begin_inset Formula $\ell_{\delta}$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula $Pf^{*}$
+\end_inset
+
+ is also a minimizer and 
+\begin_inset Formula 
+\[
+\norm{Pf^{*}}_{\infty}\leq\norm{Pf^{*}+f^{(0)}}_{\infty}+\norm{f^{(0)}}_{\infty}=O^{*}(\frac{1}{v}).
+\]
+
+\end_inset
+
+Therefore, the diameter 
+\begin_inset Formula $R=O^{*}(\frac{1}{v})$
+\end_inset
+
+.
+ Therefore, the Frank-wolfe shows that
+\begin_inset Formula 
+\[
+\ell_{\delta}(f^{(k)})\leq\ell_{\delta}(f^{*})+\frac{O(\frac{v}{\varepsilon}n^{o(1)})\cdot O^{*}(\frac{1}{v^{2}})}{k}\leq\ell_{\delta}(f^{*})+\frac{n^{o(1)}}{v\epsilon k}.
+\]
+
+\end_inset
+
+Hence, after 
+\begin_inset Formula $k=n^{o(1)}/\epsilon^{2}$
+\end_inset
+
+ iterations, we find the approximate maximum flow.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Stay away step
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+\begin_inset Note Note
+status open
+
+\begin_layout Subsection
+Relation to mirror descent
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Add the application about SDP
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Can I use frankwolfe for 
+\begin_inset Formula $\min_{x}f(x)+\phi(x)$
+\end_inset
+
+ in general where 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ is smooth and 
+\begin_inset Formula $\phi(x)$
+\end_inset
+
+ is general function?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

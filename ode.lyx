@@ -1,0 +1,635 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{url}
+\usepackage{xargs}
+\usepackage[pdftex,dvipsnames]{xcolor}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\usepackage[lined,boxed,ruled,norelsize,algo2e]{algorithm2e}
+\usepackage[small,bf]{caption}
+\usepackage{tikz}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=red,
+    filecolor=red,
+    linkcolor=red,
+    urlcolor=red
+}
+
+
+
+\usepackage{fancybox}
+\usepackage{multirow}
+\usepackage{nicefrac}
+\usepackage{hyperref}
+
+
+\expandafter\def\expandafter\normalsize\expandafter{%
+    \normalsize
+%	    \setlength\abovedisplayskip{5pt}
+    \setlength\belowdisplayskip{5pt}
+    % \setlength\abovedisplayshortskip{5pt}
+    \setlength\belowdisplayshortskip{5pt}
+}
+
+\usepackage{tocloft}
+\setlength{\cftsecnumwidth}{2.8em}%
+
+%%%%%
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{fix-cm}
+\makeatletter
+\newcommand\HUGE{\@setfontsize\Huge{38}{47}}
+\makeatother
+
+\titleclass{\part}{top}
+\titleformat{\part}[display]
+  {\normalfont\HUGE\sffamily}{\partname\ \thepart}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\HUGE\bfseries\filleft}
+%\titlespacing*{\part} {0pt}{20pt}{40pt}
+\titlespacing*{\part} {0pt}{30pt}{50pt}
+
+% chapter heading formatting
+\titleformat{\chapter}[display]
+  {\normalfont\LARGE\sffamily}{\chaptertitlename\ \thechapter}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\LARGE\bfseries\filleft}
+% section heading formatting
+\titleformat{\section}
+  {\normalfont\Large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesection}{0.5em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesubsection}{0.5em}{}
+\titlespacing*{\chapter} {0pt}{20pt}{30pt}
+
+% header/footer
+\fancyhf{}
+\fancyhead[ER]{\footnotesize\sffamily\leftmark}
+\fancyhead[OL]{\footnotesize\sffamily\nouppercase\rightmark}
+\fancyhead[EL,OR]{\bfseries\thepage}
+
+\setcounter{secnumdepth}{3}
+\end_preamble
+\options openany
+\use_default_options false
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+theorems-sec
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding default
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 0
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic true
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip 0.1in
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Ordinary Differential Equations
+\end_layout
+
+\begin_layout Standard
+We consider the first-order ODE 
+\begin_inset Formula 
+\begin{align*}
+\frac{\d}{\d t}x(t)= & ~F(x(t),t),\quad\forall0\leq t\leq T,\\
+x(0)= & ~v.
+\end{align*}
+
+\end_inset
+
+where 
+\begin_inset Formula $F:\R^{d+1}\rightarrow\R$
+\end_inset
+
+.
+ The basic idea to solve it comes from the Picard-Lindelöf theorem, a constructi
+ve existence proof for a large class of ODEs.
+\end_layout
+
+\begin_layout Subsection
+Picard-Lindelöf theorem
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:picard_lindelof"
+
+\end_inset
+
+ In general, we can rewrite the first-order ODE as an integral equation
+ 
+\begin_inset Formula 
+\[
+x(t)=v+\int_{0}^{t}F(x(s),s)\d s\quad\text{for all }0\leq t\leq T.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To simplify the notation, we use 
+\begin_inset Formula $\mathcal{C}([0,T],\R^{d})$
+\end_inset
+
+ to denote 
+\begin_inset Formula $\R^{d}$
+\end_inset
+
+-valued functions on 
+\begin_inset Formula $[0,T]$
+\end_inset
+
+.
+ We define the operator 
+\begin_inset Formula $\T$
+\end_inset
+
+ from 
+\begin_inset Formula $\mathcal{C}([0,T],\R^{d})$
+\end_inset
+
+ to 
+\begin_inset Formula $\mathcal{C}([0,T],\R^{d})$
+\end_inset
+
+ by 
+\begin_inset Formula 
+\begin{equation}
+\T(x)(t)=v+\int_{0}^{t}F(x(s),s)\d s\quad\text{for all }0\leq t\leq T.\label{eq:def_T_operator}
+\end{equation}
+
+\end_inset
+
+Therefore, the integral equation is simply 
+\begin_inset Formula $x=\T(x)$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $\T^{\circ j}$
+\end_inset
+
+ be the composition of 
+\begin_inset Formula $j$
+\end_inset
+
+ many 
+\begin_inset Formula $\T$
+\end_inset
+
+, i.e., 
+\begin_inset Formula 
+\begin{align*}
+\T^{\circ j}(x)=\underbrace{\T(\T(\cdots\T}_{j~\text{many}~\T}(x)\cdots)).
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The Banach fixed point theorem says that the integral equation 
+\begin_inset Formula $x=\T(x)$
+\end_inset
+
+ has a unique solution if there is a norm, and 
+\begin_inset Formula $j\in\mathbb{N}$
+\end_inset
+
+ such that the map 
+\begin_inset Formula $\T^{\circ j}$
+\end_inset
+
+ has Lipschitz constant less than 1.
+\end_layout
+
+\begin_layout Standard
+The Picard-Lindelöf theorem shows that if 
+\begin_inset Formula $F$
+\end_inset
+
+ is Lipschitz in 
+\begin_inset Formula $x$
+\end_inset
+
+, then the map 
+\begin_inset Formula $\T^{\circ j}$
+\end_inset
+
+ has Lipschitz constant less than 1 for some positive integer 
+\begin_inset Formula $j$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:Lipschitz_T"
+
+\end_inset
+
+ Given any norm 
+\begin_inset Formula $\|\cdot\|$
+\end_inset
+
+ on 
+\begin_inset Formula $\R^{d}$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $L$
+\end_inset
+
+ be the Lipschitz constant of 
+\begin_inset Formula $F$
+\end_inset
+
+ in 
+\begin_inset Formula $x$
+\end_inset
+
+, i.e.
+ 
+\begin_inset Formula 
+\[
+\|F(x,s)-F(y,s)\|\leq L\|x-y\|\quad\text{for all }x,y\in\R^{d},s\in[0,T].
+\]
+
+\end_inset
+
+For any 
+\begin_inset Formula $x\in\mathcal{C}([0,T],\R^{d})$
+\end_inset
+
+, we define the corresponding norm 
+\begin_inset Formula 
+\[
+\|x\|\defeq\max_{0\leq t\leq T}\|x(t)\|.
+\]
+
+\end_inset
+
+Then, the Lipschitz constant of 
+\begin_inset Formula $\T^{\circ j}$
+\end_inset
+
+ in this norm is upper bounded by 
+\begin_inset Formula $(LT)^{j}/j!$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+We prove this lemma with a stronger induction hypothesis
+\begin_inset Formula 
+\[
+\|(\T^{\circ j}x)(h)-(\T^{\circ j}y)(h)\|\leq\frac{L^{j}h^{j}}{j!}\|x-y\|\quad\text{for all }0\leq h\leq T.
+\]
+
+\end_inset
+
+The base case 
+\begin_inset Formula $j=0$
+\end_inset
+
+ is trivial.
+ For the inductive step, 
+\begin_inset Formula 
+\begin{align*}
+~\|\T^{\circ j}x(h)-\T^{\circ j}y(h)\|= & ~\|\T\T^{\circ(j-1)}x(h)-\T\T^{\circ(j-1)}y(h)\|\\
+%=
+\leq & ~\int_{0}^{h}\|F(\T^{\circ(j-1)}x(s),s)-F(\T^{\circ(j-1)}y(s),s)\|\d s\\
+\leq & ~L\int_{0}^{h}\|\T^{\circ(j-1)}x(s)-\T^{\circ(j-1)}y(s)\|\d s & \text{~by~}f\text{~is~\ensuremath{L}~Lipschitz}\\
+\leq & ~L\int_{0}^{h}\frac{L^{j-1}s^{j-1}}{(j-1)!}\|x-y\|\d s & \text{ by the induction hypothesis}\\
+= & ~\frac{L^{j}}{j!}h^{j}\|x-y\|.
+\end{align*}
+
+\end_inset
+
+This completes the proof.
+\end_layout
+
+\begin_layout Standard
+To make the Picard-Lindelöf theorem algorithmic, we have to decide how to
+ represent a function in 
+\begin_inset Formula $\mathcal{C}([0,T],\R^{d})$
+\end_inset
+
+.
+ One standard way is to use a polynomial 
+\begin_inset Formula $p_{i}(t)$
+\end_inset
+
+ in 
+\begin_inset Formula $t$
+\end_inset
+
+ for each coordinate 
+\begin_inset Formula $i\in[d]$
+\end_inset
+
+.
+ More generally, suppose there is a basis 
+\begin_inset Formula $\{\varphi_{j}\}_{j=1}^{D}\subset\mathcal{C}([0,T],\R)$
+\end_inset
+
+ such that for all 
+\begin_inset Formula $i\in[d]$
+\end_inset
+
+, 
+\begin_inset Formula $\frac{\d x_{i}}{\d t}$
+\end_inset
+
+ is approximated by some linear combination of 
+\begin_inset Formula $\varphi_{j}(t)$
+\end_inset
+
+.
+ For example, if 
+\begin_inset Formula $\varphi_{j}(t)=t^{j-1}$
+\end_inset
+
+ for 
+\begin_inset Formula $j\in[D]$
+\end_inset
+
+, then our assumption is simply saying 
+\begin_inset Formula $\frac{\d x_{i}}{\d t}$
+\end_inset
+
+ is approximated by a degree 
+\begin_inset Formula $D-1$
+\end_inset
+
+ polynomial.
+ Other possible basis are piecewise-polynomial and Fourier series.
+ By Gram-Schmidt orthogonalization, we can always pick points 
+\begin_inset Formula $\{c_{i}\}_{j=1}^{D}$
+\end_inset
+
+ such that 
+\begin_inset Formula 
+\[
+\varphi_{j}(c_{i})=\delta_{i,j}\quad\text{for }i,j\in[D].
+\]
+
+\end_inset
+
+The benefit of such a basis is that for any 
+\begin_inset Formula $f\in\text{span}(\varphi_{j})$
+\end_inset
+
+, we have that 
+\begin_inset Formula $f(t)=\sum_{j=1}^{D}f(c_{j})\varphi_{j}(t).$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For polynomials, we can use the basis consisting of the Lagrange polynomials:
+ 
+\begin_inset Formula 
+\[
+\varphi_{j}(t)=\prod_{i\in[D]\backslash\{j\}}\frac{t-c_{i}}{c_{j}-c_{i}}\quad\text{for }j\in[D].
+\]
+
+\end_inset
+
+The only assumption we make on the basis is that it is bounded in the following
+ sense.
+\end_layout
+
+\begin_layout Definition
+\begin_inset CommandInset label
+LatexCommand label
+name "def:basis"
+
+\end_inset
+
+ Given a 
+\begin_inset Formula $D$
+\end_inset
+
+ dimensional subspace 
+\begin_inset Formula $\mathcal{V}\subset\mathcal{C}([0,T],\R)$
+\end_inset
+
+ and node points 
+\begin_inset Formula $\{c_{j}\}_{j=1}^{D}\subset[0,T]$
+\end_inset
+
+.
+ For any 
+\begin_inset Formula $\gamma_{\varphi}\geq1$
+\end_inset
+
+, we say that a basis 
+\begin_inset Formula $\{\varphi_{j}\}_{j=1}^{D}\subset\mathcal{V}$
+\end_inset
+
+ is 
+\begin_inset Formula $\gamma_{\varphi}$
+\end_inset
+
+-bounded if 
+\begin_inset Formula $\varphi_{j}(c_{i})=\delta_{i,j}$
+\end_inset
+
+ and we have 
+\begin_inset Formula 
+\[
+\sum_{j=1}^{D}\left|\int_{0}^{t}\varphi_{j}(s)\d s\right|\leq\gamma_{\varphi}T\quad\text{for }t\in[0,T].
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note that if the constant function 
+\begin_inset Formula $1\in\mathcal{V}$
+\end_inset
+
+, then we have 
+\begin_inset Formula 
+\[
+1=\sum_{j=1}^{D}1(c_{j})\varphi_{j}(t)=\sum_{j=1}^{D}\varphi_{j}(t).
+\]
+
+\end_inset
+
+Hence,
+\begin_inset Formula 
+\[
+T=\int_{0}^{T}1\d s\leq\sum_{j=1}^{D}\left|\int_{0}^{T}\varphi_{j}(s)\d s\right|\leq\gamma_{\varphi}T.
+\]
+
+\end_inset
+
+Therefore, 
+\begin_inset Formula $\gamma_{\varphi}\geq1$
+\end_inset
+
+ for most elements.
+ Later we will see that for the space of low degree polynomials or piece-wise
+ low-degree polynomials, there is a basis on the Chebyshev nodes that is
+ 
+\begin_inset Formula $O(1)$
+\end_inset
+
+-bounded.
+\end_layout
+
+\begin_layout Standard
+Assuming that 
+\begin_inset Formula $\frac{dx}{dt}$
+\end_inset
+
+ can be approximated by some element in 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+, we have that 
+\begin_inset Formula 
+\[
+\frac{\d x}{\d t}(t)\sim\sum_{j=1}^{D}\frac{\d x}{\d t}(c_{j})\varphi_{j}(t)=\sum_{j=1}^{D}F(x(c_{j}),c_{j})\varphi_{j}(t).
+\]
+
+\end_inset
+
+Integrating both sides, we have 
+\begin_inset Formula 
+\begin{equation}
+x(t)\approx v+\int_{0}^{t}\sum_{j=1}^{D}F(x(c_{j}),c_{j})\varphi_{j}(s)\d s.\label{eq:approx_fix_point}
+\end{equation}
+
+\end_inset
+
+This suggests the following operator from 
+\begin_inset Formula $\mathcal{C}([0,T],\R^{d})$
+\end_inset
+
+ to 
+\begin_inset Formula $\mathcal{C}([0,T],\R^{d})$
+\end_inset
+
+: 
+\begin_inset Formula 
+\begin{equation}
+\mathcal{T}_{\varphi}(x)(t)_{i}=v_{i}+\int_{0}^{t}\sum_{j=1}^{D}F(x(c_{j}),c_{j})_{i}\varphi_{j}(s)\d s\quad\text{for }i\in[d].\label{eq:def_T_d_operator}
+\end{equation}
+
+\end_inset
+
+Equation (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:approx_fix_point"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) can be written as 
+\begin_inset Formula $x\approx\mathcal{T}_{\varphi}(x).$
+\end_inset
+
+ To find 
+\begin_inset Formula $x$
+\end_inset
+
+ that satisfies this, naturally, one can apply a fix point iteration and
+ the resulting algorithm is called the collocation method.
+\end_layout
+
+\end_body
+\end_document

@@ -1,0 +1,2788 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{url}
+\usepackage{xargs}
+\usepackage[pdftex,dvipsnames]{xcolor}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\usepackage[lined,boxed,ruled,norelsize,algo2e]{algorithm2e}
+\usepackage[small,bf]{caption}
+\usepackage{tikz}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=red,
+    filecolor=red,
+    linkcolor=red,
+    urlcolor=red
+}
+
+
+
+\usepackage{fancybox}
+\usepackage{multirow}
+\usepackage{nicefrac}
+\usepackage{hyperref}
+
+
+\expandafter\def\expandafter\normalsize\expandafter{%
+    \normalsize
+%	    \setlength\abovedisplayskip{5pt}
+    \setlength\belowdisplayskip{5pt}
+    % \setlength\abovedisplayshortskip{5pt}
+    \setlength\belowdisplayshortskip{5pt}
+}
+
+\usepackage{tocloft}
+\setlength{\cftsecnumwidth}{2.8em}%
+
+%%%%%
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{fix-cm}
+\makeatletter
+\newcommand\HUGE{\@setfontsize\Huge{38}{47}}
+\makeatother
+
+\titleclass{\part}{top}
+\titleformat{\part}[display]
+  {\normalfont\HUGE\sffamily}{\partname\ \thepart}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\HUGE\bfseries\filleft}
+%\titlespacing*{\part} {0pt}{20pt}{40pt}
+\titlespacing*{\part} {0pt}{30pt}{50pt}
+
+% chapter heading formatting
+\titleformat{\chapter}[display]
+  {\normalfont\LARGE\sffamily}{\chaptertitlename\ \thechapter}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\LARGE\bfseries\filleft}
+% section heading formatting
+\titleformat{\section}
+  {\normalfont\Large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesection}{0.5em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesubsection}{0.5em}{}
+\titlespacing*{\chapter} {0pt}{20pt}{30pt}
+
+% header/footer
+\fancyhf{}
+\fancyhead[ER]{\footnotesize\sffamily\leftmark}
+\fancyhead[OL]{\footnotesize\sffamily\nouppercase\rightmark}
+\fancyhead[EL,OR]{\bfseries\thepage}
+
+\SetKwRepeat{Do}{do}{while}
+
+\newcommand{\problemname}{Open Problem}
+\DontPrintSemicolon
+
+\usetikzlibrary{arrows,intersections}
+\usetikzlibrary{shapes.misc}
+
+\tikzset{cross/.style={cross out, draw=black, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt},cross/.default={1pt}}
+
+
+
+
+\makeatletter
+\newcommand{\xleftrightarrow}[2][]{\ext@arrow 3359\leftrightarrowfill@{#1}{#2}}
+\newcommand{\xdashrightarrow}[2][]{\ext@arrow 0359\rightarrowfill@@{#1}{#2}}
+\newcommand{\xdashleftarrow}[2][]{\ext@arrow 3095\leftarrowfill@@{#1}{#2}}
+\newcommand{\xdashleftrightarrow}[2][]{\ext@arrow 3359\leftrightarrowfill@@{#1}{#2}}
+\def\rightarrowfill@@{\arrowfill@@\relax\relbar\rightarrow}
+\def\leftarrowfill@@{\arrowfill@@\leftarrow\relbar\relax}
+\def\leftrightarrowfill@@{\arrowfill@@\leftarrow\relbar\rightarrow}
+\def\arrowfill@@#1#2#3#4{%
+  $\m@th\thickmuskip0mu\medmuskip\thickmuskip\thinmuskip\thickmuskip
+   \relax#4#1
+   \xleaders\hbox{$#4#2$}\hfill
+   #3$%
+}
+
+% alternative to arrow
+\pgfarrowsdeclare{tonew}{tonew}
+{
+  \ifdim\pgfgetarrowoptions{tonew}=-1pt%
+    \pgfutil@tempdima=0.84pt%
+    \advance\pgfutil@tempdima by1.3\pgflinewidth%
+    \pgfutil@tempdimb=0.21pt%
+    \advance\pgfutil@tempdimb by.625\pgflinewidth%
+  \else%
+    \pgfutil@tempdima=\pgfgetarrowoptions{tonew}%
+    \pgfarrowsleftextend{+-0.8\pgfutil@tempdima}%
+    \pgfarrowsrightextend{+0.2\pgfutil@tempdima}%
+  \fi%
+}
+{
+  \ifdim\pgfgetarrowoptions{tonew}=-1pt%
+    \pgfutil@tempdima=0.28pt%
+    \advance\pgfutil@tempdima by.3\pgflinewidth%
+    \pgfutil@tempdimb=0pt,%
+  \else%
+    \pgfutil@tempdima=\pgfgetarrowoptions{tonew}%
+    \multiply\pgfutil@tempdima by 100%
+    \divide\pgfutil@tempdima by 375%
+    \pgfutil@tempdimb=0.4\pgflinewidth%
+  \fi%
+  \pgfsetdash{}{+0pt}
+  \pgfsetroundcap
+  \pgfsetroundjoin
+  \pgfpathmoveto{\pgfpointorigin}
+  \pgflineto{\pgfpointadd{\pgfpoint{0.75\pgfutil@tempdima}{0bp}}
+                         {\pgfqpoint{-2\pgfutil@tempdimb}{0bp}}}
+  \pgfusepathqstroke
+  \pgfsetlinewidth{0.8\pgflinewidth}
+  \pgfpathmoveto{\pgfpointadd{\pgfqpoint{-3\pgfutil@tempdima}{4\pgfutil@tempdima}}
+                             {\pgfqpoint{\pgfutil@tempdimb}{0bp}}}
+  \pgfpathcurveto
+  {\pgfpointadd{\pgfqpoint{-2.75\pgfutil@tempdima}{2.5\pgfutil@tempdima}}
+               {\pgfqpoint{0.5\pgfutil@tempdimb}{0bp}}}
+  {\pgfpointadd{\pgfqpoint{0pt}{0.25\pgfutil@tempdima}}
+               {\pgfqpoint{-0.5\pgfutil@tempdimb}{0bp}}}
+  {\pgfpointadd{\pgfqpoint{0.75\pgfutil@tempdima}{0pt}}
+               {\pgfqpoint{-\pgfutil@tempdimb}{0bp}}}
+  \pgfpathcurveto
+  {\pgfpointadd{\pgfqpoint{0pt}{-0.25\pgfutil@tempdima}}
+               {\pgfqpoint{-0.5\pgfutil@tempdimb}{0bp}}}
+  {\pgfpointadd{\pgfqpoint{-2.75\pgfutil@tempdima}{-2.5\pgfutil@tempdima}}
+               {\pgfqpoint{0.5\pgfutil@tempdimb}{0bp}}}
+  {\pgfpointadd{\pgfqpoint{-3\pgfutil@tempdima}{-4\pgfutil@tempdima}}
+               {\pgfqpoint{\pgfutil@tempdimb}{0bp}}}
+  \pgfusepathqstroke
+}
+
+% alias alternative to arrow
+\pgfarrowsdeclarealias{<new}{>new}{tonew}{tonew}
+\pgfsetarrowoptions{tonew}{-1pt}
+\pgfkeys{/tikz/.cd, arrowhead/.default=-1pt, arrowhead/.code={
+  \pgfsetarrowoptions{tonew}{#1},
+}}
+\makeatother
+
+
+
+\usepackage[numbered,framed]{matlab-prettifier}
+\definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
+\definecolor{mylilas}{RGB}{170,55,241}
+\lstset{language=Matlab,%
+	style = Matlab-editor,
+	basicstyle=\ttfamily\footnotesize,
+    %basicstyle=\color{red},
+    breaklines=false,%
+    morekeywords={matlab2tikz},
+    keywordstyle=\color{blue},%
+    morekeywords=[2]{1}, keywordstyle=[2]{\color{black}},
+    identifierstyle=\color{black},%
+    stringstyle=\color{mylilas},
+    commentstyle=\color{mygreen},%
+    showstringspaces=false,%without this there will be a symbol in the places where there is a space
+    numbers=left,%
+    numberstyle={\tiny \color{black}},% size of the numbers
+    numbersep=9pt,
+}
+\end_preamble
+\use_default_options false
+\begin_modules
+eqs-within-sections
+figs-within-sections
+theorems-ams
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding default
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic true
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 2
+\tocdepth 1
+\paragraph_separation skip
+\defskip 0.1in
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\R}{\mathbb{R}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Rn}{\mathbb{R}^{n}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Rm}{\mathbb{R}^{m}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\norm}[1]{\left\Vert #1\right\Vert }
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\defeq}{\overset{\mathrm{def}}{=}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\dom}{\mathrm{dom}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\vol}{\mathrm{vol}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\nnz}{\mathrm{nnz}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\E}{\mathbf{E}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\P}{\mathbf{P}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\tr}{\mathrm{tr}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\op}{\mathrm{op}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\argmin}{\mathrm{argmin}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\epi}{\mathrm{epi}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\KL}{D_{\mathrm{KL}}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\last}{(\mathrm{last})}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\new}{(\mathrm{new})}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\ls}{\mathtt{lineSearch}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\conv}{\mathrm{conv}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Lip}{\mathrm{Lip}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Diag}{\mathrm{Diag}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\step}{\delta}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\spn}{\mathrm{span}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\K}{\mathcal{K}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\d}{\mathcal{\mathrm{d}}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\T}{\mathcal{\mathcal{T}}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\var}{\text{Var}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Title
+Sampling
+\end_layout
+
+\begin_layout Author
+Yin Tat Lee
+\end_layout
+
+\begin_layout Standard
+In this lecture, we study the problem of sampling 
+\begin_inset Formula $x\propto e^{-f(x)}$
+\end_inset
+
+.
+ Namely, sample 
+\begin_inset Formula $x\in\mathbb{R}^{d}$
+\end_inset
+
+ according to the distribution 
+\begin_inset Formula $e^{-f(x)}/\int_{\mathbb{R}^{d}}e^{-f(x)}dx$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Toy Example 
+\begin_inset Formula $d=1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For 
+\begin_inset Formula $d=1$
+\end_inset
+
+ case, the problem can be solved as follows:
+\end_layout
+
+\begin_layout Itemize
+Sample 
+\begin_inset Formula $u$
+\end_inset
+
+ from the uniform distribution from 
+\begin_inset Formula $[0,1]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Let 
+\begin_inset Formula $p(x)=e^{-f(x)}/\int_{-\infty}^{\infty}e^{-f(x)}dx$
+\end_inset
+
+ and 
+\begin_inset Formula $P(x)=\int_{-\infty}^{x}p(x)dx$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Output 
+\begin_inset Formula $P^{-1}(u)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Theorem*
+The algorithm above correctly samples 
+\begin_inset Formula $x\propto e^{-f(x)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $x$
+\end_inset
+
+ be an sample.
+ This is because the cumulative distribution of 
+\begin_inset Formula $x$
+\end_inset
+
+ is equals to the target cumulative distribution:
+\begin_inset Formula 
+\[
+\P(x\leq t)=\P(P^{-1}(u)\leq t)=\P(u\leq P(t))=P(t)=\int_{-\infty}^{x}p(x)dx.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise*
+Extend the algorithm above to higher dimensions 
+\begin_inset Formula $d>1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+This algorithm is inefficient in higher dimension.
+ For many functions, this is not even the best choice for 
+\begin_inset Formula $d=1$
+\end_inset
+
+.
+ For Gaussian distribution, there are better algorithms such as Box–Muller
+ transform and Ziggurat algorithm.
+\end_layout
+
+\begin_layout Section
+Why Sampling?
+\end_layout
+
+\begin_layout Standard
+There are many applications for sampling, such as Bayesian statistics, convex
+ geometry, robust convex optimization.
+ First of all, we note that sampling is a more general problem than optimization.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Draw the picture about increasing difficult problems.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise*
+Suppose we can sample any function 
+\begin_inset Formula $f$
+\end_inset
+
+ in polynomial time.
+ Show that we can find the minimizer of any function in polynomial time.
+\end_layout
+
+\begin_layout Standard
+On the other hand, for smooth function, one can sometimes approximate 
+\begin_inset Formula $e^{-f}$
+\end_inset
+
+ by a Gaussian distribution via expanding 
+\begin_inset Formula $f$
+\end_inset
+
+ at the minimum.
+ Look at Laplace's method in Wikipedia for more information.
+\end_layout
+
+\begin_layout Exercise*
+Using the fact that 
+\begin_inset Formula $N!=\int_{0}^{\infty}e^{-x}x^{N}dx$
+\end_inset
+
+, shows that 
+\begin_inset Formula $N!\sim\sqrt{2\pi N}N^{N}e^{-N}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Toy application
+\end_layout
+
+\begin_layout Standard
+Imagine you have a new design of personal website
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+This example is modified from http://mathamy.com/using-pymc-to-analyze-ab-testing
+-data.html
+\end_layout
+
+\end_inset
+
+, and you want more visitors to download your beloved papers under the new
+ design.
+ As a scientist, you did a comparison test on both versions for few days
+ and see this:
+\end_layout
+
+\begin_layout Itemize
+Old version: Visits 1135.
+ Downloads 5.
+\end_layout
+
+\begin_layout Itemize
+New version: Visits 1149.
+ Downloads 17.
+\end_layout
+
+\begin_layout Standard
+Seems the new version is better.
+ But how can we know if this is just due to random fluctuations and that
+ we need to run a longer test?
+\end_layout
+
+\begin_layout Standard
+Suppose the number of downloads 
+\begin_inset Formula $k$
+\end_inset
+
+ satisfies the Binomial distribution 
+\begin_inset Formula $B(n,r)$
+\end_inset
+
+.
+ Recall the Bayes' theorem that
+\begin_inset Formula 
+\[
+\P(A|B)=\frac{\P(B|A)\P(A)}{\P(B)}.
+\]
+
+\end_inset
+
+The event 
+\begin_inset Formula $B$
+\end_inset
+
+ is we observe the number of downloads 
+\begin_inset Formula $k$
+\end_inset
+
+ in 
+\begin_inset Formula $n$
+\end_inset
+
+ downloads and we want to know the probability of event 
+\begin_inset Formula $A$
+\end_inset
+
+: the download rate is 
+\begin_inset Formula $r$
+\end_inset
+
+.
+ Since we have no prior information about the distribution of 
+\begin_inset Formula $r$
+\end_inset
+
+ (the download rate), we simply assume 
+\begin_inset Formula $r$
+\end_inset
+
+ is uniform between 
+\begin_inset Formula $[0,1]$
+\end_inset
+
+.
+ Hence, the probability distribution of the download rate 
+\begin_inset Formula $r$
+\end_inset
+
+ is
+\begin_inset Formula 
+\begin{align*}
+\P(r|k,n) & =\frac{\P(k,n|r)\P(r)}{\P(k,n)}\\
+ & =\frac{\binom{n}{k}r^{k}(1-r)^{n-k}}{\int_{0}^{1}\binom{n}{k}r^{k}(1-r)^{n-k}dp}\\
+ & \propto r^{k}(1-r)^{n-k}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We can simply draw the distribution of 
+\begin_inset Formula $\P(r|k=5,n=1135)$
+\end_inset
+
+ and 
+\begin_inset Formula $\P(r|k=17,n=1149)$
+\end_inset
+
+ and see that 
+\begin_inset Formula $\P(r_{\text{new}}>r_{\text{old}})>0.99$
+\end_inset
+
+.
+ This shows that the new version is indeed better.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Draw the picture.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For this model, one can do all calculation exactly without sampling.
+ In reality, a model can depends on many parameters.
+ Sampling from the parameters (via the Bayes' fromula) allows you to approximate
+ly answer many questions without doing a crazy multi-dimensional integration,
+ which is often computationally infeasible.
+\end_layout
+
+\begin_layout Standard
+Compare to simply finding the best parameters to fit the existing data,
+ sampling gives you a lot more information such as how confident is the
+ result and how much is the variance.
+ For example, Henri did an interesting experiment on this
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+https://henripal.github.io/blog/langevin
+\end_layout
+
+\end_inset
+
+.
+ He trained a neural network on MNIST (a dataset on images from 0 to 9)
+ and give the network some letter to recognize.
+ Instead of returning low confidence result, his neural network gives high
+ confidence that the given letters are some numbers.
+\end_layout
+
+\begin_layout Standard
+There are many researchers/professors whose daily jobs are just creating
+ models and applying sampling techniques to answer questions about data.
+ The goal of this lecture is merely to show you some theory background about
+ sampling.
+\end_layout
+
+\begin_layout Subsection
+Theory Applications
+\end_layout
+
+\begin_layout Standard
+In general, sampling is useful whenever we need to explore the domain.
+ Here are some theory results that crucially relies on the fact we can sample
+ 
+\begin_inset Formula $x$
+\end_inset
+
+ according to 
+\begin_inset Formula $e^{-f(x)}$
+\end_inset
+
+ in polynomial time whenever 
+\begin_inset Formula $f$
+\end_inset
+
+ is convex.
+\end_layout
+
+\begin_layout Subsubsection
+Explore Space
+\end_layout
+
+\begin_layout Standard
+As in the last lecture, we see that bandit problem is about explore and
+ exploit.
+ For simple problems, one can explore the space via just uniformly sample
+ the state space.
+ But when the state space is infinite, it is much more difficult.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Convex Bandit
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+https://arxiv.org/abs/1607.03084
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Given a sequence of convex functions 
+\begin_inset Formula $f_{i}$
+\end_inset
+
+ defined on 
+\begin_inset Formula $\{x\in\mathbb{R}^{d}:\|x\|_{2}\leq1\}$
+\end_inset
+
+ with value between 
+\begin_inset Formula $0$
+\end_inset
+
+ and 
+\begin_inset Formula $1$
+\end_inset
+
+.
+ At step 
+\begin_inset Formula $i$
+\end_inset
+
+, we need to output a point 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ and receive the loss 
+\begin_inset Formula $f_{i}(x_{i})$
+\end_inset
+
+.
+ The only information we are given about 
+\begin_inset Formula $f_{i}$
+\end_inset
+
+ is the loss 
+\begin_inset Formula $f_{i}(x_{i})$
+\end_inset
+
+ received.
+ There is an algorithm that can find a sequence of 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ adaptively such that
+\begin_inset Formula 
+\[
+\sum_{i=1}^{T}f_{i}(x_{i})\leq\min_{x}\sum_{i=1}^{T}f_{i}(x)+O(\sqrt{T}(d\log T)^{O(1)}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Robust to adversary
+\end_layout
+
+\begin_layout Standard
+Another benefit of sampling compared to optimization is that the output
+ is more robust compared to noise and hence useful for optimizing noisy
+ function.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Convex Optimization using Function Value
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+https://arxiv.org/pdf/1501.07242.pdf
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Given an approximately convex function 
+\begin_inset Formula $f$
+\end_inset
+
+.
+ Suppose that there is a convex function 
+\begin_inset Formula $g$
+\end_inset
+
+ such that 
+\begin_inset Formula $|f(x)-g(x)|\leq\epsilon$
+\end_inset
+
+.
+ We can find 
+\begin_inset Formula $x$
+\end_inset
+
+ such that 
+\begin_inset Formula $f(x)\leq\min_{x}f(x)+O(\epsilon n)$
+\end_inset
+
+ in polynomial time.
+ Furthermore, 
+\begin_inset Formula $O(\epsilon n)$
+\end_inset
+
+ is the best possible informatically.
+\end_layout
+
+\begin_layout Subsubsection
+Extract global information
+\end_layout
+
+\begin_layout Standard
+Sampling is also useful for extracting global information about convex set.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Volume Computation
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+https://dl.acm.org/citation.cfm?id=102783
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+Given a convex set 
+\begin_inset Formula $K\subset\R^{d}$
+\end_inset
+
+.
+ We can compute 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ such that 
+\begin_inset Formula $\gamma=(1\pm\epsilon)\vol K$
+\end_inset
+
+ in time polynomial in 
+\begin_inset Formula $d/\epsilon$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Finally, we note that informatically best algorithm on convex optimization
+ result uses sampling, such as the center of gravity methods, interior point
+ method for universal barrier function.
+\end_layout
+
+\begin_layout Section
+Continuous Langevin Dynamic
+\end_layout
+
+\begin_layout Standard
+In this and next section, we discuss a process for sampling from 
+\begin_inset Formula $e^{-f}$
+\end_inset
+
+ called Langevin Dynamic.
+ This process can also be viewed as a stochastic version of gradient descent.
+ While gradient descent corresponds to an ordinary differential equation
+ (ODE), stochastic gradient descent corresponds to a stochastic differential
+ equation (SDE):
+\begin_inset Formula 
+\begin{align*}
+dx_{t} & =-\nabla f(x_{t})dt+\sqrt{2}dW_{t},\\
+x_{0} & =\text{initial point}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Here 
+\begin_inset Formula $f:\R^{n}\rightarrow\R$
+\end_inset
+
+ is the function in 
+\begin_inset Formula $e^{-f}$
+\end_inset
+
+ we want to sample, 
+\begin_inset Formula $x_{t}$
+\end_inset
+
+ is the random variable at time 
+\begin_inset Formula $t$
+\end_inset
+
+ and 
+\begin_inset Formula $dW_{t}$
+\end_inset
+
+ is infinitesimal Brownian motion.
+ We first discuss the continuous version here only for simplicity.
+ In the next section, we will analyze the discrete version.
+\end_layout
+
+\begin_layout Subsection
+Notation: Basics of SDE
+\end_layout
+
+\begin_layout Standard
+We will first explain a little bit about SDE notation.
+\end_layout
+
+\begin_layout Definition
+Brownian motion as the unique random process satisfying:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $W_{0}=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $W_{t}$
+\end_inset
+
+ is continuous.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $W_{t_{1}}-W_{t_{2}}$
+\end_inset
+
+ is independent to 
+\begin_inset Formula $W_{t_{2}}-W_{t_{3}}$
+\end_inset
+
+ for any 
+\begin_inset Formula $t_{1}\geq t_{2}\geq t_{3}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $W_{t}-W_{s}\sim N(0,t-s)$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+We will also abuse 
+\begin_inset Formula $W_{t}$
+\end_inset
+
+ to denote any 
+\begin_inset Formula $m$
+\end_inset
+
+ dimensional Brownian motion where 
+\begin_inset Formula $W_{t,i}$
+\end_inset
+
+ is an independent copy of Brownian motion for each 
+\begin_inset Formula $i\in[m]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Now, consider SDE of the form
+\begin_inset Formula 
+\[
+dx_{t}=\mu(x_{t})dt+\sigma(x_{t})dW_{t}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $x_{t}\in\R^{d}$
+\end_inset
+
+, 
+\begin_inset Formula $\mu(x_{t})\in\R^{d}$
+\end_inset
+
+, 
+\begin_inset Formula $\sigma(x_{t})\in\R^{d\times m}$
+\end_inset
+
+ and 
+\begin_inset Formula $dW_{t}\in\R^{m}$
+\end_inset
+
+.
+ We call 
+\begin_inset Formula $\mu dt$
+\end_inset
+
+ as the drift term and 
+\begin_inset Formula $\sigma dW$
+\end_inset
+
+ as the diffusion term.
+ To define it informally, consider the following discrete process 
+\begin_inset Formula 
+\begin{align*}
+x_{t+h} & =x_{t}+\mu(x_{t})(t+h-t)+\sigma(x_{t})(W_{t+h}-W_{t})\\
+ & =x_{t}+h\mu(x_{t})+\sqrt{h}\sigma(x_{t})\zeta_{t}
+\end{align*}
+
+\end_inset
+
+with 
+\begin_inset Formula $\zeta_{t}$
+\end_inset
+
+ sampled independently from 
+\begin_inset Formula $N(0,I)$
+\end_inset
+
+.
+ When we take the step size 
+\begin_inset Formula $h\rightarrow0$
+\end_inset
+
+, this discrete process converges to the continuous one.
+ 
+\end_layout
+
+\begin_layout Standard
+Beware that the diffusion term scales with 
+\begin_inset Formula $\sqrt{h}$
+\end_inset
+
+ instead of 
+\begin_inset Formula $h$
+\end_inset
+
+.
+ To see why, we consider the simplest SDE:
+\begin_inset Formula 
+\[
+dx_{t}=dW_{t},x_{0}=0.
+\]
+
+\end_inset
+
+The solution of this SDE is simply 
+\begin_inset Formula $x_{t}=W_{t}$
+\end_inset
+
+.
+ If we 
+\emph on
+incorrectly
+\emph default
+ discretize the equation by 
+\begin_inset Formula $x_{t+h}=x_{t}+h\zeta_{t}$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $\zeta_{t}$
+\end_inset
+
+ are independent, we have that 
+\begin_inset Formula 
+\[
+\var x_{t+h}=\var x_{t}+h^{2}.
+\]
+
+\end_inset
+
+Summing up 
+\begin_inset Formula $\frac{1}{h}$
+\end_inset
+
+ steps, we have
+\begin_inset Formula 
+\[
+\var x_{t}=\var x_{0}+\frac{t}{h}\cdot h^{2}=th.
+\]
+
+\end_inset
+
+Taking 
+\begin_inset Formula $h\rightarrow0$
+\end_inset
+
+, we would get 
+\begin_inset Formula $\var x_{t}=0$
+\end_inset
+
+.
+ The limit is deterministic because the cancellation of random variables.
+ By a similar argument, one can show that 
+\begin_inset Formula $\sqrt{h}$
+\end_inset
+
+ is the only scaling that converges to a random process.
+\end_layout
+
+\begin_layout Standard
+A key difference between ODE and SDE is the chain rule.
+ Suppose we have a ODE 
+\begin_inset Formula $\frac{dx_{t}}{dt}=f(x_{t}).$
+\end_inset
+
+ Then, chain rule shows that
+\begin_inset Formula 
+\[
+\frac{dg(x_{t})}{dt}=g'(x_{t})\frac{dx_{t}}{dt}=g'(x_{t})f(x_{t}).
+\]
+
+\end_inset
+
+In comparison, the chain rule for SDE, call Ito's lemma, has one more extra
+ term:
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Ito's lemma
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:itos"
+
+\end_inset
+
+For any process 
+\begin_inset Formula $x_{t}\in\R^{d}$
+\end_inset
+
+ satisfying 
+\begin_inset Formula $dx_{t}=\mu(x_{t})dt+\sigma(x_{t})dW_{t}$
+\end_inset
+
+ where 
+\begin_inset Formula $\mu(x_{t})\in\R^{d}$
+\end_inset
+
+ and 
+\begin_inset Formula $\sigma(x_{t})\in\R^{d\times m}$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+df(x_{t})=\nabla f(x_{t})^{\top}\mu(x_{t})dt+\nabla f(x_{t})^{\top}\sigma(x_{t})dW_{t}+\frac{1}{2}\tr(\sigma(x_{t})^{\top}\nabla^{2}f(x_{t})\sigma(x_{t}))dt.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Proof: (Intuition only)
+\end_layout
+
+\end_inset
+
+Consider
+\begin_inset Formula 
+\[
+x_{t+h}=x_{t}+h\mu(x_{t})+\sqrt{h}\sigma(x_{t})\zeta_{t}.
+\]
+
+\end_inset
+
+Then, we have
+\begin_inset Formula 
+\begin{align*}
+f(x_{t+h})= & f(x_{t})+\nabla f(x_{t})^{\top}(x_{t+h}-x_{t})+\frac{1}{2}(x_{t+h}-x_{t})^{\top}\nabla^{2}f(x_{t})(x_{t+h}-x_{t})\\
+= & f(x_{t})+h\nabla f(x_{t})^{\top}\mu(x_{t})+\sqrt{h}\nabla f(x_{t})^{\top}\sigma(x_{t})\zeta_{t}\\
+ & +\frac{h}{2}\zeta_{t}^{\top}\sigma(x_{t})^{\top}\nabla^{2}f(x_{t})\sigma(x_{t})\zeta_{t}+O(h^{1.5}).
+\end{align*}
+
+\end_inset
+
+For the terms involving 
+\begin_inset Formula $h$
+\end_inset
+
+, we only care about its expected value.
+ The variance of 
+\begin_inset Formula $h$
+\end_inset
+
+ related term are too small at the limit.
+ Note that
+\begin_inset Formula 
+\begin{align*}
+\E\zeta_{t}^{\top}\sigma(x_{t})^{\top}\nabla^{2}f(x_{t})\sigma(x_{t})\zeta_{t} & =\E\tr\sigma(x_{t})^{\top}\nabla^{2}f(x_{t})\sigma(x_{t})\zeta_{t}\zeta_{t}^{\top}\\
+ & =\tr\sigma(x_{t})^{\top}\nabla^{2}f(x_{t})\sigma(x_{t}).
+\end{align*}
+
+\end_inset
+
+Hence, we have
+\begin_inset Formula 
+\begin{align*}
+f(x_{t+h})= & f(x_{t})+h\left(\nabla f(x_{t})^{\top}\mu(x_{t})+\frac{1}{2}\tr\sigma(x_{t})^{\top}\nabla^{2}f(x_{t})\sigma(x_{t})\right)\\
+ & +\sqrt{h}\nabla f(x_{t})^{\top}\sigma(x_{t})\zeta_{t}+O(h^{1.5})+O(h\text{ mean }0\text{ terms})
+\end{align*}
+
+\end_inset
+
+This explains the formula when we take 
+\begin_inset Formula $h\rightarrow0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Exercise
+(for students who do options trading).
+ Assume the stock price 
+\begin_inset Formula $S$
+\end_inset
+
+ follows a geometric Brownian motion, namely
+\begin_inset Formula 
+\[
+dS=\mu Sdt+\sigma SdW_{t}.
+\]
+
+\end_inset
+
+Derive the fair pricing for an European option.
+ Hints: a pricing is correct if one can eliminate the risk of the option
+ by buying and selling the underlying asset in some right way.
+\end_layout
+
+\begin_layout Standard
+See the Black–Scholes equation in the Wikipedia for the answer for the above
+ exercise.
+ As with the chain rule, there are numerous other applications of Ito's
+ lemma.
+\end_layout
+
+\begin_layout Subsection
+Correctness: Fokker–Planck equation
+\end_layout
+
+\begin_layout Standard
+Now, we show that this process converges to 
+\begin_inset Formula $e^{-f}$
+\end_inset
+
+ in continuous time.
+ The proof relies on the following general theorem about the distribution
+ induced by an SDE.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Fokker–Planck equation
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:fokker_planck"
+
+\end_inset
+
+For any process 
+\begin_inset Formula $x_{t}\in\Rn$
+\end_inset
+
+ satisfying 
+\begin_inset Formula $dx_{t}=\mu(x_{t})dt+\sigma(x_{t})dW_{t}$
+\end_inset
+
+ where 
+\begin_inset Formula $\mu(x_{t})\in\Rn$
+\end_inset
+
+ and 
+\begin_inset Formula $\sigma(x_{t})\in\R^{n\times m}$
+\end_inset
+
+ with the initial point 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ drawn from 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+.
+ Then, the distribution 
+\begin_inset Formula $p_{t}$
+\end_inset
+
+ of 
+\begin_inset Formula $x_{t}$
+\end_inset
+
+ satisfies the equation
+\begin_inset Formula 
+\[
+\frac{dp_{t}}{dt}=-\sum_{i}\frac{\partial}{\partial x_{i}}(\mu(x)_{i}p_{t}(x))+\frac{1}{2}\sum_{i,j}\frac{\partial^{2}}{\partial x_{i}\partial x_{j}}\left[(D(x))_{ij}p_{t}(x)\right]
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $D(x)=\sigma(x)\sigma(x)^{\top}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+For any smooth function 
+\begin_inset Formula $\phi$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+\E_{x\sim p_{t}}\phi(x)=\E\phi(x_{t}).
+\]
+
+\end_inset
+
+Taking derivatives on the both sides with respect to 
+\begin_inset Formula $t$
+\end_inset
+
+ and using It
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+^{o}
+\end_layout
+
+\end_inset
+
+'s lemma (Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:itos"
+
+\end_inset
+
+), we have that
+\begin_inset Formula 
+\begin{align*}
+\int\phi(x)dp_{t}(x)dx & =\E\left(\nabla\phi(x_{t})^{\top}\mu(x_{t})dt+\nabla\phi(x_{t})^{\top}\sigma(x_{t})dW_{t}+\frac{1}{2}\tr(\sigma(x_{t})^{\top}\nabla^{2}\phi(x_{t})\sigma(x_{t}))dt\right)\\
+ & =\E\left(\nabla\phi(x_{t})^{\top}\mu(x_{t})dt+\frac{1}{2}\tr(\nabla^{2}\phi(x_{t})D(x_{t}))dt\right).
+\end{align*}
+
+\end_inset
+
+Using 
+\begin_inset Formula $x_{t}\sim p_{t}$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+\int\phi(x)\frac{dp_{t}}{dt}dx=\int\nabla\phi(x)^{\top}\mu(x)p_{t}(x)+\frac{1}{2}\tr(\nabla^{2}\phi(x)D(x))p_{t}(x)dx.
+\]
+
+\end_inset
+
+Integrating by parts, 
+\begin_inset Formula 
+\[
+\int\nabla\phi(x)^{\top}\mu(x)p_{t}(x)dx=-\int\phi(x)\sum_{i}\frac{\partial}{\partial x_{i}}(\mu_{i}(x)p_{t}(x))dx.
+\]
+
+\end_inset
+
+Similarly, integrating by parts twice gives
+\begin_inset Formula 
+\begin{align*}
+\int\tr(\sigma(x)^{\top}\nabla^{2}\phi(x)\sigma(x))p_{t}(x)dx & =\int\tr(\nabla^{2}\phi(x)\sigma(x)\sigma(x)^{\top})p_{t}(x)dx\\
+ & =\sum_{i,j}\int\phi(x)\frac{\partial^{2}}{\partial x_{i}\partial x_{j}}\left[(D(x))_{ij}p_{t}(x)\right]dx.
+\end{align*}
+
+\end_inset
+
+Hence, 
+\begin_inset Formula 
+\[
+\int\phi(x)\left[\frac{dp_{t}}{dt}+\sum_{i}\frac{\partial}{\partial x_{i}}(\mu(x)_{i}p_{t}(x))-\frac{1}{2}\sum_{i,j}\frac{\partial^{2}}{\partial x_{i}\partial x_{j}}\left[(D(x))_{ij}p_{t}(x)\right]\right]dx=0
+\]
+
+\end_inset
+
+for any smooth 
+\begin_inset Formula $\phi$
+\end_inset
+
+.
+ Therefore, we have the conclusion of the lemma.
+\end_layout
+
+\begin_layout Proof
+We apply the Fokker–Planck equation to the Langevin dynamics.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:langevin_stationary"
+
+\end_inset
+
+For any smooth function 
+\begin_inset Formula $f$
+\end_inset
+
+, the density proportional to 
+\begin_inset Formula $F=e^{-f}$
+\end_inset
+
+ is stationary for the Langevin dynamics.
+\end_layout
+
+\begin_layout Proof
+The Fokker–Planck equation (Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:fokker_planck"
+
+\end_inset
+
+) shows that the distribution 
+\begin_inset Formula $p_{t}$
+\end_inset
+
+ of 
+\begin_inset Formula $x_{t}$
+\end_inset
+
+ satisfies 
+\begin_inset Formula 
+\begin{equation}
+\frac{dp_{t}}{dt}=\sum_{i}\frac{\partial}{\partial x_{i}}(\frac{\partial f(x)}{\partial x_{i}}p_{t}(x))+\sum_{i}\frac{\partial^{2}}{\partial x_{i}^{2}}\left[p_{t}(x)\right].\label{eq:dp_LD}
+\end{equation}
+
+\end_inset
+
+We can verify that 
+\begin_inset Formula $p_{t}(x)\propto e^{-f(x)}$
+\end_inset
+
+ is a solution.
+\end_layout
+
+\begin_layout Subsection
+Mixing Time
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Will skip in the lecture
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Here we show that Langevin dynamics is simply gradient descent for the function
+ 
+\begin_inset Formula $F(\rho)=\KL(\rho\|\nu)$
+\end_inset
+
+ on the Wasserstein space where 
+\begin_inset Formula $\nu=e^{-f(x)}/\int e^{-f(y)}dy$
+\end_inset
+
+.
+ For this, we first define the Wasserstein space.
+\end_layout
+
+\begin_layout Definition
+The Wasserstein space 
+\begin_inset Formula $P_{2}(\Rn)$
+\end_inset
+
+ on 
+\begin_inset Formula $\Rn$
+\end_inset
+
+ is the manifold on the set of probability measures on 
+\begin_inset Formula $\Rn$
+\end_inset
+
+ such that the shortest path distance of two measures 
+\begin_inset Formula $x,y$
+\end_inset
+
+ in this manifold is exactly equal to the Wasserstein distance between 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $y$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+For any 
+\begin_inset Formula $p\in P_{2}(\Rn)$
+\end_inset
+
+ and 
+\begin_inset Formula $v\in T_{p}P_{2}(\Rn)$
+\end_inset
+
+, we can write 
+\begin_inset Formula $v(x)=\nabla\cdot(p(x)\nabla\lambda(x))$
+\end_inset
+
+ for some function 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ on 
+\begin_inset Formula $\Rn$
+\end_inset
+
+.
+ Furthermore, the length of 
+\begin_inset Formula $v$
+\end_inset
+
+ in this metric is given by
+\begin_inset Formula 
+\[
+\|v\|_{p}^{2}=\E_{x\sim p}\|\nabla\lambda(x)\|^{2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $p\in P_{2}(\Rn)$
+\end_inset
+
+ and 
+\begin_inset Formula $v\in T_{p}P_{2}(\Rn)$
+\end_inset
+
+.
+ We will show that any change of density 
+\begin_inset Formula $v$
+\end_inset
+
+ can be represented by a vector field 
+\begin_inset Formula $c$
+\end_inset
+
+ on 
+\begin_inset Formula $\Rn$
+\end_inset
+
+ as follows: Consider the process 
+\begin_inset Formula $x_{0}\sim p$
+\end_inset
+
+ and 
+\begin_inset Formula $\frac{d}{dt}x_{t}=c(x_{t})$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $p_{t}$
+\end_inset
+
+ be the density of the distribution of 
+\begin_inset Formula $x_{t}$
+\end_inset
+
+.
+ To compute 
+\begin_inset Formula $\frac{d}{dt}p_{t}$
+\end_inset
+
+, we follow the same idea as in the proof as Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:fokker_planck"
+
+\end_inset
+
+.
+ For any smooth function 
+\begin_inset Formula $\phi$
+\end_inset
+
+, we have that 
+\begin_inset Formula $\E_{x\sim p_{t}}\phi(x)=\E\phi(x_{t}).$
+\end_inset
+
+ Taking derivatives on the both sides with respect to 
+\begin_inset Formula $t$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+\int\phi(x)\frac{d}{dt}p_{t}(x)dx=\int\nabla\phi(x)^{\top}c(x)p_{t}(x)dx=-\int\nabla\cdot(c(x)p_{t}(x))\phi(x)dx
+\]
+
+\end_inset
+
+where we used integration by parts at the end.
+ Since this holds for all 
+\begin_inset Formula $\phi$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+\frac{dp_{t}(x)}{dt}=-\nabla\cdot(p_{t}(x)c(x)).
+\]
+
+\end_inset
+
+Since we are interested only in the vector fields that generate minimum
+ movement in Wasserstein distance, we consider the optimization problem
+\begin_inset Formula 
+\[
+\min_{-\nabla\cdot(pc)=v}\frac{1}{2}\int p(x)\|c(x)\|^{2}dx
+\]
+
+\end_inset
+
+where we can think 
+\begin_inset Formula $v$
+\end_inset
+
+ is the change of 
+\begin_inset Formula $p_{t}$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $\lambda(x)$
+\end_inset
+
+ be the Lagrangian multiplier of the constraint 
+\begin_inset Formula $-\nabla\cdot(pc)=v$
+\end_inset
+
+.
+ Then, the problem becomes
+\begin_inset Formula 
+\begin{align*}
+ & \min_{c}\frac{1}{2}\int p(x)\|c(x)\|^{2}dx-\int\lambda(x)\nabla\cdot(p(x)c(x))dx.\\
+= & \min_{c}\frac{1}{2}\int p(x)\|c(x)\|^{2}dx+\int\nabla\lambda(x)^{\top}c(x)\cdot p(x)dx.
+\end{align*}
+
+\end_inset
+
+Now, we note that the problem is a pointwise optimization problem with the
+ minimizer is given by
+\begin_inset Formula 
+\[
+c(x)=-\nabla\lambda(x).
+\]
+
+\end_inset
+
+This proves that any vector fields that generate minimum movement in Wasserstein
+ distance is a gradient field.
+ Also, we have that 
+\begin_inset Formula $v(x)=\nabla\cdot(p(x)\nabla\lambda(x)).$
+\end_inset
+
+ Note that the right hand side is an elliptical differential equation and
+ hence for any 
+\begin_inset Formula $v$
+\end_inset
+
+ with 
+\begin_inset Formula $\int v(x)dx=0$
+\end_inset
+
+, there is an unique solution 
+\begin_inset Formula $\lambda(x)$
+\end_inset
+
+.
+ Therefore, we can write 
+\begin_inset Formula $v(x)=\nabla\cdot(p(x)\nabla\lambda(x))$
+\end_inset
+
+ for some 
+\begin_inset Formula $\lambda(x)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Next, we note that the movement is given by
+\begin_inset Formula 
+\[
+\|v\|_{p}^{2}=\int p(x)\|c(x)\|^{2}dx=\E_{x\sim p}\|\nabla\lambda(x)\|^{2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now, we show that Langevin Dynamics is simply gradient descent on KL distance
+ under the Wasserstein space.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:LD_GD"
+
+\end_inset
+
+Let 
+\begin_inset Formula $\rho_{t}$
+\end_inset
+
+ be the density of the distribution produced by Langevin Dynamics for the
+ target distribution 
+\begin_inset Formula $\nu=e^{-f(x)}/\int e^{-f(y)}dy$
+\end_inset
+
+.
+ Then, we have that
+\begin_inset Formula 
+\[
+\frac{d\rho}{dt}=\argmin_{v\in T_{p}P_{2}(\Rn)}\left\langle \nabla F(\rho),v\right\rangle _{p}+\frac{1}{2}\|v\|_{p}^{2}.
+\]
+
+\end_inset
+
+Namely, 
+\begin_inset Formula $\rho_{t}$
+\end_inset
+
+ follows continuous gradient descent in the density space for the function
+ 
+\begin_inset Formula $F(\rho)=\KL(\rho\|\nu)$
+\end_inset
+
+ under the Wasserstein metric.
+\end_layout
+
+\begin_layout Proof
+For any function 
+\begin_inset Formula $c$
+\end_inset
+
+, the optimization problem of interest satisfies
+\begin_inset Formula 
+\[
+\min_{\delta=\nabla\cdot(\rho\nabla\lambda)}\left\langle c,\delta\right\rangle +\frac{1}{2}\int\rho(x)\|\nabla\lambda(x)\|^{2}dx=\min_{\nabla\lambda}-\int\rho(x)\cdot\nabla c(x)^{\top}\nabla\lambda(x)dx+\frac{1}{2}\int\rho(x)\|\nabla\lambda(x)\|^{2}dx.
+\]
+
+\end_inset
+
+Solving the right hand side, we have 
+\begin_inset Formula $\nabla c=\nabla\lambda$
+\end_inset
+
+ and hence 
+\begin_inset Formula $\delta=\nabla\cdot(\rho\nabla c)$
+\end_inset
+
+.
+ Now, we note that 
+\begin_inset Formula $\nabla F(\rho)=\log\frac{\rho}{\nu}-1$
+\end_inset
+
+.
+ Therefore, 
+\begin_inset Formula 
+\begin{align*}
+\frac{d\rho}{dt} & =\nabla\cdot(\rho\nabla(\log\frac{\rho}{\nu}-1))\\
+ & =\nabla\cdot(\rho\nabla\log\frac{\rho}{\nu})\\
+ & =\nabla\cdot\left(\rho\nabla f\right)+\Delta\rho
+\end{align*}
+
+\end_inset
+
+which is exactly equal to (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:dp_LD"
+
+\end_inset
+
+).
+ 
+\end_layout
+
+\begin_layout Standard
+To analyze this continuous descent on the Wasserstein space, we first prove
+ that continuous gradient descent converges exponentially whenever 
+\begin_inset Formula $F$
+\end_inset
+
+ is strongly convex.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:grad-dom"
+
+\end_inset
+
+Let 
+\begin_inset Formula $F$
+\end_inset
+
+ be a function satisfying 
+\begin_inset Quotes eld
+\end_inset
+
+Gradient Dominance
+\begin_inset Quotes erd
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{equation}
+\norm{\nabla F(x)}_{x}^{2}\ge\alpha\cdot(F(x)-\min_{y}F(y))\quad\text{for all }x\label{eq:LD_strong_convexity}
+\end{equation}
+
+\end_inset
+
+on the manifold with the metric 
+\begin_inset Formula $\|\cdot\|_{x}$
+\end_inset
+
+ where 
+\begin_inset Formula $\nabla$
+\end_inset
+
+ is the gradient on the manifold.
+ Then, the process 
+\begin_inset Formula $dx_{t}=-\nabla F(x_{t})dt$
+\end_inset
+
+ converges exponentially, i.e., 
+\begin_inset Formula $F(x_{t})-\min_{y}F(y)\le e^{-\alpha t}(F(x_{0})-\min_{y}F(y))$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+We write
+\begin_inset Formula 
+\[
+\frac{d}{dt}(F(x)-\min_{y}F(y))=\langle\nabla F(x_{t}),\frac{dx_{t}}{dt}\rangle_{x_{t}}=-\|\nabla F(x_{t})\|_{x_{t}}^{2}\leq-\alpha(F(x)-\min_{y}F(y)).
+\]
+
+\end_inset
+
+The conclusion follows.
+\end_layout
+
+\begin_layout Standard
+Finally, we note that the log-Sobolev inequality for the density 
+\begin_inset Formula $\nu$
+\end_inset
+
+ can be re-stated as the condition (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:LD_strong_convexity"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:log_sob_LD"
+
+\end_inset
+
+Fix a density 
+\begin_inset Formula $\nu$
+\end_inset
+
+.
+ Then the log-Sobolev inequality, namely, for every smooth function 
+\begin_inset Formula $g$
+\end_inset
+
+, 
+\begin_inset Formula 
+\[
+2\int\norm{\nabla g}^{2}\,d\nu\ge\alpha\int g(x)^{2}\log g(x)^{2}\ d\nu
+\]
+
+\end_inset
+
+ implies the condition (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:LD_strong_convexity"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Proof
+Take 
+\begin_inset Formula $g(x)=\sqrt{\frac{\rho(x)}{\nu(x)}}$
+\end_inset
+
+, the log-Sobolev inequality shows that 
+\begin_inset Formula 
+\[
+\frac{1}{2}\int\rho(x)\norm{\nabla\log\frac{\rho(x)}{\nu(x)}}^{2}\,dx\geq\alpha\cdot\int\rho(x)\log\frac{\rho(x)}{\nu(x)}\,dx\text{ for all }\rho.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+As we calculate in Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:LD_GD"
+
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+\norm{\nabla F(\rho)}_{\rho}^{2}=\int\rho(x)\norm{\nabla\log\frac{\rho(x)}{\nu(x)}}^{2}\,dx.
+\]
+
+\end_inset
+
+Therefore, this is exactly the condition (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:LD_strong_convexity"
+
+\end_inset
+
+) with coefficient 
+\begin_inset Formula $2\alpha$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Combining Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:log_sob_LD"
+
+\end_inset
+
+ and Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:grad-dom"
+
+\end_inset
+
+, we have the following result:
+\end_layout
+
+\begin_layout Theorem
+Let 
+\begin_inset Formula $f$
+\end_inset
+
+ be a smooth function with log-Sobolev constant 
+\begin_inset Formula $\alpha$
+\end_inset
+
+.
+ Then the Langevin dynamics 
+\begin_inset Formula 
+\[
+dx_{t}=-\nabla f(x)dt+\sqrt{2}dW_{t}
+\]
+
+\end_inset
+
+converges exponentially in KL-divergence to the density 
+\begin_inset Formula $\nu(x)\propto e^{-f(x)}$
+\end_inset
+
+ with mixing rate 
+\begin_inset Formula $O(\frac{1}{\alpha})$
+\end_inset
+
+, i.e., 
+\begin_inset Formula $KL(x_{t},\nu)\le e^{-2\alpha t}KL(x_{0},\nu)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+We note that many distributions have log-Sobolev constant larger than 
+\begin_inset Formula $0$
+\end_inset
+
+, including logconcave distributions.
+\end_layout
+
+\begin_layout Section
+Discrete Langevin Dynamic
+\end_layout
+
+\begin_layout Standard
+In this section, we discuss the discrete Langevin Dynamic:
+\begin_inset Formula 
+\begin{equation}
+x_{t+h}=x_{t}-\nabla f(x_{t})h+\sqrt{2h}\zeta_{t}\label{eq:DLD}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $\zeta_{t}\sim N(0,I)$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Subsection
+Relation with the stochastic gradient descent
+\end_layout
+
+\begin_layout Standard
+Many functions in machine learning is of the form
+\begin_inset Formula 
+\[
+f(x)=\frac{1}{n}\sum_{i\in[n]}f_{i}(x).
+\]
+
+\end_inset
+
+Often, we minimize such functions via stochastic gradient descent:
+\begin_inset Formula 
+\[
+x_{t+h}=x_{t}-h\nabla f_{i}(x)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $i$
+\end_inset
+
+ is randomly sampled from 
+\begin_inset Formula $[n]$
+\end_inset
+
+.
+ We can rewrite the equation above as
+\begin_inset Formula 
+\[
+x_{t+h}=x_{t}-h\nabla f(x)-h(\nabla f_{i}(x)-\nabla f(x)).
+\]
+
+\end_inset
+
+Note that 
+\begin_inset Formula $h(\nabla f_{i}(x)-\nabla f(x))$
+\end_inset
+
+ is a mean 
+\begin_inset Formula $0$
+\end_inset
+
+ term some variance.
+ If we ends our algorithm with some positive learning rate, we are essentially
+ running a discrete Langevin Dynamic with the diffusion term 
+\begin_inset Formula $\sqrt{2h}\zeta_{t}$
+\end_inset
+
+ replaced by some other diffusion depending on the function 
+\begin_inset Formula $f$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Metropolis–Hastings algorithm
+\end_layout
+
+\begin_layout Standard
+In general, the stationary distribution for 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:DLD"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is not 
+\begin_inset Formula $e^{-f(x)}$
+\end_inset
+
+.
+ However, there is a technique that corrects the stationary distribution.
+ More general, we can think 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:DLD"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is a Markov chain (but with infinitely many states).
+ The following Lemma gives a sufficient condition for a Markov chain having
+ a stationary distribution 
+\begin_inset Formula $\pi$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:symmetric"
+
+\end_inset
+
+Given a Markov chain 
+\begin_inset Formula $p(x\rightarrow y)$
+\end_inset
+
+ and a distribution 
+\begin_inset Formula $\pi$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $\pi(x)p(x\rightarrow y)=\pi(y)p(y\rightarrow x)$
+\end_inset
+
+ for any 
+\begin_inset Formula $x\neq y$
+\end_inset
+
+, then we have that 
+\begin_inset Formula $\pi$
+\end_inset
+
+ is a stationary distribution of the chain.
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $P\pi$
+\end_inset
+
+ is the distribution after one step of the Markov chain starting from 
+\begin_inset Formula $\pi$
+\end_inset
+
+.
+ Then, we have that
+\begin_inset Formula 
+\[
+(P\pi)_{y}=\sum_{x}\pi(x)p(x\rightarrow y)=\sum_{x}\pi(y)p(y\rightarrow x)=\pi(y)
+\]
+
+\end_inset
+
+where we used that 
+\begin_inset Formula $p(y\rightarrow\cdot)$
+\end_inset
+
+ is a probability distribution.
+ Hence, we have 
+\begin_inset Formula $P\pi=\pi$
+\end_inset
+
+, namely, 
+\begin_inset Formula $\pi$
+\end_inset
+
+ is a stationary distribution.
+\end_layout
+
+\begin_layout Standard
+When the condition 
+\begin_inset Formula $\pi(x)p(x\rightarrow y)=\pi(y)p(y\rightarrow x)$
+\end_inset
+
+ is violated, say if 
+\begin_inset Formula $p(x\rightarrow y)>\frac{\pi(y)p(y\rightarrow x)}{\pi(x)}$
+\end_inset
+
+, then we can simply reject the sample 
+\begin_inset Formula $y$
+\end_inset
+
+ with some appropriate probability and this is called the Metropolis–Hastings
+ algorithm.
+\end_layout
+
+\begin_layout Theorem
+Given a Markov chain 
+\begin_inset Formula $p(x\rightarrow y)$
+\end_inset
+
+ and a target distribution 
+\begin_inset Formula $\pi$
+\end_inset
+
+.
+ We define a new Markov chain 
+\begin_inset Formula $q$
+\end_inset
+
+ as follows:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Sample 
+\begin_inset Formula $y$
+\end_inset
+
+ according to 
+\begin_inset Formula $p(x\rightarrow y)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Go to 
+\begin_inset Formula $y$
+\end_inset
+
+ with probability 
+\begin_inset Formula $\min(1,\frac{\pi(y)p(y\rightarrow x)}{\pi(x)p(x\rightarrow y)})$
+\end_inset
+
+.
+ Otherwise, stay at 
+\begin_inset Formula $x$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Theorem
+Then, 
+\begin_inset Formula $\pi$
+\end_inset
+
+ is a stationary distribution of 
+\begin_inset Formula $q$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+For any 
+\begin_inset Formula $y\neq x$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\begin{align*}
+\pi(x)q(x\rightarrow y) & =\pi(x)p(x\rightarrow y)\min(1,\frac{\pi(y)p(y\rightarrow x)}{\pi(x)p(x\rightarrow y)})\\
+ & =\min(\pi(x)p(x\rightarrow y),\pi(y)p(y\rightarrow x)).
+\end{align*}
+
+\end_inset
+
+Similarly, we have 
+\begin_inset Formula 
+\[
+\pi(y)q(y\rightarrow x)=\min(\pi(x)p(x\rightarrow y),\pi(y)p(y\rightarrow x)).
+\]
+
+\end_inset
+
+Hence, we have 
+\begin_inset Formula $\pi(x)q(x\rightarrow y)=\pi(y)q(y\rightarrow x)$
+\end_inset
+
+ for all 
+\begin_inset Formula $x\neq y$
+\end_inset
+
+.
+ Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:symmetric"
+
+\end_inset
+
+ shows that 
+\begin_inset Formula $\pi$
+\end_inset
+
+ is a stationary distribution of 
+\begin_inset Formula $q$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Now, we can apply Metropolis–Hastings on the discrete Langevin Dynamic and
+ get an algorithm that converges to 
+\begin_inset Formula $e^{-f}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm2e}[H]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+Metropolis-adjusted Langevin algorithm (MALA)
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetAlgoLined
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Input:
+\series default
+ starting point 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Repeat 
+\begin_inset Formula $T$
+\end_inset
+
+ times:
+\end_layout
+
+\begin_layout Enumerate
+Compute 
+\begin_inset Formula $y=x-\nabla f(x)h+\sqrt{2h}\zeta$
+\end_inset
+
+ where 
+\begin_inset Formula $\zeta\sim N(0,I)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Compute 
+\begin_inset Formula $\alpha=\min(1,\frac{\exp(-f(y))\exp(-\frac{1}{4h}\|y-x+\nabla f(x)h\|^{2})}{\exp(-f(x))\exp(-\frac{1}{4h}\|x-y+\nabla f(y)h\|^{2})})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Set 
+\begin_inset Formula $x\leftarrow y$
+\end_inset
+
+ with probability 
+\begin_inset Formula $\alpha$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Return
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $x$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Hamiltonian Monte Carlo
+\end_layout
+
+\begin_layout Standard
+Metropolis-adjusted Langevin algorithm looks practical in the sense that
+ it is a small variant of gradient descent with just one extra step of accepting
+ samples.
+ Unfortunately, it does not work well in practice because whenever the step
+ size is large, it will reject all the samples.
+ To see this, let us use this to sample Gaussian distribution.
+\end_layout
+
+\begin_layout Lemma
+For 
+\begin_inset Formula $f(x)=\frac{1}{2}\|x\|^{2}$
+\end_inset
+
+ with 
+\begin_inset Formula $x\in\R^{d}$
+\end_inset
+
+, when 
+\begin_inset Formula $h\geq n^{-1/3}$
+\end_inset
+
+, the MALA accepted only 
+\begin_inset Formula $\exp(-O(h^{2}n))$
+\end_inset
+
+ portions of samples, which is exponentially small.
+\end_layout
+
+\begin_layout Proof
+Recall the acceptance probability is given by:
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula 
+\begin{align*}
+\alpha= & \frac{\exp(-\frac{1}{2}\|y\|^{2}-\frac{1}{4h}\|y-(1-h)x\|^{2})}{\exp(-\frac{1}{2}\|x\|^{2}-\frac{1}{4h}\|x-(1-h)y\|^{2})}\\
+= & \frac{\exp(-\frac{1}{2}\|y\|^{2}-\frac{1}{4h}\|y\|^{2}+\frac{1-h}{2h}y^{\top}x-\frac{(1-h)^{2}}{4h}\|x\|^{2})}{\exp(-\frac{1}{2}\|x\|^{2}-\frac{1}{4h}\|x\|^{2}+\frac{1-h}{2h}y^{\top}x-\frac{(1-h)^{2}}{4h}\|y\|^{2})}\\
+= & \exp((1-\frac{h}{4})\|x\|^{2}-(1-\frac{h}{4})\|y\|^{2})
+\end{align*}
+
+\end_inset
+
+Now, using 
+\begin_inset Formula $y=x-\nabla f(x)h+\sqrt{2h}\zeta$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\begin{align*}
+\frac{\log\alpha}{1-\frac{h}{4}} & =\|x\|^{2}-\|x-\nabla f(x)h+\sqrt{2h}\zeta\|^{2}\\
+ & =\|x\|^{2}-\|(1-h)x+\sqrt{2h}\zeta\|^{2}\\
+ & =(2h-h^{2})\|x\|^{2}-2\sqrt{2h}x^{\top}\zeta+2h\|\zeta\|^{2}.
+\end{align*}
+
+\end_inset
+
+Suppose now 
+\begin_inset Formula $x$
+\end_inset
+
+ is already close to normal distribution.
+ Then, we have that 
+\begin_inset Formula $\|x\|^{2}\sim n\pm O(\sqrt{n})$
+\end_inset
+
+.
+ Similarly, we have 
+\begin_inset Formula $\|\zeta\|^{2}=n\pm O(\sqrt{n})$
+\end_inset
+
+ and 
+\begin_inset Formula $x^{\top}\zeta=\pm O(\sqrt{n})$
+\end_inset
+
+.
+ Hence, we have
+\begin_inset Formula 
+\[
+\log\alpha=\pm O(\sqrt{hn})-O(h^{2}n).
+\]
+
+\end_inset
+
+Note that when 
+\begin_inset Formula $h\gg n^{-1/3}$
+\end_inset
+
+, then we have that 
+\begin_inset Formula $\log\alpha=-O(h^{2}n)\ll0$
+\end_inset
+
+.
+ In this case, the Metropolis-adjusted Langevin algorithm only accepted
+ 
+\begin_inset Formula $\exp(-O(h^{2}n))$
+\end_inset
+
+ portions of samples, which is exponentially small.
+\end_layout
+
+\begin_layout Standard
+Since the step size is 
+\begin_inset Formula $h\sim n^{-1/3}$
+\end_inset
+
+, this means that it requires 
+\begin_inset Formula $n^{1/3}$
+\end_inset
+
+ steps to just sample from Gaussian distribution.
+ It turns out that Gaussian distribution is the easiest kind of distribution
+ for MALA because the Hessian of 
+\begin_inset Formula $f$
+\end_inset
+
+ is constant.
+ When the Hessian is not a constant function, the step size need to be even
+ smaller, such as 
+\begin_inset Formula $n^{-1/2}$
+\end_inset
+
+ even in practice.
+\end_layout
+
+\begin_layout Standard
+It turns out there is a better algorithm for sampling called Hamiltonian
+ Monte Carlo.
+ Unfortunately, I am lazy to type it up.
+ So, please see the white board.
+\end_layout
+
+\end_body
+\end_document

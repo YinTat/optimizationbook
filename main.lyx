@@ -1,0 +1,1309 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{url}
+\usepackage{xargs}
+\usepackage[pdftex,dvipsnames]{xcolor}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\usepackage[lined,boxed,ruled,norelsize,algo2e]{algorithm2e}
+\usepackage[small,bf]{caption}
+\usepackage{tikz}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=red,
+    filecolor=red,
+    linkcolor=red,
+    urlcolor=red
+}
+
+
+
+\usepackage{fancybox}
+\usepackage{multirow}
+\usepackage{nicefrac}
+\usepackage{hyperref}
+
+
+\expandafter\def\expandafter\normalsize\expandafter{%
+    \normalsize
+%	    \setlength\abovedisplayskip{5pt}
+    \setlength\belowdisplayskip{5pt}
+    % \setlength\abovedisplayshortskip{5pt}
+    \setlength\belowdisplayshortskip{5pt}
+}
+
+\usepackage{tocloft}
+\setlength{\cftsecnumwidth}{2.8em}%
+
+%%%%%
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{fix-cm}
+\makeatletter
+\newcommand\HUGE{\@setfontsize\Huge{38}{47}}
+\makeatother
+
+\titleclass{\part}{top}
+\titleformat{\part}[display]
+  {\normalfont\HUGE\sffamily}{\partname\ \thepart}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\HUGE\bfseries\filleft}
+%\titlespacing*{\part} {0pt}{20pt}{40pt}
+\titlespacing*{\part} {0pt}{30pt}{50pt}
+
+% chapter heading formatting
+\titleformat{\chapter}[display]
+  {\normalfont\LARGE\sffamily}{\chaptertitlename\ \thechapter}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\LARGE\bfseries\filleft}
+% section heading formatting
+\titleformat{\section}
+  {\normalfont\Large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesection}{0.5em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesubsection}{0.5em}{}
+\titlespacing*{\chapter} {0pt}{20pt}{30pt}
+
+% header/footer
+\fancyhf{}
+\fancyhead[ER]{\footnotesize\sffamily\leftmark}
+\fancyhead[OL]{\footnotesize\sffamily\nouppercase\rightmark}
+\fancyhead[EL,OR]{\bfseries\thepage}
+
+\SetKwRepeat{Do}{do}{while}
+
+\newcommand{\problemname}{Open Problem}
+\DontPrintSemicolon
+
+\usetikzlibrary{arrows,intersections}
+\usetikzlibrary{shapes.misc}
+
+\tikzset{cross/.style={cross out, draw=black, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt},cross/.default={1pt}}
+
+
+
+
+\makeatletter
+\newcommand{\xleftrightarrow}[2][]{\ext@arrow 3359\leftrightarrowfill@{#1}{#2}}
+\newcommand{\xdashrightarrow}[2][]{\ext@arrow 0359\rightarrowfill@@{#1}{#2}}
+\newcommand{\xdashleftarrow}[2][]{\ext@arrow 3095\leftarrowfill@@{#1}{#2}}
+\newcommand{\xdashleftrightarrow}[2][]{\ext@arrow 3359\leftrightarrowfill@@{#1}{#2}}
+\def\rightarrowfill@@{\arrowfill@@\relax\relbar\rightarrow}
+\def\leftarrowfill@@{\arrowfill@@\leftarrow\relbar\relax}
+\def\leftrightarrowfill@@{\arrowfill@@\leftarrow\relbar\rightarrow}
+\def\arrowfill@@#1#2#3#4{%
+  $\m@th\thickmuskip0mu\medmuskip\thickmuskip\thinmuskip\thickmuskip
+   \relax#4#1
+   \xleaders\hbox{$#4#2$}\hfill
+   #3$%
+}
+
+% alternative to arrow
+\pgfarrowsdeclare{tonew}{tonew}
+{
+  \ifdim\pgfgetarrowoptions{tonew}=-1pt%
+    \pgfutil@tempdima=0.84pt%
+    \advance\pgfutil@tempdima by1.3\pgflinewidth%
+    \pgfutil@tempdimb=0.21pt%
+    \advance\pgfutil@tempdimb by.625\pgflinewidth%
+  \else%
+    \pgfutil@tempdima=\pgfgetarrowoptions{tonew}%
+    \pgfarrowsleftextend{+-0.8\pgfutil@tempdima}%
+    \pgfarrowsrightextend{+0.2\pgfutil@tempdima}%
+  \fi%
+}
+{
+  \ifdim\pgfgetarrowoptions{tonew}=-1pt%
+    \pgfutil@tempdima=0.28pt%
+    \advance\pgfutil@tempdima by.3\pgflinewidth%
+    \pgfutil@tempdimb=0pt,%
+  \else%
+    \pgfutil@tempdima=\pgfgetarrowoptions{tonew}%
+    \multiply\pgfutil@tempdima by 100%
+    \divide\pgfutil@tempdima by 375%
+    \pgfutil@tempdimb=0.4\pgflinewidth%
+  \fi%
+  \pgfsetdash{}{+0pt}
+  \pgfsetroundcap
+  \pgfsetroundjoin
+  \pgfpathmoveto{\pgfpointorigin}
+  \pgflineto{\pgfpointadd{\pgfpoint{0.75\pgfutil@tempdima}{0bp}}
+                         {\pgfqpoint{-2\pgfutil@tempdimb}{0bp}}}
+  \pgfusepathqstroke
+  \pgfsetlinewidth{0.8\pgflinewidth}
+  \pgfpathmoveto{\pgfpointadd{\pgfqpoint{-3\pgfutil@tempdima}{4\pgfutil@tempdima}}
+                             {\pgfqpoint{\pgfutil@tempdimb}{0bp}}}
+  \pgfpathcurveto
+  {\pgfpointadd{\pgfqpoint{-2.75\pgfutil@tempdima}{2.5\pgfutil@tempdima}}
+               {\pgfqpoint{0.5\pgfutil@tempdimb}{0bp}}}
+  {\pgfpointadd{\pgfqpoint{0pt}{0.25\pgfutil@tempdima}}
+               {\pgfqpoint{-0.5\pgfutil@tempdimb}{0bp}}}
+  {\pgfpointadd{\pgfqpoint{0.75\pgfutil@tempdima}{0pt}}
+               {\pgfqpoint{-\pgfutil@tempdimb}{0bp}}}
+  \pgfpathcurveto
+  {\pgfpointadd{\pgfqpoint{0pt}{-0.25\pgfutil@tempdima}}
+               {\pgfqpoint{-0.5\pgfutil@tempdimb}{0bp}}}
+  {\pgfpointadd{\pgfqpoint{-2.75\pgfutil@tempdima}{-2.5\pgfutil@tempdima}}
+               {\pgfqpoint{0.5\pgfutil@tempdimb}{0bp}}}
+  {\pgfpointadd{\pgfqpoint{-3\pgfutil@tempdima}{-4\pgfutil@tempdima}}
+               {\pgfqpoint{\pgfutil@tempdimb}{0bp}}}
+  \pgfusepathqstroke
+}
+
+% alias alternative to arrow
+\pgfarrowsdeclarealias{<new}{>new}{tonew}{tonew}
+\pgfsetarrowoptions{tonew}{-1pt}
+\pgfkeys{/tikz/.cd, arrowhead/.default=-1pt, arrowhead/.code={
+  \pgfsetarrowoptions{tonew}{#1},
+}}
+\makeatother
+
+
+
+\usepackage[numbered,framed]{matlab-prettifier}
+\definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
+\definecolor{mylilas}{RGB}{170,55,241}
+\lstset{language=Matlab,%
+	style = Matlab-editor,
+	basicstyle=\ttfamily\footnotesize,
+    %basicstyle=\color{red},
+    breaklines=false,%
+    morekeywords={matlab2tikz},
+    keywordstyle=\color{blue},%
+    morekeywords=[2]{1}, keywordstyle=[2]{\color{black}},
+    identifierstyle=\color{black},%
+    stringstyle=\color{mylilas},
+    commentstyle=\color{mygreen},%
+    showstringspaces=false,%without this there will be a symbol in the places where there is a space
+    numbers=left,%
+    numberstyle={\tiny \color{black}},% size of the numbers
+    numbersep=9pt,
+}
+
+\usepackage{environ}
+\makeatletter
+\newsavebox{\measure@tikzpicture}
+\NewEnviron{scaletikzpicturetowidth}[1]{%
+  \def\tikz@width{#1}%
+  \def\tikzscale{1}\begin{lrbox}{\measure@tikzpicture}%
+      \BODY
+  \end{lrbox}%
+  \pgfmathparse{#1/\wd\measure@tikzpicture}%
+  \edef\tikzscale{\pgfmathresult}%
+  \BODY
+}
+\makeatother
+
+\DeclareMathOperator{\epi}{epi}
+\end_preamble
+\options openany
+\use_default_options false
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+theorems-sec
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding default
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic true
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 1
+\tocdepth 1
+\paragraph_separation skip
+\defskip 0.1in
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\R}{\mathbb{R}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Rn}{\mathbb{R}^{n}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Rm}{\mathbb{R}^{m}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\norm}[1]{\left\Vert #1\right\Vert }
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\defeq}{\overset{\mathrm{def}}{=}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\dom}{\mathrm{dom}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\vol}{\mathrm{vol}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\nnz}{\mathrm{nnz}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\E}{\mathbf{E}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\P}{\mathbf{P}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\tr}{\mathrm{tr}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\op}{\mathrm{op}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\argmin}{\mathrm{argmin}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\argmax}{\mathrm{argmax}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\epi}{\mathrm{epi}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\KL}{D_{\mathrm{KL}}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\last}{(\mathrm{last})}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\new}{(\mathrm{new})}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\ls}{\mathtt{lineSearch}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\conv}{\mathrm{conv}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Lip}{\mathrm{Lip}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Diag}{\mathrm{Diag}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\step}{\delta}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\spn}{\mathrm{span}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\K}{\mathcal{K}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\d}{\mathcal{\mathrm{d}}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\T}{\mathcal{\mathcal{T}}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\diag}{\mathrm{diag}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Title
+Techniques in Optimization and Sampling
+\begin_inset Newline newline
+\end_inset
+
+(book in progress with improving citations)
+\end_layout
+
+\begin_layout Author
+Yin Tat Lee
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+yintat@uw.edu.
+ This work is supported in part by CCF-1749609, DMS-1839116, DMS-2023166,
+ Microsoft Research Faculty Fellowship, Sloan Research Fellowship and Packard
+ Fellowships.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+University of Washington
+\begin_inset Newline newline
+\end_inset
+
+& Microsoft Research
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+and 
+\end_layout
+
+\end_inset
+
+Santosh Vempala
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+vempala@gatech.edu.
+ This work is supported in part by CCF-1563838, E2CDA-1640081, CCF-1717349
+ and DMS-1839323.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Georgia Tech
+\begin_inset Newline newline
+\end_inset
+
+& Vempala Research
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Itemize
+Move to github
+\end_layout
+
+\begin_layout Itemize
+Make todo
+\end_layout
+
+\begin_layout Itemize
+Latex
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Idea
+\end_layout
+
+\begin_layout Itemize
+Example
+\end_layout
+
+\begin_layout Itemize
+Exercise
+\end_layout
+
+\begin_layout Itemize
+Proof
+\end_layout
+
+\begin_layout Itemize
+Theorem
+\end_layout
+
+\begin_layout Itemize
+Lemma
+\end_layout
+
+\begin_layout Itemize
+Algorithm Box
+\end_layout
+
+\begin_layout Itemize
+Figure
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Preliminaries
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Concentration inequality
+\end_layout
+
+\begin_layout Itemize
+Linear Algebra
+\end_layout
+
+\begin_layout Itemize
+Basic Calculus
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Basic of Convexity
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Convex Conjugate
+\end_layout
+
+\begin_layout Itemize
+Subdifferential
+\end_layout
+
+\begin_layout Itemize
+Polar
+\end_layout
+
+\begin_layout Itemize
+Duality
+\end_layout
+
+\begin_layout Itemize
+Slon's Theorem
+\end_layout
+
+\begin_layout Itemize
+Basic fact about strongly convex and smoothness
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Basic of Convex Geometry
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+....
+\end_layout
+
+\begin_layout Itemize
+vol half
+\end_layout
+
+\begin_layout Itemize
+KLS
+\end_layout
+
+\begin_layout Itemize
+...
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Examples
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Submodular minimization
+\end_layout
+
+\begin_layout Itemize
+logistic regression
+\end_layout
+
+\begin_layout Itemize
+Laplacian (phyisc)
+\end_layout
+
+\begin_layout Itemize
+Graph Laplacian
+\end_layout
+
+\begin_layout Itemize
+Linear Program
+\end_layout
+
+\begin_layout Itemize
+Maxflow
+\end_layout
+
+\begin_layout Itemize
+Transportation 
+\end_layout
+
+\end_deeper
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+in general, 
+\end_layout
+
+\begin_layout Plain Layout
+-- references 
+\end_layout
+
+\begin_layout Plain Layout
+-- examples (more) 
+\end_layout
+
+\begin_layout Plain Layout
+-- details of proofs (in some cases) 
+\end_layout
+
+\begin_layout Plain Layout
+-- some discussion at beginning and end of chapter (like the story you plan
+ to tell in lecture) but I agree with your plan for both to sign off each
+ section
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+For the Langevin dynamics, give example of SDE.
+\end_layout
+
+\begin_layout Plain Layout
+Improve citations..
+\end_layout
+
+\begin_layout Plain Layout
+add figures (lots!)
+\end_layout
+
+\begin_layout Plain Layout
+Mirror descent section: Define the parameter of the mirror map..highlight
+ what is the result for 
+\begin_inset Formula $\ell_{1}$
+\end_inset
+
+ ball to 
+\begin_inset Formula $\ell_{2}$
+\end_inset
+
+ ball.
+ Also, the SDP ball.
+\end_layout
+
+\begin_layout Plain Layout
+I still not sure about the order of the book.
+\end_layout
+
+\begin_layout Plain Layout
+The dimension is not consisten...sometimes 
+\begin_inset Formula $n$
+\end_inset
+
+ sometimes 
+\begin_inset Formula $d$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+Adding examples
+\end_layout
+
+\begin_layout Plain Layout
+Adding applications
+\end_layout
+
+\begin_layout Plain Layout
+Relative smoothness
+\end_layout
+
+\begin_layout Plain Layout
+Higher order method
+\end_layout
+
+\begin_layout Plain Layout
+Make the book mathematically rigorous?
+\end_layout
+
+\begin_layout Plain Layout
+—
+\end_layout
+
+\begin_layout Plain Layout
+Acknowledge: Swati, Andre Wibisono, Mohit Singh, Arkadi, Siva Theja Magaluri,
+ ...
+\end_layout
+
+\begin_layout Plain Layout
+Minor acknowledge: Ollin Boer Bohan, Ewin Tang, Andrew Wei, Omid Sadeghi,
+ XiuJun Li, Ofir Press, Cyrus Hettle, Jiaming Lang, Samantha Petti, Matthew
+ Fahrbach, Ziyi Yin, rafael orozco, Kunal Chawla, Anand Chaturvedi, Letian
+ Chen, Huang Zan, Pranshu Trivedi
+\end_layout
+
+\begin_layout Plain Layout
+Explain the coupling proof.
+\end_layout
+
+\begin_layout Plain Layout
+Explain the lagrangian somewhere
+\end_layout
+
+\begin_layout Plain Layout
+Add defs of Wassersteing, log-Sob
+\end_layout
+
+\begin_layout Plain Layout
+—
+\end_layout
+
+\begin_layout Plain Layout
+Resources:
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Contents to be added?
+\end_layout
+
+\begin_layout Plain Layout
+Matrix derivative via Cauchy Integral Formula?
+\end_layout
+
+\begin_layout Plain Layout
+Equivalence between strong convexity and concentration?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter*
+Preliminaries
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "preliminaries.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part
+Optimization
+\end_layout
+
+\begin_layout Chapter
+Introduction
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "convexity.lyx"
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+I think we should have a section on subgradient just for completeness?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Gradient Descent
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "gradient_descent.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Elimination
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:Elimination"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "cutting_plane.lyx"
+
+\end_inset
+
+
+\begin_inset CommandInset include
+LatexCommand input
+filename "geometric_descent.lyx"
+
+\end_inset
+
+
+\begin_inset CommandInset include
+LatexCommand input
+filename "lower_bound.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Reduction
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "equivalence.lyx"
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+I don't like the current outline where I couple the equivalence with the
+ convex conjugate.
+\end_layout
+
+\begin_layout Plain Layout
+For some people, the equivalence is not that important.
+ But the convex conjugate is important for anyone.
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset include
+LatexCommand input
+filename "duality.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Geometrization and Optimization
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Seems Mirror Descent is really doing the job as Newton Method.
+ How do you see MD as Newton method?
+\end_layout
+
+\begin_layout Plain Layout
+Just we never use in that way?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "mirror_descent.lyx"
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Incorporate some of the contents after I have introduced the subgradient
+ method
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset include
+LatexCommand input
+filename "reduction.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "frank_wolfe.lyx"
+
+\end_inset
+
+
+\begin_inset CommandInset include
+LatexCommand input
+filename "newton_method.lyx"
+
+\end_inset
+
+
+\begin_inset CommandInset include
+LatexCommand input
+filename "interior_point_method.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Sparsification
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "subspace_embedding.lyx"
+
+\end_inset
+
+
+\begin_inset CommandInset include
+LatexCommand input
+filename "leverage_score_sampling.lyx"
+
+\end_inset
+
+
+\begin_inset CommandInset include
+LatexCommand input
+filename "stochastic_gradient_descent.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Acceleration
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "chebyshev.lyx"
+
+\end_inset
+
+
+\begin_inset CommandInset include
+LatexCommand input
+filename "conjugate_gradient.lyx"
+
+\end_inset
+
+
+\begin_inset CommandInset include
+LatexCommand input
+filename "accelerated_gradient_descent.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part
+Sampling
+\end_layout
+
+\begin_layout Chapter
+Introduction and Gradient Methods
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "langevin_dynamics.lyx"
+
+\end_inset
+
+
+\begin_inset CommandInset include
+LatexCommand input
+filename "cutting_plane_volume.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Geometrization and Sampling
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "ball_walk.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Volume 
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "annealing.lyx"
+
+\end_inset
+
+
+\begin_inset CommandInset include
+LatexCommand input
+filename "annealing_volume.lyx"
+
+\end_inset
+
+
+\begin_inset CommandInset include
+LatexCommand input
+filename "rounding.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage clearpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+btprint "btPrintCited"
+bibfiles "main,acg"
+options "plain"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+\start_of_appendix
+Calculus - Review
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "appendix.lyx"
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Probably should first have a more comprehensive introduction, covering what
+ we need to use in this book..
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Notation
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "notation.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{document}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "har_dikin.lyx"
+
+\end_inset
+
+
+\begin_inset CommandInset include
+LatexCommand input
+filename "RHMC.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+—-
+\end_layout
+
+\begin_layout Chapter
+Expansion
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "ode.lyx"
+
+\end_inset
+
+
+\begin_inset CommandInset include
+LatexCommand input
+filename "collocation_method.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Decomposition
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "cholesky_decomposition.lyx"
+
+\end_inset
+
+
+\begin_inset CommandInset include
+LatexCommand input
+filename "multigrid.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

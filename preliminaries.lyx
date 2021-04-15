@@ -1,0 +1,574 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass book
+\begin_preamble
+\usepackage{url}
+\usepackage{xargs}
+\usepackage[pdftex,dvipsnames]{xcolor}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\usepackage[lined,boxed,ruled,norelsize,algo2e]{algorithm2e}
+\usepackage[small,bf]{caption}
+\usepackage{tikz}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=red,
+    filecolor=red,
+    linkcolor=red,
+    urlcolor=red
+}
+
+
+
+\usepackage{fancybox}
+\usepackage{multirow}
+\usepackage{nicefrac}
+\usepackage{hyperref}
+
+
+\expandafter\def\expandafter\normalsize\expandafter{%
+    \normalsize
+%	    \setlength\abovedisplayskip{5pt}
+    \setlength\belowdisplayskip{5pt}
+    % \setlength\abovedisplayshortskip{5pt}
+    \setlength\belowdisplayshortskip{5pt}
+}
+
+\usepackage{tocloft}
+\setlength{\cftsecnumwidth}{2.8em}%
+
+%%%%%
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{fix-cm}
+\makeatletter
+\newcommand\HUGE{\@setfontsize\Huge{38}{47}}
+\makeatother
+
+\titleclass{\part}{top}
+\titleformat{\part}[display]
+  {\normalfont\HUGE\sffamily}{\partname\ \thepart}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\HUGE\bfseries\filleft}
+%\titlespacing*{\part} {0pt}{20pt}{40pt}
+\titlespacing*{\part} {0pt}{30pt}{50pt}
+
+% chapter heading formatting
+\titleformat{\chapter}[display]
+  {\normalfont\LARGE\sffamily}{\chaptertitlename\ \thechapter}{0pt}  
+  {\titlerule\vskip2pt\titlerule\vskip20pt\LARGE\bfseries\filleft}
+% section heading formatting
+\titleformat{\section}
+  {\normalfont\Large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesection}{0.5em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesubsection}{0.5em}{}
+\titlespacing*{\chapter} {0pt}{20pt}{30pt}
+
+% header/footer
+\fancyhf{}
+\fancyhead[ER]{\footnotesize\sffamily\leftmark}
+\fancyhead[OL]{\footnotesize\sffamily\nouppercase\rightmark}
+\fancyhead[EL,OR]{\bfseries\thepage}
+
+\setcounter{secnumdepth}{3}
+\end_preamble
+\options openany
+\use_default_options false
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+theorems-sec
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding auto
+\fontencoding default
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 0
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic true
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip 0.1in
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+We use 
+\begin_inset Formula $B(x,r)$
+\end_inset
+
+ to denote the Euclidean (or 
+\begin_inset Formula $\ell_{2}$
+\end_inset
+
+) ball centered at 
+\begin_inset Formula $x$
+\end_inset
+
+ with radius 
+\begin_inset Formula $r$
+\end_inset
+
+: 
+\begin_inset Formula $\left\{ y:\norm{y-x}_{2}\le r\right\} $
+\end_inset
+
+.
+ We use 
+\begin_inset Formula $\conv(X)$
+\end_inset
+
+ to denote the convex hull of 
+\begin_inset Formula $X$
+\end_inset
+
+, namely 
+\begin_inset Formula $\conv(X)=\{\sum\alpha_{i}x_{i}:\ \alpha_{i}\geq0,\sum\alpha_{i}=1,x_{i}\in X\}$
+\end_inset
+
+.
+ We use 
+\begin_inset Formula $\left\langle x,y\right\rangle $
+\end_inset
+
+ to denote the 
+\begin_inset Formula $\ell_{2}$
+\end_inset
+
+ inner product 
+\begin_inset Formula $x^{T}y$
+\end_inset
+
+ of 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $y$
+\end_inset
+
+.
+ For any two points 
+\begin_inset Formula $x,y\in\Rn$
+\end_inset
+
+, we view them as column vectors, and use 
+\begin_inset Formula $[x,y]$
+\end_inset
+
+ to denote 
+\begin_inset Formula $\conv(\{x,y\})$
+\end_inset
+
+, namely, the line segment between 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $y$
+\end_inset
+
+.
+ Unless specified otherwise, 
+\begin_inset Formula $\norm x$
+\end_inset
+
+ will be the 
+\begin_inset Formula $\ell_{2}$
+\end_inset
+
+ norm 
+\begin_inset Formula $\norm x_{2}$
+\end_inset
+
+.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+I think the student is correct, it is horrible to assume this.
+ We should fix it whenever we do.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We use 
+\begin_inset Formula $e_{i}$
+\end_inset
+
+ to denote the coordinate vector with 
+\begin_inset Formula $i$
+\end_inset
+
+-th coordinate is 1 and 
+\begin_inset Formula $0$
+\end_inset
+
+ otherwise.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Should we really abuse vector? Like 
+\begin_inset Formula $f(x)_{i}=f(x_{i})$
+\end_inset
+
+? Or we use bold letter?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Define nnz.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Define isotropic.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Functions
+\end_layout
+
+\begin_layout Definition*
+For any 
+\begin_inset Formula $L\geq0$
+\end_inset
+
+, a function 
+\begin_inset Formula $f:V\rightarrow W$
+\end_inset
+
+ is 
+\begin_inset Formula $L$
+\end_inset
+
+-Lipschitz if 
+\begin_inset Formula $\norm{f(x)-f(y)}_{W}\leq L\norm{x-y}_{V}$
+\end_inset
+
+ where the norms 
+\begin_inset Formula $\norm{\cdot}_{V}$
+\end_inset
+
+ and 
+\begin_inset Formula $\norm{\cdot}_{W}$
+\end_inset
+
+ are 
+\begin_inset Formula $\ell_{2}$
+\end_inset
+
+ norms if unspecified.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition*
+A function 
+\begin_inset Formula $f\in\mathcal{C}^{k}(\Rn)$
+\end_inset
+
+ if 
+\begin_inset Formula $f$
+\end_inset
+
+ is a 
+\begin_inset Formula $k$
+\end_inset
+
+-differentiable function and its 
+\begin_inset Formula $k^{\mathrm{th}}$
+\end_inset
+
+ derivative is continuous.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Taylor's Remainder Theorem
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:taylor_expansion"
+
+\end_inset
+
+For any 
+\begin_inset Formula $g\in\mathcal{C}^{k+1}(\R)$
+\end_inset
+
+, and any 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $y$
+\end_inset
+
+, there is a 
+\begin_inset Formula $\zeta\in[x,y]$
+\end_inset
+
+ such that
+\begin_inset Formula 
+\[
+g(y)=\sum_{j=0}^{k}g^{(j)}(x)\frac{(y-x)^{j}}{j!}+g^{(k+1)}(\zeta)\frac{(y-x)^{k+1}}{(k+1)!}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Linear Algebra
+\end_layout
+
+\begin_layout Definition
+\begin_inset CommandInset label
+LatexCommand label
+name "def:PSD"
+
+\end_inset
+
+A real symmetric matrix 
+\begin_inset Formula $A$
+\end_inset
+
+ is positive semi-definite (PSD) if 
+\begin_inset Formula $x^{\top}Ax\geq0$
+\end_inset
+
+ for all 
+\begin_inset Formula $x\in\Rn$
+\end_inset
+
+.
+ Equivalently, a real symmetric matrix with all nonnegative eigenvalues
+ is PSD.
+ We write 
+\begin_inset Formula $A\succeq B$
+\end_inset
+
+ if 
+\begin_inset Formula $A-B$
+\end_inset
+
+ is PSD.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition*
+For any matrix 
+\begin_inset Formula $A$
+\end_inset
+
+, we define its trace, 
+\begin_inset Formula $\tr A=\sum A_{ii}$
+\end_inset
+
+, Frobenius norm, 
+\begin_inset Formula $\,\|A\|_{F}^{2}=\tr(A^{\top}A)=\sum_{i,j}A_{ij}^{2}$
+\end_inset
+
+, and operator norm, 
+\begin_inset Formula $\,\|A\|_{\op}=\sup_{\|x\|_{2}\leq1}\|Ax\|_{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+For symmetric 
+\begin_inset Formula $A$
+\end_inset
+
+, we have 
+\begin_inset Formula $\tr A=\sum_{i}\lambda_{i}$
+\end_inset
+
+, 
+\begin_inset Formula $\|A\|_{F}^{2}=\sum_{i}\lambda_{i}^{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $\|A\|_{\op}=\max_{i}|\lambda_{i}|$
+\end_inset
+
+ where 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+ are the eigenvalues of 
+\begin_inset Formula $A$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+For a vector 
+\begin_inset Formula $x$
+\end_inset
+
+, 
+\begin_inset Formula $\norm x_{A}=\sqrt{x^{T}Ax}$
+\end_inset
+
+; for a matrix 
+\begin_inset Formula $B$
+\end_inset
+
+, 
+\begin_inset Formula 
+\[
+\norm B_{A}=\sup_{x}\frac{\norm{Bx}_{A}}{\norm x_{A}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Probability
+\end_layout
+
+\begin_layout Definition*
+The KL-divergence of a density 
+\begin_inset Formula $\rho$
+\end_inset
+
+ with respect to another density 
+\begin_inset Formula $\nu$
+\end_inset
+
+ is 
+\begin_inset Formula 
+\[
+\KL(\rho\|v)=\int\rho(x)\log\frac{\rho(x)}{\nu(x)}dx.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
