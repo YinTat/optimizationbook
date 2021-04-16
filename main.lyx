@@ -4,216 +4,13 @@
 \begin_header
 \save_transient_properties true
 \origin unavailable
-\textclass book
-\begin_preamble
-\usepackage{url}
-\usepackage{xargs}
-\usepackage[pdftex,dvipsnames]{xcolor}
-\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
-\usepackage[lined,boxed,ruled,norelsize,algo2e]{algorithm2e}
-\usepackage[small,bf]{caption}
-\usepackage{tikz}
-
-\usepackage{hyperref}
-\hypersetup{
-    colorlinks,
-    citecolor=red,
-    filecolor=red,
-    linkcolor=red,
-    urlcolor=red
-}
-
-
-
-\usepackage{fancybox}
-\usepackage{multirow}
-\usepackage{nicefrac}
-\usepackage{hyperref}
-
-
-\expandafter\def\expandafter\normalsize\expandafter{%
-    \normalsize
-%	    \setlength\abovedisplayskip{5pt}
-    \setlength\belowdisplayskip{5pt}
-    % \setlength\abovedisplayshortskip{5pt}
-    \setlength\belowdisplayshortskip{5pt}
-}
-
-\usepackage{tocloft}
-\setlength{\cftsecnumwidth}{2.8em}%
-
-%%%%%
-\usepackage{titlesec}
-\usepackage{fancyhdr}
-\pagestyle{fancy}
-\usepackage{fix-cm}
-\makeatletter
-\newcommand\HUGE{\@setfontsize\Huge{38}{47}}
-\makeatother
-
-\titleclass{\part}{top}
-\titleformat{\part}[display]
-  {\normalfont\HUGE\sffamily}{\partname\ \thepart}{0pt}  
-  {\titlerule\vskip2pt\titlerule\vskip20pt\HUGE\bfseries\filleft}
-%\titlespacing*{\part} {0pt}{20pt}{40pt}
-\titlespacing*{\part} {0pt}{30pt}{50pt}
-
-% chapter heading formatting
-\titleformat{\chapter}[display]
-  {\normalfont\LARGE\sffamily}{\chaptertitlename\ \thechapter}{0pt}  
-  {\titlerule\vskip2pt\titlerule\vskip20pt\LARGE\bfseries\filleft}
-% section heading formatting
-\titleformat{\section}
-  {\normalfont\Large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesection}{0.5em}{}
-\titleformat{\subsection}
-  {\normalfont\large\bfseries\sffamily}{\rule[.12ex]{8pt}{8pt}~\thesubsection}{0.5em}{}
-\titlespacing*{\chapter} {0pt}{20pt}{30pt}
-
-% header/footer
-\fancyhf{}
-\fancyhead[ER]{\footnotesize\sffamily\leftmark}
-\fancyhead[OL]{\footnotesize\sffamily\nouppercase\rightmark}
-\fancyhead[EL,OR]{\bfseries\thepage}
-
-\SetKwRepeat{Do}{do}{while}
-
-\newcommand{\problemname}{Open Problem}
-\DontPrintSemicolon
-
-\usetikzlibrary{arrows,intersections}
-\usetikzlibrary{shapes.misc}
-
-\tikzset{cross/.style={cross out, draw=black, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt},cross/.default={1pt}}
-
-
-
-
-\makeatletter
-\newcommand{\xleftrightarrow}[2][]{\ext@arrow 3359\leftrightarrowfill@{#1}{#2}}
-\newcommand{\xdashrightarrow}[2][]{\ext@arrow 0359\rightarrowfill@@{#1}{#2}}
-\newcommand{\xdashleftarrow}[2][]{\ext@arrow 3095\leftarrowfill@@{#1}{#2}}
-\newcommand{\xdashleftrightarrow}[2][]{\ext@arrow 3359\leftrightarrowfill@@{#1}{#2}}
-\def\rightarrowfill@@{\arrowfill@@\relax\relbar\rightarrow}
-\def\leftarrowfill@@{\arrowfill@@\leftarrow\relbar\relax}
-\def\leftrightarrowfill@@{\arrowfill@@\leftarrow\relbar\rightarrow}
-\def\arrowfill@@#1#2#3#4{%
-  $\m@th\thickmuskip0mu\medmuskip\thickmuskip\thinmuskip\thickmuskip
-   \relax#4#1
-   \xleaders\hbox{$#4#2$}\hfill
-   #3$%
-}
-
-% alternative to arrow
-\pgfarrowsdeclare{tonew}{tonew}
-{
-  \ifdim\pgfgetarrowoptions{tonew}=-1pt%
-    \pgfutil@tempdima=0.84pt%
-    \advance\pgfutil@tempdima by1.3\pgflinewidth%
-    \pgfutil@tempdimb=0.21pt%
-    \advance\pgfutil@tempdimb by.625\pgflinewidth%
-  \else%
-    \pgfutil@tempdima=\pgfgetarrowoptions{tonew}%
-    \pgfarrowsleftextend{+-0.8\pgfutil@tempdima}%
-    \pgfarrowsrightextend{+0.2\pgfutil@tempdima}%
-  \fi%
-}
-{
-  \ifdim\pgfgetarrowoptions{tonew}=-1pt%
-    \pgfutil@tempdima=0.28pt%
-    \advance\pgfutil@tempdima by.3\pgflinewidth%
-    \pgfutil@tempdimb=0pt,%
-  \else%
-    \pgfutil@tempdima=\pgfgetarrowoptions{tonew}%
-    \multiply\pgfutil@tempdima by 100%
-    \divide\pgfutil@tempdima by 375%
-    \pgfutil@tempdimb=0.4\pgflinewidth%
-  \fi%
-  \pgfsetdash{}{+0pt}
-  \pgfsetroundcap
-  \pgfsetroundjoin
-  \pgfpathmoveto{\pgfpointorigin}
-  \pgflineto{\pgfpointadd{\pgfpoint{0.75\pgfutil@tempdima}{0bp}}
-                         {\pgfqpoint{-2\pgfutil@tempdimb}{0bp}}}
-  \pgfusepathqstroke
-  \pgfsetlinewidth{0.8\pgflinewidth}
-  \pgfpathmoveto{\pgfpointadd{\pgfqpoint{-3\pgfutil@tempdima}{4\pgfutil@tempdima}}
-                             {\pgfqpoint{\pgfutil@tempdimb}{0bp}}}
-  \pgfpathcurveto
-  {\pgfpointadd{\pgfqpoint{-2.75\pgfutil@tempdima}{2.5\pgfutil@tempdima}}
-               {\pgfqpoint{0.5\pgfutil@tempdimb}{0bp}}}
-  {\pgfpointadd{\pgfqpoint{0pt}{0.25\pgfutil@tempdima}}
-               {\pgfqpoint{-0.5\pgfutil@tempdimb}{0bp}}}
-  {\pgfpointadd{\pgfqpoint{0.75\pgfutil@tempdima}{0pt}}
-               {\pgfqpoint{-\pgfutil@tempdimb}{0bp}}}
-  \pgfpathcurveto
-  {\pgfpointadd{\pgfqpoint{0pt}{-0.25\pgfutil@tempdima}}
-               {\pgfqpoint{-0.5\pgfutil@tempdimb}{0bp}}}
-  {\pgfpointadd{\pgfqpoint{-2.75\pgfutil@tempdima}{-2.5\pgfutil@tempdima}}
-               {\pgfqpoint{0.5\pgfutil@tempdimb}{0bp}}}
-  {\pgfpointadd{\pgfqpoint{-3\pgfutil@tempdima}{-4\pgfutil@tempdima}}
-               {\pgfqpoint{\pgfutil@tempdimb}{0bp}}}
-  \pgfusepathqstroke
-}
-
-% alias alternative to arrow
-\pgfarrowsdeclarealias{<new}{>new}{tonew}{tonew}
-\pgfsetarrowoptions{tonew}{-1pt}
-\pgfkeys{/tikz/.cd, arrowhead/.default=-1pt, arrowhead/.code={
-  \pgfsetarrowoptions{tonew}{#1},
-}}
-\makeatother
-
-
-
-\usepackage[numbered,framed]{matlab-prettifier}
-\definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
-\definecolor{mylilas}{RGB}{170,55,241}
-\lstset{language=Matlab,%
-	style = Matlab-editor,
-	basicstyle=\ttfamily\footnotesize,
-    %basicstyle=\color{red},
-    breaklines=false,%
-    morekeywords={matlab2tikz},
-    keywordstyle=\color{blue},%
-    morekeywords=[2]{1}, keywordstyle=[2]{\color{black}},
-    identifierstyle=\color{black},%
-    stringstyle=\color{mylilas},
-    commentstyle=\color{mygreen},%
-    showstringspaces=false,%without this there will be a symbol in the places where there is a space
-    numbers=left,%
-    numberstyle={\tiny \color{black}},% size of the numbers
-    numbersep=9pt,
-}
-
-\usepackage{environ}
-\makeatletter
-\newsavebox{\measure@tikzpicture}
-\NewEnviron{scaletikzpicturetowidth}[1]{%
-  \def\tikz@width{#1}%
-  \def\tikzscale{1}\begin{lrbox}{\measure@tikzpicture}%
-      \BODY
-  \end{lrbox}%
-  \pgfmathparse{#1/\wd\measure@tikzpicture}%
-  \edef\tikzscale{\pgfmathresult}%
-  \BODY
-}
-\makeatother
-
-\DeclareMathOperator{\epi}{epi}
-\end_preamble
-\options openany
-\use_default_options false
-\begin_modules
-theorems-ams
-eqs-within-sections
-figs-within-sections
-theorems-sec
-\end_modules
+\textclass optbook
+\use_default_options true
 \maintain_unincluded_children false
 \language english
 \language_package none
 \inputencoding auto
-\fontencoding default
+\fontencoding global
 \font_roman "default" "default"
 \font_sans "default" "default"
 \font_typewriter "default" "default"
@@ -235,45 +32,41 @@ theorems-sec
 \spacing single
 \use_hyperref false
 \papersize default
-\use_geometry true
-\use_package amsmath 2
-\use_package amssymb 2
-\use_package cancel 0
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
 \use_package esint 1
-\use_package mathdots 0
-\use_package mathtools 0
-\use_package mhchem 0
-\use_package stackrel 0
-\use_package stmaryrd 0
-\use_package undertilde 0
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
 \cite_engine basic
 \cite_engine_type default
 \biblio_style plain
-\use_bibtopic true
+\use_bibtopic false
 \use_indices false
 \paperorientation portrait
 \suppress_date false
 \justification true
-\use_refstyle 0
+\use_refstyle 1
 \use_minted 0
 \index Index
 \shortcut idx
 \color #008000
 \end_index
-\leftmargin 2cm
-\topmargin 2cm
-\rightmargin 2cm
-\bottommargin 2cm
-\secnumdepth 1
+\secnumdepth 3
 \tocdepth 1
-\paragraph_separation skip
-\defskip 0.1in
+\paragraph_separation indent
+\paragraph_indentation default
 \is_math_indent 0
 \math_numbering_side default
 \quotes_style english
 \dynamic_quotes 0
 \papercolumns 1
-\papersides 2
+\papersides 1
 \paperpagestyle default
 \tracking_changes false
 \output_changes false
@@ -1178,7 +971,7 @@ filename "rounding.lyx"
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
 btprint "btPrintCited"
-bibfiles "main,acg"
+bibfiles "main"
 options "plain"
 
 \end_inset
@@ -1224,9 +1017,6 @@ filename "notation.lyx"
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
 \begin_inset ERT
 status open
 

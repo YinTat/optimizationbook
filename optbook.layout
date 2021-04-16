@@ -1,0 +1,442 @@
+#% Do not delete the line below; configure depends on this
+#  \DeclareLaTeXClass[book, anyopen]{OPT Book}
+#  \DeclareCategory{Books}
+
+
+Format 66
+Input stdclass.inc
+Input numreport.inc
+
+
+Sides           2
+PageStyle       Headings
+
+
+NoStyle Abstract
+
+Preamble
+	\input{preamble.tex}
+EndPreamble
+
+Counter theorem
+	Within         chapter
+End
+
+Style Theorem
+End
+
+Style Theorem*
+End
+
+Style Corollary
+End
+
+Style Corollary*
+End
+
+Style Lemma
+End
+
+Style Lemma*
+End
+
+Style Proposition
+End
+
+Style Proposition*
+End
+
+Style Conjecture
+End
+
+Style Conjecture*
+End
+
+Style Definition
+End
+
+Style Definition*
+End
+
+Style Example
+End
+
+Style Example*
+End
+
+Style Problem
+End
+
+Style Problem*
+End
+
+Style Exercise
+End
+
+Style Exercise*
+End
+
+Style Solution
+End
+
+Style Solution*
+End
+
+Style Remark
+End
+
+Style Remark*
+End
+
+Style Idea
+End
+
+Style Idea*
+End
+
+Style Claim
+End
+
+Style Claim*
+End
+
+Style Proof
+End
+
+OutlinerName thm "Definitions & Theorems"
+
+Style Theorem
+	Category              Reasoning
+	Margin                First_Dynamic
+	LatexType             Environment
+	LatexName             thm
+	RefPrefix             thm
+	NextNoIndent          0
+	ResetArgs             1
+	AddToToc              thm
+	IsTocCaption          1
+	Argument 1
+		LabelString    "Additional Theorem Text"
+		Tooltip        "Additional text appended to the theorem header"
+		IsTocCaption      1
+	EndArgument
+	LabelSep              xx
+	ParIndent             MMM
+	ParSkip               0.4
+	ItemSep               0.2
+	TopSep                0.7
+	BottomSep             0.7
+	ParSep                0.3
+	Align                 Block
+	AlignPossible         Left
+	LabelType             Static
+	LabelCounter          theorem
+	LabelString           "Theorem \thetheorem."
+	Font
+	  Shape               Italic
+	  Size                Normal
+	EndFont
+	LabelFont
+	  Shape               Up
+	  Series              Bold
+	EndFont
+	Requires              amsthm
+End
+
+
+Style Corollary
+	CopyStyle             Theorem
+	DependsOn             Theorem
+	LatexName             cor
+	RefPrefix             cor
+	LabelString           "Corollary \thetheorem."
+End
+
+
+Style Lemma
+	CopyStyle             Theorem
+	DependsOn             Theorem
+	LatexName             lem
+	RefPrefix             lem
+	LabelString           "Lemma \thetheorem."
+End
+
+
+Style Proposition
+	CopyStyle             Theorem
+	DependsOn             Theorem
+	LatexName             prop
+	RefPrefix             prop
+	LabelString           "Proposition \thetheorem."
+End
+
+
+Style Conjecture
+	CopyStyle             Theorem
+	DependsOn             Theorem
+	LatexName             conjecture
+	RefPrefix             conj
+	LabelString           "Conjecture \thetheorem."
+End
+
+
+Style Fact
+	CopyStyle             Theorem
+	DependsOn             Theorem
+	LatexName             fact
+	RefPrefix             fact
+	LabelString           "Fact \thetheorem."
+End
+
+
+Style Definition
+	CopyStyle             Theorem
+	DependsOn             Theorem
+	LatexName             defn
+	RefPrefix             defn
+	LabelString           "Definition \thetheorem."
+	Font
+	  Shape               Up
+	EndFont
+	LabelFont
+	  Shape               Up
+	  Series              Bold
+	EndFont
+End
+
+
+Style Example
+	CopyStyle             Definition
+	LatexName             example
+	RefPrefix             example
+	LabelString           "Example \thetheorem."
+End
+
+
+Style Problem
+	CopyStyle             Definition
+	LatexName             problem
+	RefPrefix             problem
+	LabelString           "Problem \thetheorem."
+End
+
+
+Style Exercise
+	CopyStyle             Definition
+	LatexName             xca
+	RefPrefix             xca
+	LabelString           "Exercise \thetheorem."
+End
+
+
+Style Solution
+	CopyStyle             Definition
+	LatexName             sol
+	RefPrefix             sol
+	LabelString           "Solution \thetheorem."
+End
+
+
+Style Remark
+	CopyStyle             Theorem
+	DependsOn             Theorem
+	LatexName             rem
+	RefPrefix             rem
+	LabelString           "Remark \thetheorem."
+	Font
+	  Shape               Up
+	  Size                Normal
+	EndFont
+	LabelFont
+	  Series              Medium
+	  Shape               Italic
+	EndFont
+End
+
+Style Idea
+	CopyStyle             Remark
+	LatexName             idea
+	RefPrefix             idea
+	LabelString           "Idea \thetheorem."
+End
+
+
+Style Claim
+	CopyStyle             Remark
+	LatexName             claim
+	RefPrefix             claim
+	LabelString           "Claim \thetheorem."
+End
+
+
+Style Theorem*
+	Category              Reasoning
+	LatexType             Environment
+	Margin                First_Dynamic
+	LatexName             thm*
+	LabelType             Static
+	LabelString           "Theorem."
+	NextNoIndent          1
+	ResetArgs             1
+	AddToToc              thm
+	IsTocCaption          1
+	Argument 1
+		LabelString    "Additional Theorem Text"
+		Tooltip        "Additional text appended to the theorem header"
+		IsTocCaption      1
+	EndArgument
+	LabelSep              xx
+	ParIndent             MMM
+	ParSkip               0.4
+	ItemSep               0.2
+	TopSep                0.7
+	BottomSep             0.7
+	ParSep                0.3
+	Align                 Block
+	AlignPossible         Left
+	Font
+	  Shape               Italic
+	  Size                Normal
+	EndFont
+	LabelFont
+	  Shape               Up
+	  Series              Bold
+	EndFont
+	Requires              amsthm
+End
+
+
+Style Corollary*
+	CopyStyle             Theorem*
+	LatexName             cor*
+	LabelString           "Corollary."
+End
+
+
+Style Lemma*
+	CopyStyle             Theorem*
+	LatexName             lem*
+	LabelString           "Lemma."
+End
+
+
+Style Proposition*
+	CopyStyle             Theorem*
+	LatexName             prop*
+	LabelString           "Proposition."
+End
+
+
+Style Conjecture*
+	CopyStyle             Theorem*
+	LatexName             conjecture*
+	LabelString           "Conjecture."
+End
+
+
+Style Fact*
+	CopyStyle             Theorem*
+	LatexName             fact*
+	LabelString           "Fact."
+End
+
+
+Style Definition*
+	CopyStyle             Theorem*
+	LatexName             defn*
+	LabelString           "Definition."
+	Font
+	  Shape               Up
+	EndFont
+	LabelFont
+	  Shape               Up
+	  Series              Bold
+	EndFont
+End
+
+
+Style Example*
+	CopyStyle             Definition*
+	LatexName             example*
+	LabelString           "Example."
+End
+
+
+Style Problem*
+	CopyStyle             Definition*
+	LatexName             problem*
+	LabelString           "Problem."
+End
+
+
+Style Exercise*
+	CopyStyle             Definition*
+	LatexName             xca*
+	LabelString           "Exercise."
+End
+
+
+Style Solution*
+	CopyStyle             Definition*
+	LatexName             sol*
+	LabelString           "Solution."
+End
+
+
+Style Remark*
+	CopyStyle             Theorem*
+	LatexName             rem*
+	LabelString           "Remark."
+	Font
+	  Shape               Up
+	  Size                Normal
+	EndFont
+	LabelFont
+	  Series              Medium
+	  Shape               Italic
+	EndFont
+End
+
+Style Idea*
+	CopyStyle             Remark*
+	LatexName             idea*
+	LabelString           "Idea."
+End
+
+Style Claim*
+	CopyStyle             Remark*
+	LatexName             claim*
+	LabelString           "Claim."
+End
+
+Style Proof
+	Category              Reasoning
+	Margin                First_Dynamic
+	LatexType             Environment
+	LatexName             proof
+	NextNoIndent          1
+	ResetArgs             1
+	Argument 1
+		LabelString   "Alternative Proof String"
+		Tooltip       "Alternative proof string"
+	EndArgument
+	LabelSep              xx
+	ParIndent             MMM
+	ParSkip               0.4
+	ItemSep               0.2
+	TopSep                0.7
+	BottomSep             0.7
+	ParSep                0.3
+	Align                 Block
+	AlignPossible         Block, Left
+	LabelType             Static
+	LabelString           "Proof."
+	EndLabelType          Box
+	Font
+	  Shape               Up
+	  Size                Normal
+	EndFont
+	LabelFont
+	  Shape               Italic
+	EndFont
+End
