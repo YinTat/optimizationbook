@@ -164,6 +164,23 @@ f(y)\geq f(x)+g^{\top}(y-x)\text{ for all }y\in\Rn.
 
 \end_inset
 
+Such a vector 
+\begin_inset Formula $g$
+\end_inset
+
+ is called a 
+\emph on
+subgradient
+\emph default
+ of 
+\begin_inset Formula $f$
+\end_inset
+
+ at 
+\begin_inset Formula $x$
+\end_inset
+
+.
  
 \end_layout
 
@@ -441,7 +458,7 @@ Let
 \begin_layout Proof
 \begin_inset Formula 
 \[
-(\pi(y)-y)^{\top}(z-\pi(y))\geq0.
+h'(0)=(\pi(y)-y)^{\top}(z-\pi(y))\geq0.
 \]
 
 \end_inset
@@ -1010,7 +1027,6 @@ reference "eq:mirror_descent"
 \end_inset
 
 .
- 
 \end_layout
 
 \begin_layout Definition
