@@ -278,7 +278,7 @@ If the polytope
 \begin_inset Formula $(\mathrm{P}_{t})$
 \end_inset
 
- is uniquely given by
+ is unique and is given by the solution of the following system:
 \begin_inset Formula 
 \begin{align*}
 xs & =t,\\
@@ -289,11 +289,23 @@ A^{\top}y+s & =c,\\
 
 \end_inset
 
-where 
+where the variables 
+\begin_inset Formula $s_{i}$
+\end_inset
+
+ are additional 
+\begin_inset Quotes eld
+\end_inset
+
+slack
+\begin_inset Quotes erd
+\end_inset
+
+ variables, and 
 \begin_inset Formula $xs=t$
 \end_inset
 
- is a shorthand of 
+ is shorthand of 
 \begin_inset Formula $x_{i}s_{i}=t$
 \end_inset
 
@@ -388,7 +400,7 @@ Hence,
 \end_inset
 
 .
- Therefore, central path is a balanced way to decrease 
+ Therefore, following the central path is a balanced way to decrease 
 \begin_inset Formula $x_{i}s_{i}$
 \end_inset
 
@@ -406,6 +418,11 @@ Hence,
 \end_inset
 
  is a good approximation of the primal solution.
+ In fact 
+\begin_inset Formula $t$
+\end_inset
+
+ itself is a bound on the error of the current solution.
 \end_layout
 
 \begin_layout Lemma

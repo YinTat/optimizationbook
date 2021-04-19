@@ -181,7 +181,6 @@ subgradient
 \end_inset
 
 .
- 
 \end_layout
 
 \begin_layout Standard
@@ -314,7 +313,7 @@ Pick any
 \end_inset
 
  where 
-\begin_inset Formula $\pi_{\mathcal{D}}(y)=arg\min_{x\in\mathcal{D}}\|x-y\|_{2}$
+\begin_inset Formula $\pi_{\mathcal{D}}(y)=\arg\min_{x\in\mathcal{D}}\|x-y\|_{2}$
 \end_inset
 
 
@@ -375,7 +374,7 @@ Note that we return the average of all iterates, rather than the last iterate,
  as the average is better behaved in the worst case.
  To analyze the algorithm, we first need the following Pythagorean theorem.
  This shows that when we project a point to a convex set, we get closer
- to any point in the convex set, and how much closer depends on how much
+ to each point in the convex set, and how much closer depends on how much
  we move.
 \end_layout
 
@@ -737,11 +736,7 @@ Consider using the subgradient method above to minimize
 
  steps, which grows with the dimension.
  Intuitively, the dimension dependence comes from the fact that we must
- take a tiny step size to avoid affecting all 
-\begin_inset Formula $n$
-\end_inset
-
- variables.
+ take a tiny step size to avoid changing the variables too much.
  For example, if we take a constant step size 
 \begin_inset Formula $h$
 \end_inset
@@ -880,6 +875,17 @@ Given any Banach space
 \end_inset
 
 .
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Need to define Banach space somewhere...
+ prelims?
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
