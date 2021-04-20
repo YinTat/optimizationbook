@@ -81,6 +81,24 @@ In this chapter, we study techniques that further exploit the geometry of
  Many of these techniques are effective in practice for large scale problems.
 \end_layout
 
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Instead of calling it subgradient method.
+ Maybe I just say 
+\begin_inset Formula $\ell_{2}$
+\end_inset
+
+ version and general version?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Mirror Descent
 \begin_inset CommandInset label
