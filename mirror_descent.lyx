@@ -413,6 +413,16 @@ Given a convex set
 \end_inset
 
 , we have that
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Make a figure for this.
+\end_layout
+
+\end_inset
+
+
 \begin_inset Formula 
 \[
 \|z-\pi(y)\|_{2}^{2}+\|\pi(y)-y\|_{2}^{2}\leq\|z-y\|_{2}^{2}.
@@ -630,7 +640,34 @@ reference "lem:Pythagorean"
 \end_inset
 
  in the inequality.
- Using the definition of subgradient, we have that
+ Since 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ lies on the 
+\begin_inset Formula $-g^{(k)}$
+\end_inset
+
+ direction, we expect 
+\begin_inset Formula $x^{(k+1)}$
+\end_inset
+
+ is closer to 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ than 
+\begin_inset Formula $x^{(k)}$
+\end_inset
+
+ if the step size is small enough (or if we ignore the second order term
+ 
+\begin_inset Formula $\|g^{(k)}\|_{2}^{2}$
+\end_inset
+
+).
+ To bound the distance improvement, we apply the definition of subgradient
+ and get
 \begin_inset Formula 
 \[
 f(x^{*})\geq f(x^{(k)})+\left\langle g^{(k)},x^{*}-x^{(k)}\right\rangle .
@@ -674,6 +711,24 @@ The result follows from observing that for a convex function,
 \[
 f\left(\frac{1}{T}\sum_{k=0}^{T-1}x^{(k)}\right)-f(x^{*})\leq\frac{1}{T}\sum_{k=0}^{T-1}(f(x^{(k)})-f(x^{*})).
 \]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+https://arxiv.org/pdf/1904.12443.pdf
+\end_layout
+
+\begin_layout Plain Layout
+Seems this is important.
+ Mention last point.
+\end_layout
 
 \end_inset
 
@@ -881,6 +936,35 @@ status open
 \begin_layout Plain Layout
 Need to define Banach space somewhere...
  prelims?
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Explain the dual space better.
+ Maybe proving this.
+ Not using Banach space.
+\end_layout
+
+\begin_layout Plain Layout
+Maybe just say 
+\begin_inset Formula $f:\ell_{1}\rightarrow R$
+\end_inset
+
+ that is 
+\begin_inset Formula $\ell_{1}$
+\end_inset
+
+-Lipschitz.
+ then 
+\begin_inset Formula $\|\nabla f\|_{\infty}\leq1$
+\end_inset
+
+?
 \end_layout
 
 \end_inset
@@ -1936,7 +2020,7 @@ In comparison, projected gradient descent had the bound of
 .
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
@@ -2094,6 +2178,17 @@ literal "false"
 \end_inset
 
 .
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Cite the new paper
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset

@@ -1396,7 +1396,7 @@ status open
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $A^{(k+1)}\leftarrow\frac{n^{2}}{n^{2}-1}\left(A^{(k)}-\frac{2}{n+1}\frac{A^{(k)}g(x^{(k)})g(x^{(k)})^{\top}A^{(k)}}{g(x^{(k)})^{\top}A^{(k)}(x^{(k)})}\right)$
+\begin_inset Formula $A^{(k+1)}\leftarrow\frac{n^{2}}{n^{2}-1}\left(A^{(k)}-\frac{2}{n+1}\frac{A^{(k)}g(x^{(k)})g(x^{(k)})^{\top}A^{(k)}}{g(x^{(k)})^{\top}A^{(k)}g(x^{(k)})}\right)$
 \end_inset
 
 .
