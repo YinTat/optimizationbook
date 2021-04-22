@@ -1630,7 +1630,7 @@ Solving this linear system, we have that
 , we have that
 \begin_inset Formula 
 \[
-P_{t}=X_{t}A^{\top}(AX_{t}^{2}A^{T})^{-1}AX_{t}=S_{t}^{-1}A^{\top}(AS_{t}^{-2}A)^{-1}AS_{t}^{-1}
+P_{t}=X_{t}A^{\top}(AX_{t}^{2}A^{\top})^{-1}AX_{t}=S_{t}^{-1}A^{\top}(AS_{t}^{-2}A^{\top})^{-1}AS_{t}^{-1}
 \]
 
 \end_inset
