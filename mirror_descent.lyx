@@ -135,8 +135,7 @@ The cutting plane method is well-suited for minimizing non-smooth convex
 \end_layout
 
 \begin_layout Subsection
-Subgradient method (a.k.a.
- projected GD)
+Subgradient method
 \end_layout
 
 \begin_layout Standard

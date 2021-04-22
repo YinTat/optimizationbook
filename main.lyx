@@ -308,7 +308,7 @@ LatexCommand tableofcontents
 status open
 
 \begin_layout Itemize
-Move to github
+Move to github (done)
 \end_layout
 
 \begin_layout Itemize
@@ -368,6 +368,10 @@ Linear Algebra
 
 \begin_layout Itemize
 Basic Calculus
+\end_layout
+
+\begin_layout Itemize
+ODE
 \end_layout
 
 \end_deeper
@@ -453,7 +457,21 @@ Maxflow
 \end_layout
 
 \begin_layout Itemize
-Transportation 
+Transportation
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+List of figures
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Mirror descent?
+\end_layout
+
+\begin_layout Itemize
+Newton method?
 \end_layout
 
 \end_deeper
