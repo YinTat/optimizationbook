@@ -112,6 +112,16 @@ name "sec:mirror_descent"
 status open
 
 \begin_layout Plain Layout
+Maybe adding relative smoothness here?
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 I should mention some geometry is bad..i.e.
  no strongly convex map...
 \end_layout
@@ -1398,6 +1408,33 @@ Find
 \end_inset
 
 .
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Note that one way to think about the problem is that the constraint is defined
+ inside the mirror map.
+\end_layout
+
+\begin_layout Plain Layout
+Then, we don't need to talk about the 
+\begin_inset Formula $\mathcal{D}$
+\end_inset
+
+ at all.
+\end_layout
+
+\begin_layout Plain Layout
+There is no 
+\begin_inset Formula $y^{(k+1)}$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
