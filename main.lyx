@@ -510,6 +510,10 @@ in general,
 – use more displaystyle math (separate line), easier to read and reference
 \end_layout
 
+\begin_layout Plain Layout
+– specify norm explicitly everywhere
+\end_layout
+
 \end_inset
 
 
