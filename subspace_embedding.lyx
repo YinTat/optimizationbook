@@ -1087,8 +1087,8 @@ It turns out that one can select exactly
 \end_inset
 
 .
- The proof of this is a slightly more complicated due to the lack of independenc
-e 
+ The proof of this is slightly more complicated due to the lack of independence
+ 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "cohen2016nearly"
