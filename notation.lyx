@@ -182,7 +182,7 @@ inner product
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+nnz
 \end_layout
 
 \end_inset
@@ -191,7 +191,7 @@ inner product
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+number of nonzeros
 \end_layout
 
 \end_inset

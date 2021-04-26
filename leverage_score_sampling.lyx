@@ -321,7 +321,7 @@ tly affect the composition of
 \end_inset
 
 's row space.
- The following two characterizations that helps with this intuition.
+ The following two characterizations help with this intuition.
  
 \end_layout
 
@@ -441,7 +441,7 @@ Given a vector
 , define 
 \begin_inset Formula 
 \[
-X=\frac{1}{p_{i}}a_{i}a_{i}^{\top}\quad\mbox{ with probability }p_{i}=\frac{u_{i}}{\norm u_{1}}.
+X=\frac{1}{p_{i}}a_{i}a_{i}^{\top}\quad\mbox{ with probability \quad\ }p_{i}=\frac{u_{i}}{\norm u_{1}}.
 \]
 
 \end_inset

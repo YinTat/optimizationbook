@@ -131,7 +131,7 @@ If the matrix
 \begin_inset Formula $d^{\omega}$
 \end_inset
 
-.
+, the current complexity of matrix multiplication.
  If 
 \begin_inset Formula $n>d^{\omega}$
 \end_inset
@@ -506,7 +506,7 @@ We call
  with orthonormal columns, we have that
 \begin_inset Formula 
 \[
-\P(\|U^{\top}\Pi^{\top}\Pi U-I_{d}\|_{\op}\leq\epsilon)\geq\delta.
+\P(\|U^{\top}\Pi^{\top}\Pi U-I_{d}\|_{\op}\leq\epsilon)\geq1-\delta.
 \]
 
 \end_inset
@@ -1087,8 +1087,8 @@ It turns out that one can select exactly
 \end_inset
 
 .
- The proof of this is a slightly more complicated due to the lack of independenc
-e 
+ The proof of this is slightly more complicated due to the lack of independence
+ 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "cohen2016nearly"
@@ -1257,7 +1257,7 @@ For our problem, we set
 \begin_inset Formula $\Pi$
 \end_inset
 
-.
+ (as a column vector).
  One can check that 
 \begin_inset Formula $M_{r}\succeq0$
 \end_inset
@@ -1382,11 +1382,11 @@ Note that
 \begin_inset Formula $I$
 \end_inset
 
- be the indices that 
+ be the set of indices for which 
 \begin_inset Formula $\pi_{r}$
 \end_inset
 
- are non-zero.
+ is non-zero.
  Conditional on the set 
 \begin_inset Formula $I$
 \end_inset
