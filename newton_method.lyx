@@ -195,74 +195,38 @@ It is the fastest descent direction taking the Hessian into account.
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-f(y)=f(x)+\nabla f(x)(y-x)+\frac{1}{2}(y-x)^{\mathsf{T}}(\nabla^{2}f(x))(y-x)
-\]
-
+\begin_inset Separator plain
 \end_inset
 
 
 \end_layout
 
-\begin_layout Plain Layout
-is a close approximation of a function, since higher order terms will be
- relatively small and can possibly be ignored without much effect.
- Finding the minimum of a function using this approximation requires finding
- the optimal choice of 
-\begin_inset Formula $y-x=z$
-\end_inset
-
-.
- Specifically, the optimal 
-\begin_inset Formula $z$
-\end_inset
-
- will satisfy 
-\begin_inset Formula $\min g(z)=\nabla f(x)z+\frac{1}{2}z^{\mathsf{T}}(\nabla^{2}f(x))z$
-\end_inset
-
-, which can be solved analytically by setting the gradient equal to 
-\begin_inset Formula $0$
-\end_inset
-
-,
+\begin_layout Standard
+To see why affine invariant is important for optimization, we consider the
+ following function
 \begin_inset Formula 
 \[
-\nabla g(z)=\nabla f(x)+(\nabla^{2}f(x))z=0.
+f(x_{1},x_{2})=\frac{100}{2}x_{1}^{2}+\frac{1}{2}x_{2}^{2}.
 \]
 
 \end_inset
 
-Thus 
+The gradient descent for this function is
 \begin_inset Formula 
 \[
-z=-(\nabla^{2}f(x))^{-1}\nabla f(x).
+(x_{1},x_{2})\leftarrow(x_{1},x_{2})-h\nabla f(x_{1},x_{2})=((1-100h)x_{1},(1-h)x_{2}).
 \]
 
 \end_inset
 
-Newton's iteration updates its estimate of the minimum by
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-x^{t+1}=x^{t}-(\nabla^{2}f(x))^{-1}\nabla f(x).
-\]
-
+We need 
+\begin_inset Formula $h<\frac{1}{50}$
 \end_inset
 
-
-\end_layout
-
-\end_inset
-
-
+ in order the first coordinate to converge, but this will make the second
+ coordinate converges too slowly.
+ In general, we may want to take different step size for different direction
+ and Newton method gives the best step if the function is quadratic.
 \end_layout
 
 \begin_layout Standard
@@ -287,6 +251,8 @@ For many classes of functions, gradient methods converge to the solution
 ) if the starting point is sufficiently close to a root.
  However, each step of Newton method involves solving a linear system, which
  can be much more expensive.
+ Furthermore, Newton method may not converges if the starting point is far
+ away.
 \end_layout
 
 \begin_layout Standard
@@ -1236,6 +1202,194 @@ In practice, the recursive formula
 
  becomes too expensive and hence one can stop the recursive formula after
  constant steps, which gives the limited-memory BFGS algorithm.
+\end_layout
+
+\begin_layout Subsection*
+Semismooth Newton algorithm
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+This section is not done yet.
+ 
+\end_layout
+
+\begin_layout Standard
+Consider the function 
+\begin_inset Formula $f(x)=\begin{cases}
+x^{2} & \text{if }x>0\\
+1.5x^{2} & \text{else}
+\end{cases}$
+\end_inset
+
+.
+ When we apply Newton method to find its minimizer, it is clear that it
+ converges in 
+\begin_inset Formula $1$
+\end_inset
+
+ step even it is not in 
+\begin_inset Formula $\mathcal{C}^{2}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+In general, Newton method converges superlinearly for a large class of problems.
+ For the rest of the section, we will go back to the root-finding setting.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+reference: 
+\end_layout
+
+\begin_layout Plain Layout
+The semismooth-related properties of a merit function and a descent method
+ for the nonlinear complementarity problem
+\end_layout
+
+\begin_layout Plain Layout
+A Survey of Some Nonsmooth Equations and Smoothing Newton Methods
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Suppose 
+\begin_inset Formula $g:\R^{n}\rightarrow\R^{n}$
+\end_inset
+
+ is locally Lipschitz.
+ By Rademacher’s Theorem, 
+\begin_inset Formula $g$
+\end_inset
+
+ is almost everywhere differentiable.
+ We define
+\end_layout
+
+\begin_layout Definition
+Let 
+\begin_inset Formula $D_{g}=\{x|g\text{ is differentiable at }x\}$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $\partial_{B}g(x)=\{\lim_{x^{j}\rightarrow x,x^{j}\in D_{g}}Dg(x^{j})\}$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $\partial g(x)=\conv\partial_{B}g(x)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+We say 
+\begin_inset Formula $g$
+\end_inset
+
+ is semismooth at 
+\begin_inset Formula $x$
+\end_inset
+
+ if 
+\begin_inset Formula $g$
+\end_inset
+
+ is continuous and for any 
+\begin_inset Formula $V\in\partial g(x+h)$
+\end_inset
+
+, 
+\begin_inset Formula $g(x+h)-g(x)-Vh=o(\|h\|)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Exercise
+Prove that 
+\begin_inset Formula $\nabla f$
+\end_inset
+
+ is semismooth for any convex function 
+\begin_inset Formula $f$
+\end_inset
+
+.
+ Prove that 
+\begin_inset Formula $\phi(a,b)=\sqrt{a^{2}+b^{2}}-(a+b)$
+\end_inset
+
+ is semismooth.
+\end_layout
+
+\begin_layout Standard
+The function 
+\begin_inset Formula $\phi(a,b)$
+\end_inset
+
+ is important because 
+\begin_inset Formula $a\geq0,b\geq0,ab=0$
+\end_inset
+
+ if and only if 
+\begin_inset Formula $\phi(a,b)=0$
+\end_inset
+
+.
+ Hence, this is useful for the nonlinear complementarity problem.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+Consider the generalized Newton method 
+\begin_inset Formula $x^{(k+1)}\leftarrow x^{(k)}-V_{k}^{-1}g(x^{(k)})$
+\end_inset
+
+ where 
+\begin_inset Formula $V_{k}\in\partial(x^{(k)})$
+\end_inset
+
+.
+ Suppose 
+\begin_inset Formula $g(x^{*})=0$
+\end_inset
+
+ and that all 
+\begin_inset Formula $V\in\partial g(x^{*})$
+\end_inset
+
+ are invertible.
+ Then generalized Newton method is super-linear convergence in a neighborhood
+ of 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+.
 \end_layout
 
 \end_body

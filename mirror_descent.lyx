@@ -2250,5 +2250,176 @@ Cite the new paper
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Warning: I am trying to copy the mulicapltive weight update proof.
+\end_layout
+
+\begin_layout Plain Layout
+But realize that 
+\begin_inset Formula $\rho$
+\end_inset
+
+ or 
+\begin_inset Formula $\rho^{2}$
+\end_inset
+
+ dependence is important.
+ I am not sure how to recover this for mirror descent.
+\end_layout
+
+\begin_layout Plain Layout
+(For MWU, we have multiplicative error with additive.
+ How to talk about this in optimization view?)
+\end_layout
+
+\begin_layout Plain Layout
+—
+\end_layout
+
+\begin_layout Plain Layout
+As an application, we consider the maximum flow problem.
+ Note that maxflow problem can be thought as
+\begin_inset Formula 
+\begin{align*}
+ & \min_{f\text{ sends }1\text{ unit from }s\text{ to }t}\max_{e}\frac{f_{e}}{c_{e}}\\
+= & \min_{f\text{ sends }1\text{ unit from }s\text{ to }t}\max_{v\in\Delta}\sum_{e}v_{e}\frac{f_{e}}{c_{e}}\\
+= & \max_{v\in\Delta}\min_{f\text{ sends }1\text{ unit from }s\text{ to }t}\sum_{e}v_{e}\frac{f_{e}}{c_{e}}.
+\end{align*}
+
+\end_inset
+
+Note that the problem 
+\begin_inset Formula $F(v)=\min_{f\text{ sends }1\text{ unit from }s\text{ to }t}\sum_{e}v_{e}\frac{f_{e}}{c_{e}}$
+\end_inset
+
+ is exactly the shortest path problem with length of 
+\begin_inset Formula $e$
+\end_inset
+
+ is 
+\begin_inset Formula $v_{e}/c_{e}$
+\end_inset
+
+.
+ The gradient of 
+\begin_inset Formula $\min_{f\text{ sends }1\text{ unit from }s\text{ to }t}\sum_{e}v_{e}\frac{f_{e}}{c_{e}}$
+\end_inset
+
+ with respect to 
+\begin_inset Formula $v$
+\end_inset
+
+ is exactly given by 
+\begin_inset Formula $f_{e}/c_{e}$
+\end_inset
+
+ where 
+\begin_inset Formula $f$
+\end_inset
+
+ is the shortest path.
+ If we apply mirror descent here, we recall the guarantee as 
+\begin_inset Formula 
+\[
+F(v)-F^{*}\geq-Lip_{\ell_{1}}\times Diam_{\ell_{1}}\sqrt{\frac{\log m}{T}}.
+\]
+
+\end_inset
+
+Note that the diam = 1 and the Lipschitz constant is the sup norm of the
+ gradient.
+ In this case, we have 
+\begin_inset Formula $\frac{1}{\min_{e}c_{e}}$
+\end_inset
+
+.
+ Hence, we have
+\begin_inset Formula 
+\[
+F(v)-F^{*}\geq-\frac{1}{\min_{e}c_{e}}\sqrt{\frac{\log m}{T}}.
+\]
+
+\end_inset
+
+However, it is not clear how one can get the flow 
+\begin_inset Formula $f$
+\end_inset
+
+ using 
+\begin_inset Formula $v$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+It turns out one trick is to expand out the proof (No...I need to use online
+ property here....).
+ Note that in the mirror descent proof, we in fact show that
+\begin_inset Formula 
+\[
+\frac{1}{T}\sum_{k=1}^{T}F(v^{(k)})\geq F^{*}-\frac{1}{\min_{e}c_{e}}\sqrt{\frac{\log m}{T}}.
+\]
+
+\end_inset
+
+Expanding out the definition of 
+\begin_inset Formula $F$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+\frac{1}{T}\sum_{k=1}^{T}\sum_{e\in p^{(k)}}\frac{v_{e}^{(k)}}{c_{e}}\geq\frac{1}{T}\sum_{k=1}^{T}\sum_{e\in p^{(k)}}v_{e}^{(k)}\frac{f_{e}^{(k)}}{c_{e}}\geq F^{*}-\frac{1}{\min_{e}c_{e}}\sqrt{\frac{\log m}{T}}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $p^{(k)}$
+\end_inset
+
+ is the shortest path.
+ Let 
+\begin_inset Formula $f^{*}$
+\end_inset
+
+ be the maximum flow.
+ Then
+\begin_inset Formula 
+\[
+\frac{1}{\sum_{e\in p^{(k)}}\frac{v_{e}^{(k)}}{c_{e}}}=\frac{\sum_{e}v_{e}^{(k)}}{\sum_{e\in p^{(k)}}\frac{v_{e}^{(k)}}{c_{e}}}\geq\frac{\sum_{e}\frac{v_{e}^{(k)}}{c_{e}}f_{e}^{*}}{\sum_{e\in p^{(k)}}\frac{v_{e}^{(k)}}{c_{e}}}\geq F_{OPT}
+\]
+
+\end_inset
+
+where we used 
+\begin_inset Formula $p^{(k)}$
+\end_inset
+
+ is the shortest path for cost 
+\begin_inset Formula $v_{e}/c_{e}$
+\end_inset
+
+.
+\begin_inset Formula 
+\[
+\frac{1}{F_{OPT}}\geq\frac{1}{F}-\frac{1}{\min_{e}c_{e}}\sqrt{\frac{\log m}{T}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \end_body
 \end_document
