@@ -123,7 +123,12 @@ x=(A^{\top}A)^{-1}A^{\top}b.
 
 \end_inset
 
-If the matrix 
+If 
+\begin_inset Formula $A^{T}A$
+\end_inset
+
+ is not invertible, we use its pseudo-inverse.
+ If the matrix 
 \begin_inset Formula $A^{\top}A\in\R^{d\times d}$
 \end_inset
 
@@ -256,7 +261,11 @@ Using
 \begin_inset Formula $x^{*}=(A^{\top}A)^{-1}A^{\top}b$
 \end_inset
 
- and the formula of 
+, i.e., 
+\begin_inset Formula $A^{\top}b=(A^{\top}A)x^{*}$
+\end_inset
+
+, and the formula of 
 \begin_inset Formula $x^{(k+1)}$
 \end_inset
 

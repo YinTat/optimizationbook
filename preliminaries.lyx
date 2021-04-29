@@ -461,6 +461,19 @@ For a vector
 
 \end_layout
 
+\begin_layout Lemma
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Sherman-Morrison-Woodbury
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section*
 Probability
 \end_layout
