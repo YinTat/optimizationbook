@@ -470,7 +470,7 @@ Oblivious Subspace Embedding via Johnson-Lindenstrauss
 \end_layout
 
 \begin_layout Standard
-Surprisingly, there are random embeddings that have a small distortion without
+Surprisingly, there are random embeddings that have small distortion without
  knowledge of the subspace.
 \end_layout
 
@@ -548,7 +548,7 @@ Let
 \end_inset
 
 , namely 
-\begin_inset Formula $S=\{y:Uz\}$
+\begin_inset Formula $S=\{y:y=Uz\}$
 \end_inset
 
  Then, the condition
@@ -704,7 +704,7 @@ For any
 \begin_inset Formula $n\in\mathbb{N}$
 \end_inset
 
-, there are 
+, there are at most 
 \begin_inset Formula $(1+\frac{2}{\epsilon})^{n}$
 \end_inset
 
@@ -1046,7 +1046,7 @@ reference "lem:Richardson"
 \end_layout
 
 \begin_layout Subsection
-Sparse JL
+Sparse Johnson-Lindenstrauss
 \end_layout
 
 \begin_layout Standard
@@ -1098,6 +1098,8 @@ We consider the sparse matrix
 \end_inset
 
 .
+ The advantage of a sparse embedding is that applying it can be much more
+ efficient.
 \end_layout
 
 \begin_layout Remark
@@ -1163,7 +1165,8 @@ Matrix Chernoff
 
 \end_inset
 
-Suppose we have a sequence of independent random self-adjoint matrices 
+Suppose we have a sequence of independent, random, self-adjoint matrices
+ 
 \begin_inset Formula $M_{j}\in\R^{n\times n}$
 \end_inset
 
@@ -1176,7 +1179,7 @@ Suppose we have a sequence of independent random self-adjoint matrices
 \end_inset
 
 .
- Then for 
+ Then, for 
 \begin_inset Formula $T=\frac{R}{\varepsilon^{2}}\log\frac{n}{\delta}$
 \end_inset
 
@@ -1188,7 +1191,7 @@ Suppose we have a sequence of independent random self-adjoint matrices
 
 \end_inset
 
-with probability 
+with probability at least 
 \begin_inset Formula $1-\delta$
 \end_inset
 
@@ -1250,17 +1253,7 @@ with probability
 \end_inset
 
 .
- (Here we use 
-\begin_inset Formula $A\lesssim B$
-\end_inset
-
- to denote 
-\begin_inset Formula $A=O(B)$
-\end_inset
-
-.)
-\backslash
-
+ 
 \end_layout
 
 \begin_layout Standard

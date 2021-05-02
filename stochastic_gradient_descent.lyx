@@ -125,11 +125,11 @@ where
 \end_inset
 
 .
- Suppose we observed 
+ Suppose we observed samples 
 \begin_inset Formula $f_{1},f_{2},\cdots,f_{T}$
 \end_inset
 
- samples from 
+ from 
 \begin_inset Formula $\mathcal{D}$
 \end_inset
 
@@ -177,7 +177,7 @@ We will first discuss the term
 \begin_inset Formula $x^{(T)}$
 \end_inset
 
- is simply average of 
+ is simply the average of 
 \begin_inset Formula $T$
 \end_inset
 
@@ -241,7 +241,7 @@ Suppose that
 \end_layout
 
 \begin_layout Remark*
-The statement holds with much weaker assumptions and the rate of convergence
+The statement holds with weaker assumptions and the rate of convergence
  can be made quantitative.
 \end_layout
 
@@ -595,6 +595,11 @@ Input:
 \end_inset
 
 .
+ Access to 
+\begin_inset Formula $\mathcal{D}$
+\end_inset
+
+, a distribution on convex functions.
 \end_layout
 
 \begin_layout Standard
