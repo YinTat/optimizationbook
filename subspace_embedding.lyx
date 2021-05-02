@@ -123,7 +123,12 @@ x=(A^{\top}A)^{-1}A^{\top}b.
 
 \end_inset
 
-If the matrix 
+If 
+\begin_inset Formula $A^{T}A$
+\end_inset
+
+ is not invertible, we use its pseudo-inverse.
+ If the matrix 
 \begin_inset Formula $A^{\top}A\in\R^{d\times d}$
 \end_inset
 
@@ -183,6 +188,21 @@ To ensure this converges, we scale down
  More generally, one can use 
 \emph on
 pre-conditioning.
+ 
+\emph default
+Recall that for a vector 
+\begin_inset Formula $v$
+\end_inset
+
+ the norm 
+\begin_inset Formula $\norm v_{M}$
+\end_inset
+
+ is defined as 
+\begin_inset Formula $v^{T}Mv$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Lemma
@@ -241,7 +261,11 @@ Using
 \begin_inset Formula $x^{*}=(A^{\top}A)^{-1}A^{\top}b$
 \end_inset
 
- and the formula of 
+, i.e., 
+\begin_inset Formula $A^{\top}b=(A^{\top}A)x^{*}$
+\end_inset
+
+, and the formula of 
 \begin_inset Formula $x^{(k+1)}$
 \end_inset
 
@@ -959,7 +983,7 @@ m=\Theta(\frac{1}{\epsilon^{2}}(d+\log(\frac{1}{\delta}))).
 
 \end_inset
 
-As we discussed before that any 
+As we discussed before any 
 \begin_inset Formula $(d,\epsilon,\delta)$
 \end_inset
 
@@ -1197,11 +1221,11 @@ Hanson-Wright Inequality
 
 \end_inset
 
-For 
+For independent random variables 
 \begin_inset Formula $\sigma_{1},\cdots,\sigma_{n}$
 \end_inset
 
- are independent random variables with 
+ with 
 \begin_inset Formula $\E\sigma_{i}=0$
 \end_inset
 
@@ -1209,12 +1233,11 @@ For
 \begin_inset Formula $|\sigma_{i}|\leq1$
 \end_inset
 
-.
- Let 
+ and 
 \begin_inset Formula $A\in\R^{n\times n}$
 \end_inset
 
-, we have that
+, we have 
 \begin_inset Formula 
 \[
 \left|\sigma^{\top}A\sigma-\E\sigma^{\top}A\sigma\right|\lesssim\|A\|_{F}\sqrt{\log(\frac{1}{\delta})}+\|A\|_{\op}\log(\frac{1}{\delta})
