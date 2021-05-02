@@ -1,0 +1,953 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    allcolors=red
+}
+\usepackage[lined,boxed,ruled,norelsize,algo2e]{algorithm2e}
+\@addtoreset{section}{part}
+\end_preamble
+\use_default_options true
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+theorems-ams-extended
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 1
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 0
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\defeq}{\stackrel{\mathrm{{\scriptscriptstyle def}}}{=}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\norm}[1]{\left\Vert #1\right\Vert }
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\R}{\mathbb{R}}
+\end_inset
+
+ 
+\begin_inset FormulaMacro
+\newcommand{\Rn}{\mathbb{R}^{n}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\tr}{\mathrm{Tr}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\diag}{\mathrm{diag}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\ma}{\mathbf{A}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\ttag}[1]{\tag{#1}}
+{\qquad(#1)}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\PriR}{\mathcal{P}}
+\end_inset
+
+ 
+\begin_inset FormulaMacro
+\newcommand{\DualR}{\mathcal{D}}
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Title
+Tutorial on Robust Interior Point
+\end_layout
+
+\begin_layout Standard
+In this note, we give a short self-contained proof for interior point method
+ and its robust version.
+ Consider the primal linear program
+\begin_inset Formula 
+\begin{equation}
+\min_{\ma x=b,x\in\R_{+}^{n}}c^{\top}x\ttag P\label{eq:tut_primal_LP}
+\end{equation}
+
+\end_inset
+
+and its dual
+\begin_inset Formula 
+\begin{equation}
+\max_{\ma^{\top}y+s=c,s\in\R_{+}^{n}}b^{\top}y.\ttag D\label{eq:tut_dual_LP}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $\ma\in\R^{m\times n}$
+\end_inset
+
+ and 
+\begin_inset Formula $\R_{+}=\{x\geq0\}$
+\end_inset
+
+.
+ The feasible region for both programs are 
+\begin_inset Formula $\PriR=\{x\in\R_{+}^{n}:\ma x=b\}$
+\end_inset
+
+ and 
+\begin_inset Formula $\DualR=\{s\in\R_{+}^{n}:\ma^{\top}y+s=c\text{ for some }y\}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+To motivate interior point methods, we recall the optimality condition for
+ linear programs:
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Complementary Slackness
+\end_layout
+
+\end_inset
+
+For any 
+\begin_inset Formula $x\in\PriR$
+\end_inset
+
+ and 
+\begin_inset Formula $s\in\DualR$
+\end_inset
+
+, 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $s$
+\end_inset
+
+ are optimal if and only if 
+\begin_inset Formula $x^{\top}s=0$
+\end_inset
+
+.
+ Furthermore, if both 
+\begin_inset Formula $\PriR$
+\end_inset
+
+ and 
+\begin_inset Formula $\DualR$
+\end_inset
+
+ are non-empty, there are optimal 
+\begin_inset Formula $x^{*}\in\PriR$
+\end_inset
+
+ and 
+\begin_inset Formula $s^{*}\in\DualR$
+\end_inset
+
+ such that 
+\begin_inset Formula $(x^{*})^{\top}s^{*}=0$
+\end_inset
+
+ and 
+\begin_inset Formula $x^{*}+s^{*}>0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Furthermore, the quantity 
+\begin_inset Formula $x^{\top}s$
+\end_inset
+
+ measures the duality gap of the feasible solution:
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Duality Gap
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:duality_gap"
+
+\end_inset
+
+For any 
+\begin_inset Formula $x\in\PriR$
+\end_inset
+
+ and 
+\begin_inset Formula $s\in\DualR$
+\end_inset
+
+, the duality gap 
+\begin_inset Formula $c^{\top}x-b^{\top}y=x^{\top}s$
+\end_inset
+
+.
+ In particular 
+\begin_inset Formula $c^{\top}x\leq\min_{x\in\PriR}c^{\top}x+x^{\top}s$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Using 
+\begin_inset Formula $\ma x=b$
+\end_inset
+
+ and 
+\begin_inset Formula $\ma^{\top}y+s=c$
+\end_inset
+
+, we can compute the duality gap as follows
+\begin_inset Formula 
+\[
+c^{\top}x-b^{\top}y=c^{\top}x-(\ma x)^{\top}y=c^{\top}x-x^{\top}(\ma y)=x^{\top}s.
+\]
+
+\end_inset
+
+By weak duality, we have
+\begin_inset Formula 
+\[
+c^{\top}x=b^{\top}y+x^{\top}s\leq\max_{\ma^{\top}y+s=c,s\in\R_{+}^{n}}b^{\top}y+x^{\top}s\leq\min_{x\in\PriR}c^{\top}x+x^{\top}s.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The main implication of Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:duality_gap"
+
+\end_inset
+
+ is that any feasible 
+\begin_inset Formula $(x,s)$
+\end_inset
+
+ with small 
+\begin_inset Formula $x^{\top}s$
+\end_inset
+
+ is a nearly optimal solution of the linear program.
+ This leads us to the primal-dual algorithms in which we start with a feasible
+ primal and dual solution 
+\begin_inset Formula $(x,s)$
+\end_inset
+
+ and iteratively update the solution to decrease the duality gap 
+\begin_inset Formula $x^{\top}s$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+On top of this, interior point methods observe that we can update the feasible
+ 
+\begin_inset Formula $(x,s)$
+\end_inset
+
+ via Newton method and that we can decrease the duality gap by a 
+\begin_inset Formula $1-\Omega(n^{-1/2})$
+\end_inset
+
+ factor if the vector 
+\begin_inset Formula $xs$
+\end_inset
+
+ is uniform (
+\begin_inset Formula $x_{i}s_{i}$
+\end_inset
+
+ is close enough to a constant for all 
+\begin_inset Formula $i$
+\end_inset
+
+).
+ This leads to a linear program algorithm with 
+\begin_inset Formula $O(\sqrt{n}\log(1/\epsilon))$
+\end_inset
+
+ iterations for accuracy 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+.
+ Each iteration of these algorithms involves solving a linear system, which
+ takes 
+\begin_inset Formula $n^{\omega+o(1)}$
+\end_inset
+
+ time where 
+\begin_inset Formula $\omega\leq2.38$
+\end_inset
+
+ is the matrix multiplication constant.
+\end_layout
+
+\begin_layout Standard
+In this note, we introduce the robust interior point method that shows one
+ can solve linear programs in 
+\begin_inset Formula $n^{2.38}\log(1/\epsilon)$
+\end_inset
+
+ time, essentially matching the current fastest algorithm for solving general
+ linear system.
+ The key observation is that only few coordinate of 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ and 
+\begin_inset Formula $s_{i}$
+\end_inset
+
+ changes significant each step and hence we can maintain the solution of
+ the linear system instead of computing from scratch.
+\end_layout
+
+\begin_layout Standard
+TODO:
+\end_layout
+
+\begin_layout Itemize
+Main Algorithm
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Explain one should think 
+\begin_inset Formula $x_{i}s_{i}$
+\end_inset
+
+ as a new coordinate system 
+\begin_inset Formula $\mu_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Write how to do one step.
+\end_layout
+
+\begin_layout Itemize
+Explain why uniform 
+\begin_inset Formula $x_{i}s_{i}$
+\end_inset
+
+ is good.
+ (large feasible step).
+\end_layout
+
+\begin_layout Itemize
+Write down the algorithm
+\end_layout
+
+\begin_layout Itemize
+Give the main proof.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Write the reduction
+\end_layout
+
+\begin_layout Itemize
+Write the robust part
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Check if two sided barrier is important.
+ Or we just need 
+\begin_inset Formula $x_{i}s_{i}\geq t$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Interior Point Method
+\end_layout
+
+\begin_layout Standard
+The key concept of interior point method is the central path:
+\end_layout
+
+\begin_layout Definition
+We define the central path 
+\begin_inset Formula $(x_{t},s_{t},y_{t})_{t\in\R_{+}}$
+\end_inset
+
+ for 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:tut_primal_LP"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:tut_dual_LP"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ by
+\begin_inset Formula 
+\begin{align*}
+x_{t}s_{t} & =t,\\
+\ma x_{t} & =b,\\
+\ma^{\top}y_{t}+s_{t} & =c,\\
+(x_{t},s_{t}) & \in\R_{+}^{2n}
+\end{align*}
+
+\end_inset
+
+where the vector 
+\begin_inset Formula $x_{t}s_{t}$
+\end_inset
+
+ is defined by the entry-wise product 
+\begin_inset Formula $x_{t,i}s_{t,i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Although the 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm2e}[H]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\mathtt{AccurateMedian}(\epsilon)$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:nearlylinearmedian"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetAlgoLined
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tcp{
+\end_layout
+
+\end_inset
+
+Iteratively improve quality of approximation
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+For{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $i=1,\cdots,64\log\frac{1}{\epsilon}$
+\end_inset
+
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tcp{
+\end_layout
+
+\end_inset
+
+Compute 
+\begin_inset Formula $\epsilon_{v}$
+\end_inset
+
+-approximate minimum eigenvalue and eigenvector of
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $(\lambda^{(i)},u^{(i)})=\texttt{ApproxMinEig}(x^{(i)},t_{i},\epsilon_{v})$
+\end_inset
+
+ with 
+\begin_inset Formula $\epsilon_{v}=123$
+\end_inset
+
+.
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Repeat{
+\end_layout
+
+\end_inset
+
+end condition
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+uIf{
+\end_layout
+
+\end_inset
+
+123
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+213
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+Else{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+234
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+If{
+\end_layout
+
+\end_inset
+
+123
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+234
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Output:
+\series default
+ 
+\begin_inset Formula $x^{(k)}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+\SpecialChar LyX
+ Setup
+\end_layout
+
+\begin_layout Subsection
+Auto Output
+\end_layout
+
+\begin_layout Enumerate
+First go to Tools > Preferences > Output and change "Overwrite on export"
+ to "All files".
+ 
+\end_layout
+
+\begin_layout Enumerate
+Go to .lyx/ui/stdtoolbars.inc.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Change Item "View" "buffer-view" to Item "View" "command-sequence buffer-view;
+ buffer-export pdf2" 
+\end_layout
+
+\begin_layout Enumerate
+Add Item "Master View" "command-sequence master-buffer-view; buffer-export
+ pdf2"
+\end_layout
+
+\end_body
+\end_document
