@@ -496,6 +496,17 @@ right? not just
 \end_inset
 
 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+I should change this lemma to affine invariant version.
+ Measure distance by the Jacobian norm.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Proof
