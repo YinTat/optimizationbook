@@ -92,7 +92,7 @@ name "sec:Subspace-embedding"
 \end_layout
 
 \begin_layout Standard
-In this section and next section, we consider the least squares regression
+In this section and the next section, we consider the least squares regression
  problem
 \begin_inset Formula 
 \[
@@ -106,16 +106,20 @@ where
 \end_inset
 
  with 
-\begin_inset Formula $n\gg d$
+\begin_inset Formula $n\ge d$
 \end_inset
 
-.
+ (we assume this throughout the chapter).
  The gradient of the function is 
 \begin_inset Formula $2A^{\top}Ax-2A^{\top}b$
 \end_inset
 
 .
- Therefore, the solution is given by 
+ Setting it to zero, and assuming 
+\begin_inset Formula $A^{\top}A$
+\end_inset
+
+ is invertible, the solution is given by 
 \begin_inset Formula 
 \[
 x=(A^{\top}A)^{-1}A^{\top}b.
@@ -132,7 +136,7 @@ If
 \begin_inset Formula $A^{\top}A\in\R^{d\times d}$
 \end_inset
 
- is given, then, we can solve the equation above in time 
+ is given, then we can solve the equation above in time 
 \begin_inset Formula $d^{\omega}$
 \end_inset
 
@@ -194,7 +198,7 @@ Recall that for a vector
 \begin_inset Formula $v$
 \end_inset
 
- the norm 
+, the norm 
 \begin_inset Formula $\norm v_{M}$
 \end_inset
 
@@ -462,7 +466,7 @@ This embedding is not useful for solving the least squares problem because
 \begin_inset Formula $x=V\Sigma^{-1}U^{\top}b$
 \end_inset
 
- and that finding the SVD is usually more expensive.
+ and finding the SVD is usually more expensive.
 \end_layout
 
 \begin_layout Subsection
@@ -609,8 +613,8 @@ for all unit vectors
 \begin_inset Formula $d$
 \end_inset
 
-, but later versions extended this extended this to Gaussian, Bermoulli
- and more general random matrices 
+, but later versions extended this to Gaussian, Bernoulli and more general
+ random matrices 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Vempala04"
@@ -1071,7 +1075,7 @@ We consider the sparse matrix
 \begin_inset Formula $(d,\epsilon,\delta)$
 \end_inset
 
- OSE for 
+-OSE for 
 \begin_inset Formula $s=\Theta(\log^{2}(d/\delta)/\epsilon^{2})$
 \end_inset
 
@@ -1142,8 +1146,8 @@ Since each row of
 \begin_inset Formula $\Pi$
 \end_inset
 
- is independent, we can use two matrix concentration bounds to analyze the
- sum above.
+ is independent, we can use matrix concentration bounds to analyze the sum
+ above.
  See 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -1162,6 +1166,13 @@ status open
 \begin_layout Plain Layout
 Matrix Chernoff
 \end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:matrix-chernoff"
 
 \end_inset
 
@@ -1253,7 +1264,6 @@ with probability
 \end_inset
 
 .
- 
 \end_layout
 
 \begin_layout Standard
@@ -1285,9 +1295,9 @@ For our problem, we set
 .
  Next, we note that
 \begin_inset Formula 
-\[
-M_{r}\preceq m\cdot\pi_{r}^{\top}UU^{\top}\pi_{r}\cdot I.
-\]
+\begin{equation}
+M_{r}\preceq m\cdot\pi_{r}^{\top}UU^{\top}\pi_{r}\cdot I.\label{matrix_ub}
+\end{equation}
 
 \end_inset
 
@@ -1598,7 +1608,27 @@ By the previous lemma, we have that
 \end_inset
 
 with high probability.
- Under this event, we have that
+ Under this event, using Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:matrix-chernoff"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "matrix_ub"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we have that
 \begin_inset Formula 
 \[
 (1-O(\varepsilon))I\preceq\sum_{r=1}^{m}\pi_{r}^{\top}UU^{\top}\pi_{r}\preceq(1+O(\varepsilon))I.
