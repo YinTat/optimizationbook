@@ -955,7 +955,7 @@ Now, using that
 
 \end_inset
 
-Take a union bound over all 
+Taking a union bound over all 
 \begin_inset Formula $x\in UN$
 \end_inset
 
