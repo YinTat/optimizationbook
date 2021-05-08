@@ -243,40 +243,6 @@ This is probably easier to understand the
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Lattice Integral
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Finish Case 1 first.
-\end_layout
-
-\begin_layout Plain Layout
-Then start doing Robust IPM...
-\end_layout
-
-\begin_layout Plain Layout
-We finish case 2 and case 3 later.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Title
 Tutorial on Robust Interior Point
 \end_layout
@@ -2607,30 +2573,11 @@ With this reduction, we are ready to state our algorithm for approximate
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename pasted1.png
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-...
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename pasted2.png
-
-\end_inset
-
-
-\end_layout
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+btprint "btPrintCited"
+bibfiles "ipm"
+options "plain"
 
 \end_inset
 
@@ -3218,8 +3165,8 @@ I want
 \end_layout
 
 \begin_layout Standard
-There are many ways to get an exact solution from an approximate LP algorithm.
- One way is to show that the modified LP 
+In this section, we show one way to obtain an exact solution via the modified
+ LP 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:primal_modified"
@@ -3229,12 +3176,10 @@ noprefix "false"
 
 \end_inset
 
- has the exact solution as the original LP.
-\end_layout
-
-\begin_layout Standard
-The key fact we are using here is that the bound on how stable is the solution
- of linear programs under perturbation of 
+.
+ Two key facts we are using is linear programs has unique solution after
+ perturbing cost randomly and the primal solution of linear programs is
+ stable under perturbation of 
 \begin_inset Formula $b$
 \end_inset
 
@@ -3246,8 +3191,16 @@ The key fact we are using here is that the bound on how stable is the solution
 status collapsed
 
 \begin_layout Plain Layout
-Hoffman-bounds, Lemma 3.4 in Revisiting Tardos’s Framework for Linear Programming
-: Faster Exact Solutions using Approximate Solvers.
+Hoffman-bounds 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Lemma 3.4"
+key "dadush2020revisiting"
+literal "false"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -3302,11 +3255,18 @@ The following theorem shows that
 
 \begin_layout Theorem
 \begin_inset Argument 1
-status open
+status collapsed
 
 \begin_layout Plain Layout
-Theorem 1 in Characterizations, bounds, and probabilistic analysis of two
- complexity measures for linear programming problems
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Theorem 1"
+key "todd2001characterizations"
+literal "false"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
