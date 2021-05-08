@@ -4027,5 +4027,69 @@ Hence, we have
 .
 \end_layout
 
+\begin_layout Standard
+Finally, we note that the modified linear program, the linear system is
+\begin_inset Formula 
+\[
+\oma=\left[\begin{array}{ccc}
+\ma & -\ma & 0_{d}\\
+1_{n}^{\top} & 0_{n} & 1
+\end{array}\right]
+\]
+
+\end_inset
+
+For any diagonal matrices 
+\begin_inset Formula $\mw_{1},\mw_{2}$
+\end_inset
+
+ and any scalar 
+\begin_inset Formula $\alpha$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+\mh\defeq\oma\left[\begin{array}{ccc}
+\mw_{1} & \mzero & 0_{n}\\
+\mzero & \mw_{2} & 0_{n}\\
+0_{n}^{\top} & 0_{n}^{\top} & \alpha
+\end{array}\right]\oma^{\top}=\left[\begin{array}{cc}
+\ma^{\top}(\mw_{1}+\mw_{2})\ma & \ma\mw_{1}1_{n}\\
+(\ma\mw_{1}1_{n})^{\top} & 1_{n}^{\top}\mw_{1}1_{n}+\alpha
+\end{array}\right].
+\]
+
+\end_inset
+
+Note that the second row and column block has size 
+\begin_inset Formula $1$
+\end_inset
+
+.
+ By block inverse formula, 
+\begin_inset Formula $\mh^{-1}v$
+\end_inset
+
+ is an explicit formula involving 
+\begin_inset Formula $(\ma^{\top}(\mw_{1}+\mw_{2})\ma)^{-1}v_{1:n}$
+\end_inset
+
+ and 
+\begin_inset Formula $(\ma^{\top}(\mw_{1}+\mw_{2})\ma)^{-1}\ma\mw_{1}1_{n}$
+\end_inset
+
+.
+ Hence, we can compute 
+\begin_inset Formula $\mh^{-1}v$
+\end_inset
+
+ by solving two linear systems of the form 
+\begin_inset Formula $\ma^{\top}\mw\ma$
+\end_inset
+
+ and some extra linear work.
+\end_layout
+
 \end_body
 \end_document
