@@ -1229,12 +1229,47 @@ Note that the above quantity maximizes at
 \end_layout
 
 \begin_layout Definition
+\begin_inset CommandInset label
+LatexCommand label
+name "def:central_path"
+
+\end_inset
+
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Central Path
+\end_layout
+
+\end_inset
+
 We define the central path 
 \begin_inset Formula $(x_{t},s_{t})\in\PriR^{\circ}\times\DualR^{\circ}$
 \end_inset
 
  by 
 \begin_inset Formula $x_{t}s_{t}=t$
+\end_inset
+
+.
+ We call 
+\begin_inset Formula $x_{t}$
+\end_inset
+
+ is on the central path of 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:tut_primal_LP"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ at 
+\begin_inset Formula $t$
 \end_inset
 
 .
@@ -1539,7 +1574,14 @@ Suppose that the input satisfies
 \begin_inset Formula $\mathtt{L2Step}$
 \end_inset
 
-, we have 
+ (Algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:L2Step"
+
+\end_inset
+
+), we have 
 \begin_inset Formula $\|xs-t\|_{2}\leq\frac{t}{6}$
 \end_inset
 
@@ -1701,7 +1743,7 @@ reference "lem:step_size"
 
 \begin_layout Proof
 Since 
-\begin_inset Formula $\mathtt{L2InteriorPoint}$
+\begin_inset Formula $\mathtt{L2Step}$
 \end_inset
 
  decreases 
@@ -1725,6 +1767,1033 @@ Since
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Subsection
+Finding a Point on Central Path
+\end_layout
+
+\begin_layout Standard
+The runtime of interior point method depends on how degenerate is the linear
+ program:
+\end_layout
+
+\begin_layout Definition
+We define the following parameters for the linear program 
+\begin_inset Formula $\min_{\ma x=b,x\geq0}c^{\top}x$
+\end_inset
+
+:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Inner radius 
+\begin_inset Formula $r$
+\end_inset
+
+: There is 
+\begin_inset Formula $x\geq0$
+\end_inset
+
+ with 
+\begin_inset Formula $\ma x=b$
+\end_inset
+
+ such that 
+\begin_inset Formula $x_{i}\geq r$
+\end_inset
+
+ for all 
+\begin_inset Formula $i$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Outer radius 
+\begin_inset Formula $R$
+\end_inset
+
+: For any 
+\begin_inset Formula $x\geq0$
+\end_inset
+
+ with 
+\begin_inset Formula $\ma x=b$
+\end_inset
+
+, we have that 
+\begin_inset Formula $\|x\|_{2}\leq R$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Lipschitz constant 
+\begin_inset Formula $L$
+\end_inset
+
+: 
+\begin_inset Formula $\|c\|_{2}\leq L$
+\end_inset
+
+.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+The idea is to modify the linear program such that we have an explicit central
+ path.
+ Since the main complication is the constraint 
+\begin_inset Formula $x\geq0$
+\end_inset
+
+, we split 
+\begin_inset Formula $x$
+\end_inset
+
+ into 
+\begin_inset Formula $x^{+}-x^{-}$
+\end_inset
+
+ with 
+\begin_inset Formula $x^{+},x^{-}\geq0$
+\end_inset
+
+ and put a large cost vector on 
+\begin_inset Formula $x^{-}$
+\end_inset
+
+.
+ Since the vector 
+\begin_inset Formula $x^{-}$
+\end_inset
+
+ has a large cost, we expect that when we optimize the linear program, 
+\begin_inset Formula $x^{-}$
+\end_inset
+
+ will be very small.
+ Hence, we can run 
+\begin_inset Formula $\mathtt{L2Step}$
+\end_inset
+
+ to move the point along the central path with smaller 
+\begin_inset Formula $t$
+\end_inset
+
+.
+ Then, we show that 
+\begin_inset Formula $x^{+}$
+\end_inset
+
+ at smaller 
+\begin_inset Formula $t$
+\end_inset
+
+ is near the central path of the original linear program.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm2e}[H]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\mathtt{L2Center}(\ma,b,c)$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:L2Center"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Assume the linear program has inner radius 
+\begin_inset Formula $r$
+\end_inset
+
+, outer radius 
+\begin_inset Formula $R$
+\end_inset
+
+ and Lipschitz constant 
+\begin_inset Formula $L$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $x_{c}=\ma^{\top}(\ma\ma^{\top})^{-1}b$
+\end_inset
+
+.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tcp*{
+\end_layout
+
+\end_inset
+
+We have 
+\begin_inset Formula $x_{c}=\arg\min_{\ma x=b}\|x\|_{2}$
+\end_inset
+
+.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $t=12LR$
+\end_inset
+
+, 
+\begin_inset Formula $x^{+}=\frac{t}{c+\frac{t}{4R}}$
+\end_inset
+
+, 
+\begin_inset Formula $x^{-}=x^{+}-x_{c}$
+\end_inset
+
+, 
+\begin_inset Formula $\theta=4R$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $x^{(0)}=(x^{+},x^{-},\theta)$
+\end_inset
+
+ and 
+\begin_inset Formula $s^{(0)}=t/x^{(0)}$
+\end_inset
+
+, 
+\begin_inset Formula $\overline{\ma}=\left[\begin{array}{ccc}
+\ma & -\ma & 0\\
+1_{d} & 0_{d} & 1
+\end{array}\right]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tcp{
+\end_layout
+
+\end_inset
+
+Run IPM on the problem 
+\begin_inset Formula $\min_{(x^{+},x^{-},\theta)\in\overline{\mathcal{P}}}c^{\top}x^{+}+d^{\top}x^{-}$
+\end_inset
+
+ with the initial point 
+\begin_inset Formula $(x^{(0)},s^{(0)})$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tcp{
+\end_layout
+
+\end_inset
+
+where 
+\begin_inset Formula $\overline{\mathcal{P}}=\{(x^{+},x^{-},\theta)\in\R_{\geq0}^{2n+1}:\ma(x^{+}-x^{-})=b,\sum_{i=1}^{n}x_{i}^{+}+\theta=\Lambda\}$
+\end_inset
+
+, 
+\begin_inset Formula $d=t/x^{-}$
+\end_inset
+
+, 
+\begin_inset Formula $\Lambda=\sum_{i}x_{i}^{+}+\theta$
+\end_inset
+
+.
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $(x^{(1)},s^{(1)})=\mathtt{L2Step}(\overline{\ma},x^{(0)},s^{(0)},t,t_{\mathrm{end}})$
+\end_inset
+
+ with 
+\begin_inset Formula $t_{\mathrm{end}}=200LRn$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+....
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Return
+\series default
+ 
+\begin_inset Formula $(x,s,t_{\mathrm{end}})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+First, we show that 
+\begin_inset Formula $x^{(0)}$
+\end_inset
+
+ defined in 
+\begin_inset Formula $\mathtt{L2Center}$
+\end_inset
+
+ is indeed on the central path of the modified linear program.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:ipm_propert_modified"
+
+\end_inset
+
+Let 
+\begin_inset Formula $\min_{(x^{+},x^{-},\theta)\in\overline{\mathcal{P}}}c^{\top}x^{+}+d^{\top}x^{-}$
+\end_inset
+
+ and 
+\begin_inset Formula $x^{(0)}$
+\end_inset
+
+ be the linear program and the initial point defined in 
+\begin_inset Formula $\mathtt{L2Center}$
+\end_inset
+
+ (Algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:L2Center"
+
+\end_inset
+
+).
+ Then, we have that 
+\begin_inset Formula $x^{(0)}$
+\end_inset
+
+ is on the central path of the following problem at 
+\begin_inset Formula $t$
+\end_inset
+
+ (See Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:central_path"
+
+\end_inset
+
+).
+ Furthermore, we have 
+\begin_inset Formula $(6n+4)R\geq\Lambda\geq(3n+4)R$
+\end_inset
+
+ and 
+\begin_inset Formula $d_{i}\geq t/7R$
+\end_inset
+
+ for all 
+\begin_inset Formula $i$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+We say 
+\begin_inset Formula $(x^{+},x^{-},\theta)$
+\end_inset
+
+ is on the central path at 
+\begin_inset Formula $t$
+\end_inset
+
+ if 
+\begin_inset Formula $x^{+},x^{-},\theta$
+\end_inset
+
+ are positive and it satisfies the following equation
+\begin_inset Formula 
+\begin{align*}
+\ma x^{+}-\ma x^{-} & =b,\\
+\sum_{i=1}^{n}x_{i}^{+}+\theta & =\Lambda,\\
+\ma^{\top}y+\lambda+s_{1} & =c,\\
+\ma^{\top}y+s_{2} & =d,\\
+\lambda+s_{3} & =0,
+\end{align*}
+
+\end_inset
+
+where for some 
+\begin_inset Formula $s_{1},s_{2}\in\R_{>0}^{n}$
+\end_inset
+
+, 
+\begin_inset Formula $s_{3}>0$
+\end_inset
+
+, 
+\begin_inset Formula $y\in\R^{d}$
+\end_inset
+
+, 
+\begin_inset Formula $\lambda\in\R$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Now, we verify the solution 
+\begin_inset Formula $x^{+}=\frac{t}{c+\frac{t}{4R}}$
+\end_inset
+
+, 
+\begin_inset Formula $x^{-}=\frac{t}{c+\frac{t}{4R}}-x_{c}$
+\end_inset
+
+, 
+\begin_inset Formula $\theta=4R$
+\end_inset
+
+, 
+\begin_inset Formula $y=0$
+\end_inset
+
+, 
+\begin_inset Formula $s_{1}=\frac{t}{x^{+}}$
+\end_inset
+
+, 
+\begin_inset Formula $s_{2}=\frac{t}{x^{-}}$
+\end_inset
+
+, 
+\begin_inset Formula $s_{3}=\frac{t}{4R}$
+\end_inset
+
+, 
+\begin_inset Formula $\lambda=-s_{3}$
+\end_inset
+
+.
+ Using 
+\begin_inset Formula $\ma x_{c}=b$
+\end_inset
+
+, one can check it satisfies all the equality constraints above.
+ 
+\end_layout
+
+\begin_layout Proof
+For the inequality constraints, using 
+\begin_inset Formula $\|c\|_{\infty}\leq L$
+\end_inset
+
+ and 
+\begin_inset Formula $t\geq12LR$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+3R\leq\frac{t}{L+\frac{t}{4R}}\leq x_{i}^{+}\leq\frac{t}{-L+\frac{t}{4R}}\leq6R
+\]
+
+\end_inset
+
+and hence 
+\begin_inset Formula $x^{+}>0$
+\end_inset
+
+ and so is 
+\begin_inset Formula $s_{1}$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $\|x_{c}\|_{2}\leq R$
+\end_inset
+
+ and 
+\begin_inset Formula $x_{i}^{+}\geq3R$
+\end_inset
+
+ for all 
+\begin_inset Formula $i$
+\end_inset
+
+, we have 
+\begin_inset Formula $x_{i}^{-}\geq2R$
+\end_inset
+
+ for all 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ Hence, 
+\begin_inset Formula $x^{-}$
+\end_inset
+
+ and 
+\begin_inset Formula $s_{2}$
+\end_inset
+
+ are positive.
+ Finally, 
+\begin_inset Formula $\theta$
+\end_inset
+
+ and 
+\begin_inset Formula $s_{3}$
+\end_inset
+
+ are positive.
+ Also, we have 
+\begin_inset Formula $\Lambda=\sum_{i}x_{i}^{+}+\theta\geq(3n+4)R$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Since 
+\begin_inset Formula $x^{+}\leq6R$
+\end_inset
+
+, we have 
+\begin_inset Formula $\Lambda=\sum_{i}x_{i}^{+}+\theta\leq(6n+4)R$
+\end_inset
+
+.
+ Also, since 
+\begin_inset Formula $x^{-}\leq7R$
+\end_inset
+
+ and hence 
+\begin_inset Formula $d\geq t/(7R)$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Next, we show that the central path point 
+\begin_inset Formula $x^{(1)}$
+\end_inset
+
+ found in 
+\begin_inset Formula $\mathtt{L2Center}$
+\end_inset
+
+ is far from the constraints 
+\begin_inset Formula $x^{+}>0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+asdasdasd
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $v$
+\end_inset
+
+ be a point such that 
+\begin_inset Formula $v\geq0$
+\end_inset
+
+ with 
+\begin_inset Formula $\ma v=b$
+\end_inset
+
+ such that 
+\begin_inset Formula $v_{i}\geq r$
+\end_inset
+
+ for all 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $x^{(1)}$
+\end_inset
+
+ defined in 
+\begin_inset Formula $\mathtt{L2Center}$
+\end_inset
+
+.
+ We write 
+\begin_inset Formula $x^{(1)}=(\alpha,\beta,\gamma)$
+\end_inset
+
+ where 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ is the first 
+\begin_inset Formula $n$
+\end_inset
+
+ coordinates of 
+\begin_inset Formula $x^{(1)}$
+\end_inset
+
+, 
+\begin_inset Formula $\beta$
+\end_inset
+
+ is the 
+\begin_inset Formula $n+1$
+\end_inset
+
+ to 
+\begin_inset Formula $2n$
+\end_inset
+
+ coordinates of 
+\begin_inset Formula $x^{(1)}$
+\end_inset
+
+ and 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ is the last coordinate of 
+\begin_inset Formula $x^{(1)}$
+\end_inset
+
+.
+ By the definition, 
+\begin_inset Formula $x^{(1)}=(\alpha,\beta,\gamma)$
+\end_inset
+
+ minimizes the function
+\begin_inset Formula 
+\[
+f(\alpha,\beta,\gamma)\defeq c^{\top}\alpha+d^{\top}\beta-\sum_{i=1}^{n}t_{i}^{+}\log\alpha_{i}-\sum_{i=1}^{n}t_{i}^{-}\log\beta_{i}-t_{\theta}\log\gamma
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $t_{i}^{+},t_{i}^{-},t_{\theta}\in[t_{\mathrm{end}}/2,2t_{\mathrm{end}}]$
+\end_inset
+
+ for all 
+\begin_inset Formula $i$
+\end_inset
+
+ over the domain 
+\begin_inset Formula $\overline{\mathcal{P}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Now, we define the path 
+\begin_inset Formula $p$
+\end_inset
+
+ from 
+\begin_inset Formula $x^{(1)}$
+\end_inset
+
+ to some feasible point define using 
+\begin_inset Formula $v$
+\end_inset
+
+ as follows
+\begin_inset Formula 
+\begin{align*}
+x_{i}^{-}(t) & =\begin{cases}
+(1-t)\beta_{i}+z & \text{if }\beta_{i}\geq z\\
+\beta_{i} & \text{otherwise}
+\end{cases},\\
+x^{+}(t) & =(1-t)(\alpha-\beta)+tv+x^{-}(t),\\
+\theta(t) & =\Lambda-\sum_{i=1}^{n}x_{i}^{+}(t)
+\end{align*}
+
+\end_inset
+
+with 
+\begin_inset Formula $z=\cdots$
+\end_inset
+
+.
+ We write 
+\begin_inset Formula $p(t)=(x^{+}(t),x_{i}^{-}(t),\theta(t))$
+\end_inset
+
+ in short.
+ Note that 
+\begin_inset Formula $p$
+\end_inset
+
+ starts with 
+\begin_inset Formula $p(0)=(\alpha,\beta,\gamma)\in\overline{\mathcal{P}}$
+\end_inset
+
+.
+ Now, we claim that 
+\begin_inset Formula $p(1)\in\overline{\mathcal{P}}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+Note that 
+\begin_inset Formula 
+\begin{align*}
+x_{i}^{-}(1) & =\min(z,\beta_{i}),\\
+x^{+}(1) & =v+x^{-}(t),\\
+\theta(1) & =\Lambda-\sum_{i=1}^{n}x_{i}^{+}(t).
+\end{align*}
+
+\end_inset
+
+By the construction of the path, it satisfies the equality constraints in
+ 
+\begin_inset Formula $\overline{\mathcal{P}}$
+\end_inset
+
+, both 
+\begin_inset Formula $x_{i}^{-}(1)$
+\end_inset
+
+ and 
+\begin_inset Formula $x_{i}^{+}(1)$
+\end_inset
+
+ are positive.
+ For 
+\begin_inset Formula $\theta(1)$
+\end_inset
+
+, Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:ipm_propert_modified"
+
+\end_inset
+
+ shows that
+\begin_inset Formula 
+\begin{align*}
+\theta(1) & \geq(3n+4)R-\sum_{i=1}^{n}x_{i}^{+}(1)\\
+ & =(3n+4)R-\sum_{i=1}^{n}v_{i}-\sum_{i=1}^{n}x_{i}^{-}(t)\\
+ & \geq(3n+4)R-nR-nz\geq0.
+\end{align*}
+
+\end_inset
+
+This finish the claim.
+\end_layout
+
+\begin_layout Proof
+Hence, the path 
+\begin_inset Formula $p(t)\in\overline{\mathcal{P}}$
+\end_inset
+
+ for 
+\begin_inset Formula $t\in[0,1]$
+\end_inset
+
+.
+ Now, we define 
+\begin_inset Formula $F(t)=f(p(t))$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $p(0)$
+\end_inset
+
+ minimizes the function 
+\begin_inset Formula $f$
+\end_inset
+
+ on 
+\begin_inset Formula $\overline{\mathcal{P}}$
+\end_inset
+
+, we have that 
+\begin_inset Formula $F'(0)\geq0$
+\end_inset
+
+.
+ Hence, at 
+\begin_inset Formula $t=0$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+c^{\top}\frac{dx^{+}}{dt}+d^{\top}\frac{dx^{-}}{dt}-\sum_{i=1}^{n}\frac{t_{i}^{+}}{x_{i}^{+}}\frac{dx_{i}^{+}}{dt}-\sum_{i=1}^{n}\frac{t_{i}^{-}}{x_{i}^{-}}\frac{dx_{i}^{-}}{dt}-\frac{t_{\theta}}{\theta}\frac{d\theta}{dt}\geq0.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Draft: 
+\end_layout
+
+\begin_layout Enumerate
+Prove 
+\begin_inset Formula $c^{\top}\frac{dx^{+}}{dt}-\sum_{i=1}^{n}\frac{t_{i}^{-}}{x_{i}^{-}}\frac{dx_{i}^{-}}{dt}\leq c^{\top}\frac{dx^{+}}{dt}=O(nLR+nt_{end})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Prove that 
+\begin_inset Formula $\frac{t_{\theta}}{\theta}\frac{d\theta}{dt}\leq t_{end}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+We pick 
+\begin_inset Formula $d^{\top}\frac{dx^{-}}{dt}-\sum_{i=1}^{n}\frac{t_{i}^{-}}{x_{i}^{-}}\frac{dx_{i}^{-}}{dt}\leq\frac{1}{2}d^{\top}\frac{dx^{-}}{dt}$
+\end_inset
+
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $d\geq\frac{t}{R}$
+\end_inset
+
+.
+ We take 
+\begin_inset Formula $z\gg(t_{end}/t)R$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+If some 
+\begin_inset Formula $x_{i}^{-}\geq z$
+\end_inset
+
+, then 
+\begin_inset Formula $\frac{dx_{i}^{-}}{dt}\leq-\frac{1}{2}x_{i}^{-}$
+\end_inset
+
+ and hence 
+\begin_inset Formula $d^{\top}\frac{dx^{-}}{dt}-\sum_{i=1}^{n}\frac{t_{i}^{-}}{x_{i}^{-}}\frac{dx_{i}^{-}}{dt}\leq-\frac{1}{2}\frac{t}{R}x_{i}^{-}$
+\end_inset
+
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+It is a contradictions when 
+\begin_inset Formula $x_{i}^{-}\leq\frac{nLR+nt_{end}}{t}\cdot R$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+If some 
+\begin_inset Formula $x_{i}^{+}\leq\frac{r}{Z}$
+\end_inset
+
+, then we make progress by 
+\begin_inset Formula $O(Zt_{end})$
+\end_inset
+
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+It is a contradictions when 
+\begin_inset Formula $Z>n$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Pick 
+\begin_inset Formula $t_{end}=LR$
+\end_inset
+
+, and
+\begin_inset Formula 
+\[
+\frac{r}{n^{2}R}\geq\frac{t_{end}}{t}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Okay, seems at the end, I get the central path on the original LP, not even
+ extending one dimension.
 \end_layout
 
 \begin_layout Subsection
@@ -1777,19 +2846,6 @@ Decrease it to
 \end_layout
 
 \begin_layout Plain Layout
-Then, prove that we can remove all those extra dimension stuff.
-\end_layout
-
-\begin_layout Plain Layout
-Increase it to back to 
-\begin_inset Formula $nLR$
-\end_inset
-
-.
- Then we can switch cost.
-\end_layout
-
-\begin_layout Plain Layout
 Then decrease to 
 \begin_inset Formula $\epsilon LR$
 \end_inset
@@ -1806,73 +2862,6 @@ Then decrease to
 In this section, we use the following parameters on the linear program:
 \end_layout
 
-\begin_layout Definition
-We call a linear program 
-\begin_inset Formula $\min_{\ma x=b,x\geq0}c^{\top}x$
-\end_inset
-
- with inner radius 
-\begin_inset Formula $r$
-\end_inset
-
-, outer radius 
-\begin_inset Formula $R$
-\end_inset
-
- and Lipschitz constant 
-\begin_inset Formula $L$
-\end_inset
-
- if
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-Inner radius: There is 
-\begin_inset Formula $x\geq0$
-\end_inset
-
- with 
-\begin_inset Formula $\ma x=b$
-\end_inset
-
- such that 
-\begin_inset Formula $x_{i}\geq r$
-\end_inset
-
- for all 
-\begin_inset Formula $i$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Enumerate
-Outer radius: For any 
-\begin_inset Formula $x\geq0$
-\end_inset
-
- with 
-\begin_inset Formula $\ma x=b$
-\end_inset
-
-, we have that 
-\begin_inset Formula $\|x\|_{2}\leq R$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Enumerate
-Lipschitz constant of the objective: 
-\begin_inset Formula $\|c\|_{2}\leq L$
-\end_inset
-
-.
- 
-\end_layout
-
-\end_deeper
 \begin_layout Standard
 The idea is to modify the linear program such that we have an explicit interior
  point.
