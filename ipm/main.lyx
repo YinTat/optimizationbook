@@ -1263,31 +1263,15 @@ Note that the above quantity maximizes at
 \end_layout
 
 \begin_layout Definition
-We call 
-\begin_inset Formula $x$
+We define the central path 
+\begin_inset Formula $(x_{t},s_{t})\in\PriR^{\circ}\times\DualR^{\circ}$
 \end_inset
 
- is centered if 
-\begin_inset Formula $x=x_{t}$
-\end_inset
-
- for some constant vector 
-\begin_inset Formula $t$
-\end_inset
-
- where 
-\begin_inset Formula $x_{t}$
-\end_inset
-
- is defined in Lemma 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:primal_dual_representation"
-
+ by 
+\begin_inset Formula $x_{t}s_{t}=t$
 \end_inset
 
 .
- 
 \end_layout
 
 \begin_layout Subsection
@@ -1561,8 +1545,12 @@ end{algorithm2e}
 \end_layout
 
 \begin_layout Standard
-Note that the algorithm requires some initial centered point and we will
- show how to get it by changing the cost vector temporarily.
+Note that the algorithm requires some initial point 
+\begin_inset Formula $(x,s)$
+\end_inset
+
+ close to the central path and we will show how to get it by changing the
+ cost vector temporarily.
 \end_layout
 
 \begin_layout Theorem
@@ -1778,7 +1766,78 @@ Finding a Centered Point
 \end_layout
 
 \begin_layout Standard
-In this section, we uses the following parameter on the linear program:
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+First 
+\end_layout
+
+\begin_layout Plain Layout
+Perturb the LP to get an initial point.
+\end_layout
+
+\begin_layout Plain Layout
+We have 
+\begin_inset Formula $x\approx R$
+\end_inset
+
+, 
+\begin_inset Formula $s\approx\frac{t}{R}\approx L$
+\end_inset
+
+, 
+\begin_inset Formula $t\approx LR$
+\end_inset
+
+, 
+\begin_inset Formula $\gamma\approx LR/M$
+\end_inset
+
+.
+ 
+\begin_inset Formula $M\approx L$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Decrease it to 
+\begin_inset Formula $Lr$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+Then, prove that we can remove all those extra dimension stuff.
+\end_layout
+
+\begin_layout Plain Layout
+Increase it to back to 
+\begin_inset Formula $nLR$
+\end_inset
+
+.
+ Then we can switch cost.
+\end_layout
+
+\begin_layout Plain Layout
+Then decrease to 
+\begin_inset Formula $\epsilon LR$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this section, we use the following parameters on the linear program:
 \end_layout
 
 \begin_layout Definition
@@ -1786,7 +1845,11 @@ We call a linear program
 \begin_inset Formula $\min_{\ma x=b,x\geq0}c^{\top}x$
 \end_inset
 
- with diameter 
+ with inner radius 
+\begin_inset Formula $r$
+\end_inset
+
+, outer radius 
 \begin_inset Formula $R$
 \end_inset
 
@@ -1799,7 +1862,27 @@ We call a linear program
 
 \begin_deeper
 \begin_layout Enumerate
-Diameter: For any 
+Inner radius: There is 
+\begin_inset Formula $x\geq0$
+\end_inset
+
+ with 
+\begin_inset Formula $\ma x=b$
+\end_inset
+
+ such that 
+\begin_inset Formula $x_{i}\geq r$
+\end_inset
+
+ for all 
+\begin_inset Formula $i$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Outer radius: For any 
 \begin_inset Formula $x\geq0$
 \end_inset
 
@@ -1808,7 +1891,7 @@ Diameter: For any
 \end_inset
 
 , we have that 
-\begin_inset Formula $\|x\|_{\infty}\leq R$
+\begin_inset Formula $\|x\|_{2}\leq R$
 \end_inset
 
 .
@@ -1816,7 +1899,7 @@ Diameter: For any
 
 \begin_layout Enumerate
 Lipschitz constant of the objective: 
-\begin_inset Formula $\|c\|_{\infty}\leq L$
+\begin_inset Formula $\|c\|_{2}\leq L$
 \end_inset
 
 .
@@ -1824,6 +1907,24 @@ Lipschitz constant of the objective:
 \end_layout
 
 \end_deeper
+\begin_layout Standard
+The idea is to modify the linear program such that we have an explicit interior
+ point.
+ Since the main complication is the constraint 
+\begin_inset Formula $x\geq0$
+\end_inset
+
+, we split 
+\begin_inset Formula $x$
+\end_inset
+
+ into 
+\begin_inset Formula $x^{(1)}$
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 To find a centered point using a given interior point 
 \begin_inset Formula $x^{(0)}$
@@ -1867,7 +1968,7 @@ caption{
 \end_inset
 
 
-\begin_inset Formula $\mathtt{L2Center}(\ma,b,c,x^{(0)})$
+\begin_inset Formula $\mathtt{L2Center}(\ma,b,c)$
 \end_inset
 
 
@@ -1963,7 +2064,7 @@ Let
 \end_inset
 
  with 
-\begin_inset Formula $t_{\mathrm{end}}=200LR\sqrt{n}$
+\begin_inset Formula $t_{\mathrm{end}}=200LRn$
 \end_inset
 
 .
@@ -2148,7 +2249,7 @@ After the shift
 \end_inset
 
 Now, using that 
-\begin_inset Formula $\|x\|_{\infty}\leq R$
+\begin_inset Formula $\|x\|_{2}\leq R$
 \end_inset
 
 , 
@@ -2156,13 +2257,13 @@ Now, using that
 \end_inset
 
  and 
-\begin_inset Formula $|s_{i}^{(0)}|\leq t_{\mathrm{start}}(x^{(0)})_{i}^{-1}\leq\|c\|_{\infty}\leq L$
+\begin_inset Formula $|s_{i}^{(0)}|\leq t_{\mathrm{start}}(x^{(0)})_{i}^{-1}\leq L$
 \end_inset
 
 , we have that
 \begin_inset Formula 
 \[
-\left|\frac{s_{i}-s_{i}^{(1)}}{s_{i}^{(1)}}\right|\leq\frac{4LR}{t_{\mathrm{end}}}\leq\frac{1}{50\sqrt{n}}.
+\left|\frac{s_{i}-s_{i}^{(1)}}{s_{i}^{(1)}}\right|\leq\frac{4LR\sqrt{n}}{t_{\mathrm{end}}}\leq\frac{1}{50n}.
 \]
 
 \end_inset
@@ -2197,7 +2298,7 @@ reference "thm:L2Step"
  with
 \begin_inset Formula 
 \[
-t_{\mathrm{end}}/t_{\mathrm{start}}=\frac{200LR\sqrt{n}}{L\min_{i}x_{i}^{(0)}}=O(\frac{\sqrt{n}R}{\eta R})=O(\sqrt{n}/\eta).
+t_{\mathrm{end}}/t_{\mathrm{start}}=\frac{200LRn}{L\min_{i}x_{i}^{(0)}}=O(\frac{nR}{\eta R})=O(n/\eta).
 \]
 
 \end_inset
@@ -2542,6 +2643,146 @@ Approximate LP without Interior Point
 \end_layout
 
 \begin_layout Standard
+Consider the linear program
+\begin_inset Formula 
+\[
+\min_{\ma x_{1}-\ma x_{2}=b,\theta+1^{\top}x=R,x\in\R_{+}^{2n}}c^{\top}x_{1}+d^{\top}x_{2}.
+\]
+
+\end_inset
+
+Essentially same as before except I use both 
+\begin_inset Formula $\ma$
+\end_inset
+
+.
+ Then, the class of matrices is exactly the same!
+\end_layout
+
+\begin_layout Standard
+Proof needed:
+\end_layout
+
+\begin_layout Itemize
+Exact
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Recall
+\begin_inset Formula 
+\begin{align*}
+\delta_{x} & =S^{-1}XA^{\top}(AS^{-1}XA^{\top})^{-1}\delta_{b}.
+\end{align*}
+
+\end_inset
+
+So, to remove 
+\begin_inset Formula $x_{2}$
+\end_inset
+
+, we do the step
+\begin_inset Formula 
+\begin{align*}
+\delta_{x} & =S^{-1}XA^{\top}(AS^{-1}XA^{\top})^{-1}\ma x_{2}.
+\end{align*}
+
+\end_inset
+
+We can prove 
+\begin_inset Formula $x_{2}\ll x_{1}$
+\end_inset
+
+.
+ So, it is stable.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+So, I can just call the previous section without reproving.
+\end_layout
+
+\begin_layout Standard
+—
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Initial point with cost changing: 
+\end_layout
+
+\begin_layout Standard
+Recall the central path is
+\begin_inset Formula 
+\begin{align*}
+\ma x_{1}-\ma x_{2} & =b\\
+\ma^{\top}y+s_{1} & =c,\\
+\ma^{\top}y+s_{2} & =d.
+\end{align*}
+
+\end_inset
+
+To find such point, we first solve
+\begin_inset Formula 
+\[
+\min_{\ma x=b}\|x\|_{2}^{2}.
+\]
+
+\end_inset
+
+This gives some 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ Call 
+\begin_inset Formula $\|x\|_{2}=R$
+\end_inset
+
+.
+ We split it into
+\begin_inset Formula 
+\[
+x=x_{1}-x_{2}.
+\]
+
+\end_inset
+
+If we put 
+\begin_inset Formula $y=0$
+\end_inset
+
+, we have 
+\begin_inset Formula $s_{1}=c$
+\end_inset
+
+ and 
+\begin_inset Formula $s_{2}=d$
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula $s_{1}=\frac{t}{x_{1}}$
+\end_inset
+
+, so, we need
+\begin_inset Formula 
+\begin{align*}
+x_{1}c & =t,\\
+x_{2}d & =t.
+\end{align*}
+
+\end_inset
+
+Okay, the problem is bounded.
+\end_layout
+
+\begin_layout Section
+Reduction without Explicit Interior Point
+\end_layout
+
+\begin_layout Standard
 Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -2549,9 +2790,9 @@ reference "thm:L2LPApproximate"
 
 \end_inset
 
- shows we can solve linear programs approximately assuming an interior point.
- Now, we show that how to avoid the interior point assumption via a general
- reduction.
+ shows we can solve linear programs approximately assuming an interior point
+ is given.
+ Now, we show that how obtain the result result without .
  This algorithm works for any linear programs algorithm.
 \end_layout
 
@@ -2580,6 +2821,15 @@ name "lem:feasible_LP"
 
 \begin_deeper
 \begin_layout Enumerate
+Feasible: The set 
+\begin_inset Formula $\{\ma x=b,x\geq0\}$
+\end_inset
+
+ is nonempty.
+ (
+\end_layout
+
+\begin_layout Enumerate
 Diameter: For any 
 \begin_inset Formula $x\geq0$
 \end_inset
@@ -2589,15 +2839,16 @@ Diameter: For any
 \end_inset
 
 , we have that 
-\begin_inset Formula $\|x\|_{\infty}\leq R$
+\begin_inset Formula $\|x\|_{2}\leq R$
 \end_inset
 
 .
+ 
 \end_layout
 
 \begin_layout Enumerate
 Lipschitz constant of the objective: 
-\begin_inset Formula $\|c\|_{\infty}\leq L$
+\begin_inset Formula $\|c\|_{2}\leq L$
 \end_inset
 
 .
@@ -2607,49 +2858,57 @@ Lipschitz constant of the objective:
 \end_deeper
 \begin_layout Lemma
 For any 
-\begin_inset Formula $\epsilon>0$
+\begin_inset Formula $1>\epsilon>0$
 \end_inset
 
 , the modified linear program 
 \begin_inset Formula 
 \begin{equation}
-\min_{(x,\eta,\theta)\in\mathcal{P}'}c^{\top}x+M\sum_{i}\eta_{i}\label{eq:primal_modified}
+\min_{(x,\gamma,\theta)\in\mathcal{P}'}c^{\top}x+M\sum_{i}\gamma_{i}\label{eq:primal_modified}
 \end{equation}
 
 \end_inset
 
 with 
-\begin_inset Formula $\mathcal{P}'=\{\ma x+\md\eta=b,\sum_{i}x_{i}+\theta=(n+1)R,x\geq0,\eta\geq0,\theta\geq0\}$
+\begin_inset Formula $M=\frac{7nL}{\epsilon}$
 \end_inset
 
-, 
-\begin_inset Formula $\md=\diag(\frac{1}{R}b-\ma1_{n})$
+ and
+\begin_inset Formula 
+\[
+\mathcal{P}'=\{\ma x-\ma\gamma=b,\sum_{i}x_{i}+\sum_{i}\gamma_{i}+\theta=6nR,x\geq0,\gamma\geq0,\theta\geq0\}
+\]
+
 \end_inset
 
- and 
-\begin_inset Formula $M=\frac{2nL}{\epsilon}$
-\end_inset
-
- satisfies the following:
+satisfies the following:
 \end_layout
 
 \begin_deeper
 \begin_layout Enumerate
-\begin_inset Formula $(x=R1_{n},\eta=R1_{d},\theta=R)$
+\begin_inset Formula $(x=x_{\min}+2R,\gamma=2R,\theta=R)$
 \end_inset
 
- is a feasible primal vector.
+ is a feasible primal vector that is at least 
+\begin_inset Formula $R$
+\end_inset
+
+ entry-wise where 
+\begin_inset Formula $x_{\mathrm{\min}}=\arg\min_{\ma x=b}\|x\|_{2}^{2}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Enumerate
 For any feasible primal vector 
-\begin_inset Formula $(x,\eta,\theta)\in\mathcal{P}'$
+\begin_inset Formula $(x,\gamma,\theta)\in\mathcal{P}'$
 \end_inset
 
  with
 \begin_inset Formula 
 \[
-c^{\top}x+M\sum_{i}\eta_{i}\leq\min_{(x,\eta)\in\mathcal{P}'}(c^{\top}x+M\sum_{i}\eta_{i})+\epsilon LR
+c^{\top}x+M\sum_{i}\gamma_{i}\leq\min_{(x,\gamma,\theta)\in\mathcal{P}'}(c^{\top}x+M\sum_{i}\gamma_{i})+\epsilon LR
 \]
 
 \end_inset
@@ -2659,16 +2918,16 @@ and
 \end_inset
 
 , the vector 
-\begin_inset Formula $x$
+\begin_inset Formula $\overline{x}=x-\gamma$
 \end_inset
 
  is an approximate solution to the original linear program in the following
  sense 
 \begin_inset Formula 
 \begin{align*}
-c^{\top}x & \leq\min_{\ma x=b,x\geq0}c^{\top}x+\epsilon LR,\\
-\|\ma x-b\|_{1} & \leq\epsilon\left(R\sum_{i,j}|\ma_{i,j}|+\|b\|_{1}\right),\\
-\hat{x} & \geq0.
+c^{\top}\overline{x} & \leq\min_{\ma x=b,x\geq0}c^{\top}x+\epsilon LR,\\
+\ma\overline{x} & =b,\\
+\overline{x} & \geq-\epsilon R.
 \end{align*}
 
 \end_inset
@@ -2678,18 +2937,31 @@ c^{\top}x & \leq\min_{\ma x=b,x\geq0}c^{\top}x+\epsilon LR,\\
 
 \end_deeper
 \begin_layout Proof
-By direct calculations, we have that 
-\begin_inset Formula $(x=R1_{n},\eta=R1_{d},\theta=R)$
+Since the problem is feasible with diameter 
+\begin_inset Formula $\leq R$
 \end_inset
 
- is a feasible primal vector.
+, we have 
+\begin_inset Formula $\|x_{\mathrm{\min}}\|_{2}\leq R$
+\end_inset
+
+.
+ Hence, we have that 
+\begin_inset Formula $(x=x_{\min}+2R,\gamma=2R,\theta=R)$
+\end_inset
+
+ is a feasible primal vector with every entry 
+\begin_inset Formula $\geq R$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Proof
 For the second part, we let 
 \begin_inset Formula 
 \[
-\text{OPT}=\min_{\ma x=b,x\geq0}c^{\top}x,\text{\ensuremath{\quad}and,\ensuremath{\quad}}\overline{\text{OPT}}=\min_{(x,\eta,\theta)\in\mathcal{P}'}c^{\top}x+M\sum_{i}\eta_{i}
+\text{OPT}=\min_{\ma x=b,x\geq0}c^{\top}x,\text{\ensuremath{\quad}and,\ensuremath{\quad}}\overline{\text{OPT}}=\min_{(x,\gamma,\theta)\in\mathcal{P}'}c^{\top}x+M\sum_{i}\gamma_{i}
 \]
 
 \end_inset
@@ -2703,7 +2975,7 @@ For any optimal
 \end_inset
 
  with 
-\begin_inset Formula $\theta=(n+1)R-\sum_{i}x_{i}.$
+\begin_inset Formula $\theta=6nR-\sum_{i}x_{i}.$
 \end_inset
 
  It is clear that 
@@ -2720,50 +2992,56 @@ For any optimal
 \end_inset
 
 For any feasible 
-\begin_inset Formula $(x,\eta,\theta)$
+\begin_inset Formula $(x,\gamma,\theta)$
 \end_inset
 
  solution with 
-\begin_inset Formula $c^{\top}x+M\sum_{i}\eta_{i}\leq\overline{\text{OPT}}+\epsilon LR$
+\begin_inset Formula $c^{\top}x+M\sum_{i}\gamma_{i}\leq\overline{\text{OPT}}+\epsilon LR$
 \end_inset
 
-, we used that 
-\begin_inset Formula $|c^{\top}x|\leq nLR$
-\end_inset
-
- and hence
+, we have that
 \begin_inset Formula 
 \[
--nLR+M\sum_{i}\eta_{i}\leq c^{\top}x+M\sum_{i}\eta_{i}\leq\overline{\text{OPT}}+\epsilon LR
+|c^{\top}x|\leq\|c\|_{\infty}\|x\|_{1}\leq6nLR
+\]
+
+\end_inset
+
+and hence
+\begin_inset Formula 
+\[
+-6nLR+M\sum_{i}\gamma_{i}\leq c^{\top}x+M\sum_{i}\gamma_{i}\leq\overline{\text{OPT}}+\epsilon LR
 \]
 
 \end_inset
 
 Hence, 
-\begin_inset Formula $\sum_{i}\eta_{i}\leq\frac{2nLR}{M}$
+\begin_inset Formula $\sum_{i}\gamma_{i}\leq\frac{7nLR}{M}$
 \end_inset
 
- and hence
+.
+ Hence, we have 
+\begin_inset Formula $\overline{x}_{i}=x_{i}-\gamma_{i}\geq-\epsilon R$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+Finally, for the cost, we have
 \begin_inset Formula 
 \[
-\|\ma x-b\|_{1}=\|\md\eta\|_{1}\leq\max_{i}\md_{ii}\|\eta_{1}\|_{1}\leq\epsilon R\cdot\max_{i}\md_{ii}\leq\epsilon\left(R\sum_{i,j}|\ma_{i,j}|+\|b\|_{1}\right).
+c^{\top}\overline{x}\leq c^{\top}x-c^{\top}\gamma\leq c^{\top}x+M\sum_{i}\gamma_{i}\leq\overline{\text{OPT}}
 \]
 
 \end_inset
 
-Finally, we note that 
-\begin_inset Formula $\eta_{i}\geq0$
+where we used 
+\begin_inset Formula $c_{i}\leq M$
 \end_inset
 
- and hence
-\begin_inset Formula 
-\[
-c^{\top}x\leq\min_{(x,\eta)\in\mathcal{P}'}(c^{\top}x+M\sum_{i}\eta_{i})\leq\overline{\text{OPT}}.
-\]
-
-\end_inset
-
-
+.
 \end_layout
 
 \begin_layout Standard
@@ -2771,8 +3049,8 @@ Note that in the modified linear program, the linear system is
 \begin_inset Formula 
 \[
 \oma=\left[\begin{array}{ccc}
-\ma & \md & 0_{d}\\
-1_{n}^{\top} & 0_{d}^{\top} & 1
+\ma & -\ma & 0_{d}\\
+1_{n}^{\top} & 1_{n}^{\top} & 1
 \end{array}\right]
 \]
 
@@ -2790,18 +3068,18 @@ For any diagonal matrices
 \begin_inset Formula 
 \[
 \mh\defeq\oma\left[\begin{array}{ccc}
-\mw_{1} & \mzero & 0\\
-\mzero & \mw_{2} & 0\\
-0 & 0 & \alpha
+\mw_{1} & \mzero & 0_{n}\\
+\mzero & \mw_{2} & 0_{n}\\
+0_{n}^{\top} & 0_{n}^{\top} & \alpha
 \end{array}\right]\oma^{\top}=\left[\begin{array}{cc}
-\ma^{\top}\mw_{1}\ma+\md\mw_{2}\md & \ma\mw_{1}1_{n}\\
-(\ma\mw_{1}1_{n})^{\top} & 1_{n}^{\top}\mw_{1}1_{n}+\alpha
+\ma^{\top}(\mw_{1}+\mw_{2})\ma & \ma(\mw_{1}-\mw_{2})1_{n}\\
+(\ma(\mw_{1}-\mw_{2})1_{n})^{\top} & 1_{n}^{\top}\mw_{1}1_{n}+1_{n}^{\top}\mw_{2}1_{n}+\alpha
 \end{array}\right].
 \]
 
 \end_inset
 
-Note that the second row/column block has size 
+Note that the second row and column block has size 
 \begin_inset Formula $1$
 \end_inset
 
@@ -2811,24 +3089,132 @@ Note that the second row/column block has size
 \end_inset
 
  is an explicit formula involving 
-\begin_inset Formula $(\ma^{\top}\mw_{1}\ma+\md\mw_{2}\md)^{-1}v_{1:n}$
+\begin_inset Formula $(\ma^{\top}(\mw_{1}+\mw_{2})\ma)^{-1}v_{1:n}$
 \end_inset
 
  and 
-\begin_inset Formula $(\ma^{\top}\mw_{1}\ma+\md\mw_{2}\md)^{-1}\ma\mw_{1}1_{n}$
+\begin_inset Formula $(\ma^{\top}(\mw_{1}+\mw_{2})\ma)^{-1}\ma(\mw_{1}-\mw_{2})1_{n}$
 \end_inset
 
 .
- Since the term 
-\begin_inset Formula $\md\mw_{2}\md$
+ Hence, we can compute 
+\begin_inset Formula $\mh^{-1}v$
 \end_inset
 
- is a positive diagonal matrix, the new linear system is only shifted by
- a positive diagonal matrix.
+ by solving two linear systems of the form 
+\begin_inset Formula $\ma^{\top}\mw\ma$
+\end_inset
+
+ and some extra linear work.
 \end_layout
 
 \begin_layout Section
-Exact LP
+Exact Algorithm for Certain LP
+\end_layout
+
+\begin_layout Standard
+asdasd
+\end_layout
+
+\begin_layout Proof
+No...I can't collapse function.
+\end_layout
+
+\begin_layout Proof
+—
+\end_layout
+
+\begin_layout Proof
+We know 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ is small.
+ We just need to prove 
+\begin_inset Formula $x$
+\end_inset
+
+ is large.
+\begin_inset Formula 
+\[
+\min_{(x,\gamma,\theta)\in\mathcal{P}'}c^{\top}x+M\sum_{i}\gamma_{i}.
+\]
+
+\end_inset
+
+Suppose there is 
+\begin_inset Formula $x^{(0)}\geq\eta$
+\end_inset
+
+.
+ Now, we look at the line between
+\begin_inset Formula 
+\[
+(x^{(0)},\min(x^{(0)}/(100n),\gamma),\overline{R}-1^{\top}x^{(0)}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $x^{(1)}$
+\end_inset
+
+ be whatever the OPT.
+ The derivative is
+\begin_inset Formula 
+\[
+c^{\top}\delta_{x}+M\cdot1^{\top}\delta_{\gamma}-t(x^{(0)})^{-\top}\delta_{x}-t(x^{(0)})^{-\top}\delta_{\gamma}
+\]
+
+\end_inset
+
+Yes, we should able to prove it.
+\end_layout
+
+\begin_layout Standard
+When 
+\begin_inset Formula $t\gg nR$
+\end_inset
+
+, we have 
+\begin_inset Formula $s$
+\end_inset
+
+ is huge in each coordinate.
+ So, 
+\begin_inset Formula $z$
+\end_inset
+
+ is also huge.
+\end_layout
+
+\begin_layout Standard
+I want 
+\begin_inset Formula $s_{\theta}$
+\end_inset
+
+ is smaller than 
+\begin_inset Formula $s_{x}$
+\end_inset
+
+.
+ So, we want 
+\begin_inset Formula $\theta\geq$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+—
+\end_layout
+
+\begin_layout Standard
+—
 \end_layout
 
 \begin_layout Standard
