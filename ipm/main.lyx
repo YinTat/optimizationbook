@@ -2777,6 +2777,75 @@ Or deterministically by adding a
 
 \end_layout
 
+\begin_layout Section
+Robust Interior Point Method
+\end_layout
+
+\begin_layout Standard
+TODO:
+\end_layout
+
+\begin_layout Itemize
+Explain the idea
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Explain we are doing the same step always.
+\end_layout
+
+\begin_layout Itemize
+Key observation is that we don't need to do the step at current point and
+ we don't need to change the gradient.
+\end_layout
+
+\begin_layout Itemize
+Recall we have
+\begin_inset Formula 
+\[
+xs=\mu,
+\]
+
+\end_inset
+
+our step is
+\begin_inset Formula 
+\[
+\overline{x}\delta_{s}+\overline{s}\delta_{x}=\delta_{\mu}.
+\]
+
+\end_inset
+
+So, we have
+\begin_inset Formula 
+\begin{align*}
+\mu_{new} & =\mu+x\delta_{s}+s\delta_{x}+\delta_{s}\delta_{x}\\
+ & =\mu_{target}+\epsilon_{x}\delta_{s}+\epsilon_{s}\delta_{x}.
+\end{align*}
+
+\end_inset
+
+Okay, we can make sure 
+\begin_inset Formula $\|\epsilon_{x,i}\|_{\infty}=o(1)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Can I combine the potential of central path and the data structure?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
 \begin_layout Standard
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
