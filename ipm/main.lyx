@@ -275,7 +275,7 @@ where
 \end_inset
 
 .
- The feasible region for both programs are 
+ The feasible regions for the two programs are 
 \begin_inset Formula $\PriR=\{x\in\R_{\geq}^{n}:\ma x=b\}$
 \end_inset
 
@@ -1293,7 +1293,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Subsection
-Staying within 
+Staying within small 
 \begin_inset Formula $\ell_{2}$
 \end_inset
 
@@ -2293,7 +2293,7 @@ Inner radius
 \begin_inset Formula $r$
 \end_inset
 
-: There is 
+: There is an 
 \begin_inset Formula $x\geq r$
 \end_inset
 
@@ -2725,6 +2725,16 @@ For the last conclusion, we assume
 \end_inset
 
 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Is there a factor 2 missing in the middle expression above?
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2751,6 +2761,20 @@ literal "false"
 \end_inset
 
 .
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Or deterministically by adding a 
+\begin_inset Formula $2^{-i}$
+\end_inset
+
+ different power of 2 for each coefficient?
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
