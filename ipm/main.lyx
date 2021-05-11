@@ -197,26 +197,6 @@ theorems-ams-extended
 \end_inset
 
 
-\begin_inset FormulaMacro
-\newcommand{\omx}{\overline{\mathbf{X}}}
-\end_inset
-
-
-\begin_inset FormulaMacro
-\newcommand{\oms}{\overline{\mathbf{S}}}
-\end_inset
-
-
-\begin_inset FormulaMacro
-\newcommand{\ox}{\overline{x}}
-\end_inset
-
-
-\begin_inset FormulaMacro
-\newcommand{\os}{\overline{s}}
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -1491,7 +1471,10 @@ status open
 
 \begin_layout Standard
 Let 
-\begin_inset Formula $t'=\max((1-h)t,t_{\mathrm{end}})$
+\begin_inset Formula $t'=\begin{cases}
+\max((1-h)t,t_{\mathrm{end}}) & \text{if }t_{\mathrm{start}}\leq t_{\mathrm{end}}\\
+\min((1+h)t,t_{\mathrm{end}}) & \text{else}
+\end{cases}$
 \end_inset
 
 
@@ -1625,7 +1608,7 @@ reference "alg:L2Step"
 \end_inset
 
  takes 
-\begin_inset Formula $O(\sqrt{n}\log(t_{\mathrm{start}}/t_{\mathrm{end}}))$
+\begin_inset Formula $O(\sqrt{n}|\log(t_{\mathrm{start}}/t_{\mathrm{end}})|)$
 \end_inset
 
  Newton steps (defined in 
@@ -1747,7 +1730,7 @@ Since
 , we have
 \begin_inset Formula 
 \[
-\|\delta_{\mu}/\mu\|_{\mu}\leq\frac{t'}{t}\sqrt{\frac{4}{3t}}\|xs-t\|_{2}+h\sqrt{\frac{5}{4}n}\leq\sqrt{\frac{t}{12}}+h\sqrt{\frac{5}{4}n}\leq0.38\sqrt{t}.
+\|\delta_{\mu}/\mu\|_{\mu}\leq\frac{t'}{t}\sqrt{\frac{4}{3t}}\|xs-t\|_{2}+h\sqrt{\frac{5}{4}n}\leq\frac{17}{16}\sqrt{\frac{t}{12}}+h\sqrt{\frac{5}{4}n}\leq0.38\sqrt{t}.
 \]
 
 \end_inset
@@ -1797,10 +1780,488 @@ Since
 \end_inset
 
 , the number of iterations is 
-\begin_inset Formula $O(\sqrt{n}\log(t_{\mathrm{start}}/t_{\mathrm{end}}))$
+\begin_inset Formula $O(\sqrt{n}|\log(t_{\mathrm{start}}/t_{\mathrm{end}})|)$
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+asdasd
+\end_layout
+
+\begin_layout Subsection
+Finding a Centered Point
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+First
+\end_layout
+
+\begin_layout Plain Layout
+Perturb the LP to get an initial point.
+\end_layout
+
+\begin_layout Plain Layout
+We have 
+\begin_inset Formula $x\approx R$
+\end_inset
+
+, 
+\begin_inset Formula $s\approx\frac{t}{R}\approx L$
+\end_inset
+
+, 
+\begin_inset Formula $t\approx LR$
+\end_inset
+
+, 
+\begin_inset Formula $\gamma\approx LR/M$
+\end_inset
+
+.
+ 
+\begin_inset Formula $M\approx L$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Decrease it to 
+\begin_inset Formula $Lr$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+Then decrease to 
+\begin_inset Formula $\epsilon LR$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+In this section, we use the following parameters on the linear program:
+\end_layout
+
+\begin_layout Plain Layout
+The idea is to modify the linear program such that we have an explicit interior
+ point.
+ Since the main complication is the constraint 
+\begin_inset Formula $x\geq0$
+\end_inset
+
+, we split 
+\begin_inset Formula $x$
+\end_inset
+
+ into 
+\begin_inset Formula $x^{(1)}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+To find a centered point using a given interior point 
+\begin_inset Formula $x^{(0)}$
+\end_inset
+
+, we change the cost vector such that 
+\begin_inset Formula $x^{(0)}$
+\end_inset
+
+ is centered.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm2e}[H]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\mathtt{L2Center}(\ma,b,c)$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:L2AnalyticCenter"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\series bold
+Assume the linear program has diameter 
+\begin_inset Formula $R$
+\end_inset
+
+ and Lipschitz constant 
+\begin_inset Formula $L$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+Let 
+\begin_inset Formula $s^{(0)}=t_{\mathrm{start}}(x^{(0)})^{-1}$
+\end_inset
+
+ where 
+\begin_inset Formula $t_{\mathrm{start}}=L\min_{i}x_{i}^{(0)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+
+\emph on
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tcp{
+\end_layout
+
+\end_inset
+
+Run IPM on the cost 
+\begin_inset Formula $s^{(0)}$
+\end_inset
+
+ with the initial point 
+\begin_inset Formula $(x^{(0)},s^{(0)})$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Let 
+\begin_inset Formula $(x,s^{(1)})=\mathtt{L2Step}(\ma,x^{(0)},s^{(0)},t_{\mathrm{start}},t_{\mathrm{end}})$
+\end_inset
+
+ with 
+\begin_inset Formula $t_{\mathrm{end}}=200LRn$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+Let 
+\begin_inset Formula $s=s^{(1)}+c-s^{(0)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+
+\series bold
+Return
+\series default
+ 
+\begin_inset Formula $(x,s,t_{\mathrm{end}})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:L2AnalyticCenter"
+
+\end_inset
+
+Given 
+\begin_inset Formula $x\in\PriR^{\circ}$
+\end_inset
+
+ such that 
+\begin_inset Formula $\min_{i}x_{i}\geq\eta R$
+\end_inset
+
+.
+ Then the algorithm 
+\begin_inset Formula $\mathtt{L2Center}$
+\end_inset
+
+ outputs 
+\begin_inset Formula $(x,s,t)$
+\end_inset
+
+ such that 
+\begin_inset Formula $(x,s)\in\PriR^{\circ}\times\DualR^{\circ}$
+\end_inset
+
+ and 
+\begin_inset Formula $\|xs-t\|_{2}\leq\frac{t}{4}$
+\end_inset
+
+ for some 
+\begin_inset Formula $t=O(LR\sqrt{n})$
+\end_inset
+
+.
+ Furthermore, 
+\begin_inset Formula $\mathtt{L2Step}$
+\end_inset
+
+ takes 
+\begin_inset Formula $O(\sqrt{n}\log(n/\eta))$
+\end_inset
+
+ Newton steps (defined in 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:LP_newton_step"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Proof
+By the choice of 
+\begin_inset Formula $s^{(0)}$
+\end_inset
+
+, we have that 
+\begin_inset Formula $x^{(0)}s^{(0)}=t_{\mathrm{start}}$
+\end_inset
+
+.
+ Furthermore, we have that 
+\begin_inset Formula $\ma x^{(0)}=b$
+\end_inset
+
+ and 
+\begin_inset Formula $\ma^{\top}y+s^{(0)}=s^{(0)}$
+\end_inset
+
+ for 
+\begin_inset Formula $y=0$
+\end_inset
+
+.
+ Hence, 
+\begin_inset Formula $(x^{(0)},s^{(0)})$
+\end_inset
+
+ is centered for the linear program 
+\begin_inset Formula $\min_{\ma x=b,x\geq0}s^{(0)\top}x$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Now, 
+\begin_inset Formula $\mathtt{L2Step}$
+\end_inset
+
+ returns 
+\begin_inset Formula $(x,s^{(1)})$
+\end_inset
+
+ such that there is 
+\begin_inset Formula $y$
+\end_inset
+
+ such that
+\begin_inset Formula 
+\begin{align*}
+\|xs^{(1)}-t_{\mathrm{end}}\|_{2}\leq & \frac{t_{\mathrm{end}}}{6}\\
+\ma x= & b,\\
+\ma^{\top}y+s^{(1)}= & s^{(0)},\\
+(x,s^{(1)})\in & \R_{>0}^{2n}.
+\end{align*}
+
+\end_inset
+
+After the shift 
+\begin_inset Formula $+c-s^{(0)}$
+\end_inset
+
+, we have that 
+\begin_inset Formula $\ma^{\top}y+s=c$
+\end_inset
+
+.
+ Now, we check the conditions.
+ For any 
+\begin_inset Formula $i$
+\end_inset
+
+, using that 
+\begin_inset Formula $x_{i}s_{i}^{(1)}\approx t_{\mathrm{end}}$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+\left|\frac{s_{i}-s_{i}^{(1)}}{s_{i}^{(1)}}\right|=\left|\frac{c_{i}-s_{i}^{(0)}}{s_{i}^{(1)}}\right|\leq\frac{2}{t_{\mathrm{end}}}|x_{i}(c_{i}-s_{i}^{(0)})|.
+\]
+
+\end_inset
+
+Now, using that 
+\begin_inset Formula $\|x\|_{2}\leq R$
+\end_inset
+
+, 
+\begin_inset Formula $|c_{i}|\leq L$
+\end_inset
+
+ and 
+\begin_inset Formula $|s_{i}^{(0)}|\leq t_{\mathrm{start}}(x^{(0)})_{i}^{-1}\leq L$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+\left|\frac{s_{i}-s_{i}^{(1)}}{s_{i}^{(1)}}\right|\leq\frac{4LR\sqrt{n}}{t_{\mathrm{end}}}\leq\frac{1}{50n}.
+\]
+
+\end_inset
+
+Hence, we have that 
+\begin_inset Formula $s\geq0$
+\end_inset
+
+ (so it is feasible) and
+\begin_inset Formula 
+\[
+\|xs-t_{\mathrm{end}}\|_{2}\leq\|xs-t_{\mathrm{end}}\|_{2}+\|x(s^{(1)}-s)\|_{2}\leq\frac{t_{\mathrm{end}}}{6}+2t_{\mathrm{end}}\|\frac{s^{(1)}-s}{s^{(1)}}\|_{2}\leq\frac{t_{\mathrm{end}}}{6}+\frac{t_{\mathrm{end}}}{25}\leq\frac{t_{\mathrm{end}}}{4}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:L2Step"
+
+\end_inset
+
+ shows that the number of steps is bounded by 
+\begin_inset Formula $O(\sqrt{n}\log(t_{\mathrm{end}}/t_{\mathrm{start}}))$
+\end_inset
+
+ with
+\begin_inset Formula 
+\[
+t_{\mathrm{end}}/t_{\mathrm{start}}=\frac{200LRn}{L\min_{i}x_{i}^{(0)}}=O(\frac{nR}{\eta R})=O(n/\eta).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -2148,7 +2609,7 @@ Finally, if we assume that the solution
 By Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "thm:IPM_l2_center"
+reference "thm:L2AnalyticCenter"
 
 \end_inset
 
@@ -2258,8 +2719,18 @@ For the last conclusion, we assume
 , we have that 
 \begin_inset Formula 
 \[
-\|x-x^{*}\|_{2}\leq\frac{\epsilon}{\eta}\text{diameter}(\mathcal{P}_{\eta}-x^{*})\leq\frac{2\epsilon R}{\eta}.
+\|x-x^{*}\|_{2}\leq\frac{\epsilon}{\eta}\text{radius}(\mathcal{P}_{\eta}-x^{*})\leq\frac{2\epsilon R}{\eta}.
 \]
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Is there a factor 2 missing in the middle expression above?
+\end_layout
 
 \end_inset
 
@@ -2290,7 +2761,6 @@ literal "false"
 \end_inset
 
 .
- 
 \begin_inset Note Note
 status open
 
@@ -2299,8 +2769,7 @@ Or deterministically by adding a
 \begin_inset Formula $2^{-i}$
 \end_inset
 
- different power of 2 for each coefficient? Seems a good student question
- btw...
+ different power of 2 for each coefficient?
 \end_layout
 
 \end_inset
@@ -2310,652 +2779,6 @@ Or deterministically by adding a
 
 \begin_layout Section
 Robust Interior Point Method
-\end_layout
-
-\begin_layout Standard
-To improve the interior point method, one can either improve the number
- of steps 
-\begin_inset Formula $\widetilde{O}(\sqrt{n})$
-\end_inset
-
- or the cost of per step.
- In this note, we focus on the later question.
- Recall from 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:LP_newton_step"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- that the linear system we solve in each step is of the form
-\begin_inset Formula 
-\begin{align}
-\ms\delta_{x}+\mx\delta_{s} & =\delta_{\mu},\nonumber \\
-\ma\delta_{x} & =0,\nonumber \\
-\ma^{\top}\delta_{y}+\delta_{s} & =0.\label{eq:LP_newton_step_2}
-\end{align}
-
-\end_inset
-
-In each step, 
-\begin_inset Formula $x,s$
-\end_inset
-
- and 
-\begin_inset Formula $\delta_{\mu}$
-\end_inset
-
- in the equation above changes relatively by a vector with bounded 
-\begin_inset Formula $\ell_{2}$
-\end_inset
-
- norm.
- So, only few coordinates change a lot in each step.
- To take advantage of this, the robust interior point method contains two
- new components: 1) Analyze the convergence when we only solve the linear
- system approximation (Section 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:IPM_lq_step"
-
-\end_inset
-
-).
- 2) Show how to maintain the solution throughout the iteration (Section
- 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:IPM_Inverse_Maintenance"
-
-\end_inset
-
-).
-\end_layout
-
-\begin_layout Subsection
-Staying within small 
-\begin_inset Formula $\ell_{q}$
-\end_inset
-
- distance
-\begin_inset CommandInset label
-LatexCommand label
-name "subsec:IPM_lq_step"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-In this section, we study the following algorithm:
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{algorithm2e}[H]
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-caption{
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula $\mathtt{LqStep}(\ma,x,s,t_{\mathrm{start}},t_{\mathrm{end}})$
-\end_inset
-
-
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset label
-LatexCommand label
-name "alg:LqStep"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-
-\series bold
-Invariant:
-\series default
- 
-\begin_inset Formula $(x,s)\in\PriR^{\circ}\times\DualR^{\circ}$
-\end_inset
-
- and 
-\begin_inset Formula $\|xs-t\|_{q}\leq\frac{t}{4}$
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Standard
-Let 
-\begin_inset Formula $t=t_{\mathrm{start}}$
-\end_inset
-
-, 
-\begin_inset Formula $h=1/(16\sqrt{n})$
-\end_inset
-
- and 
-\begin_inset Formula $n$
-\end_inset
-
- is the number of columns in 
-\begin_inset Formula $\ma$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-While{
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula $t\neq t_{\mathrm{end}}$
-\end_inset
-
- and it is not the first step
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-}{
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Let 
-\begin_inset Formula $t'=\max((1-h)t,t_{\mathrm{end}})$
-\end_inset
-
-, 
-\begin_inset Formula $\mu=xs$
-\end_inset
-
-, and 
-\begin_inset Formula $\delta_{\mu}=n^{1/q-1/2}(t'-\mu)$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-Pick 
-\begin_inset Formula $\overline{\delta}_{\mu}$
-\end_inset
-
-, 
-\begin_inset Formula $\ox$
-\end_inset
-
- and 
-\begin_inset Formula $\os$
-\end_inset
-
- such that 
-\begin_inset Formula $\cdots$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-Find 
-\begin_inset Formula $\delta_{x},\delta_{s}$
-\end_inset
-
- such that
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\begin{align}
-\oms\delta_{x}+\omx\delta_{s} & =\overline{\delta}_{\mu},\nonumber \\
-\ma\delta_{x} & =0,\nonumber \\
-\ma^{\top}\delta_{y}+\delta_{s} & =0.\label{eq:LP_newton_step_2-1}
-\end{align}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Set 
-\begin_inset Formula $x\leftarrow x+\delta_{x}$
-\end_inset
-
-, 
-\begin_inset Formula $s\leftarrow s+\delta_{s}$
-\end_inset
-
- and 
-\begin_inset Formula $t\leftarrow t'$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-
-\series bold
-Return
-\series default
- 
-\begin_inset Formula $(x,s)$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{algorithm2e}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Theorem
-\begin_inset CommandInset label
-LatexCommand label
-name "thm:LqStep"
-
-\end_inset
-
-Suppose that the input satisfies 
-\begin_inset Formula $(x,s)\in\PriR^{\circ}\times\DualR^{\circ}$
-\end_inset
-
- and 
-\begin_inset Formula $\|xs-t_{\mathrm{start}}\|_{q}\leq\frac{t_{\mathrm{start}}}{4}$
-\end_inset
-
-.
- Then throughout the algorithm 
-\begin_inset Formula $\mathtt{LqStep}$
-\end_inset
-
- (Algorithm 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "alg:LqStep"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-), we have 
-\begin_inset Formula $\|xs-t_{\mathrm{end}}\|_{2}\leq\frac{t_{\mathrm{end}}}{6}$
-\end_inset
-
- (except the first step).
- Furthermore, 
-\begin_inset Formula $\mathtt{LqStep}$
-\end_inset
-
- takes 
-\begin_inset Formula $O(\sqrt{n}\log(t_{\mathrm{start}}/t_{\mathrm{end}}))$
-\end_inset
-
- Newton steps (defined in 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:LP_newton_step"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-).
-\end_layout
-
-\begin_layout Proof
-We prove by induction that 
-\begin_inset Formula $\|xs-t\|_{q}\leq\frac{t}{4}$
-\end_inset
-
-.
- It holds for the first step by the assumption.
-\end_layout
-
-\begin_layout Proof
-Let 
-\begin_inset Formula $x'=x+\delta_{x}$
-\end_inset
-
-, 
-\begin_inset Formula $s'=s+\delta_{s}$
-\end_inset
-
- and 
-\begin_inset Formula $t'$
-\end_inset
-
- defined in the algorithm.
- Note that
-\begin_inset Formula 
-\begin{align*}
-x's'-t'= & (x+\delta_{x})(s+\delta_{s})-t'\\
-= & \mu+\ms\delta_{x}+\mx\delta_{s}+\delta_{x}\delta_{s}-t'.
-\end{align*}
-
-\end_inset
-
-Lemma 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:Newton_step"
-
-\end_inset
-
- shows that 
-\begin_inset Formula $\oms\delta_{x}+\omx\delta_{s}=\overline{\delta}_{\mu}$
-\end_inset
-
-.
- Hence, we have
-\begin_inset Formula 
-\begin{align*}
-x's'-t'= & (\mu-t')+\overline{\delta}_{\mu}+\epsilon_{s}\delta_{x}+\epsilon_{x}\delta_{s}\\
-= & (1-n^{1/q-1/2})(\mu-t)+\epsilon_{\mu}+\epsilon_{s}\delta_{x}+\epsilon_{x}\delta_{s}
-\end{align*}
-
-\end_inset
-
-where 
-\begin_inset Formula $\epsilon_{s}=s-\os+\delta_{s}$
-\end_inset
-
-, 
-\begin_inset Formula $\epsilon_{x}=x-\ox$
-\end_inset
-
-, 
-\begin_inset Formula $\epsilon_{\mu}=\overline{\delta}_{\mu}-\delta_{\mu}+(1-n^{1/q-1/2})(t-t')$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Proof
-(THIS is a bad step...)
-\end_layout
-
-\begin_layout Proof
-—
-\end_layout
-
-\begin_layout Proof
-Hence, we have
-\begin_inset Formula 
-\[
-\|x's'-t'\|_{q}\leq(1-n^{1/q-1/2})\|\mu-t\|_{q}+\|\epsilon_{\mu}\|_{q}+\|\epsilon_{s}\delta_{x}\|_{q}+\|\epsilon_{x}\delta_{s}\|_{q}.
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-—
-\begin_inset Formula 
-\[
-x's'-t'=\delta_{x}\delta_{s}=\mx^{-1}\delta_{x}\cdot\ms^{-1}\delta_{s}\cdot\mu
-\]
-
-\end_inset
-
-Using this, we have
-\begin_inset Formula 
-\begin{align*}
-\|x's'-t'\|_{2} & \leq\|\mu^{1/2}\mx^{-1}\delta_{x}\|_{2}\|\mu^{1/2}\ms^{-1}\delta_{s}\|_{2}\\
- & =\|\mx^{-1}\delta_{x}\|_{\mu}\|\ms^{-1}\delta_{s}\|_{\mu}\\
- & \leq\|\delta_{\mu}/\mu\|_{\mu}^{2}
-\end{align*}
-
-\end_inset
-
-where we used Lemma 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:Projection_property"
-
-\end_inset
-
- at the end.
-\end_layout
-
-\begin_layout Proof
-For the last term, using 
-\begin_inset Formula $t'-\mu=\frac{t'}{t}(t-\mu)+(\frac{t'}{t}-1)\mu$
-\end_inset
-
-, we have
-\begin_inset Formula 
-\begin{align*}
-\|\delta_{\mu}/\mu\|_{\mu} & =\|\frac{t'}{t}\frac{t-\mu}{\mu}+(\frac{t'}{t}-1)\|_{\mu}\\
- & \leq\frac{t'}{t}\|xs-t\|_{\mu^{-1}}+\|\frac{t'}{t}-1\|_{\mu}.
-\end{align*}
-
-\end_inset
-
-Since 
-\begin_inset Formula $\|\mu-t\|_{2}\leq\frac{t}{4}$
-\end_inset
-
-, we have 
-\begin_inset Formula $\min_{i}\mu_{i}\geq\frac{3t}{4}$
-\end_inset
-
- and 
-\begin_inset Formula $\max_{i}\mu_{i}\leq\frac{5}{4}t$
-\end_inset
-
-.
- Using 
-\begin_inset Formula $|\frac{t'}{t}-1|\leq h=\sqrt{n}/16$
-\end_inset
-
-, we have
-\begin_inset Formula 
-\[
-\|\delta_{\mu}/\mu\|_{\mu}\leq\frac{t'}{t}\sqrt{\frac{4}{3t}}\|xs-t\|_{2}+h\sqrt{\frac{5}{4}n}\leq\sqrt{\frac{t}{12}}+h\sqrt{\frac{5}{4}n}\leq0.38\sqrt{t}.
-\]
-
-\end_inset
-
-Hence, we have 
-\begin_inset Formula $\|x's'-t'\|_{2}\leq\|\delta_{\mu}/\mu\|_{\mu}^{2}\leq0.15t\leq t'/6$
-\end_inset
-
-.
- Furthermore, 
-\begin_inset Formula $\|\delta_{\mu}/\mu\|_{\mu}^{2}<\min_{i}\mu_{i}$
-\end_inset
-
- which implies 
-\begin_inset Formula $(x,s)$
-\end_inset
-
- is feasible (Lemma 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:step_size"
-
-\end_inset
-
-).
-\end_layout
-
-\begin_layout Proof
-Since 
-\begin_inset Formula $\mathtt{L2Step}$
-\end_inset
-
- decreases 
-\begin_inset Formula $t$
-\end_inset
-
- by 
-\begin_inset Formula $1-\Omega(n^{-1/2})$
-\end_inset
-
- factor each step and since we start with 
-\begin_inset Formula $t=t_{\mathrm{start}}$
-\end_inset
-
- and ends with 
-\begin_inset Formula $t\approx t_{\mathrm{end}}$
-\end_inset
-
-, the number of iterations is 
-\begin_inset Formula $O(\sqrt{n}\log(t_{\mathrm{start}}/t_{\mathrm{end}}))$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-For the new algorithm, instead of solving the linear system 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:LP_newton_step_2"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- exactly , we assume each step solves a nearby system with 
-\begin_inset Formula $\mx,\ms,$
-\end_inset
-
- and 
-\begin_inset Formula $\delta_{\mu}$
-\end_inset
-
- replaced by 
-\begin_inset Formula $\omx,\oms,$
-\end_inset
-
- and 
-\begin_inset Formula $\overline{\delta}_{\mu}$
-\end_inset
-
- with 
-\end_layout
-
-\begin_layout Standard
-The key observation is that the linear system we solve in each step barely
- changed.
- To 
-\end_layout
-
-\begin_layout Standard
-Since 1986, the number of steps remain roughly 
-\begin_inset Formula $\sqrt{n}$
-\end_inset
-
- for the general case 
-\begin_inset Formula $n\approx d$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Recall that each step involves computing 
-\begin_inset Formula $\mproj(\delta_{\mu}/\mu)$
-\end_inset
-
-.
- When 
-\begin_inset Formula $\mu$
-\end_inset
-
- is 
 \end_layout
 
 \begin_layout Standard
@@ -3023,17 +2846,6 @@ Can I combine the potential of central path and the data structure?
 \end_layout
 
 \end_deeper
-\begin_layout Subsection
-Inverse Maintenance
-\begin_inset CommandInset label
-LatexCommand label
-name "subsec:IPM_Inverse_Maintenance"
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Standard
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
@@ -4101,12 +3913,6 @@ Now, we are ready to prove the main result of this section.
 \end_layout
 
 \begin_layout Theorem
-\begin_inset CommandInset label
-LatexCommand label
-name "thm:IPM_l2_center"
-
-\end_inset
-
 Assume the linear program has inner radius 
 \begin_inset Formula $r$
 \end_inset
