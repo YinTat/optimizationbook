@@ -2359,7 +2359,7 @@ In each step,
  system approximation (Section 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "subsec:IPM_lq_step"
+reference "subsec:IPM_cosh_step"
 
 \end_inset
 
@@ -2377,13 +2377,13 @@ reference "subsec:IPM_Inverse_Maintenance"
 
 \begin_layout Subsection
 Staying within small 
-\begin_inset Formula $\ell_{q}$
+\begin_inset Formula $\ell_{\infty}$
 \end_inset
 
  distance
 \begin_inset CommandInset label
 LatexCommand label
-name "subsec:IPM_lq_step"
+name "subsec:IPM_cosh_step"
 
 \end_inset
 
@@ -2391,7 +2391,66 @@ name "subsec:IPM_lq_step"
 \end_layout
 
 \begin_layout Standard
-In this section, we study the following algorithm:
+To make the interior point method robust against the noise in 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $s$
+\end_inset
+
+, we need the interior point method works under a larger neighborhood than
+ 
+\begin_inset Formula $\|xs-t\|_{2}\leq\frac{t}{4}$
+\end_inset
+
+.
+ One natural choice of distance and potential would be 
+\begin_inset Formula $\|xs-t\|_{q}^{q}$
+\end_inset
+
+.
+ However, designing a step 
+\begin_inset Formula $\delta_{\mu}$
+\end_inset
+
+ to minimize 
+\begin_inset Formula $\|\mu+\delta_{\mu}-t\|_{q}^{q}$
+\end_inset
+
+ involves many cases because the function 
+\begin_inset Formula $v\rightarrow v^{p}$
+\end_inset
+
+ is too flat around 
+\begin_inset Formula $v=0$
+\end_inset
+
+.
+ Instead, we pick the potential
+\begin_inset Formula 
+\[
+\Phi(v)=\sum_{i=1}^{n}\cosh(\lambda v_{i})
+\]
+
+\end_inset
+
+for some scalar 
+\begin_inset Formula $\lambda>0$
+\end_inset
+
+.
+ In this section, we study the following algorithm:
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+HERE
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2461,7 +2520,7 @@ Invariant:
 \end_inset
 
  and 
-\begin_inset Formula $\|xs-t\|_{q}\leq\frac{t}{4}$
+\begin_inset Formula $\sum_{i=1}^{n}\cosh(\lambda v_{i})\leq\frac{t}{4}$
 \end_inset
 
 .
@@ -2737,8 +2796,7 @@ reference "lem:Newton_step"
  Hence, we have
 \begin_inset Formula 
 \begin{align*}
-x's'-t'= & (\mu-t')+\overline{\delta}_{\mu}+\epsilon_{s}\delta_{x}+\epsilon_{x}\delta_{s}\\
-= & (1-n^{1/q-1/2})(\mu-t)+\epsilon_{\mu}+\epsilon_{s}\delta_{x}+\epsilon_{x}\delta_{s}
+x's'-t'= & (\mu-t')+\delta_{\mu}+\epsilon_{s}\delta_{x}+\epsilon_{x}\delta_{s}+\epsilon_{\mu}
 \end{align*}
 
 \end_inset
@@ -2752,10 +2810,145 @@ where
 \end_inset
 
 , 
-\begin_inset Formula $\epsilon_{\mu}=\overline{\delta}_{\mu}-\delta_{\mu}+(1-n^{1/q-1/2})(t-t')$
+\begin_inset Formula $\epsilon_{\mu}=\overline{\delta}_{\mu}-\delta_{\mu}$
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Proof
+—
+\end_layout
+
+\begin_layout Proof
+What is a good step? Seems 
+\begin_inset Formula $(\mu-t)^{q-1}$
+\end_inset
+
+ is not ideal.
+ The best step is
+\begin_inset Formula 
+\[
+\arg\min_{\|\delta\|_{2}\leq h}\|x+\delta\|_{p}.
+\]
+
+\end_inset
+
+If 
+\begin_inset Formula $\|x\|_{2}\leq h$
+\end_inset
+
+, 
+\begin_inset Formula $\delta=-x$
+\end_inset
+
+ (We don't need to do this case).
+ Otherwise,
+\begin_inset Formula 
+\[
+\min_{\sum\delta_{i}^{2}\leq h}\sum(x+\delta)_{i}^{p}
+\]
+
+\end_inset
+
+The KKT is given by
+\begin_inset Formula 
+\[
+(x+\delta)_{i}^{p-1}=\lambda\delta.
+\]
+
+\end_inset
+
+WLOG 
+\begin_inset Formula $x>0$
+\end_inset
+
+ and hence
+\begin_inset Formula 
+\[
+(x-\delta)^{p-1}=\lambda\delta.
+\]
+
+\end_inset
+
+Again, there is two cases, if 
+\begin_inset Formula $\delta\ll x$
+\end_inset
+
+, we have 
+\begin_inset Formula $\delta\approx x^{p-1}$
+\end_inset
+
+, otherwise, we have 
+\begin_inset Formula $\delta\approx x$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+—
+\end_layout
+
+\begin_layout Proof
+How about this, we do the step
+\begin_inset Formula 
+\[
+\|x+\delta\|_{p}+\|x+\delta\|_{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+—
+\end_layout
+
+\begin_layout Proof
+The key is that all other terms has small 
+\begin_inset Formula $\ell_{2}$
+\end_inset
+
+ norm.
+\begin_inset Formula 
+\begin{align*}
+x & =\frac{t}{n^{1/q}},\\
+\|x^{q-1}\|_{2}^{2} & =t^{2(q-1)}\sum n^{-2(q-1)/q}=t^{2(q-1)}nn^{-2+2/q}=t^{2(q-1)}n^{2/q-1}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Not, 
+\begin_inset Formula $\epsilon_{\mu}$
+\end_inset
+
+ probably not 
+\begin_inset Formula $\ell_{2}$
+\end_inset
+
+ close.
+\end_layout
+
+\begin_layout Proof
+I probably 
+\end_layout
+
+\begin_layout Proof
+Okay, so we have
+\begin_inset Formula 
+\[
+\delta_{\mu}=\frac{(\mu-t')^{q-1}}{\|(\mu-t')^{q-1}\|_{2}}.
+\]
+
+\end_inset
+
+Problem, seems the denominator is not that stable with the noise?
 \end_layout
 
 \begin_layout Proof
