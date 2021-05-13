@@ -700,6 +700,37 @@ I think we should have a section on subgradient just for completeness?
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Maybe I can add a plot somewhere looks like this:
+\end_layout
+
+\begin_layout Plain Layout
+Sublinear time --- SGD (close to quadratic, 1/eps)
+\end_layout
+
+\begin_layout Plain Layout
+Linear time --- GD (close to quadratic , log(1/eps)) n^{1.5-2.5} time ---
+ 
+\end_layout
+
+\begin_layout Plain Layout
+IPM (structure, log(1/eps)) n^3 time --- 
+\end_layout
+
+\begin_layout Plain Layout
+cutting plane (log(1/eps)) n^O(1) time --- (exact if solution is integral
+ and bounded) 2^{exp(sqrt(n)} time --- (structure, exact if soln is integral)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Chapter
 Gradient Descent
 \end_layout
