@@ -205,6 +205,22 @@ where
 
  is called the Cramer-Rao bound.
  
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+VC dimension and the relation to Cramer-Rao bound
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Note
 status open
 

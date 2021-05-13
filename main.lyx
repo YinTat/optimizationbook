@@ -428,7 +428,7 @@ KLS
 
 \end_deeper
 \begin_layout Itemize
-Examples
+Examples (Instead of this)
 \end_layout
 
 \begin_deeper
@@ -458,6 +458,80 @@ Maxflow
 
 \begin_layout Itemize
 Transportation
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Basic
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Linear System
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+asdasdasd
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Black-box Problem
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Gradient descent, etc
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Stochastic and Finite sum Problem
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Advanced Techniques
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Other black-box method
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+...
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Linear System
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+asdasd
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Linear Program
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Maxflow
+\end_layout
+
+\begin_layout Itemize
+Generalized linear program
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Cutting Plane
 \end_layout
 
 \end_deeper
@@ -644,6 +718,19 @@ Matrix derivative via Cauchy Integral Formula?
 
 \begin_layout Plain Layout
 Equivalence between strong convexity and concentration?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Should we organize the textbook by problem topics:
 \end_layout
 
 \end_inset
