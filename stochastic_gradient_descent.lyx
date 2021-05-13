@@ -204,6 +204,25 @@ where
 \end_inset
 
  is called the Cramer-Rao bound.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Maybe I should add the proof for 
+\end_layout
+
+\begin_layout Plain Layout
+Theorem 6
+\end_layout
+
+\begin_layout Plain Layout
+https://www.cs.cornell.edu/~sridharan/convex.pdf
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Lemma
@@ -397,73 +416,7 @@ Now, we discuss how to achieve a bound similar to
 \end_inset
 
 , instead of the inverse Hessian norm.
- We need a lemma relating 
-\begin_inset Formula $\nabla f(x^{*})$
-\end_inset
-
- and 
-\begin_inset Formula $\nabla f(x)$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Exercise
-Suppose 
-\begin_inset Formula $f$
-\end_inset
-
- has 
-\begin_inset Formula $L$
-\end_inset
-
--Lipschitz gradient.
- Then, 
-\begin_inset Formula $\|\nabla f(x)-\nabla f(y)\|^{2}\leq2L\cdot D_{f}(y,x)$
-\end_inset
-
- for any 
-\begin_inset Formula $x,y$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Exercise
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-Proof: ...Oh my proof does not work..Anyway..Lemma 7 in http://www.aaronsidford.com/chap_
-5_extend_v7.pdf
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\begin{align*}
-D_{f}(y,x) & =f(y)-f(x)-\nabla f(x)^{\top}(y-x)\\
- & =\int_{0}^{1}(1-\theta)(y-x)^{\top}\nabla^{2}f(x+\theta(y-x))(y-x)d\theta.
-\end{align*}
-
-\end_inset
-
-On the other hand, we have
-\begin_inset Formula 
-\begin{align*}
-\|\nabla f(x)-\nabla f(y)\|^{2} & =\|\int_{0}^{1}\nabla^{2}f(x+\theta(y-x))(y-x)d\theta\|^{2}\\
- & \leq\left(\int_{0}^{1}\|\nabla^{2}f(x+\theta(y-x))(y-x)\|d\theta\right)^{2}\\
- & \leq\int_{0}^{1}\|\nabla^{2}f(x+\theta(y-x))(y-x)\|^{2}d\theta\\
- & \leq L\cdot\int_{0}^{1}(y-x)^{\top}\nabla^{2}f(x+\theta(y-x))(y-x)d\theta\\
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
+ 
 \end_layout
 
 \begin_layout Lemma
@@ -507,7 +460,41 @@ Suppose
 \end_layout
 
 \begin_layout Proof
-By the exercise above, we have
+Let 
+\begin_inset Formula $g(x)=f(x)-\nabla f(x^{*})^{\top}(x-x^{*})$
+\end_inset
+
+.
+ By construction, 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ is the minimizer of 
+\begin_inset Formula $g$
+\end_inset
+
+ and 
+\begin_inset Formula $f(x^{*})=g(x^{*})$
+\end_inset
+
+.
+ Hence, by the progress of gradient descent, we know
+\begin_inset Formula 
+\[
+g(x^{*})\leq g(x)-\frac{1}{2L}\|\nabla g(x)\|^{2}.
+\]
+
+\end_inset
+
+Rearranging the term, we have
+\begin_inset Formula 
+\[
+\|\nabla g(x)\|^{2}\leq2L(g(x)-g(x^{*}))
+\]
+
+\end_inset
+
+and hence
 \begin_inset Formula 
 \[
 \|\nabla f(x)-\nabla f(x^{*})\|^{2}\leq2L\cdot(f(x)-f(x^{*})-\nabla f(x^{*})^{\top}(x-x^{*})).
