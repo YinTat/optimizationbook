@@ -1412,6 +1412,18 @@ name "alg:L2Step"
 \begin_layout Standard
 
 \series bold
+Define
+\series default
+ 
+\begin_inset Formula $\mproj_{x,s}=\ms^{-1}\ma^{\top}(\ma\ms^{-1}\mx\ma^{\top})^{-1}\ma\mx$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
 Invariant:
 \series default
  
@@ -1424,18 +1436,6 @@ Invariant:
 
 .
  
-\end_layout
-
-\begin_layout Standard
-
-\series bold
-Define
-\series default
- 
-\begin_inset Formula $\mproj_{x,s}=\ms^{-1}\ma^{\top}(\ma\ms^{-1}\mx\ma^{\top})^{-1}\ma\mx$
-\end_inset
-
-.
 \end_layout
 
 \begin_layout Standard
@@ -1604,7 +1604,7 @@ Suppose that the input satisfies
 \end_inset
 
 .
- Then throughout the algorithm 
+ Then the algorithm 
 \begin_inset Formula $\mathtt{L2Step}$
 \end_inset
 
@@ -1615,11 +1615,15 @@ reference "alg:L2Step"
 
 \end_inset
 
-), we have 
+) outputs 
+\begin_inset Formula $(x,s)$
+\end_inset
+
+ such that 
 \begin_inset Formula $\|xs-t_{\mathrm{end}}\|_{2}\leq\frac{t_{\mathrm{end}}}{6}$
 \end_inset
 
- (except the first step).
+.
  Furthermore, 
 \begin_inset Formula $\mathtt{L2Step}$
 \end_inset
@@ -2388,6 +2392,16 @@ name "subsec:IPM_cosh_step"
 \end_inset
 
 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Seems using cosh is better...there is cosh identity.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2410,28 +2424,20 @@ To make the interior point method robust against the noise in
 \end_inset
 
 .
- However, designing a step 
+ However, the step 
 \begin_inset Formula $\delta_{\mu}$
 \end_inset
 
- to minimize 
+ that minimizes 
 \begin_inset Formula $\|\mu+\delta_{\mu}-t\|_{q}^{q}$
 \end_inset
 
- involves many cases because the function 
-\begin_inset Formula $v\rightarrow v^{p}$
-\end_inset
-
- is too flat around 
-\begin_inset Formula $v=0$
-\end_inset
-
-.
+ involves many cases.
  Instead, we pick the potential
 \begin_inset Formula 
-\[
-\Phi(v)=\sum_{i=1}^{n}\cosh(\lambda v_{i})
-\]
+\begin{equation}
+\Phi(v)=\sum_{i=1}^{n}\cosh(\lambda v_{i}).\label{eq:Phi_potential}
+\end{equation}
 
 \end_inset
 
@@ -2439,18 +2445,12 @@ for some scalar
 \begin_inset Formula $\lambda>0$
 \end_inset
 
-.
- In this section, we study the following algorithm:
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-HERE
-\end_layout
-
+ where 
+\begin_inset Formula $\cosh(v)=(e^{v}+e^{-v})/2$
 \end_inset
 
-
+.
+ This potential induces the following algorithm:
 \end_layout
 
 \begin_layout Standard
@@ -2483,7 +2483,7 @@ caption{
 \end_inset
 
 
-\begin_inset Formula $\mathtt{LqStep}(\ma,x,s,t_{\mathrm{start}},t_{\mathrm{end}})$
+\begin_inset Formula $\mathtt{RobustStep}(\ma,x,s,t_{\mathrm{start}},t_{\mathrm{end}})$
 \end_inset
 
 
@@ -2503,11 +2503,41 @@ status open
 \begin_layout Standard
 \begin_inset CommandInset label
 LatexCommand label
-name "alg:LqStep"
+name "alg:RobustStep"
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Define
+\series default
+ 
+\begin_inset Formula $r=(xs-t)/r$
+\end_inset
+
+ and 
+\begin_inset Formula $\Phi$
+\end_inset
+
+ according to 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Phi_potential"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ with 
+\begin_inset Formula $\lambda=16\log40n$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -2520,11 +2550,10 @@ Invariant:
 \end_inset
 
  and 
-\begin_inset Formula $\sum_{i=1}^{n}\cosh(\lambda v_{i})\leq\frac{t}{4}$
+\begin_inset Formula $\Phi(r)\leq16n$
 \end_inset
 
 .
- 
 \end_layout
 
 \begin_layout Standard
@@ -2533,7 +2562,7 @@ Let
 \end_inset
 
 , 
-\begin_inset Formula $h=1/(16\sqrt{n})$
+\begin_inset Formula $h=1/(48\lambda\sqrt{n})$
 \end_inset
 
  and 
@@ -2564,7 +2593,11 @@ While{
 \begin_inset Formula $t\neq t_{\mathrm{end}}$
 \end_inset
 
- and it is not the first step
+ and 
+\begin_inset Formula $\Phi(r)\geq8n$
+\end_inset
+
+
 \begin_inset ERT
 status open
 
@@ -2579,36 +2612,44 @@ status open
 \end_layout
 
 \begin_layout Standard
-Let 
-\begin_inset Formula $t'=\max((1-h)t,t_{\mathrm{end}})$
+Pick 
+\begin_inset Formula $\ox$
 \end_inset
 
 , 
-\begin_inset Formula $\mu=xs$
+\begin_inset Formula $\os$
 \end_inset
 
-, and 
-\begin_inset Formula $\delta_{\mu}=n^{1/q-1/2}(t'-\mu)$
+ and 
+\begin_inset Formula $\overline{r}$
+\end_inset
+
+ such that 
+\begin_inset Formula $\|\frac{\ox-x}{x}\|_{\infty}\leq\frac{1}{48}$
+\end_inset
+
+, 
+\begin_inset Formula $\|\frac{\os-s}{s}\|_{\infty}\leq\frac{1}{48}$
+\end_inset
+
+ and 
+\begin_inset Formula $\|\overline{r}-r\|_{\infty}\leq\frac{1}{48\lambda}$
 \end_inset
 
 .
 \end_layout
 
 \begin_layout Standard
-Pick 
-\begin_inset Formula $\overline{\delta}_{\mu}$
+Let 
+\begin_inset Formula $t'=\max((1-h)t,t_{\mathrm{end}})$
 \end_inset
 
 , 
-\begin_inset Formula $\ox$
+\begin_inset Formula $\overline{\delta}_{\mu}=t'-t-\frac{t'}{32\lambda}\frac{\overline{g}}{\|\overline{g}\|_{2}}$
 \end_inset
 
- and 
-\begin_inset Formula $\os$
-\end_inset
-
- such that 
-\begin_inset Formula $\cdots$
+, 
+\begin_inset Formula $\overline{g}=\nabla\Phi(\overline{r})$
 \end_inset
 
 .
@@ -2693,6 +2734,367 @@ end{algorithm2e}
 
 \end_layout
 
+\begin_layout Standard
+Here, we prove the key facts we use about 
+\begin_inset Formula $\Phi$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:robust_IPM_Phi"
+
+\end_inset
+
+Define 
+\begin_inset Formula $\Phi$
+\end_inset
+
+ according to 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Phi_potential"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ For any 
+\begin_inset Formula $v\in\Rn$
+\end_inset
+
+, we have that 
+\begin_inset Formula $\|v\|_{\infty}\leq\frac{\log2\Phi(v)}{\lambda}$
+\end_inset
+
+ and 
+\begin_inset Formula $\|\nabla\Phi(v)\|_{2}\geq\frac{\lambda}{\sqrt{n}}(\Phi(v)-n)$
+\end_inset
+
+.
+ Furthermore, if 
+\begin_inset Formula $\Phi(v)\geq4n$
+\end_inset
+
+ and 
+\begin_inset Formula $\|\delta\|_{\infty}\leq\frac{1}{5\lambda}$
+\end_inset
+
+, we have 
+\begin_inset Formula 
+\[
+\|\nabla\Phi(v+\delta)-\nabla\Phi(v)\|_{2}\leq\frac{1}{3}\|\nabla\Phi(v)\|_{2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+For the first result: we have 
+\begin_inset Formula $\Phi(v)\geq\frac{1}{2}\min_{i}e^{\lambda|v_{i}|}$
+\end_inset
+
+ and hence 
+\begin_inset Formula $\|v\|_{\infty}\leq\frac{\log2\Phi(v)}{\lambda}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+For the second result: we have
+\begin_inset Formula 
+\begin{align*}
+\|\nabla\Phi(v)\|_{2} & =\lambda\sqrt{\sum_{i=1}^{n}\sinh^{2}(\lambda v_{i})}=\lambda\sqrt{\sum_{i=1}^{n}(\cosh^{2}(\lambda v_{i})-1)}\\
+ & \geq\frac{\lambda}{\sqrt{n}}\sum_{i=1}^{n}\sqrt{\cosh^{2}(\lambda v_{i})-1}\geq\frac{\lambda}{\sqrt{n}}\sum_{i=1}^{n}(\cosh(\lambda v_{i})-1)\\
+ & =\frac{\lambda}{\sqrt{n}}(\Phi(v)-n).
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+For the last result, using 
+\begin_inset Formula $\sinh(v+\delta)=\sinh v\cosh\delta+\cosh v\sinh\delta$
+\end_inset
+
+ and 
+\begin_inset Formula $|\cosh v-\sinh v|\leq1$
+\end_inset
+
+, for 
+\begin_inset Formula $|\delta|\leq\frac{1}{5}$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\begin{align*}
+|\sinh(v+\delta)-\sinh(v)| & \leq|\cosh\delta-1|\cdot|\sinh v|+|\sinh\delta|\cdot\cosh v\\
+ & \leq\left(|\cosh\delta-1|+|\sinh\delta|\right)\cdot|\sinh v|+|\sinh\delta|\\
+ & \leq\frac{1}{4}|\sinh v|+\frac{1}{4}.
+\end{align*}
+
+\end_inset
+
+Using that 
+\begin_inset Formula $\nabla\Phi(v)=\sum_{i=1}^{n}\lambda\sinh(\lambda v_{i})$
+\end_inset
+
+, for 
+\begin_inset Formula $\|\delta\|_{\infty}\leq\frac{1}{5\lambda}$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\begin{equation}
+\|\nabla\Phi(v+\delta)-\nabla\Phi(v)\|_{2}\leq\frac{1}{4}\|\nabla\Phi(v)\|_{2}+\frac{\sqrt{n}\lambda}{4}.\label{eq:grad_phi_diff}
+\end{equation}
+
+\end_inset
+
+Since 
+\begin_inset Formula $\Phi(v)\geq4n$
+\end_inset
+
+, we have that 
+\begin_inset Formula $\|\nabla\Phi(v)\|_{2}\geq3\sqrt{n}\lambda$
+\end_inset
+
+ and hence 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:grad_phi_diff"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows that
+\begin_inset Formula 
+\[
+\|\nabla\Phi(v+\delta)-\nabla\Phi(v)\|_{2}\leq(\frac{1}{4}+\frac{1}{12})\|\nabla\Phi(v)\|_{2}=\frac{1}{3}\|\nabla\Phi(v)\|_{2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We collect some basic bounds on the step in the following Lemma:
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:RobustIPM_basic"
+
+\end_inset
+
+Using the notation in 
+\begin_inset Formula $\mathtt{RobustStep}$
+\end_inset
+
+ (Algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:RobustStep"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ Under the invariant 
+\begin_inset Formula $\Phi((xs-t)/t)\leq16n$
+\end_inset
+
+, we have 
+\begin_inset Formula $\|xs-t\|_{\infty}\leq\frac{t}{16}$
+\end_inset
+
+, 
+\begin_inset Formula $\|\delta_{x}/x\|_{2}\leq\frac{1}{16\lambda}$
+\end_inset
+
+, 
+\begin_inset Formula $\|\delta_{s}/s\|_{2}\leq\frac{1}{16\lambda}$
+\end_inset
+
+, and 
+\begin_inset Formula $\|r'-r\|_{\infty}\leq\frac{1}{6\lambda}$
+\end_inset
+
+ where 
+\begin_inset Formula $r'=((x+\delta_{x})(s+\delta_{s})-t')/t'$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Using 
+\begin_inset Formula $\Phi((xs-t)/t)\leq16n$
+\end_inset
+
+ and Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:robust_IPM_Phi"
+
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+\|xs-t\|_{\infty}\leq\frac{t\log32n}{\lambda}\leq\frac{t}{16}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+By Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:Newton_step"
+
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+\mx^{-1}\delta_{x}=(\mi-\mproj)(\overline{\delta}_{\mu}/\overline{\mu})
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\overline{\mu}=\ox\os$
+\end_inset
+
+ and 
+\begin_inset Formula $\mproj=\oms^{-1}\ma^{\top}(\ma\oms^{-1}\omx\ma^{\top})^{-1}\ma\omx$
+\end_inset
+
+.
+ By Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:Projection_property"
+
+\end_inset
+
+, we have 
+\begin_inset Formula 
+\[
+\|\delta_{x}/x\|_{\overline{\mu}}=\|(\mi-\mproj)v\|_{\overline{\mu}}\leq\|\overline{\delta}_{\mu}/\overline{\mu}\|_{\overline{\mu}}.
+\]
+
+\end_inset
+
+Using that 
+\begin_inset Formula $\|xs-t\|_{\infty}\leq\frac{t}{16}$
+\end_inset
+
+, 
+\begin_inset Formula $\|\frac{x-\ox}{x}\|_{\infty}\leq\frac{1}{48}$
+\end_inset
+
+, 
+\begin_inset Formula $\|\frac{s-\os}{s}\|_{\infty}\leq\frac{1}{48}$
+\end_inset
+
+, we have 
+\begin_inset Formula $\overline{\mu}\geq\frac{10}{11}t$
+\end_inset
+
+ and hence
+\begin_inset Formula 
+\[
+\|\delta_{x}/x\|_{2}\leq\sqrt{\frac{11}{10t}}\|\delta_{x}/x\|_{\overline{\mu}}\leq\sqrt{\frac{11}{10t}}\|\overline{\delta}_{\mu}\|_{\overline{\mu}^{-1}}\leq\frac{11}{10t}\|\overline{\delta}_{\mu}\|_{2}
+\]
+
+\end_inset
+
+Using the formula 
+\begin_inset Formula $\overline{\delta}_{\mu}=t'-t-\frac{t'}{32\lambda}\frac{\overline{g}}{\|\overline{g}\|_{2}}$
+\end_inset
+
+ and 
+\begin_inset Formula $|\frac{t'-t}{t}|\leq\frac{1}{48\lambda\sqrt{n}}$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\begin{align*}
+\|\delta_{x}/x\|_{2} & \leq\frac{11}{10}\left(\|\frac{t'-t}{t}\|_{2}+\frac{t'}{32\lambda t}\right)\leq\frac{1}{16\lambda}.
+\end{align*}
+
+\end_inset
+
+Same proof gives 
+\begin_inset Formula $\|\delta_{s}/s\|_{2}\leq\frac{1}{16\lambda}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Finally, we have
+\begin_inset Formula 
+\begin{align*}
+r'-r & =\frac{(x+\delta_{x})(s+\delta_{s})}{t'}-\frac{xs}{t}\\
+ & =(\frac{t}{t'}-1)\frac{xs}{t}+\frac{xs}{t'}(\delta_{x}/x+\delta_{s}/s+(\delta_{x}/x)(\delta_{s}/s)).
+\end{align*}
+
+\end_inset
+
+Using 
+\begin_inset Formula $|\frac{t'-t}{t}|\leq\frac{1}{48\lambda\sqrt{n}},$
+\end_inset
+
+
+\begin_inset Formula $\|xs-t\|_{\infty}\leq\frac{t}{16}$
+\end_inset
+
+, 
+\begin_inset Formula $\|\delta_{x}/x\|_{2}\leq\frac{1}{16\lambda}$
+\end_inset
+
+, 
+\begin_inset Formula $\|\delta_{s}/s\|_{2}\leq\frac{1}{16\lambda}$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\begin{align*}
+\|r'-r\|_{\infty} & \leq\frac{1}{48\lambda}\frac{17}{16}+\frac{17}{16}\frac{49}{48}(\frac{1}{16\lambda}+\frac{1}{16\lambda}+\frac{1}{16\lambda}\frac{1}{16\lambda})\leq\frac{1}{6\lambda}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now, we are already to prove the main theorem.
+\end_layout
+
 \begin_layout Theorem
 \begin_inset CommandInset label
 LatexCommand label
@@ -2705,35 +3107,43 @@ Suppose that the input satisfies
 \end_inset
 
  and 
-\begin_inset Formula $\|xs-t_{\mathrm{start}}\|_{q}\leq\frac{t_{\mathrm{start}}}{4}$
+\begin_inset Formula $\Phi((xs-t_{\mathrm{start}})/t_{\mathrm{start}})\leq16n$
 \end_inset
 
 .
- Then throughout the algorithm 
-\begin_inset Formula $\mathtt{LqStep}$
+ Then the algorithm 
+\begin_inset Formula $\mathtt{RobustStep}$
 \end_inset
 
  (Algorithm 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "alg:LqStep"
+reference "alg:RobustStep"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
-), we have 
-\begin_inset Formula $\|xs-t_{\mathrm{end}}\|_{2}\leq\frac{t_{\mathrm{end}}}{6}$
+) outputs 
+\begin_inset Formula $x$
 \end_inset
 
- (except the first step).
+ and 
+\begin_inset Formula $s$
+\end_inset
+
+ such that 
+\begin_inset Formula $\Phi((xs-t_{\mathrm{end}})/t_{\mathrm{end}})\leq8n$
+\end_inset
+
+.
  Furthermore, 
-\begin_inset Formula $\mathtt{LqStep}$
+\begin_inset Formula $\mathtt{RobustStep}$
 \end_inset
 
  takes 
-\begin_inset Formula $O(\sqrt{n}\log(t_{\mathrm{start}}/t_{\mathrm{end}}))$
+\begin_inset Formula $O(\sqrt{n}\log n\log(t_{\mathrm{start}}/t_{\mathrm{end}}))$
 \end_inset
 
  Newton steps (defined in 
@@ -2750,16 +3160,13 @@ noprefix "false"
 \end_layout
 
 \begin_layout Proof
-We prove by induction that 
-\begin_inset Formula $\|xs-t\|_{q}\leq\frac{t}{4}$
+First, we prove the invariant 
+\begin_inset Formula $\Phi(r)\leq16n$
 \end_inset
 
-.
+ by induction.
  It holds for the first step by the assumption.
-\end_layout
-
-\begin_layout Proof
-Let 
+ Let 
 \begin_inset Formula $x'=x+\delta_{x}$
 \end_inset
 
@@ -2771,300 +3178,284 @@ Let
 \begin_inset Formula $t'$
 \end_inset
 
- defined in the algorithm.
- Note that
+ defined in the algorithm and 
+\begin_inset Formula $r'=\frac{x's'-t'}{t'}$
+\end_inset
+
+.
+ Our goal is to prove 
+\begin_inset Formula $\Phi(r')\leq16n$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+If 
+\begin_inset Formula $\Phi(r)\leq8n$
+\end_inset
+
+, we simply use the fact that 
+\begin_inset Formula $\|r-r'\|_{\infty}\leq\frac{1}{16\lambda}$
+\end_inset
+
+ (Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:RobustIPM_basic"
+
+\end_inset
+
+) and hence 
+\begin_inset Formula $\Phi(r')\leq2\Phi(r)\leq16n$
+\end_inset
+
+.
+ Hence, we only need to prove for the case 
+\begin_inset Formula $\Phi(r)\geq8n$
+\end_inset
+
+.
+ By the definition of 
+\begin_inset Formula $\delta_{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $\delta_{s}$
+\end_inset
+
+, we have 
+\begin_inset Formula 
+\[
+\oms\delta_{x}+\omx\delta_{s}=\overline{\delta}_{\mu}=t'-t-\frac{t'}{32\lambda}\frac{\overline{g}}{\|\overline{g}\|_{2}}
+\]
+
+\end_inset
+
+and hence
+\begin_inset Formula 
+\begin{align}
+\frac{x's'-t'}{t'}= & \frac{(x+\delta_{x})(s+\delta_{s})-t'}{t'}\nonumber \\
+= & \frac{xs+\ms\delta_{x}+\mx\delta_{s}+\delta_{x}\delta_{s}-t'}{t'}\nonumber \\
+= & \frac{xs-t'+\oms\delta_{x}+\omx\delta_{s}+(s-\os)\delta_{x}+(x-\ox)\delta_{s}+\delta_{x}\delta_{s}}{t'}\nonumber \\
+= & \frac{xs-t}{t}-\frac{1}{32\lambda}\cdot\frac{\overline{g}}{\|\overline{g}\|_{2}}+\eta\label{eq:IPM_robust_r_diff}
+\end{align}
+
+\end_inset
+
+where the error term
+\begin_inset Formula 
+\[
+\eta=(\frac{t}{t'}-1)\frac{xs-t}{t}+\frac{(s-\os)\delta_{x}+(x-\ox)\delta_{s}+\delta_{x}\delta_{s}}{t'}.
+\]
+
+\end_inset
+
+Now, we bound the error term 
+\begin_inset Formula $\eta$
+\end_inset
+
+.
+ Using Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:RobustIPM_basic"
+
+\end_inset
+
+ (
+\begin_inset Formula $\|\delta_{x}/x\|_{2}\leq\frac{1}{16\lambda}$
+\end_inset
+
+, 
+\begin_inset Formula $\|\delta_{s}/s\|_{2}\leq\frac{1}{16\lambda}$
+\end_inset
+
+, 
+\begin_inset Formula $\|xs-t\|_{\infty}\leq\frac{t}{16}$
+\end_inset
+
+) and the definition of the algorithm (
+\begin_inset Formula $\lambda\geq16$
+\end_inset
+
+, 
+\begin_inset Formula $|t-t'|\leq\frac{t'}{48\lambda\sqrt{n}}$
+\end_inset
+
+, 
+\begin_inset Formula $\|\frac{x-\ox}{x}\|_{\infty}\leq\frac{1}{48}$
+\end_inset
+
+, 
+\begin_inset Formula $\|\frac{s-\os}{s}\|_{\infty}\leq\frac{1}{48}$
+\end_inset
+
+), we have
+\begin_inset Formula 
+\begin{align}
+\|\eta\|_{2}\leq & |\frac{t}{t'}-1|\|\frac{xs-t}{t}\|_{\infty}\sqrt{n}+\|\frac{xs}{t'}\|_{\infty}\|\frac{s-\os}{s}\|_{\infty}\|\frac{\delta_{x}}{x}\|_{2}\nonumber \\
+ & +\|\frac{xs}{t'}\|_{\infty}\|\frac{x-\ox}{x}\|_{\infty}\|\frac{\delta_{s}}{s}\|_{2}+\|\frac{xs}{t'}\|_{\infty}\|\frac{\delta_{x}}{x}\|_{2}\|\frac{\delta_{s}}{s}\|_{2}\nonumber \\
+\leq & \frac{1}{48\lambda}\frac{1}{16}+\frac{9}{8}\frac{1}{48}(\frac{1}{16\lambda}+\frac{1}{16\lambda})+\frac{9}{8}(\frac{1}{16\lambda}\frac{1}{16\lambda})\leq\frac{1}{200\lambda}.\label{eq:robust_IPM_eta}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Mean value theorem shows there is 
+\begin_inset Formula $\widetilde{r}$
+\end_inset
+
+ between 
+\begin_inset Formula $r$
+\end_inset
+
+ and 
+\begin_inset Formula $r'$
+\end_inset
+
+ such that
 \begin_inset Formula 
 \begin{align*}
-x's'-t'= & (x+\delta_{x})(s+\delta_{s})-t'\\
-= & \mu+\ms\delta_{x}+\mx\delta_{s}+\delta_{x}\delta_{s}-t'.
+\Phi(r') & =\Phi(r)+\left\langle \nabla\Phi(\widetilde{r}),r'-r\right\rangle \\
+ & =\Phi(r)+\left\langle \nabla\Phi(\widetilde{r}),-\frac{1}{32\lambda}\frac{\overline{g}}{\|\overline{g}\|_{2}}+\eta\right\rangle 
 \end{align*}
 
 \end_inset
 
-Lemma 
+where we used 
 \begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:Newton_step"
+LatexCommand eqref
+reference "eq:IPM_robust_r_diff"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
- shows that 
-\begin_inset Formula $\oms\delta_{x}+\omx\delta_{s}=\overline{\delta}_{\mu}$
+ at the end.
+ Using Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:RobustIPM_basic"
+
+\end_inset
+
+, we have 
+\begin_inset Formula $\|r-r'\|_{\infty}\leq\frac{1}{6\lambda}$
+\end_inset
+
+ and 
+\begin_inset Formula $\|\overline{r}-r\|_{\infty}\leq\frac{1}{48\lambda}$
+\end_inset
+
+.
+ Hence, we have 
+\begin_inset Formula $\|\overline{r}-\widetilde{r}\|_{\infty}\leq\frac{1}{5\lambda}$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $\Phi(r)\geq8n$
+\end_inset
+
+, we have 
+\begin_inset Formula $\Phi(\overline{r})\geq4n$
+\end_inset
+
+ and hence Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:robust_IPM_Phi"
+
+\end_inset
+
+ shows that
+\begin_inset Formula 
+\[
+\|\nabla\Phi(\widetilde{r})-\nabla\Phi(\overline{r})\|_{2}\leq\frac{1}{3}\|\nabla\Phi(\overline{r})\|_{2}.
+\]
+
+\end_inset
+
+Using 
+\begin_inset Formula $\overline{g}=\nabla\Phi(\overline{r})$
+\end_inset
+
+ and letting 
+\begin_inset Formula $\eta_{2}=\nabla\Phi(\widetilde{r})-\nabla\Phi(\overline{r})$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\begin{align*}
+\Phi(r')-\Phi(r)= & \left\langle \overline{g}+\eta_{2},-\frac{1}{32\lambda}\frac{\overline{g}}{\|\overline{g}\|_{2}}+\eta\right\rangle \\
+= & -\frac{1}{32\lambda}\|\overline{g}\|_{2}-\frac{1}{32\lambda}\eta_{2}^{\top}\frac{\overline{g}}{\|\overline{g}\|_{2}}+\overline{g}^{\top}\eta+\eta_{2}^{\top}\eta.
+\end{align*}
+
+\end_inset
+
+Using 
+\begin_inset Formula $\|\eta_{2}\|_{2}\leq\frac{1}{3}\|\overline{g}\|_{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $\|\eta\|_{2}\leq\frac{1}{200\lambda}$
+\end_inset
+
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:robust_IPM_eta"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we have
+\begin_inset Formula 
+\begin{align*}
+\Phi(r')-\Phi(r) & \leq-\frac{1}{32\lambda}\|\overline{g}\|_{2}+\frac{1}{32\lambda}\cdot\frac{1}{3}\|\overline{g}\|_{2}+\|\overline{g}\|_{2}\cdot\frac{1}{200\lambda}+\frac{1}{3}\|\overline{g}\|_{2}\cdot\frac{1}{200\lambda}\\
+ & \leq-\frac{1}{100\lambda}\|\overline{g}\|_{2}
+\end{align*}
+
+\end_inset
+
+Using Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:robust_IPM_Phi"
+
+\end_inset
+
+, we have 
+\begin_inset Formula $\|\overline{g}\|_{2}\geq\frac{\lambda}{\sqrt{n}}(\Phi(\overline{r})-n)\geq3\lambda\sqrt{n}$
 \end_inset
 
 .
  Hence, we have
 \begin_inset Formula 
-\begin{align*}
-x's'-t'= & (\mu-t')+\delta_{\mu}+\epsilon_{s}\delta_{x}+\epsilon_{x}\delta_{s}+\epsilon_{\mu}
-\end{align*}
+\begin{equation}
+\Phi(r')\leq\Phi(r)-\frac{\sqrt{n}}{40}\leq16n.\label{eq:IPM_robust_decrease}
+\end{equation}
 
 \end_inset
 
-where 
-\begin_inset Formula $\epsilon_{s}=s-\os+\delta_{s}$
+So, in both cases, we have that 
+\begin_inset Formula $\Phi(r')\leq16n$
 \end_inset
 
-, 
-\begin_inset Formula $\epsilon_{x}=x-\ox$
-\end_inset
-
-, 
-\begin_inset Formula $\epsilon_{\mu}=\overline{\delta}_{\mu}-\delta_{\mu}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Proof
-—
-\end_layout
-
-\begin_layout Proof
-What is a good step? Seems 
-\begin_inset Formula $(\mu-t)^{q-1}$
-\end_inset
-
- is not ideal.
- The best step is
-\begin_inset Formula 
-\[
-\arg\min_{\|\delta\|_{2}\leq h}\|x+\delta\|_{p}.
-\]
-
-\end_inset
-
-If 
-\begin_inset Formula $\|x\|_{2}\leq h$
-\end_inset
-
-, 
-\begin_inset Formula $\delta=-x$
-\end_inset
-
- (We don't need to do this case).
- Otherwise,
-\begin_inset Formula 
-\[
-\min_{\sum\delta_{i}^{2}\leq h}\sum(x+\delta)_{i}^{p}
-\]
-
-\end_inset
-
-The KKT is given by
-\begin_inset Formula 
-\[
-(x+\delta)_{i}^{p-1}=\lambda\delta.
-\]
-
-\end_inset
-
-WLOG 
-\begin_inset Formula $x>0$
-\end_inset
-
- and hence
-\begin_inset Formula 
-\[
-(x-\delta)^{p-1}=\lambda\delta.
-\]
-
-\end_inset
-
-Again, there is two cases, if 
-\begin_inset Formula $\delta\ll x$
-\end_inset
-
-, we have 
-\begin_inset Formula $\delta\approx x^{p-1}$
-\end_inset
-
-, otherwise, we have 
-\begin_inset Formula $\delta\approx x$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Proof
-—
-\end_layout
-
-\begin_layout Proof
-How about this, we do the step
-\begin_inset Formula 
-\[
-\|x+\delta\|_{p}+\|x+\delta\|_{2}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-—
-\end_layout
-
-\begin_layout Proof
-The key is that all other terms has small 
-\begin_inset Formula $\ell_{2}$
-\end_inset
-
- norm.
-\begin_inset Formula 
-\begin{align*}
-x & =\frac{t}{n^{1/q}},\\
-\|x^{q-1}\|_{2}^{2} & =t^{2(q-1)}\sum n^{-2(q-1)/q}=t^{2(q-1)}nn^{-2+2/q}=t^{2(q-1)}n^{2/q-1}.
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-Not, 
-\begin_inset Formula $\epsilon_{\mu}$
-\end_inset
-
- probably not 
-\begin_inset Formula $\ell_{2}$
-\end_inset
-
- close.
-\end_layout
-
-\begin_layout Proof
-I probably 
-\end_layout
-
-\begin_layout Proof
-Okay, so we have
-\begin_inset Formula 
-\[
-\delta_{\mu}=\frac{(\mu-t')^{q-1}}{\|(\mu-t')^{q-1}\|_{2}}.
-\]
-
-\end_inset
-
-Problem, seems the denominator is not that stable with the noise?
-\end_layout
-
-\begin_layout Proof
-(THIS is a bad step...)
-\end_layout
-
-\begin_layout Proof
-—
-\end_layout
-
-\begin_layout Proof
-Hence, we have
-\begin_inset Formula 
-\[
-\|x's'-t'\|_{q}\leq(1-n^{1/q-1/2})\|\mu-t\|_{q}+\|\epsilon_{\mu}\|_{q}+\|\epsilon_{s}\delta_{x}\|_{q}+\|\epsilon_{x}\delta_{s}\|_{q}.
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-—
-\begin_inset Formula 
-\[
-x's'-t'=\delta_{x}\delta_{s}=\mx^{-1}\delta_{x}\cdot\ms^{-1}\delta_{s}\cdot\mu
-\]
-
-\end_inset
-
-Using this, we have
-\begin_inset Formula 
-\begin{align*}
-\|x's'-t'\|_{2} & \leq\|\mu^{1/2}\mx^{-1}\delta_{x}\|_{2}\|\mu^{1/2}\ms^{-1}\delta_{s}\|_{2}\\
- & =\|\mx^{-1}\delta_{x}\|_{\mu}\|\ms^{-1}\delta_{s}\|_{\mu}\\
- & \leq\|\delta_{\mu}/\mu\|_{\mu}^{2}
-\end{align*}
-
-\end_inset
-
-where we used Lemma 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:Projection_property"
-
-\end_inset
-
- at the end.
-\end_layout
-
-\begin_layout Proof
-For the last term, using 
-\begin_inset Formula $t'-\mu=\frac{t'}{t}(t-\mu)+(\frac{t'}{t}-1)\mu$
-\end_inset
-
-, we have
-\begin_inset Formula 
-\begin{align*}
-\|\delta_{\mu}/\mu\|_{\mu} & =\|\frac{t'}{t}\frac{t-\mu}{\mu}+(\frac{t'}{t}-1)\|_{\mu}\\
- & \leq\frac{t'}{t}\|xs-t\|_{\mu^{-1}}+\|\frac{t'}{t}-1\|_{\mu}.
-\end{align*}
-
-\end_inset
-
-Since 
-\begin_inset Formula $\|\mu-t\|_{2}\leq\frac{t}{4}$
-\end_inset
-
-, we have 
-\begin_inset Formula $\min_{i}\mu_{i}\geq\frac{3t}{4}$
-\end_inset
-
- and 
-\begin_inset Formula $\max_{i}\mu_{i}\leq\frac{5}{4}t$
-\end_inset
-
-.
- Using 
-\begin_inset Formula $|\frac{t'}{t}-1|\leq h=\sqrt{n}/16$
-\end_inset
-
-, we have
-\begin_inset Formula 
-\[
-\|\delta_{\mu}/\mu\|_{\mu}\leq\frac{t'}{t}\sqrt{\frac{4}{3t}}\|xs-t\|_{2}+h\sqrt{\frac{5}{4}n}\leq\sqrt{\frac{t}{12}}+h\sqrt{\frac{5}{4}n}\leq0.38\sqrt{t}.
-\]
-
-\end_inset
-
-Hence, we have 
-\begin_inset Formula $\|x's'-t'\|_{2}\leq\|\delta_{\mu}/\mu\|_{\mu}^{2}\leq0.15t\leq t'/6$
-\end_inset
-
-.
- Furthermore, 
-\begin_inset Formula $\|\delta_{\mu}/\mu\|_{\mu}^{2}<\min_{i}\mu_{i}$
-\end_inset
-
- which implies 
-\begin_inset Formula $(x,s)$
-\end_inset
-
- is feasible (Lemma 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:step_size"
-
-\end_inset
-
-).
+ and this finishes the induction.
 \end_layout
 
 \begin_layout Proof
 Since 
-\begin_inset Formula $\mathtt{L2Step}$
+\begin_inset Formula $\mathtt{RobustStep}$
 \end_inset
 
  decreases 
@@ -3072,7 +3463,7 @@ Since
 \end_inset
 
  by 
-\begin_inset Formula $1-\Omega(n^{-1/2})$
+\begin_inset Formula $1-\Omega(n^{-1/2}/\lambda)$
 \end_inset
 
  factor each step and since we start with 
@@ -3083,139 +3474,61 @@ Since
 \begin_inset Formula $t\approx t_{\mathrm{end}}$
 \end_inset
 
-, the number of iterations is 
-\begin_inset Formula $O(\sqrt{n}\log(t_{\mathrm{start}}/t_{\mathrm{end}}))$
+, it takes 
+\begin_inset Formula $O(\sqrt{n}\log n\cdot\log(t_{\mathrm{start}}/t_{\mathrm{end}}))$
+\end_inset
+
+ iterations for 
+\begin_inset Formula $t$
+\end_inset
+
+ moves to 
+\begin_inset Formula $t_{\mathrm{end}}$
 \end_inset
 
 .
-\end_layout
+ Finally, if 
+\begin_inset Formula $\Phi(r)\geq8n$
+\end_inset
 
-\begin_layout Standard
-For the new algorithm, instead of solving the linear system 
+, 
 \begin_inset CommandInset ref
 LatexCommand eqref
-reference "eq:LP_newton_step_2"
+reference "eq:IPM_robust_decrease"
 plural "false"
 caps "false"
 noprefix "false"
 
 \end_inset
 
- exactly , we assume each step solves a nearby system with 
-\begin_inset Formula $\mx,\ms,$
+ shows that 
+\begin_inset Formula $\Phi$
 \end_inset
 
- and 
-\begin_inset Formula $\delta_{\mu}$
+ decreases by at least 
+\begin_inset Formula $\frac{\sqrt{n}}{40}$
 \end_inset
 
- replaced by 
-\begin_inset Formula $\omx,\oms,$
+ per steps.
+ Hence, it takes at most 
+\begin_inset Formula $O(\sqrt{n})$
 \end_inset
 
- and 
-\begin_inset Formula $\overline{\delta}_{\mu}$
+ extra iterations to decrease 
+\begin_inset Formula $\Phi$
 \end_inset
 
- with 
-\end_layout
-
-\begin_layout Standard
-The key observation is that the linear system we solve in each step barely
- changed.
- To 
-\end_layout
-
-\begin_layout Standard
-Since 1986, the number of steps remain roughly 
-\begin_inset Formula $\sqrt{n}$
+ back from 
+\begin_inset Formula $16n$
 \end_inset
 
- for the general case 
-\begin_inset Formula $n\approx d$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Recall that each step involves computing 
-\begin_inset Formula $\mproj(\delta_{\mu}/\mu)$
-\end_inset
-
-.
- When 
-\begin_inset Formula $\mu$
-\end_inset
-
- is 
-\end_layout
-
-\begin_layout Standard
-TODO:
-\end_layout
-
-\begin_layout Itemize
-Explain the idea
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-Explain we are doing the same step always.
-\end_layout
-
-\begin_layout Itemize
-Key observation is that we don't need to do the step at current point and
- we don't need to change the gradient.
-\end_layout
-
-\begin_layout Itemize
-Recall we have
-\begin_inset Formula 
-\[
-xs=\mu,
-\]
-
-\end_inset
-
-our step is
-\begin_inset Formula 
-\[
-\overline{x}\delta_{s}+\overline{s}\delta_{x}=\delta_{\mu}.
-\]
-
-\end_inset
-
-So, we have
-\begin_inset Formula 
-\begin{align*}
-\mu_{new} & =\mu+x\delta_{s}+s\delta_{x}+\delta_{s}\delta_{x}\\
- & =\mu_{target}+\epsilon_{x}\delta_{s}+\epsilon_{s}\delta_{x}.
-\end{align*}
-
-\end_inset
-
-Okay, we can make sure 
-\begin_inset Formula $\|\epsilon_{x,i}\|_{\infty}=o(1)$
+ to 
+\begin_inset Formula $8n$
 \end_inset
 
 .
 \end_layout
 
-\begin_layout Itemize
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Can I combine the potential of central path and the data structure?
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_deeper
 \begin_layout Subsection
 Inverse Maintenance
 \begin_inset CommandInset label
