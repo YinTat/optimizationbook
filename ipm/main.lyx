@@ -2516,7 +2516,7 @@ name "alg:RobustStep"
 Define
 \series default
  
-\begin_inset Formula $r=(xs-t)/r$
+\begin_inset Formula $r=(xs-t)/t$
 \end_inset
 
  and 
@@ -3538,6 +3538,10 @@ name "subsec:IPM_Inverse_Maintenance"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+....
 \end_layout
 
 \begin_layout Standard
