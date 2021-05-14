@@ -2322,7 +2322,7 @@ To improve the interior point method, one can either improve the number
 \begin_inset Formula $\widetilde{O}(\sqrt{n})$
 \end_inset
 
- or the cost of per step.
+ or the cost per step.
  In this note, we focus on the later question.
  Recall from 
 \begin_inset CommandInset ref
@@ -2360,7 +2360,7 @@ In each step,
  So, only few coordinates change a lot in each step.
  To take advantage of this, the robust interior point method contains two
  new components: 1) Analyze the convergence when we only solve the linear
- system approximation (Section 
+ system approximately (Section 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "subsec:IPM_cosh_step"
