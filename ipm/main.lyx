@@ -3519,8 +3519,100 @@ name "subsec:IPM_Inverse_Maintenance"
 \end_layout
 
 \begin_layout Standard
+Each step of robust interior point method involves solving the linear system
+ 
+\begin_inset Formula 
+\[
+\left(\begin{array}{ccc}
+\oms & \omx & \mzero\\
+\ma & \mzero & \mzero\\
+\mzero & \mi & \ma^{\top}
+\end{array}\right)\left(\begin{array}{c}
+\delta_{x}\\
+\delta_{s}\\
+\delta_{y}
+\end{array}\right)=\left(\begin{array}{c}
+\overline{\delta}_{\mu}\\
+0\\
+0
+\end{array}\right).
+\]
+
+\end_inset
+
+The key observation is that 
 \begin_inset Note Note
 status open
+
+\begin_layout Plain Layout
+I should think about if I can simply change them directly.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\mm_{x,s}x=\delta
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\mm_{x,s}\defeq\left(\begin{array}{ccc}
+\ms & \mx & \mzero\\
+\ma & \mzero & \mzero\\
+\mzero & \mi & \ma^{\top}
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align}
+xs+\ms\delta_{x}+\mx\delta_{s} & =\mu,\label{eq:LP_newton_step-1}\\
+\ma\delta_{x} & =0,\nonumber \\
+\ma^{\top}\delta_{y}+\delta_{s} & =0,\nonumber 
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Explain the update vector first?
+\end_layout
+
+\begin_layout Plain Layout
+—
+\end_layout
+
+\begin_layout Plain Layout
+It is a data structure support the following operation
+\end_layout
+
+\begin_layout Plain Layout
+1) Output a row.
+\end_layout
+
+\begin_layout Plain Layout
+2) Update an entry.
+\end_layout
+
+\begin_layout Plain Layout
+—
+\end_layout
 
 \begin_layout Plain Layout
 We cut the proof into two parts:
@@ -3550,6 +3642,26 @@ We cut the proof into two parts:
 \end_layout
 
 \begin_layout Plain Layout
+We only do changes with rank 
+\begin_inset Formula $\geq r$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+So, the vector is wrong for at most rank 
+\begin_inset Formula $r$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+—
+\end_layout
+
+\begin_layout Plain Layout
 > How to maintain matrix.
 \end_layout
 
@@ -3559,10 +3671,6 @@ We cut the proof into two parts:
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Plain Layout
-
 \end_layout
 
 \end_inset
