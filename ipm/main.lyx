@@ -264,12 +264,12 @@ This is probably easier to understand the
 \end_layout
 
 \begin_layout Title
-Tutorial on Robust Interior Point
+Tutorial on Robust Interior Point Method
 \end_layout
 
 \begin_layout Standard
-In this note, we give a short self-contained proof for interior point method
- and its robust version.
+We give a short, self-contained proof of the interior point method and its
+ robust version.
  Consider the primal linear program
 \begin_inset Formula 
 \begin{equation}
@@ -296,28 +296,27 @@ where
 
 .
  The feasible regions for the two programs are 
-\begin_inset Formula $\PriR=\{x\in\R_{\geq}^{n}:\ma x=b\}$
+\begin_inset Formula 
+\[
+\PriR=\{x\in\R_{\geq}^{n}:\ma x=b\}\mbox{ and }\DualR=\{s\in\R_{\geq}^{n}:\ma^{\top}y+s=c\text{ for some }y\}.
+\]
+
 \end_inset
 
- and 
-\begin_inset Formula $\DualR=\{s\in\R_{\geq}^{n}:\ma^{\top}y+s=c\text{ for some }y\}$
+We define their interiors: 
+\begin_inset Formula 
+\[
+\PriR^{\circ}=\{x\in\R_{>}^{n}:\ma x=b\}\mbox{ and \DualR^{\circ}=\{s\in\R_{>}^{n}:\ma^{\top}y+s=c\text{ for some }y\}.}
+\]
+
 \end_inset
 
-.
- We define their interior 
-\begin_inset Formula $\PriR^{\circ}=\{x\in\R_{>}^{n}:\ma x=b\}$
-\end_inset
 
- and 
-\begin_inset Formula $\DualR^{\circ}=\{s\in\R_{>}^{n}:\ma^{\top}y+s=c\text{ for some }y\}$
-\end_inset
-
-.
 \end_layout
 
 \begin_layout Standard
-To motivate interior point methods, we recall the optimality condition for
- linear programs:
+To motivate the main idea of the interior point method, we recall the optimality
+ condition for linear programs.
 \end_layout
 
 \begin_layout Theorem
@@ -337,7 +336,7 @@ name "thm:comp_slackness"
 
 \end_inset
 
-For any 
+Any 
 \begin_inset Formula $x\in\PriR$
 \end_inset
 
@@ -345,20 +344,12 @@ For any
 \begin_inset Formula $s\in\DualR$
 \end_inset
 
-, 
-\begin_inset Formula $x$
-\end_inset
-
- and 
-\begin_inset Formula $s$
-\end_inset
-
  are optimal if and only if 
 \begin_inset Formula $x^{\top}s=0$
 \end_inset
 
 .
- Furthermore, if both 
+ Moreover, if both 
 \begin_inset Formula $\PriR$
 \end_inset
 
@@ -366,7 +357,7 @@ For any
 \begin_inset Formula $\DualR$
 \end_inset
 
- are non-empty, there are optimal 
+ are non-empty, there exist 
 \begin_inset Formula $x^{*}\in\PriR$
 \end_inset
 
@@ -598,8 +589,58 @@ Interior Point Method
 \end_layout
 
 \begin_layout Standard
-In this note, we discuss the short-step interior point method.
- The algorithm maintains a pair 
+In this section, we discuss the classical short-step interior point method.
+\end_layout
+
+\begin_layout Definition
+\begin_inset CommandInset label
+LatexCommand label
+name "def:central_path"
+
+\end_inset
+
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Central Path
+\end_layout
+
+\end_inset
+
+We define the central path 
+\begin_inset Formula $(x_{t},s_{t})\in\PriR^{\circ}\times\DualR^{\circ}$
+\end_inset
+
+ by 
+\begin_inset Formula $x_{t}s_{t}=t$
+\end_inset
+
+.
+ We say 
+\begin_inset Formula $x_{t}$
+\end_inset
+
+ is on the central path of 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:tut_primal_LP"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ at 
+\begin_inset Formula $t$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The algorithm maintains a pair 
 \begin_inset Formula $(x,s)\in\PriR^{\circ}\times\DualR^{\circ}$
 \end_inset
 
@@ -612,7 +653,12 @@ In this note, we discuss the short-step interior point method.
 \end_inset
 
 .
- Each step, it decreases 
+ Note that the deviation from the central path is measured in 
+\begin_inset Formula $\ell_{2}$
+\end_inset
+
+ norm.
+ In each step, it decreases 
 \begin_inset Formula $t$
 \end_inset
 
@@ -632,7 +678,7 @@ To see why there is a pair
 \begin_inset Formula $(x,s)\in\PriR^{\circ}\times\DualR^{\circ}$
 \end_inset
 
- satisfying the invariant, we prove the following generalization:
+ satisfying the invariant, we prove the following generalization.
 \end_layout
 
 \begin_layout Lemma
@@ -741,8 +787,18 @@ Fix
 \end_layout
 
 \begin_layout Proof
-By the optimality condition for 
+By the K-T optimality condition for 
 \begin_inset Formula $f_{\mu}$
+\end_inset
+
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+State or refer to the condition
+\end_layout
+
 \end_inset
 
 , there is a vector 
@@ -822,16 +878,16 @@ reference "lem:primal_dual_representation"
 \begin_inset Formula $\mu$
 \end_inset
 
- uniform to 
+ uniformly to 
 \begin_inset Formula $0$
 \end_inset
 
- while maintaining its corresponding 
+ while maintaining the corresponding 
 \begin_inset Formula $x_{\mu}$
 \end_inset
 
 .
- Now, we discuss how to find 
+ Now we discuss how to find 
 \begin_inset Formula $(x_{\mu},s_{\mu})$
 \end_inset
 
@@ -840,7 +896,7 @@ reference "lem:primal_dual_representation"
 \end_inset
 
 .
- Namely, how to move 
+ Namely, how can we move 
 \begin_inset Formula $(x,s)$
 \end_inset
 
@@ -868,12 +924,11 @@ Although the equation above involves
 \end_inset
 
 .
- By ignoring the second order term 
+ By ignoring the inequality constraint and the second-order term 
 \begin_inset Formula $\delta_{x}\delta_{s}$
 \end_inset
 
- on the equation above and the inequality constraint, we can simplify the
- formula a little bit by using 
+ in the first equation above, and using 
 \begin_inset Formula $\ma x=0$
 \end_inset
 
@@ -881,7 +936,7 @@ Although the equation above involves
 \begin_inset Formula $\ma^{\top}y+s=c$
 \end_inset
 
-:
+ we can simplify the system:
 \begin_inset Formula 
 \begin{align}
 xs+\ms\delta_{x}+\mx\delta_{s} & =\mu,\label{eq:LP_newton_step}\\
@@ -909,7 +964,11 @@ where
 
 .
  In the following Lemma, we show how to write the step above using a projection
- matrix.
+ matrix (
+\begin_inset Formula $P^{2}=P$
+\end_inset
+
+).
 \end_layout
 
 \begin_layout Lemma
@@ -1040,9 +1099,9 @@ Lower Bounding Step Size
 \end_layout
 
 \begin_layout Standard
-The efficiency of interior point methods depends on how large the step we
- can take while stays within the domain.
- We first study the step operator 
+The efficiency of interior point methods depends on how large a step we
+ can take while staying within the domain.
+ We first study the step operators 
 \begin_inset Formula $(\mi-\mproj)$
 \end_inset
 
@@ -1051,15 +1110,15 @@ The efficiency of interior point methods depends on how large the step we
 \end_inset
 
 .
- The following Lemma shows that 
+ The following lemma implies that 
 \begin_inset Formula $\mproj$
 \end_inset
 
- is a nearly-orthogonal projection matrix when 
+ is a nearly orthogonal projection matrix when 
 \begin_inset Formula $\mu$
 \end_inset
 
- is close to a constant vector.
+ is close to a multiple of the all-ones vector.
  Hence, the relative changes of 
 \begin_inset Formula $\mx^{-1}\delta_{x}$
 \end_inset
@@ -1148,7 +1207,7 @@ The calculation for
 \end_layout
 
 \begin_layout Standard
-Now, we give a lower bound of the largest feasible step size:
+Next we give a lower bound on the largest feasible step size.
 \end_layout
 
 \begin_layout Lemma
@@ -1253,63 +1312,15 @@ h=\sqrt{\frac{\min_{i}\mu_{i}}{\sum_{i}\mu_{i}}}.\label{eq:max_h_formula}
 
 \end_inset
 
-Note that the above quantity maximizes at 
-\begin_inset Formula $n^{-1/2}$
+Note that the above quantity is maximized at 
+\begin_inset Formula $h=n^{-1/2}$
 \end_inset
 
  when 
 \begin_inset Formula $\mu$
 \end_inset
 
- is a constant vector.
- 
-\end_layout
-
-\begin_layout Definition
-\begin_inset CommandInset label
-LatexCommand label
-name "def:central_path"
-
-\end_inset
-
-
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-Central Path
-\end_layout
-
-\end_inset
-
-We define the central path 
-\begin_inset Formula $(x_{t},s_{t})\in\PriR^{\circ}\times\DualR^{\circ}$
-\end_inset
-
- by 
-\begin_inset Formula $x_{t}s_{t}=t$
-\end_inset
-
-.
- We call 
-\begin_inset Formula $x_{t}$
-\end_inset
-
- is on the central path of 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:tut_primal_LP"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- at 
-\begin_inset Formula $t$
-\end_inset
-
-.
+ has all equal coordinates.
 \end_layout
 
 \begin_layout Subsection
@@ -1586,6 +1597,7 @@ Note that the algorithm requires some initial point
 
  close to the central path and we will show how to get it by changing the
  cost vector temporarily.
+ This is why the first step of the algorithm is different.
 \end_layout
 
 \begin_layout Theorem
@@ -1643,6 +1655,18 @@ noprefix "false"
 \end_inset
 
 ).
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Should we break this into a lemma and a theorem? lemma for maintaining the
+ invariant in one step when t is reduced, and theorem just to conclude the
+ number of iterations.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Proof
@@ -1718,7 +1742,7 @@ reference "lem:Projection_property"
 \end_layout
 
 \begin_layout Proof
-For the last term, using 
+Using 
 \begin_inset Formula $t'-\mu=\frac{t'}{t}(t-\mu)+(\frac{t'}{t}-1)\mu$
 \end_inset
 
@@ -1745,13 +1769,13 @@ Since
 
 .
  Using 
-\begin_inset Formula $|\frac{t'}{t}-1|\leq h=\sqrt{n}/16$
+\begin_inset Formula $|\frac{t'}{t}-1|\leq h=\frac{16}{\sqrt{n}}$
 \end_inset
 
 , we have
 \begin_inset Formula 
 \[
-\|\delta_{\mu}/\mu\|_{\mu}\leq\frac{t'}{t}\sqrt{\frac{4}{3t}}\|xs-t\|_{2}+h\sqrt{\frac{5}{4}n}\leq\sqrt{\frac{t}{12}}+h\sqrt{\frac{5}{4}n}\leq0.38\sqrt{t}.
+\|\delta_{\mu}/\mu\|_{\mu}\leq\frac{t'}{t}\sqrt{\frac{4}{3t}}\|xs-t\|_{2}+h\sqrt{\frac{5}{4}t}\leq\sqrt{\frac{t}{12}}+h\sqrt{\frac{5}{4}t}\leq0.38\sqrt{t}.
 \]
 
 \end_inset
@@ -1796,7 +1820,7 @@ Since
 \begin_inset Formula $t=t_{\mathrm{start}}$
 \end_inset
 
- and ends with 
+ and end with 
 \begin_inset Formula $t\approx t_{\mathrm{end}}$
 \end_inset
 
@@ -1812,8 +1836,8 @@ Solving LP Approximately and Exactly
 \end_layout
 
 \begin_layout Standard
-The runtime of interior point method depends on how degenerate is the linear
- program:
+The runtime of interior point method depends on how degenerate the linear
+ program is.
 \end_layout
 
 \begin_layout Definition
@@ -1836,7 +1860,7 @@ Inner radius
 \begin_inset Formula $r$
 \end_inset
 
-: There is an 
+: There exists an 
 \begin_inset Formula $x\geq r$
 \end_inset
 
@@ -1845,6 +1869,20 @@ Inner radius
 \end_inset
 
 .
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+What does 
+\begin_inset Formula $x\ge r$
+\end_inset
+
+ mean?
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Enumerate
@@ -1877,7 +1915,6 @@ Lipschitz constant
 \end_inset
 
 .
- 
 \end_layout
 
 \end_deeper
@@ -1887,7 +1924,7 @@ Since
 \end_inset
 
  requires an explicit central path, we modify the linear program to make
- it happens.
+ it happen.
  To satisfy the constraint 
 \begin_inset Formula $\ma x=b$
 \end_inset
@@ -1918,8 +1955,8 @@ Since
 \end_inset
 
  and hence this gives a good starting point of the original program.
- Since the proof is a bit complicated and not interested, we defer both
- the proof and the algorithm in Appendix 
+ Since the proof is a bit complicated and not illuminating, we defer both
+ the proof and the algorithm to Appendix 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:IPM_interior"
@@ -2125,7 +2162,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Theorem
-Finally, if we assume that the solution 
+If we further assume that the solution 
 \begin_inset Formula $x^{*}=\arg\min_{\ma x=b,x\geq0}c^{\top}x$
 \end_inset
 
@@ -2141,7 +2178,7 @@ Finally, if we assume that the solution
 \begin_inset Formula $\{\ma x=b,x\geq0\}$
 \end_inset
 
-, then, we have that 
+, then we have that 
 \begin_inset Formula $\|x-x^{*}\|_{2}\leq\frac{2\epsilon R}{\eta}$
 \end_inset
 
@@ -2204,7 +2241,7 @@ c^{\top}x\leq\min_{\ma x=b,x\geq0}c^{\top}x+x^{\top}s\leq\min_{\ma x=b,x\geq0}c^
 
 \end_inset
 
-For the runtime, 
+For the runtime, finding the initial point with 
 \begin_inset Formula $\mathtt{L2Center}$
 \end_inset
 
@@ -2212,7 +2249,7 @@ For the runtime,
 \begin_inset Formula $O(\sqrt{n}\log(nR/r))$
 \end_inset
 
- Newton steps and 
+ Newton steps and the iteration 
 \begin_inset Formula $\mathtt{L2Step}(\ma,x,s,t,t_{\mathrm{end}})$
 \end_inset
 
@@ -2271,8 +2308,9 @@ For the last conclusion, we assume
 \end_layout
 
 \begin_layout Standard
-If we know the solution of the linear program is integral, then getting
- a solution close enough to 
+If we know the solution of the linear program is integral or rational with
+ some bound on the number of bits, then getting a solution close enough
+ to 
 \begin_inset Formula $x^{*}$
 \end_inset
 
@@ -2284,7 +2322,15 @@ If we know the solution of the linear program is integral, then getting
 
  are integral and bounded.
  The uniqueness assumption can be achieved by perturbing the cost vector
- by a random vector via isolation lemma 
+ by a random vector (e.g., using the 
+\begin_inset Quotes eld
+\end_inset
+
+isolation
+\begin_inset Quotes erd
+\end_inset
+
+ lemma 
 \begin_inset CommandInset citation
 LatexCommand cite
 after "Lemma 4"
@@ -2293,7 +2339,7 @@ literal "false"
 
 \end_inset
 
-.
+).
  
 \begin_inset Note Note
 status open
