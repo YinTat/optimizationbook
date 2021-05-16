@@ -2975,16 +2975,8 @@ noprefix "false"
 \begin_inset Formula $\|\delta_{x}/x\|_{2}\leq\frac{1}{16\lambda}$
 \end_inset
 
-, 
+ and 
 \begin_inset Formula $\|\delta_{s}/s\|_{2}\leq\frac{1}{16\lambda}$
-\end_inset
-
-, and 
-\begin_inset Formula $\|r'-r\|_{\infty}\leq\frac{1}{6\lambda}$
-\end_inset
-
- where 
-\begin_inset Formula $r'=((x+\delta_{x})(s+\delta_{s})-t')/t'$
 \end_inset
 
 .
@@ -3100,43 +3092,6 @@ Same proof gives
 .
 \end_layout
 
-\begin_layout Proof
-Finally, we have
-\begin_inset Formula 
-\begin{align*}
-r'-r & =\frac{(x+\delta_{x})(s+\delta_{s})}{t'}-\frac{xs}{t}\\
- & =(\frac{t}{t'}-1)\frac{xs}{t}+\frac{xs}{t'}(\delta_{x}/x+\delta_{s}/s+(\delta_{x}/x)(\delta_{s}/s)).
-\end{align*}
-
-\end_inset
-
-Using 
-\begin_inset Formula $|\frac{t'-t}{t}|\leq\frac{1}{48\lambda\sqrt{n}},$
-\end_inset
-
-
-\begin_inset Formula $\|xs-t\|_{\infty}\leq\frac{t}{16}$
-\end_inset
-
-, 
-\begin_inset Formula $\|\delta_{x}/x\|_{2}\leq\frac{1}{16\lambda}$
-\end_inset
-
-, 
-\begin_inset Formula $\|\delta_{s}/s\|_{2}\leq\frac{1}{16\lambda}$
-\end_inset
-
-, we have
-\begin_inset Formula 
-\begin{align*}
-\|r'-r\|_{\infty} & \leq\frac{1}{48\lambda}\frac{17}{16}+\frac{17}{16}\frac{49}{48}(\frac{1}{16\lambda}+\frac{1}{16\lambda}+\frac{1}{16\lambda}\frac{1}{16\lambda})\leq\frac{1}{6\lambda}.
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Standard
 Now, we are already to prove the main theorem.
 \end_layout
@@ -3202,7 +3157,15 @@ noprefix "false"
 
 \end_inset
 
-).
+) and during the algorithm, we have 
+\begin_inset Formula $\|r'-r\|_{2}\leq\frac{1}{16\lambda}$
+\end_inset
+
+ where 
+\begin_inset Formula $r'=((x+\delta_{x})(s+\delta_{s})-t')/t'$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Proof
@@ -3238,32 +3201,7 @@ First, we prove the invariant
 \end_layout
 
 \begin_layout Proof
-If 
-\begin_inset Formula $\Phi(r)\leq8n$
-\end_inset
-
-, we simply use the fact that 
-\begin_inset Formula $\|r-r'\|_{\infty}\leq\frac{1}{16\lambda}$
-\end_inset
-
- (Lemma 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:RobustIPM_basic"
-
-\end_inset
-
-) and hence 
-\begin_inset Formula $\Phi(r')\leq2\Phi(r)\leq16n$
-\end_inset
-
-.
- Hence, we only need to prove for the case 
-\begin_inset Formula $\Phi(r)\geq8n$
-\end_inset
-
-.
- By the definition of 
+By the definition of 
 \begin_inset Formula $\delta_{x}$
 \end_inset
 
@@ -3349,6 +3287,67 @@ reference "lem:RobustIPM_basic"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Proof
+In particular, we use 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:IPM_robust_r_diff"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:robust_IPM_eta"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and get
+\begin_inset Formula 
+\[
+\|r-r'\|_{2}\leq\frac{1}{32\lambda}+\|\eta\|_{2}\leq\frac{1}{16\lambda}.
+\]
+
+\end_inset
+
+This proves the conclusion about 
+\begin_inset Formula $r$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+If 
+\begin_inset Formula $\Phi(r)\leq8n$
+\end_inset
+
+, the definition of 
+\begin_inset Formula $\Phi$
+\end_inset
+
+ together with the fact 
+\begin_inset Formula $\|r-r'\|_{2}\leq\frac{1}{16\lambda}$
+\end_inset
+
+ implies that 
+\begin_inset Formula $\Phi(r')\leq2\Phi(r)\leq16n$
+\end_inset
+
+.
+ Hence, we only need to prove for the case 
+\begin_inset Formula $\Phi(r)\geq8n$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Proof
@@ -3587,7 +3586,74 @@ name "subsec:IPM_Inverse_Maintenance"
 \end_layout
 
 \begin_layout Standard
+<<<<<<< Updated upstream
 ....
+=======
+TODO:
+\end_layout
+
+\begin_layout Itemize
+Lemma 1: the number of rank 
+\begin_inset Formula $2^{t}$
+\end_inset
+
+ changes is at most 
+\begin_inset Formula $\cdots$
+\end_inset
+
+.
+ Use 
+\begin_inset Formula $\log$
+\end_inset
+
+ scale for 
+\begin_inset Formula $x$
+\end_inset
+
+ and use regular scale for 
+\begin_inset Formula $r$
+\end_inset
+
+.
+ Then, both is same lemma.
+\end_layout
+
+\begin_layout Itemize
+Lemma 2:
+\end_layout
+
+\begin_layout Itemize
+Write down the fact about updating matrix
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $N=\left[\begin{array}{cc}
+\mm & v\\
+0_{n}^{\top} & -1
+\end{array}\right]$
+\end_inset
+
+, 
+\begin_inset Formula $N^{-1}=\left[\begin{array}{cc}
+\mm^{-1} & M^{-1}v\\
+0_{n}^{\top} & -1
+\end{array}\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The number of rank 
+\begin_inset Formula $2^{t}$
+\end_inset
+
+ changes is at most 
+\begin_inset Formula $\cdots$
+\end_inset
+
+.
+>>>>>>> Stashed changes
 \end_layout
 
 \begin_layout Standard
