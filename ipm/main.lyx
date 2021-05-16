@@ -238,31 +238,6 @@ theorems-ams-extended
  
 \end_layout
 
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-In fact, maybe the best algorithm simply use
-\begin_inset Formula 
-\[
-\|xs-t\|_{p}^{p}?
-\]
-
-\end_inset
-
-This is probably easier to understand the 
-\begin_inset Formula $\cosh$
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Title
 Tutorial on Robust Interior Point Method
 \end_layout
@@ -481,7 +456,7 @@ reference "lem:duality_gap"
 
 \begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 On top of this, interior point methods use that we can update the feasible
@@ -547,38 +522,6 @@ In this note, we discuss the robust interior point method that shows one
  the linear system instead of computing from scratch.
 \end_layout
 
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-TODO:
-\end_layout
-
-\begin_layout Itemize
-Write the reduction
-\end_layout
-
-\begin_layout Itemize
-Write the robust part
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-Check if two sided barrier is important.
- Or we just need 
-\begin_inset Formula $x_{i}s_{i}\geq t$
-\end_inset
-
-.
-\end_layout
-
-\end_deeper
 \end_inset
 
 
@@ -787,7 +730,7 @@ Fix
 \end_layout
 
 \begin_layout Proof
-By the K-T optimality condition for 
+By the KKT optimality condition for 
 \begin_inset Formula $f_{\mu}$
 \end_inset
 
@@ -896,7 +839,7 @@ reference "lem:primal_dual_representation"
 \end_inset
 
 .
- Namely, how can we move 
+ Namely, how to move 
 \begin_inset Formula $(x,s)$
 \end_inset
 
@@ -1860,29 +1803,19 @@ Inner radius
 \begin_inset Formula $r$
 \end_inset
 
-: There exists an 
-\begin_inset Formula $x\geq r$
+: There exists a 
+\begin_inset Formula $x\in\PriR$
 \end_inset
 
- with 
-\begin_inset Formula $\ma x=b$
+ such that 
+\begin_inset Formula $x_{i}\geq r$
+\end_inset
+
+ for all 
+\begin_inset Formula $i$
 \end_inset
 
 .
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-What does 
-\begin_inset Formula $x\ge r$
-\end_inset
-
- mean?
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Enumerate
@@ -2438,16 +2371,6 @@ name "subsec:IPM_cosh_step"
 \end_inset
 
 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Seems using cosh is better...there is cosh identity.
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -2975,16 +2898,8 @@ noprefix "false"
 \begin_inset Formula $\|\delta_{x}/x\|_{2}\leq\frac{1}{16\lambda}$
 \end_inset
 
-, 
-\begin_inset Formula $\|\delta_{s}/s\|_{2}\leq\frac{1}{16\lambda}$
-\end_inset
-
 , and 
-\begin_inset Formula $\|r'-r\|_{\infty}\leq\frac{1}{6\lambda}$
-\end_inset
-
- where 
-\begin_inset Formula $r'=((x+\delta_{x})(s+\delta_{s})-t')/t'$
+\begin_inset Formula $\|\delta_{s}/s\|_{2}\leq\frac{1}{16\lambda}$
 \end_inset
 
 .
@@ -3100,43 +3015,6 @@ Same proof gives
 .
 \end_layout
 
-\begin_layout Proof
-Finally, we have
-\begin_inset Formula 
-\begin{align*}
-r'-r & =\frac{(x+\delta_{x})(s+\delta_{s})}{t'}-\frac{xs}{t}\\
- & =(\frac{t}{t'}-1)\frac{xs}{t}+\frac{xs}{t'}(\delta_{x}/x+\delta_{s}/s+(\delta_{x}/x)(\delta_{s}/s)).
-\end{align*}
-
-\end_inset
-
-Using 
-\begin_inset Formula $|\frac{t'-t}{t}|\leq\frac{1}{48\lambda\sqrt{n}},$
-\end_inset
-
-
-\begin_inset Formula $\|xs-t\|_{\infty}\leq\frac{t}{16}$
-\end_inset
-
-, 
-\begin_inset Formula $\|\delta_{x}/x\|_{2}\leq\frac{1}{16\lambda}$
-\end_inset
-
-, 
-\begin_inset Formula $\|\delta_{s}/s\|_{2}\leq\frac{1}{16\lambda}$
-\end_inset
-
-, we have
-\begin_inset Formula 
-\begin{align*}
-\|r'-r\|_{\infty} & \leq\frac{1}{48\lambda}\frac{17}{16}+\frac{17}{16}\frac{49}{48}(\frac{1}{16\lambda}+\frac{1}{16\lambda}+\frac{1}{16\lambda}\frac{1}{16\lambda})\leq\frac{1}{6\lambda}.
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Standard
 Now, we are already to prove the main theorem.
 \end_layout
@@ -3202,7 +3080,25 @@ noprefix "false"
 
 \end_inset
 
-).
+) and that each step satisfies 
+\begin_inset Formula $\|r'-r\|_{2}\leq\frac{1}{16\lambda}$
+\end_inset
+
+ where 
+\begin_inset Formula $r'=((x+\delta_{x})(s+\delta_{s})-t')/t'$
+\end_inset
+
+.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Probably also break it into two.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Proof
@@ -3238,32 +3134,7 @@ First, we prove the invariant
 \end_layout
 
 \begin_layout Proof
-If 
-\begin_inset Formula $\Phi(r)\leq8n$
-\end_inset
-
-, we simply use the fact that 
-\begin_inset Formula $\|r-r'\|_{\infty}\leq\frac{1}{16\lambda}$
-\end_inset
-
- (Lemma 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:RobustIPM_basic"
-
-\end_inset
-
-) and hence 
-\begin_inset Formula $\Phi(r')\leq2\Phi(r)\leq16n$
-\end_inset
-
-.
- Hence, we only need to prove for the case 
-\begin_inset Formula $\Phi(r)\geq8n$
-\end_inset
-
-.
- By the definition of 
+By the definition of 
 \begin_inset Formula $\delta_{x}$
 \end_inset
 
@@ -3349,6 +3220,67 @@ reference "lem:RobustIPM_basic"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Proof
+In particular, we use 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:IPM_robust_r_diff"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:robust_IPM_eta"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ to get
+\begin_inset Formula 
+\[
+\|r-r'\|_{2}\leq\frac{1}{32\lambda}+\|\eta\|_{2}\leq\frac{1}{16\lambda}.
+\]
+
+\end_inset
+
+This proves the conclusion about 
+\begin_inset Formula $r$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+If 
+\begin_inset Formula $\Phi(r)\leq8n$
+\end_inset
+
+, the definition of 
+\begin_inset Formula $\Phi$
+\end_inset
+
+ together with the fact 
+\begin_inset Formula $\|r-r'\|_{2}\leq\frac{1}{16\lambda}$
+\end_inset
+
+ implies that 
+\begin_inset Formula $\Phi(r')\leq2\Phi(r)\leq16n$
+\end_inset
+
+.
+ Hence, we only need to prove for the case 
+\begin_inset Formula $\Phi(r)\geq8n$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Proof
@@ -3587,7 +3519,55 @@ name "subsec:IPM_Inverse_Maintenance"
 \end_layout
 
 \begin_layout Standard
-....
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+We cut the proof into two parts:
+\end_layout
+
+\begin_layout Plain Layout
+> One is about how to update vector with delay.
+ (Number of 
+\begin_inset Formula $2^{t}$
+\end_inset
+
+ changes is 
+\begin_inset Formula $\leq\cdots$
+\end_inset
+
+).
+ Log 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $r$
+\end_inset
+
+.
+ So, both is the same algorithm.
+\end_layout
+
+\begin_layout Plain Layout
+> How to maintain matrix.
+\end_layout
+
+\begin_layout Plain Layout
+> 
+\begin_inset Formula $[M\ v;0_{n}\ -1]^{-1}=[M^{-1}\ M^{-1}v;0_{n}\ -1]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
