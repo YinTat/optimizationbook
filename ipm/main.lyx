@@ -2451,7 +2451,15 @@ Seems using cosh is better...there is cosh identity.
 \end_layout
 
 \begin_layout Standard
-To make the interior point method robust against the noise in 
+In the above description and analysis, we assumed that we computed each
+ step of the interior point method precisely.
+ But one can imagine that it suffices to compute steps approximately, since
+ our goal is only to stay close to the central path.
+ This could have significant computational advantages.
+\end_layout
+
+\begin_layout Standard
+To make the interior point method robust to noise in the updates to 
 \begin_inset Formula $x$
 \end_inset
 
@@ -2459,18 +2467,18 @@ To make the interior point method robust against the noise in
 \begin_inset Formula $s$
 \end_inset
 
-, we need the interior point method works under a larger neighborhood than
- 
+, we need the interior point method to work under a larger neighborhood
+ than that given by the Euclidean norm (
 \begin_inset Formula $\|xs-t\|_{2}\leq\frac{t}{4}$
 \end_inset
 
-.
- One natural choice of distance and potential would be 
+).
+ One natural choice of distance and potential would be a higher norm, 
 \begin_inset Formula $\|xs-t\|_{q}^{q}$
 \end_inset
 
 .
- However, the step 
+ However, analyzing the step 
 \begin_inset Formula $\delta_{\mu}$
 \end_inset
 
@@ -2482,21 +2490,17 @@ To make the interior point method robust against the noise in
  Instead, we pick the potential
 \begin_inset Formula 
 \begin{equation}
-\Phi(v)=\sum_{i=1}^{n}\cosh(\lambda v_{i}).\label{eq:Phi_potential}
+\Phi(v)=\sum_{i=1}^{n}\cosh(\lambda v_{i})=\sum_{i=1}^{n}\frac{(e^{\lambda v_{i}}+e^{-\lambda v_{i}})}{2}.\label{eq:Phi_potential}
 \end{equation}
 
 \end_inset
 
-for some scalar 
+for a scalar 
 \begin_inset Formula $\lambda>0$
 \end_inset
 
- where 
-\begin_inset Formula $\cosh(v)=(e^{v}+e^{-v})/2$
-\end_inset
-
 .
- This potential induces the following algorithm:
+ This potential induces the following algorithm.
 \end_layout
 
 \begin_layout Standard
@@ -2823,7 +2827,7 @@ noprefix "false"
 \end_inset
 
 .
- Furthermore, if 
+ Moreover, if 
 \begin_inset Formula $\Phi(v)\geq4n$
 \end_inset
 
@@ -2843,7 +2847,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Proof
-For the first result: we have 
+We have 
 \begin_inset Formula $\Phi(v)\geq\frac{1}{2}\min_{i}e^{\lambda|v_{i}|}$
 \end_inset
 
@@ -2856,7 +2860,7 @@ For the first result: we have
 \end_layout
 
 \begin_layout Proof
-For the second result: we have
+For the second claim, we have
 \begin_inset Formula 
 \begin{align*}
 \|\nabla\Phi(v)\|_{2} & =\lambda\sqrt{\sum_{i=1}^{n}\sinh^{2}(\lambda v_{i})}=\lambda\sqrt{\sum_{i=1}^{n}(\cosh^{2}(\lambda v_{i})-1)}\\
@@ -2870,7 +2874,7 @@ For the second result: we have
 \end_layout
 
 \begin_layout Proof
-For the last result, using 
+For the last claim, using 
 \begin_inset Formula $\sinh(v+\delta)=\sinh v\cosh\delta+\cosh v\sinh\delta$
 \end_inset
 
@@ -3138,7 +3142,7 @@ Using
 \end_layout
 
 \begin_layout Standard
-Now, we are already to prove the main theorem.
+Now, we are ready to prove the main theorem.
 \end_layout
 
 \begin_layout Theorem
@@ -3184,7 +3188,7 @@ noprefix "false"
 \end_inset
 
 .
- Furthermore, 
+ Moreover, 
 \begin_inset Formula $\mathtt{RobustStep}$
 \end_inset
 
@@ -3254,11 +3258,14 @@ reference "lem:RobustIPM_basic"
 \end_inset
 
 ) and hence 
-\begin_inset Formula $\Phi(r')\leq2\Phi(r)\leq16n$
+\begin_inset Formula 
+\[
+\Phi(r')\le\Phi(r)e^{\lambda\|r-r'\|_{\infty}|}\leq2\Phi(r)\leq16n.
+\]
+
 \end_inset
 
-.
- Hence, we only need to prove for the case 
+Hence, we only need to consider the case 
 \begin_inset Formula $\Phi(r)\geq8n$
 \end_inset
 
@@ -3283,8 +3290,8 @@ and hence
 \begin_inset Formula 
 \begin{align}
 \frac{x's'-t'}{t'}= & \frac{(x+\delta_{x})(s+\delta_{s})-t'}{t'}\nonumber \\
-= & \frac{xs+\ms\delta_{x}+\mx\delta_{s}+\delta_{x}\delta_{s}-t'}{t'}\nonumber \\
-= & \frac{xs-t'+\oms\delta_{x}+\omx\delta_{s}+(s-\os)\delta_{x}+(x-\ox)\delta_{s}+\delta_{x}\delta_{s}}{t'}\nonumber \\
+= & \frac{xs+s\delta+x\delta_{s}+\delta_{x}\delta_{s}-t'}{t'}\nonumber \\
+= & \frac{xs-t'+s\delta_{x}+x\delta_{s}+(s-\os)\delta_{x}+(x-\ox)\delta_{s}+\delta_{x}\delta_{s}}{t'}\nonumber \\
 = & \frac{xs-t}{t}-\frac{1}{32\lambda}\cdot\frac{\overline{g}}{\|\overline{g}\|_{2}}+\eta\label{eq:IPM_robust_r_diff}
 \end{align}
 
@@ -3395,7 +3402,7 @@ reference "lem:RobustIPM_basic"
 \begin_inset Formula $\|r-r'\|_{\infty}\leq\frac{1}{6\lambda}$
 \end_inset
 
- and 
+ and by assumption, 
 \begin_inset Formula $\|\overline{r}-r\|_{\infty}\leq\frac{1}{48\lambda}$
 \end_inset
 
@@ -3487,12 +3494,13 @@ reference "lem:robust_IPM_Phi"
  Hence, we have
 \begin_inset Formula 
 \begin{equation}
-\Phi(r')\leq\Phi(r)-\frac{\sqrt{n}}{40}\leq16n.\label{eq:IPM_robust_decrease}
+\Phi(r')\leq\Phi(r)-\frac{\sqrt{n}}{40}<16n.\label{eq:IPM_robust_decrease}
 \end{equation}
 
 \end_inset
 
-So, in both cases, we have that 
+The potential actually decreases in this case.
+ So, in both cases, we have that 
 \begin_inset Formula $\Phi(r')\leq16n$
 \end_inset
 
