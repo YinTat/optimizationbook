@@ -2139,7 +2139,7 @@ If we further assume that the solution
 By Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "thm:IPM_l2_center"
+reference "thm:IPM_center"
 
 \end_inset
 
@@ -3045,6 +3045,12 @@ Now, we are already to prove the main theorem.
 \end_layout
 
 \begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:RobustStep"
+
+\end_inset
+
 Suppose that the input satisfies 
 \begin_inset Formula $(x,s)\in\PriR^{\circ}\times\DualR^{\circ}$
 \end_inset
@@ -3462,7 +3468,7 @@ noprefix "false"
 \end_inset
 
  such that 
-\begin_inset Formula $\Phi((xs-t_{\mathrm{end}})/t_{\mathrm{end}})\leq8n$
+\begin_inset Formula $\Phi((xs-t_{\mathrm{end}})/t_{\mathrm{end}})\leq12n$
 \end_inset
 
 .
@@ -3490,6 +3496,17 @@ noprefix "false"
 
  where 
 \begin_inset Formula $r'=((x+\delta_{x})(s+\delta_{s})-t')/t'$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+The guarantee of the output follows from Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:RobustStep"
+
 \end_inset
 
 .
@@ -3530,7 +3547,7 @@ Since
 
 .
  Finally, if 
-\begin_inset Formula $\Phi(r)\geq8n$
+\begin_inset Formula $\Phi(r)\geq12n$
 \end_inset
 
 , 
@@ -3565,7 +3582,7 @@ noprefix "false"
 \end_inset
 
  to 
-\begin_inset Formula $8n$
+\begin_inset Formula $12n$
 \end_inset
 
 .
@@ -3853,7 +3870,7 @@ Due to technical reasons, we need to put an extra constraint
  See Algorithm 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "alg:L2Center"
+reference "alg:LPCenter"
 
 \end_inset
 
@@ -3891,7 +3908,7 @@ caption{
 \end_inset
 
 
-\begin_inset Formula $\mathtt{L2Center}(\ma,b,c)$
+\begin_inset Formula $\mathtt{LPCenter}(\ma,b,c)$
 \end_inset
 
 
@@ -3911,7 +3928,7 @@ status open
 \begin_layout Standard
 \begin_inset CommandInset label
 LatexCommand label
-name "alg:L2Center"
+name "alg:LPCenter"
 
 \end_inset
 
@@ -4156,7 +4173,7 @@ First, we show that
 \end_inset
 
  defined in 
-\begin_inset Formula $\mathtt{L2Center}$
+\begin_inset Formula $\mathtt{LPCenter}$
 \end_inset
 
  is indeed on the central path of the modified linear program.
@@ -4178,13 +4195,13 @@ Let
 \end_inset
 
  be the linear program and the initial point defined in 
-\begin_inset Formula $\mathtt{L2Center}$
+\begin_inset Formula $\mathtt{LPCenter}$
 \end_inset
 
  (Algorithm 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "alg:L2Center"
+reference "alg:LPCenter"
 
 \end_inset
 
@@ -4406,7 +4423,7 @@ Next, we show that the central path point
 \end_inset
 
  found in 
-\begin_inset Formula $\mathtt{L2Center}$
+\begin_inset Formula $\mathtt{LPCenter}$
 \end_inset
 
  is far from the constraints 
@@ -4885,7 +4902,7 @@ Now, we are ready to prove the main result of this section.
 \begin_layout Theorem
 \begin_inset CommandInset label
 LatexCommand label
-name "thm:IPM_l2_center"
+name "thm:IPM_center"
 
 \end_inset
 
