@@ -243,6 +243,20 @@ Tutorial on Robust Interior Point Method
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+To do: I need to change the interior point part such that I can use for
+ both section.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 We give a short, self-contained proof of the interior point method and its
  robust version.
  Consider the primal linear program
@@ -281,7 +295,7 @@ where
 We define their interiors: 
 \begin_inset Formula 
 \[
-\PriR^{\circ}=\{x\in\R_{>}^{n}:\ma x=b\}\mbox{ and \DualR^{\circ}=\{s\in\R_{>}^{n}:\ma^{\top}y+s=c\text{ for some }y\}.}
+\PriR^{\circ}=\{x\in\R_{>}^{n}:\ma x=b\}\mbox{ and \DualR^{\circ}}=\{s\in\R_{>}^{n}:\ma^{\top}y+s=c\text{ for some }y\}.
 \]
 
 \end_inset
@@ -452,79 +466,6 @@ reference "lem:duality_gap"
 
 .
  
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-On top of this, interior point methods use that we can update the feasible
- 
-\begin_inset Formula $(x,s)$
-\end_inset
-
- via Newton method and that we can decrease the duality gap by a 
-\begin_inset Formula $1-\Omega(n^{-1/2})$
-\end_inset
-
- factor if the vector 
-\begin_inset Formula $xs$
-\end_inset
-
- is uniform (
-\begin_inset Formula $x_{i}s_{i}$
-\end_inset
-
- is close enough to a constant for all 
-\begin_inset Formula $i$
-\end_inset
-
-).
- This leads to a linear program algorithm with 
-\begin_inset Formula $O(\sqrt{n}\log(1/\epsilon))$
-\end_inset
-
- iterations for accuracy 
-\begin_inset Formula $\epsilon$
-\end_inset
-
-.
- Each iteration of these algorithms involves solving a linear system, which
- takes 
-\begin_inset Formula $n^{\omega+o(1)}$
-\end_inset
-
- time where 
-\begin_inset Formula $\omega\leq2.38$
-\end_inset
-
- is the matrix multiplication constant.
-\end_layout
-
-\begin_layout Plain Layout
-In this note, we discuss the robust interior point method that shows one
- can solve linear programs in 
-\begin_inset Formula $n^{2.38}\log(1/\epsilon)$
-\end_inset
-
- time, essentially matching the current fastest algorithm for solving general
- linear system.
- The key observation is that only few coordinate of 
-\begin_inset Formula $x_{i}$
-\end_inset
-
- and 
-\begin_inset Formula $s_{i}$
-\end_inset
-
- changes significant each step and hence we can maintain the solution of
- the linear system instead of computing from scratch.
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Section
@@ -1429,7 +1370,11 @@ While{
 \begin_inset Formula $t\neq t_{\mathrm{end}}$
 \end_inset
 
- and it is not the first step
+ or 
+\begin_inset Formula $\|xs-t\|_{2}\geq\frac{t}{6}$
+\end_inset
+
+
 \begin_inset ERT
 status open
 
@@ -1445,7 +1390,7 @@ status open
 
 \begin_layout Standard
 Let 
-\begin_inset Formula $t'=\max((1-h)t,t_{\mathrm{end}})$
+\begin_inset Formula $t'=\max(t/(1+h),t_{\mathrm{end}})$
 \end_inset
 
 
@@ -1539,14 +1484,31 @@ Note that the algorithm requires some initial point
 \end_inset
 
  close to the central path and we will show how to get it by changing the
- cost vector temporarily.
- This is why the first step of the algorithm is different.
+ linear program temporarily.
+ First, we show that the invariant is maintained in each step.
+ The conclusion distance less than 
+\begin_inset Formula $t/6$
+\end_inset
+
+ is needed in Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:IPM_interior"
+
+\end_inset
+
+ where we call 
+\begin_inset Formula $\mathtt{L2Step}$
+\end_inset
+
+ on a modified LP, then prove the result is close to central path for the
+ original LP.
 \end_layout
 
-\begin_layout Theorem
+\begin_layout Lemma
 \begin_inset CommandInset label
 LatexCommand label
-name "thm:L2Step"
+name "lem:L2Step"
 
 \end_inset
 
@@ -1559,66 +1521,36 @@ Suppose that the input satisfies
 \end_inset
 
 .
- Then the algorithm 
+ Then, the algorithm 
 \begin_inset Formula $\mathtt{L2Step}$
 \end_inset
 
- (Algorithm 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "alg:L2Step"
-
+ maintains 
+\begin_inset Formula $(x,s)\in\PriR^{\circ}\times\DualR^{\circ}$
 \end_inset
 
-) outputs 
-\begin_inset Formula $(x,s)$
+ and 
+\begin_inset Formula $t$
 \end_inset
 
  such that 
-\begin_inset Formula $\|xs-t_{\mathrm{end}}\|_{2}\leq\frac{t_{\mathrm{end}}}{6}$
+\begin_inset Formula $\|xs-t\|_{2}\leq\frac{t}{6}$
 \end_inset
 
 .
- Furthermore, 
-\begin_inset Formula $\mathtt{L2Step}$
-\end_inset
-
- takes 
-\begin_inset Formula $O(\sqrt{n}\log(t_{\mathrm{start}}/t_{\mathrm{end}}))$
-\end_inset
-
- Newton steps (defined in 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:LP_newton_step"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-).
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Should we break this into a lemma and a theorem? lemma for maintaining the
- invariant in one step when t is reduced, and theorem just to conclude the
- number of iterations.
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Proof
 We prove by induction that 
+\begin_inset Formula $\|xs-t\|_{2}\leq\frac{t}{6}$
+\end_inset
+
+ after each step.
+ Note that the input satisfies 
 \begin_inset Formula $\|xs-t\|_{2}\leq\frac{t}{4}$
 \end_inset
 
 .
- It holds for the first step by the assumption.
 \end_layout
 
 \begin_layout Proof
@@ -1746,6 +1678,90 @@ reference "lem:step_size"
 ).
 \end_layout
 
+\begin_layout Standard
+The following theorem only concludes the output is close to central path.
+ To upper bound the error, we can apply Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:duality_gap"
+
+\end_inset
+
+ which shows the duality gap is equal to 
+\begin_inset Formula $x^{\top}s$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:L2Step"
+
+\end_inset
+
+Suppose that the input satisfies 
+\begin_inset Formula $(x,s)\in\PriR^{\circ}\times\DualR^{\circ}$
+\end_inset
+
+ and 
+\begin_inset Formula $\|xs-t_{\mathrm{start}}\|_{2}\leq\frac{t_{\mathrm{start}}}{4}$
+\end_inset
+
+.
+ Then the algorithm 
+\begin_inset Formula $\mathtt{L2Step}$
+\end_inset
+
+ (Algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:L2Step"
+
+\end_inset
+
+) outputs 
+\begin_inset Formula $(x,s)$
+\end_inset
+
+ such that 
+\begin_inset Formula $\|xs-t_{\mathrm{end}}\|_{2}\leq\frac{t_{\mathrm{end}}}{6}$
+\end_inset
+
+.
+ Furthermore, 
+\begin_inset Formula $\mathtt{L2Step}$
+\end_inset
+
+ takes 
+\begin_inset Formula $O(\sqrt{n}\log(t_{\mathrm{start}}/t_{\mathrm{end}}))$
+\end_inset
+
+ Newton steps (defined in 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:LP_newton_step"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Proof
+The guarantee of the output follows from Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:L2Step"
+
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Proof
 Since 
 \begin_inset Formula $\mathtt{L2Step}$
@@ -1779,7 +1795,8 @@ Solving LP Approximately and Exactly
 \end_layout
 
 \begin_layout Standard
-The runtime of interior point method depends on how degenerate the linear
+Now we discuss how to get the interior point by modifying .
+ The runtime of interior point method depends on how degenerate the linear
  program is.
 \end_layout
 
@@ -2531,7 +2548,7 @@ Let
 \end_inset
 
 , 
-\begin_inset Formula $h=1/(48\lambda\sqrt{n})$
+\begin_inset Formula $h=1/(128\lambda\sqrt{n})$
 \end_inset
 
  and 
@@ -2610,11 +2627,11 @@ Pick
 
 \begin_layout Standard
 Let 
-\begin_inset Formula $t'=\max((1-h)t,t_{\mathrm{end}})$
+\begin_inset Formula $t'=\max(t/(1+h),t_{\mathrm{end}})$
 \end_inset
 
 , 
-\begin_inset Formula $\overline{\delta}_{\mu}=t'-t-\frac{t'}{32\lambda}\frac{\overline{g}}{\|\overline{g}\|_{2}}$
+\begin_inset Formula $\overline{\delta}_{\mu}=-\frac{t'}{32\lambda}\frac{\overline{g}}{\|\overline{g}\|_{2}}$
 \end_inset
 
 , 
@@ -2997,13 +3014,13 @@ Using the formula
 \end_inset
 
  and 
-\begin_inset Formula $|\frac{t'-t}{t}|\leq\frac{1}{48\lambda\sqrt{n}}$
+\begin_inset Formula $|t'-t|\leq\frac{t'}{128\lambda\sqrt{n}}$
 \end_inset
 
 , we have
 \begin_inset Formula 
 \begin{align*}
-\|\delta_{x}/x\|_{2} & \leq\frac{11}{10}\left(\|\frac{t'-t}{t}\|_{2}+\frac{t'}{32\lambda t}\right)\leq\frac{1}{16\lambda}.
+\|\delta_{x}/x\|_{2} & \leq\frac{11}{10}\left(\|\frac{t'-t}{t}\|_{2}+\frac{t'}{100\lambda t}\right)\leq\frac{1}{16\lambda}.
 \end{align*}
 
 \end_inset
@@ -3016,16 +3033,18 @@ Same proof gives
 \end_layout
 
 \begin_layout Standard
+Using this, we prove the algorithm 
+\begin_inset Formula $\mathtt{RobustStep}$
+\end_inset
+
+ satisfies the invariant on the distance.
+\end_layout
+
+\begin_layout Standard
 Now, we are already to prove the main theorem.
 \end_layout
 
-\begin_layout Theorem
-\begin_inset CommandInset label
-LatexCommand label
-name "thm:LqStep"
-
-\end_inset
-
+\begin_layout Lemma
 Suppose that the input satisfies 
 \begin_inset Formula $(x,s)\in\PriR^{\circ}\times\DualR^{\circ}$
 \end_inset
@@ -3035,66 +3054,36 @@ Suppose that the input satisfies
 \end_inset
 
 .
- Then the algorithm 
-\begin_inset Formula $\mathtt{RobustStep}$
+ Let 
+\begin_inset Formula $x^{(k)},s^{(k)},t^{(k)}$
 \end_inset
 
- (Algorithm 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "alg:RobustStep"
-plural "false"
-caps "false"
-noprefix "false"
-
+ be the 
+\begin_inset Formula $x,s,t$
 \end_inset
 
-) outputs 
-\begin_inset Formula $x$
+ computed in the 
+\begin_inset Formula $\mathtt{L2Step}$
 \end_inset
 
- and 
-\begin_inset Formula $s$
+ after the 
+\begin_inset Formula $k$
 \end_inset
 
- such that 
-\begin_inset Formula $\Phi((xs-t_{\mathrm{end}})/t_{\mathrm{end}})\leq8n$
+-th step.
+ Let 
+\begin_inset Formula $\Phi^{(k)}=\Phi((x^{(k)}s^{(k)}-t^{(k)})/t^{(k)})$
 \end_inset
 
 .
- Furthermore, 
-\begin_inset Formula $\mathtt{RobustStep}$
-\end_inset
-
- takes 
-\begin_inset Formula $O(\sqrt{n}\log n\log(t_{\mathrm{start}}/t_{\mathrm{end}}))$
-\end_inset
-
- Newton steps (defined in 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:LP_newton_step"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-) and that each step satisfies 
-\begin_inset Formula $\|r'-r\|_{2}\leq\frac{1}{16\lambda}$
-\end_inset
-
- where 
-\begin_inset Formula $r'=((x+\delta_{x})(s+\delta_{s})-t')/t'$
-\end_inset
-
-.
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Probably also break it into two.
-\end_layout
+ Then, we have
+\begin_inset Formula 
+\[
+\Phi^{(k+1)}\leq\begin{cases}
+12n & \text{if }\Phi^{(k)}\leq8n\\
+\Phi^{(k)}-\frac{\sqrt{n}}{90} & \text{otherwises}
+\end{cases}.
+\]
 
 \end_inset
 
@@ -3102,35 +3091,29 @@ Probably also break it into two.
 \end_layout
 
 \begin_layout Proof
-First, we prove the invariant 
-\begin_inset Formula $\Phi(r)\leq16n$
+Fix some iteration 
+\begin_inset Formula $k$
 \end_inset
 
- by induction.
- It holds for the first step by the assumption.
+.
  Let 
-\begin_inset Formula $x'=x+\delta_{x}$
-\end_inset
-
-, 
-\begin_inset Formula $s'=s+\delta_{s}$
+\begin_inset Formula $x=x^{(k)},s=s^{(k)},t=t^{(k)},x'=x^{(k+1)},s'=s^{(k+1)}$
 \end_inset
 
  and 
-\begin_inset Formula $t'$
-\end_inset
-
- defined in the algorithm and 
-\begin_inset Formula $r'=\frac{x's'-t'}{t'}$
+\begin_inset Formula $t'=t^{(k+1)}$
 \end_inset
 
 .
- Our goal is to prove 
-\begin_inset Formula $\Phi(r')\leq16n$
+ We define 
+\begin_inset Formula $r=(xs-t)/t$
+\end_inset
+
+ and 
+\begin_inset Formula $r'=(x's'-t')/t'$
 \end_inset
 
 .
- 
 \end_layout
 
 \begin_layout Proof
@@ -3164,7 +3147,7 @@ and hence
 where the error term
 \begin_inset Formula 
 \[
-\eta=(\frac{t}{t'}-1)\frac{xs-t}{t}+\frac{(s-\os)\delta_{x}+(x-\ox)\delta_{s}+\delta_{x}\delta_{s}}{t'}.
+\eta=\frac{t-t'}{t}+(\frac{t}{t'}-1)\frac{xs-t}{t}+\frac{(s-\os)\delta_{x}+(x-\ox)\delta_{s}+\delta_{x}\delta_{s}}{t'}.
 \]
 
 \end_inset
@@ -3198,7 +3181,7 @@ reference "lem:RobustIPM_basic"
 \end_inset
 
 , 
-\begin_inset Formula $|t-t'|\leq\frac{t'}{48\lambda\sqrt{n}}$
+\begin_inset Formula $|t'-t|\leq\frac{t'}{128\lambda\sqrt{n}}\leq\frac{t}{128\lambda\sqrt{n}}$
 \end_inset
 
 , 
@@ -3212,9 +3195,9 @@ reference "lem:RobustIPM_basic"
 ), we have
 \begin_inset Formula 
 \begin{align}
-\|\eta\|_{2}\leq & |\frac{t}{t'}-1|\|\frac{xs-t}{t}\|_{\infty}\sqrt{n}+\|\frac{xs}{t'}\|_{\infty}\|\frac{s-\os}{s}\|_{\infty}\|\frac{\delta_{x}}{x}\|_{2}\nonumber \\
+\|\eta\|_{2}\leq & |\frac{t'}{t}-1|\sqrt{n}+|\frac{t}{t'}-1|\|\frac{xs-t}{t}\|_{\infty}\sqrt{n}+\|\frac{xs}{t'}\|_{\infty}\|\frac{s-\os}{s}\|_{\infty}\|\frac{\delta_{x}}{x}\|_{2}\nonumber \\
  & +\|\frac{xs}{t'}\|_{\infty}\|\frac{x-\ox}{x}\|_{\infty}\|\frac{\delta_{s}}{s}\|_{2}+\|\frac{xs}{t'}\|_{\infty}\|\frac{\delta_{x}}{x}\|_{2}\|\frac{\delta_{s}}{s}\|_{2}\nonumber \\
-\leq & \frac{1}{48\lambda}\frac{1}{16}+\frac{9}{8}\frac{1}{48}(\frac{1}{16\lambda}+\frac{1}{16\lambda})+\frac{9}{8}(\frac{1}{16\lambda}\frac{1}{16\lambda})\leq\frac{1}{200\lambda}.\label{eq:robust_IPM_eta}
+\leq & \frac{1}{128\lambda}+\frac{1}{128\lambda}\frac{1}{16}+\frac{9}{8}\frac{1}{48}(\frac{1}{16\lambda}+\frac{1}{16\lambda})+\frac{9}{8}(\frac{1}{16\lambda}\frac{1}{16\lambda})\leq\frac{1}{80\lambda}.\label{eq:robust_IPM_eta}
 \end{align}
 
 \end_inset
@@ -3259,11 +3242,16 @@ This proves the conclusion about
 \end_layout
 
 \begin_layout Proof
-If 
+Case 1: 
 \begin_inset Formula $\Phi(r)\leq8n$
 \end_inset
 
-, the definition of 
+.
+ 
+\end_layout
+
+\begin_layout Proof
+The definition of 
 \begin_inset Formula $\Phi$
 \end_inset
 
@@ -3272,11 +3260,15 @@ If
 \end_inset
 
  implies that 
-\begin_inset Formula $\Phi(r')\leq2\Phi(r)\leq16n$
+\begin_inset Formula $\Phi(r')\leq\frac{3}{2}\Phi(r)\leq12n$
 \end_inset
 
 .
- Hence, we only need to prove for the case 
+ 
+\end_layout
+
+\begin_layout Proof
+Case 2: 
 \begin_inset Formula $\Phi(r)\geq8n$
 \end_inset
 
@@ -3382,7 +3374,7 @@ Using
 \end_inset
 
  and 
-\begin_inset Formula $\|\eta\|_{2}\leq\frac{1}{200\lambda}$
+\begin_inset Formula $\|\eta\|_{2}\leq\frac{1}{80\lambda}$
 \end_inset
 
  
@@ -3398,8 +3390,8 @@ noprefix "false"
 , we have
 \begin_inset Formula 
 \begin{align*}
-\Phi(r')-\Phi(r) & \leq-\frac{1}{32\lambda}\|\overline{g}\|_{2}+\frac{1}{32\lambda}\cdot\frac{1}{3}\|\overline{g}\|_{2}+\|\overline{g}\|_{2}\cdot\frac{1}{200\lambda}+\frac{1}{3}\|\overline{g}\|_{2}\cdot\frac{1}{200\lambda}\\
- & \leq-\frac{1}{100\lambda}\|\overline{g}\|_{2}
+\Phi(r')-\Phi(r) & \leq-\frac{1}{32\lambda}\|\overline{g}\|_{2}+\frac{1}{32\lambda}\cdot\frac{1}{3}\|\overline{g}\|_{2}+\|\overline{g}\|_{2}\cdot\frac{1}{80\lambda}+\frac{1}{3}\|\overline{g}\|_{2}\cdot\frac{1}{80\lambda}\\
+ & \leq-\frac{1}{270\lambda}\|\overline{g}\|_{2}
 \end{align*}
 
 \end_inset
@@ -3419,16 +3411,88 @@ reference "lem:robust_IPM_Phi"
  Hence, we have
 \begin_inset Formula 
 \begin{equation}
-\Phi(r')\leq\Phi(r)-\frac{\sqrt{n}}{40}\leq16n.\label{eq:IPM_robust_decrease}
+\Phi(r')\leq\Phi(r)-\frac{\sqrt{n}}{90}.\label{eq:IPM_robust_decrease}
 \end{equation}
 
 \end_inset
 
-So, in both cases, we have that 
-\begin_inset Formula $\Phi(r')\leq16n$
+
+\end_layout
+
+\begin_layout Standard
+Now, we are already to prove the main theorem.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:LqStep"
+
 \end_inset
 
- and this finishes the induction.
+Suppose that the input satisfies 
+\begin_inset Formula $(x,s)\in\PriR^{\circ}\times\DualR^{\circ}$
+\end_inset
+
+ and 
+\begin_inset Formula $\Phi((xs-t_{\mathrm{start}})/t_{\mathrm{start}})\leq16n$
+\end_inset
+
+.
+ Then the algorithm 
+\begin_inset Formula $\mathtt{RobustStep}$
+\end_inset
+
+ (Algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:RobustStep"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) outputs 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $s$
+\end_inset
+
+ such that 
+\begin_inset Formula $\Phi((xs-t_{\mathrm{end}})/t_{\mathrm{end}})\leq8n$
+\end_inset
+
+.
+ Furthermore, 
+\begin_inset Formula $\mathtt{RobustStep}$
+\end_inset
+
+ takes 
+\begin_inset Formula $O(\sqrt{n}\log n\log(t_{\mathrm{start}}/t_{\mathrm{end}}))$
+\end_inset
+
+ Newton steps (defined in 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:LP_newton_step"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) and that each step satisfies 
+\begin_inset Formula $\|r'-r\|_{2}\leq\frac{1}{16\lambda}$
+\end_inset
+
+ where 
+\begin_inset Formula $r'=((x+\delta_{x})(s+\delta_{s})-t')/t'$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Proof
@@ -3484,7 +3548,7 @@ noprefix "false"
 \end_inset
 
  decreases by at least 
-\begin_inset Formula $\frac{\sqrt{n}}{40}$
+\begin_inset Formula $\frac{\sqrt{n}}{90}$
 \end_inset
 
  per steps.
@@ -3519,8 +3583,7 @@ name "subsec:IPM_Inverse_Maintenance"
 \end_layout
 
 \begin_layout Standard
-Each step of robust interior point method involves solving the linear system
- 
+Each step of the robust interior point method solves the linear system 
 \begin_inset Formula 
 \[
 \left(\begin{array}{ccc}
@@ -3532,14 +3595,89 @@ Each step of robust interior point method involves solving the linear system
 \delta_{s}\\
 \delta_{y}
 \end{array}\right)=\left(\begin{array}{c}
-\overline{\delta}_{\mu}\\
+\alpha\nabla\Phi(\overline{r})\\
 0\\
 0
-\end{array}\right).
+\end{array}\right)
 \]
 
 \end_inset
 
+for some scalar 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ and some vectors 
+\begin_inset Formula $\ox,\os,\overline{r}$
+\end_inset
+
+ such that 
+\begin_inset Formula $\|\frac{\ox-x}{x}\|_{\infty}\leq\frac{1}{48}$
+\end_inset
+
+, 
+\begin_inset Formula $\|\frac{\os-s}{s}\|_{\infty}\leq\frac{1}{48}$
+\end_inset
+
+, 
+\begin_inset Formula $\|\overline{r}-r\|_{\infty}\leq\frac{1}{48\lambda}$
+\end_inset
+
+.
+ The key observation is that only few coordinate of 
+\begin_inset Formula $x,s$
+\end_inset
+
+ and 
+\begin_inset Formula $r_{i}$
+\end_inset
+
+ changes significant each step and hence we can maintain the solution of
+ the linear system instead of computing from scratch.
+\end_layout
+
+\begin_layout Standard
+It is simpler to impose a stronger constraint that 
+\begin_inset Formula $\|\ln\ox-\ln x\|_{\infty}$
+\end_inset
+
+, 
+\begin_inset Formula $\|\ln\os-\ln s\|_{\infty}$
+\end_inset
+
+ and 
+\begin_inset Formula $\|\overline{r}-r\|_{\infty}$
+\end_inset
+
+ are all bounded by 
+\begin_inset Formula $\frac{1}{96\lambda}$
+\end_inset
+
+.
+ First, we observe that 
+\begin_inset Formula $\ln x,\ln s$
+\end_inset
+
+ and 
+\begin_inset Formula $r$
+\end_inset
+
+ are changed by 
+\begin_inset Formula $O(1)$
+\end_inset
+
+ in 
+\begin_inset Formula $\ell_{2}$
+\end_inset
+
+ norm in each step.
+\end_layout
+
+\begin_layout Lemma
+In each step of 
+\end_layout
+
+\begin_layout Standard
 The key observation is that 
 \begin_inset Note Note
 status open
