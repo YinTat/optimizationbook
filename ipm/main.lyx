@@ -3086,21 +3086,15 @@ Suppose that the input satisfies
 \end_inset
 
 .
-<<<<<<< HEAD
- Moreover, 
-\begin_inset Formula $\mathtt{RobustStep}$
-\end_inset
-=======
  Then, we have
-\begin_inset Formula 
+\begin_inset Formula $
 \[
 \Phi^{(k+1)}\leq\begin{cases}
 12n & \text{if }\Phi^{(k)}\leq8n\\
-\Phi^{(k)}-\frac{\sqrt{n}}{90} & \text{otherwises}
+\Phi^{(k)}-\frac{\sqrt{n}}{90} & \text{otherwise}
 \end{cases}.
 \]
->>>>>>> d9e60ebc71d3c7ceb61793d051b536db87ec9584
-
+$
 \end_inset
 
 
@@ -3133,7 +3127,6 @@ Fix some iteration
 \end_layout
 
 \begin_layout Proof
-<<<<<<< HEAD
 If 
 \begin_inset Formula $\Phi(r)\leq8n$
 \end_inset
@@ -3152,7 +3145,7 @@ reference "lem:RobustIPM_basic"
 ) and hence 
 \begin_inset Formula 
 \[
-\Phi(r')\le\Phi(r)e^{\lambda\|r-r'\|_{\infty}|}\leq2\Phi(r)\leq16n.
+\Phi(r')\le\Phi(r)e^{\lambda\|r-r'\|_{\infty}|}\leq1.5\Phi(r)\leq12n.
 \]
 
 \end_inset
@@ -3163,9 +3156,6 @@ Hence, we only need to consider the case
 
 .
  By the definition of 
-=======
-By the definition of 
->>>>>>> d9e60ebc71d3c7ceb61793d051b536db87ec9584
 \begin_inset Formula $\delta_{x}$
 \end_inset
 
@@ -3459,35 +3449,19 @@ reference "lem:robust_IPM_Phi"
  Hence, we have
 \begin_inset Formula 
 \begin{equation}
-<<<<<<< HEAD
 \Phi(r')\leq\Phi(r)-\frac{\sqrt{n}}{40}<16n.\label{eq:IPM_robust_decrease}
-=======
-\Phi(r')\leq\Phi(r)-\frac{\sqrt{n}}{90}.\label{eq:IPM_robust_decrease}
->>>>>>> d9e60ebc71d3c7ceb61793d051b536db87ec9584
 \end{equation}
 
 \end_inset
 
-<<<<<<< HEAD
 The potential actually decreases in this case.
  So, in both cases, we have that 
 \begin_inset Formula $\Phi(r')\leq16n$
-=======
-
-\end_layout
-
-\begin_layout Standard
-Now, we are already to prove the main theorem.
-\end_layout
-
-\begin_layout Theorem
-\begin_inset CommandInset label
-LatexCommand label
-name "thm:LqStep"
 
 \end_inset
 
-Suppose that the input satisfies 
+.
+ Suppose that the input satisfies 
 \begin_inset Formula $(x,s)\in\PriR^{\circ}\times\DualR^{\circ}$
 \end_inset
 
@@ -3516,7 +3490,6 @@ noprefix "false"
 
  and 
 \begin_inset Formula $s$
->>>>>>> d9e60ebc71d3c7ceb61793d051b536db87ec9584
 \end_inset
 
  such that 
