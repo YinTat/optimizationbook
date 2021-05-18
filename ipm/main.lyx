@@ -3094,14 +3094,11 @@ Suppose that the input satisfies
 
 .
  Then, we have
-\begin_inset Formula $
-\[
-\Phi^{(k+1)}\leq\begin{cases}
-12n & \text{if }\Phi^{(k)}\leq8n\\
-\Phi^{(k)}-\frac{\sqrt{n}}{90} & \text{otherwise}
-\end{cases}.
-\]
-$
+\begin_inset Formula $ $ \Phi^{(k+1)}\leq\begin{cases}
+ 12n  &  \text{if }\Phi^{(k)}\leq8n\\
+ \Phi^{(k)}-\frac{\sqrt{n}}{90}  &  \text{otherwise} 
+\end{cases}. $ $
+
 \end_inset
 
 
@@ -3134,6 +3131,14 @@ Fix some iteration
 \end_layout
 
 \begin_layout Proof
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+This is handled in Case 1 below...
+\end_layout
+
+\begin_layout Plain Layout
 If 
 \begin_inset Formula $\Phi(r)\leq8n$
 \end_inset
@@ -3162,6 +3167,10 @@ Hence, we only need to consider the case
 \end_inset
 
 .
+\end_layout
+
+\end_inset
+
  By the definition of 
 \begin_inset Formula $\delta_{x}$
 \end_inset
@@ -3464,7 +3473,6 @@ reference "lem:robust_IPM_Phi"
 The potential actually decreases in this case.
  So, in both cases, we have that 
 \begin_inset Formula $\Phi(r')\leq16n$
-
 \end_inset
 
 .
@@ -3618,6 +3626,16 @@ noprefix "false"
 \end_inset
 
 .
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Why does this matter?
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
