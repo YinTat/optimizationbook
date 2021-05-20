@@ -3895,6 +3895,16 @@ Selecting
 \begin_inset Formula $\overline{r}$
 \end_inset
 
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Change it to binary search.
+\end_layout
+
+\end_inset
+
 
 \end_layout
 
@@ -4685,6 +4695,16 @@ Inverse Maintenance
 \begin_inset CommandInset label
 LatexCommand label
 name "subsec:IPM_Inverse_Maintenance"
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Maybe I should think about how to get the coordinate first?
+\end_layout
 
 \end_inset
 
