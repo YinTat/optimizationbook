@@ -4260,7 +4260,7 @@ caption{
 \end_inset
 
 
-\begin_inset Formula $\mathtt{SelectVector}(\overline{v},v,\delta)$
+\begin_inset Formula $\mathtt{SelectVector}(\overline{v},v^{(1)},v^{(2)},\cdots,v^{(k)},\delta)$
 \end_inset
 
 
@@ -4289,34 +4289,10 @@ name "alg:SelectVector"
 
 \begin_layout Standard
 Let 
-\begin_inset Formula $\epsilon=\overline{v}-v$
+\begin_inset Formula $I=\{\}$
 \end_inset
 
-.
-\end_layout
-
-\begin_layout Standard
-Let 
-\begin_inset Formula $\pi:[n]\rightarrow[n]$
-\end_inset
-
- be a permutation such that 
-\begin_inset Formula $|\epsilon_{\pi(i)}|\geq|\epsilon_{\pi(i+1)}|$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-Let 
-\begin_inset Formula $k$
-\end_inset
-
- be the smallest integer such 
-\begin_inset Formula $|\epsilon_{\pi(2^{k})}|\leq(1-\frac{k}{2\left\lceil \log n\right\rceil })\delta$
-\end_inset
-
-.
+ be the set of updating coordinates.
 \end_layout
 
 \begin_layout Standard
@@ -4327,28 +4303,13 @@ status open
 
 
 \backslash
-lIf{
-\end_layout
-
-\end_inset
-
-there is no such 
-\begin_inset Formula $k$
-\end_inset
-
-
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-}{
+For{
 \end_layout
 
 \end_inset
 
 
-\begin_inset Formula $k=\log n$
+\begin_inset Formula $\ell=0,1,\cdots,\left\lceil \log n\right\rceil $
 \end_inset
 
 
@@ -4366,14 +4327,80 @@ status open
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $\overline{v}_{\pi(i)}\leftarrow v_{\pi(i)}$
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+If{
+\end_layout
+
 \end_inset
 
- for all 
-\begin_inset Formula $i\leq2^{k}$
+
+\begin_inset Formula $k=0\mod2^{\ell}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $I=I\cup\{i:|v_{i}^{(k)}-v_{i}^{(k-2^{\ell})}|\geq\delta/(2\left\lceil \log n\right\rceil )\}$
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\overline{v}_{i}\leftarrow v_{i}^{(k)}$
+\end_inset
+
+ for all 
+\begin_inset Formula $i\in I$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4428,7 +4455,7 @@ Given vectors
 \end_inset
 
  and 
-\begin_inset Formula $\overline{v}^{(k+1)}=\mathtt{SelectVector}(\overline{v}^{(k)},\overline{v}^{(k)},\delta)$
+\begin_inset Formula $\overline{v}^{(k)}=\mathtt{SelectVector}(\overline{v}^{(k-1)},v^{(1)},v^{(2)},\cdots,v^{(k)},\delta)$
 \end_inset
 
 .
@@ -4448,210 +4475,12 @@ Given vectors
 \end_layout
 
 \begin_layout Itemize
-The number of rank 
-\begin_inset Formula $2^{k}$
-\end_inset
-
- update is upper bounded by 
-\begin_inset Formula $2^{-k/2}\frac{\alpha}{\delta}\cdot T\log n$
-\end_inset
-
- where an update from 
-\begin_inset Formula $\overline{v}^{(k)}$
-\end_inset
-
- to 
-\begin_inset Formula $\overline{v}^{(k+1)}$
-\end_inset
-
- has rank 
-\begin_inset Formula $r$
-\end_inset
-
- if 
-\begin_inset Formula $\|\overline{v}^{(k+1)}-\overline{v}^{(k)}\|_{0}=r$
-\end_inset
-
-.
+...I want to do some 
 \end_layout
 
 \end_deeper
 \begin_layout Proof
-Since the algorithm selects all coordinates with additive error 
-\begin_inset Formula $\geq\delta$
-\end_inset
-
- and updates them, we have 
-\begin_inset Formula $\|\overline{v}^{(k)}-v^{(k)}\|_{\infty}\leq\delta$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Proof
-Next, we bound the number of rank 
-\begin_inset Formula $=2^{k}$
-\end_inset
-
- update.
- Let 
-\begin_inset Formula $\epsilon^{(0)}$
-\end_inset
-
- be the error vector directly after a rank 
-\begin_inset Formula $2^{k}$
-\end_inset
-
- update.
- Assume there is another rank 
-\begin_inset Formula $K_{2}\geq K$
-\end_inset
-
- update after 
-\begin_inset Formula $b$
-\end_inset
-
- iterations.
- Let 
-\begin_inset Formula $\epsilon^{(1)},\cdots,\epsilon^{(j)},\cdots,\epsilon^{(b)}$
-\end_inset
-
- be the error vector after 
-\begin_inset Formula $j$
-\end_inset
-
--th iteration.
- We order 
-\begin_inset Formula $\epsilon^{(b)}$
-\end_inset
-
- such that 
-\begin_inset Formula $|\epsilon_{i}^{(b)}|$
-\end_inset
-
- is decreasing.
- We order other vectors such that 
-\begin_inset Formula $\epsilon_{i}^{(0)},\cdots,\epsilon_{i}^{(b-1)}$
-\end_inset
-
- refer to the same entry at 
-\begin_inset Formula $\epsilon_{i}^{(b)}$
-\end_inset
-
-.
- Let 
-\begin_inset Formula $j_{i}$
-\end_inset
-
- be the last iteration such that 
-\begin_inset Formula $\overline{v}_{i}$
-\end_inset
-
- is updated (
-\begin_inset Formula $j_{i}=0$
-\end_inset
-
- if never updated).
-\end_layout
-
-\begin_layout Proof
-If 
-\begin_inset Formula $\overline{v}_{i}$
-\end_inset
-
- is never updated, we have 
-\begin_inset Formula $|\epsilon_{i}^{(j_{i})}|=|\epsilon_{i}^{(0)}|\leq(1-\frac{k}{2\left\lceil \log n\right\rceil })\delta$
-\end_inset
-
- where 
-\begin_inset Formula $(1-\frac{k}{2\left\lceil \log n\right\rceil })\delta$
-\end_inset
-
- comes from the threshold for 
-\begin_inset Formula $2^{k}$
-\end_inset
-
- rank update.
- If 
-\begin_inset Formula $\overline{v}_{i}$
-\end_inset
-
- is updated during the interval, we have 
-\begin_inset Formula $|\epsilon_{i}^{(j_{i})}|=0$
-\end_inset
-
-.
- Hence, in both cases, we have 
-\begin_inset Formula $|\epsilon_{i}^{(j_{i})}|\leq(1-\frac{k}{2\left\lceil \log n\right\rceil })\delta$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Proof
-On the other hand, we are making a 
-\begin_inset Formula $2^{k}$
-\end_inset
-
- rank update at step 
-\begin_inset Formula $b$
-\end_inset
-
- implies it does not pass the threshold for 
-\begin_inset Formula $2^{k-1}$
-\end_inset
-
- update.
- Hence, we have
-\begin_inset Formula 
-\[
-|v_{i}^{(b)}-\overline{v}_{i}^{(b-1)}|\geq(1-\frac{k-1}{2\left\lceil \log n\right\rceil })\delta
-\]
-
-\end_inset
-
-for all 
-\begin_inset Formula $i\leq2^{k-1}$
-\end_inset
-
-.
- Since 
-\begin_inset Formula $\overline{v}_{i}^{(j_{i})}=\overline{v}_{i}^{(b)}$
-\end_inset
-
-, we have that 
-\begin_inset Formula $|v_{i}^{(b)}-v_{i}^{(j_{i})}|\geq\frac{\delta}{2\left\lceil \log n\right\rceil }$
-\end_inset
-
-.
- Summing up over all 
-\begin_inset Formula $i$
-\end_inset
-
-, we have
-\begin_inset Formula 
-\begin{align*}
-\Omega(2^{k}\delta^{2}/\log^{2}n) & \leq\sum_{i}|v_{i}^{(b)}-v_{i}^{(j_{i})}|^{2}\\
- & \leq O(b)\sum_{i}\sum_{t=0}^{b-1}|v_{i}^{(t+1)}-v_{i}^{(t)}|^{2}\\
- & =O(b^{2}\alpha^{2}).
-\end{align*}
-
-\end_inset
-
-where we used 
-\begin_inset Formula $\|v^{(t+1)}-v^{(t)}\|_{2}\leq\alpha$
-\end_inset
-
- at the end.
- Hence, we know that rank 
-\begin_inset Formula $2^{k}$
-\end_inset
-
- update happens every 
-\begin_inset Formula $b\geq\frac{2^{k/2}\delta}{\alpha\log n}$
-\end_inset
-
- steps.
+......
 \end_layout
 
 \begin_layout Standard
@@ -4660,12 +4489,12 @@ Imagine all the changes to
 \end_inset
 
  are on the same set of 
-\begin_inset Formula $2^{k}$
+\begin_inset Formula $2^{\ell}$
 \end_inset
 
  coordinates.
  It takes 
-\begin_inset Formula $\Theta(2^{k/2}\frac{\delta}{\alpha})$
+\begin_inset Formula $\Theta(2^{\ell/2}\frac{\delta}{\alpha})$
 \end_inset
 
  steps to changes all those coordinates by 
