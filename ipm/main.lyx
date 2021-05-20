@@ -4716,6 +4716,46 @@ In this section, we discuss how to maintain the solution of the Newton step.
 \end_layout
 
 \begin_layout Standard
+Seems we can maintain the presentation as
+\begin_inset Formula 
+\[
+\mm\mx\mm
+\]
+
+\end_inset
+
+Instead of multilayer, just 1 layer.
+ But we remember the 
+\begin_inset Formula $\log n$
+\end_inset
+
+ different 
+\begin_inset Formula $\mm$
+\end_inset
+
+ for different scale.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\mm\mx\mm\mx_{2}\mm\mx\mm
+\]
+
+\end_inset
+
+Seems okay...
+\begin_inset Formula 
+\[
+n\times k
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \[
 \mm_{x,s}x=\delta
