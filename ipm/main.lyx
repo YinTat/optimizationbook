@@ -243,20 +243,6 @@ Tutorial on Robust Interior Point Method
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-To do: I need to change the interior point part such that I can use for
- both section.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 We give a short, self-contained proof of the interior point method and its
  robust version.
  Consider the primal linear program
@@ -1239,11 +1225,7 @@ noprefix "false"
 \begin_inset Formula $\ell_{2}$
 \end_inset
 
- close to a constant 
-\begin_inset Formula $t$
-\end_inset
-
-.
+ close to a constant vector.
  This motivates the following algorithm:
 \end_layout
 
@@ -1361,17 +1343,13 @@ status open
 
 
 \backslash
-While{
+Repeat{
 \end_layout
 
 \end_inset
 
 
 \begin_inset Formula $t\neq t_{\mathrm{end}}$
-\end_inset
-
- or 
-\begin_inset Formula $\|xs-t\|_{2}\geq\frac{t}{6}$
 \end_inset
 
 
@@ -1381,6 +1359,18 @@ status open
 \begin_layout Plain Layout
 
 }{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+I need at least one step.
+ So, this is do ...
+ while (cond) 
 \end_layout
 
 \end_inset
@@ -1694,102 +1684,6 @@ reference "lem:duality_gap"
 .
 \end_layout
 
-\begin_layout Theorem
-\begin_inset CommandInset label
-LatexCommand label
-name "thm:L2Step"
-
-\end_inset
-
-Suppose that the input satisfies 
-\begin_inset Formula $(x,s)\in\PriR^{\circ}\times\DualR^{\circ}$
-\end_inset
-
- and 
-\begin_inset Formula $\|xs-t_{\mathrm{start}}\|_{2}\leq\frac{t_{\mathrm{start}}}{4}$
-\end_inset
-
-.
- Then the algorithm 
-\begin_inset Formula $\mathtt{L2Step}$
-\end_inset
-
- (Algorithm 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "alg:L2Step"
-
-\end_inset
-
-) outputs 
-\begin_inset Formula $(x,s)$
-\end_inset
-
- such that 
-\begin_inset Formula $\|xs-t_{\mathrm{end}}\|_{2}\leq\frac{t_{\mathrm{end}}}{6}$
-\end_inset
-
-.
- Furthermore, 
-\begin_inset Formula $\mathtt{L2Step}$
-\end_inset
-
- takes 
-\begin_inset Formula $O(\sqrt{n}\log(t_{\mathrm{start}}/t_{\mathrm{end}}))$
-\end_inset
-
- Newton steps (defined in 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:LP_newton_step"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-).
-\end_layout
-
-\begin_layout Proof
-The guarantee of the output follows from Lemma 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:L2Step"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Proof
-Since 
-\begin_inset Formula $\mathtt{L2Step}$
-\end_inset
-
- decreases 
-\begin_inset Formula $t$
-\end_inset
-
- by 
-\begin_inset Formula $1-\Omega(n^{-1/2})$
-\end_inset
-
- factor each step and since we start with 
-\begin_inset Formula $t=t_{\mathrm{start}}$
-\end_inset
-
- and end with 
-\begin_inset Formula $t\approx t_{\mathrm{end}}$
-\end_inset
-
-, the number of iterations is 
-\begin_inset Formula $O(\sqrt{n}\log(t_{\mathrm{start}}/t_{\mathrm{end}}))$
-\end_inset
-
-.
-\end_layout
-
 \begin_layout Subsection
 Solving LP Approximately and Exactly
 \begin_inset CommandInset label
@@ -1912,15 +1806,220 @@ Since
 \end_inset
 
  and hence this gives a good starting point of the original program.
- Since the proof is a bit complicated and not illuminating, we defer both
- the proof and the algorithm to Appendix 
+ Due to technical reasons, we need to put an extra constraint 
+\begin_inset Formula $1^{\top}x^{+}\leq\Lambda$
+\end_inset
+
+ for some 
+\begin_inset Formula $\Lambda$
+\end_inset
+
+ to ensure the problem is bounded.
+ The precise formulation of the modified linear program is as follows:
+\end_layout
+
+\begin_layout Definition
+\begin_inset CommandInset label
+LatexCommand label
+name "def:IPM_interior_modified"
+
+\end_inset
+
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Modified Linear Program
+\end_layout
+
+\end_inset
+
+Given a linear program 
+\begin_inset Formula $\min_{\ma x=b,x\in\R_{\geq}^{n}}c^{\top}x$
+\end_inset
+
+ with inner radius 
+\begin_inset Formula $r$
+\end_inset
+
+, outer radius 
+\begin_inset Formula $R$
+\end_inset
+
+ and Lipschitz constant 
+\begin_inset Formula $L$
+\end_inset
+
+.
+ For any 
+\begin_inset Formula $\overline{R}\geq10R$
+\end_inset
+
+, 
+\begin_inset Formula $t\geq8L\overline{R}$
+\end_inset
+
+, we define the modified primal linear program by 
+\begin_inset Formula 
+\[
+\min_{(x^{+},x^{-},\theta)\in\mathcal{P}_{t,\overline{R}}}c^{\top}x^{+}+d^{\top}x^{-}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\mathcal{P}_{t,\overline{R}}=\{(x^{+},x^{-},\theta)\in\R_{\geq0}^{2n+1}:\ma(x^{+}-x^{-})=b,\sum_{i=1}^{n}x_{i}^{+}+\theta=\Lambda\}$
+\end_inset
+
+, 
+\begin_inset Formula $d=t/x_{c}^{-}$
+\end_inset
+
+, 
+\begin_inset Formula $x_{c}^{-}=x_{c}^{+}-\ma^{\top}(\ma\ma^{\top})^{-1}b$
+\end_inset
+
+, 
+\begin_inset Formula $x_{c}^{+}=\frac{t}{c+t/\overline{R}}$
+\end_inset
+
+, 
+\begin_inset Formula $\Lambda=\sum_{i}x_{c,i}^{+}+\overline{R}$
+\end_inset
+
+.
+ We define the corresponding dual polytope by
+\begin_inset Formula 
+\[
+\mathcal{D}_{t,\overline{R}}=\{(s^{+},s^{-},s^{\theta})\in\R_{\geq0}^{2n+1}:\ma^{\top}y+\lambda+s^{+}=c,\ma^{\top}y+s^{-}=d,\lambda+s^{\theta}=0\text{ for some }y\in\R^{d}\text{ and }\lambda\in\R\}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The main result about the modified program is the following.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:IPM_interior"
+
+\end_inset
+
+Given a linear program 
+\begin_inset Formula $\min_{\ma x=b,x\in\R_{\geq}^{n}}c^{\top}x$
+\end_inset
+
+ with inner radius 
+\begin_inset Formula $r$
+\end_inset
+
+, outer radius 
+\begin_inset Formula $R$
+\end_inset
+
+ and Lipschitz constant 
+\begin_inset Formula $L$
+\end_inset
+
+.
+ For any 
+\begin_inset Formula $0\leq\epsilon\leq\frac{1}{2}$
+\end_inset
+
+, the modified linear program 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:modified_linear_program"
+
+\end_inset
+
+ with 
+\begin_inset Formula $\overline{R}=\frac{5}{\epsilon}R,t=2^{16}\epsilon^{-3}n^{2}\frac{R}{r}\cdot LR$
+\end_inset
+
+ has the following properties:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+The point 
+\begin_inset Formula $(x_{c}^{+},x_{c}^{-},\overline{R})$
+\end_inset
+
+ is on the central path of the modified program at 
+\begin_inset Formula $t$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+For any primal 
+\begin_inset Formula $x\defeq(x^{+},x^{-},\theta)\in\mathcal{P}_{t,\overline{R}}$
+\end_inset
+
+ and dual 
+\begin_inset Formula $s\defeq(s^{+},s^{-},s^{\theta})\in\mathcal{D}_{t,\overline{R}}$
+\end_inset
+
+ such that 
+\begin_inset Formula $\frac{5}{6}LR\leq x_{i}s_{i}\leq\frac{7}{6}LR$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+(x^{+}-x^{-},s^{+}-s^{\theta})\in\PriR\times\DualR
+\]
+
+\end_inset
+
+and that 
+\begin_inset Formula $x_{i}^{-}\leq\epsilon x_{i}^{+}$
+\end_inset
+
+ and 
+\begin_inset Formula $s^{\theta}\leq\epsilon s_{i}^{+}$
+\end_inset
+
+ for all 
+\begin_inset Formula $i$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Proof
+Since the proof is a bit complicated and not illuminating, we defer the
+ proof to Appendix 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:IPM_interior"
 
 \end_inset
 
-.
+ (Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:ipm_interior_modified"
+
+\end_inset
+
+ and Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lemma:IPM_center_original"
+
+\end_inset
+
+).
 \end_layout
 
 \begin_layout Standard
@@ -1987,7 +2086,11 @@ name "alg:L2LPApproximate"
 \begin_layout Standard
 
 \series bold
-Assume the linear program has diameter 
+Assume the linear program has inner radius 
+\begin_inset Formula $r$
+\end_inset
+
+, outer radius 
 \begin_inset Formula $R$
 \end_inset
 
@@ -1999,14 +2102,176 @@ Assume the linear program has diameter
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $(x,s)=\mathtt{L2Center}(\ma,b,c,x^{(0)})$
+Let 
+\begin_inset Formula $\epsilon=1/(100\sqrt{n})$
+\end_inset
+
+, 
+\begin_inset Formula $\overline{R}=\frac{5}{\epsilon}R$
+\end_inset
+
+, 
+\begin_inset Formula $t=2^{16}\epsilon^{-3}n^{2}\frac{R}{r}\cdot LR$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tcp{
+\end_layout
+
+\end_inset
+
+Define the modified program 
+\begin_inset Formula $\min_{\oma x=\overline{b}}\overline{c}^{\top}x$
+\end_inset
+
+ by Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:IPM_interior_modified"
+
+\end_inset
+
+ with parameters 
+\begin_inset Formula $\overline{R}$
+\end_inset
+
+ and 
+\begin_inset Formula $t$
+\end_inset
+
+.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
 \end_inset
 
 
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $(x,s)=\mathtt{L2Step}(\ma,x,s,LR,t_{\mathrm{end}})$
+Let 
+\begin_inset Formula $\oma=\left[\begin{array}{ccc}
+\ma & -\ma & 0\\
+1_{n}^{\top} & 0_{n}^{\top} & 0
+\end{array}\right]$
+\end_inset
+
+, 
+\begin_inset Formula $\overline{c}=[c,d]$
+\end_inset
+
+, 
+\begin_inset Formula $\overline{b}=[b;\Lambda]$
+\end_inset
+
+ where 
+\begin_inset Formula $d$
+\end_inset
+
+ and 
+\begin_inset Formula $\Lambda$
+\end_inset
+
+ are defined in Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:IPM_interior_modified"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tcp{
+\end_layout
+
+\end_inset
+
+Write down the central path at 
+\begin_inset Formula $t$
+\end_inset
+
+ for modified linear program using Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:ipm_interior_modified"
+
+\end_inset
+
+.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\overline{x}=(x_{c}^{+},x_{c}^{-},\overline{R})$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\overline{s}=x/t$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $(\overline{x},\overline{s})=\mathtt{L2Step}(\oma,\overline{x},\overline{s},t,LR)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $(x,s)=(x^{+}-x^{-},s^{+}-s^{\theta})$
+\end_inset
+
+ where 
+\begin_inset Formula $\overline{x}=(x^{+},x^{-},\theta)$
+\end_inset
+
+ and 
+\begin_inset Formula $\overline{s}=(s^{+},s^{-},s^{\theta})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $(x_{\mathrm{end}},s_{\mathrm{end}})=\mathtt{L2Step}(\ma,x^{+}-x^{-},s^{+}-s^{\theta},LR,t_{\mathrm{end}})$
 \end_inset
 
  with 
@@ -2022,7 +2287,7 @@ Assume the linear program has diameter
 Return
 \series default
  
-\begin_inset Formula $x$
+\begin_inset Formula $x_{\mathrm{end}}$
 \end_inset
 
 .
@@ -2146,27 +2411,27 @@ If we further assume that the solution
 By Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "lemma:IPM_center_original"
+reference "thm:IPM_interior"
 
 \end_inset
 
-, we can find 
-\begin_inset Formula $(x,s)$
+, 
+\begin_inset Formula $(x_{c}^{+},x_{c}^{-},\overline{R})$
 \end_inset
 
- such that 
-\begin_inset Formula $xs\approx t$
-\end_inset
-
- with 
-\begin_inset Formula $t=O(LR)$
+ is on the central path of the modified program at 
+\begin_inset Formula $t$
 \end_inset
 
 .
- Now, Theorem 
+ After the first call of 
+\begin_inset Formula $\mathtt{L2Step}$
+\end_inset
+
+, Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "thm:L2Step"
+reference "lem:L2Step"
 
 \end_inset
 
@@ -2175,11 +2440,87 @@ reference "thm:L2Step"
 \end_inset
 
  returns 
-\begin_inset Formula $(x,s)$
+\begin_inset Formula $(\overline{x},\overline{s})$
 \end_inset
 
  such that 
-\begin_inset Formula $xs\approx t_{\mathrm{end}}$
+\begin_inset Formula $\|\overline{x}\overline{s}-t\|_{2}\leq\frac{t}{6}$
+\end_inset
+
+ with 
+\begin_inset Formula $t=LR$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:IPM_interior"
+
+\end_inset
+
+ shows that 
+\begin_inset Formula $(x,s)=(x^{+}-x^{-},s^{+}-s^{\theta})\in\PriR\times\DualR$
+\end_inset
+
+ and that 
+\begin_inset Formula $x=(1\pm\epsilon)x^{+}$
+\end_inset
+
+ and 
+\begin_inset Formula $s=(1\pm\epsilon)s^{+}$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $\epsilon=\frac{1}{100\sqrt{n}}$
+\end_inset
+
+ and 
+\begin_inset Formula $\|x^{+}s^{+}-t\|_{2}\leq\frac{t}{6}$
+\end_inset
+
+, we have that 
+\begin_inset Formula $\|xs-t\|_{2}\leq\frac{t}{6}$
+\end_inset
+
+.
+ This satisfies the condition for the second call of 
+\begin_inset Formula $\mathtt{L2Step}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+After the second call of 
+\begin_inset Formula $\mathtt{L2Step}$
+\end_inset
+
+, Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:L2Step"
+
+\end_inset
+
+ shows that 
+\begin_inset Formula $\mathtt{L2Step}$
+\end_inset
+
+ returns 
+\begin_inset Formula $(x_{\mathrm{end}},s_{\mathrm{end}})$
+\end_inset
+
+ such that 
+\begin_inset Formula $\|x_{\mathrm{end}}s_{\mathrm{end}}-t_{\mathrm{end}}\|_{2}\leq\frac{t}{6}$
+\end_inset
+
+ with 
+\begin_inset Formula $t_{\mathrm{end}}=\epsilon LR/(2n)$
 \end_inset
 
 .
@@ -2193,24 +2534,29 @@ reference "lem:duality_gap"
  shows that 
 \begin_inset Formula 
 \[
-c^{\top}x\leq\min_{\ma x=b,x\geq0}c^{\top}x+x^{\top}s\leq\min_{\ma x=b,x\geq0}c^{\top}x+2t_{\mathrm{end}}n\leq\min_{\ma x=b,x\geq0}c^{\top}x+\epsilon LR.
+c^{\top}x_{\mathrm{end}}\leq\min_{\ma x=b,x\geq0}c^{\top}x+x_{\mathrm{end}}^{\top}s_{\mathrm{end}}\leq\min_{\ma x=b,x\geq0}c^{\top}x+2t_{\mathrm{end}}n\leq\min_{\ma x=b,x\geq0}c^{\top}x+\epsilon LR.
 \]
 
 \end_inset
 
-For the runtime, finding the initial point with 
+For the runtime, note that 
 \begin_inset Formula $\mathtt{L2Center}$
 \end_inset
 
- takes 
+ decrease 
+\begin_inset Formula $t$
+\end_inset
+
+ by 
+\begin_inset Formula $1-\Omega(n^{-1/2})$
+\end_inset
+
+ factor each step.
+ Hence, the first call takes 
 \begin_inset Formula $O(\sqrt{n}\log(nR/r))$
 \end_inset
 
- Newton steps and the iteration 
-\begin_inset Formula $\mathtt{L2Step}(\ma,x,s,t,t_{\mathrm{end}})$
-\end_inset
-
- takes 
+ Newton steps and second call takes 
 \begin_inset Formula $O(\sqrt{n}\log(n/\epsilon))$
 \end_inset
 
@@ -2581,17 +2927,13 @@ status open
 
 
 \backslash
-While{
+Repeat{
 \end_layout
 
 \end_inset
 
 
 \begin_inset Formula $t\neq t_{\mathrm{end}}$
-\end_inset
-
- and 
-\begin_inset Formula $\Phi(r)\geq8n$
 \end_inset
 
 
@@ -2622,11 +2964,11 @@ Pick
 \end_inset
 
  such that 
-\begin_inset Formula $\|\frac{\ox-x}{x}\|_{\infty}\leq\frac{1}{48}$
+\begin_inset Formula $\|\ln\ox-\ln x\|_{\infty}\leq\frac{1}{48}$
 \end_inset
 
 , 
-\begin_inset Formula $\|\frac{\os-s}{s}\|_{\infty}\leq\frac{1}{48}$
+\begin_inset Formula $\|\ln\os-\ln s\|_{\infty}\leq\frac{1}{48}$
 \end_inset
 
  and 
@@ -3001,11 +3343,11 @@ Using that
 \end_inset
 
 , 
-\begin_inset Formula $\|\frac{x-\ox}{x}\|_{\infty}\leq\frac{1}{48}$
+\begin_inset Formula $\|\ln\ox-\ln x\|_{\infty}\leq\frac{1}{48}$
 \end_inset
 
 , 
-\begin_inset Formula $\|\frac{s-\os}{s}\|_{\infty}\leq\frac{1}{48}$
+\begin_inset Formula $\|\ln\os-\ln s\|_{\infty}\leq\frac{1}{48}$
 \end_inset
 
 , we have 
@@ -3080,7 +3422,7 @@ Suppose that the input satisfies
 \end_inset
 
  computed in the 
-\begin_inset Formula $\mathtt{L2Step}$
+\begin_inset Formula $\mathtt{RobustStep}$
 \end_inset
 
  after the 
@@ -3093,15 +3435,26 @@ Suppose that the input satisfies
 \end_inset
 
 .
- Then, we have
-\begin_inset Formula $ $ \Phi^{(k+1)}\leq\begin{cases}
- 12n  &  \text{if }\Phi^{(k)}\leq8n\\
- \Phi^{(k)}-\frac{\sqrt{n}}{90}  &  \text{otherwise} 
-\end{cases}. $ $
+ Then, we have 
+\begin_inset Formula 
+\[
+\Phi^{(k+1)}\leq\begin{cases}
+12n & \text{if }\Phi^{(k)}\leq8n\\
+\Phi^{(k)} & \text{otherwise}
+\end{cases}.
+\]
 
 \end_inset
 
+Furthermore, we have that 
+\begin_inset Formula $\|r^{(k+1)}-r^{(k)}\|_{2}\leq\frac{1}{5\lambda}$
+\end_inset
 
+ where 
+\begin_inset Formula $r^{(k)}=(x^{(k)}s^{(k)}-t^{(k)})/t^{(k)}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Proof
@@ -3131,47 +3484,7 @@ Fix some iteration
 \end_layout
 
 \begin_layout Proof
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-This is handled in Case 1 below...
-\end_layout
-
-\begin_layout Plain Layout
-If 
-\begin_inset Formula $\Phi(r)\leq8n$
-\end_inset
-
-, we simply use the fact that 
-\begin_inset Formula $\|r-r'\|_{\infty}\leq\frac{1}{16\lambda}$
-\end_inset
-
- (Lemma 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:RobustIPM_basic"
-
-\end_inset
-
-) and hence 
-\begin_inset Formula 
-\[
-\Phi(r')\le\Phi(r)e^{\lambda\|r-r'\|_{\infty}|}\leq1.5\Phi(r)\leq12n.
-\]
-
-\end_inset
-
-Hence, we only need to consider the case 
-\begin_inset Formula $\Phi(r)\geq8n$
-\end_inset
-
-.
-\end_layout
-
-\end_inset
-
- By the definition of 
+By the definition of 
 \begin_inset Formula $\delta_{x}$
 \end_inset
 
@@ -3239,11 +3552,11 @@ reference "lem:RobustIPM_basic"
 \end_inset
 
 , 
-\begin_inset Formula $\|\frac{x-\ox}{x}\|_{\infty}\leq\frac{1}{48}$
+\begin_inset Formula $\|\ln\ox-\ln x\|_{\infty}\leq\frac{1}{48}$
 \end_inset
 
 , 
-\begin_inset Formula $\|\frac{s-\os}{s}\|_{\infty}\leq\frac{1}{48}$
+\begin_inset Formula $\|\ln\os-\ln s\|_{\infty}\leq\frac{1}{48}$
 \end_inset
 
 ), we have
@@ -3251,7 +3564,7 @@ reference "lem:RobustIPM_basic"
 \begin{align}
 \|\eta\|_{2}\leq & |\frac{t'}{t}-1|\sqrt{n}+|\frac{t}{t'}-1|\|\frac{xs-t}{t}\|_{\infty}\sqrt{n}+\|\frac{xs}{t'}\|_{\infty}\|\frac{s-\os}{s}\|_{\infty}\|\frac{\delta_{x}}{x}\|_{2}\nonumber \\
  & +\|\frac{xs}{t'}\|_{\infty}\|\frac{x-\ox}{x}\|_{\infty}\|\frac{\delta_{s}}{s}\|_{2}+\|\frac{xs}{t'}\|_{\infty}\|\frac{\delta_{x}}{x}\|_{2}\|\frac{\delta_{s}}{s}\|_{2}\nonumber \\
-\leq & \frac{1}{128\lambda}+\frac{1}{128\lambda}\frac{1}{16}+\frac{9}{8}\frac{1}{48}(\frac{1}{16\lambda}+\frac{1}{16\lambda})+\frac{9}{8}(\frac{1}{16\lambda}\frac{1}{16\lambda})\leq\frac{1}{80\lambda}.\label{eq:robust_IPM_eta}
+\leq & \frac{1}{128\lambda}+\frac{1}{128\lambda}\frac{1}{16}+\frac{9}{8}(e^{1/48}-1)(\frac{1}{16\lambda}+\frac{1}{16\lambda})+\frac{9}{8}(\frac{1}{16\lambda}\frac{1}{16\lambda})\leq\frac{1}{80\lambda}.\label{eq:robust_IPM_eta}
 \end{align}
 
 \end_inset
@@ -3552,98 +3865,34 @@ reference "lem:RobustStep"
 .
 \end_layout
 
-\begin_layout Proof
-Since 
+\begin_layout Standard
+Note that 
 \begin_inset Formula $\mathtt{RobustStep}$
 \end_inset
 
- decreases 
+ decrease 
 \begin_inset Formula $t$
 \end_inset
 
- by 
-\begin_inset Formula $1-\Omega(n^{-1/2}/\lambda)$
+ by a 
+\begin_inset Formula $\Omega(1/(\sqrt{n}\log n))$
 \end_inset
 
- factor each step and since we start with 
-\begin_inset Formula $t=t_{\mathrm{start}}$
+ factor.
+ So, if we implement the Newton step in the same way as 
+\begin_inset Formula $\mathtt{L2Step}$
 \end_inset
 
- and ends with 
-\begin_inset Formula $t\approx t_{\mathrm{end}}$
-\end_inset
-
-, it takes 
-\begin_inset Formula $O(\sqrt{n}\log n\cdot\log(t_{\mathrm{start}}/t_{\mathrm{end}}))$
-\end_inset
-
- iterations for 
-\begin_inset Formula $t$
-\end_inset
-
- moves to 
-\begin_inset Formula $t_{\mathrm{end}}$
-\end_inset
-
-.
- Finally, if 
-\begin_inset Formula $\Phi(r)\geq12n$
-\end_inset
-
-, 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:IPM_robust_decrease"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- shows that 
-\begin_inset Formula $\Phi$
-\end_inset
-
- decreases by at least 
-\begin_inset Formula $\frac{\sqrt{n}}{90}$
-\end_inset
-
- per steps.
- Hence, it takes at most 
-\begin_inset Formula $O(\sqrt{n})$
-\end_inset
-
- extra iterations to decrease 
-\begin_inset Formula $\Phi$
-\end_inset
-
- back from 
-\begin_inset Formula $16n$
-\end_inset
-
- to 
-\begin_inset Formula $12n$
-\end_inset
-
-.
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Why does this matter?
-\end_layout
-
-\end_inset
-
-
+, this new algorithm is slower.
 \end_layout
 
 \begin_layout Subsection
-Inverse Maintenance
-\begin_inset CommandInset label
-LatexCommand label
-name "subsec:IPM_Inverse_Maintenance"
+Selecting 
+\begin_inset Formula $\ox,\os$
+\end_inset
 
+ and 
+\begin_inset Formula $\overline{r}$
 \end_inset
 
 
@@ -3679,11 +3928,11 @@ for some scalar
 \end_inset
 
  such that 
-\begin_inset Formula $\|\frac{\ox-x}{x}\|_{\infty}\leq\frac{1}{48}$
+\begin_inset Formula $\|\ln\ox-\ln x\|_{\infty}\leq\frac{1}{48}$
 \end_inset
 
 , 
-\begin_inset Formula $\|\frac{\os-s}{s}\|_{\infty}\leq\frac{1}{48}$
+\begin_inset Formula $\|\ln\os-\ln s\|_{\infty}\leq\frac{1}{48}$
 \end_inset
 
 , 
@@ -3701,27 +3950,19 @@ for some scalar
 
  changes significant each step and hence we can maintain the solution of
  the linear system instead of computing from scratch.
+ In this section, we discuss how to select 
+\begin_inset Formula $\ox,\os,\overline{r}$
+\end_inset
+
+ such that there are only as few updates to 
+\begin_inset Formula $\ox,\os,\overline{r}$
+\end_inset
+
+ as possible while maintaining the invariants.
 \end_layout
 
 \begin_layout Standard
-It is simpler to impose a stronger constraint that 
-\begin_inset Formula $\|\ln\ox-\ln x\|_{\infty}$
-\end_inset
-
-, 
-\begin_inset Formula $\|\ln\os-\ln s\|_{\infty}$
-\end_inset
-
- and 
-\begin_inset Formula $\|\overline{r}-r\|_{\infty}$
-\end_inset
-
- are all bounded by 
-\begin_inset Formula $\frac{1}{96\lambda}$
-\end_inset
-
-.
- First, we observe that 
+First, we observe that 
 \begin_inset Formula $\ln x,\ln s$
 \end_inset
 
@@ -3741,21 +3982,717 @@ It is simpler to impose a stronger constraint that
 \end_layout
 
 \begin_layout Lemma
-In each step of 
+Define 
+\begin_inset Formula $x^{(k)},s^{(k)},r^{(k)}$
+\end_inset
+
+ according to Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:RobustStep"
+
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula $\|\ln x^{(k+1)}-\ln x^{(k)}\|_{2}$
+\end_inset
+
+, 
+\begin_inset Formula $\|\ln s^{(k+1)}-\ln s^{(k)}\|_{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $\|r^{(k+1)}-r^{(k)}\|_{2}$
+\end_inset
+
+ are all bounded by 
+\begin_inset Formula $1/(5\lambda)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:Projection_property"
+
+\end_inset
+
+ shows that
+\begin_inset Formula 
+\begin{equation}
+\|(x^{(k+1)}-x^{(k)})/x^{(k)}\|_{\mu^{(k)}}\leq\|\overline{\delta}_{\mu}/\mu^{(k)}\|_{\mu^{(k)}}\label{eq:robust_x_step}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $\mu^{(k)}=\overline{x}^{(k)}\overline{s}^{(k)}$
+\end_inset
+
+ and 
+\begin_inset Formula $\overline{x}^{(k)},\overline{s}^{(k)}$
+\end_inset
+
+ are the 
+\begin_inset Formula $\ox,\os$
+\end_inset
+
+ used on the 
+\begin_inset Formula $k$
+\end_inset
+
+-th step.
+ 
+\end_layout
+
+\begin_layout Proof
+To bound 
+\begin_inset Formula $\mu^{(k)}$
+\end_inset
+
+, Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:RobustStep"
+
+\end_inset
+
+ shows that the invariant 
+\begin_inset Formula $\Phi(r^{(k)})$
+\end_inset
+
+ holds and hence Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:robust_IPM_Phi"
+
+\end_inset
+
+ shows that 
+\begin_inset Formula $\|(x^{(k)}s^{(k)}-t^{(k)})/t^{(k)}\|_{\infty}=\|r^{(k)}\|_{\infty}\leq\frac{\log32n}{\lambda}\leq\frac{1}{16}$
+\end_inset
+
+ (recall 
+\begin_inset Formula $\lambda=16\log40n$
+\end_inset
+
+).
+ Together with the fact that 
+\begin_inset Formula $\|\frac{\ox^{(k)}-x^{(k)}}{x^{(k)}}\|_{\infty}\leq\frac{1}{48}$
+\end_inset
+
+, 
+\begin_inset Formula $\|\frac{\os^{(k)}-s^{(k)}}{s^{(k)}}\|_{\infty}\leq\frac{1}{48}$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+\|\frac{\ox^{(k)}\os^{(k)}-t^{(k)}}{t^{(k)}}\|_{\infty}\leq\frac{1}{8}.
+\]
+
+\end_inset
+
+Using it on 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:robust_x_step"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ gives 
+\begin_inset Formula $\|(x^{(k+1)}-x^{(k)})/x^{(k)}\|_{2}\leq\frac{8}{7}\frac{1}{t^{(k)}}\|\overline{\delta}_{\mu}\|_{2}.$
+\end_inset
+
+ Using 
+\begin_inset Formula $\overline{\delta}_{\mu}=-\frac{t'}{32\lambda}\frac{\overline{g}}{\|\overline{g}\|_{2}}$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+\|(x^{(k+1)}-x^{(k)})/x^{(k)}\|_{2}\leq\frac{1}{28\lambda}.
+\]
+
+\end_inset
+
+To translate the bound to 
+\begin_inset Formula $\log$
+\end_inset
+
+ scale, we note that 
+\begin_inset Formula $|\ln(1+t)-t|\leq2t$
+\end_inset
+
+ for all 
+\begin_inset Formula $|t|\leq\frac{1}{2}$
+\end_inset
+
+ and hence
+\begin_inset Formula 
+\[
+\|\ln x^{(k+1)}-\ln x^{(k)}\|_{2}=\|\ln(1+\frac{x^{(k+1)}-x^{(k)}}{x^{(k)}})\|_{2}\leq\frac{1}{14\lambda}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+The bound for 
+\begin_inset Formula $\|\ln s^{(k+1)}-\ln s^{(k)}\|_{2}$
+\end_inset
+
+ is similar.
+\end_layout
+
+\begin_layout Proof
+The bound for 
+\begin_inset Formula $\|r^{(k+1)}-r^{(k)}\|_{\infty}$
+\end_inset
+
+ follows from Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:RobustStep"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
-The key observation is that 
-\begin_inset Note Note
+Now, the question is how to select 
+\begin_inset Formula $\ln\ox,\ln\os$
+\end_inset
+
+ and 
+\begin_inset Formula $\overline{r}$
+\end_inset
+
+ such that they are close to 
+\begin_inset Formula $\ln x,\ln s$
+\end_inset
+
+ and 
+\begin_inset Formula $r$
+\end_inset
+
+ in 
+\begin_inset Formula $\ell_{\infty}$
+\end_inset
+
+ norm.
+ If the cost of updating the inverse of a matrix is linear to the rank of
+ update, then we can simply update any coordinate of 
+\begin_inset Formula $\ox,\os$
+\end_inset
+
+ and 
+\begin_inset Formula $\overline{r}$
+\end_inset
+
+ whenever they violate the condition.
+ However, due to fast matrix multiplication, the average cost (per rank)
+ of update is lower when the rank of update is large.
+ Therefore, it is beneficial to update coordinate preemptively.
+ 
+\end_layout
+
+\begin_layout Standard
+Now, we state the algorithm for selecting 
+\begin_inset Formula $\ox,\os$
+\end_inset
+
+ and 
+\begin_inset Formula $\overline{r}$
+\end_inset
+
+.
+ This is a general algorithm for selecting an approximate vector.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
 status open
 
 \begin_layout Plain Layout
-I should think about if I can simply change them directly.
+
+
+\backslash
+begin{algorithm2e}[H]
 \end_layout
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\mathtt{SelectVector}(\overline{v},v,\delta)$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:SelectVector"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $\epsilon=\overline{v}-v$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $\pi:[n]\rightarrow[n]$
+\end_inset
+
+ be a permutation such that 
+\begin_inset Formula $|\epsilon_{\pi(i)}|\geq|\epsilon_{\pi(i+1)}|$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $k$
+\end_inset
+
+ be the smallest integer such 
+\begin_inset Formula $|\epsilon_{\pi(2^{k})}|\leq(1-\frac{k}{2\left\lceil \log n\right\rceil })\delta$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lIf{
+\end_layout
+
+\end_inset
+
+there is no such 
+\begin_inset Formula $k$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $k=\log n$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\overline{v}_{\pi(i)}\leftarrow v_{\pi(i)}$
+\end_inset
+
+ for all 
+\begin_inset Formula $i\leq2^{k}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Return
+\series default
+ 
+\begin_inset Formula $\overline{v}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+Given vectors 
+\begin_inset Formula $v^{(1)},v^{(2)},v^{(3)},\cdots,v^{(T)}$
+\end_inset
+
+ in stream.
+ Suppose that 
+\begin_inset Formula $\|v^{(k+1)}-v^{(k)}\|_{2}\leq\alpha$
+\end_inset
+
+ for all 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ For any 
+\begin_inset Formula $\frac{1}{2}>\delta>0$
+\end_inset
+
+, we define the approximation vector 
+\begin_inset Formula $\overline{v}^{(1)}=v^{(1)}$
+\end_inset
+
+ and 
+\begin_inset Formula $\overline{v}^{(k+1)}=\mathtt{SelectVector}(\overline{v}^{(k)},\overline{v}^{(k)},\delta)$
+\end_inset
+
+.
+ Then, we have that
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\|\overline{v}^{(k)}-v^{(k)}\|_{\infty}\leq\delta$
+\end_inset
+
+ for all 
+\begin_inset Formula $k$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+The number of rank 
+\begin_inset Formula $2^{k}$
+\end_inset
+
+ update is upper bounded by 
+\begin_inset Formula $2^{-k/2}\frac{\alpha}{\delta}\cdot T\log n$
+\end_inset
+
+ where an update from 
+\begin_inset Formula $\overline{v}^{(k)}$
+\end_inset
+
+ to 
+\begin_inset Formula $\overline{v}^{(k+1)}$
+\end_inset
+
+ has rank 
+\begin_inset Formula $r$
+\end_inset
+
+ if 
+\begin_inset Formula $\|\overline{v}^{(k+1)}-\overline{v}^{(k)}\|_{0}=r$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Proof
+Since the algorithm selects all coordinates with additive error 
+\begin_inset Formula $\geq\delta$
+\end_inset
+
+ and updates them, we have 
+\begin_inset Formula $\|\overline{v}^{(k)}-v^{(k)}\|_{\infty}\leq\delta$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Next, we bound the number of rank 
+\begin_inset Formula $=2^{k}$
+\end_inset
+
+ update.
+ Let 
+\begin_inset Formula $\epsilon^{(0)}$
+\end_inset
+
+ be the error vector directly after a rank 
+\begin_inset Formula $2^{k}$
+\end_inset
+
+ update.
+ Assume there is another rank 
+\begin_inset Formula $K_{2}\geq K$
+\end_inset
+
+ update after 
+\begin_inset Formula $b$
+\end_inset
+
+ iterations.
+ Let 
+\begin_inset Formula $\epsilon^{(1)},\cdots,\epsilon^{(j)},\cdots,\epsilon^{(b)}$
+\end_inset
+
+ be the error vector after 
+\begin_inset Formula $j$
+\end_inset
+
+-th iteration.
+ We order 
+\begin_inset Formula $\epsilon^{(b)}$
+\end_inset
+
+ such that 
+\begin_inset Formula $|\epsilon_{i}^{(b)}|$
+\end_inset
+
+ is decreasing.
+ We order other vectors such that 
+\begin_inset Formula $\epsilon_{i}^{(0)},\cdots,\epsilon_{i}^{(b-1)}$
+\end_inset
+
+ refer to the same entry at 
+\begin_inset Formula $\epsilon_{i}^{(b)}$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $j_{i}$
+\end_inset
+
+ be the last iteration such that 
+\begin_inset Formula $\overline{v}_{i}$
+\end_inset
+
+ is updated (
+\begin_inset Formula $j_{i}=0$
+\end_inset
+
+ if never updated).
+\end_layout
+
+\begin_layout Proof
+If 
+\begin_inset Formula $\overline{v}_{i}$
+\end_inset
+
+ is never updated, we have 
+\begin_inset Formula $|\epsilon_{i}^{(j_{i})}|=|\epsilon_{i}^{(0)}|\leq(1-\frac{k}{2\left\lceil \log n\right\rceil })\delta$
+\end_inset
+
+ where 
+\begin_inset Formula $(1-\frac{k}{2\left\lceil \log n\right\rceil })\delta$
+\end_inset
+
+ comes from the threshold for 
+\begin_inset Formula $2^{k}$
+\end_inset
+
+ rank update.
+ If 
+\begin_inset Formula $\overline{v}_{i}$
+\end_inset
+
+ is updated during the interval, we have 
+\begin_inset Formula $|\epsilon_{i}^{(j_{i})}|=0$
+\end_inset
+
+.
+ Hence, in both cases, we have 
+\begin_inset Formula $|\epsilon_{i}^{(j_{i})}|\leq(1-\frac{k}{2\left\lceil \log n\right\rceil })\delta$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+On the other hand, we are making a 
+\begin_inset Formula $2^{k}$
+\end_inset
+
+ rank update at step 
+\begin_inset Formula $b$
+\end_inset
+
+ implies it does not pass the threshold for 
+\begin_inset Formula $2^{k-1}$
+\end_inset
+
+ update.
+ Hence, we have
+\begin_inset Formula 
+\[
+|v_{i}^{(b)}-\overline{v}_{i}^{(b-1)}|\geq(1-\frac{k-1}{2\left\lceil \log n\right\rceil })\delta
+\]
+
+\end_inset
+
+for all 
+\begin_inset Formula $i\leq2^{k-1}$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $\overline{v}_{i}^{(j_{i})}=\overline{v}_{i}^{(b)}$
+\end_inset
+
+, we have that 
+\begin_inset Formula $|v_{i}^{(b)}-v_{i}^{(j_{i})}|\geq\frac{\delta}{2\left\lceil \log n\right\rceil }$
+\end_inset
+
+.
+ Summing up over all 
+\begin_inset Formula $i$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\begin{align*}
+\Omega(2^{k}\delta^{2}/\log^{2}n) & \leq\sum_{i}|v_{i}^{(b)}-v_{i}^{(j_{i})}|^{2}\\
+ & \leq O(b)\sum_{i}\sum_{t=0}^{b-1}|v_{i}^{(t+1)}-v_{i}^{(t)}|^{2}\\
+ & =O(b^{2}\alpha^{2}).
+\end{align*}
+
+\end_inset
+
+where we used 
+\begin_inset Formula $\|v^{(t+1)}-v^{(t)}\|_{2}\leq\alpha$
+\end_inset
+
+ at the end.
+ Hence, we know that rank 
+\begin_inset Formula $2^{k}$
+\end_inset
+
+ update happens every 
+\begin_inset Formula $b\geq\frac{2^{k/2}\delta}{\alpha\log n}$
+\end_inset
+
+ steps.
+\end_layout
+
+\begin_layout Standard
+Imagine all the changes to 
+\begin_inset Formula $v$
+\end_inset
+
+ are on the same set of 
+\begin_inset Formula $2^{k}$
+\end_inset
+
+ coordinates.
+ It takes 
+\begin_inset Formula $\Theta(2^{k/2}\frac{\delta}{\alpha})$
+\end_inset
+
+ steps to changes all those coordinates by 
+\begin_inset Formula $\delta$
+\end_inset
+
+.
+ Hence, any algorithm needs to update these coordinates.
+ The algorithm 
+\begin_inset Formula $\mathtt{SelectVector}$
+\end_inset
+
+ only updates 
+\begin_inset Formula $O(\log n)$
+\end_inset
+
+ times more frequently.
+ We are not sure if this 
+\begin_inset Formula $O(\log n)$
+\end_inset
+
+ factor is necessary or not.
+\end_layout
+
+\begin_layout Subsection
+Inverse Maintenance
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:IPM_Inverse_Maintenance"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this section, we discuss how to maintain the solution of the Newton step.
 \end_layout
 
 \begin_layout Standard
@@ -3779,6 +4716,9 @@ I should think about if I can simply change them directly.
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \begin{align}
 xs+\ms\delta_{x}+\mx\delta_{s} & =\mu,\label{eq:LP_newton_step-1}\\
@@ -3912,212 +4852,6 @@ Continue from the discussion in Section
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "subsec:SolveLP_apx"
-
-\end_inset
-
-.
- Due to technical reasons, we need to put an extra constraint 
-\begin_inset Formula $1^{\top}x^{+}\leq\Lambda$
-\end_inset
-
- for some 
-\begin_inset Formula $\Lambda$
-\end_inset
-
- to ensure the problem is bounded.
- The precise formulation of the modified linear program is as follows:
-\end_layout
-
-\begin_layout Definition
-\begin_inset CommandInset label
-LatexCommand label
-name "def:IPM_interior_modified"
-
-\end_inset
-
-
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-Modified Linear Program
-\end_layout
-
-\end_inset
-
-Given a linear program 
-\begin_inset Formula $\min_{\ma x=b,x\in\R_{\geq}^{n}}c^{\top}x$
-\end_inset
-
- with inner radius 
-\begin_inset Formula $r$
-\end_inset
-
-, outer radius 
-\begin_inset Formula $R$
-\end_inset
-
- and Lipschitz constant 
-\begin_inset Formula $L$
-\end_inset
-
-.
- For any 
-\begin_inset Formula $\overline{R}\geq10R$
-\end_inset
-
-, 
-\begin_inset Formula $t\geq8L\overline{R}$
-\end_inset
-
-, we define the modified primal linear program by
-\begin_inset Formula 
-\begin{equation}
-\min_{(x^{+},x^{-},\theta)\in\mathcal{P}_{t,\overline{R}}}c^{\top}x^{+}+d^{\top}x^{-}\label{eq:modified_linear_program}
-\end{equation}
-
-\end_inset
-
-where 
-\begin_inset Formula $\mathcal{P}_{t,\overline{R}}=\{(x^{+},x^{-},\theta)\in\R_{\geq0}^{2n+1}:\ma(x^{+}-x^{-})=b,\sum_{i=1}^{n}x_{i}^{+}+\theta=\Lambda\}$
-\end_inset
-
-, 
-\begin_inset Formula $d=t/x_{c}^{-}$
-\end_inset
-
-, 
-\begin_inset Formula $x_{c}^{-}=x_{c}^{+}-\ma^{\top}(\ma\ma^{\top})^{-1}b$
-\end_inset
-
-, 
-\begin_inset Formula $x_{c}^{+}=\frac{t}{c+t/\overline{R}}$
-\end_inset
-
-, 
-\begin_inset Formula $\Lambda=\sum_{i}x_{c,i}^{+}+\overline{R}$
-\end_inset
-
-.
- We define the corresponding dual polytope by
-\begin_inset Formula 
-\[
-\mathcal{D}_{t,\overline{R}}=\{(s^{+},s^{-},s^{\theta})\in\R_{\geq0}^{2n+1}:\ma^{\top}y+\lambda+s^{+}=c,\ma^{\top}y+s^{-}=d,\lambda+s^{\theta}=0\text{ for some }y\in\R^{d}\text{ and }\lambda\in\R\}.
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The main result we prove in this section is the following:
-\end_layout
-
-\begin_layout Theorem
-\begin_inset CommandInset label
-LatexCommand label
-name "thm:IPM_interior"
-
-\end_inset
-
-Given a linear program 
-\begin_inset Formula $\min_{\ma x=b,x\in\R_{\geq}^{n}}c^{\top}x$
-\end_inset
-
- with inner radius 
-\begin_inset Formula $r$
-\end_inset
-
-, outer radius 
-\begin_inset Formula $R$
-\end_inset
-
- and Lipschitz constant 
-\begin_inset Formula $L$
-\end_inset
-
-.
- For any 
-\begin_inset Formula $0\leq\epsilon\leq\frac{1}{2}$
-\end_inset
-
-, the modified linear program 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:modified_linear_program"
-
-\end_inset
-
- with 
-\begin_inset Formula $\overline{R}=\frac{5}{\epsilon}R,t=2^{16}\epsilon^{-3}n^{2}\frac{R}{r}\cdot LR$
-\end_inset
-
- has the following properties:
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-The point 
-\begin_inset Formula $(x_{c}^{+},x_{c}^{-},\overline{R})$
-\end_inset
-
- is on the central path of the modified program at 
-\begin_inset Formula $t$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Itemize
-For any primal 
-\begin_inset Formula $x\defeq(x^{+},x^{-},\theta)\in\mathcal{P}_{t,\overline{R}}$
-\end_inset
-
- and dual 
-\begin_inset Formula $s\defeq(s^{+},s^{-},s^{\theta})\in\mathcal{D}_{t,\overline{R}}$
-\end_inset
-
- such that 
-\begin_inset Formula $\frac{5}{6}LR\leq x_{i}s_{i}\leq\frac{7}{6}LR$
-\end_inset
-
-, we have that
-\begin_inset Formula 
-\[
-(x^{+}-x^{-},s^{+}-s^{\theta})\in\PriR\times\DualR
-\]
-
-\end_inset
-
-and that 
-\begin_inset Formula $x_{i}^{-}\leq\epsilon x_{i}^{+}$
-\end_inset
-
- and 
-\begin_inset Formula $s^{\theta}\leq\epsilon s_{i}^{+}$
-\end_inset
-
- for all 
-\begin_inset Formula $i$
-\end_inset
-
-.
-\end_layout
-
-\end_deeper
-\begin_layout Proof
-The result follows from Lemma 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:ipm_interior_modified"
-
-\end_inset
-
- and Lemma 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lemma:IPM_center_original"
 
 \end_inset
 
