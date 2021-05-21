@@ -2168,7 +2168,7 @@ status open
 Let 
 \begin_inset Formula $\oma=\left[\begin{array}{ccc}
 \ma & -\ma & 0\\
-1_{n}^{\top} & 0_{n}^{\top} & 0
+1 & 0 & 0
 \end{array}\right]$
 \end_inset
 
@@ -3895,16 +3895,6 @@ Selecting
 \begin_inset Formula $\overline{r}$
 \end_inset
 
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Change it to binary search.
-\end_layout
-
-\end_inset
-
 
 \end_layout
 
@@ -3921,7 +3911,7 @@ Each step of the robust interior point method solves the linear system
 \delta_{s}\\
 \delta_{y}
 \end{array}\right)=\left(\begin{array}{c}
-\alpha\nabla\Phi(\overline{r})\\
+\nabla\Phi(\overline{r})\\
 0\\
 0
 \end{array}\right)
@@ -3929,11 +3919,7 @@ Each step of the robust interior point method solves the linear system
 
 \end_inset
 
-for some scalar 
-\begin_inset Formula $\alpha$
-\end_inset
-
- and some vectors 
+for some vectors 
 \begin_inset Formula $\ox,\os,\overline{r}$
 \end_inset
 
@@ -3992,6 +3978,12 @@ First, we observe that
 \end_layout
 
 \begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:change_xsr"
+
+\end_inset
+
 Define 
 \begin_inset Formula $x^{(k)},s^{(k)},r^{(k)}$
 \end_inset
@@ -4260,7 +4252,7 @@ caption{
 \end_inset
 
 
-\begin_inset Formula $\mathtt{SelectVector}(\overline{v},v^{(1)},v^{(2)},\cdots,v^{(k)},\delta)$
+\begin_inset Formula $\mathtt{SelectVector}(\overline{v},v^{(0)},v^{(1)},\cdots,v^{(k)},\delta)$
 \end_inset
 
 
@@ -4318,7 +4310,7 @@ status open
 
 \begin_layout Plain Layout
 
-}
+}{
 \end_layout
 
 \end_inset
@@ -4349,7 +4341,61 @@ status open
 
 \begin_layout Plain Layout
 
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+uIf{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\ell=\left\lceil \log n\right\rceil $
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $I=[n]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
 }
+\backslash
+Else{
 \end_layout
 
 \end_inset
@@ -4362,6 +4408,20 @@ status open
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4431,14 +4491,20 @@ end{algorithm2e}
 
 \end_layout
 
-\begin_layout Theorem
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:SelectVector"
+
+\end_inset
+
 Given vectors 
-\begin_inset Formula $v^{(1)},v^{(2)},v^{(3)},\cdots,v^{(T)}$
+\begin_inset Formula $v^{(0)},v^{(1)},v^{(2)},\cdots$
 \end_inset
 
  in stream.
  Suppose that 
-\begin_inset Formula $\|v^{(k+1)}-v^{(k)}\|_{2}\leq\alpha$
+\begin_inset Formula $\|v^{(k+1)}-v^{(k)}\|_{2}\leq\beta$
 \end_inset
 
  for all 
@@ -4451,11 +4517,11 @@ Given vectors
 \end_inset
 
 , we define the approximation vector 
-\begin_inset Formula $\overline{v}^{(1)}=v^{(1)}$
+\begin_inset Formula $\overline{v}^{(0)}=v^{(0)}$
 \end_inset
 
  and 
-\begin_inset Formula $\overline{v}^{(k)}=\mathtt{SelectVector}(\overline{v}^{(k-1)},v^{(1)},v^{(2)},\cdots,v^{(k)},\delta)$
+\begin_inset Formula $\overline{v}^{(k)}=\mathtt{SelectVector}(\overline{v}^{(k-1)},v^{(0)},v^{(1)},\cdots,v^{(k)},\delta)$
 \end_inset
 
 .
@@ -4475,48 +4541,130 @@ Given vectors
 \end_layout
 
 \begin_layout Itemize
-...I want to do some 
+\begin_inset Formula $\|\overline{v}^{(k)}-\overline{v}^{(k-1)}\|_{0}\leq O(2^{2\ell_{k}}(\beta/\delta)^{2}\log^{2}n)$
+\end_inset
+
+ where 
+\begin_inset Formula $\ell_{k}$
+\end_inset
+
+ is the largest integer 
+\begin_inset Formula $\ell$
+\end_inset
+
+ with 
+\begin_inset Formula $k=0\mod2^{\ell}$
+\end_inset
+
+.
+ 
 \end_layout
 
 \end_deeper
 \begin_layout Proof
-......
-\end_layout
-
-\begin_layout Standard
-Imagine all the changes to 
-\begin_inset Formula $v$
-\end_inset
-
- are on the same set of 
-\begin_inset Formula $2^{\ell}$
-\end_inset
-
- coordinates.
- It takes 
-\begin_inset Formula $\Theta(2^{\ell/2}\frac{\delta}{\alpha})$
-\end_inset
-
- steps to changes all those coordinates by 
-\begin_inset Formula $\delta$
+For the accuracy result, we first fix some coordinate 
+\begin_inset Formula $i\in[n]$
 \end_inset
 
 .
- Hence, any algorithm needs to update these coordinates.
- The algorithm 
-\begin_inset Formula $\mathtt{SelectVector}$
+ Note that 
+\begin_inset Formula $\overline{v}_{i}^{(k)}=v_{i}^{(k')}$
 \end_inset
 
- only updates 
-\begin_inset Formula $O(\log n)$
+ for some 
+\begin_inset Formula $k-2^{\left\lceil \log n\right\rceil }<k'<k$
 \end_inset
 
- times more frequently.
- We are not sure if this 
-\begin_inset Formula $O(\log n)$
+ because we set 
+\begin_inset Formula $\overline{v}\leftarrow v$
 \end_inset
 
- factor is necessary or not.
+ every 
+\begin_inset Formula $2^{\left\lceil \log n\right\rceil }$
+\end_inset
+
+ steps.
+ We can write 
+\begin_inset Formula $k=k_{0}>k_{1}>k_{2}>\cdots>k_{s}=k'$
+\end_inset
+
+ such that 
+\begin_inset Formula $k_{i}-k_{i+1}$
+\end_inset
+
+ is a power of 
+\begin_inset Formula $2$
+\end_inset
+
+ and that 
+\begin_inset Formula $|s|\leq2\left\lceil \log n\right\rceil $
+\end_inset
+
+.
+ Hence, we have that
+\begin_inset Formula 
+\[
+v_{i}^{(k)}-\overline{v}_{i}^{(k)}=v_{i}^{(k_{0})}-v_{i}^{(k_{s})}=\sum_{j=1}^{s}(v_{i}^{(k_{j-1})}-v_{i}^{(k_{j})}).
+\]
+
+\end_inset
+
+The fact that 
+\begin_inset Formula $\overline{v}_{i}$
+\end_inset
+
+ is not updated after step 
+\begin_inset Formula $k_{s}$
+\end_inset
+
+ implies that 
+\begin_inset Formula $|v_{i}^{(k_{j-1})}-v_{i}^{(k_{j})}|\leq\delta/(2\left\lceil \log n\right\rceil )$
+\end_inset
+
+ and hence 
+\begin_inset Formula $|v_{i}^{(k)}-\overline{v}_{i}^{(k)}|\leq\delta$
+\end_inset
+
+.
+ Since this holds for every 
+\begin_inset Formula $i$
+\end_inset
+
+, we have that 
+\begin_inset Formula $\|\overline{v}^{(k)}-v^{(k)}\|_{\infty}\leq\delta$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+For the sparsity result, we first bound the size of the set 
+\begin_inset Formula $I_{\ell}\defeq\{i:|v_{i}^{(k)}-v_{i}^{(k-2^{\ell})}|\geq\delta/(2\left\lceil \log n\right\rceil )\}$
+\end_inset
+
+.
+ Note that
+\begin_inset Formula 
+\[
+\Omega(|I_{\ell}|\cdot\frac{\delta^{2}}{\log^{2}n})\leq\sum_{i=1}^{n}|v_{i}^{(k)}-v_{i}^{(k-2^{\ell})}|^{2}=2^{\ell}\sum_{i=1}^{n}\sum_{t=k-2^{\ell}}^{k-1}|v_{i}^{(t+1)}-v_{i}^{(t)}|^{2}\leq2^{2\ell}\beta^{2}
+\]
+
+\end_inset
+
+where we used 
+\begin_inset Formula $\|v^{(t+1)}-v^{(t)}\|_{2}\leq\beta$
+\end_inset
+
+ at the end.
+ Hence, we have 
+\begin_inset Formula $|I_{\ell}|=O(2^{2\ell}(\beta/\delta)^{2}\log^{2}n).$
+\end_inset
+
+ Hence, 
+\begin_inset Formula $|I|\leq\sum_{\ell=0}^{\ell_{k}}|I_{\ell}|\leq O(2^{2\ell_{k}}(\beta/\delta)^{2}\log^{2}n)$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection
@@ -4528,11 +4676,304 @@ name "subsec:IPM_Inverse_Maintenance"
 \end_inset
 
 
-\begin_inset Note Note
+\end_layout
+
+\begin_layout Standard
+In this section, we discuss how to maintain the solution of the Newton step.
+ Although both the matrix and the vector changes during the algorithm, we
+ can simplify it by moving the vector inside the matrix.
+\end_layout
+
+\begin_layout Fact
+For any invertible matrix 
+\begin_inset Formula $\mm\in\R^{n\times n}$
+\end_inset
+
+ and any vector 
+\begin_inset Formula $v\in\Rn$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+\left[\begin{array}{cc}
+\mm & v\\
+0 & -1
+\end{array}\right]^{-1}=\left[\begin{array}{cc}
+\mm^{-1} & \mm^{-1}v\\
+0 & -1
+\end{array}\right].
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Hence, the question of maintain the solution reduces to the problem of maintaini
+ng a column of the inverse of the matrix
+\begin_inset Formula 
+\begin{equation}
+\mm_{\ox,\os,\overline{r}}\defeq\left(\begin{array}{cccc}
+\oms & \omx & \mzero & \nabla\Phi(\overline{r})\\
+\ma & \mzero & \mzero & 0\\
+\mzero & \mi & \ma^{\top} & 0\\
+0 & 0 & 0 & -1
+\end{array}\right).\label{eq:M_xsr_def}
+\end{equation}
+
+\end_inset
+
+Now, when we update 
+\begin_inset Formula $\ox,\os,\overline{r}$
+\end_inset
+
+ to 
+\begin_inset Formula $\ox+\delta_{\ox},\os+\delta_{\os},\overline{r}+\delta_{\overline{r}}$
+\end_inset
+
+ with 
+\begin_inset Formula $q$
+\end_inset
+
+ coordinates changed in total, there are only 
+\begin_inset Formula $q$
+\end_inset
+
+ coordinates in 
+\begin_inset Formula $\mm$
+\end_inset
+
+ is changed.
+ Hence, we can compute the update the inverse of 
+\begin_inset Formula $\mm$
+\end_inset
+
+ using the Woodbury matrix identity.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:maintain_inverse"
+
+\end_inset
+
+Given vectors 
+\begin_inset Formula $\ox,\os,\overline{r}\in\R^{n}$
+\end_inset
+
+ and the update 
+\begin_inset Formula $\delta_{\ox},\delta_{\os},\delta_{\overline{r}}\in\R^{n}$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $q=\|\delta_{\ox}\|_{0}+\|\delta_{\os}\|_{0}+\|\delta_{\overline{r}}\|_{0}$
+\end_inset
+
+ and 
+\begin_inset Formula $T_{m,n,\ell}$
+\end_inset
+
+ be the cost of multiplying 
+\begin_inset Formula $m\times n$
+\end_inset
+
+ and 
+\begin_inset Formula $n\times\ell$
+\end_inset
+
+ matrices.
+ Then, we have
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Given 
+\begin_inset Formula $\mm_{\ox,\os,\overline{r}}^{-1}$
+\end_inset
+
+, we can compute 
+\begin_inset Formula $\mm_{\ox+\delta_{\ox},\os+\delta_{\os},\overline{r}+\delta_{\overline{r}}}^{-1}$
+\end_inset
+
+ in time 
+\begin_inset Formula $O(T_{n,n,q})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Given 
+\begin_inset Formula $\mm_{\ox,\os,\overline{r}}^{-1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mm_{\ox,\os,\overline{r}}^{-1}b$
+\end_inset
+
+, we can compute 
+\begin_inset Formula $\mm_{\ox+\delta_{\ox},\os+\delta_{\os},\overline{r}+\delta_{\overline{r}}}^{-1}b$
+\end_inset
+
+ in time 
+\begin_inset Formula $O(T_{q,q,q}+nq)$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Proof
+We write 
+\begin_inset Formula $\mm_{0}=\mm_{\ox,\os,\overline{r}}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mm_{1}=\mm_{\ox+\delta_{\ox},\os+\delta_{\os},\overline{r}+\delta_{\overline{r}}}$
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula $\mm_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mm_{0}$
+\end_inset
+
+ is off by just 
+\begin_inset Formula $q$
+\end_inset
+
+ entries.
+ Hence, we can write
+\begin_inset Formula 
+\[
+\mm_{1}=\mm_{0}+\mathbf{U}\mathbf{C}\mathbf{V}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\mathbf{U}$
+\end_inset
+
+ is 
+\begin_inset Formula $q$
+\end_inset
+
+ columns of identity matrix, 
+\begin_inset Formula $\mathbf{C}$
+\end_inset
+
+ is a 
+\begin_inset Formula $q\times q$
+\end_inset
+
+ matrix and 
+\begin_inset Formula $\mathbf{V}$
+\end_inset
+
+ is 
+\begin_inset Formula $q$
+\end_inset
+
+ rows of identity matrix.
+ Hence, Woodbury matrix identity shows that
+\begin_inset Formula 
+\[
+\mm_{1}^{-1}=(\mm_{0}+\mathbf{U}\mathbf{C}\mathbf{V})^{-1}=\mm_{0}^{-1}-\mm_{0}^{-1}\mathbf{U}(\mathbf{C}^{-1}+\mathbf{V}\mm_{0}^{-1}\mathbf{U})^{-1}\mathbf{V}\mm_{0}^{-1}.
+\]
+
+\end_inset
+
+Note that 
+\begin_inset Formula $\mm_{0}^{-1}\mathbf{U}$
+\end_inset
+
+, 
+\begin_inset Formula $\mathbf{V}\mm_{0}^{-1}\mathbf{U}$
+\end_inset
+
+, 
+\begin_inset Formula $\mathbf{V}\mm_{0}^{-1}$
+\end_inset
+
+ are just blocks of 
+\begin_inset Formula $\mm_{0}^{-1}$
+\end_inset
+
+ and no computation is needed.
+ Hence, we can compute 
+\begin_inset Formula $(\mathbf{C}^{-1}+\mathbf{V}\mm_{0}^{-1}\mathbf{U})^{-1}$
+\end_inset
+
+ in the time of inverting two 
+\begin_inset Formula $q\times q$
+\end_inset
+
+ matrices, which is 
+\begin_inset Formula $O(T_{q,q,q})$
+\end_inset
+
+.
+ The rest of the formula can be computed in 
+\begin_inset Formula $O(T_{n,n,q}+T_{n,q,q})=O(T_{n,n,q})$
+\end_inset
+
+ time.
+ In total, the runtime is 
+\begin_inset Formula $O(T_{n,n,q})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+For computing 
+\begin_inset Formula $\mm_{1}^{-1}b$
+\end_inset
+
+, we note that
+\begin_inset Formula 
+\[
+\mm_{1}^{-1}b=\mm_{0}^{-1}b-\mm_{0}^{-1}\mathbf{U}(\mathbf{C}^{-1}+\mathbf{V}\mm_{0}^{-1}\mathbf{U})^{-1}\mathbf{V}\mm_{0}^{-1}b.
+\]
+
+\end_inset
+
+Since 
+\begin_inset Formula $\mm_{0}^{-1}b$
+\end_inset
+
+ is given, the above formula can be computed in 
+\begin_inset Formula $O(T_{q,q,q}+nq)$
+\end_inset
+
+ time where the 
+\begin_inset Formula $O(nq)$
+\end_inset
+
+ term comes from multiplying 
+\begin_inset Formula $\mm_{0}^{-1}\mathbf{U}$
+\end_inset
+
+ with a vector.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
 status open
 
 \begin_layout Plain Layout
-Maybe I should think about how to get the coordinate first?
+
+
+\backslash
+begin{algorithm2e}[H]
 \end_layout
 
 \end_inset
@@ -4541,7 +4982,670 @@ Maybe I should think about how to get the coordinate first?
 \end_layout
 
 \begin_layout Standard
-In this section, we discuss how to maintain the solution of the Newton step.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\mathtt{FastRobustStep}(\ma,x,s,t_{\mathrm{start}},t_{\mathrm{end}})$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:FastRobustStep"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Define
+\series default
+ 
+\begin_inset Formula $r=(xs-t)/t$
+\end_inset
+
+ and 
+\begin_inset Formula $\Phi$
+\end_inset
+
+ according to 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Phi_potential"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ with 
+\begin_inset Formula $\lambda=16\log40n$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Invariant:
+\series default
+ 
+\begin_inset Formula $(x,s)\in\PriR^{\circ}\times\DualR^{\circ}$
+\end_inset
+
+ and 
+\begin_inset Formula $\Phi(r)\leq16n$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $t=t_{\mathrm{start}}$
+\end_inset
+
+, 
+\begin_inset Formula $h=1/(128\lambda\sqrt{n})$
+\end_inset
+
+ and 
+\begin_inset Formula $n$
+\end_inset
+
+ is the number of columns in 
+\begin_inset Formula $\ma$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $x^{(0)}=\ox^{(0)}=x,s^{(0)}=\os^{(0)}=s,r^{(0)}=\overline{r}^{(0)}=(xs-t)/t$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $\mathbf{T}=\mm_{\ox^{(0)},\os^{(0)},\overline{r}^{(0)}}^{-1}$
+\end_inset
+
+ (defined in 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:M_xsr_def"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) and 
+\begin_inset Formula $u=\mathbf{T}e_{2n+d+1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Repeat{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $t\neq t_{\mathrm{end}}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $t'=\max(t/(1+h),t_{\mathrm{end}})$
+\end_inset
+
+, 
+\begin_inset Formula $\overline{\delta}_{\mu}=-\frac{t'}{32\lambda}\frac{\overline{g}}{\|\overline{g}\|_{2}}$
+\end_inset
+
+, 
+\begin_inset Formula $\overline{g}=\nabla\Phi(\overline{r})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+uIf{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $k=0\mod2^{\ell_{*}}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Update 
+\begin_inset Formula $\mathbf{T}$
+\end_inset
+
+ to 
+\begin_inset Formula $\mm_{\ox^{(k)},\os^{(k)},\overline{r}^{(k)}}^{-1}$
+\end_inset
+
+ (Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:maintain_inverse"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $u\leftarrow\mathbf{T}e_{2n+d+1}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $v\leftarrow u$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+Else{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Compute 
+\begin_inset Formula $v=\mm_{\ox^{(k)},\os^{(k)},\overline{r}^{(k)}}^{-1}e_{2n+d+1}$
+\end_inset
+
+ using 
+\begin_inset Formula $\mathbf{T}$
+\end_inset
+
+ and 
+\begin_inset Formula $u$
+\end_inset
+
+ (Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:maintain_inverse"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $\delta_{x}$
+\end_inset
+
+ be the first 
+\begin_inset Formula $n$
+\end_inset
+
+ coordinates of 
+\begin_inset Formula $v$
+\end_inset
+
+ and 
+\begin_inset Formula $\delta_{s}$
+\end_inset
+
+ be the second 
+\begin_inset Formula $n$
+\end_inset
+
+ coordinates of 
+\begin_inset Formula $v$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $x^{(k+1)}=x^{(k)}+\delta_{x}$
+\end_inset
+
+, 
+\begin_inset Formula $s^{(k+1)}=s^{(k)}+\delta_{s}$
+\end_inset
+
+ and 
+\begin_inset Formula $t\leftarrow t'$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $r^{(k+1)}=(x^{(k+1)}s^{(k+1)}-t)/t$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\ln\overline{x}^{(k+1)}=\mathtt{SelectVector}(\ln\overline{x}^{(k)},\ln x^{(0)},\ln x^{(1)},\cdots,\ln x^{(k+1)},1/48)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\ln\overline{s}^{(k+1)}=\mathtt{SelectVector}(\ln\overline{s}^{(k)},\ln s^{(0)},\ln s^{(1)},\cdots,\ln s^{(k+1)},1/48)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\overline{r}^{(k+1)}=\mathtt{SelectVector}(\overline{r}^{(k)},r^{(0)},r^{(1)},\cdots,r^{(k+1)},1/(48\lambda))$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Set 
+\begin_inset Formula $k\leftarrow k+1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Return
+\series default
+ 
+\begin_inset Formula $(x,s)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Combining the previous Lemma with Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:SelectVector"
+
+\end_inset
+
+, we have the following:
+\end_layout
+
+\begin_layout Lemma
+We can implement each step of 
+\begin_inset Formula $\mathtt{RobustStep}$
+\end_inset
+
+ in time 
+\begin_inset Formula 
+\[
+O(\cdots)
+\]
+
+\end_inset
+
+if we select the vectors 
+\begin_inset Formula $\ln\ox,\ln\os$
+\end_inset
+
+ and 
+\begin_inset Formula $\overline{r}$
+\end_inset
+
+ via 
+\begin_inset Formula $\mathtt{SelectVector}$
+\end_inset
+
+ (Algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:SelectVector"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Proof
+Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:change_xsr"
+
+\end_inset
+
+ shows that 
+\begin_inset Formula $\ln x,\ln s$
+\end_inset
+
+ and 
+\begin_inset Formula $r$
+\end_inset
+
+ changes by 
+\begin_inset Formula $\alpha\defeq1/(5\lambda)$
+\end_inset
+
+ in 
+\begin_inset Formula $\ell_{2}$
+\end_inset
+
+ norm per step.
+ According to Algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:RobustStep"
+
+\end_inset
+
+, we need the error of 
+\begin_inset Formula $\mathtt{SelectVector}$
+\end_inset
+
+ to be 
+\begin_inset Formula $\delta\defeq1/(48\lambda)$
+\end_inset
+
+.
+ Hence, Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:SelectVector"
+
+\end_inset
+
+ shows that 
+\begin_inset Formula $q_{k}\defeq O(2^{2\ell_{k}}\log^{2}n)$
+\end_inset
+
+ coordinates in 
+\begin_inset Formula $\ox,\os,\overline{r}$
+\end_inset
+
+ are updated at the 
+\begin_inset Formula $k$
+\end_inset
+
+-th step where 
+\begin_inset Formula $\ell_{k}$
+\end_inset
+
+ is the largest integer 
+\begin_inset Formula $\ell$
+\end_inset
+
+ with 
+\begin_inset Formula $k=0\mod2^{\ell}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+During the 
+\begin_inset Formula $\mathtt{RobustStep}$
+\end_inset
+
+ algorithm, we maintain 
+\begin_inset Formula $\mm_{\ox,\os,\overline{r}}^{-1}e_{2n+d+1}$
+\end_inset
+
+ which is the last column of 
+\begin_inset Formula $\mm_{\ox,\os,\overline{r}}^{-1}$
+\end_inset
+
+.
+ As we discussed, that gives the solution of 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:LP_newton_step_2-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ We update 
+\end_layout
+
+\begin_layout Proof
+We only update 
+\begin_inset Formula $\mm_{\ox,\os,\overline{r}}^{-1}$
+\end_inset
+
+ whenever 
+\begin_inset Formula $\ell_{k}\geq\ell$
+\end_inset
+
+ for some 
+\begin_inset Formula $\ell$
+\end_inset
+
+ to be determined.
+ Hence, we update 
+\begin_inset Formula $\mm_{\ox,\os,\overline{r}}^{-1}$
+\end_inset
+
+ once every 
+\begin_inset Formula $2^{\ell}$
+\end_inset
+
+ steps.
+ Within that 
+\begin_inset Formula $2^{\ell}$
+\end_inset
+
+ steps, the number of coordinates updated in 
+\begin_inset Formula $\ox,\os,\overline{r}$
+\end_inset
+
+ is bounded by
+\begin_inset Formula 
+\[
+\sum_{k=1}^{2^{\ell}-1}q_{k}=\sum_{k=1}^{2^{\ell}-1}O(2^{2\ell_{k}}\log^{2}n)=O(2^{2\ell}\log^{2}n).
+\]
+
+\end_inset
+
+Hence, second part of Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:maintain_inverse"
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\|\overline{v}^{(k)}-\overline{v}^{(k-1)}\|_{0}\leq O(2^{2\ell_{k}}(\alpha/\delta)^{2}\log^{2}n)$
+\end_inset
+
+ where 
+\begin_inset Formula $\ell_{k}$
+\end_inset
+
+ is the largest integer 
+\begin_inset Formula $\ell$
+\end_inset
+
+ with 
+\begin_inset Formula $k=0\mod2^{\ell}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+O(2^{-\ell}T_{n,n,2^{2\ell}})
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+O(2^{2\ell_{k}}(\alpha/\delta)^{2}\log^{2}n)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+To simplify the data structure, we note that 
 \end_layout
 
 \begin_layout Standard
@@ -4614,98 +5718,6 @@ xs+\ms\delta_{x}+\mx\delta_{s} & =\mu,\label{eq:LP_newton_step-1}\\
 \ma\delta_{x} & =0,\nonumber \\
 \ma^{\top}\delta_{y}+\delta_{s} & =0,\nonumber 
 \end{align}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Explain the update vector first?
-\end_layout
-
-\begin_layout Plain Layout
-—
-\end_layout
-
-\begin_layout Plain Layout
-It is a data structure support the following operation
-\end_layout
-
-\begin_layout Plain Layout
-1) Output a row.
-\end_layout
-
-\begin_layout Plain Layout
-2) Update an entry.
-\end_layout
-
-\begin_layout Plain Layout
-—
-\end_layout
-
-\begin_layout Plain Layout
-We cut the proof into two parts:
-\end_layout
-
-\begin_layout Plain Layout
-> One is about how to update vector with delay.
- (Number of 
-\begin_inset Formula $2^{t}$
-\end_inset
-
- changes is 
-\begin_inset Formula $\leq\cdots$
-\end_inset
-
-).
- Log 
-\begin_inset Formula $x$
-\end_inset
-
- and 
-\begin_inset Formula $r$
-\end_inset
-
-.
- So, both is the same algorithm.
-\end_layout
-
-\begin_layout Plain Layout
-We only do changes with rank 
-\begin_inset Formula $\geq r$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Plain Layout
-So, the vector is wrong for at most rank 
-\begin_inset Formula $r$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Plain Layout
-—
-\end_layout
-
-\begin_layout Plain Layout
-> How to maintain matrix.
-\end_layout
-
-\begin_layout Plain Layout
-> 
-\begin_inset Formula $[M\ v;0_{n}\ -1]^{-1}=[M^{-1}\ M^{-1}v;0_{n}\ -1]$
-\end_inset
-
-.
-\end_layout
 
 \end_inset
 
@@ -5702,8 +6714,8 @@ To ensure the reduction does not increase the complexity of solving linear
 \begin_inset Formula 
 \[
 \oma=\left[\begin{array}{ccc}
-\ma & -\ma & 0_{d}\\
-1_{n}^{\top} & 0_{n} & 1
+\ma & -\ma & 0\\
+1 & 0 & 1
 \end{array}\right]
 \]
 
@@ -5721,9 +6733,9 @@ For any diagonal matrices
 \begin_inset Formula 
 \[
 \mh\defeq\oma\left[\begin{array}{ccc}
-\mw_{1} & \mzero & 0_{n}\\
-\mzero & \mw_{2} & 0_{n}\\
-0_{n}^{\top} & 0_{n}^{\top} & \alpha
+\mw_{1} & \mzero & 0\\
+\mzero & \mw_{2} & 0\\
+0 & 0 & \alpha
 \end{array}\right]\oma^{\top}=\left[\begin{array}{cc}
 \ma^{\top}(\mw_{1}+\mw_{2})\ma & \ma\mw_{1}1_{n}\\
 (\ma\mw_{1}1_{n})^{\top} & 1_{n}^{\top}\mw_{1}1_{n}+\alpha
