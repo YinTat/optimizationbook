@@ -1453,6 +1453,27 @@ in
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+To be more picky, we need to discuss how to handle the case 
+\begin_inset Formula $\mathcal{T}_{f}+\mathcal{T}_{h,L}$
+\end_inset
+
+ takes 
+\begin_inset Formula $O(1)$
+\end_inset
+
+ time.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Proof
 Lemma 
 \begin_inset CommandInset ref
