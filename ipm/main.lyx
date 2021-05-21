@@ -5205,14 +5205,14 @@ Update
 \begin_inset Formula $\mm_{\ox^{(k)},\os^{(k)},\overline{r}^{(k)}}^{-1}$
 \end_inset
 
- (Lemma 
+ using Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:maintain_inverse"
 
 \end_inset
 
-).
+.
 \end_layout
 
 \begin_layout Standard
@@ -5256,14 +5256,14 @@ Compute
 \begin_inset Formula $u$
 \end_inset
 
- (Lemma 
+ and Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:maintain_inverse"
 
 \end_inset
 
-).
+.
 \end_layout
 
 \begin_layout Standard
