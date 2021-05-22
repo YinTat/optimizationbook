@@ -4966,6 +4966,41 @@ Since
 \end_layout
 
 \begin_layout Standard
+In this note, we only use the following estimate for 
+\begin_inset Formula $T_{n,n,r}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:Tnnr_est"
+
+\end_inset
+
+For 
+\begin_inset Formula $r\leq n$
+\end_inset
+
+, we have 
+\begin_inset Formula $T_{n,n,r}=n^{2}+n^{\omega-\frac{\omega-2}{1-\alpha}}r^{\frac{\omega-2}{1-\alpha}}$
+\end_inset
+
+ where 
+\begin_inset Formula $\omega\sim2.37$
+\end_inset
+
+ is the exponent of matrix multiplication and 
+\begin_inset Formula $\alpha\sim0.31$
+\end_inset
+
+ is the dual exponent of matrix multiplication.
+ 
+\end_layout
+
+\begin_layout Standard
 \begin_inset ERT
 status open
 
@@ -5020,6 +5055,16 @@ name "alg:FastRobustStep"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Assume the restart frequency satisfies 
+\begin_inset Formula $2^{2\ell_{*}}\leq n^{\alpha}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -5219,12 +5264,11 @@ reference "lem:maintain_inverse"
 \begin_inset Formula $u\leftarrow\mathbf{T}e_{2n+d+1}$
 \end_inset
 
-.
- 
+, 
 \begin_inset Formula $v\leftarrow u$
 \end_inset
 
-
+.
 \end_layout
 
 \begin_layout Standard
@@ -5244,15 +5288,15 @@ Else{
 \end_layout
 
 \begin_layout Standard
-Compute 
-\begin_inset Formula $v=\mm_{\ox^{(k)},\os^{(k)},\overline{r}^{(k)}}^{-1}e_{2n+d+1}$
+Update 
+\begin_inset Formula $v$
 \end_inset
 
- using 
-\begin_inset Formula $\mathbf{T}$
+ to 
+\begin_inset Formula $\mm_{\ox^{(k)},\os^{(k)},\overline{r}^{(k)}}^{-1}e_{2n+d+1}$
 \end_inset
 
- and 
+ using vector 
 \begin_inset Formula $u$
 \end_inset
 
@@ -5282,23 +5326,11 @@ status open
 
 \begin_layout Standard
 Let 
-\begin_inset Formula $\delta_{x}$
+\begin_inset Formula $(\delta_{x},\delta_{s})$
 \end_inset
 
  be the first 
-\begin_inset Formula $n$
-\end_inset
-
- coordinates of 
-\begin_inset Formula $v$
-\end_inset
-
- and 
-\begin_inset Formula $\delta_{s}$
-\end_inset
-
- be the second 
-\begin_inset Formula $n$
+\begin_inset Formula $2n$
 \end_inset
 
  coordinates of 
@@ -5415,42 +5447,58 @@ reference "lem:SelectVector"
 \end_layout
 
 \begin_layout Lemma
-We can implement each step of 
-\begin_inset Formula $\mathtt{RobustStep}$
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:FastRobustStepTime"
+
 \end_inset
 
- in time 
+With 
+\begin_inset Formula $2^{2\ell_{*}}=\min(n^{\alpha},n^{2/3})$
+\end_inset
+
+, 
+\begin_inset Formula $\mathtt{FastRobustStep}$
+\end_inset
+
+ (algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:FastRobustStep"
+
+\end_inset
+
+) takes 
 \begin_inset Formula 
 \[
-O(\cdots)
+\widetilde{O}(n^{\omega}+(n^{2+1/6}+n^{5/2-\alpha/2})\log(t_{\mathrm{end}}/t_{\mathrm{start}}))
 \]
 
 \end_inset
 
-if we select the vectors 
-\begin_inset Formula $\ln\ox,\ln\os$
-\end_inset
-
- and 
-\begin_inset Formula $\overline{r}$
-\end_inset
-
- via 
-\begin_inset Formula $\mathtt{SelectVector}$
-\end_inset
-
- (Algorithm 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "alg:SelectVector"
-
-\end_inset
-
-).
+time.
 \end_layout
 
 \begin_layout Proof
-Lemma 
+The bottleneck of 
+\begin_inset Formula $\mathtt{FastRobustStep}$
+\end_inset
+
+ is the step for updating 
+\begin_inset Formula $v$
+\end_inset
+
+ and updating 
+\begin_inset Formula $\mathbf{T}$
+\end_inset
+
+.
+ It depends on the number of coordinates updates in 
+\begin_inset Formula $\ox,\os,\overline{r}$
+\end_inset
+
+.
+ Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:change_xsr"
@@ -5474,14 +5522,7 @@ reference "lem:change_xsr"
 \end_inset
 
  norm per step.
- According to Algorithm 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "alg:RobustStep"
-
-\end_inset
-
-, we need the error of 
+ Since we set the error of 
 \begin_inset Formula $\mathtt{SelectVector}$
 \end_inset
 
@@ -5489,8 +5530,7 @@ reference "alg:RobustStep"
 \begin_inset Formula $\delta\defeq1/(48\lambda)$
 \end_inset
 
-.
- Hence, Lemma 
+, Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:SelectVector"
@@ -5525,58 +5565,21 @@ reference "lem:SelectVector"
 \end_layout
 
 \begin_layout Proof
-During the 
-\begin_inset Formula $\mathtt{RobustStep}$
+Cost of updating 
+\begin_inset Formula $v$
 \end_inset
 
- algorithm, we maintain 
-\begin_inset Formula $\mm_{\ox,\os,\overline{r}}^{-1}e_{2n+d+1}$
-\end_inset
-
- which is the last column of 
-\begin_inset Formula $\mm_{\ox,\os,\overline{r}}^{-1}$
-\end_inset
-
-.
- As we discussed, that gives the solution of 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:LP_newton_step_2-1"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-.
- We update 
-\end_layout
-
-\begin_layout Proof
-We only update 
-\begin_inset Formula $\mm_{\ox,\os,\overline{r}}^{-1}$
+: We update 
+\begin_inset Formula $u$
 \end_inset
 
  whenever 
-\begin_inset Formula $\ell_{k}\geq\ell$
+\begin_inset Formula $k=0\mod2^{\ell_{*}}$
 \end_inset
 
- for some 
-\begin_inset Formula $\ell$
-\end_inset
-
- to be determined.
- Hence, we update 
-\begin_inset Formula $\mm_{\ox,\os,\overline{r}}^{-1}$
-\end_inset
-
- once every 
-\begin_inset Formula $2^{\ell}$
-\end_inset
-
- steps.
+.
  Within that 
-\begin_inset Formula $2^{\ell}$
+\begin_inset Formula $2^{\ell_{*}}$
 \end_inset
 
  steps, the number of coordinates updated in 
@@ -5586,53 +5589,258 @@ We only update
  is bounded by
 \begin_inset Formula 
 \[
-\sum_{k=1}^{2^{\ell}-1}q_{k}=\sum_{k=1}^{2^{\ell}-1}O(2^{2\ell_{k}}\log^{2}n)=O(2^{2\ell}\log^{2}n).
+q\defeq\sum_{k=1}^{2^{\ell_{*}}-1}q_{k}=\sum_{k=1}^{2^{\ell_{*}}-1}O(2^{2\ell_{k}}\log^{2}n)=O(2^{2\ell_{*}}\log^{2}n).
 \]
 
 \end_inset
 
-Hence, second part of Lemma 
+Therefore, 
+\begin_inset Formula $\mm_{\ox^{(k)},\os^{(k)},\overline{r}^{(k)}}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathbf{T}$
+\end_inset
+
+ are off by 
+\begin_inset Formula $q$
+\end_inset
+
+ coordinates.
+ Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:maintain_inverse"
 
 \end_inset
 
- 
-\end_layout
+ shows that it takes 
+\begin_inset Formula 
+\[
+O(T_{q,q,q}+nq)=\widetilde{O}(2^{2\ell_{*}\omega}+n2^{2\ell_{*}})
+\]
 
-\begin_layout Itemize
-\begin_inset Formula $\|\overline{v}^{(k)}-\overline{v}^{(k-1)}\|_{0}\leq O(2^{2\ell_{k}}(\alpha/\delta)^{2}\log^{2}n)$
 \end_inset
 
- where 
-\begin_inset Formula $\ell_{k}$
+time to compute 
+\begin_inset Formula $v=\mm_{\ox^{(k)},\os^{(k)},\overline{r}^{(k)}}^{-1}e_{2n+d+1}$
 \end_inset
 
- is the largest integer 
-\begin_inset Formula $\ell$
-\end_inset
-
- with 
-\begin_inset Formula $k=0\mod2^{\ell}$
+ using 
+\begin_inset Formula $u=\mathbf{T}e_{2n+d+1}$
 \end_inset
 
 .
- 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Proof
+Cost of updating 
+\begin_inset Formula $\mathbf{T}$
+\end_inset
+
+: For the 
+\begin_inset Formula $k$
+\end_inset
+
+-th step that updates 
+\begin_inset Formula $\mathbf{T}$
+\end_inset
+
+, the number of coordinates updated in 
+\begin_inset Formula $\ox,\os,\overline{r}$
+\end_inset
+
+ is bounded by 
+\begin_inset Formula $q+O(2^{2\ell_{k}}\log^{2}n)=O(2^{2\ell_{k}}\log^{2}n)$
+\end_inset
+
+ where the first term is the delayed update and the second term is the update
+ at that step.
+ Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:maintain_inverse"
+
+\end_inset
+
+ shows that it takes 
+\begin_inset Formula $\widetilde{O}(T_{n,n,2^{2\ell_{k}}})$
+\end_inset
+
+ time to update 
+\begin_inset Formula $\mathbf{T}.$
+\end_inset
+
+ Since 
+\begin_inset Formula $2^{2\ell_{k}}$
+\end_inset
+
+ update happens every 
+\begin_inset Formula $2^{\ell_{k}}$
+\end_inset
+
+ iterations, the amortized cost is
 \begin_inset Formula 
 \[
-O(2^{-\ell}T_{n,n,2^{2\ell}})
+\widetilde{O}(\sum_{\ell=\ell_{*}}^{\frac{1}{2}\log n}2^{-\ell}T_{n,n,2^{2\ell}})=\widetilde{O}(\sum_{\ell=\ell_{*}}^{\frac{1}{2}\log n}(n^{\omega-\frac{\omega-2}{1-\alpha}}2^{2\ell\cdot\frac{\omega-2}{1-\alpha}-\ell}+n^{2}2^{-\ell}))
+\]
+
+\end_inset
+
+where we used Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:Tnnr_est"
+
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $2\frac{\omega-2}{1-\alpha}<1$
+\end_inset
+
+, the sum above is dominated by the term at 
+\begin_inset Formula $\ell=\ell_{*}$
+\end_inset
+
+.
+ Hence, the amortized cost of updating 
+\begin_inset Formula $\mathbf{T}$
+\end_inset
+
+ is
+\begin_inset Formula 
+\[
+\widetilde{O}(n^{\omega-\frac{\omega-2}{1-\alpha}}2^{2\ell\cdot\frac{\omega-2}{1-\alpha}-\ell}+n^{2}2^{-\ell_{*}})=\widetilde{O}(n^{2}2^{-\ell_{*}})
+\]
+
+\end_inset
+
+where we used 
+\begin_inset Formula $2^{2\ell_{*}}\leq n^{\alpha}$
+\end_inset
+
+ at the end.
+\end_layout
+
+\begin_layout Proof
+Cost of initialize 
+\begin_inset Formula $\mathbf{T}$
+\end_inset
+
+ and 
+\begin_inset Formula $u$
+\end_inset
+
+: 
+\begin_inset Formula $O(n^{\omega})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Since there are 
+\begin_inset Formula $\sqrt{n}\log(t_{\mathrm{end}}/t_{\mathrm{start}})$
+\end_inset
+
+ steps, the total cost is
+\begin_inset Formula 
+\begin{align*}
+ & \widetilde{O}(n^{\omega}+\sqrt{n}\log(t_{\mathrm{end}}/t_{\mathrm{start}})(2^{2\ell_{*}\omega}+n2^{2\ell_{*}}+n^{2}2^{-\ell_{*}}))\\
+= & \widetilde{O}(n^{\omega}+\sqrt{n}\log(t_{\mathrm{end}}/t_{\mathrm{start}})(n2^{2\ell_{*}}+n^{2}2^{-\ell_{*}}))
+\end{align*}
+
+\end_inset
+
+where we used 
+\begin_inset Formula $2^{2\ell_{*}\omega}\leq n^{\alpha\omega}\leq n$
+\end_inset
+
+.
+ Putting 
+\begin_inset Formula $2^{2\ell_{*}}=\min(n^{\alpha},n^{2/3})$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+\widetilde{O}(n^{\omega}+(n^{2+1/6}+n^{5/2-\alpha/2})\log(t_{\mathrm{end}}/t_{\mathrm{start}})).
 \]
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Following Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:SolveLP_apx"
+
+\end_inset
+
+, we have the following Theorem
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:RobustLPApproximate"
+
+\end_inset
+
+Consider a linear program 
+\begin_inset Formula $\min_{\ma x=b,x\geq0}c^{\top}x$
+\end_inset
+
+ with 
+\begin_inset Formula $n$
+\end_inset
+
+ variables and 
+\begin_inset Formula $d$
+\end_inset
+
+ constraints.
+ Assume the linear program has inner radius 
+\begin_inset Formula $r$
+\end_inset
+
+, outer radius 
+\begin_inset Formula $R$
+\end_inset
+
+ and Lipschitz constant 
+\begin_inset Formula $L$
+\end_inset
+
+ (See Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:LP_para"
+
+\end_inset
+
+), we can find 
+\begin_inset Formula $x$
+\end_inset
+
+ such that
+\begin_inset Formula 
+\begin{align*}
+c^{\top}x & \leq\min_{\ma x=b,x\geq0}c^{\top}x+\epsilon LR,\\
+\ma x & =b,\\
+x & \geq0.
+\end{align*}
+
+\end_inset
+
+in time
 \begin_inset Formula 
 \[
-O(2^{2\ell_{k}}(\alpha/\delta)^{2}\log^{2}n)
+\widetilde{O}(n^{\omega}+(n^{2+1/6}+n^{5/2-\alpha/2})\log(nR/(\epsilon r))).
 \]
 
 \end_inset
@@ -5640,88 +5848,76 @@ O(2^{2\ell_{k}}(\alpha/\delta)^{2}\log^{2}n)
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Theorem
+If we further assume that the solution 
+\begin_inset Formula $x^{*}=\arg\min_{\ma x=b,x\geq0}c^{\top}x$
+\end_inset
 
+ is unique and that 
+\begin_inset Formula $c^{\top}x\geq c^{\top}x^{*}+\eta LR$
+\end_inset
+
+ for any other vertex 
+\begin_inset Formula $x$
+\end_inset
+
+ of 
+\begin_inset Formula $\{\ma x=b,x\geq0\}$
+\end_inset
+
+, then we have that 
+\begin_inset Formula $\|x-x^{*}\|_{2}\leq\frac{2\epsilon R}{\eta}$
+\end_inset
+
+.
 \end_layout
 
-\begin_layout Standard
-To simplify the data structure, we note that 
-\end_layout
+\begin_layout Proof
+The algorithm for find 
+\begin_inset Formula $x$
+\end_inset
 
-\begin_layout Standard
-Seems we can maintain the presentation as
-\begin_inset Formula 
-\[
-\mm\mx\mm
-\]
+ is same as 
+\begin_inset Formula $\mathtt{L2LPApproximate}$
+\end_inset
+
+ except the function 
+\begin_inset Formula $\mathtt{L2Step}$
+\end_inset
+
+ is replaced by the function 
+\begin_inset Formula $\mathtt{FastRobustStep}$
+\end_inset
+
+.
+ The runtime of 
+\begin_inset Formula $\mathtt{FastRobustStep}$
+\end_inset
+
+ is analyzed in Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:FastRobustStepTime"
 
 \end_inset
 
-Instead of multilayer, just 1 layer.
- But we remember the 
-\begin_inset Formula $\log n$
+.
+ Since 
+\begin_inset Formula $\mathtt{FastRobustStep}$
 \end_inset
 
- different 
-\begin_inset Formula $\mm$
+ is a instantiation of 
+\begin_inset Formula $\mathtt{RobustStep}$
 \end_inset
 
- for different scale.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\mm\mx\mm\mx_{2}\mm\mx\mm
-\]
+, the property of the output is analyzed in Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:RobustStep"
 
 \end_inset
 
-Seems okay...
-\begin_inset Formula 
-\[
-n\times k
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\mm_{x,s}x=\delta
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\mm_{x,s}\defeq\left(\begin{array}{ccc}
-\ms & \mx & \mzero\\
-\ma & \mzero & \mzero\\
-\mzero & \mi & \ma^{\top}
-\end{array}\right)
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\begin{align}
-xs+\ms\delta_{x}+\mx\delta_{s} & =\mu,\label{eq:LP_newton_step-1}\\
-\ma\delta_{x} & =0,\nonumber \\
-\ma^{\top}\delta_{y}+\delta_{s} & =0,\nonumber 
-\end{align}
-
-\end_inset
-
-
+.
 \end_layout
 
 \begin_layout Standard
