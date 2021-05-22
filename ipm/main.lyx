@@ -5471,7 +5471,7 @@ reference "alg:FastRobustStep"
 ) takes 
 \begin_inset Formula 
 \[
-\widetilde{O}(n^{\omega}+(n^{2+1/6}+n^{5/2-\alpha/2})\log(t_{\mathrm{end}}/t_{\mathrm{start}}))
+\widetilde{O}((n^{\omega}+n^{2+1/6}+n^{5/2-\alpha/2})\log(t_{\mathrm{end}}/t_{\mathrm{start}}))
 \]
 
 \end_inset
@@ -5681,9 +5681,10 @@ reference "lem:maintain_inverse"
 
  iterations, the amortized cost is
 \begin_inset Formula 
-\[
-\widetilde{O}(\sum_{\ell=\ell_{*}}^{\frac{1}{2}\log n}2^{-\ell}T_{n,n,2^{2\ell}})=\widetilde{O}(\sum_{\ell=\ell_{*}}^{\frac{1}{2}\log n}(n^{\omega-\frac{\omega-2}{1-\alpha}}2^{2\ell\cdot\frac{\omega-2}{1-\alpha}-\ell}+n^{2}2^{-\ell}))
-\]
+\begin{align*}
+\widetilde{O}(\sum_{\ell=\ell_{*}}^{\frac{1}{2}\log n}2^{-\ell}T_{n,n,2^{2\ell}}) & =\widetilde{O}(\sum_{\ell=\ell_{*}}^{\frac{1}{2}\log n}(n^{\omega-\frac{\omega-2}{1-\alpha}}2^{2\ell\cdot\frac{\omega-2}{1-\alpha}-\ell}+n^{2}2^{-\ell}))\\
+ & =\widetilde{O}(\sum_{\ell=\ell_{*}}^{\frac{1}{2}\log n}n^{\omega-\frac{\omega-2}{1-\alpha}}2^{2\ell\cdot\frac{\omega-2}{1-\alpha}-\ell}+n^{2}2^{-\ell_{*}})
+\end{align*}
 
 \end_inset
 
@@ -5695,12 +5696,12 @@ reference "lem:Tnnr_est"
 \end_inset
 
 .
- Since 
-\begin_inset Formula $2\frac{\omega-2}{1-\alpha}<1$
+ The sum above is dominated by either the term at 
+\begin_inset Formula $\ell=0$
 \end_inset
 
-, the sum above is dominated by the term at 
-\begin_inset Formula $\ell=\ell_{*}$
+ or the term at 
+\begin_inset Formula $\ell=\frac{1}{2}\log n$
 \end_inset
 
 .
@@ -5711,16 +5712,20 @@ reference "lem:Tnnr_est"
  is
 \begin_inset Formula 
 \[
-\widetilde{O}(n^{\omega-\frac{\omega-2}{1-\alpha}}2^{2\ell\cdot\frac{\omega-2}{1-\alpha}-\ell}+n^{2}2^{-\ell_{*}})=\widetilde{O}(n^{2}2^{-\ell_{*}})
+\widetilde{O}(n^{\omega-\frac{\omega-2}{1-\alpha}}2^{2\ell_{*}\cdot\frac{\omega-2}{1-\alpha}-\ell_{*}}+n^{\omega-\frac{1}{2}}+n^{2}2^{-\ell_{*}})=\widetilde{O}(n^{\omega-\frac{1}{2}}+n^{2}2^{-\ell_{*}})
 \]
 
 \end_inset
 
 where we used 
+\begin_inset Formula $n^{\omega-\frac{\omega-2}{1-\alpha}}2^{2\ell_{*}\cdot\frac{\omega-2}{1-\alpha}}\leq n^{2}$
+\end_inset
+
+ since 
 \begin_inset Formula $2^{2\ell_{*}}\leq n^{\alpha}$
 \end_inset
 
- at the end.
+.
 \end_layout
 
 \begin_layout Proof
@@ -5747,8 +5752,8 @@ Since there are
  steps, the total cost is
 \begin_inset Formula 
 \begin{align*}
- & \widetilde{O}(n^{\omega}+\sqrt{n}\log(t_{\mathrm{end}}/t_{\mathrm{start}})(2^{2\ell_{*}\omega}+n2^{2\ell_{*}}+n^{2}2^{-\ell_{*}}))\\
-= & \widetilde{O}(n^{\omega}+\sqrt{n}\log(t_{\mathrm{end}}/t_{\mathrm{start}})(n2^{2\ell_{*}}+n^{2}2^{-\ell_{*}}))
+ & \widetilde{O}(n^{\omega}+\sqrt{n}\log(t_{\mathrm{end}}/t_{\mathrm{start}})(2^{2\ell_{*}\omega}+n2^{2\ell_{*}}+n^{\omega-\frac{1}{2}}+n^{2}2^{-\ell_{*}}))\\
+= & \widetilde{O}(\sqrt{n}\log(t_{\mathrm{end}}/t_{\mathrm{start}})(n2^{2\ell_{*}}+n^{\omega-\frac{1}{2}}+n^{2}2^{-\ell_{*}}))
 \end{align*}
 
 \end_inset
@@ -5765,7 +5770,7 @@ where we used
 , we have
 \begin_inset Formula 
 \[
-\widetilde{O}(n^{\omega}+(n^{2+1/6}+n^{5/2-\alpha/2})\log(t_{\mathrm{end}}/t_{\mathrm{start}})).
+\widetilde{O}((n^{\omega}+n^{2+1/6}+n^{5/2-\alpha/2})\log(t_{\mathrm{end}}/t_{\mathrm{start}})).
 \]
 
 \end_inset
@@ -5840,7 +5845,7 @@ x & \geq0.
 in time
 \begin_inset Formula 
 \[
-\widetilde{O}(n^{\omega}+(n^{2+1/6}+n^{5/2-\alpha/2})\log(nR/(\epsilon r))).
+\widetilde{O}((n^{\omega}+n^{2+1/6}+n^{5/2-\alpha/2})\log(nR/(\epsilon r))).
 \]
 
 \end_inset
