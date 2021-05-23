@@ -3870,7 +3870,7 @@ Note that
 \begin_inset Formula $\mathtt{RobustStep}$
 \end_inset
 
- decrease 
+ decreases 
 \begin_inset Formula $t$
 \end_inset
 
@@ -3883,7 +3883,7 @@ Note that
 \begin_inset Formula $\mathtt{L2Step}$
 \end_inset
 
-, this new algorithm is slower.
+, this new algorithm is a bit slower.
 \end_layout
 
 \begin_layout Subsection
