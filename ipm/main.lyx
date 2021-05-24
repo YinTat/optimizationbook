@@ -4711,8 +4711,8 @@ For any invertible matrix
 \end_layout
 
 \begin_layout Standard
-Hence, the question of maintain the solution reduces to the problem of maintaini
-ng a column of the inverse of the matrix
+Hence, the question of maintaining the solution reduces to the problem of
+ maintaining a column of the inverse of the matrix
 \begin_inset Formula 
 \begin{equation}
 \mm_{\ox,\os,\overline{r}}\defeq\left(\begin{array}{cccc}
@@ -4745,7 +4745,7 @@ Now, when we update
 \begin_inset Formula $\mm$
 \end_inset
 
- is changed.
+ that are changed.
  Hence, we can compute the update the inverse of 
 \begin_inset Formula $\mm$
 \end_inset
