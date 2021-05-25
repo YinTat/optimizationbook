@@ -1559,10 +1559,9 @@ Let
  defined in the algorithm.
  Note that
 \begin_inset Formula 
-\begin{align*}
-x's'-t'= & (x+\delta_{x})(s+\delta_{s})-t'\\
-= & \mu+\ms\delta_{x}+\mx\delta_{s}+\delta_{x}\delta_{s}-t'.
-\end{align*}
+\[
+x's'-t'=(x+\delta_{x})(s+\delta_{s})-t'=\mu+\ms\delta_{x}+\mx\delta_{s}+\delta_{x}\delta_{s}-t'.
+\]
 
 \end_inset
 
@@ -1578,21 +1577,16 @@ reference "lem:Newton_step"
 \end_inset
 
 .
- Hence, we have
-\begin_inset Formula 
-\[
-x's'-t'=\delta_{x}\delta_{s}=\mx^{-1}\delta_{x}\cdot\ms^{-1}\delta_{s}\cdot\mu
-\]
-
+ Hence, we have 
+\begin_inset Formula $x's'-t'=\delta_{x}\delta_{s}=\mx^{-1}\delta_{x}\cdot\ms^{-1}\delta_{s}\cdot\mu$
 \end_inset
 
-Using this, we have
+.
+ Using this, we have
 \begin_inset Formula 
-\begin{align*}
-\|x's'-t'\|_{2} & \leq\|\mu^{1/2}\mx^{-1}\delta_{x}\|_{2}\|\mu^{1/2}\ms^{-1}\delta_{s}\|_{2}\\
- & =\|\mx^{-1}\delta_{x}\|_{\mu}\|\ms^{-1}\delta_{s}\|_{\mu}\\
- & \leq\|\delta_{\mu}/\mu\|_{\mu}^{2}
-\end{align*}
+\[
+\|x's'-t'\|_{2}\leq\|\mu^{1/2}\mx^{-1}\delta_{x}\|_{2}\|\mu^{1/2}\ms^{-1}\delta_{s}\|_{2}=\|\mx^{-1}\delta_{x}\|_{\mu}\|\ms^{-1}\delta_{s}\|_{\mu}\leq\|\delta_{\mu}/\mu\|_{\mu}^{2}.
+\]
 
 \end_inset
 
@@ -1613,10 +1607,9 @@ Using
 
 , we have
 \begin_inset Formula 
-\begin{align*}
-\|\delta_{\mu}/\mu\|_{\mu} & =\|\frac{t'}{t}\frac{t-\mu}{\mu}+(\frac{t'}{t}-1)\|_{\mu}\\
- & \leq\frac{t'}{t}\|xs-t\|_{\mu^{-1}}+\|\frac{t'}{t}-1\|_{\mu}.
-\end{align*}
+\[
+\|\delta_{\mu}/\mu\|_{\mu}=\|\frac{t'}{t}\frac{t-\mu}{\mu}+(\frac{t'}{t}-1)\|_{\mu}\leq\frac{t'}{t}\|xs-t\|_{\mu^{-1}}+\|\frac{t'}{t}-1\|_{\mu}.
+\]
 
 \end_inset
 
@@ -2002,8 +1995,7 @@ and that
 
 \end_deeper
 \begin_layout Proof
-Since the proof is a bit complicated and not illuminating, we defer the
- proof to Appendix 
+Since the proof is not illuminating, we defer the proof to Appendix 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:IPM_interior"
@@ -2786,7 +2778,7 @@ To make the interior point method robust to noise in the updates to
 \end_inset
 
 ).
- We cannot simply increase the radius of the 
+ We cannot increase the radius of the 
 \begin_inset Formula $\ell_{2}$
 \end_inset
 
@@ -2798,7 +2790,7 @@ To make the interior point method robust to noise in the updates to
 \end_inset
 
 .
- However, analyzing the step 
+ However, the step 
 \begin_inset Formula $\delta_{\mu}$
 \end_inset
 
@@ -2819,14 +2811,13 @@ with
 \begin_inset Formula $r=\frac{xs-t}{t}$
 \end_inset
 
-.
  for some scalar 
 \begin_inset Formula $\lambda=\Theta(\log n)$
 \end_inset
 
 .
- This potential induces the following algorithm, each step of the algorithm
- choose 
+ This potential induces the following algorithm where each step of the algorithm
+ takes the step 
 \begin_inset Formula $\delta_{\mu}\approx-c\nabla\Phi(\frac{xs-t}{t})$
 \end_inset
 
@@ -2896,11 +2887,11 @@ name "alg:RobustStep"
 Define
 \series default
  
-\begin_inset Formula $r=(xs-t)/t$
+\begin_inset Formula $\Phi(r)$
 \end_inset
 
  and 
-\begin_inset Formula $\Phi$
+\begin_inset Formula $r$
 \end_inset
 
  according to 
@@ -3091,7 +3082,7 @@ Return
 \begin_inset Formula $(x,s)$
 \end_inset
 
-
+.
 \end_layout
 
 \begin_layout Standard
@@ -3126,7 +3117,7 @@ name "lem:robust_IPM_Phi"
 \end_inset
 
 Define 
-\begin_inset Formula $\Phi$
+\begin_inset Formula $\Phi(r)$
 \end_inset
 
  according to 
@@ -3141,20 +3132,20 @@ noprefix "false"
 
 .
  For any 
-\begin_inset Formula $v\in\Rn$
+\begin_inset Formula $r\in\Rn$
 \end_inset
 
 , we have that 
-\begin_inset Formula $\|v\|_{\infty}\leq\frac{\log2\Phi(v)}{\lambda}$
+\begin_inset Formula $\|r\|_{\infty}\leq\frac{\log2\Phi(r)}{\lambda}$
 \end_inset
 
  and 
-\begin_inset Formula $\|\nabla\Phi(v)\|_{2}\geq\frac{\lambda}{\sqrt{n}}(\Phi(v)-n)$
+\begin_inset Formula $\|\nabla\Phi(r)\|_{2}\geq\frac{\lambda}{\sqrt{n}}(\Phi(r)-n)$
 \end_inset
 
 .
  Moreover, if 
-\begin_inset Formula $\Phi(v)\geq4n$
+\begin_inset Formula $\Phi(r)\geq4n$
 \end_inset
 
  and 
@@ -3164,7 +3155,7 @@ noprefix "false"
 , we have 
 \begin_inset Formula 
 \[
-\|\nabla\Phi(v+\delta)-\nabla\Phi(v)\|_{2}\leq\frac{1}{3}\|\nabla\Phi(v)\|_{2}.
+\|\nabla\Phi(r+\delta)-\nabla\Phi(r)\|_{2}\leq\frac{1}{3}\|\nabla\Phi(r)\|_{2}.
 \]
 
 \end_inset
@@ -3174,11 +3165,11 @@ noprefix "false"
 
 \begin_layout Proof
 We have 
-\begin_inset Formula $\Phi(v)\geq\frac{1}{2}\min_{i}e^{\lambda|v_{i}|}$
+\begin_inset Formula $\Phi(r)\geq\frac{1}{2}\min_{i}e^{\lambda|r_{i}|}$
 \end_inset
 
  and hence 
-\begin_inset Formula $\|v\|_{\infty}\leq\frac{\log2\Phi(v)}{\lambda}$
+\begin_inset Formula $\|r\|_{\infty}\leq\frac{\log2\Phi(r)}{\lambda}$
 \end_inset
 
 .
@@ -3186,12 +3177,16 @@ We have
 \end_layout
 
 \begin_layout Proof
-For the second claim, we have
+For the second claim, wsing that 
+\begin_inset Formula $\nabla\Phi(r)=\sum_{i=1}^{n}\lambda\sinh(\lambda r_{i})$
+\end_inset
+
+, we have
 \begin_inset Formula 
 \begin{align*}
-\|\nabla\Phi(v)\|_{2} & =\lambda\sqrt{\sum_{i=1}^{n}\sinh^{2}(\lambda v_{i})}=\lambda\sqrt{\sum_{i=1}^{n}(\cosh^{2}(\lambda v_{i})-1)}\\
- & \geq\frac{\lambda}{\sqrt{n}}\sum_{i=1}^{n}\sqrt{\cosh^{2}(\lambda v_{i})-1}\geq\frac{\lambda}{\sqrt{n}}\sum_{i=1}^{n}(\cosh(\lambda v_{i})-1)\\
- & =\frac{\lambda}{\sqrt{n}}(\Phi(v)-n).
+\|\nabla\Phi(r)\|_{2} & =\lambda\sqrt{\sum_{i=1}^{n}\sinh^{2}(\lambda r_{i})}=\lambda\sqrt{\sum_{i=1}^{n}(\cosh^{2}(\lambda r_{i})-1)}\\
+ & \geq\frac{\lambda}{\sqrt{n}}\sum_{i=1}^{n}\sqrt{\cosh^{2}(\lambda r_{i})-1}\geq\frac{\lambda}{\sqrt{n}}\sum_{i=1}^{n}(\cosh(\lambda r_{i})-1)\\
+ & =\frac{\lambda}{\sqrt{n}}(\Phi(r)-n).
 \end{align*}
 
 \end_inset
@@ -3201,11 +3196,11 @@ For the second claim, we have
 
 \begin_layout Proof
 For the last claim, using 
-\begin_inset Formula $\sinh(v+\delta)=\sinh v\cosh\delta+\cosh v\sinh\delta$
+\begin_inset Formula $\sinh(r+\delta)=\sinh r\cosh\delta+\cosh r\sinh\delta$
 \end_inset
 
  and 
-\begin_inset Formula $|\cosh v-\sinh v|\leq1$
+\begin_inset Formula $|\cosh r-\sinh r|\leq1$
 \end_inset
 
 , for 
@@ -3215,15 +3210,15 @@ For the last claim, using
 , we have
 \begin_inset Formula 
 \begin{align*}
-|\sinh(v+\delta)-\sinh(v)| & \leq|\cosh\delta-1|\cdot|\sinh v|+|\sinh\delta|\cdot\cosh v\\
- & \leq\left(|\cosh\delta-1|+|\sinh\delta|\right)\cdot|\sinh v|+|\sinh\delta|\\
- & \leq\frac{1}{4}|\sinh v|+\frac{1}{4}.
+|\sinh(r+\delta)-\sinh(r)| & \leq|\cosh\delta-1|\cdot|\sinh r|+|\sinh\delta|\cdot\cosh r\\
+ & \leq\left(|\cosh\delta-1|+|\sinh\delta|\right)\cdot|\sinh r|+|\sinh\delta|\\
+ & \leq\frac{1}{4}|\sinh r|+\frac{1}{4}.
 \end{align*}
 
 \end_inset
 
 Using that 
-\begin_inset Formula $\nabla\Phi(v)=\sum_{i=1}^{n}\lambda\sinh(\lambda v_{i})$
+\begin_inset Formula $\nabla\Phi(r)=\sum_{i=1}^{n}\lambda\sinh(\lambda r_{i})$
 \end_inset
 
 , for 
@@ -3233,17 +3228,17 @@ Using that
 , we have
 \begin_inset Formula 
 \begin{equation}
-\|\nabla\Phi(v+\delta)-\nabla\Phi(v)\|_{2}\leq\frac{1}{4}\|\nabla\Phi(v)\|_{2}+\frac{\sqrt{n}\lambda}{4}.\label{eq:grad_phi_diff}
+\|\nabla\Phi(r+\delta)-\nabla\Phi(r)\|_{2}\leq\frac{1}{4}\|\nabla\Phi(r)\|_{2}+\frac{\sqrt{n}\lambda}{4}.\label{eq:grad_phi_diff}
 \end{equation}
 
 \end_inset
 
 Since 
-\begin_inset Formula $\Phi(v)\geq4n$
+\begin_inset Formula $\Phi(r)\geq4n$
 \end_inset
 
 , we have that 
-\begin_inset Formula $\|\nabla\Phi(v)\|_{2}\geq3\sqrt{n}\lambda$
+\begin_inset Formula $\|\nabla\Phi(r)\|_{2}\geq3\sqrt{n}\lambda$
 \end_inset
 
  and hence 
@@ -3259,7 +3254,7 @@ noprefix "false"
  shows that
 \begin_inset Formula 
 \[
-\|\nabla\Phi(v+\delta)-\nabla\Phi(v)\|_{2}\leq(\frac{1}{4}+\frac{1}{12})\|\nabla\Phi(v)\|_{2}=\frac{1}{3}\|\nabla\Phi(v)\|_{2}.
+\|\nabla\Phi(r+\delta)-\nabla\Phi(r)\|_{2}\leq(\frac{1}{4}+\frac{1}{12})\|\nabla\Phi(r)\|_{2}=\frac{1}{3}\|\nabla\Phi(r)\|_{2}.
 \]
 
 \end_inset
@@ -3343,15 +3338,11 @@ reference "lem:Newton_step"
 
 \end_inset
 
-, we have
-\begin_inset Formula 
-\[
-\mx^{-1}\delta_{x}=(\mi-\mproj)(\overline{\delta}_{\mu}/\overline{\mu})
-\]
-
+, we have 
+\begin_inset Formula $\mx^{-1}\delta_{x}=(\mi-\mproj)(\overline{\delta}_{\mu}/\overline{\mu})$
 \end_inset
 
-where 
+ where 
 \begin_inset Formula $\overline{\mu}=\ox\os$
 \end_inset
 
@@ -3400,17 +3391,13 @@ Using that
 \end_inset
 
 Using the formula 
-\begin_inset Formula $\overline{\delta}_{\mu}=t'-t-\frac{t'}{32\lambda}\frac{\overline{g}}{\|\overline{g}\|_{2}}$
-\end_inset
-
- and 
-\begin_inset Formula $|t'-t|\leq\frac{t'}{128\lambda\sqrt{n}}$
+\begin_inset Formula $\overline{\delta}_{\mu}=-\frac{t'}{32\lambda}\frac{\overline{g}}{\|\overline{g}\|_{2}}$
 \end_inset
 
 , we have
 \begin_inset Formula 
 \begin{align*}
-\|\delta_{x}/x\|_{2} & \leq\frac{11}{10}\left(\|\frac{t'-t}{t}\|_{2}+\frac{t'}{100\lambda t}\right)\leq\frac{1}{16\lambda}.
+\|\delta_{x}/x\|_{2} & \leq\frac{11}{10}\frac{t'}{32\lambda t}\leq\frac{1}{16\lambda}.
 \end{align*}
 
 \end_inset
@@ -3428,10 +3415,6 @@ Using this, we prove the algorithm
 \end_inset
 
  satisfies the invariant on the distance.
-\end_layout
-
-\begin_layout Standard
-Now, we are ready to prove the main theorem.
 \end_layout
 
 \begin_layout Lemma
@@ -3484,7 +3467,7 @@ Suppose that the input satisfies
 \end_inset
 
 Furthermore, we have that 
-\begin_inset Formula $\|r^{(k+1)}-r^{(k)}\|_{2}\leq\frac{1}{5\lambda}$
+\begin_inset Formula $\|r^{(k+1)}-r^{(k)}\|_{2}\leq\frac{1}{16\lambda}$
 \end_inset
 
  where 
@@ -3518,10 +3501,7 @@ Fix some iteration
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Proof
-By the definition of 
+ By the definition of 
 \begin_inset Formula $\delta_{x}$
 \end_inset
 
@@ -3530,19 +3510,14 @@ By the definition of
 \end_inset
 
 , we have 
-\begin_inset Formula 
-\[
-\oms\delta_{x}+\omx\delta_{s}=\overline{\delta}_{\mu}=t'-t-\frac{t'}{32\lambda}\frac{\overline{g}}{\|\overline{g}\|_{2}}
-\]
-
+\begin_inset Formula $\oms\delta_{x}+\omx\delta_{s}=\overline{\delta}_{\mu}=-\frac{t'}{32\lambda}\frac{\overline{g}}{\|\overline{g}\|_{2}}$
 \end_inset
 
-and hence
+ and hence
 \begin_inset Formula 
 \begin{align}
-\frac{x's'-t'}{t'}= & \frac{(x+\delta_{x})(s+\delta_{s})-t'}{t'}\nonumber \\
-= & \frac{xs+s\delta+x\delta_{s}+\delta_{x}\delta_{s}-t'}{t'}\nonumber \\
-= & \frac{xs-t'+s\delta_{x}+x\delta_{s}+(s-\os)\delta_{x}+(x-\ox)\delta_{s}+\delta_{x}\delta_{s}}{t'}\nonumber \\
+\frac{x's'-t'}{t'}= & \frac{(x+\delta_{x})(s+\delta_{s})-t'}{t'}=\frac{xs+s\delta_{x}+x\delta_{s}+\delta_{x}\delta_{s}-t'}{t'}\nonumber \\
+= & \frac{xs-t'+\os\delta_{x}+\ox\delta_{s}+(s-\os)\delta_{x}+(x-\ox)\delta_{s}+\delta_{x}\delta_{s}}{t'}\nonumber \\
 = & \frac{xs-t}{t}-\frac{1}{32\lambda}\cdot\frac{\overline{g}}{\|\overline{g}\|_{2}}+\eta\label{eq:IPM_robust_r_diff}
 \end{align}
 
@@ -3551,7 +3526,7 @@ and hence
 where the error term
 \begin_inset Formula 
 \[
-\eta=\frac{t-t'}{t}+(\frac{t}{t'}-1)\frac{xs-t}{t}+\frac{(s-\os)\delta_{x}+(x-\ox)\delta_{s}+\delta_{x}\delta_{s}}{t'}.
+\eta=(\frac{t}{t'}-1)\frac{xs}{t}+\frac{(s-\os)\delta_{x}+(x-\ox)\delta_{s}+\delta_{x}\delta_{s}}{t'}.
 \]
 
 \end_inset
@@ -3599,9 +3574,9 @@ reference "lem:RobustIPM_basic"
 ), we have
 \begin_inset Formula 
 \begin{align}
-\|\eta\|_{2}\leq & |\frac{t'}{t}-1|\sqrt{n}+|\frac{t}{t'}-1|\|\frac{xs-t}{t}\|_{\infty}\sqrt{n}+\|\frac{xs}{t'}\|_{\infty}\|\frac{s-\os}{s}\|_{\infty}\|\frac{\delta_{x}}{x}\|_{2}\nonumber \\
+\|\eta\|_{2}\leq & |\frac{t}{t'}-1|\|\frac{xs}{t}\|_{\infty}\sqrt{n}+\|\frac{xs}{t'}\|_{\infty}\|\frac{s-\os}{s}\|_{\infty}\|\frac{\delta_{x}}{x}\|_{2}\nonumber \\
  & +\|\frac{xs}{t'}\|_{\infty}\|\frac{x-\ox}{x}\|_{\infty}\|\frac{\delta_{s}}{s}\|_{2}+\|\frac{xs}{t'}\|_{\infty}\|\frac{\delta_{x}}{x}\|_{2}\|\frac{\delta_{s}}{s}\|_{2}\nonumber \\
-\leq & \frac{1}{128\lambda}+\frac{1}{128\lambda}\frac{1}{16}+\frac{9}{8}(e^{1/48}-1)(\frac{1}{16\lambda}+\frac{1}{16\lambda})+\frac{9}{8}(\frac{1}{16\lambda}\frac{1}{16\lambda})\leq\frac{1}{80\lambda}.\label{eq:robust_IPM_eta}
+\leq & \frac{1}{128\lambda}\frac{17}{16}+\frac{9}{8}(e^{1/48}-1)(\frac{1}{16\lambda}+\frac{1}{16\lambda})+\frac{9}{8}(\frac{1}{16\lambda}\frac{1}{16\lambda})\leq\frac{1}{60\lambda}.\label{eq:robust_IPM_eta}
 \end{align}
 
 \end_inset
@@ -3694,10 +3669,9 @@ Mean value theorem shows there is
 
  such that
 \begin_inset Formula 
-\begin{align*}
-\Phi(r') & =\Phi(r)+\left\langle \nabla\Phi(\widetilde{r}),r'-r\right\rangle \\
- & =\Phi(r)+\left\langle \nabla\Phi(\widetilde{r}),-\frac{1}{32\lambda}\frac{\overline{g}}{\|\overline{g}\|_{2}}+\eta\right\rangle 
-\end{align*}
+\[
+\Phi(r')=\Phi(r)+\left\langle \nabla\Phi(\widetilde{r}),r'-r\right\rangle =\Phi(r)+\left\langle \nabla\Phi(\widetilde{r}),-\frac{1}{32\lambda}\frac{\overline{g}}{\|\overline{g}\|_{2}}+\eta\right\rangle 
+\]
 
 \end_inset
 
@@ -3712,23 +3686,15 @@ noprefix "false"
 \end_inset
 
  at the end.
- Using Lemma 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:RobustIPM_basic"
-
+ Using 
+\begin_inset Formula $\|r-r'\|_{2}\leq\frac{1}{16\lambda}$
 \end_inset
 
-, we have 
-\begin_inset Formula $\|r-r'\|_{\infty}\leq\frac{1}{6\lambda}$
-\end_inset
-
- and by assumption, 
+ and 
 \begin_inset Formula $\|\overline{r}-r\|_{\infty}\leq\frac{1}{48\lambda}$
 \end_inset
 
-.
- Hence, we have 
+ (by assumption), we have 
 \begin_inset Formula $\|\overline{r}-\widetilde{r}\|_{\infty}\leq\frac{1}{5\lambda}$
 \end_inset
 
@@ -3766,10 +3732,9 @@ Using
 
 , we have
 \begin_inset Formula 
-\begin{align*}
-\Phi(r')-\Phi(r)= & \left\langle \overline{g}+\eta_{2},-\frac{1}{32\lambda}\frac{\overline{g}}{\|\overline{g}\|_{2}}+\eta\right\rangle \\
-= & -\frac{1}{32\lambda}\|\overline{g}\|_{2}-\frac{1}{32\lambda}\eta_{2}^{\top}\frac{\overline{g}}{\|\overline{g}\|_{2}}+\overline{g}^{\top}\eta+\eta_{2}^{\top}\eta.
-\end{align*}
+\[
+\Phi(r')-\Phi(r)=\left\langle \overline{g}+\eta_{2},-\frac{1}{32\lambda}\frac{\overline{g}}{\|\overline{g}\|_{2}}+\eta\right\rangle =-\frac{1}{32\lambda}\|\overline{g}\|_{2}-\frac{1}{32\lambda}\eta_{2}^{\top}\frac{\overline{g}}{\|\overline{g}\|_{2}}+\overline{g}^{\top}\eta+\eta_{2}^{\top}\eta.
+\]
 
 \end_inset
 
@@ -3778,7 +3743,7 @@ Using
 \end_inset
 
  and 
-\begin_inset Formula $\|\eta\|_{2}\leq\frac{1}{80\lambda}$
+\begin_inset Formula $\|\eta\|_{2}\leq\frac{1}{60\lambda}$
 \end_inset
 
  
@@ -3794,8 +3759,7 @@ noprefix "false"
 , we have
 \begin_inset Formula 
 \begin{align*}
-\Phi(r')-\Phi(r) & \leq-\frac{1}{32\lambda}\|\overline{g}\|_{2}+\frac{1}{32\lambda}\cdot\frac{1}{3}\|\overline{g}\|_{2}+\|\overline{g}\|_{2}\cdot\frac{1}{80\lambda}+\frac{1}{3}\|\overline{g}\|_{2}\cdot\frac{1}{80\lambda}\\
- & \leq-\frac{1}{270\lambda}\|\overline{g}\|_{2}
+\Phi(r')-\Phi(r) & \leq-\frac{1}{32\lambda}\|\overline{g}\|_{2}+\frac{1}{32\lambda}\cdot\frac{1}{3}\|\overline{g}\|_{2}+\|\overline{g}\|_{2}\cdot\frac{1}{60\lambda}+\frac{1}{3}\|\overline{g}\|_{2}\cdot\frac{1}{60\lambda}\leq-\frac{1}{720\lambda}\|\overline{g}\|_{2}
 \end{align*}
 
 \end_inset
@@ -3815,112 +3779,17 @@ reference "lem:robust_IPM_Phi"
  Hence, we have
 \begin_inset Formula 
 \begin{equation}
-\Phi(r')\leq\Phi(r)-\frac{\sqrt{n}}{40}<16n.\label{eq:IPM_robust_decrease}
+\Phi(r')\leq\Phi(r)-\frac{\sqrt{n}}{240}<16n.\label{eq:IPM_robust_decrease}
 \end{equation}
 
 \end_inset
 
 The potential actually decreases in this case.
- So, in both cases, we have that 
-\begin_inset Formula $\Phi(r')\leq16n$
+ This proves the conclusion about 
+\begin_inset Formula $\Phi$
 \end_inset
 
 .
- Suppose that the input satisfies 
-\begin_inset Formula $(x,s)\in\PriR^{\circ}\times\DualR^{\circ}$
-\end_inset
-
- and 
-\begin_inset Formula $\Phi((xs-t_{\mathrm{start}})/t_{\mathrm{start}})\leq16n$
-\end_inset
-
-.
- Then the algorithm 
-\begin_inset Formula $\mathtt{RobustStep}$
-\end_inset
-
- (Algorithm 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "alg:RobustStep"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-) outputs 
-\begin_inset Formula $x$
-\end_inset
-
- and 
-\begin_inset Formula $s$
-\end_inset
-
- such that 
-\begin_inset Formula $\Phi((xs-t_{\mathrm{end}})/t_{\mathrm{end}})\leq12n$
-\end_inset
-
-.
- Furthermore, 
-\begin_inset Formula $\mathtt{RobustStep}$
-\end_inset
-
- takes 
-\begin_inset Formula $O(\sqrt{n}\log n\log(t_{\mathrm{start}}/t_{\mathrm{end}}))$
-\end_inset
-
- Newton steps (defined in 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:LP_newton_step"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-) and that each step satisfies 
-\begin_inset Formula $\|r'-r\|_{2}\leq\frac{1}{16\lambda}$
-\end_inset
-
- where 
-\begin_inset Formula $r'=((x+\delta_{x})(s+\delta_{s})-t')/t'$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Proof
-The guarantee of the output follows from Lemma 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:RobustStep"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-Note that 
-\begin_inset Formula $\mathtt{RobustStep}$
-\end_inset
-
- decreases 
-\begin_inset Formula $t$
-\end_inset
-
- by a 
-\begin_inset Formula $\Omega(1/(\sqrt{n}\log n))$
-\end_inset
-
- factor.
- So, if we implement the Newton step in the same way as 
-\begin_inset Formula $\mathtt{L2Step}$
-\end_inset
-
-, this new algorithm is a bit slower.
 \end_layout
 
 \begin_layout Subsection
@@ -3985,20 +3854,16 @@ for some vectors
 \end_inset
 
  and 
-\begin_inset Formula $r_{i}$
+\begin_inset Formula $r$
 \end_inset
 
- changes significant each step and hence we can maintain the solution of
- the linear system instead of computing from scratch.
+ changes significantly each step and hence we can maintain the solution
+ of the linear system instead of computing from scratch.
  In this section, we discuss how to select 
 \begin_inset Formula $\ox,\os,\overline{r}$
 \end_inset
 
- such that there are only as few updates to 
-\begin_inset Formula $\ox,\os,\overline{r}$
-\end_inset
-
- as possible while maintaining the invariants.
+ with as few updates as possible while maintaining the invariants.
 \end_layout
 
 \begin_layout Standard
@@ -4053,7 +3918,7 @@ reference "lem:RobustStep"
 \end_inset
 
  are all bounded by 
-\begin_inset Formula $1/(5\lambda)$
+\begin_inset Formula $1/(8\lambda)$
 \end_inset
 
 .
@@ -4128,11 +3993,11 @@ reference "lem:robust_IPM_Phi"
 
 ).
  Together with the fact that 
-\begin_inset Formula $\|\frac{\ox^{(k)}-x^{(k)}}{x^{(k)}}\|_{\infty}\leq\frac{1}{48}$
+\begin_inset Formula $\|\ln\ox^{(k)}-\ln x^{(k)}\|_{\infty}\leq\frac{1}{48}$
 \end_inset
 
 , 
-\begin_inset Formula $\|\frac{\os^{(k)}-s^{(k)}}{s^{(k)}}\|_{\infty}\leq\frac{1}{48}$
+\begin_inset Formula $\|\ln\os^{(k)}-\ln s^{(k)}\|_{\infty}\leq\frac{1}{48}$
 \end_inset
 
 , we have
@@ -4263,7 +4128,32 @@ Now, we state the algorithm for selecting
 \end_inset
 
 .
- This is a general algorithm for selecting an approximate vector.
+ This algorithm is a general algorithm for maintaining a vector 
+\begin_inset Formula $\overline{v}$
+\end_inset
+
+ such that 
+\begin_inset Formula $\|\overline{v}-v\|_{\infty}\leq\delta$
+\end_inset
+
+.
+ For any 
+\begin_inset Formula $2^{k}$
+\end_inset
+
+ steps, the algorithm updates the coordinate of the vector 
+\begin_inset Formula $\overline{v}$
+\end_inset
+
+ if that coordinate has changed more than 
+\begin_inset Formula $\delta/(2\log n)$
+\end_inset
+
+ between this step and the 
+\begin_inset Formula $2^{k}$
+\end_inset
+
+ steps ago.
 \end_layout
 
 \begin_layout Standard
@@ -4606,20 +4496,25 @@ Given vectors
 
 \end_deeper
 \begin_layout Proof
-For the accuracy result, we first fix some coordinate 
+For the accuracy, we first fix some coordinate 
 \begin_inset Formula $i\in[n]$
 \end_inset
 
 .
- Note that 
-\begin_inset Formula $\overline{v}_{i}^{(k)}=v_{i}^{(k')}$
+ Let 
+\begin_inset Formula $k'$
 \end_inset
 
- for some 
-\begin_inset Formula $k-2^{\left\lceil \log n\right\rceil }<k'<k$
+ is the last iteration such that 
+\begin_inset Formula $\overline{v}_{i}$
 \end_inset
 
- because we set 
+ is updated, namely, 
+\begin_inset Formula $\overline{v}_{i}^{(k)}=\overline{v}_{i}^{(k')}=v_{i}^{(k')}$
+\end_inset
+
+.
+ Since we set 
 \begin_inset Formula $\overline{v}\leftarrow v$
 \end_inset
 
@@ -4627,7 +4522,11 @@ For the accuracy result, we first fix some coordinate
 \begin_inset Formula $2^{\left\lceil \log n\right\rceil }$
 \end_inset
 
- steps.
+ steps, we have 
+\begin_inset Formula $k-2^{\left\lceil \log n\right\rceil }\leq k'<k$
+\end_inset
+
+.
  We can write 
 \begin_inset Formula $k=k_{0}>k_{1}>k_{2}>\cdots>k_{s}=k'$
 \end_inset
@@ -4640,7 +4539,7 @@ For the accuracy result, we first fix some coordinate
 \begin_inset Formula $2$
 \end_inset
 
- and that 
+ that 
 \begin_inset Formula $|s|\leq2\left\lceil \log n\right\rceil $
 \end_inset
 
@@ -4653,15 +4552,15 @@ v_{i}^{(k)}-\overline{v}_{i}^{(k)}=v_{i}^{(k_{0})}-v_{i}^{(k_{s})}=\sum_{j=1}^{s
 
 \end_inset
 
-The fact that 
+Since 
 \begin_inset Formula $\overline{v}_{i}$
 \end_inset
 
- is not updated after step 
+ is not updated since step 
 \begin_inset Formula $k_{s}$
 \end_inset
 
- implies that 
+, we have 
 \begin_inset Formula $|v_{i}^{(k_{j-1})}-v_{i}^{(k_{j})}|\leq\delta/(2\left\lceil \log n\right\rceil )$
 \end_inset
 
@@ -4682,7 +4581,11 @@ The fact that
 \end_layout
 
 \begin_layout Proof
-For the sparsity result, we first bound the size of the set 
+For the sparsity of 
+\begin_inset Formula $\overline{v}^{(k)}-\overline{v}^{(k-1)}$
+\end_inset
+
+, we first bound the size of the set 
 \begin_inset Formula $I_{\ell}\defeq\{i:|v_{i}^{(k)}-v_{i}^{(k-2^{\ell})}|\geq\delta/(2\left\lceil \log n\right\rceil )\}$
 \end_inset
 
@@ -4690,7 +4593,7 @@ For the sparsity result, we first bound the size of the set
  Note that
 \begin_inset Formula 
 \[
-\Omega(|I_{\ell}|\cdot\frac{\delta^{2}}{\log^{2}n})\leq\sum_{i=1}^{n}|v_{i}^{(k)}-v_{i}^{(k-2^{\ell})}|^{2}=2^{\ell}\sum_{i=1}^{n}\sum_{t=k-2^{\ell}}^{k-1}|v_{i}^{(t+1)}-v_{i}^{(t)}|^{2}\leq2^{2\ell}\beta^{2}
+\Omega(|I_{\ell}|\cdot\frac{\delta^{2}}{\log^{2}n})\leq\sum_{i=1}^{n}|v_{i}^{(k)}-v_{i}^{(k-2^{\ell})}|^{2}\leq2^{\ell}\sum_{i=1}^{n}\sum_{t=k-2^{\ell}}^{k-1}|v_{i}^{(t+1)}-v_{i}^{(t)}|^{2}\leq2^{2\ell}\beta^{2}
 \]
 
 \end_inset
@@ -4704,7 +4607,7 @@ where we used
 \begin_inset Formula $|I_{\ell}|=O(2^{2\ell}(\beta/\delta)^{2}\log^{2}n).$
 \end_inset
 
- Hence, 
+ Hence, the total changes is bounded by 
 \begin_inset Formula $|I|\leq\sum_{\ell=0}^{\ell_{k}}|I_{\ell}|\leq O(2^{2\ell_{k}}(\beta/\delta)^{2}\log^{2}n)$
 \end_inset
 
@@ -4716,6 +4619,16 @@ Inverse Maintenance
 \begin_inset CommandInset label
 LatexCommand label
 name "subsec:IPM_Inverse_Maintenance"
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+HERE
+\end_layout
 
 \end_inset
 
