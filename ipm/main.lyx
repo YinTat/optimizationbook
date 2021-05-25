@@ -2061,7 +2061,7 @@ caption{
 \end_inset
 
 
-\begin_inset Formula $\mathtt{SolveLPSlow}(\ma,b,c,x^{(0)},\delta)$
+\begin_inset Formula $\mathtt{SlowSolveLP}(\ma,b,c,x^{(0)},\delta)$
 \end_inset
 
 
@@ -2081,7 +2081,7 @@ status open
 \begin_layout Standard
 \begin_inset CommandInset label
 LatexCommand label
-name "alg:L2LPApproximate"
+name "alg:SlowSolveLP"
 
 \end_inset
 
@@ -2317,7 +2317,7 @@ end{algorithm2e}
 \begin_layout Theorem
 \begin_inset CommandInset label
 LatexCommand label
-name "thm:L2LPApproximate"
+name "thm:SlowSolveLP"
 
 \end_inset
 
@@ -2354,7 +2354,7 @@ reference "def:LP_para"
 \end_inset
 
 ), 
-\begin_inset Formula $\mathtt{SolveLPSlow}$
+\begin_inset Formula $\mathtt{SlowSolveLP}$
 \end_inset
 
  outputs 
@@ -5848,7 +5848,7 @@ reference "def:LP_para"
  such that
 \begin_inset Formula 
 \begin{align*}
-c^{\top}x & \leq\min_{\ma x=b,x\geq0}c^{\top}x+\epsilon LR,\\
+c^{\top}x & \leq\min_{\ma x=b,x\geq0}c^{\top}x+\delta LR,\\
 \ma x & =b,\\
 x & \geq0.
 \end{align*}
@@ -5858,7 +5858,7 @@ x & \geq0.
 in time
 \begin_inset Formula 
 \[
-\widetilde{O}((n^{\omega}+n^{2+1/6}+n^{5/2-\alpha/2})\log(nR/(\epsilon r))).
+\widetilde{O}((n^{\omega}+n^{2+1/6}+n^{5/2-\alpha/2})\log(nR/(\delta r))).
 \]
 
 \end_inset
@@ -5883,8 +5883,12 @@ If we further assume that the solution
 \begin_inset Formula $\{\ma x=b,x\geq0\}$
 \end_inset
 
+ for some 
+\begin_inset Formula $\eta>\delta\geq0$
+\end_inset
+
 , then we have that 
-\begin_inset Formula $\|x-x^{*}\|_{2}\leq\frac{2\epsilon R}{\eta}$
+\begin_inset Formula $\|x-x^{*}\|_{2}\leq\frac{2\delta R}{\eta}$
 \end_inset
 
 .
@@ -5896,7 +5900,7 @@ The algorithm for find
 \end_inset
 
  is same as 
-\begin_inset Formula $\mathtt{L2LPApproximate}$
+\begin_inset Formula $\mathtt{SlowSolveLP}$
 \end_inset
 
  except the function 
