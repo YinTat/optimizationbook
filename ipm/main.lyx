@@ -2734,6 +2734,13 @@ reference "subsec:IPM_cosh_step"
  
 \begin_inset CommandInset ref
 LatexCommand ref
+reference "subsec:select_xsr"
+
+\end_inset
+
+ and Section 
+\begin_inset CommandInset ref
+LatexCommand ref
 reference "subsec:IPM_Inverse_Maintenance"
 
 \end_inset
@@ -2779,7 +2786,14 @@ To make the interior point method robust to noise in the updates to
 \end_inset
 
 ).
- One natural choice of distance and potential would be a higher norm, 
+ We cannot simply increase the radius of the 
+\begin_inset Formula $\ell_{2}$
+\end_inset
+
+ ball because we need the neighborhood lies strictly inside the feasible
+ region.
+ One natural alternative choice of distance and potential would be a higher
+ norm, 
 \begin_inset Formula $\|xs-t\|_{q}^{q}$
 \end_inset
 
@@ -2796,17 +2810,27 @@ To make the interior point method robust to noise in the updates to
  Instead, we pick the potential
 \begin_inset Formula 
 \begin{equation}
-\Phi(v)=\sum_{i=1}^{n}\cosh(\lambda v_{i})=\sum_{i=1}^{n}\frac{(e^{\lambda v_{i}}+e^{-\lambda v_{i}})}{2}.\label{eq:Phi_potential}
+\Phi(r)=\sum_{i=1}^{n}\cosh(\lambda r_{i})=\sum_{i=1}^{n}\frac{(e^{\lambda r_{i}}+e^{-\lambda r_{i}})}{2}.\label{eq:Phi_potential}
 \end{equation}
 
 \end_inset
 
-for a scalar 
-\begin_inset Formula $\lambda>0$
+with 
+\begin_inset Formula $r=\frac{xs-t}{t}$
 \end_inset
 
 .
- This potential induces the following algorithm.
+ for some scalar 
+\begin_inset Formula $\lambda=\Theta(\log n)$
+\end_inset
+
+.
+ This potential induces the following algorithm, each step of the algorithm
+ choose 
+\begin_inset Formula $\delta_{\mu}\approx-c\nabla\Phi(\frac{xs-t}{t})$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -3906,6 +3930,13 @@ Selecting
 
  and 
 \begin_inset Formula $\overline{r}$
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:select_xsr"
+
 \end_inset
 
 
