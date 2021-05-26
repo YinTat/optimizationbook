@@ -4977,8 +4977,24 @@ The exponent of matrix multiplication
 \begin_inset Formula $\omega\leq2.3729$
 \end_inset
 
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "coppersmith1987matrix,williams2012multiplying,le2014powers,alman2021refined"
+literal "false"
+
+\end_inset
+
  and 
 \begin_inset Formula $\alpha\geq0.3138$
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "le2014powers,gall2018improved"
+literal "false"
+
 \end_inset
 
 .
