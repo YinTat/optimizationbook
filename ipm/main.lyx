@@ -4637,8 +4637,8 @@ HERE
 
 \begin_layout Standard
 In this section, we discuss how to maintain the solution of the Newton step.
- Although both the matrix and the vector changes during the algorithm, we
- can simplify it by moving the vector inside the matrix.
+ Although both the matrix and the vector of the Newton step changes during
+ the algorithm, we can simplify it by moving the vector inside the matrix.
 \end_layout
 
 \begin_layout Fact
@@ -4682,7 +4682,7 @@ Hence, the question of maintaining the solution reduces to the problem of
 
 \end_inset
 
-Now, when we update 
+When we update 
 \begin_inset Formula $\ox,\os,\overline{r}$
 \end_inset
 
@@ -4757,7 +4757,7 @@ Given
 \end_inset
 
  in time 
-\begin_inset Formula $O(T_{n,n,q})$
+\begin_inset Formula $O(T_{n,q,n})$
 \end_inset
 
 .
@@ -4879,12 +4879,12 @@ Note that
 
 .
  The rest of the formula can be computed in 
-\begin_inset Formula $O(T_{n,n,q}+T_{n,q,q})=O(T_{n,n,q})$
+\begin_inset Formula $O(T_{n,q,q}+T_{n,q,n})=O(T_{n,q,n})$
 \end_inset
 
  time.
  In total, the runtime is 
-\begin_inset Formula $O(T_{n,n,q})$
+\begin_inset Formula $O(T_{n,q,n})$
 \end_inset
 
 .
@@ -4923,8 +4923,62 @@ Since
 \end_layout
 
 \begin_layout Standard
-In this note, we only use the following estimate for 
-\begin_inset Formula $T_{n,n,r}$
+To use the previous lemma, we need the following estimate for 
+\begin_inset Formula $T_{n,r,n}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Definition
+The exponent of matrix multiplication 
+\begin_inset Formula $\omega$
+\end_inset
+
+ is the infimum among all 
+\begin_inset Formula $\omega\geq0$
+\end_inset
+
+ such that it takes 
+\begin_inset Formula $n^{\omega+o(1)}$
+\end_inset
+
+ time to multiply an 
+\begin_inset Formula $n\times n$
+\end_inset
+
+ matrix by an 
+\begin_inset Formula $n\times n$
+\end_inset
+
+ matrix.
+ The dual exponent of matrix multiplication 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ is the supremum among all 
+\begin_inset Formula $\alpha\geq0$
+\end_inset
+
+ such that it takes 
+\begin_inset Formula $n^{2+o(1)}$
+\end_inset
+
+ time to multiply an 
+\begin_inset Formula $n\times n$
+\end_inset
+
+ matrix by an 
+\begin_inset Formula $n\times n^{\alpha}$
+\end_inset
+
+ matrix.
+ Currently, 
+\begin_inset Formula $\omega\leq2.3729$
+\end_inset
+
+ and 
+\begin_inset Formula $\alpha\geq0.3138$
 \end_inset
 
 .
@@ -4942,19 +4996,10 @@ For
 \end_inset
 
 , we have 
-\begin_inset Formula $T_{n,n,r}=n^{2}+n^{\omega-\frac{\omega-2}{1-\alpha}}r^{\frac{\omega-2}{1-\alpha}}$
+\begin_inset Formula $T_{n,r,n}=n^{2+o(1)}+n^{\omega-\frac{\omega-2}{1-\alpha}+o(1)}r^{\frac{\omega-2}{1-\alpha}}$
 \end_inset
 
- where 
-\begin_inset Formula $\omega\sim2.37$
-\end_inset
-
- is the exponent of matrix multiplication and 
-\begin_inset Formula $\alpha\sim0.31$
-\end_inset
-
- is the dual exponent of matrix multiplication.
- 
+.
 \end_layout
 
 \begin_layout Standard
@@ -5393,7 +5438,14 @@ end{algorithm2e}
 \end_layout
 
 \begin_layout Standard
-Combining the previous Lemma with Lemma 
+Combining the Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:maintain_inverse"
+
+\end_inset
+
+ with Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:SelectVector"
@@ -5410,7 +5462,7 @@ name "lem:FastRobustStepTime"
 
 \end_inset
 
-With 
+Setting 
 \begin_inset Formula $2^{2\ell_{*}}=\min(n^{\alpha},n^{2/3})$
 \end_inset
 
@@ -5428,7 +5480,7 @@ reference "alg:FastRobustStep"
 ) takes 
 \begin_inset Formula 
 \[
-\widetilde{O}((n^{\omega}+n^{2+1/6}+n^{5/2-\alpha/2})\log(t_{\mathrm{end}}/t_{\mathrm{start}}))
+O((n^{\omega+o(1)}+n^{2+1/6+o(1)}+n^{5/2-\alpha/2+o(1)})\log(t_{\mathrm{end}}/t_{\mathrm{start}}))
 \]
 
 \end_inset
@@ -5441,7 +5493,7 @@ The bottleneck of
 \begin_inset Formula $\mathtt{FastRobustStep}$
 \end_inset
 
- is the step for updating 
+ are the steps for updating 
 \begin_inset Formula $v$
 \end_inset
 
@@ -5471,7 +5523,7 @@ reference "lem:change_xsr"
 \end_inset
 
  changes by 
-\begin_inset Formula $\alpha\defeq1/(5\lambda)$
+\begin_inset Formula $\alpha\defeq1/(8\lambda)$
 \end_inset
 
  in 
@@ -5487,7 +5539,7 @@ reference "lem:change_xsr"
 \begin_inset Formula $\delta\defeq1/(48\lambda)$
 \end_inset
 
-, Lemma 
+ (or larger), Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:SelectVector"
@@ -5556,7 +5608,7 @@ Therefore,
 \end_inset
 
  and 
-\begin_inset Formula $\mathbf{T}$
+\begin_inset Formula $\mathbf{T}^{-1}$
 \end_inset
 
  are off by 
@@ -5574,7 +5626,7 @@ reference "lem:maintain_inverse"
  shows that it takes 
 \begin_inset Formula 
 \[
-O(T_{q,q,q}+nq)=\widetilde{O}(2^{2\ell_{*}\omega}+n2^{2\ell_{*}})
+O(T_{q,q,q}+nq)=\widetilde{\widetilde{O}}(2^{2\ell_{*}\omega}+n2^{2\ell_{*}})
 \]
 
 \end_inset
@@ -5587,7 +5639,15 @@ time to compute
 \begin_inset Formula $u=\mathbf{T}e_{2n+d+1}$
 \end_inset
 
-.
+ where we used 
+\begin_inset Formula $\widetilde{\widetilde{O}}$
+\end_inset
+
+ to omit 
+\begin_inset Formula $n^{o(1)}$
+\end_inset
+
+ terms.
 \end_layout
 
 \begin_layout Proof
@@ -5611,8 +5671,8 @@ Cost of updating
 \begin_inset Formula $q+O(2^{2\ell_{k}}\log^{2}n)=O(2^{2\ell_{k}}\log^{2}n)$
 \end_inset
 
- where the first term is the delayed update and the second term is the update
- at that step.
+ where the first term is due to the delayed updates and the second term
+ is due to the update at that step.
  Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -5621,7 +5681,7 @@ reference "lem:maintain_inverse"
 \end_inset
 
  shows that it takes 
-\begin_inset Formula $\widetilde{O}(T_{n,n,2^{2\ell_{k}}})$
+\begin_inset Formula $\widetilde{\widetilde{O}}(T_{n,n,2^{2\ell_{k}}})$
 \end_inset
 
  time to update 
@@ -5639,8 +5699,8 @@ reference "lem:maintain_inverse"
  iterations, the amortized cost is
 \begin_inset Formula 
 \begin{align*}
-\widetilde{O}(\sum_{\ell=\ell_{*}}^{\frac{1}{2}\log n}2^{-\ell}T_{n,n,2^{2\ell}}) & =\widetilde{O}(\sum_{\ell=\ell_{*}}^{\frac{1}{2}\log n}(n^{\omega-\frac{\omega-2}{1-\alpha}}2^{2\ell\cdot\frac{\omega-2}{1-\alpha}-\ell}+n^{2}2^{-\ell}))\\
- & =\widetilde{O}(\sum_{\ell=\ell_{*}}^{\frac{1}{2}\log n}n^{\omega-\frac{\omega-2}{1-\alpha}}2^{2\ell\cdot\frac{\omega-2}{1-\alpha}-\ell}+n^{2}2^{-\ell_{*}})
+\widetilde{\widetilde{O}}(\sum_{\ell=\ell_{*}}^{\frac{1}{2}\log n}2^{-\ell}T_{n,n,2^{2\ell}}) & =\widetilde{\widetilde{O}}(\sum_{\ell=\ell_{*}}^{\frac{1}{2}\log n}(n^{\omega-\frac{\omega-2}{1-\alpha}}2^{2\ell\cdot\frac{\omega-2}{1-\alpha}-\ell}+n^{2}2^{-\ell}))\\
+ & =\widetilde{\widetilde{O}}(\sum_{\ell=\ell_{*}}^{\frac{1}{2}\log n}n^{\omega-\frac{\omega-2}{1-\alpha}}2^{2\ell\cdot\frac{\omega-2}{1-\alpha}-\ell}+n^{2}2^{-\ell_{*}})
 \end{align*}
 
 \end_inset
@@ -5654,7 +5714,7 @@ reference "lem:Tnnr_est"
 
 .
  The sum above is dominated by either the term at 
-\begin_inset Formula $\ell=0$
+\begin_inset Formula $\ell=\ell_{*}$
 \end_inset
 
  or the term at 
@@ -5669,7 +5729,7 @@ reference "lem:Tnnr_est"
  is
 \begin_inset Formula 
 \[
-\widetilde{O}(n^{\omega-\frac{\omega-2}{1-\alpha}}2^{2\ell_{*}\cdot\frac{\omega-2}{1-\alpha}-\ell_{*}}+n^{\omega-\frac{1}{2}}+n^{2}2^{-\ell_{*}})=\widetilde{O}(n^{\omega-\frac{1}{2}}+n^{2}2^{-\ell_{*}})
+\widetilde{\widetilde{O}}(n^{\omega-\frac{\omega-2}{1-\alpha}}2^{2\ell_{*}\cdot\frac{\omega-2}{1-\alpha}-\ell_{*}}+n^{\omega-\frac{1}{2}}+n^{2}2^{-\ell_{*}})=\widetilde{\widetilde{O}}(n^{\omega-\frac{1}{2}}+n^{2}2^{-\ell_{*}})
 \]
 
 \end_inset
@@ -5695,7 +5755,7 @@ Cost of initialize
 \end_inset
 
 : 
-\begin_inset Formula $O(n^{\omega})$
+\begin_inset Formula $\widetilde{\widetilde{O}}(n^{\omega})$
 \end_inset
 
 .
@@ -5709,8 +5769,8 @@ Since there are
  steps, the total cost is
 \begin_inset Formula 
 \begin{align*}
- & \widetilde{O}(n^{\omega}+\sqrt{n}\log(t_{\mathrm{end}}/t_{\mathrm{start}})(2^{2\ell_{*}\omega}+n2^{2\ell_{*}}+n^{\omega-\frac{1}{2}}+n^{2}2^{-\ell_{*}}))\\
-= & \widetilde{O}(\sqrt{n}\log(t_{\mathrm{end}}/t_{\mathrm{start}})(n2^{2\ell_{*}}+n^{\omega-\frac{1}{2}}+n^{2}2^{-\ell_{*}}))
+ & \widetilde{\widetilde{O}}(n^{\omega}+\sqrt{n}\log(t_{\mathrm{end}}/t_{\mathrm{start}})(2^{2\ell_{*}\omega}+n2^{2\ell_{*}}+n^{\omega-\frac{1}{2}}+n^{2}2^{-\ell_{*}}))\\
+= & \widetilde{\widetilde{O}}(\sqrt{n}\log(t_{\mathrm{end}}/t_{\mathrm{start}})(n2^{2\ell_{*}}+n^{\omega-\frac{1}{2}}+n^{2}2^{-\ell_{*}}))
 \end{align*}
 
 \end_inset
@@ -5727,7 +5787,7 @@ where we used
 , we have
 \begin_inset Formula 
 \[
-\widetilde{O}((n^{\omega}+n^{2+1/6}+n^{5/2-\alpha/2})\log(t_{\mathrm{end}}/t_{\mathrm{start}})).
+\widetilde{\widetilde{O}}((n^{\omega}+n^{2+1/6}+n^{5/2-\alpha/2})\log(t_{\mathrm{end}}/t_{\mathrm{start}})).
 \]
 
 \end_inset
@@ -5743,7 +5803,8 @@ reference "subsec:SolveLP_apx"
 
 \end_inset
 
-, we have the following Theorem
+, we can find the initial point by modifying the linear program and this
+ gives the following Theorem.
 \end_layout
 
 \begin_layout Theorem
@@ -5802,7 +5863,7 @@ x & \geq0.
 in time
 \begin_inset Formula 
 \[
-\widetilde{O}((n^{\omega}+n^{2+1/6}+n^{5/2-\alpha/2})\log(nR/(\delta r))).
+O((n^{\omega+o(1)}+n^{2+1/6+o(1)}+n^{5/2-\alpha/2+o(1)})\log(R/(\delta r))).
 \]
 
 \end_inset
