@@ -1995,7 +1995,7 @@ and that
 
 \end_deeper
 \begin_layout Proof
-Since the proof is not illuminating, we defer the proof to Appendix 
+Since the proof is not illuminating, we defer it to Appendix 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:IPM_interior"
@@ -2020,7 +2020,7 @@ reference "lemma:IPM_center_original"
 \end_layout
 
 \begin_layout Standard
-Now, we state our main algorithm:
+Now we state our main algorithm.
 \end_layout
 
 \begin_layout Standard
@@ -2648,7 +2648,13 @@ literal "false"
 \end_inset
 
 ).
- 
+\end_layout
+
+\begin_layout Exercise
+Make the perturbation deterministic while preserving solutions.
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
@@ -3102,6 +3108,61 @@ end{algorithm2e}
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+This section is missing a theorem that people can use? Something like this:
+\end_layout
+
+\begin_layout Theorem
+Fix 
+\begin_inset Formula $\epsilon=0.01/\log n$
+\end_inset
+
+.
+ Suppose in each step we set 
+\begin_inset Formula $t^{(k+1)}=(1-\frac{\epsilon}{3\sqrt{n}})t^{(k)}$
+\end_inset
+
+ and use 
+\begin_inset Formula $\bar{x},\bar{s},\bar{\mu}$
+\end_inset
+
+ to perform updates, where 
+\begin_inset Formula $\|\frac{x-\bar{x}}{x}\|_{\infty},\|\frac{s-\bar{s}}{s}\|_{\infty}\le\epsilon$
+\end_inset
+
+.
+ Then, starting at 
+\begin_inset Formula $x^{(0)},s^{(0)},t^{(0)}$
+\end_inset
+
+, s.t., 
+\begin_inset Formula $\Phi((x^{(0)}s^{(0)}-t^{(0)})/t^{(0)})\le2n$
+\end_inset
+
+, the algorithm outputs 
+\begin_inset Formula $x,s$
+\end_inset
+
+ with 
+\begin_inset Formula $\Phi((xs-t^{*})/t^{*})\le2n$
+\end_inset
+
+ in 
+\begin_inset Formula $O(\sqrt{n}\log n\log(t^{(0)}/t^{*}))$
+\end_inset
+
+ steps.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 Here, we prove the key facts we use about 
 \begin_inset Formula $\Phi$
 \end_inset
@@ -3263,7 +3324,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-We collect some basic bounds on the step in the following Lemma:
+We collect some basic bounds on the step in the following lemma.
 \end_layout
 
 \begin_layout Lemma
@@ -3792,6 +3853,14 @@ The potential actually decreases in this case.
 .
 \end_layout
 
+\begin_layout Exercise
+Show that we can use the potential function 
+\begin_inset Formula $\Phi=\sum_{i=1}^{n}\exp(-\lambda|v_{i}|)$
+\end_inset
+
+ to get a similar conclusion.
+\end_layout
+
 \begin_layout Subsection
 Selecting 
 \begin_inset Formula $\ox,\os$
@@ -3849,7 +3918,7 @@ for some vectors
 \end_inset
 
 .
- The key observation is that only few coordinate of 
+ The key observation is that only a few coordinates of 
 \begin_inset Formula $x,s$
 \end_inset
 
@@ -4149,11 +4218,11 @@ Now, we state the algorithm for selecting
 \begin_inset Formula $\delta/(2\log n)$
 \end_inset
 
- between this step and the 
+ between this step and 
 \begin_inset Formula $2^{k}$
 \end_inset
 
- steps ago.
+ steps earlier.
 \end_layout
 
 \begin_layout Standard
@@ -5509,7 +5578,7 @@ The bottleneck of
 \begin_inset Formula $\mathtt{FastRobustStep}$
 \end_inset
 
- are the steps for updating 
+ is updating 
 \begin_inset Formula $v$
 \end_inset
 
@@ -5518,7 +5587,7 @@ The bottleneck of
 \end_inset
 
 .
- It depends on the number of coordinates updates in 
+ This depends on the number of coordinates updated in 
 \begin_inset Formula $\ox,\os,\overline{r}$
 \end_inset
 
@@ -5762,7 +5831,7 @@ where we used
 \end_layout
 
 \begin_layout Proof
-Cost of initialize 
+Cost of initializing 
 \begin_inset Formula $\mathbf{T}$
 \end_inset
 
@@ -5820,7 +5889,7 @@ reference "subsec:SolveLP_apx"
 \end_inset
 
 , we can find the initial point by modifying the linear program and this
- gives the following Theorem.
+ gives the following theorem.
 \end_layout
 
 \begin_layout Theorem
@@ -5953,7 +6022,7 @@ reference "lem:FastRobustStepTime"
 \begin_inset Formula $\mathtt{RobustStep}$
 \end_inset
 
-, the property of the output is analyzed in Lemma 
+, its output is analyzed in Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:RobustStep"
