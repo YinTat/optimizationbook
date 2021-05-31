@@ -5578,11 +5578,11 @@ The bottleneck of
 \begin_inset Formula $\mathtt{FastRobustStep}$
 \end_inset
 
- is updating 
+ is the time to update 
 \begin_inset Formula $v$
 \end_inset
 
- and updating 
+ and 
 \begin_inset Formula $\mathbf{T}$
 \end_inset
 
@@ -5607,7 +5607,7 @@ reference "lem:change_xsr"
 \begin_inset Formula $r$
 \end_inset
 
- changes by 
+ change by at most 
 \begin_inset Formula $\alpha\defeq1/(8\lambda)$
 \end_inset
 
@@ -5696,7 +5696,7 @@ Therefore,
 \begin_inset Formula $\mathbf{T}^{-1}$
 \end_inset
 
- are off by 
+ are off by at most 
 \begin_inset Formula $q$
 \end_inset
 
@@ -5724,7 +5724,7 @@ time to compute
 \begin_inset Formula $u=\mathbf{T}e_{2n+d+1}$
 \end_inset
 
- where we used 
+, where we used 
 \begin_inset Formula $\widetilde{\widetilde{O}}$
 \end_inset
 
@@ -5757,7 +5757,7 @@ Cost of updating
 \end_inset
 
  where the first term is due to the delayed updates and the second term
- is due to the update at that step.
+ is due to the updates at that step.
  Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -5777,7 +5777,7 @@ reference "lem:maintain_inverse"
 \begin_inset Formula $2^{2\ell_{k}}$
 \end_inset
 
- update happens every 
+ updates happen every 
 \begin_inset Formula $2^{\ell_{k}}$
 \end_inset
 
@@ -6046,7 +6046,7 @@ options "plain"
 
 \begin_layout Section
 \start_of_appendix
-Finding a Point on Central Path
+Finding a Point on the Central Path
 \begin_inset CommandInset label
 LatexCommand label
 name "sec:IPM_interior"
