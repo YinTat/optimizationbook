@@ -242,6 +242,10 @@ theorems-ams-extended
 Tutorial on Robust Interior Point Method
 \end_layout
 
+\begin_layout Author
+Yin Tat Lee, Santosh Vempala
+\end_layout
+
 \begin_layout Standard
 We give a short, self-contained proof of the interior point method and its
  robust version.
