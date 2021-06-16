@@ -242,6 +242,19 @@ theorems-ams-extended
 Tutorial on Robust Interior Point Method
 \end_layout
 
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+There is a simpler reduction
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Author
 Yin Tat Lee, Santosh Vempala
 \end_layout
@@ -4692,16 +4705,6 @@ Inverse Maintenance
 \begin_inset CommandInset label
 LatexCommand label
 name "subsec:IPM_Inverse_Maintenance"
-
-\end_inset
-
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-HERE
-\end_layout
 
 \end_inset
 
