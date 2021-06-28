@@ -242,6 +242,61 @@ theorems-ams-extended
 Tutorial on Robust Interior Point Method
 \end_layout
 
+\begin_layout Author
+Yin Tat Lee
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+University of Washington & Microsoft Research.
+ Email: yintat@uw.edu.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+and 
+\end_layout
+
+\end_inset
+
+Santosh Vempala
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Georgia Tech.
+ Email: vempala@gatech.edu.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 \begin_inset Note Note
 status open
@@ -255,14 +310,17 @@ There is a simpler reduction
 
 \end_layout
 
-\begin_layout Author
-Yin Tat Lee, Santosh Vempala
+\begin_layout Abstract
+We give a short, self-contained proof of the interior point method and its
+ robust version.
+\end_layout
+
+\begin_layout Section
+Introduction
 \end_layout
 
 \begin_layout Standard
-We give a short, self-contained proof of the interior point method and its
- robust version.
- Consider the primal linear program
+Consider the primal linear program
 \begin_inset Formula 
 \begin{equation}
 \min_{\ma x=b,x\in\R_{\geq0}^{n}}c^{\top}x\ttag P\label{eq:tut_primal_LP}
@@ -678,16 +736,6 @@ By the KKT optimality condition for
 \begin_inset Formula $f_{\mu}$
 \end_inset
 
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-State or refer to the condition
-\end_layout
-
-\end_inset
-
 , there is a vector 
 \begin_inset Formula $y$
 \end_inset
@@ -695,7 +743,7 @@ State or refer to the condition
  such that
 \begin_inset Formula 
 \[
-c-\frac{\mu}{x}=\ma^{\top}y.
+\nabla f_{\mu}(x)=c-\frac{\mu}{x}=\ma^{\top}y.
 \]
 
 \end_inset
@@ -710,6 +758,27 @@ Define
 
  and 
 \begin_inset Formula $x_{\mu}s_{\mu}=\mu$
+\end_inset
+
+.
+ For two vectors 
+\begin_inset Formula $a,b$
+\end_inset
+
+, we use 
+\begin_inset Formula $ab$
+\end_inset
+
+ to denote the vector with components 
+\begin_inset Formula $(ab)_{i}=a_{i}b_{i}$
+\end_inset
+
+ and 
+\begin_inset Formula $a/b$
+\end_inset
+
+ to denote the vector with components 
+\begin_inset Formula $a_{i}/b_{i}$
 \end_inset
 
 .
@@ -1913,6 +1982,28 @@ where
 \end_inset
 
 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+The 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ in the first equation above is a vector with all components equal to 
+\begin_inset Formula $\lambda$
+\end_inset
+
+, right? Maybe we write such occurrences as 
+\begin_inset Formula $\lambda\mathbf{1}$
+\end_inset
+
+?
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2008,6 +2099,24 @@ and that
 \end_inset
 
 .
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Should this be 
+\begin_inset Formula $s^{-}$
+\end_inset
+
+ instead of 
+\begin_inset Formula $s^{\theta}$
+\end_inset
+
+ in the last inequality and above in containment?
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_deeper
@@ -2100,7 +2209,7 @@ name "alg:SlowSolveLP"
 \begin_layout Standard
 
 \series bold
-Assume the linear program has inner radius 
+Assumption: the linear program has inner radius 
 \begin_inset Formula $r$
 \end_inset
 
