@@ -4983,6 +4983,16 @@ noprefix "false"
 \end_inset
 
 ).
+ The idea of using the Woodbury identity together with fast matrix multiplicatio
+n goes back to Vaidya 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "vaidya1989speeding"
+literal "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Lemma
@@ -6279,6 +6289,85 @@ reference "lem:RobustStep"
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Paragraph
+Historical Note.
+\end_layout
+
+\begin_layout Standard
+The interior-point method was pioneered by Karmarkar 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Karmarkar84"
+literal "false"
+
+\end_inset
+
+ and developed in beautiful ways (including 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "renegar1988polynomial,vaidya1989speeding,nesterov1994interior,nesterov2002riemannian,lee2014path,lee2015faster"
+literal "false"
+
+\end_inset
+
+).
+ This classical approach appeared to reach its limit of requiring the solution
+ of 
+\begin_inset Formula $\sqrt{n}$
+\end_inset
+
+ linear systems until the paper of Cohen, Lee and Song 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "cohen2018solving"
+literal "false"
+
+\end_inset
+
+ which reduced the complexity of approximate linear programming to 
+\begin_inset Formula $\widetilde{\widetilde{O}}(n^{\omega})$
+\end_inset
+
+, by introducing the robust central path method.
+ Using further insights, their algorithm was derandomized by van den Brand
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DBLP:conf/soda/Brand20"
+literal "false"
+
+\end_inset
+
+.
+ The technique has been extended in subsequent papers to more general continuous
+ optimization problems 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+cite ERM paper, Zhao's improvement to LP, tall dense paper
+\end_layout
+
+\end_inset
+
+, and has also played a crucial role in faster algorithms for classical
+ combinatorial optimization problems such as matchings and flows 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+cite matching and flow papers with data structures
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
 \end_layout
 
 \begin_layout Standard
