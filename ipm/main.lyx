@@ -3339,11 +3339,59 @@ Fix
 \end_layout
 
 \begin_layout Standard
-Here, we prove the key facts we use about 
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename robustCPM.jpg
+	height 2in
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The Central Path.
+ The standard method keeps the current point within a relative 
+\begin_inset Formula $\ell_{2}$
+\end_inset
+
+-norm ball, while it suffices to use a larger 
+\begin_inset Formula $\ell_{\infty}$
+\end_inset
+
+-norm ball.
+ The robust method provides a bridge to the latter via the cosh ball defined
+ by 
 \begin_inset Formula $\Phi$
 \end_inset
 
-:
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We begin with useful facts about 
+\begin_inset Formula $\Phi$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Lemma
@@ -3410,7 +3458,6 @@ We have
 \end_inset
 
 .
- 
 \end_layout
 
 \begin_layout Proof
@@ -5784,6 +5831,20 @@ reference "lem:SelectVector"
 \end_inset
 
 , we have the following guarantee.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+need to define 
+\begin_inset Formula $\widetilde{\widetilde{O}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Lemma
@@ -6367,10 +6428,6 @@ cite matching and flow papers with data structures
 \end_layout
 
 \begin_layout Standard
-
-\end_layout
-
-\begin_layout Standard
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
 btprint "btPrintCited"
@@ -6395,7 +6452,7 @@ name "sec:IPM_interior"
 \end_layout
 
 \begin_layout Standard
-Continue from the discussion in Section 
+We continue from the discussion in Section 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "subsec:SolveLP_apx"
