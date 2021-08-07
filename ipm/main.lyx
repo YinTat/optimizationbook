@@ -302,19 +302,6 @@ Georgia Tech.
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-There is a simpler reduction
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Abstract
 We give a short, self-contained proof of the interior point method and its
  robust version.
@@ -565,30 +552,16 @@ In this section, we discuss the classical short-step interior point method.
 \begin_inset Formula $t\in\R$
 \end_inset
 
-, when clear from context (as in the definition below) we let 
-\begin_inset Formula $t$
+, we let 
+\begin_inset Formula $t\mathbf{1}$
 \end_inset
 
- also denote the vector with all coordinates equal to 
+ denote the vector with all coordinates equal to 
 \begin_inset Formula $t$
 \end_inset
 
 .
  
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Maybe we write such occurrences as 
-\begin_inset Formula $t\mathbf{1}$
-\end_inset
-
- rather than overload?
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Definition
@@ -2033,7 +2006,7 @@ with
  We define the corresponding dual polytope by
 \begin_inset Formula 
 \[
-\mathcal{D}_{\overline{R},t}=\{(s^{+},s^{-},s^{\theta})\in\R_{\geq0}^{2n+1}:\ma^{\top}y+\lambda+s^{+}=c,-\ma^{\top}y+s^{-}=\widetilde{c},\lambda+s^{\theta}=0\text{ for some }y\in\R^{d}\text{ and }\lambda\in\R\}.
+\mathcal{D}_{\overline{R},t}=\{(s^{+},s^{-},s^{\theta})\in\R_{\geq0}^{2n+1}:\ma^{\top}y+\lambda\mathbf{1}+s^{+}=c,-\ma^{\top}y+s^{-}=\widetilde{c},\lambda+s^{\theta}=0\text{ for some }y\in\R^{d}\text{ and }\lambda\in\R\}.
 \]
 
 \end_inset
@@ -2043,28 +2016,15 @@ with
 status open
 
 \begin_layout Plain Layout
-- The 
-\begin_inset Formula $\lambda$
-\end_inset
-
- in the first equation above is a vector with all components equal to 
-\begin_inset Formula $\lambda$
-\end_inset
-
-.
- Maybe we write such occurrences as 
-\begin_inset Formula $\lambda\mathbf{1}$
-\end_inset
-
- rather than overload?
-\end_layout
-
-\begin_layout Plain Layout
 - why the notation 
 \begin_inset Formula $x_{c}$
 \end_inset
 
- ?
+ ? 
+\begin_inset Formula $c$
+\end_inset
+
+ probably for center? Probably not good name.
 \end_layout
 
 \end_inset
@@ -2829,24 +2789,6 @@ literal "false"
 Make the perturbation deterministic while preserving solutions.
 \end_layout
 
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Or deterministically by adding a 
-\begin_inset Formula $2^{-i}$
-\end_inset
-
- different power of 2 for each coefficient? Seems a good student question
- btw...
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Section
 Robust Interior Point Method
 \end_layout
@@ -3284,61 +3226,6 @@ end{algorithm2e}
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-This section is missing a theorem that people can use? Something like this:
-\end_layout
-
-\begin_layout Theorem
-Fix 
-\begin_inset Formula $\epsilon=0.01/\log n$
-\end_inset
-
-.
- Suppose in each step we set 
-\begin_inset Formula $t^{(k+1)}=(1-\frac{\epsilon}{3\sqrt{n}})t^{(k)}$
-\end_inset
-
- and use 
-\begin_inset Formula $\bar{x},\bar{s},\bar{\mu}$
-\end_inset
-
- to perform updates, where 
-\begin_inset Formula $\|\frac{x-\bar{x}}{x}\|_{\infty},\|\frac{s-\bar{s}}{s}\|_{\infty}\le\epsilon$
-\end_inset
-
-.
- Then, starting at 
-\begin_inset Formula $x^{(0)},s^{(0)},t^{(0)}$
-\end_inset
-
-, s.t., 
-\begin_inset Formula $\Phi((x^{(0)}s^{(0)}-t^{(0)})/t^{(0)})\le2n$
-\end_inset
-
-, the algorithm outputs 
-\begin_inset Formula $x,s$
-\end_inset
-
- with 
-\begin_inset Formula $\Phi((xs-t^{*})/t^{*})\le2n$
-\end_inset
-
- in 
-\begin_inset Formula $O(\sqrt{n}\log n\log(t^{(0)}/t^{*}))$
-\end_inset
-
- steps.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
@@ -3374,6 +3261,22 @@ The Central Path.
 \end_inset
 
 .
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+This picture is a bit misleading.
+ In your picture, our 
+\begin_inset Formula $\ell_{\infty}$
+\end_inset
+
+ ball is more like a zonotope due to the constraint.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -4362,7 +4265,7 @@ The bound for
 
 \begin_layout Proof
 The bound for 
-\begin_inset Formula $\|r^{(k+1)}-r^{(k)}\|_{\infty}$
+\begin_inset Formula $\|r^{(k+1)}-r^{(k)}\|_{2}$
 \end_inset
 
  follows from Lemma 
@@ -4822,15 +4725,23 @@ For bounding the error, we first fix some coordinate
 
 .
  We can write 
-\begin_inset Formula $k=k_{0}>k_{1}>k_{2}>\cdots>k_{s}=k'$
+\begin_inset Formula $k'=k_{0}<k_{1}<k_{2}<\cdots<k_{s}=k$
 \end_inset
 
  such that 
-\begin_inset Formula $k_{i}-k_{i+1}$
+\begin_inset Formula $k_{i+1}-k_{i}$
 \end_inset
 
  is a power of 
 \begin_inset Formula $2$
+\end_inset
+
+ and 
+\begin_inset Formula $k_{i+1}-k_{i}$
+\end_inset
+
+ divides 
+\begin_inset Formula $k_{i+1}$
 \end_inset
 
  with 
@@ -4850,7 +4761,7 @@ Why
 \begin_inset Formula $\left\lceil \log n\right\rceil ?$
 \end_inset
 
-
+ Go up the tree, then go down
 \end_layout
 
 \end_inset
@@ -4858,7 +4769,7 @@ Why
  Hence, we have that
 \begin_inset Formula 
 \[
-v_{i}^{(k)}-\overline{v}_{i}^{(k)}=v_{i}^{(k_{0})}-v_{i}^{(k_{s})}=\sum_{j=1}^{s}(v_{i}^{(k_{j-1})}-v_{i}^{(k_{j})}).
+v_{i}^{(k)}-\overline{v}_{i}^{(k)}=v_{i}^{(k_{s})}-v_{i}^{(k_{0})}=\sum_{j=0}^{s-1}(v_{i}^{(k_{j+1})}-v_{i}^{(k_{j})}).
 \]
 
 \end_inset
@@ -4868,11 +4779,11 @@ Since
 \end_inset
 
  is not updated since step 
-\begin_inset Formula $k_{s}$
+\begin_inset Formula $k'$
 \end_inset
 
 , we have 
-\begin_inset Formula $|v_{i}^{(k_{j-1})}-v_{i}^{(k_{j})}|\leq\delta/(2\left\lceil \log n\right\rceil )$
+\begin_inset Formula $|v_{i}^{(k_{j+1})}-v_{i}^{(k_{j})}|\leq\delta/(2\left\lceil \log n\right\rceil )$
 \end_inset
 
  and hence 
@@ -4893,7 +4804,7 @@ Since
 
 \begin_layout Proof
 For the sparsity of 
-\begin_inset Formula $\overline{v}^{(k)}-\overline{v}^{(k-1)}$
+\begin_inset Formula $\overline{v}^{(k+1)}-\overline{v}^{(k)}$
 \end_inset
 
 , we first bound the size of the set 
@@ -5831,20 +5742,6 @@ reference "lem:SelectVector"
 \end_inset
 
 , we have the following guarantee.
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-need to define 
-\begin_inset Formula $\widetilde{\widetilde{O}}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Lemma
@@ -6388,7 +6285,7 @@ literal "false"
 \end_inset
 
  which reduced the complexity of approximate linear programming to 
-\begin_inset Formula $\widetilde{\widetilde{O}}(n^{\omega})$
+\begin_inset Formula $n^{\omega+o(1)}\log(1/\epsilon)$
 \end_inset
 
 , by introducing the robust central path method.
@@ -6402,25 +6299,21 @@ literal "false"
 \end_inset
 
 .
- The technique has been extended in subsequent papers to more general continuous
- optimization problems 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-cite ERM paper, Zhao's improvement to LP, tall dense paper
-\end_layout
+ The technique has been extended in subsequent papers to other optimization
+ problems 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "lee2019solving,jiang2020faster,BrandLSS20,jiang2021faster,van2021unifying,huang2021solving"
+literal "false"
 
 \end_inset
 
 , and has also played a crucial role in faster algorithms for classical
  combinatorial optimization problems such as matchings and flows 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-cite matching and flow papers with data structures
-\end_layout
+\begin_inset CommandInset citation
+LatexCommand cite
+key "BrandLNPSS20,BrandLLSSSW21,treeLP"
+literal "false"
 
 \end_inset
 
@@ -6789,7 +6682,20 @@ over the domain
 status open
 
 \begin_layout Plain Layout
-Why is this the natural choice?
+Why is this the natural choice? The 
+\begin_inset Formula $v^{+}$
+\end_inset
+
+ and 
+\begin_inset Formula $v^{\theta}$
+\end_inset
+
+ are natural.
+ 
+\begin_inset Formula $v^{-}$
+\end_inset
+
+ is more like for technical reason
 \end_layout
 
 \end_inset
