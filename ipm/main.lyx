@@ -3232,6 +3232,7 @@ sideways false
 status open
 
 \begin_layout Plain Layout
+\align center
 \begin_inset Graphics
 	filename robustCPM.jpg
 	height 2in
