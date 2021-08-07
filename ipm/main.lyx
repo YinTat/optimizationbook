@@ -255,6 +255,9 @@ status open
 \begin_layout Plain Layout
 University of Washington & Microsoft Research.
  Email: yintat@uw.edu.
+ Supported in part by NSF awards CCF-1749609, DMS-1839116, DMS-2023166,
+ CCF-2105772, Microsoft Research Faculty Fellowship, Sloan Research Fellowship,
+ Packard Fellowships.
 \end_layout
 
 \end_inset
@@ -3264,21 +3267,6 @@ The Central Path.
 
 .
  
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-This picture is a bit misleading.
- In your picture, our 
-\begin_inset Formula $\ell_{\infty}$
-\end_inset
-
- ball is more like a zonotope due to the constraint.
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \end_inset
