@@ -1,0 +1,11 @@
+\BOOKMARK [1][-]{section.0.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.0.2}{Interior Point Method}{}% 2
+\BOOKMARK [2][-]{subsection.0.2.1}{Basic Property of a Step}{section.0.2}% 3
+\BOOKMARK [2][-]{subsection.0.2.2}{Lower Bounding Step Size}{section.0.2}% 4
+\BOOKMARK [2][-]{subsection.0.2.3}{Staying within small 2 distance}{section.0.2}% 5
+\BOOKMARK [2][-]{subsection.0.2.4}{Solving LP Approximately and Exactly}{section.0.2}% 6
+\BOOKMARK [1][-]{section.0.3}{Robust Interior Point Method}{}% 7
+\BOOKMARK [2][-]{subsection.0.3.1}{Staying within small \040distance}{section.0.3}% 8
+\BOOKMARK [2][-]{subsection.0.3.2}{Selecting x,s and r}{section.0.3}% 9
+\BOOKMARK [2][-]{subsection.0.3.3}{Inverse Maintenance}{section.0.3}% 10
+\BOOKMARK [1][-]{appendix.A}{Finding a Point on the Central Path}{}% 11

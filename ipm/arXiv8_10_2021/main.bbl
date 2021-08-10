@@ -1,0 +1,156 @@
+\begin{thebibliography}{10}
+
+\bibitem{alman2021refined}
+Josh Alman and Virginia~Vassilevska Williams.
+\newblock A refined laser method and faster matrix multiplication.
+\newblock In {\em Proceedings of the 2021 ACM-SIAM Symposium on Discrete
+  Algorithms (SODA)}, pages 522--539. SIAM, 2021.
+
+\bibitem{cohen2018solving}
+Michael~B Cohen, Yin~Tat Lee, and Zhao Song.
+\newblock Solving linear programs in the current matrix multiplication time.
+\newblock {\em arXiv preprint arXiv:1810.07896}, 2018.
+
+\bibitem{coppersmith1987matrix}
+Don Coppersmith and Shmuel Winograd.
+\newblock Matrix multiplication via arithmetic progressions.
+\newblock In {\em Proceedings of the nineteenth annual ACM symposium on Theory
+  of computing}, pages 1--6, 1987.
+
+\bibitem{treeLP}
+Sally Dong, Yin~Tat Lee, and Guanghao Ye.
+\newblock A nearly-linear time algorithm for linear programs with small
+  treewidth: A multiscale representation of robust central path.
+\newblock In {\em Proceedings of the 53rd Annual ACM SIGACT Symposium on Theory
+  of Computing}, STOC 2021, pages 1784--1797, New York, NY, USA, 2021.
+  Association for Computing Machinery.
+
+\bibitem{gall2018improved}
+Fran{\c{c}}ois~Le Gall and Florent Urrutia.
+\newblock Improved rectangular matrix multiplication using powers of the
+  coppersmith-winograd tensor.
+\newblock In {\em Proceedings of the Twenty-Ninth Annual ACM-SIAM Symposium on
+  Discrete Algorithms}, pages 1029--1046. SIAM, 2018.
+
+\bibitem{huang2021solving}
+Baihe Huang, Shunhua Jiang, Zhao Song, and Runzhou Tao.
+\newblock Solving tall dense sdps in the current matrix multiplication time.
+\newblock {\em arXiv preprint arXiv:2101.08208}, 2021.
+
+\bibitem{jiang2020faster}
+Haotian Jiang, Tarun Kathuria, Yin~Tat Lee, Swati Padmanabhan, and Zhao Song.
+\newblock A faster interior point method for semidefinite programming.
+\newblock In {\em 2020 IEEE 61st Annual Symposium on Foundations of Computer
+  Science (FOCS)}, pages 910--918. IEEE, 2020.
+
+\bibitem{jiang2021faster}
+Shunhua Jiang, Zhao Song, Omri Weinstein, and Hengjie Zhang.
+\newblock A faster algorithm for solving general lps.
+\newblock In {\em Proceedings of the 53rd Annual ACM SIGACT Symposium on Theory
+  of Computing}, pages 823--832, 2021.
+
+\bibitem{Karmarkar84}
+N.~Karmarkar.
+\newblock A new polynomial-time algorithm for linear programming.
+\newblock {\em Combinatorica}, 4(4):373--396, 1984.
+
+\bibitem{klivans2001randomness}
+Adam~R Klivans and Daniel Spielman.
+\newblock Randomness efficient identity testing of multivariate polynomials.
+\newblock In {\em Proceedings of the thirty-third annual ACM symposium on
+  Theory of computing}, pages 216--223, 2001.
+
+\bibitem{le2014powers}
+Fran{\c{c}}ois Le~Gall.
+\newblock Powers of tensors and fast matrix multiplication.
+\newblock In {\em Proceedings of the 39th international symposium on symbolic
+  and algebraic computation}, pages 296--303, 2014.
+
+\bibitem{lee2014path}
+Yin~Tat Lee and Aaron Sidford.
+\newblock Path finding methods for linear programming: Solving linear programs
+  in {\~o} (vrank) iterations and faster algorithms for maximum flow.
+\newblock In {\em Foundations of Computer Science (FOCS), 2014 IEEE
+  55\textsuperscript{th} Annual Symposium on}, pages 424--433. IEEE, 2014.
+
+\bibitem{lee2015faster}
+Yin~Tat Lee, Aaron Sidford, and Sam Chiu-wai Wong.
+\newblock A faster cutting plane method and its implications for combinatorial
+  and convex optimization.
+\newblock In {\em Foundations of Computer Science (FOCS), 2015 IEEE 56th Annual
+  Symposium on}, pages 1049--1065. IEEE, 2015.
+
+\bibitem{lee2019solving}
+Yin~Tat Lee, Zhao Song, and Qiuyi Zhang.
+\newblock Solving empirical risk minimization in the current matrix
+  multiplication time.
+\newblock In {\em Conference on Learning Theory}, pages 2140--2157. PMLR, 2019.
+
+\bibitem{nesterov1994interior}
+Yurii Nesterov and Arkadii Nemirovskii.
+\newblock {\em Interior-point polynomial algorithms in convex programming}.
+\newblock SIAM, 1994.
+
+\bibitem{nesterov2002riemannian}
+Yurii~E Nesterov, Michael~J Todd, et~al.
+\newblock On the riemannian geometry defined by self-concordant barriers and
+  interior-point methods.
+\newblock {\em Foundations of Computational Mathematics}, 2(4):333--361, 2002.
+
+\bibitem{renegar1988polynomial}
+James Renegar.
+\newblock A polynomial-time algorithm, based on newton's method, for linear
+  programming.
+\newblock {\em Mathematical Programming}, 40(1):59--93, 1988.
+
+\bibitem{vaidya1989speeding}
+Pravin~M. Vaidya.
+\newblock Speeding-up linear programming using fast matrix multiplication
+  (extended abstract).
+\newblock In {\em 30th Annual Symposium on Foundations of Computer Science,
+  Research Triangle Park, North Carolina, USA, 30 October - 1 November 1989},
+  pages 332--337, 1989.
+
+\bibitem{DBLP:conf/soda/Brand20}
+Jan van~den Brand.
+\newblock A deterministic linear program solver in current matrix
+  multiplication time.
+\newblock In Shuchi Chawla, editor, {\em Proceedings of the 2020 {ACM-SIAM}
+  Symposium on Discrete Algorithms, {SODA} 2020, Salt Lake City, UT, USA,
+  January 5-8, 2020}, pages 259--278. {SIAM}, 2020.
+
+\bibitem{van2021unifying}
+Jan van~den Brand.
+\newblock Unifying matrix data structures: Simplifying and speeding up
+  iterative algorithms.
+\newblock In {\em Symposium on Simplicity in Algorithms (SOSA)}, pages 1--13.
+  SIAM, 2021.
+
+\bibitem{BrandLLSSSW21}
+Jan van~den Brand, Yin~Tat Lee, Yang~P Liu, Thatchaphol Saranurak, Aaron
+  Sidford, Zhao Song, and Di~Wang.
+\newblock Minimum cost flows, {MDP}s, and l1-regression in nearly linear time
+  for dense instances.
+\newblock In {\em Proceedings of the 53rd Annual ACM SIGACT Symposium on Theory
+  of Computing}, pages 859--869, 2021.
+
+\bibitem{BrandLNPSS20}
+Jan van~den Brand, Yin-Tat Lee, Danupon Nanongkai, Richard Peng, Thatchaphol
+  Saranurak, Aaron Sidford, Zhao Song, and Di~Wang.
+\newblock Bipartite matching in nearly-linear time on moderately dense graphs.
+\newblock In {\em 2020 IEEE 61st Annual Symposium on Foundations of Computer
+  Science (FOCS)}, pages 919--930. IEEE, 2020.
+
+\bibitem{BrandLSS20}
+Jan van~den Brand, Yin~Tat Lee, Aaron Sidford, and Zhao Song.
+\newblock Solving tall dense linear programs in nearly linear time.
+\newblock In {\em Proceedings of the 52nd Annual ACM SIGACT Symposium on Theory
+  of Computing}, pages 775--788, 2020.
+
+\bibitem{williams2012multiplying}
+Virginia~Vassilevska Williams.
+\newblock Multiplying matrices faster than coppersmith-winograd.
+\newblock In {\em Proceedings of the forty-fourth annual ACM symposium on
+  Theory of computing}, pages 887--898, 2012.
+
+\end{thebibliography}

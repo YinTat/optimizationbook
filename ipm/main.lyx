@@ -244,7 +244,7 @@ theorems-ams-extended
 \end_layout
 
 \begin_layout Title
-Tutorial on Robust Interior Point Method
+Tutorial on the Robust Interior Point Method
 \end_layout
 
 \begin_layout Author
@@ -283,7 +283,8 @@ and
 
 \end_inset
 
-Santosh Vempala
+Santosh S.
+ Vempala
 \begin_inset Foot
 status open
 
