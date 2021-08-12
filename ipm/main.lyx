@@ -3020,10 +3020,6 @@ Define
 \begin_inset Formula $\Phi(r)$
 \end_inset
 
- and 
-\begin_inset Formula $r$
-\end_inset
-
  according to 
 \begin_inset CommandInset ref
 LatexCommand eqref
@@ -3130,7 +3126,7 @@ Pick
 \end_inset
 
  and 
-\begin_inset Formula $\|\overline{r}-r\|_{\infty}\leq\frac{1}{48\lambda}$
+\begin_inset Formula $\|\overline{r}-\frac{xs-t}{t}\|_{\infty}\leq\frac{1}{48\lambda}$
 \end_inset
 
 .
@@ -3165,7 +3161,7 @@ Find
 \begin{align}
 \oms\delta_{x}+\omx\delta_{s} & =\overline{\delta}_{\mu},\nonumber \\
 \ma\delta_{x} & =0,\nonumber \\
-\ma^{\top}\delta_{y}+\delta_{s} & =0.\label{eq:LP_newton_step_2-1}
+\ma^{\top}\delta_{y}+\delta_{s} & =0.\label{eq:LP_newton_step_robust}
 \end{align}
 
 \end_inset
@@ -4664,7 +4660,7 @@ Given vectors
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $\|\overline{v}^{(k)}-\overline{v}^{(k-1)}\|_{0}\leq O(2^{2\ell_{k}}(\beta/\delta)^{2}\log^{2}n)$
+\begin_inset Formula $\|\overline{v}^{(k)}-\overline{v}^{(k-1)}\|_{0}\leq O(\min(2^{2\ell_{k}}(\beta/\delta)^{2}\log^{2}n,n))$
 \end_inset
 
  where 
@@ -4741,23 +4737,6 @@ For bounding the error, we first fix some coordinate
 \end_inset
 
 .
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Why 
-\begin_inset Formula $2\left\lceil \log n\right\rceil $
-\end_inset
-
- instead of 
-\begin_inset Formula $\left\lceil \log n\right\rceil ?$
-\end_inset
-
- Go up the tree, then go down
-\end_layout
-
-\end_inset
-
  Hence, we have that
 \begin_inset Formula 
 \[
@@ -4833,6 +4812,519 @@ where we used
 \end_layout
 
 \begin_layout Subsection
+Framework
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:framework"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this section, we give the meta theorem by combining the algorithm 
+\begin_inset Formula $\mathtt{RobustStep}$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathtt{SelectVector}$
+\end_inset
+
+.
+ The algorithm is given in Algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:FastRobustStep"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm2e}[H]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\mathtt{FastRobustStep}(\ma,x,s,t_{\mathrm{start}},t_{\mathrm{end}})$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:FastRobustStep"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Define
+\series default
+ 
+\begin_inset Formula $\Phi(r)$
+\end_inset
+
+ according to 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:Phi_potential"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ with 
+\begin_inset Formula $\lambda=16\log40n$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Invariant:
+\series default
+ 
+\begin_inset Formula $(x,s)\in\PriR^{\circ}\times\DualR^{\circ}$
+\end_inset
+
+ and 
+\begin_inset Formula $\Phi(r)\leq16n$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $t=t_{\mathrm{start}}$
+\end_inset
+
+, 
+\begin_inset Formula $h=1/(128\lambda\sqrt{n})$
+\end_inset
+
+ and 
+\begin_inset Formula $n$
+\end_inset
+
+ is the number of columns in 
+\begin_inset Formula $\ma$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Set 
+\begin_inset Formula $k\leftarrow0$
+\end_inset
+
+, 
+\begin_inset Formula $x^{(0)}=\ox^{(0)}=x$
+\end_inset
+
+, 
+\begin_inset Formula $s^{(0)}=\os^{(0)}=s$
+\end_inset
+
+, 
+\begin_inset Formula $r^{(0)}=\overline{r}^{(0)}=\frac{xs-t}{t}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Repeat{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $t\neq t_{\mathrm{end}}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $t^{(k+1)}=\max(t^{(k)}/(1+h),t_{\mathrm{end}})$
+\end_inset
+
+, 
+\begin_inset Formula $\overline{\delta}_{\mu}=-\frac{t^{(k+1)}}{32\lambda}\frac{\overline{g}}{\|\overline{g}\|_{2}}$
+\end_inset
+
+, 
+\begin_inset Formula $\overline{g}=\nabla\Phi(\overline{r}^{(k)})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Find 
+\begin_inset Formula $\delta_{x},\delta_{s}$
+\end_inset
+
+ such that
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+\oms^{(k)}\delta_{x}+\omx^{(k)}\delta_{s} & =\overline{\delta}_{\mu},\nonumber \\
+\ma\delta_{x} & =0,\nonumber \\
+\ma^{\top}\delta_{y}+\delta_{s} & =0.\label{eq:LP_newton_step_robust_fast}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Set 
+\begin_inset Formula $x^{(k+1)}\leftarrow x^{(k)}+\delta_{x}$
+\end_inset
+
+, 
+\begin_inset Formula $s^{(k+1)}\leftarrow s^{(k)}+\delta_{s}$
+\end_inset
+
+, 
+\begin_inset Formula $r^{(k+1)}\leftarrow(x^{(k+1)}s^{(k+1)}-t)/t$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\ln\overline{x}^{(k+1)}=\mathtt{SelectVector}(\ln\overline{x}^{(k)},\ln x^{(0)},\ln x^{(1)},\cdots,\ln x^{(k+1)},1/48)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\ln\overline{s}^{(k+1)}=\mathtt{SelectVector}(\ln\overline{s}^{(k)},\ln s^{(0)},\ln s^{(1)},\cdots,\ln s^{(k+1)},1/48)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\overline{r}^{(k+1)}=\mathtt{SelectVector}(\overline{r}^{(k)},r^{(0)},r^{(1)},\cdots,r^{(k+1)},1/(48\lambda))$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Return
+\series default
+ 
+\begin_inset Formula $(x,s)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The intermediate variables 
+\begin_inset Formula $x^{(k)},s^{(k)},\ox^{(k)},\os^{(k)}$
+\end_inset
+
+ can be stored using persistent data structures and the cost of 
+\begin_inset Formula $\mathtt{SelectVector}$
+\end_inset
+
+ roughly depends on how many coordinates of 
+\begin_inset Formula $x,s$
+\end_inset
+
+ are updated.
+ Hence, the bottleneck of 
+\begin_inset Formula $\mathtt{FastRobustStep}$
+\end_inset
+
+ is to solve the linear systems 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:LP_newton_step_robust_fast"
+
+\end_inset
+
+.
+ The cost of solving a sequence of linear systems in general depend on the
+ number of entries changed.
+ Combining Lemmas we proved in the previous two subsections, we can prove
+ the correctness of 
+\begin_inset Formula $\mathtt{FastRobustStep}$
+\end_inset
+
+ and bound the number of entries changed.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:FastRobustStepMeta"
+
+\end_inset
+
+Suppose that the input satisfies 
+\begin_inset Formula $(x,s)\in\PriR^{\circ}\times\DualR^{\circ}$
+\end_inset
+
+ and 
+\begin_inset Formula $\Phi_{\mathrm{start}}\defeq\Phi((xs-t_{\mathrm{start}})/t_{\mathrm{start}})\leq16n$
+\end_inset
+
+.
+ Using 
+\begin_inset Formula $O(\sqrt{n}\log(t_{\mathrm{start}}/t_{\mathrm{end}}))$
+\end_inset
+
+, 
+\begin_inset Formula $\mathtt{FastRobustStep}$
+\end_inset
+
+ outputs 
+\begin_inset Formula $(x,s)$
+\end_inset
+
+ such that
+\begin_inset Formula 
+\[
+\Phi((xs-/t_{\mathrm{end}})/t_{\mathrm{end}})\leq\max(\Phi_{\mathrm{start}},12n).
+\]
+
+\end_inset
+
+Furthermore, in the 
+\begin_inset Formula $k$
+\end_inset
+
+-th step, we have 
+\begin_inset Formula 
+\[
+\|\overline{x}^{(k)}-\overline{x}^{(k-1)}\|_{0}+\|\overline{s}^{(k)}-\overline{s}^{(k-1)}\|_{0}+\|\overline{r}^{(k)}-\overline{r}^{(k-1)}\|_{0}\leq O(\min(2^{2\ell_{k}}\log^{2}n,n))
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\ell_{k}$
+\end_inset
+
+ is the largest integer 
+\begin_inset Formula $\ell$
+\end_inset
+
+ with 
+\begin_inset Formula $k=0\mod2^{\ell}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+Note that 
+\begin_inset Formula $\mathtt{FastRobustStep}$
+\end_inset
+
+ is a instantiation of 
+\begin_inset Formula $\mathtt{RobustStep}$
+\end_inset
+
+, its output is analyzed in Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:RobustStep"
+
+\end_inset
+
+.
+ The sparsity guarantee of 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $s$
+\end_inset
+
+ follows from Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:SelectVector"
+
+\end_inset
+
+ with 
+\begin_inset Formula $\beta=\frac{1}{8\lambda}$
+\end_inset
+
+ (Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:change_xsr"
+
+\end_inset
+
+) and 
+\begin_inset Formula $\delta\geq\frac{1}{48\lambda}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+As we see from Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:SolveLP_apx"
+
+\end_inset
+
+, we can solve a linear program by calling 
+\begin_inset Formula $\mathtt{FastRobustStep}$
+\end_inset
+
+ (or 
+\begin_inset Formula $\mathtt{L2Step}$
+\end_inset
+
+) twice and that 
+\begin_inset Formula $t_{\mathrm{start}}/t_{\mathrm{end}}=(\frac{n}{\delta}\frac{R}{r})^{O(1)}$
+\end_inset
+
+ for both call.
+ Hence, the total number of steps is bounded by
+\begin_inset Formula 
+\[
+T=O(\sqrt{n}\log(\frac{n}{\delta}\frac{R}{r}))
+\]
+
+\end_inset
+
+and the number of entries changed is bounded by
+\begin_inset Formula 
+\[
+\sum_{k=1}^{T}O(\min(2^{2\ell_{k}}\log^{2}n,n))=O(n\log n\cdot\log(\frac{n}{\delta}\frac{R}{r})).
+\]
+
+\end_inset
+
+Note that we need change at least 
+\begin_inset Formula $n$
+\end_inset
+
+ entries to get an approximate solution.
+ Hence, the number of changes is optimal up to a polylogarithmic factor.
+ 
+\end_layout
+
+\begin_layout Subsection
 Inverse Maintenance
 \begin_inset CommandInset label
 LatexCommand label
@@ -4846,6 +5338,17 @@ name "subsec:IPM_Inverse_Maintenance"
 \begin_layout Standard
 In this section, we discuss how to maintain the solution of the linear system
  (Newton step) efficiently.
+ There are many different ways on maintaining the solution depending on
+ the structure of 
+\begin_inset Formula $\ma$
+\end_inset
+
+.
+ In this note, we consider the generic case that 
+\begin_inset Formula $\ma$
+\end_inset
+
+ is an arbitrary matrix.
  Although both the matrix and the vector of the Newton step changes during
  the algorithm, we can simplify by moving the vector inside the matrix.
 \end_layout
@@ -5295,7 +5798,7 @@ caption{
 \end_inset
 
 
-\begin_inset Formula $\mathtt{FastRobustStep}(\ma,x,s,t_{\mathrm{start}},t_{\mathrm{end}})$
+\begin_inset Formula $\mathtt{InverseMaintenance}()$
 \end_inset
 
 
@@ -5313,116 +5816,16 @@ status open
 \end_layout
 
 \begin_layout Standard
-\begin_inset CommandInset label
-LatexCommand label
-name "alg:FastRobustStep"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-
-\series bold
-Assume 
-\begin_inset Formula $2^{2\ell_{*}}\leq n^{\alpha}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-
-\series bold
-Define
-\series default
- 
-\begin_inset Formula $r=(xs-t)/t$
+Set 
+\begin_inset Formula $k\leftarrow0$
 \end_inset
 
  and 
-\begin_inset Formula $\Phi$
+\begin_inset Formula $\ell_{*}$
 \end_inset
 
- according to 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:Phi_potential"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- with 
-\begin_inset Formula $\lambda=16\log40n$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-
-\series bold
-Invariant:
-\series default
- 
-\begin_inset Formula $(x,s)\in\PriR^{\circ}\times\DualR^{\circ}$
-\end_inset
-
- and 
-\begin_inset Formula $\Phi(r)\leq16n$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-Let 
-\begin_inset Formula $t=t_{\mathrm{start}}$
-\end_inset
-
-, 
-\begin_inset Formula $h=1/(128\lambda\sqrt{n})$
-\end_inset
-
- and 
-\begin_inset Formula $n$
-\end_inset
-
- be the number of columns in 
-\begin_inset Formula $\ma$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-Let 
-\begin_inset Formula $x^{(0)}=\ox^{(0)}=x,s^{(0)}=\os^{(0)}=s,r^{(0)}=\overline{r}^{(0)}=(xs-t)/t$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-Let 
-\begin_inset Formula $\mathbf{T}=\mm_{\ox^{(0)},\os^{(0)},\overline{r}^{(0)}}^{-1}$
-\end_inset
-
- (defined in 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:M_xsr_def"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-) and 
-\begin_inset Formula $u=\mathbf{T}e_{2n+d+1}$
+ such that 
+\begin_inset Formula $2^{2\ell_{*}}=\Theta(\min(n^{\alpha},n^{2/3}))$
 \end_inset
 
 .
@@ -5436,16 +5839,12 @@ status open
 
 
 \backslash
-Repeat{
+While{
 \end_layout
 
 \end_inset
 
-
-\begin_inset Formula $t\neq t_{\mathrm{end}}$
-\end_inset
-
-
+Not finished
 \begin_inset ERT
 status open
 
@@ -5460,16 +5859,12 @@ status open
 \end_layout
 
 \begin_layout Standard
-Let 
-\begin_inset Formula $t'=\max(t/(1+h),t_{\mathrm{end}})$
-\end_inset
 
-, 
-\begin_inset Formula $\overline{\delta}_{\mu}=-\frac{t'}{32\lambda}\frac{\overline{g}}{\|\overline{g}\|_{2}}$
-\end_inset
-
-, 
-\begin_inset Formula $\overline{g}=\nabla\Phi(\overline{r})$
+\series bold
+Obtain
+\series default
+ the current 
+\begin_inset Formula $\ox^{(k)},\os^{(k)},\overline{r}^{(k)}$
 \end_inset
 
 .
@@ -5590,6 +5985,13 @@ status open
 \end_layout
 
 \begin_layout Standard
+\begin_inset Formula $k\leftarrow k+1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 Let 
 \begin_inset Formula $(\delta_{x},\delta_{s})$
 \end_inset
@@ -5606,56 +6008,15 @@ Let
 \end_layout
 
 \begin_layout Standard
-Let 
-\begin_inset Formula $x^{(k+1)}=x^{(k)}+\delta_{x}$
+
+\series bold
+Yield
+\series default
+ 
+\begin_inset Formula $(\delta_{x},\delta_{s})$
 \end_inset
 
-, 
-\begin_inset Formula $s^{(k+1)}=s^{(k)}+\delta_{s}$
-\end_inset
 
- and 
-\begin_inset Formula $t\leftarrow t'$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-Let 
-\begin_inset Formula $r^{(k+1)}=(x^{(k+1)}s^{(k+1)}-t)/t$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula $\ln\overline{x}^{(k+1)}=\mathtt{SelectVector}(\ln\overline{x}^{(k)},\ln x^{(0)},\ln x^{(1)},\cdots,\ln x^{(k+1)},1/48)$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula $\ln\overline{s}^{(k+1)}=\mathtt{SelectVector}(\ln\overline{s}^{(k)},\ln s^{(0)},\ln s^{(1)},\cdots,\ln s^{(k+1)},1/48)$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula $\overline{r}^{(k+1)}=\mathtt{SelectVector}(\overline{r}^{(k)},r^{(0)},r^{(1)},\cdots,r^{(k+1)},1/(48\lambda))$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-Set 
-\begin_inset Formula $k\leftarrow k+1$
-\end_inset
-
-.
 \end_layout
 
 \begin_layout Standard
@@ -5667,18 +6028,6 @@ status open
 }
 \end_layout
 
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-
-\series bold
-Return
-\series default
- 
-\begin_inset Formula $(x,s)$
 \end_inset
 
 
@@ -5743,11 +6092,18 @@ name "lem:FastRobustStepTime"
 
 \end_inset
 
-Setting 
-\begin_inset Formula $2^{2\ell_{*}}=\min(n^{\alpha},n^{2/3})$
+Using 
+\begin_inset Formula $\mathtt{InverseMaintenance}$
 \end_inset
 
-, 
+ to implement Line 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:LP_newton_step_robust_fast"
+
+\end_inset
+
+ of 
 \begin_inset Formula $\mathtt{FastRobustStep}$
 \end_inset
 
@@ -5758,7 +6114,11 @@ reference "alg:FastRobustStep"
 
 \end_inset
 
-) takes time 
+), 
+\begin_inset Formula $\mathtt{FastRobustStep}$
+\end_inset
+
+ takes in total time 
 \begin_inset Formula 
 \[
 O((n^{\omega+o(1)}+n^{2+1/6+o(1)}+n^{5/2-\alpha/2+o(1)})\log(t_{\mathrm{end}}/t_{\mathrm{start}})).
