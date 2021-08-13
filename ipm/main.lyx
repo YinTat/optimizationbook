@@ -5051,16 +5051,6 @@ Set
 \end_inset
 
 .
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-<– This is the full/intended step
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -5068,17 +5058,6 @@ status open
 \end_inset
 
 .
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-<– This is what we actually do, right?
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
