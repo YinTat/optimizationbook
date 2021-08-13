@@ -1483,18 +1483,6 @@ status open
 \end_inset
 
 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-I need at least one step.
- So, this is do ...
- while (cond) 
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -5063,6 +5051,16 @@ Set
 \end_inset
 
 .
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+<– This is the full/intended step
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5070,6 +5068,17 @@ Set
 \end_inset
 
 .
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+<– This is what we actually do, right?
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5133,7 +5142,17 @@ The intermediate variables
 \begin_inset Formula $x^{(k)},s^{(k)},\ox^{(k)},\os^{(k)}$
 \end_inset
 
- can be stored using persistent data structures and the cost of 
+ can be stored using persistent
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+what is this?
+\end_layout
+
+\end_inset
+
+ data structures and the cost of 
 \begin_inset Formula $\mathtt{SelectVector}$
 \end_inset
 
@@ -5146,7 +5165,7 @@ The intermediate variables
 \begin_inset Formula $\mathtt{FastRobustStep}$
 \end_inset
 
- is to solve the linear systems 
+ solving the linear systems 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:LP_newton_step_robust_fast"
@@ -5154,8 +5173,8 @@ reference "eq:LP_newton_step_robust_fast"
 \end_inset
 
 .
- The cost of solving a sequence of linear systems in general depend on the
- number of entries changed.
+ The cost of solving a sequence of linear systems in general depends on
+ the number of entries changed.
  Combining Lemmas we proved in the previous two subsections, we can prove
  the correctness of 
 \begin_inset Formula $\mathtt{FastRobustStep}$
@@ -5295,14 +5314,18 @@ reference "subsec:SolveLP_apx"
 \end_inset
 
 ) twice and that 
-\begin_inset Formula $t_{\mathrm{start}}/t_{\mathrm{end}}=(\frac{n}{\delta}\frac{R}{r})^{O(1)}$
+\begin_inset Formula 
+\[
+\frac{t_{\mathrm{start}}}{t_{\mathrm{end}}}=\left(\frac{nR}{\delta r}\right)^{O(1)}
+\]
+
 \end_inset
 
- for both call.
+for both calls.
  Hence, the total number of steps is bounded by
 \begin_inset Formula 
 \[
-T=O(\sqrt{n}\log(\frac{n}{\delta}\frac{R}{r}))
+T=O(\sqrt{n}\log(\frac{nR}{\delta r}))
 \]
 
 \end_inset
@@ -5310,7 +5333,7 @@ T=O(\sqrt{n}\log(\frac{n}{\delta}\frac{R}{r}))
 and the number of entries changed is bounded by
 \begin_inset Formula 
 \[
-\sum_{k=1}^{T}O(\min(2^{2\ell_{k}}\log^{2}n,n))=O(n\log n\cdot\log(\frac{n}{\delta}\frac{R}{r})).
+\sum_{k=1}^{T}O(\min(2^{2\ell_{k}}\log^{2}n,n))=O(n\log n\cdot\log(\frac{nR}{\delta r})).
 \]
 
 \end_inset
