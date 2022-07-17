@@ -755,6 +755,16 @@ filename "preliminaries.lyx"
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "examples.lyx"
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Part
 Optimization
 \end_layout

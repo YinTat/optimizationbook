@@ -481,7 +481,7 @@ Using
 , we can compute the duality gap as follows
 \begin_inset Formula 
 \[
-c^{\top}x-b^{\top}y=c^{\top}x-(\ma x)^{\top}y=c^{\top}x-x^{\top}(\ma y)=x^{\top}s.
+c^{\top}x-b^{\top}y=c^{\top}x-(\ma x)^{\top}y=c^{\top}x-x^{\top}(\ma^{\top}y)=x^{\top}s.
 \]
 
 \end_inset
@@ -698,7 +698,7 @@ Suppose
 
 .
  Furthermore, 
-\begin_inset Formula $x_{\mu}=\min_{x\in\PriR}f_{\mu}(x)$
+\begin_inset Formula $x_{\mu}=\arg\min_{x\in\PriR}f_{\mu}(x)$
 \end_inset
 
  where
@@ -779,7 +779,7 @@ By the KKT optimality condition for
  such that
 \begin_inset Formula 
 \[
-\nabla f_{\mu}(x)=c-\frac{\mu}{x}=\ma^{\top}y.
+\nabla f_{\mu}(x_{\mu})=c-\frac{\mu}{x_{\mu}}=\ma^{\top}y.
 \]
 
 \end_inset
