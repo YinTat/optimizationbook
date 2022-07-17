@@ -852,7 +852,7 @@ well-rounded
 
 .
  Connecting improvements in the Cheeger constant directly to the complexity
- of volume computation is an open question.
+ of volume computation was an open question for a couple of decades.
  To apply improvements in the Cheeger constant, one would need to replace
  well-roundedness with (near-)isotropy and maintain that.
  However, maintaining isotropy appears to be much harder — possibly requiring
@@ -905,6 +905,49 @@ The volume of a well-rounded convex body, i.e., with
 \end_inset
 
 , can be computed using 
+\begin_inset Formula $O^{*}(n^{3})$
+\end_inset
+
+ oracle calls.
+\end_layout
+
+\begin_layout Standard
+In 2021, it was shown that the complexity of rounding a convex body can
+ be bounded as 
+\begin_inset Formula $O^{*}(n^{3}\psi_{n}^{2})$
+\end_inset
+
+ where 
+\begin_inset Formula $\psi_{n}$
+\end_inset
+
+ is the KLS constant bound for any isotropic logconcave density in 
+\begin_inset Formula $\R^{n}.$
+\end_inset
+
+ Together with the next theorem, it follows that the volume of a convex
+ body can be computed in the same complexity.
+ The current bound on the KLS constant implies that this is in fact 
+\begin_inset Formula $O^{*}(n^{3}).$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Theorem
+A near-isotropic transformation for any convex body in 
+\begin_inset Formula $\R^{n}$
+\end_inset
+
+ can be computed using 
+\begin_inset Formula $\tilde{O}(n^{3})$
+\end_inset
+
+ oracle calls and the volume of any convex body in 
+\begin_inset Formula $\R^{n}$
+\end_inset
+
+ can be computed using 
 \begin_inset Formula $O^{*}(n^{3})$
 \end_inset
 

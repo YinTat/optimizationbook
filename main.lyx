@@ -288,10 +288,6 @@ vempala@gatech.edu.
 \end_inset
 
 Georgia Tech
-\begin_inset Newline newline
-\end_inset
-
-& Vempala Research
 \end_layout
 
 \begin_layout Standard
@@ -1102,6 +1098,13 @@ filename "ball_walk.lyx"
 \end_inset
 
 
+\begin_inset CommandInset include
+LatexCommand input
+filename "har_dikin.lyx"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Chapter
@@ -1123,9 +1126,18 @@ filename "annealing_volume.lyx"
 \end_inset
 
 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 \begin_inset CommandInset include
 LatexCommand input
 filename "rounding.lyx"
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
