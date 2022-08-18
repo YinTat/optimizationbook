@@ -204,8 +204,7 @@ Given a convex set
 \begin_inset Formula $K\subset\Rn$
 \end_inset
 
-.
- Suppose for any 
+, suppose for any 
 \begin_inset Formula $x\notin K$
 \end_inset
 
@@ -245,7 +244,7 @@ When apply to convex functions, we have
 \begin_inset Formula $K$
 \end_inset
 
- be the set of minimizer of 
+ be the set of minimizers of 
 \begin_inset Formula $f$
 \end_inset
 

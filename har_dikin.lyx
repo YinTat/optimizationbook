@@ -1032,11 +1032,11 @@ For a matrix
 
 .
  For convenience we write 
-\begin_inset Formula $\norm._{\nabla^{2}\phi(x)}$
+\begin_inset Formula $\norm ._{\nabla^{2}\phi(x)}$
 \end_inset
 
  as 
-\begin_inset Formula $\norm._{x}$
+\begin_inset Formula $\norm ._{x}$
 \end_inset
 
 .
@@ -1065,7 +1065,7 @@ For any
 , 
 \begin_inset Formula 
 \[
-u+E_{u}\subseteq P\cap(u-P)\subseteq u+\sqrt{m}E_{u}.
+u+E_{u}\subseteq P\cap(2u-P)\subseteq u+\sqrt{m}E_{u}.
 \]
 
 \end_inset
@@ -1079,7 +1079,7 @@ By the definition of
 \end_inset
 
 , for any 
-\begin_inset Formula $v\in P\cap(u-P)$
+\begin_inset Formula $v\in P\cap(2u-P)$
 \end_inset
 
 , 

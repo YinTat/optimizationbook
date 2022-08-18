@@ -764,7 +764,7 @@ For
  satisfies 
 \begin_inset Formula 
 \[
-\frac{\E\left(Y^{2}\right)}{\E\left(Y\right)}\le\left(\frac{a_{i+1}^{2}}{(2a_{i+1}-a_{i})a_{i}}\right)^{n}
+\frac{\E\left(Y^{2}\right)}{\E\left(Y\right)^{2}}\le\left(\frac{a_{i+1}^{2}}{(2a_{i+1}-a_{i})a_{i}}\right)^{n}
 \]
 
 \end_inset

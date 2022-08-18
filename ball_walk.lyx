@@ -3774,7 +3774,7 @@ Let
 , 
 \begin_inset Formula 
 \[
-\Pr_{x\sim K}\left(|q(x)|\le\epsilon\max_{K}|q(x)|\right)\lesssim\epsilon^{\frac{1}{d}}n
+\Pr_{x\sim K}\left(|q(x)|\le\epsilon\max_{K}|q(x)|\right)\lesssim\epsilon^{\frac{1}{d}}d
 \]
 
 \end_inset
