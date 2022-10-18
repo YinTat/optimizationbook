@@ -1,4 +1,4 @@
-This is a optimization textbook by Yin Tat Lee and Santosh Vempala.
+This is a optimization and sampling textbook by Yin Tat Lee and Santosh Vempala.
 
 This is far from done.
 
