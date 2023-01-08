@@ -2,7 +2,75 @@
 \lyxformat 544
 \begin_document
 \begin_header
+\save_transient_properties true
+\origin unavailable
 \textclass optbook
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
 \end_header
 
 \begin_body
@@ -13,7 +81,7 @@ In this book
 status open
 
 \begin_layout Plain Layout
-In the UW course, only the optimization part is covered.
+In the UW course, only the optimization part was covered.
 \end_layout
 
 \end_inset
@@ -57,7 +125,8 @@ Convexity and its natural extensions are a current frontier of tractable,
 
 \begin_layout Standard
 We will learn several techniques that lead us to some polynomial-time algorithms
- for both problems and (nearly) linear-time algorithms for the case 
+ for both problems and (nearly) linear-time algorithms for the case when
+ 
 \begin_inset Formula $f$
 \end_inset
 
@@ -96,7 +165,15 @@ Given an
 \begin_inset Formula $O(n)$
 \end_inset
 
- nonzero entries, can we solve 
+ nonzero entries and a 
+\begin_inset Formula $0/1$
+\end_inset
+
+ vector 
+\begin_inset Formula $b$
+\end_inset
+
+, can we solve 
 \begin_inset Formula $Ax=b$
 \end_inset
 
@@ -323,7 +400,7 @@ reference "sec:Gradient-Descent"
 \end_layout
 
 \begin_layout Section
-Why is Convexity Useful? Linear Separability!
+Why is convexity useful? Linear Separability!
 \end_layout
 
 \begin_layout Standard
@@ -380,13 +457,13 @@ A function
 convex
 \emph default
  if for any 
-\begin_inset Formula $\lambda\in[0,1]$
+\begin_inset Formula $t\in[0,1]$
 \end_inset
 
 , we have 
 \begin_inset Formula 
 \[
-f(\lambda x+(1-\lambda)y)\le\lambda f(x)+(1-\lambda)f(y).
+f(tx+(1-t)y)\le tf(x)+(1-t)f(y).
 \]
 
 \end_inset
@@ -414,6 +491,10 @@ I should either use
 \end_inset
 
  is eigenvalue.
+\end_layout
+
+\begin_layout Plain Layout
+OK.
 \end_layout
 
 \end_inset
@@ -1132,7 +1213,7 @@ We note that the proof above is in fact a constructive proof.
 \end_layout
 
 \begin_layout Section
-Convex Problems are Everywhere!
+Convex problems are everywhere!
 \end_layout
 
 \begin_layout Standard
@@ -2099,7 +2180,7 @@ Show that the above sets and functions are all convex.
 \end_layout
 
 \begin_layout Section
-Checking Convexity
+Checking convexity
 \begin_inset CommandInset label
 LatexCommand label
 name "sec:Checking-Convexity"

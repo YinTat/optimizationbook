@@ -376,10 +376,6 @@ Partial Approximation: Split the problem into two parts and approximate
  only one part
 \end_layout
 
-\begin_layout Standard
-Here are other approximation not covered:
-\end_layout
-
 \begin_layout Itemize
 Taylor Approximation: 
 \begin_inset Formula $f(y)\approx\sum_{k=0}^{K}D^{k}f(x)[y-x]^{k}$
@@ -396,6 +392,10 @@ Cite
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Here are other approximation not covered:
 \end_layout
 
 \begin_layout Itemize
@@ -884,7 +884,7 @@ Let
 
 .
  For any 
-\begin_inset Formula $\mu\geq0$
+\begin_inset Formula $L\geq0$
 \end_inset
 
 , the following are equivalent:
@@ -2083,9 +2083,9 @@ Line Search
 \end_layout
 
 \begin_layout Standard
-In practice, we often stop the line search early because we can make larger
+In practice, we often stop line search early because we can make larger
  progress via a new direction.
- One standard stopping condition is called Wolfe conditions.
+ One standard stopping condition is called the Wolfe condition.
 \end_layout
 
 \begin_layout Definition
@@ -2093,7 +2093,7 @@ A step size
 \begin_inset Formula $h$
 \end_inset
 
- satisfies the Wolfe conditions with respect to direction 
+ satisfies the Wolfe condition with respect to direction 
 \begin_inset Formula $p$
 \end_inset
 
@@ -2176,7 +2176,7 @@ Suppose
 \begin_inset Formula $h$
 \end_inset
 
- satisfies the Wolfe conditions with the direction 
+ satisfies the Wolfe condition with the direction 
 \begin_inset Formula $p=-\nabla f(x)$
 \end_inset
 
@@ -2213,7 +2213,7 @@ reference "thm:gd_convex_strongly"
 \end_inset
 
 .
- One common way to via backtracking line search.
+ One common way to implement this is via a backtracking line search.
  The algorithm starts with a large step size and decreases it by a constant
  factor when the Wolfe conditions are violated.
  For gradient descent, the next step involves exactly computing 
@@ -2230,7 +2230,7 @@ reference "thm:gd_convex_strongly"
 
 \begin_layout Standard
 Finally, we note that for problems of the form 
-\begin_inset Formula $\sum_{i}f_{i}(a_{i}^{\top}x)$
+\begin_inset Formula $f(x)=\sum_{i}f_{i}(a_{i}^{\top}x)$
 \end_inset
 
 , the bottleneck is often in computing 
