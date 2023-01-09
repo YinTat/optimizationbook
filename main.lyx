@@ -765,10 +765,6 @@ filename "examples.lyx"
 
 \end_layout
 
-\begin_layout Part
-Optimization
-\end_layout
-
 \begin_layout Chapter
 Introduction
 \end_layout
@@ -791,6 +787,10 @@ I think we should have a section on subgradient just for completeness?
 \end_inset
 
 
+\end_layout
+
+\begin_layout Part
+Optimization
 \end_layout
 
 \begin_layout Standard
@@ -911,7 +911,7 @@ filename "duality.lyx"
 \end_layout
 
 \begin_layout Chapter
-Geometrization and Optimization
+Geometrization
 \end_layout
 
 \begin_layout Standard
@@ -1076,7 +1076,7 @@ Sampling
 \end_layout
 
 \begin_layout Chapter
-Introduction and Gradient Methods
+Gradient-based Sampling
 \end_layout
 
 \begin_layout Standard
@@ -1087,6 +1087,13 @@ filename "langevin_dynamics.lyx"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Chapter
+Elimination
+\end_layout
+
+\begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand input
 filename "cutting_plane_volume.lyx"
@@ -1097,7 +1104,21 @@ filename "cutting_plane_volume.lyx"
 \end_layout
 
 \begin_layout Chapter
-Geometrization and Sampling
+Reduction
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset include
+LatexCommand input
+filename "opt_from_mem.lyx"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Geometrization
 \end_layout
 
 \begin_layout Standard
