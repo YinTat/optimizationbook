@@ -222,7 +222,7 @@ Given a polytope defined by
 \end_layout
 
 \begin_layout Section
-Why non-convex functions can be difficult
+Why non-convex functions can be difficult to optimize
 \end_layout
 
 \begin_layout Standard
@@ -1417,8 +1417,12 @@ where
 \begin_inset Formula $A\in\R^{m\times n}$
 \end_inset
 
- is the matrix of nutrients contents of each food.
- Unfortunately, Nobel Laureate Stigler showed that 
+ is the matrix of nutrients contents of each food
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Unfortunately, Nobel Laureate Stigler showed that 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "stigler1945cost"
@@ -1430,9 +1434,14 @@ literal "false"
  liver.
 \end_layout
 
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Standard
-Joking aside, both the diet problem and the minimum cost flow problem can
- be reformulated into the form
+Both the diet problem and the minimum cost flow problem can be reformulated
+ into the form
 \begin_inset Formula 
 \begin{equation}
 \min_{Ax=b,x\geq0}c^{\top}x\label{eq:LP_standard}
@@ -1456,8 +1465,8 @@ for some vectors
 \end_layout
 
 \begin_layout Exercise
-Show that both the minimum cost flow problem and the diet problem can be
- written as 
+Show how the minimum cost flow problem and the diet problem can be written
+ in the form 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:LP_standard"
@@ -1482,7 +1491,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Subsection
-Logistic Regression (Machine Learning)
+Logistic regression (from Machine Learning)
 \end_layout
 
 \begin_layout Standard
@@ -1693,7 +1702,7 @@ where we say
  Furthermore, the objective is convex by using the fact that
 \begin_inset Formula 
 \[
-\text{SurfaceArea}(f)=\int_{0}^{1}\int_{0}^{1}\sqrt{(\frac{\partial f(x,y)}{\partial x})^{2}+(\frac{\partial f(x,y)}{\partial y})^{2}+1}dxdy.
+\text{SurfaceArea}(f)=\int_{0}^{1}\int_{0}^{1}\sqrt{(\frac{\partial f(x,y)}{\partial x})^{2}+(\frac{\partial f(x,y)}{\partial y})^{2}+1\,}dxdy.
 \]
 
 \end_inset
@@ -1706,13 +1715,13 @@ Show that surface area is convex by using the definition.
 \end_layout
 
 \begin_layout Exercise
-Calculus of variations is an area in mathematics studies the optimization
- on function spaces and there are many common theorems between this and
+Calculus of variations is an area of mathematics that studies optimization
+ in function spaces and there are many common theorems between this and
  convex optimization.
 \end_layout
 
 \begin_layout Section
-Examples of Convex Sets and Functions
+Examples of convex sets and functions
 \end_layout
 
 \begin_layout Standard
@@ -2203,7 +2212,7 @@ noprefix "false"
 
 .
  The major benefit of that definition is that it works for non-differentiable
- functions and infinite dimensional space.
+ functions and infinite dimensional spaces.
  However, when a function is twice differentiable, one can check the convexity
  by simply checking if the Hessian is positive semi-definite.
  (Recall the definition of 
@@ -2224,7 +2233,7 @@ reference "def:PSD"
 To show this, we first prove the following second-order Taylor theorem.
 \end_layout
 
-\begin_layout Lemma
+\begin_layout Theorem
 \begin_inset CommandInset label
 LatexCommand label
 name "lem:second_order"
@@ -2700,16 +2709,6 @@ name "lem:marginal"
  a logconcave density is logconcave; the distribution function of any logconcave
  density is logconcave.
  
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Define convolution somewhere?
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -2841,7 +2840,7 @@ Prove both corollaries just mentioned.
 \end_layout
 
 \begin_layout Example
-We give one example problem related to Bayesian inference.
+We give an example problem related to Bayesian inference.
  Suppose we have a signal 
 \begin_inset Formula $\theta=\left(\theta_{1},\theta_{2},\cdots,\theta_{n}\right)$
 \end_inset

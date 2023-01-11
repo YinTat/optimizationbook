@@ -238,6 +238,19 @@ Define isotropic.
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Define convolution.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section*
 Functions
 \end_layout

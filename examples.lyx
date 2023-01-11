@@ -80,21 +80,25 @@ Examples
 \end_layout
 
 \begin_layout Standard
-Here is the list we want to do:
+Here is a list we want to cover:
 \end_layout
 
 \begin_layout Itemize
-linear system, SDD, M matrices, directed Laplacian, (What other linear systems?)
- 
+linear system, SDD, M matrices, directed Laplacian, multi-commodity flow,
+ totally unimodular matrices (what other linear systems?) 
 \end_layout
 
 \begin_layout Itemize
-logistic regression, other regressions, lp regression, convex regression
+logistic regression, other regressions, 
+\begin_inset Formula $\ell_{p}$
+\end_inset
+
+ regression, convex regression
 \end_layout
 
 \begin_layout Itemize
 linear program < quadratic program < second order cone program < semidefinite
- program < cone program
+ program < conic program < convex program
 \end_layout
 
 \begin_deeper

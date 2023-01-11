@@ -80,7 +80,7 @@ Philosophy
 \end_layout
 
 \begin_layout Standard
-Often, optimization methods follow the following framework:
+Optimization methods often follow the following framework:
 \end_layout
 
 \begin_layout Standard
@@ -237,23 +237,24 @@ end{algorithm2e}
 
 \begin_layout Standard
 The runtime depends on the number of iterations and the cost per iteration.
- Philosophically, difficulties of a problem can never be created nor destroyed,
- only converted from one form of difficulty to another.
+ Philosophically, the difficulties of a problem can never be created nor
+ destroyed, only converted from one form of difficulty to another.
  When we decrease the number of iterations, the cost per iteration often
  increase.
  The gain of new methods often come from avoiding some wasted computation,
  utilizing some forgotten information or giving a faster but tailored algorithm
  for a sub-problem.
+ This is of course just an empirical observation.
 \end_layout
 
 \begin_layout Standard
-One key question to answer in designing an optimization algorithm is that
- what the problem looks like (or how can we approximate 
+One key question to answer in designing an optimization algorithm is what
+ the problem looks like (or how can we approximate 
 \begin_inset Formula $f$
 \end_inset
 
  by a simpler function).
- Here are some approximation we will used in this textbook:
+ Here are some approximations we will use in this textbook:
 \end_layout
 
 \begin_layout Itemize
@@ -268,7 +269,7 @@ reference "sec:Gradient-Descent"
 
 \end_inset
 
-)
+).
 \end_layout
 
 \begin_layout Itemize
@@ -283,7 +284,7 @@ reference "sec:Newton-Method"
 
 \end_inset
 
-)
+).
 \end_layout
 
 \begin_layout Itemize
@@ -302,7 +303,7 @@ reference "sec:Stochastic-Gradient-Descent"
 
 \end_inset
 
-)
+).
 \end_layout
 
 \begin_layout Itemize
@@ -332,7 +333,7 @@ reference "sec:Leverage-Score-Sampling"
 
 \end_inset
 
-)
+).
 \end_layout
 
 \begin_layout Itemize
@@ -344,7 +345,7 @@ reference "sec:Cutting-Plane-Methods"
 
 \end_inset
 
-)
+).
 \end_layout
 
 \begin_layout Itemize
@@ -356,7 +357,7 @@ reference "sec:IPM"
 
 \end_inset
 
-)
+).
 \end_layout
 
 \begin_layout Itemize
@@ -368,12 +369,12 @@ reference "sec:Chebyshev-Polynomials"
 
 \end_inset
 
-)
+).
 \end_layout
 
 \begin_layout Itemize
 Partial Approximation: Split the problem into two parts and approximate
- only one part
+ only one part.
 \end_layout
 
 \begin_layout Itemize
@@ -391,7 +392,7 @@ Cite
 
 \end_inset
 
-
+.
 \end_layout
 
 \begin_layout Standard
@@ -483,8 +484,8 @@ Santosh, add more stuff here
 \end_layout
 
 \begin_layout Standard
-The second question to answer is how we maintain all the different approximation
-s we created in each step.
+The second question to answer is how to maintain different approximations
+ created in different steps.
  One simple way would be forget the approximation we got in previous steps,
  but this is often not optimal.
  Another way is to keep all previous approximations/information (such as
@@ -772,7 +773,7 @@ One can view gradient descent as a greedy method for solving
 , gradient descent goes to the minimizer of 
 \begin_inset Formula 
 \[
-\min_{\|\Delta\|_{2}\leq\eta}f(x)+\nabla f(x)^{\top}\Delta.
+\min_{\|\Delta\|_{2}\leq h}f(x)+\nabla f(x)^{\top}\Delta.
 \]
 
 \end_inset
@@ -833,7 +834,7 @@ If the iteration stops, we get a point with
 \end_layout
 
 \begin_layout Definition
-We call 
+We say 
 \begin_inset Formula $f$
 \end_inset
 
@@ -854,7 +855,7 @@ We call
 \end_inset
 
  for all 
-\begin_inset Formula $x,y$
+\begin_inset Formula $x,y\in\R^{n}$
 \end_inset
 
 .
@@ -903,10 +904,10 @@ Let
 \end_layout
 
 \begin_layout Enumerate
-\begin_inset Formula $-L\preceq\nabla^{2}f(x)\preceq L$
+\begin_inset Formula $-LI\preceq\nabla^{2}f(x)\preceq L$
 \end_inset
 
- for all 
+I for all 
 \begin_inset Formula $x\in\Rn$
 \end_inset
 
@@ -914,7 +915,7 @@ Let
 \end_layout
 
 \begin_layout Enumerate
-\begin_inset Formula $f(y)=f(x)+\nabla f(x)^{\top}(y-x)\pm\frac{L}{2}\|y-x\|_{2}^{2}$
+\begin_inset Formula $\left|f(y)-f(x)-\nabla f(x)^{\top}(y-x)\right|\le\frac{L}{2}\|y-x\|_{2}^{2}$
 \end_inset
 
  for all 
@@ -980,7 +981,7 @@ This gives (1).
 
 \begin_layout Proof
 Suppose (2) holds.
- By Taylor expansion, we have
+ By integration, we have
 \begin_inset Formula 
 \[
 f(y)=f(x)+\nabla f(x)^{\top}(y-x)+\int_{0}^{1}(1-t)(y-x)^{\top}\nabla^{2}f(x+t(y-x))(y-x)dt.
@@ -995,17 +996,17 @@ Since
 , we have
 \begin_inset Formula 
 \[
-(y-x)^{\top}\nabla^{2}f(x+t(y-x))(y-x)=\pm L\|y-x\|^{2}.
+\left|(y-x)^{\top}\nabla^{2}f(x+t(y-x))(y-x)\right|\le L\|y-x\|^{2}.
 \]
 
 \end_inset
 
-Using this gives (3).
+This gives (3).
 \end_layout
 
 \begin_layout Proof
 Suppose (3) holds, then 
-\begin_inset Formula $g(x)=f(x)+\frac{L}{2}\|x\|^{2}$
+\begin_inset Formula $g(x)=g(x)+\frac{L}{2}\|x\|^{2}$
 \end_inset
 
  satisfies 
@@ -1017,7 +1018,7 @@ Suppose (3) holds, then
 \end_inset
 
 .
- Theorem 
+ So Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:equ_convex"
@@ -1033,8 +1034,8 @@ reference "thm:equ_convex"
 \end_inset
 
 .
- This shows that 
-\begin_inset Formula $\nabla^{2}f(x)\succeq-L$
+ Hence, 
+\begin_inset Formula $\nabla^{2}f(x)\succeq-LI$
 \end_inset
 
 .
@@ -1043,11 +1044,11 @@ reference "thm:equ_convex"
 \end_inset
 
 , we have 
-\begin_inset Formula $\nabla^{2}f(x)\preceq L$
+\begin_inset Formula $\nabla^{2}f(x)\preceq LI$
 \end_inset
 
 .
- Hence, this gives (2).
+ This gives (2).
 \end_layout
 
 \begin_layout Standard
@@ -1062,11 +1063,14 @@ x^{(k+1)}=\arg\min_{y}f(x^{(k)})+\left\langle \nabla f(x^{(k)}),y-x^{(k)}\right\
 \end_inset
 
 To see this is the same step, we let 
-\begin_inset Formula $g(y)=f(x^{(k)})+\left\langle \nabla f(x^{(k)}),y-x^{(k)}\right\rangle +\frac{L}{2}\|y-x^{(k)}\|_{2}^{2}$
+\begin_inset Formula 
+\[
+g(y)=f(x^{(k)})+\left\langle \nabla f(x^{(k)}),y-x^{(k)}\right\rangle +\frac{L}{2}\|y-x^{(k)}\|_{2}^{2}.
+\]
+
 \end_inset
 
-.
- The optimality condition shows that 
+The optimality condition shows that 
 \begin_inset Formula $0=\nabla g(x^{(k+1)})=\nabla f(x^{(k)})+L(x^{(k+1)}-x^{(k)})$
 \end_inset
 
@@ -1133,8 +1137,8 @@ reference "thm:L_equ_def"
 
 , then we are making more progress.
  For gradient descent, it uses the simplest first-order approximation.
- Although this is not the best approximation one can come up, but it is
- robust enough to use in all sort of applications.
+ Although this is not the best approximation one can come up with, it is
+ robust enough to use in all sorts of applications.
 \end_layout
 
 \begin_layout Subsection
@@ -1597,7 +1601,11 @@ f(x^{(k)})-f(x^{*})\leq\frac{2L\|x^{(0)}-x^{*}\|_{2}^{2}}{k+4}.
 \end_layout
 
 \begin_layout Proof
-We compute the distance as follows:
+We compute the distance as follows, noting that 
+\begin_inset Formula $\nabla f(x^{*})=0$
+\end_inset
+
+:
 \begin_inset Formula 
 \begin{align*}
 \|x^{(k+1)}-x^{*}\|_{2}^{2} & =\|x^{(k)}-x^{*}-h\nabla f(x^{(k)})\|_{2}^{2}\\
@@ -1625,7 +1633,7 @@ with
 
 .
  Since 
-\begin_inset Formula $0\preceq H\preceq L$
+\begin_inset Formula $0\preceq H\preceq LI$
 \end_inset
 
  and that 
@@ -1698,12 +1706,11 @@ reference "thm:gd_general"
 \end_inset
 
 .
- However, this is not true because one is measuring the error in terms of
- 
+ However, this is not true because one measures the error in terms of 
 \begin_inset Formula $\|\nabla f(x)\|_{2}$
 \end_inset
 
- and one is measuring the error in terms of 
+ while the other is in terms of 
 \begin_inset Formula $f(x)-f^{*}$
 \end_inset
 
@@ -1815,7 +1822,7 @@ Let
 
 \begin_deeper
 \begin_layout Itemize
-\begin_inset Formula $f(\lambda x+(1-\lambda)y)\leq\lambda f(x)+(1-\lambda)f(y)-\frac{1}{2}\mu\lambda(1-\lambda)\|x-y\|_{2}^{2}$
+\begin_inset Formula $f(tx+(1-t)y)\leq tf(x)+(1-t)f(y)-\frac{1}{2}\mu t(1-t)\|x-y\|_{2}^{2}$
 \end_inset
 
  for all 
@@ -1823,7 +1830,7 @@ Let
 \end_inset
 
  and 
-\begin_inset Formula $\lambda\in[0,1]$
+\begin_inset Formula $t\in[t0,1]$
 \end_inset
 
 .
@@ -1844,7 +1851,7 @@ Let
 \begin_inset Formula $\nabla^{2}f(x)\succeq\mu$
 \end_inset
 
- for all 
+I for all 
 \begin_inset Formula $x\in\Rn$
 \end_inset
 
@@ -1868,11 +1875,75 @@ reference "thm:equ_convex"
 \end_layout
 
 \begin_layout Standard
-Now, we study gradient descent for 
+Next, we study gradient descent for 
 \begin_inset Formula $\mu$
 \end_inset
 
 -strongly convex functions.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:strongly_convex"
+
+\end_inset
+
+Let 
+\begin_inset Formula $f\in\mathcal{C}^{2}(\R^{n})$
+\end_inset
+
+ be 
+\begin_inset Formula $\mu$
+\end_inset
+
+-strongly convex.
+ Then, for any 
+\begin_inset Formula $x,y\in\R^{n},$
+\end_inset
+
+we have
+\begin_inset Formula 
+\[
+\norm{\nabla f(x)}^{2}\ge2\mu\left(f(x)-f(y)\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+By the definition of 
+\begin_inset Formula $\mu$
+\end_inset
+
+ strong convexity, we have 
+\begin_inset Formula 
+\[
+f(y)\ge f(x)+\langle\nabla f(x),y-x\rangle+\frac{\mu}{2}\norm{x-y}^{2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Rearranging, we have 
+\begin_inset Formula 
+\[
+f(x)-f(y)\le\langle\nabla f(x),x-y\rangle-\frac{\mu}{2}\norm{x-y}^{2}\le\max_{\Delta}\nabla f(x)^{\top}\Delta-\frac{\mu}{2}\norm{\Delta}^{2}=\frac{1}{2\mu}\norm{\nabla f(x)}^{2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This will lead to the following guarantee.
+ Note that the error now decreases geometrically rather than additively.
 \end_layout
 
 \begin_layout Theorem
@@ -1918,7 +1989,7 @@ Let
  satisfies
 \begin_inset Formula 
 \[
-f(x^{(k)})-f(x^{*})\leq(1-\frac{\mu}{L})^{k}(f(x^{(0)})-f(x^{*})).
+f(x^{(k)})-f(x^{*})\leq\left(1-\frac{\mu}{L}\right){}^{k}\left(f(x^{(0)})-f(x^{*})\right).
 \]
 
 \end_inset
@@ -1952,52 +2023,26 @@ reference "lem:gradient_progress"
 
  shows that
 \begin_inset Formula 
-\begin{equation}
-f(x^{(k+1)})-f^{*}\leq f(x^{(k)})-f^{*}-\frac{1}{2L}\|\nabla f(x^{(k)})\|_{2}^{2}.\label{eq:strong_convex_progress}
-\end{equation}
+\begin{align}
+f(x^{(k+1)})-f^{*} & \leq f(x^{(k)})-f^{*}-\frac{1}{2L}\|\nabla f(x^{(k)})\|_{2}^{2}\label{eq:strong_convex_progress}\\
+ & \le f(x^{(k)})-f^{*}-\frac{\mu}{L}\left(f(x^{(k)})-f^{*}\right)\\
+ & =\left(1-\frac{\mu}{L}\right)\left(f(x^{(k)})-f^{*}\right)
+\end{align}
 
 \end_inset
 
-Next, the definition of 
-\begin_inset Formula $\mu$
-\end_inset
-
- strong convexity implies that
-\begin_inset Formula 
-\[
-f(x^{*})\geq f(x^{(k)})+\nabla f(x^{(k)})^{\top}(x^{*}-x^{(k)})+\frac{\mu}{2}\|x^{*}-x^{(k)}\|_{2}^{2}.
-\]
-
-\end_inset
-
-Rearranging the term, we have
-\begin_inset Formula 
-\begin{equation}
-f(x^{(k)})-f^{*}\leq\nabla f(x^{(k)})^{\top}(x^{(k)}-x^{*})-\frac{\mu}{2}\|x^{(k)}-x^{*}\|_{2}^{2}\leq\max_{\Delta}\left(\nabla f(x^{(k)})^{\top}\Delta-\frac{\mu}{2}\|\Delta\|_{2}^{2}\right)=\frac{1}{2\mu}\|\nabla f(x^{(k)})\|_{2}^{2}.\label{eq:err_vs_grad}
-\end{equation}
-
-\end_inset
-
-Putting this into the gradient term in (
+where we used Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "eq:strong_convex_progress"
+reference "lem:strongly_convex"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
-) gives
-\begin_inset Formula 
-\[
-f(x^{(k+1)})-f^{*}\leq(1-\frac{\mu}{L})(f(x^{(k)})-f^{*}).
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-The conclusion follows.
+.
+ The conclusion follows.
 \end_layout
 
 \begin_layout Standard
@@ -2084,8 +2129,8 @@ Line Search
 
 \begin_layout Standard
 In practice, we often stop line search early because we can make larger
- progress via a new direction.
- One standard stopping condition is called the Wolfe condition.
+ progress in a new direction.
+ A standard stopping condition is called the Wolfe condition.
 \end_layout
 
 \begin_layout Definition
@@ -2125,7 +2170,7 @@ with
 \end_layout
 
 \begin_layout Standard
-Let the object progress 
+Let the objective for progress be 
 \begin_inset Formula $\phi(h)=f(x)-f(x+hp)$
 \end_inset
 
@@ -2135,7 +2180,7 @@ Let the object progress
 \end_inset
 
 ).
- The second condition requires the slop reduced significantly (
+ The second condition requires the slope to reduce significantly (
 \begin_inset Formula $\phi'(h)\leq c_{2}\phi'(0)$
 \end_inset
 
@@ -2149,13 +2194,13 @@ Let the object progress
 \end_inset
 
 .
- In general, step size satisfying the Wolfe conditions will be larger than
- the step size 
+ In general, a step size satisfying the Wolfe conditions will be larger
+ than the step size 
 \begin_inset Formula $h=\frac{1}{L}$
 \end_inset
 
 .
- In particular, one can show the following:
+ In particular, one can show the following.
 \end_layout
 
 \begin_layout Exercise
@@ -2193,7 +2238,7 @@ Suppose
 
 \begin_layout Standard
 As a corollary, we have that the function value progress given by such step
- is at least 
+ is 
 \begin_inset Formula $\Omega(\|\nabla f(x)\|^{2}/L)$
 \end_inset
 
@@ -2213,19 +2258,19 @@ reference "thm:gd_convex_strongly"
 \end_inset
 
 .
- One common way to implement this is via a backtracking line search.
+ A common way to implement this is via a backtracking line search.
  The algorithm starts with a large step size and decreases it by a constant
- factor when the Wolfe conditions are violated.
+ factor if the Wolfe conditions are violated.
  For gradient descent, the next step involves exactly computing 
 \begin_inset Formula $\nabla f(x+hp)$
 \end_inset
 
  and hence if our line search accepts the step size immediately, the line
- search almost cost nothing.
+ search almost costs nothing extra.
  Therefore, if we maintain a step size throughout the algorithm and decreases
  it only when it violates the condition, the total cost of the line search
  will be only an additive logarithmic number of gradient calls throughout
- the algorithm and it is negligible.
+ the algorithm and is negligible.
 \end_layout
 
 \begin_layout Standard
@@ -2251,14 +2296,14 @@ Finally, we note that for problems of the form
 \end_layout
 
 \begin_layout Section
-Generalizing Gradient Descent
+Generalizing Gradient Descent*
 \end_layout
 
 \begin_layout Standard
-Now, we study what properties gradient descent are using for the strongly
+Now, we study what properties gradient descent are bein used for the strongly
  convex case.
  There are many ways to generalize it.
- One way is to view gradient descent approximate the function 
+ One way is to view gradient descent is as approximating the function 
 \begin_inset Formula $f$
 \end_inset
 
@@ -2268,9 +2313,9 @@ Now, we study what properties gradient descent are using for the strongly
 \end_inset
 
  norm.
- More generally, we can split a function into two terms, one term is easy
- to optimize and the another term we need to approximate with some error.
- Precisely, we consider the following 
+ More generally, we can split a function into two terms, one that is easy
+ to optimize and another that we need to approximate with some error.
+ More precisely, we consider the following 
 \end_layout
 
 \begin_layout Definition
@@ -2278,7 +2323,7 @@ We say
 \begin_inset Formula $g+h$
 \end_inset
 
- is a 
+ is an 
 \begin_inset Formula $\alpha$
 \end_inset
 
@@ -2573,11 +2618,11 @@ name "thm:gd_general_apx"
 
 \end_inset
 
-Given a convex function 
+ Suppose we are given a convex function 
 \begin_inset Formula $f$
 \end_inset
 
- that we can find a 
+ such that we can find an 
 \begin_inset Formula $\alpha$
 \end_inset
 
@@ -2615,7 +2660,7 @@ f(x^{(k)})-f(x^{*})\leq(1-\alpha)^{k}(f(x^{(0)})-f(x^{*})).
 \end_layout
 
 \begin_layout Proof
-Using that 
+Using the fact that 
 \begin_inset Formula $g^{(k)}+h^{(k)}$
 \end_inset
 
@@ -2705,7 +2750,7 @@ reference "thm:gd_general_apx"
 
 \end_inset
 
- looks weird, it captures many theorems.
+ looks weird, it captures many well-known theorems.
  Here we list some of them.
 \end_layout
 
@@ -2873,9 +2918,9 @@ One can apply this framework for optimizing
 
 using the problem
 \begin_inset Formula 
-\[
-\min_{y}v^{\top}y+\|DA(y-x)\|_{2}^{2}+\|A(y-x)\|_{p}^{p}
-\]
+\begin{equation}
+\min_{y}v^{\top}y+\|DA(y-x)\|_{2}^{2}+\|A(y-x)\|_{p}^{p}\label{eq:l2lp}
+\end{equation}
 
 \end_inset
 
@@ -2895,7 +2940,7 @@ reference "thm:gd_general_apx"
 
 \end_inset
 
- only need to solve sub-problem approximately.
+ only need to solve the sub-problem approximately.
  Therefore, this shows that one can solve 
 \begin_inset Formula $\ell^{p}$
 \end_inset
@@ -2904,7 +2949,7 @@ reference "thm:gd_general_apx"
 \begin_inset Formula $\log(1/\epsilon)$
 \end_inset
 
- converging by solving mixed 
+ convergence by solving mixed 
 \begin_inset Formula $\ell_{2}+\ell_{p}$
 \end_inset
 
@@ -2912,89 +2957,12 @@ reference "thm:gd_general_apx"
  
 \end_layout
 
-\begin_layout Standard
-Recently, 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "adil2019iterative"
-literal "false"
-
-\end_inset
-
- and 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "kyng2019flows"
-literal "false"
-
-\end_inset
-
- applied these to obtain the fastest algorithms for 
-\begin_inset Formula $\ell^{p}$
-\end_inset
-
- regression and the 
-\begin_inset Formula $\ell^{p}$
-\end_inset
-
- flow problem.
- 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "kathuria2020unit"
-literal "false"
-
-\end_inset
-
- showed that the 
-\begin_inset Formula $\ell^{p}$
-\end_inset
-
- flow problem can be used as a subroutine to solve uncapacitied maximum
- flow problem in 
-\begin_inset Formula $m^{4/3+o(1)}$
-\end_inset
-
- time.
-\end_layout
-
 \begin_layout Subsubsection*
 Other assumptions
 \end_layout
 
 \begin_layout Standard
-Instead of assuming 
-\begin_inset Formula $h(x)$
-\end_inset
-
- converges to 
-\begin_inset Formula $0$
-\end_inset
-
- quadratically, 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "lu2016relatively"
-literal "false"
-
-\end_inset
-
- proved Theorem 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "thm:gd_general_apx"
-
-\end_inset
-
- assuming 
-\begin_inset Formula $h$
-\end_inset
-
- is given by some divergence and showed its applications in D-optimal design.
-\end_layout
-
-\begin_layout Standard
-For some special case, it is possible to analyze this algorithm without
+For some special cases, it is possible to analyze this algorithm without
  convexity.
  One prominent application is compressive sensing: 
 \begin_inset Formula 
@@ -3033,7 +3001,7 @@ literal "false"
 \end_layout
 
 \begin_layout Exercise
-Give the close form solution for the sub-problem given by the splitting
+Give the closed form solution for the sub-problem given by the splitting
  above.
 \end_layout
 
@@ -3053,7 +3021,11 @@ In continuous time, gradient descent follows the ODE
 This can be viewed as the canonical continuous algorithm.
  Finding the right discretization has lead to many fruitful research directions.
  One benefit of the continuous view is to simplify some calculations.
- For example, the Theorem 
+ For example, for strongly convex 
+\begin_inset Formula $f$
+\end_inset
+
+, Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:gd_convex_strongly"
@@ -3063,19 +3035,22 @@ reference "thm:gd_convex_strongly"
  now becomes
 \begin_inset Formula 
 \[
-\frac{d}{dt}(f(x_{t})-f(x^{*}))=\nabla f(x_{t})^{\top}\frac{dx_{t}}{dt}=-\|\nabla f(x_{t})\|_{2}^{2}\leq-2\mu(f(x_{t})-f(x^{*}))
+\frac{d}{dt}(f(x_{t})-f(x^{*}))=\nabla f(x_{t})^{\top}\frac{dx_{t}}{dt}=-\|\nabla f(x_{t})\|_{2}^{2}\leq-2\mu\left(f(x_{t})-f(x^{*})\right)
 \]
 
 \end_inset
 
-where we used (
+where we used Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "eq:err_vs_grad"
+reference "lem:strongly_convex"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
-) at the end.
+ at the end.
  Solving this differential inequality, we have
 \begin_inset Formula 
 \[
@@ -3084,8 +3059,7 @@ f(x_{t})-f(x^{*})\leq e^{-2\mu t}(f(x_{0})-f(x^{*})).
 
 \end_inset
 
-Without the strongly convexity assumption, the gradient flow can behave
- wildly.
+Without the strong convexity assumption, gradient flow can behave wildly.
  For example, the length of the gradient flow can be exponential in 
 \begin_inset Formula $d$
 \end_inset
@@ -3099,8 +3073,114 @@ literal "false"
 \end_inset
 
 .
- Finally, we emphasize that this continuous view is mainly useful for understand
-ing, indicative of but not necessarily an algorithmic result.
+ 
+\end_layout
+
+\begin_layout Standard
+We emphasize that this continuous view is mainly useful for understanding,
+ indicative of but not necessarily implying an algorithmic result.
+\end_layout
+
+\begin_layout Section
+Discussion
+\end_layout
+
+\begin_layout Standard
+Convex optimization by variants of gradient descent is a very active field
+ with an increasing number of applications.
+ Often, methods that are provable for the convex setting are applied as
+ heuristics to nonconvex problems as well, most notably in deep learning.
+ This is one of the principal features of GD, its wide applicability as
+ an algorithmic paradigm.
+ 
+\end_layout
+
+\begin_layout Standard
+Researchers are also using GD to get provably faster algorithms for classical
+ problems.
+ For example, 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "adil2019iterative"
+literal "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "kyng2019flows"
+literal "false"
+
+\end_inset
+
+ applied the decomposition of Eqn.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:l2lp"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ to obtain fast algorithms for 
+\begin_inset Formula $\ell^{p}$
+\end_inset
+
+ regression and the 
+\begin_inset Formula $\ell^{p}$
+\end_inset
+
+ flow problem.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "kathuria2020unit"
+literal "false"
+
+\end_inset
+
+ showed that the 
+\begin_inset Formula $\ell^{p}$
+\end_inset
+
+ flow problem can be used as a subroutine to solve uncapacitied maximum
+ flow problem in 
+\begin_inset Formula $m^{4/3+o(1)}$
+\end_inset
+
+ time.
+ Instead of assuming 
+\begin_inset Formula $h(x)$
+\end_inset
+
+ converges to 
+\begin_inset Formula $0$
+\end_inset
+
+ quadratically, 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "lu2016relatively"
+literal "false"
+
+\end_inset
+
+ proved Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:gd_general_apx"
+
+\end_inset
+
+ assuming 
+\begin_inset Formula $h$
+\end_inset
+
+ is given by some divergence function and showed its applications in D-optimal
+ design.
 \end_layout
 
 \end_body
