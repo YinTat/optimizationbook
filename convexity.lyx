@@ -1642,12 +1642,12 @@ A surface
 
  is a minimal surface if it has the minimum surface area among all surfaces
  with the same boundary.
- These surfaces appear naturally and has been studied extensively not just
+ These surfaces appear naturally and have been studied extensively not just
  for 
 \begin_inset Formula $\R^{3}$
 \end_inset
 
- but also for different manifold.
+ but also for different manifolds.
  For simplicity, we consider the case that the surface is parameterized
  by 
 \begin_inset Formula 
@@ -1702,7 +1702,7 @@ where we say
  Furthermore, the objective is convex by using the fact that
 \begin_inset Formula 
 \[
-\text{SurfaceArea}(f)=\int_{0}^{1}\int_{0}^{1}\sqrt{(\frac{\partial f(x,y)}{\partial x})^{2}+(\frac{\partial f(x,y)}{\partial y})^{2}+1\,}dxdy.
+\text{SurfaceArea}(f)=\int_{0}^{1}\int_{0}^{1}\sqrt{1+\left(\frac{\partial f(x,y)}{\partial x}\right)^{2}+\left(\frac{\partial f(x,y)}{\partial y}\right)^{2}\,}dxdy.
 \]
 
 \end_inset
@@ -2027,11 +2027,11 @@ Finally, we note that many operations preserve convexity.
 \end_layout
 
 \begin_layout Exercise
-Given a matrix 
+For a matrix 
 \begin_inset Formula $A$
 \end_inset
 
-, a vector 
+, vector 
 \begin_inset Formula $b$
 \end_inset
 
@@ -2039,7 +2039,7 @@ Given a matrix
 \begin_inset Formula $t_{1},t_{2}\geq0$
 \end_inset
 
-, convex functions 
+, and convex functions 
 \begin_inset Formula $f_{1}$
 \end_inset
 
@@ -2047,7 +2047,7 @@ Given a matrix
 \begin_inset Formula $f_{2}$
 \end_inset
 
-, then 
+, the function 
 \begin_inset Formula $g(x)=t_{1}f_{1}(Ax+b)+t_{2}f_{2}(x)$
 \end_inset
 
