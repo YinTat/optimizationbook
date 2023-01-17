@@ -484,6 +484,34 @@ Sherman-Morrison-Woodbury
 
 \end_inset
 
+ For matrix 
+\begin_inset Formula $A\in\R^{n\times n}$
+\end_inset
+
+ and vectors 
+\begin_inset Formula $u,v\in\R^{n}$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+\left(A+uv^{\top}\right)^{-1}=A^{-1}-\frac{A^{-1}uv^{\top}A^{-1}}{1+u^{\top}Av}.
+\]
+
+\end_inset
+
+For matrices 
+\begin_inset Formula $U,V\in\R^{n\times k},$
+\end_inset
+
+we have
+\begin_inset Formula 
+\[
+\left(A+UV^{\top}\right)^{-1}=A^{-1}-A^{-1}U\left(I+V^{\top}A^{-1}U\right)^{-1}V^{\top}A^{-1}.
+\]
+
+\end_inset
+
 
 \end_layout
 
@@ -491,7 +519,43 @@ Sherman-Morrison-Woodbury
 Probability
 \end_layout
 
-\begin_layout Definition*
+\begin_layout Definition
+The Total Variation (TV) or 
+\begin_inset Formula $\ell_{1}$
+\end_inset
+
+-distance between two distributions with densities 
+\begin_inset Formula $\rho,\nu$
+\end_inset
+
+ with support 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ is 
+\begin_inset Formula 
+\[
+d_{TV}(\rho,\nu)=\frac{1}{2}\int_{\Omega}\left|\rho(x)-\nu(x)\right|\,dx=\sup_{S\subset\Omega}\rho(S)-\nu(S).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The following 
+\begin_inset Quotes eld
+\end_inset
+
+distance
+\begin_inset Quotes erd
+\end_inset
+
+ is not symmetric.
+\end_layout
+
+\begin_layout Definition
 The KL-divergence of a density 
 \begin_inset Formula $\rho$
 \end_inset
@@ -508,6 +572,14 @@ The KL-divergence of a density
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Section*
+Geometry
+\end_layout
+
+\begin_layout Standard
 
 \end_layout
 

@@ -357,14 +357,14 @@ Show that if
 \end_inset
 
 , we can find 
-\begin_inset Formula $x$
+\begin_inset Formula $x^{*}$
 \end_inset
 
  such that 
-\begin_inset Formula $f(x)-\min_{x}f(x)\leq\epsilon$
+\begin_inset Formula $f(x^{*})-\min_{x}f(x)\leq\epsilon$
 \end_inset
 
- by calling 
+ by evaluating 
 \begin_inset Formula $f(x)$
 \end_inset
 
@@ -715,6 +715,35 @@ reference "chap:Elimination"
 \end_inset
 
 .
+ The following notions will be used routinely.
+ A 
+\emph on
+halfspace
+\emph default
+ in 
+\begin_inset Formula $\R^{n}$
+\end_inset
+
+ is defined as the set 
+\begin_inset Formula $\left\{ x:\langle a,x\rangle\ge b\right\} $
+\end_inset
+
+ for some 
+\begin_inset Formula $a\in\R^{n},b\in\R$
+\end_inset
+
+.
+ A 
+\emph on
+polyhedron
+\emph default
+ is the intersection of halfspaces.
+ A 
+\emph on
+polytope
+\emph default
+ is the convex hull of a set of points.
+ 
 \end_layout
 
 \begin_layout Theorem
@@ -738,7 +767,7 @@ Let
 \begin_inset Formula $K$
 \end_inset
 
- be a closed convex set in 
+ be a nonempty closed convex set in 
 \begin_inset Formula $\Rn$
 \end_inset
 
@@ -889,7 +918,7 @@ reference "thm:sep"
 
 \end_inset
 
- shows that a polytope (a finite intersection of halfspaces) is essentially
+ shows that a polyhedron (a finite intersection of halfspaces) is essentially
  as general as a convex set.
 \end_layout
 
@@ -912,7 +941,7 @@ K=\bigcap_{\theta\in\Rn}\left\{ x:\ \left\langle \theta,x\right\rangle \leq\max_
 
 \end_inset
 
-In other words, any convex set is a limit of a sequence of polyhedra.
+In other words, any closed convex set is a limit of a sequence of polyhedra.
 \end_layout
 
 \begin_layout Proof
