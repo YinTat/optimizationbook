@@ -75,6 +75,122 @@
 
 \begin_body
 
+\begin_layout Standard
+Sampling in high dimension is a fundamental problem.
+ Informally, given access to a function 
+\begin_inset Formula $f:\R^{n}\rightarrow\R$
+\end_inset
+
+, the sampling problem is to generate a point 
+\begin_inset Formula $x\in\R^{n}$
+\end_inset
+
+ from the distribution with density proportional to 
+\begin_inset Formula $e^{-f(x)}$
+\end_inset
+
+.
+ To make the problem precise, we also have to specify a starting point with
+ positive density, and an error parameter 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ that measures the distance of the distribution of the output from the desired
+ target.
+ 
+\end_layout
+
+\begin_layout Standard
+Unfortunately, in this generality, just like optimization, sampling is also
+ intractable.
+ To see this consider the following function:
+\begin_inset Formula 
+\[
+f(x)=\begin{cases}
+0 & x\in S\\
+\infty & x\not\in S
+\end{cases}
+\]
+
+\end_inset
+
+for some closed set 
+\begin_inset Formula $S$
+\end_inset
+
+.
+ Then sampling according to 
+\begin_inset Formula $e^{-f}$
+\end_inset
+
+ would allow us to find an element of 
+\begin_inset Formula $S$
+\end_inset
+
+, which could, e.g., be the minimizer of a hard-to-optimize function.
+\end_layout
+
+\begin_layout Standard
+Consider a second example, which might appear more tractable.
+ 
+\begin_inset Formula 
+\[
+f(x)=e^{-\frac{1}{2}x^{\top}Ax}\one_{x\ge0}.
+\]
+
+\end_inset
+
+Without the restriction to the nonnegative orthant, the target density is
+ the Gaussian 
+\begin_inset Formula $N(0,A^{-1})$
+\end_inset
+
+, and can be sampled by first sampling the standard Gaussian 
+\begin_inset Formula $N(0,I)$
+\end_inset
+
+ and applying the linear transformation 
+\begin_inset Formula $A^{-1/2}$
+\end_inset
+
+.
+ To sample from the standard Gaussian in 
+\begin_inset Formula $\R^{n}$
+\end_inset
+
+, we can sample each coordinate independently from 
+\begin_inset Formula $N(0,1$
+\end_inset
+
+), a problem which has many (efficient) numerical recipes.
+ But how can we handle the restriction? In the course of forthcoming chapters,
+ we will see that this problem and its generalization to sampling logconcave
+ densities, i.e., when 
+\begin_inset Formula $f$
+\end_inset
+
+ is convex, can be solved in polynomial time.
+ It is remarkable that the polynomial-time frontier for both optimization
+ and convexity is essentially determined by convexity.
+\end_layout
+
+\begin_layout Standard
+We begin with gradient-based sampling methods.
+ These rely on access to 
+\begin_inset Formula $\nabla f$
+\end_inset
+
+.
+ These methods will in fact be natural algorithmic versions of continuous
+ processes on random variables, a particularly pleasing connection.
+ Later we will see methods that only use access to 
+\begin_inset Formula $f$
+\end_inset
+
+, and others that utilize higher derivatives, notably the Hessian.
+ The parallels to optimization will be pervasive and striking.
+\end_layout
+
 \begin_layout Section
 Gradient-based methods: Langevin Dynamics
 \end_layout
@@ -212,7 +328,7 @@ Here
 \begin_inset Formula $x_{t}$
 \end_inset
 
- is the random variable at time 
+ is the r-tandom variable at time 
 \begin_inset Formula $t$
 \end_inset
 

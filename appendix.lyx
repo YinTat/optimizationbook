@@ -2,7 +2,75 @@
 \lyxformat 544
 \begin_document
 \begin_header
+\save_transient_properties true
+\origin unavailable
 \textclass optbook
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
 \end_header
 
 \begin_body
@@ -224,24 +292,24 @@ reference "lem:second_order"
 \end_layout
 
 \begin_layout Section
-Tips for Computing Gradient
+Tips for Computing Gradients
 \end_layout
 
 \begin_layout Standard
-In this section, we give some tips on how to do calculations.
+In this section, we give some tips on how to do calculus.
 \end_layout
 
 \begin_layout Subsection
-Computing Gradient via Directional Derivatives
+Computing gradients via directional derivatives
 \end_layout
 
 \begin_layout Standard
-Usually, computing gradient coordinate-by-coordinate is not the best way
+Usually, computing gradients coordinate-by-coordinate is not the best way
  and we should avoid using summation notation as much as possible as it
  creates too many subscripts and is prone to mistakes.
  Instead, it is usually better to compute the gradient via directional deriative
 s.
- Here, we give few examples for this.
+ Here, we give a few examples for this.
  We define 
 \begin_inset Formula $Df(x)[h]$
 \end_inset
@@ -396,7 +464,7 @@ Use the above method to compute the gradient and Hessian of
 \end_layout
 
 \begin_layout Standard
-Here is a more complicated example:
+Here is a more complicated example.
 \end_layout
 
 \begin_layout Lemma
@@ -452,8 +520,8 @@ Let
 \end_layout
 
 \begin_layout Remark*
-Take a look at Wikipedia for Brachistochrone curve.
- It is very counterintuitive!
+Take a look at Wikipedia for the Brachistochrone curve.
+ It is counterintuitive!
 \end_layout
 
 \begin_layout Standard
@@ -711,17 +779,7 @@ noprefix "false"
 \end_layout
 
 \begin_layout Subsection
-Taking Derivatives on Both Sides
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Why this is removed?
-\end_layout
-
-\end_inset
-
-
+Taking derivatives on both sides
 \end_layout
 
 \begin_layout Standard
@@ -837,7 +895,7 @@ reference "sec:IPM"
 \end_layout
 
 \begin_layout Section
-Solving Optimization Problems by Hand
+Solving optimization problems by hand
 \end_layout
 
 \begin_layout Standard

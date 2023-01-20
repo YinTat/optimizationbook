@@ -2667,6 +2667,39 @@ Since
 \end_layout
 
 \begin_layout Section
+Subgradients
+\end_layout
+
+\begin_layout Standard
+The standard definition of a convex function in terms of gradients requires
+ differentiability.
+ However, a more general definition allows us to avoid this requirement.
+ For a convex function 
+\begin_inset Formula $f:\R^{n}\rightarrow\R$
+\end_inset
+
+, we say that a function 
+\begin_inset Formula $g:\R^{n}\rightarrow\R^{n}$
+\end_inset
+
+ is called a 
+\begin_inset Formula $subgradient$
+\end_inset
+
+ if it satisfies the following property: for any 
+\begin_inset Formula $x,y\in\R^{n},$
+\end_inset
+
+
+\begin_inset Formula $f(y)-f(x)\ge\langle g(x),y-x\rangle.$
+\end_inset
+
+ For the purpose of optimization algorithms, in almost all cases, a subgradient
+ will suffice in place of a gradient.
+ 
+\end_layout
+
+\begin_layout Section
 Logconcave Functions
 \begin_inset CommandInset label
 LatexCommand label

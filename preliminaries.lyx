@@ -524,7 +524,7 @@ The Total Variation (TV) or
 \begin_inset Formula $\ell_{1}$
 \end_inset
 
--distance between two distributions with densities 
+-distance between two distributions with measures 
 \begin_inset Formula $\rho,\nu$
 \end_inset
 
@@ -577,10 +577,6 @@ The KL-divergence of a density
 
 \begin_layout Section*
 Geometry
-\end_layout
-
-\begin_layout Standard
-
 \end_layout
 
 \end_body

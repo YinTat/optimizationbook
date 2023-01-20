@@ -218,6 +218,11 @@
 \end_inset
 
 
+\begin_inset FormulaMacro
+\newcommand{\one}{\mathbb{{\bf 1}}}
+\end_inset
+
+
 \end_layout
 
 \begin_layout Title
@@ -773,16 +778,6 @@ Introduction
 \begin_inset CommandInset include
 LatexCommand input
 filename "convexity.lyx"
-
-\end_inset
-
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-I think we should have a section on subgradient just for completeness?
-\end_layout
 
 \end_inset
 
