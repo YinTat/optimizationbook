@@ -941,7 +941,7 @@ K=\bigcap_{\theta\in\Rn}\left\{ x:\ \left\langle \theta,x\right\rangle \leq\max_
 
 \end_inset
 
-In other words, any closed convex set is a limit of a sequence of polyhedra.
+In other words, any closed convex set is the limit of a sequence of polyhedra.
 \end_layout
 
 \begin_layout Proof
@@ -1027,6 +1027,24 @@ where the set
 .
 \end_layout
 
+\begin_layout Exercise
+Let 
+\begin_inset Formula $A,B\subset\R^{n}$
+\end_inset
+
+ be nonempty disjoint closed convex sets.
+ Then there exists a vector 
+\begin_inset Formula $v\in\R^{n}$
+\end_inset
+
+ such that 
+\begin_inset Formula $\sup_{x\in A}v^{\top}x<\inf_{x\in B}v^{\top}x$
+\end_inset
+
+.
+ 
+\end_layout
+
 \begin_layout Standard
 Similar to convex sets, we have a separation theorem similar to Theorem
  
@@ -1037,15 +1055,15 @@ reference "thm:sep"
 \end_inset
 
  for convex functions.
- This shows that one can use binary search to find minimum of convex functions.
- (See Chapter 
+ In Chapter 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "chap:Elimination"
 
 \end_inset
 
-.)
+, we will see that this allows us to use binary search to minimize convex
+ functions.
 \end_layout
 
 \begin_layout Theorem
@@ -1275,19 +1293,19 @@ Minimum Cost Flow Problem (Computer Science)
 \begin_layout Standard
 The min cost flow problem has lots of applications such as route planning,
  airline scheduling, image segmentation, recommendation systems, etc.
- In this problem, we are given a graph 
+ In this problem, there is a graph 
 \begin_inset Formula $G=(V,E)$
 \end_inset
 
  with 
-\begin_inset Formula $m\defeq|E|$
+\begin_inset Formula $m=|E|$
 \end_inset
 
- edges and 
-\begin_inset Formula $n\defeq|V|$
+ and 
+\begin_inset Formula $n=|V|$
 \end_inset
 
- vertices.
+.
  Each edge 
 \begin_inset Formula $e\in E$
 \end_inset
@@ -1314,7 +1332,56 @@ The min cost flow problem has lots of applications such as route planning,
 \end_inset
 
 .
- Formally, the problem can be written as an optimization problem 
+ To imagine this less abstractly, imagine we want to match every person
+ to the best flight for them.
+ Then we can have a source node 
+\begin_inset Formula $s$
+\end_inset
+
+ connected to a node for each person with 
+\begin_inset Formula $u_{e}=1$
+\end_inset
+
+ for all such 
+\begin_inset Formula $e$
+\end_inset
+
+.
+ Further, we take 
+\begin_inset Formula $t$
+\end_inset
+
+ to be connected to a node for each flight, with 
+\begin_inset Formula $u_{e}$
+\end_inset
+
+ being the number of people that can fit on that flight.
+ Then, all the remaining edges will be from people nodes to flight nodes.
+ For any such 
+\begin_inset Formula $e,u_{e}=1$
+\end_inset
+
+ and 
+\begin_inset Formula $c_{e}$
+\end_inset
+
+ is proportional to how good that flight is for that person (does it get
+ them where they need to go at the time they need to go?) with 
+\begin_inset Formula $0$
+\end_inset
+
+ representing a perfect flight and 
+\begin_inset Formula $\infty$
+\end_inset
+
+ representing a flight they would not take even if given the option for
+ free.
+ Then we can calculate the min-cost flow to find the best allocation of
+ people to flights.
+\end_layout
+
+\begin_layout Standard
+Formally, the problem can be written as an optimization problem 
 \begin_inset Formula $\min_{f\in\R^{|E|}}\sum_{e\in E}c_{e}\cdot f_{e}$
 \end_inset
 
@@ -1983,7 +2050,7 @@ Epigraph of
 ; quasiconvex function
 \begin_inset CommandInset label
 LatexCommand label
-name "fig:rel-1-1"
+name "fig:quasiconvex"
 
 \end_inset
 
@@ -2040,7 +2107,7 @@ quasiconvex
  
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "fig:rel-1-1"
+reference "fig:quasiconvex"
 plural "false"
 caps "false"
 noprefix "false"
@@ -2700,7 +2767,7 @@ The standard definition of a convex function in terms of gradients requires
 \end_layout
 
 \begin_layout Section
-Logconcave Functions
+Logconcave functions
 \begin_inset CommandInset label
 LatexCommand label
 name "sec:Logconcave-functions"
@@ -2747,6 +2814,8 @@ The indicator function of a convex set
 \end_inset
 
  is logconcave.
+ The Gaussian density function is logconcave.
+ The Gaussian density restricted to any convex set is logconcave.
 \end_layout
 
 \begin_layout Lemma

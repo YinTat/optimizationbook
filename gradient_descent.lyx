@@ -1199,24 +1199,9 @@ Let
 \end_layout
 
 \begin_layout Standard
-The proof idea involves showing the function value 
-\begin_inset Formula $f(x)$
-\end_inset
-
- decreases by at least 
-\begin_inset Formula $\frac{\epsilon^{2}}{2L}$
-\end_inset
-
- when 
-\begin_inset Formula $\|\nabla f(x)\|_{2}\geq\epsilon$
-\end_inset
-
-.
- Since the function value can only decrease by at most 
-\begin_inset Formula $f(x^{(0)})-f(x^{*})$
-\end_inset
-
-, this bounds the number of iterations.
+The next lemma shows that the function value must decrease along the GD
+ path for a sufficiently small step size, and the magnitude of the decrease
+ depends on the norm of the current gradient.
 \end_layout
 
 \begin_layout Lemma
@@ -1279,10 +1264,8 @@ for some
 \end_layout
 
 \begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
+We can now prove the theorem.
+ 
 \end_layout
 
 \begin_layout Proof
@@ -1302,7 +1285,39 @@ reference "thm:gd_general"
 
 \end_inset
 
-Since each step of gradient descent decreases 
+ We observe that either 
+\begin_inset Formula $\|\nabla f(x)\|_{2}\le\epsilon$
+\end_inset
+
+, or 
+\begin_inset Formula $\|\nabla f(x)\|_{2}\geq\epsilon$
+\end_inset
+
+ and so by Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:gradient_progress"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, the function value 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ decreases by at least 
+\begin_inset Formula $\frac{\epsilon^{2}}{2L}$
+\end_inset
+
+.
+ Since the function value can decrease by at most 
+\begin_inset Formula $f(x^{(0)})-f(x^{*})$
+\end_inset
+
+, this bounds the number of iterations — each step of gradient descent decreases
+ 
 \begin_inset Formula $f$
 \end_inset
 
@@ -1323,8 +1338,7 @@ Since each step of gradient descent decreases
 
 \begin_layout Standard
 Despite the simplicity of the algorithm and the proof, it is known that
- this is the best one can do via any algorithm for this general setting
- 
+ this is the best one can do via any algorithm in this general setting 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "carmon2017lower"
@@ -2300,8 +2314,8 @@ Generalizing Gradient Descent*
 \end_layout
 
 \begin_layout Standard
-Now, we study what properties gradient descent are bein used for the strongly
- convex case.
+Now, we study what properties of gradient descent are being used for the
+ strongly convex case.
  There are many ways to generalize it.
  One way is to view gradient descent is as approximating the function 
 \begin_inset Formula $f$
@@ -2355,7 +2369,7 @@ We say
 \end_inset
 
  and 
-\begin_inset Formula $h((1-\alpha)x+\lambda\widehat{x})\leq\lambda^{2}h(\widehat{x})$
+\begin_inset Formula $h((1-\alpha)x+\alpha\widehat{x})\leq\alpha^{2}h(\widehat{x})$
 \end_inset
 
  for all 
@@ -2555,7 +2569,7 @@ status open
 \end_layout
 
 \begin_layout Standard
-Find a 
+Find an 
 \begin_inset Formula $\alpha$
 \end_inset
 
@@ -2664,7 +2678,7 @@ Using the fact that
 \begin_inset Formula $g^{(k)}+h^{(k)}$
 \end_inset
 
- is an upper bound of 
+ is an upper bound on 
 \begin_inset Formula $f$
 \end_inset
 
@@ -2684,7 +2698,7 @@ f(x^{(k+1)})\leq\min_{y}g^{(k)}(y)+h^{(k)}(y).
 
 \end_inset
 
-To bound the best possible progress, we consider 
+To bound the best possible progress, i.e., the RHS above, we consider 
 \begin_inset Formula $\widehat{x}=\arg\min_{y}g^{(k)}(y)+\alpha h^{(k)}(y)$
 \end_inset
 
@@ -2723,11 +2737,11 @@ where we used
 \end_layout
 
 \begin_layout Proof
-Combining both and using 
+Combining both and using the fact that 
 \begin_inset Formula $g^{(k)}+\alpha h^{(k)}$
 \end_inset
 
- is a lower bound of 
+ is a lower bound on 
 \begin_inset Formula $f$
 \end_inset
 
@@ -2752,6 +2766,22 @@ reference "thm:gd_general_apx"
 
  looks weird, it captures many well-known theorems.
  Here we list some of them.
+\end_layout
+
+\begin_layout Exercise
+Show that the second condition in the definition of 
+\begin_inset Formula $\alpha$
+\end_inset
+
+-approximation can be replaced by 
+\begin_inset Formula 
+\[
+g(y)+\alpha h(y/\alpha)\leq f(y)\leq g(y)+h(y)
+\]
+
+\end_inset
+
+ while maintaining the guarantee for the convergence of generalized GD.
 \end_layout
 
 \begin_layout Subsubsection*
