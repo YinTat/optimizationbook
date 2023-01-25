@@ -422,7 +422,7 @@ For any process
 , we have that
 \begin_inset Formula 
 \[
-df(x_{t})=\nabla f(x_{t})^{\top}\mu(x_{t})dt+\nabla f(x_{t})^{\top}\sigma(x_{t})dW_{t}+\frac{1}{2}\tr(\sigma(x_{t})^{\top}\nabla^{2}f(x_{t})\sigma(x_{t}))dt.
+df(x_{t})=\nabla f(x_{t})^{\top}dx_{t}+\frac{1}{2}(dx_{t})^{\top}\nabla^{2}f(x_{t})(dx_{t})^{\top}=\nabla f(x_{t})^{\top}\mu(x_{t})dt+\nabla f(x_{t})^{\top}\sigma(x_{t})dW_{t}+\frac{1}{2}\tr(\sigma(x_{t})^{\top}\nabla^{2}f(x_{t})\sigma(x_{t}))dt.
 \]
 
 \end_inset
@@ -431,11 +431,42 @@ df(x_{t})=\nabla f(x_{t})^{\top}\mu(x_{t})dt+\nabla f(x_{t})^{\top}\sigma(x_{t})
 \end_layout
 
 \begin_layout Standard
-First, we will see that the Langevin SDE converges to 
+The usual chain rule comes from using Taylor expansion and taking a limit,
+ i.e., 
+\begin_inset Formula 
+\[
+\nabla f(x+hy)=\lim_{h\rightarrow0}\frac{f(x)+h\nabla f(x)^{\top}y+\frac{1}{2}h^{2}...}{h}
+\]
+
+\end_inset
+
+and only has the first term survies, as the second and later terms goes
+ to zero.
+ But with the stochastic component, roughly speaking, 
+\begin_inset Formula $(dW_{t})^{2}=dt$
+\end_inset
+
+, and we need to keep track of the second term in the Taylor expansion as
+ well.
+ For a detailed treatment of stochastic calculus, we refer the reader to
+ a standard textbook such as 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "oksendal2013stochastic"
+literal "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+First, we will see that 
 \begin_inset Formula $e^{-f}$
 \end_inset
 
- in continuous time.
+ is a stationary density for the Langevin SDE in continuous time.
  The proof relies on the following general theorem about the distribution
  induced by an SDE.
 \end_layout
@@ -804,8 +835,7 @@ name "sec:LD_GD"
 status open
 
 \begin_layout Plain Layout
-Anything marked with * means it is probably too mathematical and could be
- skipped.
+Sections marked with * are more mathematical.
 \end_layout
 
 \end_inset
