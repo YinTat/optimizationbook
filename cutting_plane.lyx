@@ -25,7 +25,7 @@
 \use_dash_ligatures true
 \graphics default
 \default_output_format default
-\output_sync 0
+\output_sync 1
 \bibtex_command default
 \index_command default
 \paperfontsize default
@@ -89,9 +89,8 @@ name "sec:Cutting-Plane-Methods"
 \begin_layout Standard
 The goal of this chapter is to present some polynomial-time algorithms for
  convex optimization.
- These algorithms use the knowledge of the function in a minimal way, essentiall
-y by querying the function value and knowing some (weak) bounds on its support/v
-alue.
+ These algorithms use knowledge of the function in a minimal way, essentially
+ by querying the function value and weak bounds on its support/range.
 \end_layout
 
 \begin_layout Standard
@@ -176,11 +175,28 @@ It turns out that in
 cutting plane method
 \emph default
 .
- 
+ In this method, the convex set or function of interest is given by an oracle,
+ typically a separation oracle: for any 
+\begin_inset Formula $x\notin K\subseteq\R^{n}$
+\end_inset
+
+, the oracle finds a vector 
+\begin_inset Formula $v(x)\in\R^{n}$
+\end_inset
+
+ such that
+\begin_inset Formula 
+\[
+v(x)^{\top}(y-x)\leq0\text{ for all }y\in K.
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-More generally, cutting plane methods solves the following class of problems:
+Cutting plane methods address the following class of problems.
 \end_layout
 
 \begin_layout Problem
@@ -200,51 +216,37 @@ Finding a point in a convex set
 
 \end_inset
 
-Given a convex set 
+Given 
+\begin_inset Formula $\epsilon>0$
+\end_inset
+
+ and a convex set 
 \begin_inset Formula $K\subset\Rn$
 \end_inset
 
-, suppose for any 
-\begin_inset Formula $x\notin K$
-\end_inset
-
-, we can find a vector 
-\begin_inset Formula $g(x)$
-\end_inset
-
- such that
-\begin_inset Formula 
-\[
-g(x)^{\top}(y-x)\leq0\text{ for all }y\in K.
-\]
-
-\end_inset
-
-Our goal is to find some 
+ specified by a separation oracle, find a point 
 \begin_inset Formula $y\in K$
 \end_inset
 
- or prove that 
+ or conclude that 
 \begin_inset Formula $\vol K\leq\epsilon^{n}$
 \end_inset
 
- using as few calls to 
-\begin_inset Formula $g$
-\end_inset
-
- as possible.
+.
+ The complexity of an algorithm is measured by the number of calls to the
+ oracle and the number of arithmetic operations.
 \end_layout
 
 \begin_layout Remark*
-When apply to convex functions, we have 
-\begin_inset Formula $g(x)=\nabla f(x)$
+To minimize a convex function, we set 
+\begin_inset Formula $v(x)=\nabla f(x)$
 \end_inset
 
  and 
 \begin_inset Formula $K$
 \end_inset
 
- be the set of minimizers of 
+ to be the set of (approximate) minimizers of 
 \begin_inset Formula $f$
 \end_inset
 
@@ -256,11 +258,11 @@ reference "sec:vol2val"
 
 \end_inset
 
-, we relate the problem of proving 
-\begin_inset Formula $\vol K$
+, we relate the problem of proving that 
+\begin_inset Formula $\vol(K)$
 \end_inset
 
- is small and the problem of finding an approximate minimizer of 
+ is small to the problem of finding an approximate minimizer of 
 \begin_inset Formula $f$
 \end_inset
 
@@ -277,29 +279,33 @@ In this framework, we maintain a convex set
 \end_inset
 
 .
- Each iteration, we compute 
-\begin_inset Formula $g(x^{(k)})$
-\end_inset
-
- with 
+ Each iteration, we choose some 
 \begin_inset Formula $x^{(k)}$
 \end_inset
 
- chosen based on 
+ based on 
 \begin_inset Formula $E^{(k)}$
 \end_inset
 
-.
- The guarantee of 
-\begin_inset Formula $g$
+ and query the oracle for 
+\begin_inset Formula $v(x^{(k)})$
 \end_inset
 
- shows that 
+ .
+ The guarantee for 
+\begin_inset Formula $v(.)$
+\end_inset
+
+ implies that 
 \begin_inset Formula $K$
 \end_inset
 
  lies in the halfspace 
-\begin_inset Formula $H^{(k)}=\{y:g(x^{(k)})^{\top}(y-x^{(k)})\leq0\}$
+\begin_inset Formula 
+\[
+H^{(k)}=\{y:g(x^{(k)})^{\top}(y-x^{(k)})\leq0\}
+\]
+
 \end_inset
 
  and hence 
@@ -310,7 +316,7 @@ In this framework, we maintain a convex set
 \begin_inset Formula $E^{(k+1)}$
 \end_inset
 
- which contains 
+ to be a convex set that contains 
 \begin_inset Formula $H^{(k)}\cap E^{(k)}$
 \end_inset
 
@@ -436,7 +442,7 @@ status open
 \end_layout
 
 \begin_layout Standard
-Find a point 
+Choose a point 
 \begin_inset Formula $x^{(k)}\in E^{(k)}$
 \end_inset
 
@@ -464,11 +470,11 @@ lIf{
 \begin_inset Quotes eld
 \end_inset
 
-small
+small enough
 \begin_inset Quotes erd
 \end_inset
 
- enough
+
 \begin_inset ERT
 status open
 
@@ -546,7 +552,7 @@ end{algorithm2e}
 \end_layout
 
 \begin_layout Standard
-The main questions are
+To analyze the algorithm, the main questions we need to answer are:
 \end_layout
 
 \begin_layout Enumerate
@@ -1000,7 +1006,7 @@ Center of gravity
 \begin_layout Plain Layout
 
 \size footnotesize
-\begin_inset Formula $n^{6}$
+\begin_inset Formula $n^{4}$
 \end_inset
 
 
@@ -1166,7 +1172,7 @@ Ellipsoid Method
 \end_layout
 
 \begin_layout Standard
-We first start by explaining the simplest algorithm, the Ellipsoid method.
+We start by explaining the Ellipsoid method.
  We maintain an ellipsoid
 \begin_inset Formula 
 \[
@@ -1352,11 +1358,11 @@ lIf{
 \begin_inset Quotes eld
 \end_inset
 
-small
+small enough
 \begin_inset Quotes erd
 \end_inset
 
- enough
+
 \begin_inset ERT
 status open
 
@@ -1388,14 +1394,14 @@ status open
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $x^{(k+1)}\leftarrow x^{(k)}-\frac{1}{n+1}\frac{A^{(k)}g(x^{(k)})}{\sqrt{g(x^{(k)})^{\top}A^{(k)}g(x^{(k)})}}$
+\begin_inset Formula $x^{(k+1)}=x^{(k)}-\frac{1}{n+1}\frac{A^{(k)}v(x^{(k)})}{\sqrt{v(x^{(k)})^{\top}A^{(k)}v(x^{(k)})}}$
 \end_inset
 
 .
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $A^{(k+1)}\leftarrow\frac{n^{2}}{n^{2}-1}\left(A^{(k)}-\frac{2}{n+1}\frac{A^{(k)}g(x^{(k)})g(x^{(k)})^{\top}A^{(k)}}{g(x^{(k)})^{\top}A^{(k)}g(x^{(k)})}\right)$
+\begin_inset Formula $A^{(k+1)}=\frac{n^{2}}{n^{2}-1}\left(A^{(k)}-\frac{2}{n+1}\frac{A^{(k)}v(x^{(k)})v(x^{(k)})^{\top}A^{(k)}}{v(x^{(k)})^{\top}A^{(k)}v(x^{(k)})}\right)$
 \end_inset
 
 .
@@ -1449,6 +1455,10 @@ reference "alg:ellipsoid_method"
 \begin_inset Formula $\vol E^{(k+1)}<e^{-\frac{1}{2n+2}}\vol E^{(k)}$
 \end_inset
 
+ and 
+\begin_inset Formula $E^{(k)}\cap H^{(k)}\subset E^{(k+1)}$
+\end_inset
+
 .
 \end_layout
 
@@ -1477,7 +1487,7 @@ Note that the ratio of
 \end_inset
 
  and 
-\begin_inset Formula $g(x^{(k)})=e_{1}$
+\begin_inset Formula $v(x^{(k)})=e_{1}$
 \end_inset
 
 .
@@ -1503,7 +1513,7 @@ Claim 1:
 
 \begin_layout Proof
 Note that since 
-\begin_inset Formula $g(x^{(k)})=e_{1},$
+\begin_inset Formula $v(x^{(k)})=e_{1},$
 \end_inset
 
 we have 
@@ -1572,7 +1582,15 @@ and, for any
 \end_inset
 
 .
- By direct computation, we have
+ By direct computation, using the fact that 
+\begin_inset Formula 
+\[
+\left(I-\frac{2}{n+1}e_{1}e_{1}^{\top}\right)^{-1}=\left(I+\frac{2}{n-1}e_{1}e_{1}^{\top}\right)
+\]
+
+\end_inset
+
+we have
 \begin_inset Formula 
 \begin{align*}
  & (x+\frac{e_{1}}{n+1})^{\top}\left(1-\frac{1}{n^{2}}\right)\left(I+\frac{2}{n-1}e_{1}e_{1}^{\top}\right)(x+\frac{e_{1}}{n+1})\\
@@ -1590,7 +1608,7 @@ where we used that
 \begin_inset Formula $x_{1}(1+x_{1})\leq0$
 \end_inset
 
- (because 
+ (since 
 \begin_inset Formula $-1\leq x_{1}\leq0$
 \end_inset
 
@@ -1713,25 +1731,25 @@ reference "alg:cutting_plane"
 \end_inset
 
 .
- Given a function 
+ Let 
 \begin_inset Formula $\mathcal{V}$
 \end_inset
 
- mapping subsets of 
+ be a mapping from subsets of 
 \begin_inset Formula $\Rn$
 \end_inset
 
- to non-negative numbers such that
+ to non-negative numbers satisfying
 \end_layout
 
 \begin_deeper
 \begin_layout Enumerate
 (Linearity) For any set 
-\begin_inset Formula $E\subseteq\R^{n}$
+\begin_inset Formula $S\subseteq\R^{n}$
 \end_inset
 
 , any vector 
-\begin_inset Formula $v$
+\begin_inset Formula $y$
 \end_inset
 
  and any scalar 
@@ -1739,11 +1757,11 @@ reference "alg:cutting_plane"
 \end_inset
 
 , we have 
-\begin_inset Formula $\mathcal{V}(\alpha E+v)=\alpha\mathcal{V}(E)$
+\begin_inset Formula $\mathcal{V}(\alpha S+y)=\alpha\mathcal{V}(S)$
 \end_inset
 
  where 
-\begin_inset Formula $\alpha E+v=\{\alpha x+v:x\in E\}$
+\begin_inset Formula $\alpha S+y=\{\alpha x+y:x\in S\}$
 \end_inset
 
 .
@@ -1751,11 +1769,11 @@ reference "alg:cutting_plane"
 
 \begin_layout Enumerate
 (Monotonic) For any set 
-\begin_inset Formula $F\subset E$
+\begin_inset Formula $T\subset S$
 \end_inset
 
 , we have that 
-\begin_inset Formula $\mathcal{V}(F)\leq\mathcal{V}(E)$
+\begin_inset Formula $\mathcal{V}(T)\leq\mathcal{V}(S)$
 \end_inset
 
 .
@@ -1764,7 +1782,7 @@ reference "alg:cutting_plane"
 \end_deeper
 \begin_layout Theorem
 Then, for any set 
-\begin_inset Formula $\Omega\subset E^{(0)}$
+\begin_inset Formula $\Omega\subseteq E^{(0)}$
 \end_inset
 
 , we have that
@@ -1801,7 +1819,7 @@ size
 \begin_inset Formula $\mathcal{V}(E)=\vol(E)^{\frac{1}{n}}$
 \end_inset
 
- because we have proved the volume decreases in Lemma 
+ for which we have proved volume decrease in Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:ellipsoid_vol_decrease"
@@ -1809,11 +1827,11 @@ reference "lem:ellipsoid_vol_decrease"
 \end_inset
 
 .
- We raise the volume to 
-\begin_inset Formula $\frac{1}{n}$
+ We raise the volume to power 
+\begin_inset Formula $1/n$
 \end_inset
 
--th power to satisfy linearity.
+ to satisfy linearity.
 \end_layout
 
 \begin_layout Proof
@@ -1838,8 +1856,7 @@ Let
 \begin_inset Formula $S=(1-\alpha)x^{*}+\alpha\Omega$
 \end_inset
 
-.
- By the linearity of 
+, by the linearity of 
 \begin_inset Formula $\mathcal{V}$
 \end_inset
 
@@ -1877,7 +1894,11 @@ Therefore,
 \begin_inset Formula $i\leq k$
 \end_inset
 
-, namely
+, namely for some 
+\begin_inset Formula $i\le k$
+\end_inset
+
+, we have 
 \begin_inset Formula 
 \[
 \nabla f(x^{(i)})^{\top}(y-x^{(i)})>0.
@@ -1889,7 +1910,7 @@ By the convexity of
 \begin_inset Formula $f$
 \end_inset
 
-, we have 
+, it follows that 
 \begin_inset Formula $f(x^{(i)})\leq f(y).$
 \end_inset
 
@@ -2007,7 +2028,7 @@ Then, we have
 
 \end_inset
 
-Furthermore, each iteration takes 
+Moreover, each iteration takes 
 \begin_inset Formula $O(n^{2}+\mathcal{T})$
 \end_inset
 
@@ -2034,11 +2055,12 @@ reference "lem:ellipsoid_vol_decrease"
 
 \end_inset
 
- shows that the volume of the ellipsoid maintained decreases by 
+ shows that the volume of the ellipsoid maintained decreases by a factor
+ of 
 \begin_inset Formula $\exp(-\frac{1}{2n+2})$
 \end_inset
 
- every iteration.
+ in every iteration.
  Hence, 
 \begin_inset Formula $\vol^{\frac{1}{n}}$
 \end_inset
@@ -2089,27 +2111,31 @@ Given a linear program
 \end_inset
 
  where 
-\begin_inset Formula $\Omega=\{x\text{ such that }Ax\geq b\}$
+\begin_inset Formula $P=\{x\text{ such that }Ax\geq b\}$
 \end_inset
 
 .
- Let the diameter 
+ Let the diameter of 
+\begin_inset Formula $P$
+\end_inset
+
+ be 
 \begin_inset Formula $R\defeq\max_{x\in\Omega}\norm x_{2}$
 \end_inset
 
- and the volume radius 
+ and its volume radius be 
 \begin_inset Formula $r=\vol(\Omega)^{\frac{1}{n}}$
 \end_inset
 
 .
  Then, we can find 
-\begin_inset Formula $x$
+\begin_inset Formula $x\in P$
 \end_inset
 
- such that 
+ for which 
 \begin_inset Formula 
 \[
-f(x)-\min_{x\in\Omega}f(x)\leq\varepsilon\cdot(\max_{x\in\Omega}c^{\top}x-\min_{x\in\Omega}c^{\top}x)
+c^{\top}x-\min_{y\in P}c^{\top}y\leq\varepsilon\cdot(\max_{y\in P}c^{\top}y-\min_{y\in P}c^{\top}y)
 \]
 
 \end_inset
@@ -2146,7 +2172,7 @@ For the linear program
 , the function we want to minimize is
 \begin_inset Formula 
 \begin{equation}
-L(x)=c^{\top}x+\delta_{Ax\geq b}\quad\text{where}\quad\delta_{Ax\geq b}(x)=\begin{cases}
+L(x)=c^{\top}x+\delta_{Ax\geq b}(x)\quad\text{where}\quad\delta_{Ax\geq b}(x)=\begin{cases}
 0 & \text{if }a_{i}^{\top}x\geq b_{i}\text{ for all }i\\
 +\infty & \text{otherwise.}
 \end{cases}.\label{eq:LP_func}
@@ -2163,7 +2189,7 @@ For this function
 \end_inset
 
 , we can use the separation oracle 
-\begin_inset Formula $g(x)=c$
+\begin_inset Formula $v(x)=c$
 \end_inset
 
  if 
@@ -2171,19 +2197,15 @@ For this function
 \end_inset
 
  and 
-\begin_inset Formula $g(x)=-a_{i}$
+\begin_inset Formula $v(x)=-a_{i}$
 \end_inset
 
  if 
-\begin_inset Formula $a_{i}^{\top}x<b$
+\begin_inset Formula $a_{i}^{\top}x<b_{i}$
 \end_inset
 
 .
- If there are many violated constraints, any one of the corresponding 
-\begin_inset Formula $a_{i}$
-\end_inset
-
-'s will do.
+ If there are many violated constraints, any one of them will do.
 \end_layout
 
 \begin_layout Proof
@@ -2191,7 +2213,7 @@ We can simply pick
 \begin_inset Formula $E^{(0)}$
 \end_inset
 
- be a unit ball centered at 
+ be the unit ball centered at 
 \begin_inset Formula $0$
 \end_inset
 
@@ -2199,7 +2221,8 @@ We can simply pick
 \begin_inset Formula $R$
 \end_inset
 
- and apply Theorem 
+.
+ We apply Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:ellipsoid"
@@ -2213,7 +2236,7 @@ reference "thm:ellipsoid"
  such that
 \begin_inset Formula 
 \[
-f(x)-\min_{x\in\Omega}f(x)\leq\varepsilon(\max_{x\in\Omega}c^{\top}x-\min_{x\in\Omega}c^{\top}x)
+c^{\top}x-\min_{y\in P}c^{\top}y\leq\varepsilon\cdot(\max_{y\in P}c^{\top}y-\min_{y\in P}c^{\top}y)
 \]
 
 \end_inset
@@ -2225,18 +2248,38 @@ in time
  
 \end_layout
 
+\begin_layout Exercise
+Give a bound on 
+\begin_inset Formula $R$
+\end_inset
+
+ as a polynomial in 
+\begin_inset Formula $n,\langle A\rangle,\langle b\rangle$
+\end_inset
+
+, where 
+\begin_inset Formula $\langle A\rangle,\langle b\rangle$
+\end_inset
+
+ are the numbers of bits needed to represent 
+\begin_inset Formula $A,b$
+\end_inset
+
+ whose entries are rationals.
+\end_layout
+
 \begin_layout Standard
 To get the solution exactly, i.e., 
 \begin_inset Formula $\varepsilon=0$
 \end_inset
 
 , we need to assume the linear program has integral (or rational) coefficients
- and the running time depends on the bound of the numbers in the matrix
- 
+ and then the running time will depend on the sizes of the numbers in the
+ matrix 
 \begin_inset Formula $A$
 \end_inset
 
- and the vectors 
+ and in the vectors 
 \begin_inset Formula $b$
 \end_inset
 
@@ -2250,9 +2293,8 @@ To get the solution exactly, i.e.,
  of the coefficients).
  Such a running time is called 
 \emph on
-strongly polynomial
-\emph default
-.
+strongly polynomial.
+ 
 \end_layout
 
 \begin_layout Problem*
