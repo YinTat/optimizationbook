@@ -835,7 +835,7 @@ name "sec:LD_GD"
 status open
 
 \begin_layout Plain Layout
-Sections marked with * are more mathematical.
+Sections marked with * are more mathematical and can be skipped.
 \end_layout
 
 \end_inset
