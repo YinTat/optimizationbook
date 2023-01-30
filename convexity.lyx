@@ -2284,6 +2284,26 @@ Convex functions:
 Show that the above sets and functions are all convex.
 \end_layout
 
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Show that the intersection of convex sets is convex; show that for convex
+ functions, 
+\begin_inset Formula $f,g$
+\end_inset
+
+, the function 
+\begin_inset Formula $h(x)=\max f(x),g(x)$
+\end_inset
+
+ is also convex.
+\end_layout
+
 \begin_layout Section
 Checking convexity
 \begin_inset CommandInset label

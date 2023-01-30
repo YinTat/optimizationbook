@@ -964,11 +964,15 @@ Since
 
 \begin_layout Proof
 Suppose (2) holds.
- Since 
-\begin_inset Formula $\nabla f(x)-\nabla f(y)=\int_{0}^{1}\nabla^{2}f(y+t(x-y))(x-y)dt$
+ Since by the fundamental theorem of calculus, 
+\begin_inset Formula 
+\[
+\nabla f(x)-\nabla f(y)=\int_{0}^{1}\nabla^{2}f(y+t(x-y))(x-y)dt,
+\]
+
 \end_inset
 
-, we have that
+we have that
 \begin_inset Formula 
 \[
 \|\nabla f(x)-\nabla f(y)\|_{2}\leq\int_{0}^{1}\|\nabla^{2}f(y+t(x-y))\|_{\op}\|x-y\|_{2}dt\leq L\|x-y\|_{2}.
@@ -990,7 +994,7 @@ f(y)=f(x)+\nabla f(x)^{\top}(y-x)+\int_{0}^{1}(1-t)(y-x)^{\top}\nabla^{2}f(x+t(y
 \end_inset
 
 Since 
-\begin_inset Formula $-L\preceq\nabla^{2}f(x)\preceq L$
+\begin_inset Formula $-LI\preceq\nabla^{2}f(x)\preceq LI$
 \end_inset
 
 , we have
@@ -1006,7 +1010,7 @@ This gives (3).
 
 \begin_layout Proof
 Suppose (3) holds, then 
-\begin_inset Formula $g(x)=g(x)+\frac{L}{2}\|x\|^{2}$
+\begin_inset Formula $g(x)=f(x)+\frac{L}{2}\|x\|^{2}$
 \end_inset
 
  satisfies 
@@ -1256,11 +1260,22 @@ for some
 \end_inset
 
 , we have that 
-\begin_inset Formula $\nabla f(x)^{\top}\nabla^{2}f(z)\nabla f(x)\leq L\cdot\|\nabla f(x)\|_{2}^{2}$
+\begin_inset Formula 
+\[
+\nabla f(x)^{\top}\nabla^{2}f(z)\nabla f(x)\leq L\cdot\|\nabla f(x)\|_{2}^{2}.
+\]
+
 \end_inset
 
-.
- Hence, we have the result.
+Putting this back above, we have 
+\begin_inset Formula 
+\[
+f(x-\frac{1}{L}\nabla f(x))\le f(x)-\frac{1}{L}\|\nabla f(x)\|_{2}^{2}+\frac{L}{2L^{2}}\norm{\nabla f(x)}_{2}^{2}=f(x)-\frac{1}{2L}\|\nabla f(x)\|_{2}^{2}.
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1531,19 +1546,19 @@ Therefore, we have that
 
 \end_inset
 
-Also, we have that 
-\begin_inset Formula 
-\[
-\epsilon_{0}=f(x^{(0)})-f^{*}\leq\nabla f(x^{*})^{\top}(x^{(0)}-x^{*})+\frac{L}{2}\|x^{(0)}-x^{*}\|_{2}^{2}\leq\frac{LR^{2}}{2}.
-\]
-
-\end_inset
-
 Now, we need to solve the recursion.
  We note that
 \begin_inset Formula 
 \[
 \frac{1}{\epsilon_{k+1}}-\frac{1}{\epsilon_{k}}=\frac{\epsilon_{k}-\epsilon_{k+1}}{\epsilon_{k}\epsilon_{k+1}}\geq\frac{\epsilon_{k}-\epsilon_{k+1}}{\epsilon_{k}^{2}}\geq\frac{1}{2LR^{2}}.
+\]
+
+\end_inset
+
+Also, we have that 
+\begin_inset Formula 
+\[
+\epsilon_{0}=f(x^{(0)})-f^{*}\leq\nabla f(x^{*})^{\top}(x^{(0)}-x^{*})+\frac{L}{2}\|x^{(0)}-x^{*}\|_{2}^{2}\leq\frac{LR^{2}}{2}.
 \]
 
 \end_inset
@@ -1571,7 +1586,7 @@ This style of proof is typical in optimization.
 \end_layout
 
 \begin_layout Standard
-This proof did not use any property of 
+This proof above does not use any property of 
 \begin_inset Formula $\ell_{2}$
 \end_inset
 
@@ -1586,7 +1601,8 @@ This proof did not use any property of
 \begin_inset Formula $\|x^{(k)}-x^{*}\|_{2}$
 \end_inset
 
- is in fact decreasing:
+ is in fact decreasing.
+ 
 \end_layout
 
 \begin_layout Lemma
@@ -1599,7 +1615,15 @@ For
 \end_inset
 
 .
- Therefore, for 
+ Therefore, for an 
+\begin_inset Formula $L$
+\end_inset
+
+-gradient Lipschitz convex function 
+\begin_inset Formula $f$
+\end_inset
+
+, for GD with 
 \begin_inset Formula $h=\frac{1}{L}$
 \end_inset
 
@@ -1615,7 +1639,7 @@ f(x^{(k)})-f(x^{*})\leq\frac{2L\|x^{(0)}-x^{*}\|_{2}^{2}}{k+4}.
 \end_layout
 
 \begin_layout Proof
-We compute the distance as follows, noting that 
+We compute the distance to an optimal point as follows, noting that 
 \begin_inset Formula $\nabla f(x^{*})=0$
 \end_inset
 
@@ -1896,7 +1920,7 @@ Next, we study gradient descent for
 -strongly convex functions.
 \end_layout
 
-\begin_layout Theorem
+\begin_layout Lemma
 \begin_inset CommandInset label
 LatexCommand label
 name "lem:strongly_convex"
