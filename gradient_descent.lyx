@@ -395,10 +395,6 @@ Cite
 .
 \end_layout
 
-\begin_layout Standard
-Here are other approximation not covered:
-\end_layout
-
 \begin_layout Itemize
 Mixed 
 \begin_inset Formula $\ell^{2}$
@@ -423,6 +419,10 @@ Cite
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Here are other approximation not covered:
 \end_layout
 
 \begin_layout Itemize
@@ -773,17 +773,17 @@ One can view gradient descent as a greedy method for solving
 , gradient descent goes to the minimizer of 
 \begin_inset Formula 
 \[
-\min_{\|\Delta\|_{2}\leq h}f(x)+\nabla f(x)^{\top}\Delta.
+\min_{\|\delta\|_{2}\leq h/\norm{\nabla f(x)}_{2}}f(x)+\nabla f(x)^{\top}\delta.
 \]
 
 \end_inset
 
 The term 
-\begin_inset Formula $f(x)+\nabla f(x)^{\top}\Delta$
+\begin_inset Formula $f(x)+\nabla f(x)^{\top}\delta$
 \end_inset
 
  is simply the first-order approximation of 
-\begin_inset Formula $f(x+\Delta)$
+\begin_inset Formula $f(x+\delta)$
 \end_inset
 
 .
@@ -792,7 +792,7 @@ The term
 \end_inset
 
  is fixed and we are optimizing the step 
-\begin_inset Formula $\Delta$
+\begin_inset Formula $\delta$
 \end_inset
 
 .
@@ -985,7 +985,19 @@ This gives (1).
 
 \begin_layout Proof
 Suppose (2) holds.
- By integration, we have
+ By integration along the direction 
+\begin_inset Formula $y-x$
+\end_inset
+
+ from 
+\begin_inset Formula $x$
+\end_inset
+
+ to 
+\begin_inset Formula $y$
+\end_inset
+
+, we have
 \begin_inset Formula 
 \[
 f(y)=f(x)+\nabla f(x)^{\top}(y-x)+\int_{0}^{1}(1-t)(y-x)^{\top}\nabla^{2}f(x+t(y-x))(y-x)dt.
@@ -1179,7 +1191,7 @@ Let
 \end_inset
 
 .
- The 
+ Then 
 \begin_inset Formula $\mathtt{GradientDescent}$
 \end_inset
 
@@ -1789,8 +1801,17 @@ We note that the convergence rate
 \begin_inset Formula $\epsilon^{-2}$
 \end_inset
 
- is not great if we need to solve the problem up to machine accuracy.
- Getting to machine accuracy is sometimes important if the optimization
+ is not great if we need to solve the problem up to very high accuracy (e.g.,
+ up to 
+\begin_inset Formula $n$
+\end_inset
+
+ bits would mean 
+\begin_inset Formula $\epsilon=2^{-n}$
+\end_inset
+
+).
+ Getting to very high accuracy is sometimes important if the optimization
  problem is used as a subroutine.
  We note that for the case 
 \begin_inset Formula $f(x)=\frac{1}{2}\|x\|_{2}^{2}$
@@ -1807,7 +1828,7 @@ We note that the convergence rate
  step.
  Therefore, it is natural to ask if one can improve the bound for functions
  close to quadratics.
- This motivates the following assumption:
+ This motivates the following assumption.
 \end_layout
 
 \begin_layout Definition
@@ -2338,8 +2359,8 @@ Generalizing Gradient Descent*
 \end_layout
 
 \begin_layout Standard
-Now, we study what properties of gradient descent are being used for the
- strongly convex case.
+Now, we study properties of gradient descent that were actually used for
+ the strongly convex case.
  There are many ways to generalize it.
  One way is to view gradient descent is as approximating the function 
 \begin_inset Formula $f$
@@ -3133,6 +3154,17 @@ literal "false"
 \begin_layout Standard
 We emphasize that this continuous view is mainly useful for understanding,
  indicative of but not necessarily implying an algorithmic result.
+ In some cases, effective algorithmic results can be obtained simply by
+ discretizing time in the gradient flow.
+ The study of such numerical methods and their convergence properties is
+ its own field, and well-known basic methods include the forward Euler method
+ (which results in the basic version of GD), the 
+\emph on
+backward 
+\emph default
+Euler method, the Implicit Midpoint method and Runge-Kutta methods.
+ We will see that gradient flow and its discretization also play an important
+ role in the development of sampling algorithms.
 \end_layout
 
 \begin_layout Section

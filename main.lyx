@@ -1085,7 +1085,7 @@ filename "langevin_dynamics.lyx"
 \end_layout
 
 \begin_layout Chapter
-Elimination
+Elimination and Reduction
 \end_layout
 
 \begin_layout Standard
@@ -1096,10 +1096,6 @@ filename "cutting_plane_volume.lyx"
 \end_inset
 
 
-\end_layout
-
-\begin_layout Chapter
-Reduction
 \end_layout
 
 \begin_layout Standard

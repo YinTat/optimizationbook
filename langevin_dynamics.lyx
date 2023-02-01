@@ -90,6 +90,8 @@ Sampling in high dimension is a fundamental problem.
 \end_inset
 
 .
+ Note that any density can be written in this form, so this is completely
+ general.
  To make the problem precise, we also have to specify a starting point with
  positive density, and an error parameter 
 \begin_inset Formula $\epsilon$
@@ -328,7 +330,7 @@ Here
 \begin_inset Formula $x_{t}$
 \end_inset
 
- is the r-tandom variable at time 
+ is the random variable at time 
 \begin_inset Formula $t$
 \end_inset
 
@@ -673,6 +675,18 @@ reference "thm:fokker_planck"
 
 \end_inset
 
+Now since 
+\begin_inset Formula $p_{t}$
+\end_inset
+
+ is stationary the LHS is zero and we can rewrite the above as
+\begin_inset Formula 
+\[
+0=\sum_{i}\frac{\partial}{\partial x_{i}}\left(p_{t}(x)\left(\frac{\partial}{\partial x_{i}}\left[\log\frac{p_{t}(x)}{e^{-f(x)}}\right]\right)\right).
+\]
+
+\end_inset
+
 We can verify that 
 \begin_inset Formula $p_{t}(x)\propto e^{-f(x)}$
 \end_inset
@@ -685,7 +699,8 @@ Convergence via Coupling.
 \end_layout
 
 \begin_layout Standard
-Next we turn to the rate of convergence, which will also prove uniqueness.
+Next we turn to the rate of convergence, which will also prove uniqueness
+ of the stationary distribution for the stochastic process.
  For this, we assume that 
 \begin_inset Formula $f$
 \end_inset
@@ -721,7 +736,7 @@ Let
 \begin_inset Formula $x_{t},y_{t}$
 \end_inset
 
- evolves according to the Langevin diffusion for a 
+ evolve according to the Langevin diffusion for a 
 \begin_inset Formula $\mu$
 \end_inset
 
@@ -731,7 +746,11 @@ Let
 
 .
  Then, there is a coupling between 
-\begin_inset Formula $x_{t},y_{t}$
+\begin_inset Formula $x_{t}$
+\end_inset
+
+ and 
+\begin_inset Formula $y_{t}$
 \end_inset
 
  s.t.
@@ -849,11 +868,19 @@ Here we show that Langevin dynamics is simply gradient descent for the function
 \begin_inset Formula $F(\rho)=\KL(\rho\|\nu)$
 \end_inset
 
+ for two densities 
+\begin_inset Formula $\rho,\nu$
+\end_inset
+
  on the Wasserstein space where 
 \begin_inset Formula $\nu=e^{-f(x)}/\int e^{-f(y)}dy$
 \end_inset
 
-.
+ is the target and 
+\begin_inset Formula $\rho$
+\end_inset
+
+ is the current density.
  For this, we first define the Wasserstein space.
 \end_layout
 
