@@ -515,7 +515,7 @@ For any process
 \end_inset
 
 .
- Then, the distribution 
+ Then the density 
 \begin_inset Formula $p_{t}$
 \end_inset
 
@@ -1457,9 +1457,11 @@ Discussion
 \end_layout
 
 \begin_layout Standard
-Langevin dynamics samples from strongly logconcave densities, and the convergenc
-e is fast in continuous time.
- Turning this into an efficient algorithm takes more work and assumptions.
+Langevin dynamics converges quickly in continuous time for isoperimetric
+ distributions.
+ Turning this into an efficient algorithm typically needs more assumptions
+ and there is much room for choosing discretizations.
+ This is similar to the situation with gradient descent for optimization.
  As we saw in Section 
 \begin_inset CommandInset ref
 LatexCommand ref

@@ -337,6 +337,14 @@ reference "sec:Leverage-Score-Sampling"
 \end_layout
 
 \begin_layout Itemize
+Matrix Approximation: Approximate 
+\begin_inset Formula $A$
+\end_inset
+
+ by a low-rank matrix.
+\end_layout
+
+\begin_layout Itemize
 Set Approximation: Approximate a convex set by an ellipsoid or a polytope
  (Section 
 \begin_inset CommandInset ref
@@ -706,7 +714,7 @@ tcp{
 \end_inset
 
 Alternatively, one can use 
-\begin_inset Formula $x^{(k+1)}\leftarrow\text{argmin}_{x=x^{(k)}+t\nabla f(x^{(k)})}f(x)$
+\begin_inset Formula $x^{(k+1)}\leftarrow\text{argmin}_{x=x^{(k)}+t\nabla f(x^{(k)}),t\in\R}f(x)$
 \end_inset
 
 .
@@ -1067,9 +1075,43 @@ reference "thm:equ_convex"
  This gives (2).
 \end_layout
 
+\begin_layout Exercise
+Prove that if 
+\begin_inset Formula $f\in{\cal C}^{2}(\R^{n})$
+\end_inset
+
+ has an 
+\begin_inset Formula $L$
+\end_inset
+
+-Lipschitz gradient then the function 
+\begin_inset Formula $g(x)=\frac{L}{2}\norm x_{2}^{2}-f(x)$
+\end_inset
+
+ satisfies 
+\begin_inset Formula $\langle\nabla g(x)-\nabla g(y),x-y\rangle\ge0$
+\end_inset
+
+, and so 
+\begin_inset Formula $g$
+\end_inset
+
+ is convex.
+\end_layout
+
 \begin_layout Standard
-With this equivalent definition, we can have an alternative view of gradient
- descent.
+With the equivalent definitions in Thm.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:L_equ_def"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we can have an alternative view of gradient descent.
  Each step, we perform
 \begin_inset Formula 
 \[
@@ -1155,6 +1197,11 @@ reference "thm:L_equ_def"
  For gradient descent, it uses the simplest first-order approximation.
  Although this is not the best approximation one can come up with, it is
  robust enough to use in all sorts of applications.
+\end_layout
+
+\begin_layout Exercise
+Show that any convex function is Lipschitz over any compact subset of its
+ domain.
 \end_layout
 
 \begin_layout Subsection
@@ -1455,7 +1502,11 @@ reference "thm:gd_general"
 \begin_inset Formula $f(x)-f^{*}$
 \end_inset
 
-.
+ rather than 
+\begin_inset Formula $\norm{x-x^{*}}_{2}$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Theorem

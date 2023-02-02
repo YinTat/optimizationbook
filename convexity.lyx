@@ -76,23 +76,13 @@
 \begin_body
 
 \begin_layout Standard
-In this book
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-In the UW course, only the optimization part was covered.
-\end_layout
-
-\end_inset
-
-, we will study two topics involving convexity, namely optimization and
- sampling.
+In this book, we will study two topics involving convexity, namely optimization
+ and sampling.
  Given a multivariate, real-valued function 
 \begin_inset Formula $f$
 \end_inset
 
-, (1) how fast can we find a point that minimizes 
+, (1) how quickly can we find a point that minimizes 
 \begin_inset Formula $f$
 \end_inset
 
@@ -105,8 +95,21 @@ In the UW course, only the optimization part was covered.
 \begin_inset Formula $e^{-f}$
 \end_inset
 
-? These problems are quite closely connected, e.g., sampling from such distributio
-ns can be used to find near-optimal points.
+? 
+\end_layout
+
+\begin_layout Standard
+Optimization appears naturally across mathematics, the sciences and engineering
+ for a variety of theoretical and practical reasons.
+ Its study over centuries has been extremely fruitful.
+ Sampling is motivated by the question of choosing a representative point
+ or subset (rather than an extremal point)? Rather than a feasible set,
+ we have a distribution which assigns probabilities to subsets.
+ The goal is to sample a point from a target distribution, i.e., the output
+ point should lie in a given subset with probability equal to the probability
+ of the set in the target distribution.
+ These problems are quite closely connected, e.g., sampling from such distribution
+s can be used to find near-optimal points.
  These problems are intractable in full generality, and have exponential
  (in dimension) complexity even under smoothness assumptions.
 \end_layout
@@ -406,17 +409,24 @@ Why is convexity useful? Linear Separability!
 \begin_layout Standard
 In the last section, we saw that general functions are difficult to optimize
  because we can only find the minimum via exhaustive search.
- Now we define convex sets, convex functions and convex problems.
+ Now we define convex sets, convex functions and convex problems (see Fig.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:convex"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
  One benefit of convexity is that it enables binary search.
 \end_layout
 
 \begin_layout Definition
 A set 
-\begin_inset Formula $K$
-\end_inset
-
- in 
-\begin_inset Formula $\R^{n}$
+\begin_inset Formula $K\subseteq\R^{n}$
 \end_inset
 
  is 
@@ -808,8 +818,9 @@ Let
 \begin_inset Formula $x^{*}\in\arg\min_{x\in K}\norm{x-y}_{2}^{2}$
 \end_inset
 
- (such a minimizer always exists for closed convex sets; this is sometimes
- called Hilbert's projection theorem).
+ (such a minimizer always exists for closed convex sets and is unique; this
+ is sometimes called Hilbert's projection theorem but can be proved directly
+ for this setting).
  Using convexity of 
 \begin_inset Formula $K$
 \end_inset
@@ -844,7 +855,7 @@ Expanding the LHS, we have
 \end_inset
 
 Canceling the term 
-\begin_inset Formula $\norm{x^{*}-y}_{2}^{2}$
+\begin_inset Formula $\norm{y-x^{*}}_{2}^{2}$
 \end_inset
 
  and dividing both sides by 
@@ -951,11 +962,11 @@ Let
 
 .
  Since 
-\begin_inset Formula $K\subset\left\{ x:\ \left\langle \theta,x\right\rangle \leq\max_{y\in K}\left\langle \theta,y\right\rangle \right\} $
+\begin_inset Formula $K\subseteq\left\{ x:\ \left\langle \theta,x\right\rangle \leq\max_{y\in K}\left\langle \theta,y\right\rangle \right\} $
 \end_inset
 
 , we have 
-\begin_inset Formula $K\subset L$
+\begin_inset Formula $K\subseteq L$
 \end_inset
 
 .
@@ -988,7 +999,7 @@ reference "thm:sep"
 \end_inset
 
  and hence 
-\begin_inset Formula $L\subset K$
+\begin_inset Formula $L\subseteq K$
 \end_inset
 
 .
@@ -1886,7 +1897,7 @@ epigraph
 \end_inset
 
  is 
-\begin_inset Formula $\epi f\defeq\{(x,t)\subset\Rn\times\R:\ t\geq f(x)\}$
+\begin_inset Formula $\epi f\defeq\{(x,t)\in\Rn\times\R:\ t\geq f(x)\}$
 \end_inset
 
 .
@@ -2347,6 +2358,9 @@ reference "def:PSD"
 
 \begin_layout Standard
 To show this, we first prove the following second-order Taylor theorem.
+ A useful idea here is to note that a function is convex if and only if
+ its restriction to any one-dimensional line is convex, and to define a
+ suitable one-dimensional function.
 \end_layout
 
 \begin_layout Theorem
@@ -2836,6 +2850,36 @@ The indicator function of a convex set
  is logconcave.
  The Gaussian density function is logconcave.
  The Gaussian density restricted to any convex set is logconcave.
+\end_layout
+
+\begin_layout Example
+To see that the indicator function of a convex set 
+\begin_inset Formula $K$
+\end_inset
+
+ is logconcave, simply consider two points 
+\begin_inset Formula $x,y$
+\end_inset
+
+ which (1) both lie in 
+\begin_inset Formula $K$
+\end_inset
+
+, (2) both lie outside and (3) one is in 
+\begin_inset Formula $K$
+\end_inset
+
+, one is outside.
+ Now check the value of the indicator along any convex combination of 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $y$
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Lemma

@@ -243,7 +243,7 @@ Define isotropic.
 status open
 
 \begin_layout Plain Layout
-Define convolution.
+Define marginal.
 \end_layout
 
 \end_inset
@@ -255,7 +255,7 @@ Define convolution.
 Functions
 \end_layout
 
-\begin_layout Definition*
+\begin_layout Definition
 For any 
 \begin_inset Formula $L\geq0$
 \end_inset
@@ -294,7 +294,7 @@ For any
 
 \end_layout
 
-\begin_layout Definition*
+\begin_layout Definition
 A function 
 \begin_inset Formula $f\in\mathcal{C}^{k}(\Rn)$
 \end_inset
@@ -358,6 +358,22 @@ g(y)=\sum_{j=0}^{k}g^{(j)}(x)\frac{(y-x)^{j}}{j!}+g^{(k+1)}(\zeta)\frac{(y-x)^{k
 
 \end_layout
 
+\begin_layout Definition
+The 
+\begin_inset Formula $convolution$
+\end_inset
+
+ of two functions 
+\begin_inset Formula $f,g:\R^{n}\rightarrow\R$
+\end_inset
+
+ is defined as 
+\begin_inset Formula $h(x)=\int_{\R^{n}}f(z)g(x-z)\,dz.$
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section*
 Linear Algebra
 \end_layout
@@ -416,10 +432,11 @@ For any matrix
 \end_inset
 
 , and operator norm, 
-\begin_inset Formula $\,\|A\|_{\op}=\sup_{\|x\|_{2}\leq1}\|Ax\|_{2}$
+\begin_inset Formula $\,\|A\|_{\op}=\sup_{\|x\|_{2}=1}\|Ax\|_{2}$
 \end_inset
 
 .
+ 
 \end_layout
 
 \begin_layout Standard
@@ -535,7 +552,7 @@ The Total Variation (TV) or
  is 
 \begin_inset Formula 
 \[
-d_{TV}(\rho,\nu)=\frac{1}{2}\int_{\Omega}\left|\rho(x)-\nu(x)\right|\,dx=\sup_{S\subset\Omega}\rho(S)-\nu(S).
+d_{TV}(\rho,\nu)=\frac{1}{2}\int_{\Omega}\left|\rho(x)-\nu(x)\right|\,dx=\sup_{S\subset\Omega}\left|\rho(S)-\nu(S)\right|=\sup_{S\subset\Omega}\rho(S)-\nu(S).
 \]
 
 \end_inset
@@ -548,11 +565,11 @@ The following
 \begin_inset Quotes eld
 \end_inset
 
-distance
+distances
 \begin_inset Quotes erd
 \end_inset
 
- is not symmetric.
+ are not symmetric.
 \end_layout
 
 \begin_layout Definition
@@ -575,8 +592,106 @@ The KL-divergence of a density
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+The 
+\begin_inset Formula $\chi$
+\end_inset
+
+-squared distance of a densities 
+\begin_inset Formula $\rho$
+\end_inset
+
+ with respect to another density 
+\begin_inset Formula $\nu$
+\end_inset
+
+ is defined as 
+\backslash
+nu 
+\begin_inset Formula 
+\[
+\chi^{2}(\rho,\nu)=\E_{\nu}\left(\left(\frac{\rho(x)}{\nu(x)}-1\right)^{2}\right)=\E_{\rho}\left(\frac{\rho(x)}{\nu(x)}\right)-1.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+The 
+\emph on
+marginal
+\emph default
+ of a distribution in 
+\begin_inset Formula $\R^{n}$
+\end_inset
+
+ with density 
+\begin_inset Formula $\nu$
+\end_inset
+
+ in the span of a 
+\begin_inset Formula $k$
+\end_inset
+
+-dimensional subspace 
+\begin_inset Formula $V$
+\end_inset
+
+ is defined as 
+\begin_inset Formula 
+\[
+g(x)=\int_{y\in V^{\perp}}\nu(x,y)\,dy
+\]
+
+\end_inset
+
+for any 
+\begin_inset Formula $x\in V$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Definition
+Note that the marginal is a convolution of the density with the indicator
+ function of the subspace.
+ 
+\end_layout
+
 \begin_layout Section*
 Geometry
+\end_layout
+
+\begin_layout Definition
+The 
+\emph on
+Minkowski sum 
+\emph default
+of two sets 
+\begin_inset Formula $A,B\subset\R^{n}$
+\end_inset
+
+ is defined as 
+\begin_inset Formula $A+B=\left\{ x+y:x\in A,y\in B\right\} $
+\end_inset
+
+.
 \end_layout
 
 \end_body
