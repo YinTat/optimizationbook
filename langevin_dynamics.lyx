@@ -78,7 +78,7 @@
 \begin_layout Standard
 Sampling in high dimension is a fundamental problem.
  Informally, given access to a function 
-\begin_inset Formula $f:\R^{n}\rightarrow\R$
+\begin_inset Formula $f:\R^{n}\rightarrow\R\cup\left\{ \infty\right\} $
 \end_inset
 
 , the sampling problem is to generate a point 
@@ -105,12 +105,12 @@ Sampling in high dimension is a fundamental problem.
 \begin_layout Standard
 Unfortunately, in this generality, just like optimization, sampling is also
  intractable.
- To see this consider the following function:
+ To see this, consider the following function:
 \begin_inset Formula 
 \[
 f(x)=\begin{cases}
 0 & x\in S\\
-\infty & x\not\in S
+M & x\not\in S
 \end{cases}
 \]
 
@@ -125,6 +125,10 @@ for some closed set
 \begin_inset Formula $e^{-f}$
 \end_inset
 
+ for a sufficiently large 
+\begin_inset Formula $M$
+\end_inset
+
  would allow us to find an element of 
 \begin_inset Formula $S$
 \end_inset
@@ -133,11 +137,10 @@ for some closed set
 \end_layout
 
 \begin_layout Standard
-Consider a second example, which might appear more tractable.
- 
+Consider a second example, which might appear more tractable: 
 \begin_inset Formula 
 \[
-f(x)=e^{-\frac{1}{2}x^{\top}Ax}\one_{x\ge0}.
+g(x)=e^{-\frac{1}{2}x^{\top}Ax}\one_{x\ge0}.
 \]
 
 \end_inset
@@ -424,7 +427,7 @@ For any process
 , we have that
 \begin_inset Formula 
 \[
-df(x_{t})=\nabla f(x_{t})^{\top}dx_{t}+\frac{1}{2}(dx_{t})^{\top}\nabla^{2}f(x_{t})(dx_{t})^{\top}=\nabla f(x_{t})^{\top}\mu(x_{t})dt+\nabla f(x_{t})^{\top}\sigma(x_{t})dW_{t}+\frac{1}{2}\tr(\sigma(x_{t})^{\top}\nabla^{2}f(x_{t})\sigma(x_{t}))dt.
+df(x_{t})=\nabla f(x_{t})^{\top}dx_{t}+\frac{1}{2}(dx_{t})^{\top}\nabla^{2}f(x_{t})(dx_{t})=\nabla f(x_{t})^{\top}\mu(x_{t})dt+\nabla f(x_{t})^{\top}\sigma(x_{t})dW_{t}+\frac{1}{2}\tr(\sigma(x_{t})^{\top}\nabla^{2}f(x_{t})\sigma(x_{t}))dt.
 \]
 
 \end_inset
@@ -485,7 +488,7 @@ name "thm:fokker_planck"
 status open
 
 \begin_layout Plain Layout
-Fokker–Planck equation*
+Fokker–Planck equation
 \end_layout
 
 \end_inset
@@ -608,6 +611,7 @@ Similarly, integrating by parts twice gives
 \begin_inset Formula 
 \begin{align*}
 \int\tr(\sigma(x)^{\top}\nabla^{2}\phi(x)\sigma(x))p_{t}(x)dx & =\int\tr(\nabla^{2}\phi(x)\sigma(x)\sigma(x)^{\top})p_{t}(x)dx\\
+ & =-\int\langle\nabla\phi(x),\sum_{i}\frac{\partial}{\partial x_{i}}(p_{t}(x)D(x)_{i})\rangle dx\\
  & =\sum_{i,j}\int\phi(x)\frac{\partial^{2}}{\partial x_{i}\partial x_{j}}\left[(D(x))_{ij}p_{t}(x)\right]dx.
 \end{align*}
 
@@ -910,6 +914,22 @@ The Wasserstein space
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Definition
+We let 
+\begin_inset Formula $T_{p}({\cal M})$
+\end_inset
+
+ refer to the tangent space at a point 
+\begin_inset Formula $p$
+\end_inset
+
+ in a manifold 
+\begin_inset Formula ${\cal M}.$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Lemma

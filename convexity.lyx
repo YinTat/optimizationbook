@@ -82,16 +82,24 @@ In this book, we will study two topics involving convexity, namely optimization
 \begin_inset Formula $f$
 \end_inset
 
-, (1) how quickly can we find a point that minimizes 
+, 
+\end_layout
+
+\begin_layout Enumerate
+How quickly can we find a point that minimizes 
 \begin_inset Formula $f$
 \end_inset
 
-? (2) how fast can we sample a point according to the distribution with
- density defined by 
+? 
+\end_layout
+
+\begin_layout Enumerate
+How fast can we sample a point according to the distribution with density
+ defined by 
 \begin_inset Formula $f$
 \end_inset
 
-, e.g., proportional to 
+, i.e., proportional to 
 \begin_inset Formula $e^{-f}$
 \end_inset
 
@@ -297,7 +305,15 @@ where
 \begin_inset Formula $1$
 \end_inset
 
--Lipschitz and unless we query 
+-Lipschitz, i.e., for any 
+\begin_inset Formula $x,y$
+\end_inset
+
+, we have 
+\begin_inset Formula $|f(x)-f(y)|\le|x-y|$
+\end_inset
+
+, and unless we query 
 \begin_inset Formula $f(x)$
 \end_inset
 
@@ -422,6 +438,9 @@ noprefix "false"
 
 ).
  One benefit of convexity is that it enables binary search.
+ We will see that for convex functions, local minima are global minima,
+ and (later in this book), in fact we can solve convex optimization problems
+ in polynomial time.
 \end_layout
 
 \begin_layout Definition
@@ -439,6 +458,18 @@ convex
 
 , we have 
 \begin_inset Formula $[x,y]\subseteq K$
+\end_inset
+
+, where 
+\begin_inset Formula $[x,y]=\{(1-t)x+ty:t\in[0,1]\}$
+\end_inset
+
+ is the one-dimensional interval from 
+\begin_inset Formula $x$
+\end_inset
+
+ to 
+\begin_inset Formula $y$
 \end_inset
 
 .
@@ -466,7 +497,7 @@ A function
 \emph on
 convex
 \emph default
- if for any 
+ if for every 
 \begin_inset Formula $t\in[0,1]$
 \end_inset
 
@@ -479,40 +510,40 @@ f(tx+(1-t)y)\le tf(x)+(1-t)f(y).
 \end_inset
 
 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-I should either use 
-\begin_inset Formula $\lambda x+(1-\lambda)y$
-\end_inset
-
- or 
-\begin_inset Formula $tx+(1-t)y$
-\end_inset
-
- in all the book.
- Seems 
-\begin_inset Formula $t$
-\end_inset
-
- is better coz 
-\begin_inset Formula $\lambda$
-\end_inset
-
- is eigenvalue.
 \end_layout
 
-\begin_layout Plain Layout
-OK.
+\begin_layout Exercise
+Suppose we have a function 
+\begin_inset Formula $f:\R^{n}\rightarrow\R\cup\{+\infty\}$
+\end_inset
+
+that has the property that for every 
+\begin_inset Formula $x,y\in\R^{n},$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+f\left(\frac{x+y}{2}\right)\le\frac{1}{2}\left(f(x)+f(y)\right).
+\]
+
+\end_inset
+
+Show that this implies 
+\begin_inset Formula $f$
+\end_inset
+
+ is convex.
 \end_layout
 
+\begin_layout Standard
+\begin_inset Separator plain
 \end_inset
 
 
 \end_layout
 
-\begin_layout Definition
+\begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
@@ -830,7 +861,7 @@ Let
 \end_inset
 
  and any 
-\begin_inset Formula $0\leq t\leq1$
+\begin_inset Formula $0<t\leq1$
 \end_inset
 
 , we have that 
@@ -1100,6 +1131,11 @@ f(y)\geq f(x)+\nabla f(x)^{\top}(y-x)\text{ for all }x,y\in\Rn\label{eq:f_lower}
 
 \end_layout
 
+\begin_layout Standard
+Later in this chapter we will see that the above condition is in fact an
+ equivalent definition of convexity.
+\end_layout
+
 \begin_layout Proof
 Fix any 
 \begin_inset Formula $x,y\in\Rn$
@@ -1115,11 +1151,16 @@ Fix any
 \begin_inset Formula $f$
 \end_inset
 
- is convex, so is 
+ is convex, it is convex along every line, in particular over the segment
+ 
+\begin_inset Formula $[x,y]$
+\end_inset
+
+ and so 
 \begin_inset Formula $g$
 \end_inset
 
- over 
+ is convex over 
 \begin_inset Formula $[0,1]$
 \end_inset
 
@@ -2084,7 +2125,7 @@ This characterization shows that
 \end_inset
 
  is the same as 
-\begin_inset Formula $\min_{(t,x)\in\epi f}t$
+\begin_inset Formula $\min_{(x,t)\in\epi f}t$
 \end_inset
 
 .
@@ -2114,7 +2155,27 @@ In particular, this shows that the set of minimizers is connected.
 quasiconvex
 \emph default
  if every level set is convex.
- For example, Fig.
+ Equivalently, a function 
+\begin_inset Formula $f:\R^{n}\rightarrow\R$
+\end_inset
+
+ is quasiconvex if for every 
+\begin_inset Formula $x,y\in\R^{n}$
+\end_inset
+
+ and 
+\begin_inset Formula $t\in[0,1]$
+\end_inset
+
+, 
+\begin_inset Formula 
+\[
+f((1-t)x+ty)\le\max f(x),f(y).
+\]
+
+\end_inset
+
+For example, Fig.
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -2126,6 +2187,7 @@ noprefix "false"
 \end_inset
 
  shows a function that is quasiconvex but not convex.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -2422,6 +2484,10 @@ where
 .
  To see the result, note that 
 \begin_inset Formula $g(0)=f(x)$
+\end_inset
+
+, 
+\begin_inset Formula $g(1)=f(y)$
 \end_inset
 
 , 
@@ -2741,18 +2807,23 @@ reference "thm:equ_convex"
  Note that
 \begin_inset Formula 
 \begin{align*}
-\nabla R_{1}(\theta) & =\frac{1}{n}\sum_{i=1}^{n}f'(\left\langle x^{i},\theta\right\rangle )x^{i},\\
-\nabla^{2}R_{1}(\theta) & =\frac{1}{n}\sum_{i=1}^{n}f''(\left\langle x^{i},\theta\right\rangle )x^{i}(x^{i})^{\top}.
+\nabla R_{1}(\theta) & =\frac{1}{n}\sum_{i=1}^{n}f'(y^{i}\left\langle x^{i},\theta\right\rangle )y^{i}x^{i},\\
+\nabla^{2}R_{1}(\theta) & =\frac{1}{n}\sum_{i=1}^{n}f''(y^{i}\left\langle x^{i},\theta\right\rangle )x^{i}(x^{i})^{\top}
 \end{align*}
 
 \end_inset
 
-Since 
+where we used 
+\begin_inset Formula $(y^{i})^{2}=1$
+\end_inset
+
+.
+ Since 
 \begin_inset Formula $x^{i}(x^{i})^{\top}\succeq0$
 \end_inset
 
 , it suffices to prove that 
-\begin_inset Formula $f''(\left\langle x^{i},\theta\right\rangle )\geq0$
+\begin_inset Formula $f''(y^{i}\left\langle x^{i},\theta\right\rangle )\geq0$
 \end_inset
 
 .
@@ -2829,14 +2900,44 @@ logconcave
 \end_inset
 
  is nonnegative and for any 
-\begin_inset Formula $\lambda\in[0,1]$
+\begin_inset Formula $t\in(0,1)$
 \end_inset
 
 , we have 
-\begin_inset Formula $f(\lambda x+(1-\lambda)y)\ge f(x)^{\lambda}f(y)^{1-\lambda}$
+\begin_inset Formula $f(tx+(1-t)y)\ge f(x)^{t}f(y)^{1-t}$
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Definition
+Thus any logconcave function can be viewed as 
+\begin_inset Formula $e^{-f(x)}$
+\end_inset
+
+ for some convex function 
+\begin_inset Formula $f$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Exercise
+Show that for any 
+\begin_inset Formula $t\ge0$
+\end_inset
+
+, the level set 
+\begin_inset Formula $L(t)=\left\{ x:f(x)\ge t\right\} $
+\end_inset
+
+ of a logconcave function 
+\begin_inset Formula $f$
+\end_inset
+
+ is convex.
+ 
 \end_layout
 
 \begin_layout Example

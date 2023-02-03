@@ -240,7 +240,7 @@ The runtime depends on the number of iterations and the cost per iteration.
  Philosophically, the difficulties of a problem can never be created nor
  destroyed, only converted from one form of difficulty to another.
  When we decrease the number of iterations, the cost per iteration often
- increase.
+ increases.
  The gain of new methods often come from avoiding some wasted computation,
  utilizing some forgotten information or giving a faster but tailored algorithm
  for a sub-problem.
@@ -288,7 +288,7 @@ reference "sec:Newton-Method"
 \end_layout
 
 \begin_layout Itemize
-Stochastic Approximation: 
+Stochastic/Monte-Carlo Approximation: 
 \begin_inset Formula $\sum_{i}f_{i}(x)\approx f_{j}(x)$
 \end_inset
 
@@ -539,7 +539,8 @@ Perhaps the most natural algorithm for optimization is gradient descent.
  is unbounded or the gradient is zero at a minimum.
  So we try to find a point with gradient close to zero (which, of course,
  does not guarantee global optimality).
- The basic algorithm is the following:
+ The basic algorithm is the following.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -966,7 +967,15 @@ Since
 \begin_inset Formula $\|\nabla^{2}f(x)v\|_{2}\leq L\|v\|_{2}$
 \end_inset
 
-.
+, which means all eigenvalues of 
+\begin_inset Formula $\nabla^{2}f$
+\end_inset
+
+ are atmost 
+\begin_inset Formula $L$
+\end_inset
+
+ in magnitude.
  This proves (2).
 \end_layout
 
@@ -1073,6 +1082,22 @@ reference "thm:equ_convex"
 
 .
  This gives (2).
+\end_layout
+
+\begin_layout Exercise
+Prove the implication above (2) 
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+ (3), by defining a one-dimensional function.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
 \end_layout
 
 \begin_layout Exercise
@@ -1222,10 +1247,10 @@ name "thm:gd_general"
 \end_inset
 
 Let 
-\begin_inset Formula $f$
+\begin_inset Formula $f\in\mathcal{C}^{2}(\R^{n})$
 \end_inset
 
- be a function with 
+ with 
 \begin_inset Formula $L$
 \end_inset
 
@@ -1262,7 +1287,9 @@ Let
 \end_layout
 
 \begin_layout Standard
-The next lemma shows that the function value must decrease along the GD
+One practical advantage of line search is that the algorithm does not need
+ to know a bound on the Lipschitz constant of the gradient.
+ The next lemma shows that the function value must decrease along the GD
  path for a sufficiently small step size, and the magnitude of the decrease
  depends on the norm of the current gradient.
 \end_layout
@@ -1404,7 +1431,7 @@ noprefix "false"
 \end_inset
 
  by at most 
-\begin_inset Formula $f(x^{(0)})-f^{*}$
+\begin_inset Formula $f(x^{(0)})-f(x^{*})$
 \end_inset
 
 , we have the result.
@@ -1649,13 +1676,13 @@ This style of proof is typical in optimization.
 \end_layout
 
 \begin_layout Standard
-This proof above does not use any property of 
+This proof above does not make essential use any property of 
 \begin_inset Formula $\ell_{2}$
 \end_inset
 
  or inner product space.
- Therefore, it works for general norms if the gradient descent step is defined
- using that norm.
+ It can be extended to work for general norms if the gradient descent step
+ is defined using that norm.
  For the case of 
 \begin_inset Formula $\ell_{2}$
 \end_inset
@@ -1907,14 +1934,31 @@ f(y)\geq f(x)+\nabla f(x)^{\top}(y-x)+\frac{\mu}{2}\|y-x\|_{2}^{2}.
 \end_layout
 
 \begin_layout Standard
-Similar to the convex case (Theorem 
+A 
+\begin_inset Quotes eld
+\end_inset
+
+growth
+\begin_inset Quotes erd
+\end_inset
+
+ of a strongly convex function around any point is lower bound by a quadratic
+ function.
+ Clearly a strongly convex function is also convex and the sum of a strongly
+ convex and convex function remains strongly convex.
+ An example of a function that is convex but not strongly convex is 
+\begin_inset Formula $f(x)=\left|x\right|$
+\end_inset
+
+.
+ Similar to the convex case (Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:equ_convex"
 
 \end_inset
 
-), we have the following:
+), we have the following.
 \end_layout
 
 \begin_layout Theorem
@@ -1940,7 +1984,7 @@ Let
 \end_inset
 
  and 
-\begin_inset Formula $t\in[t0,1]$
+\begin_inset Formula $t\in[0,1]$
 \end_inset
 
 .
@@ -2156,6 +2200,56 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
+A similar bound also holds for convergence to the optimal point.
+ 
+\end_layout
+
+\begin_layout Exercise
+Let 
+\begin_inset Formula $f\in\mathcal{C}^{2}(\R^{n})$
+\end_inset
+
+ be 
+\begin_inset Formula $\mu$
+\end_inset
+
+-strongly convex with 
+\begin_inset Formula $L$
+\end_inset
+
+-Lipschitz gradient and 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ be the minimizer of 
+\begin_inset Formula $f$
+\end_inset
+
+.
+ With step size 
+\begin_inset Formula $h=1/L$
+\end_inset
+
+, show that the sequence 
+\begin_inset Formula $x^{(k)}$
+\end_inset
+
+ in 
+\begin_inset Formula $\mathtt{GradientDescent}$
+\end_inset
+
+ satisfies 
+\begin_inset Formula 
+\[
+\|x^{(k)}-x^{*}\|_{2}^{2}\le\left(1-\frac{\mu}{L}\right)^{k}\left\Vert x^{(0)}-x^{*}\right\Vert _{2}^{2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 It is natural to ask to what extent the assumption of convexity is essential
  for the bounds we obtained.
  This is the motivation for the next exercises.
@@ -2331,11 +2425,11 @@ Suppose
 \begin_inset Formula $h$
 \end_inset
 
- satisfies the Wolfe condition with the direction 
+ satisfies the Wolfe condition with respect to the direction 
 \begin_inset Formula $p=-\nabla f(x)$
 \end_inset
 
-, then we have
+, then show that
 \begin_inset Formula 
 \[
 \frac{2(1-c_{1})}{\mu}\geq h\geq\frac{1-c_{2}}{L}.
@@ -2441,7 +2535,7 @@ We say
 \begin_inset Formula $f$
 \end_inset
 
- at 
+ at the point 
 \begin_inset Formula $x$
 \end_inset
 
@@ -2453,11 +2547,15 @@ We say
 \begin_inset Formula $g$
 \end_inset
 
- is convex, 
+ is convex, with the same value at 
+\begin_inset Formula $x$
+\end_inset
+
+, i.e., 
 \begin_inset Formula $g(x)=f(x)$
 \end_inset
 
-,
+ ,
 \end_layout
 
 \begin_layout Itemize
@@ -3136,7 +3234,8 @@ Gradient Flow
 \end_layout
 
 \begin_layout Standard
-In continuous time, gradient descent follows the ODE 
+In continuous time, gradient descent follows the Ordinary Differential Equation
+ (ODE) 
 \begin_inset Formula 
 \[
 \frac{dx_{t}}{dt}=-\nabla f(x_{t}).

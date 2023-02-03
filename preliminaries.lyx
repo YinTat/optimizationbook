@@ -217,19 +217,6 @@ Should we really abuse vector? Like
 status open
 
 \begin_layout Plain Layout
-Define nnz.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
 Define isotropic.
 \end_layout
 
@@ -243,7 +230,7 @@ Define isotropic.
 status open
 
 \begin_layout Plain Layout
-Define marginal.
+Notation chart.
 \end_layout
 
 \end_inset
@@ -401,6 +388,14 @@ A real symmetric matrix
  Equivalently, a real symmetric matrix with all nonnegative eigenvalues
  is PSD.
  We write 
+\begin_inset Formula $A\succeq0$
+\end_inset
+
+ if 
+\begin_inset Formula $A$
+\end_inset
+
+ is PSD and 
 \begin_inset Formula $A\succeq B$
 \end_inset
 
