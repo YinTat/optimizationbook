@@ -632,10 +632,7 @@ literal "false"
 .
  In later chapters we will see randomized polytime algorithms for sampling
  and hence for approximating centroid and volume.
-\end_layout
-
-\begin_layout Standard
-
+ 
 \end_layout
 
 \end_body

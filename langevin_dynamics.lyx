@@ -243,7 +243,7 @@ caption{
 \end_inset
 
 
-\begin_inset Formula $\mathtt{LangevinDynamics}$
+\begin_inset Formula $\mathtt{LangevinDiffusion}$
 \end_inset
 
  (LD)
@@ -342,8 +342,8 @@ Here
 \end_inset
 
  is infinitesimal Brownian motion also known as a Wiener process.
- While it takes some care to define rigorously, for now we can view it as
- the following discrete process 
+ We can view it as the continuous version of the following discrete process
+ 
 \begin_inset Formula 
 \[
 x_{t+h}=x_{t}-h\nabla f(x_{t})+\sqrt{2h}\zeta_{t}
@@ -366,6 +366,48 @@ with
 
 , this discrete process converges to the continuous one.
  We choose to discuss the continuous version here only for simplicity.
+\end_layout
+
+\begin_layout Standard
+A more general form of an SDE is 
+\begin_inset Formula 
+\[
+dx_{t}=\mu(x_{t},t)dt+\sigma(x_{t},t)dW_{t}
+\]
+
+\end_inset
+
+ where 
+\begin_inset Formula $x_{t}\in\R^{n},\mu(x_{t},t)\in\Rn$
+\end_inset
+
+ is a time-varying vector field and 
+\begin_inset Formula $\sigma(x_{t},t)\in\R^{n\times m}$
+\end_inset
+
+ is a time-varying linear transformation.
+ The simplest such process is the Wiener process: 
+\begin_inset Formula $dx_{t}=dW_{t}$
+\end_inset
+
+ which finds many applications in applied mathematics, finance, biology
+ and physics.
+ Another useful process is the Ornstein-Ulhenbeck Process: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+dx_{t}=-ax_{t}dt+\sigma dW_{t}
+\]
+
+\end_inset
+
+This represents a particle moving in a fluid, the first term being the force
+ of friction exerted on the particle and the second term being the movement
+ caused by other particles colliding in our particle, which is modeled using
+ Brownian motion.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -698,6 +740,113 @@ We can verify that
  is a solution.
 \end_layout
 
+\begin_layout Exercise
+Consider the equation 
+\begin_inset Formula 
+\[
+\frac{d}{dt}p_{t}(x)=\frac{1}{2}\frac{d^{2}}{dx^{2}}p_{t}(x)
+\]
+
+\end_inset
+
+ for 
+\begin_inset Formula $x\in\R,t>0$
+\end_inset
+
+.
+ Show that the density of 
+\begin_inset Formula $\mathcal{N}(0,t)$
+\end_inset
+
+, i.e.
+ 
+\begin_inset Formula 
+\[
+\phi_{t}(x)=\frac{1}{\sqrt{2\pi t}}\exp\left(-\frac{x^{2}}{2t}\right)
+\]
+
+\end_inset
+
+ satisfies this equation.
+ Then generalize the process to 
+\begin_inset Formula $\R^{n}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Consider the SDE with 
+\begin_inset Formula $X_{t}\in\R^{n}$
+\end_inset
+
+: 
+\begin_inset Formula 
+\[
+dX_{t}=-X_{t}dt+\sqrt{2}dW_{t}.
+\]
+
+\end_inset
+
+Use the Fokker-Planck equation to derive a corresponding stationary density.
+ Use It
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+^{o}
+\end_layout
+
+\end_inset
+
+'s lemma to derive 
+\begin_inset Formula $\E(\norm{X_{t}}_{4}^{4})$
+\end_inset
+
+.
+ (Hint: Take expectation on both sides of It
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+^{o}
+\end_layout
+
+\end_inset
+
+'s lemma for appropriate 
+\begin_inset Formula $f(X_{t})$
+\end_inset
+
+, and use 
+\begin_inset Formula $\E df(X_{t})=d\E f(X_{t})$
+\end_inset
+
+ for continuous 
+\begin_inset Formula $f$
+\end_inset
+
+ and 
+\begin_inset Formula $df$
+\end_inset
+
+).
+ 
+\end_layout
+
 \begin_layout Paragraph
 Convergence via Coupling.
 \end_layout
@@ -710,7 +859,15 @@ Next we turn to the rate of convergence, which will also prove uniqueness
 \end_inset
 
  is strongly convex.
- The proof is via the classical coupling technique (cite: Aldous).
+ The proof is via the classical coupling technique 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "aldous1995reversible"
+literal "false"
+
+\end_inset
+
+.
  Briefly, two distributions are compared via some probabilistic distance.
  For example, the total variation distance can be bounded by the probability
  that random variables from the two distributions are not identical, under
@@ -843,6 +1000,38 @@ Integrating both sides from
 \end_inset
 
 which proves the result.
+\end_layout
+
+\begin_layout Exercise
+Give an example of a function 
+\begin_inset Formula $f$
+\end_inset
+
+ for which the density proportional to 
+\begin_inset Formula $e^{-f}$
+\end_inset
+
+ is 
+\emph on
+not
+\emph default
+ stationary for the following discretized Langevin algorithm 
+\begin_inset Formula 
+\[
+x^{(k+1)}=x^{(k)}-\epsilon\nabla f(x^{(k)})+\sqrt{2\epsilon}Z^{(k)}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $Z^{(k)}\sim\mathcal{N}(0,1)$
+\end_inset
+
+ are independent and the distribution of 
+\begin_inset Formula $x^{(0)}$
+\end_inset
+
+ is Gaussian.
 \end_layout
 
 \begin_layout Section
@@ -1054,7 +1243,7 @@ where we used integration by parts at the end.
 
 \end_inset
 
-Since we are interested only inthe vector fields that generate minimum movement
+Since we are interested only in vector fields that generate minimum movement
  in Wasserstein distance, we consider the optimization problem
 \begin_inset Formula 
 \[

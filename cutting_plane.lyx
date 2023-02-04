@@ -217,11 +217,11 @@ Finding a point in a convex set
 \end_inset
 
 Given 
-\begin_inset Formula $\epsilon>0$
+\begin_inset Formula $\epsilon>0,R>0,$
 \end_inset
 
  and a convex set 
-\begin_inset Formula $K\subset\Rn$
+\begin_inset Formula $K\subseteq RB^{n}$
 \end_inset
 
  specified by a separation oracle, find a point 
@@ -3095,6 +3095,80 @@ Next consider the subset
 
 \end_layout
 
+\begin_layout Standard
+To conclude this section, we note that the number of separation oracle queries
+ made by the center-of-gravity cutting plane method is asymptotically the
+ best possible.
+\end_layout
+
+\begin_layout Theorem
+Any algorithm that solves Problem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "prob:abstract_convex_problem"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ using a separation oracle needs to make 
+\begin_inset Formula $\Omega(n\log(R/\epsilon))$
+\end_inset
+
+ queries to the oracle.
+\end_layout
+
+\begin_layout Proof
+Suppose 
+\begin_inset Formula $K$
+\end_inset
+
+ is a cube of side length 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ contained in the cube 
+\begin_inset Formula $[0,R]^{n}$
+\end_inset
+
+.
+ Imagine a tiling of the big cube by cubes of side length 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+.
+ Consider the oracle that always returns an axis parallel halfspace that
+ does not cut any little cube and contains at least half of the volume of
+ the 
+\begin_inset Quotes eld
+\end_inset
+
+remaining
+\begin_inset Quotes erd
+\end_inset
+
+ region, i.e., the set given by the original cube intersected with all halfspaces
+ given by the oracle so far.
+ This is always possible since for any halfspace either the halfspace or
+ its complement will contain at least half the volume of any set.
+ Thus each query at best halves the remaining volume.
+ To solve the problem, the algorithm needs to cut down to a set of volume
+ 
+\begin_inset Formula $\epsilon^{n}$
+\end_inset
+
+ starting from a set of volume 
+\begin_inset Formula $R^{n}.$
+\end_inset
+
+ Thus it needs at least 
+\begin_inset Formula $n\log_{2}(R/\epsilon)$
+\end_inset
+
+ queries.
+\end_layout
+
 \begin_layout Section*
 Discussion
 \end_layout
@@ -3115,15 +3189,6 @@ literal "false"
  The method generalizes to certain noisy computation models, e.g., when the
  oracle reports a function value that is within a bounded additive error,
  i.e., a noisy function oracle.
-\end_layout
-
-\begin_layout Standard
-We will also see that the iteration complexity of the center of gravity
- method, 
-\begin_inset Formula $O(n)$
-\end_inset
-
- iterations, is asymptotically optimal.
 \end_layout
 
 \end_body
