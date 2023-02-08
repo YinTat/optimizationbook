@@ -231,7 +231,7 @@ Let
 \end_inset
 
  is greater than 
-\begin_inset Formula $r$
+\begin_inset Formula $r/2$
 \end_inset
 
 .
@@ -574,9 +574,14 @@ noprefix "false"
 \begin_inset Formula $r$
 \end_inset
 
-, when the algorithm stops, it must be an axis-parallel cuboid.
+, when the algorithm stops, it must be an axis-parallel cuboid with each
+ side of length in the range 
+\begin_inset Formula $[r/2(n+1),r/2]$
+\end_inset
+
+.
  So the final volume is at least 
-\begin_inset Formula $(r/2n)^{n}.$
+\begin_inset Formula $(r/2(n+1))^{n}.$
 \end_inset
 
  The initial volume is at most 
@@ -592,10 +597,6 @@ noprefix "false"
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Proof
 In each iteration, by Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref

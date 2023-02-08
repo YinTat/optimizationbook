@@ -322,7 +322,7 @@ Given an approximately convex function
 \end_inset
 
 ? The current fastest algorithm takes 
-\begin_inset Formula $O(n^{4.5}\log^{O(1)}(n/\varepsilon))$
+\begin_inset Formula $O(n^{4}\log^{O(1)}(n/\varepsilon))$
 \end_inset
 
  calls to the noisy EVAL oracle for 

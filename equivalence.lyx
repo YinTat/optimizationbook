@@ -2246,7 +2246,7 @@ By an approximate separation oracle we mean that either the queried point
  defined as follows: 
 \begin_inset Formula 
 \[
-h_{x}(y)=-\max\left\{ \alpha:d+\alpha x\in K\right\} .
+h_{x}(y)=-\max\left\{ \alpha:y+\alpha x\in K\right\} .
 \]
 
 \end_inset
