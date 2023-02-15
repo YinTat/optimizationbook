@@ -176,7 +176,7 @@ Without the restriction to the nonnegative orthant, the target density is
 
  is convex, can be solved in polynomial time.
  It is remarkable that the polynomial-time frontier for both optimization
- and convexity is essentially determined by convexity.
+ and sampling is essentially determined by convexity.
 \end_layout
 
 \begin_layout Standard
@@ -207,7 +207,12 @@ Here we study a simple stochastic process for generating samples from a
 \end_inset
 
 .
- It can also be viewed as a stochastic version of gradient descent.
+ As we will see later in this chapter, it can also be viewed as a stochastic
+ version of gradient descent 
+\emph on
+in the space of measures
+\emph default
+.
  While gradient descent corresponds to an ordinary differential equation
  (ODE), stochastic gradient descent corresponds to a stochastic differential
  equation (SDE).
@@ -346,7 +351,7 @@ Here
  
 \begin_inset Formula 
 \[
-x_{t+h}=x_{t}-h\nabla f(x_{t})+\sqrt{2h}\zeta_{t}
+x_{t+1}=x_{t}-h\nabla f(x_{t})+\sqrt{2h}\zeta_{t}
 \]
 
 \end_inset
@@ -365,7 +370,7 @@ with
 \end_inset
 
 , this discrete process converges to the continuous one.
- We choose to discuss the continuous version here only for simplicity.
+ We discuss the continuous version first.
 \end_layout
 
 \begin_layout Standard
@@ -468,9 +473,10 @@ For any process
 
 , we have that
 \begin_inset Formula 
-\[
-df(x_{t})=\nabla f(x_{t})^{\top}dx_{t}+\frac{1}{2}(dx_{t})^{\top}\nabla^{2}f(x_{t})(dx_{t})=\nabla f(x_{t})^{\top}\mu(x_{t})dt+\nabla f(x_{t})^{\top}\sigma(x_{t})dW_{t}+\frac{1}{2}\tr(\sigma(x_{t})^{\top}\nabla^{2}f(x_{t})\sigma(x_{t}))dt.
-\]
+\begin{align*}
+df(x_{t}) & =\nabla f(x_{t})^{\top}dx_{t}+\frac{1}{2}(dx_{t})^{\top}\nabla^{2}f(x_{t})(dx_{t})\\
+ & =\nabla f(x_{t})^{\top}\mu(x_{t})dt+\nabla f(x_{t})^{\top}\sigma(x_{t})dW_{t}+\frac{1}{2}\tr(\sigma(x_{t})^{\top}\nabla^{2}f(x_{t})\sigma(x_{t}))dt.
+\end{align*}
 
 \end_inset
 
@@ -487,8 +493,8 @@ The usual chain rule comes from using Taylor expansion and taking a limit,
 
 \end_inset
 
-and only has the first term survies, as the second and later terms goes
- to zero.
+and only the first term survives, as the second and later terms goes to
+ zero.
  But with the stochastic component, roughly speaking, 
 \begin_inset Formula $(dW_{t})^{2}=dt$
 \end_inset
@@ -600,7 +606,7 @@ Taking derivatives on the both sides with respect to
 \begin_inset Formula $t$
 \end_inset
 
- and using It
+, using It
 \begin_inset ERT
 status open
 
@@ -620,7 +626,11 @@ reference "lem:itos"
 
 \end_inset
 
-), we have that
+), and noting that 
+\begin_inset Formula $\E dW_{t}=0$
+\end_inset
+
+, we have that
 \begin_inset Formula 
 \begin{align*}
 \int\phi(x)dp_{t}(x)dx & =\E\left(\nabla\phi(x_{t})^{\top}\mu(x_{t})dt+\nabla\phi(x_{t})^{\top}\sigma(x_{t})dW_{t}+\frac{1}{2}\tr(\sigma(x_{t})^{\top}\nabla^{2}\phi(x_{t})\sigma(x_{t}))dt\right)\\
@@ -672,7 +682,7 @@ for any smooth
 \end_inset
 
 .
- Therefore, we have the conclusion of the lemma.
+ Therefore, we have the conclusion of the theorem.
 \end_layout
 
 \begin_layout Proof
@@ -727,9 +737,11 @@ Now since
 
  is stationary the LHS is zero and we can rewrite the above as
 \begin_inset Formula 
-\[
-0=\sum_{i}\frac{\partial}{\partial x_{i}}\left(p_{t}(x)\left(\frac{\partial}{\partial x_{i}}\left[\log\frac{p_{t}(x)}{e^{-f(x)}}\right]\right)\right).
-\]
+\begin{align*}
+\frac{dp_{t}}{dt}=0 & =\sum_{i}\frac{\partial}{\partial x_{i}}\left(p_{t}(x)\frac{\partial f(x)}{\partial x_{i}}+\frac{\partial}{\partial x_{i}}p_{t}(x)\right)\\
+ & =\sum_{i}\frac{\partial}{\partial x_{i}}\left(p_{t}(x)\left(\frac{\partial f(x)}{\partial x_{i}}+\frac{\partial}{\partial x_{i}}\log p_{t}(x)\right)\right)\\
+ & =\sum_{i}\frac{\partial}{\partial x_{i}}\left(p_{t}(x)\left(\frac{\partial}{\partial x_{i}}\left[\log\frac{p_{t}(x)}{e^{-f(x)}}\right]\right)\right).
+\end{align*}
 
 \end_inset
 
@@ -868,16 +880,28 @@ literal "false"
 \end_inset
 
 .
- Briefly, two distributions are compared via some probabilistic distance.
- For example, the total variation distance can be bounded by the probability
- that random variables from the two distributions are not identical, under
- any matching (assignment) between the two distributions.
- We then couple two copies 
+ 
+\end_layout
+
+\begin_layout Standard
+Our goal is to bound the rate at which the distribution of the current point
+ approaches the stationary distribution, in some chosen measure of distance
+ between distributions (for example, the TV distance).
+ To do this, in the coupling technique, we consider two points which are
+ both following the random process.
+ One of them is already in the stationary distribution, and therefore will
+ stay there.
+ The other is our point.
+ We will show that there is a coupling of the two distributions, i.e., a joint
+ distribution over the two points, whose marginals are identical to the
+ single point processes, such that the expected distance between the two
+ points decreases at a certain rate.
+ More formally, we couple two copies 
 \begin_inset Formula $x_{t},y_{t}$
 \end_inset
 
- of the process with different starting points (the coupling is a joint
- distribution 
+ of the random process with different starting points (the coupling is a
+ joint distribution 
 \begin_inset Formula $D(x_{t},y_{t})$
 \end_inset
 
@@ -887,9 +911,40 @@ literal "false"
 
  is exactly the process) and show that their distributions get closer over
  time.
- While the challenge is usually to find a good coupling, in the present
- case, the simplest identity coupling works (for the continuous time convergence
+ 
+\end_layout
+
+\begin_layout Standard
+While the challenge usually is to find a good coupling, in the present case,
+ the simple identity coupling (i.e., the same Wiener process is used for both
+ 
+\begin_inset Formula $x_{t}$
+\end_inset
+
+ and 
+\begin_inset Formula $y_{t}$
+\end_inset
+
+) works well.
+ The distance measure we will use here is the Wasserstein distance (in Euclidean
+ norm, see Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "defn:The-Wassestein--distance"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
 ).
+ 
+\end_layout
+
+\begin_layout Exercise
+Show that for two distributions with the same finite support, computing
+ their Wasserstein distance reduces to a bipartite matching problem.
+ 
 \end_layout
 
 \begin_layout Lemma
@@ -906,7 +961,11 @@ Let
 \end_inset
 
 .
- Then, there is a coupling between 
+ Then, there is a coupling 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ between 
 \begin_inset Formula $x_{t}$
 \end_inset
 
@@ -917,7 +976,7 @@ Let
  s.t.
 \begin_inset Formula 
 \[
-\E\norm{x_{t}-y_{t}}^{2}\le e^{-2\mu t}\norm{x_{0}-y_{0}}^{2}.
+\E_{x_{t},y_{t}\sim\gamma}\norm{x_{t}-y_{t}}^{2}\le e^{-2\mu t}\norm{x_{0}-y_{0}}^{2}.
 \]
 
 \end_inset
@@ -926,11 +985,20 @@ Let
 \end_layout
 
 \begin_layout Proof
-From the definition of LD, and by using the same Gaussian 
+From the definition of LD, and by using the identity coupling, i.e., the same
+ Gaussian 
 \begin_inset Formula $dW_{t}$
 \end_inset
 
- for both process, we have that 
+ for both processes 
+\begin_inset Formula $x_{t}$
+\end_inset
+
+ and 
+\begin_inset Formula $y_{t}$
+\end_inset
+
+, we have that 
 \begin_inset Formula 
 \[
 \frac{d}{dt}\left(x_{t}-y_{t}\right)=\nabla f(y_{t})-\nabla f(x_{t}).
@@ -977,9 +1045,10 @@ Therefore,
 
  Hence, 
 \begin_inset Formula 
-\[
-\frac{d}{dt}\log\|x_{t}-y_{t}\|^{2}=\frac{\frac{d}{dt}\|x_{t}-y_{t}\|^{2}}{\|x_{t}-y_{t}\|^{2}}\leq-2\mu.
-\]
+\begin{align*}
+\frac{d}{dt}\log\|x_{t}-y_{t}\|^{2} & =\frac{\frac{d}{dt}\|x_{t}-y_{t}\|^{2}}{\|x_{t}-y_{t}\|^{2}}\\
+ & \leq-2\mu.
+\end{align*}
 
 \end_inset
 
@@ -994,7 +1063,7 @@ Integrating both sides from
 , we get 
 \begin_inset Formula 
 \[
-\log\|x_{t}-y_{t}\|^{2}\leq\log\|x_{0}-y_{0}\|^{2}-2\mu t
+\log\|x_{t}-y_{t}\|^{2}-\log\|x_{0}-y_{0}\|^{2}\le-2\mu t
 \]
 
 \end_inset
@@ -1122,6 +1191,12 @@ We let
 \end_layout
 
 \begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:local-norm"
+
+\end_inset
+
 For any 
 \begin_inset Formula $p\in P_{2}(\Rn)$
 \end_inset
@@ -1143,7 +1218,7 @@ For any
 \end_inset
 
 .
- Furthermore, the length of 
+ Furthermore, the local norm of 
 \begin_inset Formula $v$
 \end_inset
 
@@ -1243,8 +1318,8 @@ where we used integration by parts at the end.
 
 \end_inset
 
-Since we are interested only in vector fields that generate minimum movement
- in Wasserstein distance, we consider the optimization problem
+Since we are interested only in vector fields that generate the minimum
+ movement in Wasserstein distance, we consider the optimization problem
 \begin_inset Formula 
 \[
 \min_{-\nabla\cdot(pc)=v}\frac{1}{2}\int p(x)\|c(x)\|^{2}dx
@@ -1279,7 +1354,7 @@ where we can think
 
 \end_inset
 
-Now, we note that the problem is a pointwise optimization problem with the
+Now, we note that the problem is a pointwise optimization problem whose
  minimizer is given by
 \begin_inset Formula 
 \[
@@ -1288,7 +1363,7 @@ c(x)=-\nabla\lambda(x).
 
 \end_inset
 
-This proves that any vector fields that generate minimum movement in Wasserstein
+This proves that any vector field that generates minimum movement in Wasserstein
  distance is a gradient field.
  Also, we have that 
 \begin_inset Formula $v(x)=\nabla\cdot(p(x)\nabla\lambda(x)).$
@@ -1338,7 +1413,18 @@ As we discussed in the gradient descent section, one can use norms other
 \end_inset
 
  norm.
- For the Wasserstein space, we should use the local norm.
+ For the Wasserstein space, we should use the local norm as given in Lemma
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:local-norm"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Theorem
@@ -1528,7 +1614,7 @@ Fix a density
 , 
 \begin_inset Formula 
 \[
-2\int\norm{\nabla g}^{2}\,d\nu\ge\alpha\int g(x)^{2}\log g(x)^{2}\ d\nu
+\frac{1}{2}\int\norm{\nabla g}^{2}\,d\nu\ge\alpha\int g(x)^{2}\log g(x)^{2}\ d\nu
 \]
 
 \end_inset
@@ -1682,7 +1768,7 @@ reference "sec:LD_GD"
  space of probability measures under the Wasserstein metric, where the function
  being minimized is the KL-divergence of the current density from the target
  stationary density.
- For more on this view, see 
+ For more on this view of sampling as optimization over measures, see 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "wibisono2018sampling"
@@ -1691,6 +1777,7 @@ literal "true"
 \end_inset
 
 .
+ 
 \end_layout
 
 \end_body

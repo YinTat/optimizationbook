@@ -272,9 +272,24 @@ The theorem says that if we sample according to
  Instead, we will have to go through a sequence of overlapping distributions,
  starting with one that is easy to sample and ending with a distribution
  that is focused close to the minimum.
- The complexity of sampling is polynomial in the dimension and in a suitable
- notion of probabilistic distance between the starting distribution and
- the target distribution.
+ This method is known as 
+\emph on
+simulated annearling 
+\emph default
+and is the subject of Chapter 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:Annealing"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The complexity of sampling is polynomial in the dimension and logarithmic
+ in a suitable notion of probabilistic distance between the starting distributio
+n and the target distribution.
  The sampling algorithm only uses a membership (EVAL) oracle.
 \end_layout
 

@@ -238,6 +238,32 @@ Notation chart.
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Probability measure.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Manifold, tangent space.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section*
 Functions
 \end_layout
@@ -431,7 +457,15 @@ For any matrix
 \end_inset
 
 .
- 
+ Note that 
+\begin_inset Formula $x^{\top}Ax=\tr(Axx^{\top})$
+\end_inset
+
+ and in general, 
+\begin_inset Formula $\tr(AB)=\tr(BA)$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -628,6 +662,67 @@ nu
 \end_layout
 
 \begin_layout Definition
+\begin_inset CommandInset label
+LatexCommand label
+name "defn:The-Wassestein--distance"
+
+\end_inset
+
+The Wassestein 
+\begin_inset Formula $p$
+\end_inset
+
+-distance between two probability measures 
+\begin_inset Formula $\rho,\nu$
+\end_inset
+
+ over a metric space 
+\begin_inset Formula $M$
+\end_inset
+
+ is defined as 
+\begin_inset Formula 
+\[
+W_{p}(\rho,\nu)=\left(\inf_{\gamma\in\Gamma(\rho,\nu)}\E_{x,y\sim\gamma}\left(d(x,y)^{p}\right)\right)^{1/p}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\Gamma(\rho,\nu)$
+\end_inset
+
+ is the set of all couplings of 
+\begin_inset Formula $\rho$
+\end_inset
+
+ and 
+\begin_inset Formula $\nu$
+\end_inset
+
+ (joint probability measures with support 
+\begin_inset Formula $M\times M$
+\end_inset
+
+ whose marginals are 
+\begin_inset Formula $\rho$
+\end_inset
+
+ and 
+\begin_inset Formula $\nu$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
 The 
 \emph on
 marginal
@@ -671,6 +766,41 @@ Note that the marginal is a convolution of the density with the indicator
 
 \begin_layout Section*
 Geometry
+\end_layout
+
+\begin_layout Definition
+We denote the unit Euclidean ball as 
+\begin_inset Formula $B^{n}=\left\{ x:\norm x_{2}\le1\right\} .$
+\end_inset
+
+ More generally, we define the 
+\begin_inset Formula $\ell_{p}$
+\end_inset
+
+-norm ball of radius 
+\begin_inset Formula $r$
+\end_inset
+
+ centered at 
+\begin_inset Formula $z$
+\end_inset
+
+ as 
+\begin_inset Formula $B_{p}^{n}(z,r)=\left\{ x:\norm{x-z}_{p}\le r\right\} $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
 \end_layout
 
 \begin_layout Definition

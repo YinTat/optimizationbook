@@ -554,7 +554,14 @@ noprefix "false"
 \end_inset
 
 ), the algorithm stops cutting along that axis.
- Thus, by Lemma 
+ So, just before the last cut along any axis, the width in that direction
+ is at least 
+\begin_inset Formula $r/2$
+\end_inset
+
+.
+ Then, we use the center of gravity to cut.
+ By Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:width"
@@ -564,7 +571,8 @@ noprefix "false"
 
 \end_inset
 
-, the directional width along every axis is at least 
+, the directional width along every axis of the surviving set is at least
+ 
 \begin_inset Formula $r/2(n+1)$
 \end_inset
 

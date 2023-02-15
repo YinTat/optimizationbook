@@ -25,7 +25,7 @@
 \use_dash_ligatures true
 \graphics default
 \default_output_format default
-\output_sync 1
+\output_sync 0
 \bibtex_command default
 \index_command default
 \paperfontsize default
@@ -181,13 +181,13 @@ cutting plane method
 \end_inset
 
 , the oracle finds a vector 
-\begin_inset Formula $v(x)\in\R^{n}$
+\begin_inset Formula $g(x)\in\R^{n}$
 \end_inset
 
  such that
 \begin_inset Formula 
 \[
-v(x)^{\top}(y-x)\leq0\text{ for all }y\in K.
+g(x)^{\top}(y-x)\leq0\text{ for all }y\in K.
 \]
 
 \end_inset
@@ -221,7 +221,7 @@ Given
 \end_inset
 
  and a convex set 
-\begin_inset Formula $K\subseteq RB^{n}$
+\begin_inset Formula $K\subseteq R\cdot B^{n}$
 \end_inset
 
  specified by a separation oracle, find a point 
@@ -239,7 +239,7 @@ Given
 
 \begin_layout Remark*
 To minimize a convex function, we set 
-\begin_inset Formula $v(x)=\nabla f(x)$
+\begin_inset Formula $g(x)=\nabla f(x)$
 \end_inset
 
  and 
@@ -251,7 +251,7 @@ To minimize a convex function, we set
 \end_inset
 
 .
- In chapter 
+ In Section 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:vol2val"
@@ -288,12 +288,12 @@ In this framework, we maintain a convex set
 \end_inset
 
  and query the oracle for 
-\begin_inset Formula $v(x^{(k)})$
+\begin_inset Formula $g(x^{(k)})$
 \end_inset
 
  .
  The guarantee for 
-\begin_inset Formula $v(.)$
+\begin_inset Formula $g(.)$
 \end_inset
 
  implies that 
@@ -491,7 +491,7 @@ Return
 \begin_inset Formula $x^{(k)}$
 \end_inset
 
-.
+
 \begin_inset ERT
 status open
 
@@ -1152,6 +1152,12 @@ Volumetric center
 \begin_layout Plain Layout
 
 \size footnotesize
+\begin_inset CommandInset label
+LatexCommand label
+name "table:cpm"
+
+\end_inset
+
 Different Cutting Plane Methods.
  Omitted polylogarithmic terms.
  The number of iterations follows from the rate.
@@ -1173,10 +1179,10 @@ Ellipsoid Method
 
 \begin_layout Standard
 We start by explaining the Ellipsoid method.
- We maintain an ellipsoid
+ The algorithm maintains an ellipsoid
 \begin_inset Formula 
 \[
-E^{(k)}\defeq\{x\in\Rn:\ (x-x^{(k)})^{\top}\left(A^{(k)}\right)^{-1}(x-x^{(k)})\leq1\}
+E^{(k)}\defeq\{y\in\Rn:\ (y-x^{(k)})^{\top}\left(A^{(k)}\right)^{-1}(y-x^{(k)})\leq1\}
 \]
 
 \end_inset
@@ -1185,7 +1191,12 @@ that contains
 \begin_inset Formula $K$
 \end_inset
 
-.
+ and becomes smaller in volume in each step.
+ Note that for this to be an ellipsoid the matrix 
+\begin_inset Formula $A^{(k)}$
+\end_inset
+
+ must be symmetric PSD.
  After we compute 
 \begin_inset Formula $g(x^{(k)})$
 \end_inset
@@ -1214,7 +1225,7 @@ reference "eq:Hk"
 \begin_inset Formula $E^{(k)}$
 \end_inset
 
- decreases by 
+ decreases by a factor of 
 \begin_inset Formula $1-\Theta(\frac{1}{n})$
 \end_inset
 
@@ -1300,7 +1311,7 @@ SetAlgoLined
 Input:
 \series default
  Initial ellipsoid 
-\begin_inset Formula $E^{(0)}=\{x\in\Rn:\ (x-x^{(0)})^{\top}\left(A^{(0)}\right)^{-1}(x-x^{(0)})\leq1\}$
+\begin_inset Formula $E^{(0)}=\{y\in\Rn:\ (y-x^{(0)})^{\top}\left(A^{(0)}\right)^{-1}(y-x^{(0)})\leq1\}$
 \end_inset
 
 .
@@ -1362,7 +1373,7 @@ small enough
 \begin_inset Quotes erd
 \end_inset
 
-
+ or Oracle says YES
 \begin_inset ERT
 status open
 
@@ -1379,7 +1390,7 @@ Return
 \begin_inset Formula $x^{(k)}$
 \end_inset
 
-.
+
 \begin_inset ERT
 status open
 
@@ -1394,14 +1405,14 @@ status open
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $x^{(k+1)}=x^{(k)}-\frac{1}{n+1}\frac{A^{(k)}v(x^{(k)})}{\sqrt{v(x^{(k)})^{\top}A^{(k)}v(x^{(k)})}}$
+\begin_inset Formula $x^{(k+1)}=x^{(k)}-\frac{1}{n+1}\frac{A^{(k)}g(x^{(k)})}{\sqrt{g(x^{(k)})^{\top}A^{(k)}g(x^{(k)})}}$
 \end_inset
 
 .
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $A^{(k+1)}=\frac{n^{2}}{n^{2}-1}\left(A^{(k)}-\frac{2}{n+1}\frac{A^{(k)}v(x^{(k)})v(x^{(k)})^{\top}A^{(k)}}{v(x^{(k)})^{\top}A^{(k)}v(x^{(k)})}\right)$
+\begin_inset Formula $A^{(k+1)}=\frac{n^{2}}{n^{2}-1}\left(A^{(k)}-\frac{2}{n+1}\frac{A^{(k)}g(x^{(k)})g(x^{(k)})^{\top}A^{(k)}}{g(x^{(k)})^{\top}A^{(k)}g(x^{(k)})}\right)$
 \end_inset
 
 .
@@ -1437,6 +1448,18 @@ end{algorithm2e}
 
 \end_layout
 
+\begin_layout Remark
+We usually obtain 
+\begin_inset Formula $g(x)$
+\end_inset
+
+ from a 
+\emph on
+separation oracle
+\emph default
+.
+\end_layout
+
 \begin_layout Lemma
 \begin_inset CommandInset label
 LatexCommand label
@@ -1452,14 +1475,14 @@ reference "alg:ellipsoid_method"
 \end_inset
 
 ), we have 
-\begin_inset Formula $\vol E^{(k+1)}<e^{-\frac{1}{2n+2}}\vol E^{(k)}$
+\begin_inset Formula 
+\[
+\vol E^{(k+1)}<e^{-\frac{1}{2n+2}}\vol E^{(k)}\quad\mbox{and}\quad E^{(k)}\cap H^{(k)}\subset E^{(k+1)}.
+\]
+
 \end_inset
 
- and 
-\begin_inset Formula $E^{(k)}\cap H^{(k)}\subset E^{(k+1)}$
-\end_inset
 
-.
 \end_layout
 
 \begin_layout Remark
@@ -1468,8 +1491,16 @@ Note that the proof below also shows that
 \end_inset
 
 .
- Therefore, the ellipsoid method does not run faster for nice functions,
- making it provably slow in practice.
+ Therefore, the ellipsoid method does not run faster even for any function,
+ e.g., a linear function, making it provably 
+\begin_inset Quotes eld
+\end_inset
+
+slow
+\begin_inset Quotes erd
+\end_inset
+
+ in practice.
 \end_layout
 
 \begin_layout Proof
@@ -1477,7 +1508,8 @@ Note that the ratio of
 \begin_inset Formula $\vol E^{(k+1)}/\vol E^{(k)}$
 \end_inset
 
- does not change under any affine transformation.
+ does not change under any affine transformation, and neither does set containme
+nt.
  Therefore, we can do a transformation so that 
 \begin_inset Formula $A^{(k)}=I$
 \end_inset
@@ -1488,6 +1520,15 @@ Note that the ratio of
 
  and 
 \begin_inset Formula $v(x^{(k)})=e_{1}$
+\end_inset
+
+.
+ Therefore 
+\begin_inset Formula $H^{(k)}$
+\end_inset
+
+ is simply the halfspace 
+\begin_inset Formula $\{x:x_{1}\le0\}$
 \end_inset
 
 .
@@ -1632,6 +1673,18 @@ Show that the ellipsoid
 .
 \end_layout
 
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Suppose that we used a box instead of an ellipsoid.
+ Could we ensure progress in each iteration? What about a simplex?
+\end_layout
+
 \begin_layout Section
 From Volume to Function Value
 \begin_inset CommandInset label
@@ -1693,7 +1746,7 @@ reference "alg:cutting_plane"
 \end_layout
 
 \begin_layout Standard
-This in turns implies that we can minimize any convex function with 
+This implies that we can minimize any convex function with 
 \begin_inset Formula $\varepsilon$
 \end_inset
 
@@ -1702,9 +1755,23 @@ This in turns implies that we can minimize any convex function with
 \end_inset
 
  iterations.
- To make the statement more general, we note that ellipsoid method can be
- used for non-differentiable functions.
- 
+ To make the statement more general, we note that the Ellipsoid method can
+ be used for non-differentiable functions.
+ In the next theorem, we allow for a general 
+\begin_inset Quotes eld
+\end_inset
+
+progress
+\begin_inset Quotes erd
+\end_inset
+
+ function and an arbitrary support 
+\begin_inset Formula $\Omega$
+\end_inset
+
+.
+ The convergence argument works for any monotonic, scale-and-shift-invariant
+ progress measure.
 \end_layout
 
 \begin_layout Theorem
@@ -1739,7 +1806,7 @@ reference "alg:cutting_plane"
 \begin_inset Formula $\Rn$
 \end_inset
 
- to non-negative numbers satisfying
+ to non-negative real numbers satisfying
 \end_layout
 
 \begin_deeper
@@ -1768,7 +1835,7 @@ reference "alg:cutting_plane"
 \end_layout
 
 \begin_layout Enumerate
-(Monotonic) For any set 
+(Monotonicity) For any set 
 \begin_inset Formula $T\subset S$
 \end_inset
 
@@ -1785,7 +1852,11 @@ Then, for any set
 \begin_inset Formula $\Omega\subseteq E^{(0)}$
 \end_inset
 
-, we have that
+, with 
+\begin_inset Formula $\mathcal{V}(\Omega)>0$
+\end_inset
+
+, we have
 \begin_inset Formula 
 \[
 \min_{i=1,2,\cdots k}f(x^{(i)})-\min_{y\in\Omega}f(y)\leq\frac{\mathcal{V}(E^{(k)})}{\mathcal{V}(\Omega)}\cdot\left(\max_{z\in\Omega}f(z)-\min_{x\in\Omega}f(x)\right)\enspace.
@@ -1832,6 +1903,9 @@ reference "lem:ellipsoid_vol_decrease"
 \end_inset
 
  to satisfy linearity.
+ Also note that we only guarantee that one of the previous query points
+ has a small function value; of course we can simply use the point with
+ minimum function value.
 \end_layout
 
 \begin_layout Proof
@@ -1890,7 +1964,7 @@ Therefore,
 \end_inset
 
 .
- This means it is separated by the gradient at some step 
+ This means it is eliminated by the subgradient halfspace at some step 
 \begin_inset Formula $i\leq k$
 \end_inset
 
@@ -1898,7 +1972,11 @@ Therefore,
 \begin_inset Formula $i\le k$
 \end_inset
 
-, we have 
+, we have (denoting the subgradient by 
+\begin_inset Formula $\nabla f$
+\end_inset
+
+),
 \begin_inset Formula 
 \[
 \nabla f(x^{(i)})^{\top}(y-x^{(i)})>0.
@@ -2036,15 +2114,9 @@ Moreover, each iteration takes
 \end_layout
 
 \begin_layout Remark
-We usually obtain 
-\begin_inset Formula $g(x)$
-\end_inset
-
- from a 
-\emph on
-separation oracle
-\emph default
-.
+We note that for this rate of convergence (and hence the entire algorithm)
+ to be polynomial, we need some bound on the range of the function value.
+ This often follows from a bound on the diameter of the support.
 \end_layout
 
 \begin_layout Proof
@@ -2082,7 +2154,30 @@ reference "thm:conv_opt"
 \end_inset
 
 .
- Next, we note the proof of Theorem 
+ Using Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:conv_opt"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we have 
+\begin_inset Formula 
+\begin{align*}
+\min_{i=1,2,\cdots k}f(x^{(i)})-\min_{y\in\Omega}f(y) & \le\left(\frac{\vol(E^{(k)})}{\vol(\Omega)}\right)^{\frac{1}{n}}\left(\max_{z\in\Omega}f(z)-\min_{x\in\Omega}f(x)\right)\\
+ & \le\left(\frac{\vol(E^{(0)})}{\vol(\Omega)}\right)^{\frac{1}{n}}\exp\left(-\frac{k}{2n(n+1)}\right)\left(\max_{z\in\Omega}f(z)-\min_{x\in\Omega}f(x)\right).
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Next, we note the proof of Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:conv_opt"
@@ -2093,6 +2188,36 @@ reference "thm:conv_opt"
  higher value.
  Therefore, we can replace the gradient with the vector 
 \begin_inset Formula $g(x)$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+To bound the time per iteration, note that we make one query to the separation
+ oracle per iteration, and then compute the next Ellipsoid using the formulas
+ in Algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:ellipsoid_method"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The most time-consuming operation is multiplying an 
+\begin_inset Formula $n\times n$
+\end_inset
+
+ matrix by an 
+\begin_inset Formula $n$
+\end_inset
+
+-vector, which has complexity 
+\begin_inset Formula $O(n^{2})$
 \end_inset
 
 .
@@ -2111,7 +2236,7 @@ Given a linear program
 \end_inset
 
  where 
-\begin_inset Formula $P=\{x\text{ such that }Ax\geq b\}$
+\begin_inset Formula $P=\{x\text{: }Ax\geq b\}$
 \end_inset
 
 .
@@ -2160,7 +2285,7 @@ If the dimension
 \begin_inset Formula $n$
 \end_inset
 
- is constant, this algorithm is nearly linear time (linear to the number
+ is constant, this algorithm is nearly linear time (linear in the number
  of constraints)!
 \end_layout
 
@@ -2209,7 +2334,12 @@ For this function
 \end_layout
 
 \begin_layout Proof
-We can simply pick 
+In this case, we can set 
+\begin_inset Formula $\Omega=P$
+\end_inset
+
+.
+ We can simply pick 
 \begin_inset Formula $E^{(0)}$
 \end_inset
 
@@ -2245,6 +2375,15 @@ in time
 \begin_inset Formula $O(n^{2}(n^{2}+\nnz(A))\log(\frac{R}{r\varepsilon})).$
 \end_inset
 
+ Note that the complexity of computer a matrix-vector product 
+\begin_inset Formula $Ax$
+\end_inset
+
+ is 
+\begin_inset Formula $O(\nnz(A))$
+\end_inset
+
+.
  
 \end_layout
 
@@ -2313,27 +2452,44 @@ In the Ellipsoid method, we used an ellipsoid as the current set, and its
 \begin_layout Standard
 In the center of gravity method, we start with any bounded convex set containing
  a minimizer, e.g., a large enough cube, and the set maintained is simply
- the intersection of all halfspaces used so far.
+ the intersection of all halfspaces used so far with the original set.
  The query point will be the center of gravity (or barycenter) of the current
  set.
- The measure of progress will once again be the volume (or more precisely,
+ Recall that the center of gravity of a bounded set is the average of points
+ in the set, i.e., 
+\begin_inset Formula 
+\[
+z_{K}=\frac{1}{\vol(K)}\int_{K}x\:dx.
+\]
+
+\end_inset
+
+The measure of progress will once again be the volume (or more precisely,
  volume radius) of the current set.
 \end_layout
 
 \begin_layout Standard
 It is clear that the volume can only decrease in each iteration.
  But at what rate? The following classical theorem shows that the volume
- of the convex body decreases by at least a 
+ of the convex body decreases by a constant factor (no more than 
 \begin_inset Formula $1-\frac{1}{e}$
 \end_inset
 
- factor when using the exact center of gravity.
+) when using the exact center of gravity.
 \end_layout
 
 \begin_layout Theorem
 \begin_inset CommandInset label
 LatexCommand label
 name "thm:Grunbaum"
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Grunbaum1960"
+literal "false"
 
 \end_inset
 
@@ -2371,7 +2527,7 @@ Let
 \end_layout
 
 \begin_layout Standard
-Note that the RHS is at least 
+Note that the constant on the RHS is at least 
 \begin_inset Formula $1/e$
 \end_inset
 
@@ -2410,7 +2566,7 @@ f(\lambda x+(1-\lambda)y)\ge f(x)^{\lambda}f(y)^{1-\lambda}.
 
 \end_inset
 
-We refer to Sections 
+We refer to Section 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:Logconcave-functions"
@@ -2431,25 +2587,277 @@ isotropic
 \end_layout
 
 \begin_layout Standard
-The randomized center of gravity method defined as follows: Let 
-\begin_inset Formula $y^{1},\ldots,y^{N}$
+The randomized center of gravity method defined as follows: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm2e}[H]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\mathtt{RandomizedCenterOfGravity}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:randomized_cog"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetAlgoLined
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Input:
+\series default
+ Initial convex set 
+\begin_inset Formula $E^{(0)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+For{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $k=0,\cdots$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lIf{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $E^{(k)}$
+\end_inset
+
+ is 
+\begin_inset Quotes eld
+\end_inset
+
+small enough
+\begin_inset Quotes erd
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\backslash
+Return
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $x^{(k)}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $y^{(1)},\ldots,y^{(N)}$
 \end_inset
 
  be uniform random points from 
 \begin_inset Formula $E^{(k)}$
 \end_inset
 
- and define
+ and set
 \begin_inset Formula 
 \begin{align*}
-x^{(k)} & =\frac{1}{N}\sum_{i=1}^{N}y^{i},\\
+x^{(k)} & =\frac{1}{N}\sum_{i=1}^{N}y^{(i)}\\
 E^{(k+1)} & =E^{(k)}\cap H^{(k)}
 \end{align*}
 
 \end_inset
 
-To prove its convergence, we will use a robust version of the following
- classical theorem of Grunbaum.
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $H^{(k)}\defeq\{x\in\Rn:g(x^{(k)})^{\top}(x-x^{(k)})\leq0\}$
+\end_inset
+
+ obtained by querying 
+\begin_inset Formula $g(x^{(k)}).$
+\end_inset
+
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+The question of how to samply (nearly) uniform random points is an important
+ one that we will address in detail in this book.
+ Using sampling to approximate the center of gravity leads to the reduction
+ in the time per iteration from 
+\begin_inset Formula $n^{n}$
+\end_inset
+
+ to 
+\begin_inset Formula $n^{4}$
+\end_inset
+
+ (Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "table:cpm"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+To prove the convergence of the method, we will use a robust version of
+ Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:Grunbaum"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, which will give a similar result despite using only an approximate center
+ of gravity.
 \end_layout
 
 \begin_layout Theorem
@@ -2464,7 +2872,24 @@ name "thm:grun-1"
 status open
 
 \begin_layout Plain Layout
-Robust Grunbaum
+Robust Gr
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+unbaum
 \end_layout
 
 \end_inset
@@ -2482,7 +2907,7 @@ Let
 \end_inset
 
 .
- For any 
+ For any unit vector 
 \begin_inset Formula $\theta\in\R^{n}$
 \end_inset
 
@@ -2493,7 +2918,7 @@ Let
  we have
 \begin_inset Formula 
 \[
-\P_{x\sim p}(x^{\top}\theta\geq t)\geq\frac{1}{e}-t.
+\P_{x\sim p}(x^{\top}\theta\geq t)\geq\frac{1}{e}-\left|t\right|.
 \]
 
 \end_inset
@@ -2565,7 +2990,7 @@ reference "lem:marginal"
 , we have that
 \begin_inset Formula 
 \[
-\int_{-M}^{M}tP'(t)\,dt=0
+\int_{-M}^{M}t\frac{dP(t)}{dt}\,dt=0
 \]
 
 \end_inset
@@ -2592,10 +3017,14 @@ Integration by parts gives that
 \begin_inset Formula $P$
 \end_inset
 
- is logconcave, we have that
+ is logconcave, i.e., 
+\begin_inset Formula $-\log P(t)$
+\end_inset
+
+ is convex, and so we have,
 \begin_inset Formula 
 \[
--\log P(t)\geq-\log P(0)-\frac{P'(0)}{P(0)}t.
+-\log P(t)\geq-\log P(0)-\frac{\frac{d}{dt}P(0)}{P(0)}t.
 \]
 
 \end_inset
@@ -2703,7 +3132,24 @@ Give a short proof that
 \end_layout
 
 \begin_layout Standard
-Using the robust Grunbaum theorem 
+Using the robust Gr
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+unbaum theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:grun-1"
@@ -2721,7 +3167,7 @@ noprefix "false"
 
 \begin_layout Lemma
 Suppose 
-\begin_inset Formula $y^{1},\ldots,y^{N}$
+\begin_inset Formula $y^{(1)},\ldots,y^{(N)}$
 \end_inset
 
  are i.i.d.
@@ -2730,7 +3176,7 @@ Suppose
 \end_inset
 
  and 
-\begin_inset Formula $y=\frac{1}{N}\sum_{i=1}^{N}y^{i}$
+\begin_inset Formula $y=\frac{1}{N}\sum_{i=1}^{N}y^{(i)}$
 \end_inset
 
 .
@@ -2759,11 +3205,11 @@ Without loss of generality, we assume that
 \end_inset
 
  is in isotropic position, i.e., 
-\begin_inset Formula $\E_{K}(y^{i})=0$
+\begin_inset Formula $\E_{K}(y^{(i)})=0$
 \end_inset
 
  and 
-\begin_inset Formula $\E_{K}(y^{i}(y^{i})^{\top})=I$
+\begin_inset Formula $\E_{K}(y^{(i)}(y^{(i)})^{\top})=I$
 \end_inset
 
 .
@@ -2774,7 +3220,7 @@ Without loss of generality, we assume that
  and
 \begin_inset Formula 
 \begin{align*}
-\E\norm y^{2} & =\frac{1}{N}\E\norm{y^{i}}^{2}=\frac{n}{N}.
+\E\norm y^{2} & =\frac{1}{N^{2}}\E\sum_{i=1}^{N}\norm{y^{(i)}}^{2}=\frac{1}{N}\E\norm{y^{(1)}}^{2}=\frac{n}{N}.
 \end{align*}
 
 \end_inset
@@ -2798,10 +3244,15 @@ noprefix "false"
 \end_inset
 
  with 
-\begin_inset Formula $t=\sqrt{\frac{n}{N}}.$
+\begin_inset Formula $t=\sqrt{\frac{n}{N}}$
 \end_inset
 
+ to bound 
+\begin_inset Formula $\E(\vol(K\cap H))/\vol(K)$
+\end_inset
 
+.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -2864,7 +3315,7 @@ Then, for the center of gravity method with
 , we have
 \begin_inset Formula 
 \[
-\E\min_{i=1,2,\cdots k}f(x^{(i)})-\min_{y\in\Omega}f(y)\leq\left(\frac{\vol(E^{(0)})}{\vol(\Omega)}\right)^{\frac{1}{n}}\left(0.95\right)^{\frac{k}{n}}\left(\max_{z\in\Omega}f(z)-\min_{x\in\Omega}f(x)\right)\enspace.
+\E\left(\min_{i=1,2,\cdots k}f(x^{(i)})\right)-\min_{y\in\Omega}f(y)\leq\left(\frac{\vol(E^{(0)})}{\vol(\Omega)}\right)^{\frac{1}{n}}\left(0.95\right)^{\frac{k}{n}}\left(\max_{z\in\Omega}f(z)-\min_{x\in\Omega}f(x)\right)\enspace.
 \]
 
 \end_inset
@@ -2873,7 +3324,7 @@ Then, for the center of gravity method with
 \end_layout
 
 \begin_layout Standard
-Now, we give a geometric proof Theorem 
+Now we give a geometric proof of Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:Grunbaum"
@@ -2895,7 +3346,8 @@ reference "thm:grun-1"
 \end_layout
 
 \begin_layout Proof
-Without loss of generality, assume that the center of gravity of 
+Since affine transformations do not affect ratios of volumes, without loss
+ of generality, assume that the center of gravity of 
 \begin_inset Formula $K$
 \end_inset
 
@@ -3005,7 +3457,11 @@ noprefix "false"
 \begin_inset Formula $A(s),A(t)$
 \end_inset
 
-, we have
+, the function 
+\begin_inset Formula $\vol_{n-1}(A(s))^{1/(n-1)}$
+\end_inset
+
+ is a concave function and so we have
 \begin_inset Formula 
 \[
 \vol_{n-1}(A(\lambda s+(1-\lambda)t))^{\frac{1}{n-1}}\ge\lambda\vol_{n-1}(A(s))^{\frac{1}{n-1}}+(1-\lambda)\vol_{n-1}(A(t))^{\frac{1}{n-1}}.
@@ -3084,6 +3540,15 @@ Next consider the subset
  can only decrease by this transformation.
  At the end we have shown that the lower bound for any convex body follows
  by proving for a rotational cone with axis along the normal to the halfspace.
+ The intersection of this cone with the halfspace is the original cone scaled
+ down by the ratio of the distance from the apex to the center of gravity,
+ to the height of the cone.
+ So all that remains to be done is to compute the relative distance of the
+ center of gravity from the apex, which is exactly 
+\begin_inset Formula $n/(n+1)$
+\end_inset
+
+.
  Now we compute the volume ratio:
 \begin_inset Formula 
 \[
@@ -3093,6 +3558,50 @@ Next consider the subset
 \end_inset
 
 
+\end_layout
+
+\begin_layout Exercise
+Show that for a cone of height 
+\begin_inset Formula $h$
+\end_inset
+
+ in 
+\begin_inset Formula $\R^{n}$
+\end_inset
+
+, i.e., the convex hull of a convex body 
+\begin_inset Formula $K\subset\R^{n-1}$
+\end_inset
+
+ with a single point 
+\begin_inset Formula $a\in\R^{n}$
+\end_inset
+
+ at distance 
+\begin_inset Formula $h$
+\end_inset
+
+ from the hyperplane 
+\begin_inset Formula $H$
+\end_inset
+
+ containing 
+\begin_inset Formula $K$
+\end_inset
+
+, the distance of the center of gravity 
+\begin_inset Formula $z$
+\end_inset
+
+ of the cone is at distance 
+\begin_inset Formula $h/(n+1)$
+\end_inset
+
+ from 
+\begin_inset Formula $H$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
