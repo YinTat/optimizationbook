@@ -92,17 +92,14 @@ literal "true"
 
 \end_inset
 
- introduced five different ways to access convex sets, showed they are equivalen
+ defined five different oracles to access convex sets, showed they are equivalen
 t and used them to get polynomial-time algorithms for a variety of combinatorial
  problems (including the first ones in many cases).
- Here are four basic oracles for a convex set 
-\begin_inset Formula $K\subseteq\R^{n}$
-\end_inset
+ 
+\end_layout
 
-.
- The original definitions are more general, allowing for error parameters
- in each oracle, i.e., approximate versions of all the oracles below.
- Here we will focus on exact oracles for simplicity.
+\begin_layout Standard
+Here are four basic oracles
 \begin_inset Foot
 status open
 
@@ -122,7 +119,14 @@ literal "true"
 
 \end_inset
 
+ for a convex set 
+\begin_inset Formula $K\subseteq\R^{n}$
+\end_inset
 
+.
+ Later we will allow for error parameters in each oracle, i.e., approximate
+ versions of all the oracles below.
+ We begin with exact oracles for simplicity.
 \end_layout
 
 \begin_layout Definition
@@ -370,11 +374,11 @@ asserts that
 
 \end_deeper
 \begin_layout Standard
-According to the definition, the separation oracle gives strictly more informati
-on than the membership oracle and the optimization oracle gives more information
- than the validity oracle.
+According to the definitions, the separation oracle gives strictly more
+ information than the membership oracle and the optimization oracle gives
+ more information than the validity oracle.
  Depending on the problem, usually one of the oracles will be the preferred
- way to access the convex set.
+ or more natural way to access the convex set.
  For example, for the polytope given by 
 \begin_inset Formula $\{Ax\geq b\}$
 \end_inset
@@ -390,7 +394,7 @@ on than the membership oracle and the optimization oracle gives more information
 \begin_inset Formula $\max_{x\in\conv(\{a_{i}\})}\theta^{\top}x$
 \end_inset
 
- can be solved by checking 
+ can be solved by only checking 
 \begin_inset Formula $x=a_{i}$
 \end_inset
 
@@ -401,7 +405,7 @@ on than the membership oracle and the optimization oracle gives more information
 .
  In combinatorial optimization, many polytopes have exponentially many vertices
  and constraints but one can use combinatorial structure to solve the optimizati
-on problem.
+on problem efficiently.
 \end_layout
 
 \begin_layout Standard
@@ -935,6 +939,12 @@ ent oracle for
 \end_inset
 
 .
+ We use 
+\begin_inset Formula $\nabla f$
+\end_inset
+
+ to represent subgradient.
+ 
 \end_layout
 
 \begin_layout Lemma
@@ -1035,8 +1045,8 @@ reference "fig:rel"
 \begin_inset Formula $n+1$
 \end_inset
 
- calls to evaluation oracle to compute one gradient (using finite difference)
- and that you can use 
+ calls to evaluation oracle to compute one gradient approximately (using
+ finite difference) and that you can use 
 \begin_inset Formula $\tilde{O}(n)$
 \end_inset
 
@@ -1060,8 +1070,10 @@ noprefix "false"
 
 \end_inset
 
-), we will show the rest of the reduction.
- However, it is still open whether all of these reductions are tight:
+), we will see the remaining reductions.
+ However, it is still an open question if all of these reductions are the
+ best possible.
+ 
 \end_layout
 
 \begin_layout Problem*
@@ -1439,7 +1451,7 @@ Prove that the gradient of
 \end_layout
 
 \begin_layout Standard
-The following lemma shows that indeed one can recover 
+The following lemma shows that one can recover 
 \begin_inset Formula $f$
 \end_inset
 
@@ -1610,9 +1622,19 @@ Maybe make this part more explicit with an algorithm box?
 \end_inset
 
 .
- In combinatorial optimization, many convex sets are given by the convex
- hull for some discrete objects.
- In many cases, the only known way to do the separation is via such reductions.
+ This is formalized in the next exercise.
+\end_layout
+
+\begin_layout Exercise
+Show how to implement the separation oracle SEP for a convex set 
+\begin_inset Formula $K$
+\end_inset
+
+ given access to an optimization oracle OPT for 
+\begin_inset Formula $K$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -1718,6 +1740,12 @@ Interestingly, the convex conjugate is the unique transformation on convex
  
 \end_layout
 
+\begin_layout Standard
+In combinatorial optimization, many convex sets are given by the convex
+ hull for some discrete objects.
+ In many cases, the only known way to do the separation is via such reductions.
+\end_layout
+
 \begin_layout Theorem
 \begin_inset Argument 1
 status open
@@ -1783,6 +1811,63 @@ Given a transformation
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+We will see the following general theorem showing that optimization can
+ be reduced to membership/evaluation with a quadratic overhead in dimension.
+ 
+\end_layout
+
+\begin_layout Theorem
+Let 
+\begin_inset Formula $K$
+\end_inset
+
+ be a convex set specified by a membership oracle, a point 
+\begin_inset Formula $x_{0}\in\R^{n}$
+\end_inset
+
+, and numbers 
+\begin_inset Formula $0<r<R$
+\end_inset
+
+ such that 
+\begin_inset Formula $B(x_{0},r)\subseteq K\subseteq B(x_{0},R)$
+\end_inset
+
+.
+ For any convex function 
+\begin_inset Formula $f$
+\end_inset
+
+ given by an evaluation oracle and any 
+\begin_inset Formula $\epsilon>0$
+\end_inset
+
+, there is a randomized algorithm that computes a point 
+\begin_inset Formula $z\in B(K,\epsilon)$
+\end_inset
+
+ such that.
+ 
+\begin_inset Formula 
+\[
+f(z)\le\min_{x\in K}f(x)+\epsilon\left(\max_{x\in K}f(x)-\min_{x\in K}f(x)\right)
+\]
+
+\end_inset
+
+with constant probability using 
+\begin_inset Formula $O\left(n^{2}\log^{2}\left(\frac{nR}{\epsilon r}\right)\right)$
+\end_inset
+
+ calls to the membership oracle and evaluation oracle and 
+\begin_inset Formula $O(n^{3}\log^{O(1)}\left(\frac{nR}{\epsilon r}\right))$
+\end_inset
+
+ total arithmetic operations.
+ 
 \end_layout
 
 \begin_layout Section
@@ -2165,117 +2250,522 @@ reference "fig:rel"
 \end_inset
 
 .
- This argument can also be used to construct an approximate separation oracle
- for a convex set from a membership oracle.
+ With the above fact asserting that, on average, the gradient is approximated
+ by its average in a small ball, we now proceed to construct an approximate
+ subgradient, using only an approximate evaluation oracle.
+ 
 \end_layout
 
-\begin_layout Theorem
-Let 
-\begin_inset Formula $K$
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm2e}[t]
+\end_layout
+
 \end_inset
 
- be a convex body s.t.
  
-\begin_inset Formula $B(0,1)\subseteq K\subseteq B(0,R)$
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:separateFunc"
+
 \end_inset
 
-.
- Then, for any 
-\begin_inset Formula $0<\eta\leq1/2$
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
 \end_inset
 
-, we can compute an 
-\begin_inset Formula $\eta$
+
+\begin_inset Formula $\mathtt{SubgradConvexFunc}(f,x,r_{1},\varepsilon)$
 \end_inset
 
--approximate separation oracle for K using 
-\begin_inset Formula $O(n\log(nR/\eta))$
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
 \end_inset
 
- queries to a membership oracle for 
-\begin_inset Formula $K$
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetAlgoLined
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Require:
+\series default
+ 
+\begin_inset Formula $r_{1}>0$
+\end_inset
+
+, 
+\begin_inset Formula $\norm{\partial f(z)}_{\infty}\leq L$
+\end_inset
+
+ for any 
+\begin_inset Formula $z\in B_{\infty}(x,2r_{1})$
 \end_inset
 
 .
 \end_layout
 
 \begin_layout Standard
-By an approximate separation oracle we mean that either the queried point
- 
-\begin_inset Formula $x$
-\end_inset
-
- lies within distance 
-\begin_inset Formula $\eta$
-\end_inset
-
- of 
-\begin_inset Formula $K$
-\end_inset
-
-, or the oracle provides a halfspace 
-\begin_inset Formula $c^{T}y\le c^{T}x+\eta$
-\end_inset
-
- for all points 
-\begin_inset Formula $y\in K$
-\end_inset
-
- at distance at least 
-\begin_inset Formula $\eta$
-\end_inset
-
- from the boundary of 
-\begin_inset Formula $K$
+Set 
+\begin_inset Formula $r_{2}=\sqrt{\frac{\varepsilon r_{1}}{\sqrt{n}L}}$
 \end_inset
 
 .
- We sketch the proof here.
- To separate 
+\end_layout
+
+\begin_layout Standard
+Sample 
+\begin_inset Formula $y\in B_{\infty}(x,r_{1})$
+\end_inset
+
+ and 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $z\in B_{\infty}(y,r_{2})$
+\end_inset
+
+ independently and uniformly at random.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+For{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $i=1,2,\cdots,n$
+\end_inset
+
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $\alpha_{i}$
+\end_inset
+
+ and 
+\begin_inset Formula $\beta_{i}$
+\end_inset
+
+ denote the end points of the interval 
+\begin_inset Formula $B_{\infty}(y,r_{2})\cap\{z+se_{i}:s\in\R\}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Set 
+\begin_inset Formula $\tilde{g}_{i}=\frac{f(\beta_{i})-f(\alpha_{i})}{2r_{2}}$
+\end_inset
+
+ where we compute 
+\begin_inset Formula $f$
+\end_inset
+
+ to withing 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ additive error.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Output
+\series default
+ 
+\begin_inset Formula $\tilde{g}$
+\end_inset
+
+ as the approximate subgradient of 
+\begin_inset Formula $f$
+\end_inset
+
+ at 
 \begin_inset Formula $x$
 \end_inset
 
- from the set 
-\begin_inset Formula $K$
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
 \end_inset
 
-, we consider the convex function 
-\begin_inset Formula $h_{x}:K\rightarrow\R$
+
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:separate_conv_func"
+
 \end_inset
 
- defined as follows: 
+ Let 
+\begin_inset Formula $r_{1}>0$
+\end_inset
+
+ and 
+\begin_inset Formula $f$
+\end_inset
+
+ be a convex function
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+on 
+\begin_inset Formula $B_{\infty}(x,2r_{1})$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+.
+ Suppose that 
+\begin_inset Formula $\norm{\nabla f(z)}_{\infty}\leq L$
+\end_inset
+
+ for any 
+\begin_inset Formula $z\in B_{\infty}(x,2r_{1})$
+\end_inset
+
+ and suppose that we can evaluate f to within 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ additive error for 
+\begin_inset Formula $\varepsilon\leq r_{1}\sqrt{n}L$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $\tilde{g}=\mathtt{SubgradConvexFunc}(f,x,r_{1},\varepsilon)$
+\end_inset
+
+.
+ Then, there is random variable 
+\begin_inset Formula $\zeta\geq0$
+\end_inset
+
+ with 
+\begin_inset Formula $\E\zeta\leq2\sqrt{\frac{L\varepsilon}{r_{1}}}n^{5/4}$
+\end_inset
+
+ such that for any 
+\begin_inset Formula $y$
+\end_inset
+
+
 \begin_inset Formula 
 \[
-h_{x}(y)=-\max\left\{ \alpha:y+\alpha x\in K\right\} .
+f(y)\geq f(x)+\left\langle \tilde{g},y-x\right\rangle -\zeta\norm{y-x}_{\infty}-4nr_{1}L.
 \]
 
 \end_inset
 
-We then use Lemma 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:convex_almost_flat"
-plural "false"
-caps "false"
-noprefix "false"
 
+\end_layout
+
+\begin_layout Proof
+We assume that 
+\begin_inset Formula $f$
 \end_inset
 
- to compute an approximate gradient of 
-\begin_inset Formula $h$
+ is twice differentiable.
+ For general 
+\begin_inset Formula $f$
 \end_inset
 
- at the origin.
- For more details, including dependence on approximation parameters, see
- 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "lee2017efficient"
-literal "false"
+, we can reduce to this case by viewing it as a limit of twice-differentiable
+ functions.
+\end_layout
 
+\begin_layout Proof
+First, we assume that we can compute 
+\begin_inset Formula $f$
+\end_inset
+
+ exactly, namely 
+\begin_inset Formula $\varepsilon=0$
 \end_inset
 
 .
+ Fix 
+\begin_inset Formula $i\in[n]$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $g(y)$
+\end_inset
+
+ be the average of 
+\begin_inset Formula $\nabla f$
+\end_inset
+
+ over 
+\begin_inset Formula $B_{\infty}(y,r_{2})$
+\end_inset
+
+.
+ Then, for the function 
+\begin_inset Formula $\tilde{g}$
+\end_inset
+
+ computed by the algorithm, we have that
+\begin_inset Formula 
+\begin{align*}
+\E_{z}\left|\tilde{g}_{i}-g(y)_{i}\right| & =\E_{z}\left|\frac{f(\beta_{i})-f(\alpha_{i})}{2r_{2}}-g(y)_{i}\right|\\
+ & \leq\E_{z}\frac{1}{2r_{2}}\int\left|\frac{df}{dx_{i}}(z+se_{i})-g(y)_{i}\right|ds\\
+ & =\E_{z}\left|\frac{df}{dx_{i}}(z)-g(y)_{i}\right|
+\end{align*}
+
+\end_inset
+
+where we used that both 
+\begin_inset Formula $z+se_{i}$
+\end_inset
+
+ and 
+\begin_inset Formula $z$
+\end_inset
+
+ are uniform distribution on 
+\begin_inset Formula $B_{\infty}(y,r_{2})$
+\end_inset
+
+ in the last line.
+ Hence, we have
+\begin_inset Formula 
+\[
+\E_{z}\norm{\tilde{g}-\nabla f(z)}_{1}\leq\E_{z}\norm{\nabla f(z)-g(y)}_{1}+\E_{z}\norm{\tilde{g}-g(y)}_{1}\leq2\E_{z}\norm{\nabla f(z)-g(y)}_{1}.
+\]
+
+\end_inset
+
+Now, applying the convexity of 
+\begin_inset Formula $f$
+\end_inset
+
+ yields that
+\begin_inset Formula 
+\begin{align*}
+f(q) & \geq f(z)+\left\langle \nabla f(z),q-z\right\rangle \\
+ & =f(z)+\left\langle \tilde{g},q-x\right\rangle +\left\langle \nabla f(z)-\tilde{g},q-x\right\rangle +\left\langle \nabla f(z),x-z\right\rangle \\
+ & \geq f(z)+\left\langle \tilde{g},q-x\right\rangle -\norm{\nabla f(z)-\tilde{g}}_{1}\norm{q-x}_{\infty}-\norm{\nabla f(z)}_{\infty}\norm{x-z}_{1}.
+\end{align*}
+
+\end_inset
+
+Now, using 
+\begin_inset Formula $f$
+\end_inset
+
+ is 
+\begin_inset Formula $L$
+\end_inset
+
+-Lipschitz between 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $z$
+\end_inset
+
+, we have that 
+\begin_inset Formula $f(z)\geq f(x)-L\cdot\norm{x-z}_{1}$
+\end_inset
+
+.
+ Hence, we have
+\begin_inset Formula 
+\[
+f(q)\geq f(x)+\left\langle \tilde{g},q-x\right\rangle -\norm{\nabla f(z)-\tilde{g}}_{1}\norm{q-x}_{\infty}-2L\norm{x-z}_{1}.
+\]
+
+\end_inset
+
+Note that 
+\begin_inset Formula $\norm{x-z}_{1}\leq n\cdot\norm{x-z}_{\infty}\leq n(r_{1}+r_{2})$
+\end_inset
+
+ by assumption.
+ Moreover, we can apply Lemma
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:convex_almost_flat"
+
+\end_inset
+
+ to bound 
+\begin_inset Formula $\norm{\nabla f(z)-\tilde{g}}_{1}$
+\end_inset
+
+ and use 
+\begin_inset Formula $r_{2}=\sqrt{\frac{\varepsilon r_{1}}{\sqrt{n}L}}\leq r_{1}$
+\end_inset
+
+ to get
+\begin_inset Formula 
+\[
+f(q)\geq f(x)+\left\langle \tilde{g},q-x\right\rangle -\zeta\norm{q-x}_{\infty}-4nr_{1}L
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $\E\zeta\leq n^{3/2}\frac{r_{2}}{r_{1}}L$
+\end_inset
+
+.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+removed factor of 2, is it needed?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Since we only compute 
+\begin_inset Formula $f$
+\end_inset
+
+ up to 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ additive error, it introduces 
+\begin_inset Formula $\frac{\varepsilon}{r_{2}}$
+\end_inset
+
+ additive error in 
+\begin_inset Formula $\tilde{g}_{i}$
+\end_inset
+
+.
+ Hence, we instead have that
+\begin_inset Formula 
+\[
+\E\zeta\leq n^{3/2}\frac{r_{2}}{r_{1}}L+\frac{\varepsilon n}{r_{2}}.
+\]
+
+\end_inset
+
+Setting 
+\begin_inset Formula $r_{2}=\sqrt{\frac{\varepsilon r_{1}}{\sqrt{n}L}}$
+\end_inset
+
+ completes the proof.
 \end_layout
 
 \begin_layout Exercise
@@ -2397,6 +2887,1446 @@ noprefix "false"
 \end_inset
 
  using the classical coarea formula.
+\end_layout
+
+\begin_layout Section
+Separation via Membership 
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:From-Membership-to"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this section, we show that how to implement a separation oracle for a
+ convex set using a nearly linear number of queries to a membership oracle.
+ We divide this into two steps.
+ In the first step (Section
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:alg:separation_convex_Lip"
+
+\end_inset
+
+), we compute an approximate subgradient of a given Lipshitz convex function.
+ Using this, in the second step (Section
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:alg:separation_convex_set"
+
+\end_inset
+
+), we compute an approximate separating hyperplane.
+ The algorithms are stated in Algorithm
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:separateFunc"
+
+\end_inset
+
+ and Algorithm
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:sep_set"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Theorem
+Let 
+\begin_inset Formula $K$
+\end_inset
+
+ be a convex body s.t.
+ 
+\begin_inset Formula $B(0,1)\subseteq K\subseteq B(0,R)$
+\end_inset
+
+.
+ Then, for any 
+\begin_inset Formula $0<\eta\leq1/2$
+\end_inset
+
+, we can compute an 
+\begin_inset Formula $\eta$
+\end_inset
+
+-approximate separation oracle for K using 
+\begin_inset Formula $O(n\log(nR/\eta))$
+\end_inset
+
+ queries to a membership oracle for 
+\begin_inset Formula $K$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+By an approximate separation oracle we mean that either the queried point
+ 
+\begin_inset Formula $x$
+\end_inset
+
+ lies within distance 
+\begin_inset Formula $\eta$
+\end_inset
+
+ of 
+\begin_inset Formula $K$
+\end_inset
+
+, or the oracle provides a halfspace 
+\begin_inset Formula $c^{T}y\le c^{T}x+\eta$
+\end_inset
+
+ for all points 
+\begin_inset Formula $y\in K$
+\end_inset
+
+ at distance at least 
+\begin_inset Formula $\eta$
+\end_inset
+
+ from the boundary of 
+\begin_inset Formula $K$
+\end_inset
+
+.
+ We also define 
+\begin_inset Formula 
+\[
+B_{p}(K,-\delta)\defeq\{x\in\R^{n}:B_{p}(x,\delta)\subseteq K\},
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Throughout this section, let 
+\begin_inset Formula $K\subseteq\R^{n}$
+\end_inset
+
+ be a convex set that contains 
+\begin_inset Formula $B_{2}(0,r)$
+\end_inset
+
+ and is contained in 
+\begin_inset Formula $B_{2}(0,R)$
+\end_inset
+
+.
+ Given some point 
+\begin_inset Formula $x\notin K$
+\end_inset
+
+, we wish to separate 
+\begin_inset Formula $x$
+\end_inset
+
+ from 
+\begin_inset Formula $K$
+\end_inset
+
+ using a halfspace.
+ To do this, we reduce this problem to computing an approximate subgradient
+ of a Lipschitz convex function 
+\begin_inset Formula $h_{x}(d)$
+\end_inset
+
+ defined for points in 
+\begin_inset Formula $K.$
+\end_inset
+
+ Roughly speaking, it is the 
+\begin_inset Quotes eld
+\end_inset
+
+height
+\begin_inset Quotes erd
+\end_inset
+
+ (or distance from the boundary) of a point 
+\begin_inset Formula $d$
+\end_inset
+
+ in the direction of 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula 
+\[
+\alpha_{x}(d)=\max_{d+\alpha x\in K}\alpha\mbox{ \quad and \quad}h_{x}(d)=-\alpha_{x}(d)\norm x_{2}.
+\]
+
+\end_inset
+
+ Note that 
+\begin_inset Formula $d+\alpha_{x}(d)x$
+\end_inset
+
+ is the last point in 
+\begin_inset Formula $K$
+\end_inset
+
+ on the line through 
+\begin_inset Formula $d\in K$
+\end_inset
+
+ in the direction of 
+\begin_inset Formula $x$
+\end_inset
+
+, and 
+\begin_inset Formula $-h_{x}(d)$
+\end_inset
+
+ is the 
+\begin_inset Formula $\ell_{2}$
+\end_inset
+
+ distance from this boundary point to 
+\begin_inset Formula $d$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename height.JPG
+	height 2in
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The convex height function 
+\begin_inset Formula $h_{x}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm2e}[h]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:sep_set"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\mathtt{Separate}_{\varepsilon,\rho}(K,x)$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetAlgoLined
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Require:
+\series default
+ 
+\begin_inset Formula $B_{2}(0,r)\subset K\subset B_{2}(0,R)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+uIf{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\text{MEM}_{\varepsilon}(K)$
+\end_inset
+
+ asserts that 
+\begin_inset Formula $x\in B(K,\epsilon)$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Output:
+\series default
+ 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Formula $x\in B(K,\varepsilon)$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\backslash
+ElseIf{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $x\notin B_{2}(0,R)$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Output:
+\series default
+ the halfspace 
+\begin_inset Formula $\{y:0\geq\left\langle y-x,x\right\rangle \}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $\kappa=R/r$
+\end_inset
+
+, 
+\begin_inset Formula $\alpha_{x}(d)=\max_{d+\alpha x\in K}\alpha$
+\end_inset
+
+ and 
+\begin_inset Formula $h_{x}(d)=-\alpha_{x}(d)\norm x_{2}$
+\end_inset
+
+.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Should define 
+\begin_inset Formula $h_{x}$
+\end_inset
+
+ and talk about additive error here for completeness? what do you mean by
+ talk about additive error? I just mean that the binary search is inexact.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The evaluation oracle of 
+\begin_inset Formula $\alpha_{x}(d)$
+\end_inset
+
+ can be implemented via binary search and 
+\begin_inset Formula $\text{MEM}_{\varepsilon}(K)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Compute 
+\begin_inset Formula $\tilde{g}=\mathtt{SubgradConvexFunc}(h_{x},0,r_{1},4\varepsilon)$
+\end_inset
+
+ with 
+\begin_inset Formula $r_{1}=n^{1/6}\varepsilon^{1/3}R^{2/3}\kappa^{-1}$
+\end_inset
+
+ and the evaluation oracle of 
+\begin_inset Formula $\alpha_{x}(d)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Output:
+\series default
+ the halfspace
+\begin_inset Formula 
+\[
+\left\{ y:\frac{31}{\rho}n^{7/6}R^{2/3}\kappa\varepsilon^{1/3}\geq\left\langle \tilde{g},y-x\right\rangle \right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The output of the algorithm for separation is a halfspace that approximately
+ contains 
+\begin_inset Formula $K$
+\end_inset
+
+, and the input point 
+\begin_inset Formula $x$
+\end_inset
+
+ is close to its bounding hyperplane.
+ It uses a call to the subgradient function above.
+\end_layout
+
+\begin_layout Standard
+We now proceed to analyze the height function.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:h_convex"
+
+\end_inset
+
+ 
+\begin_inset Formula $h_{x}(d)$
+\end_inset
+
+ is convex on 
+\begin_inset Formula $K$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $d_{1},d_{2}\in K$
+\end_inset
+
+ and 
+\begin_inset Formula $\lambda\in[0,1]$
+\end_inset
+
+.
+ Now 
+\begin_inset Formula $d_{1}+\alpha_{x}(d_{1})x\in K$
+\end_inset
+
+ and 
+\begin_inset Formula $d_{2}+\alpha_{x}(d_{2})x\in K$
+\end_inset
+
+.
+ Consequently,
+\begin_inset Formula 
+\[
+\left[\lambda d_{1}+(1-\lambda)d_{2}\right]+\left[\lambda\cdot\alpha_{x}(d_{1})+(1-\lambda)\cdot\alpha_{x}(d_{2})\right]x\in K\,.
+\]
+
+\end_inset
+
+Therefore, if we let 
+\begin_inset Formula $d\defeq\lambda d_{1}+(1-\lambda)d_{2}$
+\end_inset
+
+ we see that 
+\begin_inset Formula $\alpha_{x}(d)\geq\lambda\cdot\alpha_{x}(d_{1})+(1-\lambda)\cdot\alpha_{x}(d_{2})$
+\end_inset
+
+ and 
+\begin_inset Formula $h_{x}(\lambda d_{1}+(1-\lambda d_{2})\leq\lambda h_{x}(d_{1})+\lambda h_{x}(d_{2})$
+\end_inset
+
+ as claimed.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:h_Lip"
+
+\end_inset
+
+ 
+\begin_inset Formula $h_{x}$
+\end_inset
+
+ is 
+\begin_inset Formula $\left(\frac{R+\delta}{r-\delta}\right)$
+\end_inset
+
+-Lipschitz over points in 
+\begin_inset Formula $B_{2}(0,\delta)$
+\end_inset
+
+ for any 
+\begin_inset Formula $\delta<r$
+\end_inset
+
+.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+needs figure!
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $d_{1},d_{2}$
+\end_inset
+
+ be arbitrary points in 
+\begin_inset Formula $B(0,\delta)$
+\end_inset
+
+.
+ We wish to upper bound 
+\begin_inset Formula $\left|h_{x}(d_{1})-h_{x}(d_{2})\right|$
+\end_inset
+
+ in terms of 
+\begin_inset Formula $\norm{d_{1}-d_{2}}_{2}$
+\end_inset
+
+.
+ We assume without loss of generality that 
+\begin_inset Formula $\alpha_{x}(d_{1})\geq\alpha_{x}(d_{2})$
+\end_inset
+
+ and therefore
+\begin_inset Formula 
+\[
+\left|h_{x}(d_{1})-h_{x}(d_{2})\right|=\left|\alpha_{x}(d_{1})\norm x_{2}-\alpha_{x}(d_{2})\norm x_{2}\right|=\left(\alpha_{x}(d_{1})-\alpha_{x}(d_{2})\right)\norm x_{2}\,.
+\]
+
+\end_inset
+
+Consequently, it suffices to lower bound 
+\begin_inset Formula $\alpha_{x}(d_{2})$
+\end_inset
+
+.
+ We split the analysis into two cases.
+\end_layout
+
+\begin_layout Proof
+Case 1: 
+\begin_inset Formula $\norm{d_{2}-d_{1}}_{2}\geq r-\delta$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $0\geq h_{x}(d_{1}),h_{x}(d_{2})\geq-R-\delta$
+\end_inset
+
+, we have that 
+\begin_inset Formula 
+\[
+\left|h_{x}(d_{1})-h_{x}(d_{2})\right|\leq R+\delta\leq\frac{R+\delta}{r-\delta}\norm{d_{2}-d_{1}}_{2}\,.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Case 2: 
+\begin_inset Formula $\norm{d_{2}-d_{1}}_{2}\leq r-\delta$
+\end_inset
+
+.
+ We consider the point 
+\begin_inset Formula $d_{3}=d_{1}+\frac{d_{2}-d_{1}}{\lambda}$
+\end_inset
+
+ with 
+\begin_inset Formula $\lambda=\norm{d_{2}-d_{1}}_{2}/(r-\delta)$
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula 
+\[
+\norm{d_{3}}_{2}\leq\norm{d_{1}}_{2}+\frac{1}{\lambda}\norm{d_{2}-d_{1}}_{2}\leq\delta+\frac{1}{\lambda}\norm{d_{2}-d_{1}}_{2}\leq r.
+\]
+
+\end_inset
+
+Hence, 
+\begin_inset Formula $d_{3}\in K$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $\lambda\in[0,1]$
+\end_inset
+
+ and 
+\begin_inset Formula $K$
+\end_inset
+
+ is convex, we have that 
+\begin_inset Formula $\lambda\cdot d_{3}+(1-\lambda)\cdot\left[d_{1}+\alpha_{x}(d_{1})x\right]\in K$
+\end_inset
+
+.
+ Now, we note that
+\begin_inset Formula 
+\[
+\lambda\cdot d_{3}+(1-\lambda)\cdot\left[d_{1}+\alpha_{x}(d_{1})x\right]=d_{2}+(1-\lambda)\cdot\alpha_{x}(d_{1})x
+\]
+
+\end_inset
+
+and this shows that 
+\begin_inset Formula 
+\[
+\alpha_{x}(d_{2})\geq(1-\lambda)\cdot\alpha_{x}(d_{1})=\left(1-\frac{\norm{d_{2}-d_{1}}_{2}}{r-\delta}\right)\cdot\alpha_{x}(d_{1}).
+\]
+
+\end_inset
+
+Since 
+\begin_inset Formula $d_{1}+\alpha_{x}(d_{1})x\in K\subset B_{2}(0,R)$
+\end_inset
+
+, we have that 
+\begin_inset Formula $\alpha_{x}(d_{1})\cdot\norm x_{2}\leq R+\delta$
+\end_inset
+
+ and hence
+\begin_inset Formula 
+\[
+\left|h_{x}(d_{1})-h_{x}(d_{2})\right|=(\alpha_{x}(d_{1})-\alpha_{x}(d_{2}))\cdot\norm x_{2}\leq\alpha_{x}(d_{1})\cdot\norm x_{2}\frac{\norm{d_{2}-d_{1}}_{2}}{r-\delta}\leq\frac{R+\delta}{r-\delta}\norm{d_{2}-d_{1}}_{2}.
+\]
+
+\end_inset
+
+ In either case, as claimed we have
+\begin_inset Formula 
+\[
+\left|h_{x}(d_{1})-h_{x}(d_{2})\right|\leq\frac{R+\delta}{r-\delta}\norm{d_{2}-d_{1}}_{2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The next lemma shows that 
+\begin_inset Formula $h_{x}$
+\end_inset
+
+ gives us a way to implement an approximation separation oracle and only
+ needs access to an approximation evaluation oracle for 
+\begin_inset Formula $h_{x}$
+\end_inset
+
+ which in turn only needs an approximate membership oracle for 
+\begin_inset Formula $K$
+\end_inset
+
+.
+ To be precise, we define approximate oracles.
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Separation Oracle (SEP)
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "def:SEP-1"
+
+\end_inset
+
+ Queried with a vector 
+\begin_inset Formula $y\in\Rn$
+\end_inset
+
+ and real numbers 
+\begin_inset Formula $\delta,\delta'>0$
+\end_inset
+
+, with probability 
+\begin_inset Formula $1-\delta'$
+\end_inset
+
+, the oracle either
+\begin_inset Separator latexpar
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+assert that 
+\begin_inset Formula $y\in B(K,\delta)$
+\end_inset
+
+, or
+\end_layout
+
+\begin_layout Itemize
+find a unit vector 
+\begin_inset Formula $c\in\Rn$
+\end_inset
+
+ such that 
+\begin_inset Formula $c^{T}x\leq c^{T}y+\delta$
+\end_inset
+
+ for all 
+\begin_inset Formula $x\in B(K,-\delta)$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+We let 
+\begin_inset Formula $\text{SEP}_{\delta,\delta'}(K)$
+\end_inset
+
+ be the time complexity of this oracle.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Membership Oracle (MEM)
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "def:MEM-1"
+
+\end_inset
+
+ Queried with a vector 
+\begin_inset Formula $y\in\Rn$
+\end_inset
+
+ and real numbers 
+\begin_inset Formula $\delta,\delta'>0$
+\end_inset
+
+, with probability 
+\begin_inset Formula $1-\delta'$
+\end_inset
+
+, either
+\begin_inset Separator latexpar
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+assert that 
+\begin_inset Formula $y\in B(K,\delta)$
+\end_inset
+
+, or
+\end_layout
+
+\begin_layout Itemize
+assert that 
+\begin_inset Formula $y\notin B(K,-\delta)$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Definition
+We let 
+\begin_inset Formula $\text{MEM}_{\delta,\delta'}(K)$
+\end_inset
+
+ be the time complexity of this oracle.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:separate_set"
+
+\end_inset
+
+ Let 
+\begin_inset Formula $K$
+\end_inset
+
+ be a convex set satisfying 
+\begin_inset Formula $B_{2}(0,r)\subset K\subset B_{2}(0,R)$
+\end_inset
+
+.
+ Given any 
+\begin_inset Formula $0<\rho<1$
+\end_inset
+
+ and 
+\begin_inset Formula $0\leq\varepsilon\leq r$
+\end_inset
+
+.
+ With probability 
+\begin_inset Formula $1-\rho$
+\end_inset
+
+, 
+\begin_inset Formula $\mathtt{Separate}_{\varepsilon,\rho}(K,x)$
+\end_inset
+
+ outputs a halfspace that contains 
+\begin_inset Formula $K$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+When 
+\begin_inset Formula $x\notin B_{2}(0,R)$
+\end_inset
+
+, the algorithm outputs a valid separation for 
+\begin_inset Formula $B_{2}(0,R)$
+\end_inset
+
+.
+ For the rest of the proof, we assume 
+\begin_inset Formula $x\notin B(K,-\varepsilon)$
+\end_inset
+
+ (due to the membership oracle) and 
+\begin_inset Formula $x\in B_{2}(0,R)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+By Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:h_convex"
+
+\end_inset
+
+ and Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:h_Lip"
+
+\end_inset
+
+, 
+\begin_inset Formula $h_{x}$
+\end_inset
+
+ is convex with Lipschitz constant 
+\begin_inset Formula $3\kappa$
+\end_inset
+
+ on 
+\begin_inset Formula $B_{2}(0,\frac{r}{2})$
+\end_inset
+
+.
+ By our assumption on 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ and our choice of 
+\begin_inset Formula $r_{1}$
+\end_inset
+
+, we have that 
+\begin_inset Formula $B_{\infty}(0,2r_{1})\subset B_{2}(0,\frac{r}{2})$
+\end_inset
+
+.
+ Hence, we can apply Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:separate_conv_func"
+
+\end_inset
+
+ to get that
+\begin_inset Formula 
+\begin{align}
+h_{x}(y) & \geq h_{x}(0)+\left\langle \tilde{g},y\right\rangle -\zeta\norm y_{\infty}-12nr_{1}\kappa\label{eq:hxy-1}
+\end{align}
+
+\end_inset
+
+for any 
+\begin_inset Formula $y\in K$
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula $-\frac{x}{\kappa}\in K$
+\end_inset
+
+ and 
+\begin_inset Formula $h_{x}(-\frac{x}{\kappa})\ge h_{x}(0)-\frac{1}{\kappa}\norm x_{2}$
+\end_inset
+
+.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+This was previously 
+\begin_inset Formula $=$
+\end_inset
+
+, check.
+\end_layout
+
+\end_inset
+
+ Hence, we have
+\begin_inset Formula 
+\[
+h_{x}(0)-\frac{1}{\kappa}\norm x_{2}=h_{x}(-\frac{1}{\kappa}x)\geq h_{x}(0)+\left\langle \tilde{g},-\frac{1}{\kappa}x\right\rangle -\frac{1}{\kappa}\zeta\norm x_{\infty}-12nr_{1}\kappa.
+\]
+
+\end_inset
+
+Therefore, we have
+\begin_inset Formula 
+\begin{equation}
+\left\langle \tilde{g},x\right\rangle \geq\norm x_{2}-\zeta\norm x_{\infty}-12nr_{1}\kappa^{2}.\label{eq:lowerbound_g}
+\end{equation}
+
+\end_inset
+
+Now, we note that 
+\begin_inset Formula $x\notin B(K,-\varepsilon)$
+\end_inset
+
+.
+ Using that 
+\begin_inset Formula $B(0,r)\subset K$
+\end_inset
+
+, we have 
+\begin_inset Formula $(1-\frac{\varepsilon}{r})K\subset B(K,-\varepsilon)$
+\end_inset
+
+.
+ Hence, 
+\begin_inset Formula 
+\[
+h_{x}(0)\geq-\left(1-\frac{\varepsilon}{r}\right)\norm x_{2}\geq-\norm x_{2}+\varepsilon\kappa.
+\]
+
+\end_inset
+
+Therefore, we have
+\begin_inset Formula 
+\[
+h_{x}(0)+\left\langle \tilde{g},x\right\rangle \geq-\zeta\norm x_{\infty}-12nr_{1}\kappa^{2}+\varepsilon\kappa
+\]
+
+\end_inset
+
+Combining this with 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:hxy-1"
+
+\end_inset
+
+, we have that 
+\begin_inset Formula 
+\begin{align*}
+h_{x}(y) & \geq\left\langle \tilde{g},y-x\right\rangle -\zeta\norm y_{\infty}-\zeta\norm x_{\infty}-12nr_{1}\kappa-12nr_{1}\kappa^{2}\\
+ & \geq\left\langle \tilde{g},y-x\right\rangle -2\zeta R-24nr_{1}\kappa^{2}
+\end{align*}
+
+\end_inset
+
+for any 
+\begin_inset Formula $y\in K$
+\end_inset
+
+.
+ Recall from Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:separate_conv_func"
+
+\end_inset
+
+ that 
+\begin_inset Formula $\zeta$
+\end_inset
+
+ is a positive random scalar independent of 
+\begin_inset Formula $y$
+\end_inset
+
+ satisfying 
+\begin_inset Formula $\E\zeta\leq2\sqrt{\frac{3\kappa\varepsilon}{r_{1}}}n^{5/4}$
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+changed factor of 12 to 3 inside square-root.
+\end_layout
+
+\end_inset
+
+.
+ For any 
+\begin_inset Formula $y\in K$
+\end_inset
+
+, we have that 
+\begin_inset Formula $h_{x}(y)\leq0$
+\end_inset
+
+ and hence 
+\begin_inset Formula $\tilde{\zeta}\geq\left\langle \tilde{g},y-x\right\rangle $
+\end_inset
+
+ where 
+\begin_inset Formula $\tilde{\zeta}$
+\end_inset
+
+ is a random scalar independent of 
+\begin_inset Formula $y$
+\end_inset
+
+ satisfying 
+\begin_inset Formula 
+\begin{align*}
+\E\tilde{\zeta} & \le4\sqrt{\frac{3\kappa\varepsilon}{r_{1}}}n^{5/4}R+24nr_{1}\kappa^{2}\\
+ & \leq31n^{7/6}R^{2/3}\varepsilon^{1/3}\kappa.
+\end{align*}
+
+\end_inset
+
+where we used 
+\begin_inset Formula $r_{1}=n^{1/6}\varepsilon^{1/3}R^{2/3}/\kappa$
+\end_inset
+
+ and 
+\begin_inset Formula $0\leq\varepsilon\leq r$
+\end_inset
+
+.
+ The result then follows using Markov's inequality.
+ 
+\end_layout
+
+\begin_layout Exercise
+Suppose we can evaluate the subgradient of 
+\begin_inset Formula $h_{x}$
+\end_inset
+
+ exactly for a convex set 
+\begin_inset Formula $K$
+\end_inset
+
+ containing the origin.
+ Give a short proof that for any 
+\begin_inset Formula $x\not\in K$
+\end_inset
+
+, we have 
+\begin_inset Formula $\langle\nabla h_{x}(0),y-x\rangle\le0$
+\end_inset
+
+ for all 
+\begin_inset Formula $y\in K$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:separate_set"
+
+\end_inset
+
+ Let 
+\begin_inset Formula $K$
+\end_inset
+
+ be a convex set satisfying 
+\begin_inset Formula $B_{2}(0,1/\kappa)\subset K\subset B_{2}(0,1)$
+\end_inset
+
+.
+ For any 
+\begin_inset Formula $0\leq\eta<\frac{1}{2}$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+\text{SEP}_{\eta}(K)\leq O\left(n\log\left(\frac{n\kappa}{\eta}\right)\right)\text{MEM}_{(\eta/n\kappa)^{O(1)}}(K).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+First, we bound the running time.
+ Note that the bottleneck is to compute 
+\begin_inset Formula $h_{x}$
+\end_inset
+
+ with 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ additive error.
+ Since 
+\begin_inset Formula $-O(1)\leq h_{x}(y)\leq0$
+\end_inset
+
+ for all 
+\begin_inset Formula $y\in B_{2}(0,O(1))$
+\end_inset
+
+, one can compute 
+\begin_inset Formula $h_{x}(y)$
+\end_inset
+
+ by binary search with 
+\begin_inset Formula $O(\log(1/\delta))$
+\end_inset
+
+ calls to the membership oracle.
+\end_layout
+
+\begin_layout Proof
+Next, we check that 
+\begin_inset Formula $\mathtt{Separate}_{\delta,\rho}(K,x)$
+\end_inset
+
+ is indeed a separation oracle.
+ Note that 
+\begin_inset Formula $\tilde{g}$
+\end_inset
+
+ may not be an unit vector and we need to re-normalize the 
+\begin_inset Formula $\tilde{g}$
+\end_inset
+
+ by 
+\begin_inset Formula $1/\norm{\tilde{g}}_{2}$
+\end_inset
+
+.
+ So, we need to a lower bound 
+\begin_inset Formula $\norm{\tilde{g}}_{2}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+From 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:lowerbound_g"
+
+\end_inset
+
+ and our choice of 
+\begin_inset Formula $r_{1}$
+\end_inset
+
+, if 
+\begin_inset Formula $\delta\leq\frac{\rho^{3}}{10^{6}n^{6}\kappa^{6}}$
+\end_inset
+
+, then we have that
+\begin_inset Formula 
+\begin{align*}
+\left\langle \tilde{g},x\right\rangle  & \geq\norm x_{2}-\zeta\norm x_{\infty}-12nr_{1}\kappa^{2}\geq\frac{r}{4}.
+\end{align*}
+
+\end_inset
+
+Hence, we have that 
+\begin_inset Formula $\norm{\tilde{g}}_{2}\geq\frac{1}{4\kappa}$
+\end_inset
+
+.
+ Therefore, this algorithm is a separation oracle with error 
+\begin_inset Formula $\frac{400}{\rho}n^{7/6}\kappa^{2}\delta^{1/3}$
+\end_inset
+
+ and failure probability 
+\begin_inset Formula $O(\rho+\log(1/\delta)\delta)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula 
+\[
+\text{SEP}_{\Omega(\max(n^{7/6}\kappa^{2}\delta^{1/3}/\rho+\rho+\log(1/\delta)\delta)}(K)\leq O(\log(1/\delta))\text{MEM}_{\delta}(K).
+\]
+
+\end_inset
+
+Setting 
+\begin_inset Formula $\rho=\sqrt{n^{7/6}\kappa^{2}\delta^{1/3}}$
+\end_inset
+
+ and 
+\begin_inset Formula $\delta=\Theta\left(\frac{\eta^{6}}{n^{7/2}\kappa^{6}}\right)$
+\end_inset
+
+, we have that 
+\begin_inset Formula 
+\[
+\text{SEP}_{\eta}(K)\leq O(\log(\frac{n\kappa}{\eta}))\text{MEM}_{\eta^{6}/(n^{7/2}\kappa^{6})}(K).
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
