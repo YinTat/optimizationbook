@@ -576,14 +576,14 @@ lazy
  The next theorem is folklore.
 \end_layout
 
-\begin_layout Theorem
+\begin_layout Exercise
 If 
 \begin_inset Formula $Q$
 \end_inset
 
  is stationary w.r.t.
- a lazy Markov chain then it is the unique stationary distribution for that
- Markov chain.
+ a lazy ergodic Markov chain, then it is the unique stationary distribution
+ for that Markov chain.
 \end_layout
 
 \begin_layout Standard
@@ -609,7 +609,11 @@ Total variation distance is
 \begin_inset Formula $L_{2}$
 \end_inset
 
- distance of 
+ or 
+\begin_inset Formula $\chi^{2}$
+\end_inset
+
+-distance of 
 \begin_inset Formula $P$
 \end_inset
 
@@ -620,7 +624,7 @@ Total variation distance is
  is 
 \begin_inset Formula 
 \[
-d_{2}(P,Q)=\int_{K}\frac{dP(u)}{dQ(u)}\,dP(u)=\int_{K}\left(\frac{dP(u)}{dQ(u)}\right)^{2}\,dQ(u).
+\chi^{2}(P,Q)=\int_{K}\left(\frac{dP(u)}{dQ(u)}-1\right)^{2}dQ(u)=\int_{K}\left(\frac{dP(u)}{dQ(u)}\right)^{2}\,dQ(u)-1=\int_{K}\frac{dP(u)}{dQ(u)}\,dP(u)-1.
 \]
 
 \end_inset
@@ -629,6 +633,7 @@ d_{2}(P,Q)=\int_{K}\frac{dP(u)}{dQ(u)}\,dP(u)=\int_{K}\left(\frac{dP(u)}{dQ(u)}\
 \end_layout
 
 \begin_layout Enumerate
+Warmth: 
 \begin_inset Formula $P$
 \end_inset
 
@@ -744,8 +749,6 @@ Ideally we would like to show that
 \end_inset
 
  is monotonically (and rapidly) decreasing.
- While this is not true in general for the total variation distance, it
- is true for a slight extension.
  We consider 
 \begin_inset Formula 
 \[
@@ -759,7 +762,7 @@ for each
 \end_inset
 
 .
- To prove inductively that this quantity decreases , Let 
+ To prove inductively that this quantity decreases, Let 
 \begin_inset Formula ${\cal G}_{x}$
 \end_inset
 
@@ -1162,7 +1165,7 @@ d_{TV}(Q_{t},Q)\leq H_{s}+\frac{H_{s}}{s}\left(1-\frac{\phi_{s}^{2}}{2}\right)^{
 
 \begin_layout Enumerate
 Let 
-\begin_inset Formula $M=d_{2}(Q_{0},Q)$
+\begin_inset Formula $M=\chi^{2}(Q_{0},Q)$
 \end_inset
 
 .

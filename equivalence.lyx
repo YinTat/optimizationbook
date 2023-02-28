@@ -84,7 +84,20 @@ Oracles for Convex Sets
 \end_layout
 
 \begin_layout Standard
-Grötschel, Lovasz and Schrijver 
+Grötschel, Lov
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+'
+\end_layout
+
+\end_inset
+
+asz and Schrijver 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "grotschel2012geometric"
@@ -505,7 +518,7 @@ The spanning tree polytope of an undirected graph
  is given by
 \begin_inset Formula 
 \[
-P=\{x\in\R_{+}^{E}|\sum_{e\in E}x_{e}=|V|-1,\sum_{(u,v)\in E\cap(S\times S)}x_{(u,v)}\leq|S|-1\quad\forall S\subseteq V\}.
+P=\{x\in\R_{+}^{\left|E\right|}|\sum_{e\in E}x_{e}=|V|-1,\sum_{(u,v)\in E\cap(S\times S)}x_{(u,v)}\leq|S|-1\quad\forall S\subseteq V,\left|S\right|\ge1\}.
 \]
 
 \end_inset
@@ -928,7 +941,11 @@ Recall that
 \end_inset
 
 .
- Therefore, the validity oracle is simply the evaluation oracle for 
+ Therefore, the validity oracle for 
+\begin_inset Formula $\delta_{K}$
+\end_inset
+
+ is simply the evaluation oracle for 
 \begin_inset Formula $\delta_{K}^{*}$
 \end_inset
 
@@ -1577,6 +1594,19 @@ f(x)=\sup_{\{\theta,b\}\in\mathcal{H}}\theta^{\top}x-b^{*}=\sup_{\theta}\theta^{
 
 \end_layout
 
+\begin_layout Exercise
+Let f be a convex function with closed epigraph.
+ Show that 
+\begin_inset Formula $f=f^{*}$
+\end_inset
+
+ iff 
+\begin_inset Formula $f(x)=\frac{\norm x^{2}}{2}$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Standard
 Since we can use the gradient, 
 \begin_inset Formula $\nabla f$
@@ -1740,12 +1770,6 @@ Interestingly, the convex conjugate is the unique transformation on convex
  
 \end_layout
 
-\begin_layout Standard
-In combinatorial optimization, many convex sets are given by the convex
- hull for some discrete objects.
- In many cases, the only known way to do the separation is via such reductions.
-\end_layout
-
 \begin_layout Theorem
 \begin_inset Argument 1
 status open
@@ -1767,7 +1791,7 @@ Given a transformation
 \begin_inset Formula $\mathcal{T}$
 \end_inset
 
- that maps the set of lower-semi-continuous convex functions onto itself
+ that maps the set of lower semi-continuous convex functions onto itself
  such that 
 \begin_inset Formula $\mathcal{T}\mathcal{T}\phi=\phi$
 \end_inset
@@ -1814,8 +1838,12 @@ Given a transformation
 \end_layout
 
 \begin_layout Standard
-We will see the following general theorem showing that optimization can
- be reduced to membership/evaluation with a quadratic overhead in dimension.
+In combinatorial optimization, many convex sets are given by the convex
+ hull for some discrete objects.
+ In many cases, the only known way to do the separation is via such reductions.
+ In this chapter, we will study the following general theorem showing that
+ optimization can be reduced to membership/evaluation with a quadratic overhead
+ in dimension for the number of oracle queries.
  
 \end_layout
 
@@ -2133,12 +2161,15 @@ Since
 \begin_inset Formula $f$
 \end_inset
 
- is convex, we have that 
-\begin_inset Formula $\norm{\nabla^{2}f(z)}_{F}\leq\tr\nabla^{2}f(z)=\Delta f(z)$
+ is convex, eigenvalues of the Hessian are nonnegative and so we have 
+\begin_inset Formula 
+\[
+\norm{\nabla^{2}f(z)}_{F}=\sqrt{\sum_{i}\lambda_{i}^{2}}\le\sum_{i}\lambda_{i}=\tr\nabla^{2}f(z)=\Delta f(z).
+\]
+
 \end_inset
 
-.
- Therefore, we have
+Therefore, we have
 \begin_inset Formula 
 \begin{align*}
 \E_{z\in B_{\infty}(y,r_{2})}\norm{\nabla f(z)-g(y)}_{1}dz & \leq\sqrt{n}r_{2}\E_{z\in B_{\infty}(y,r_{2})}\Delta f(z)dz\\
@@ -2253,6 +2284,16 @@ reference "fig:rel"
  With the above fact asserting that, on average, the gradient is approximated
  by its average in a small ball, we now proceed to construct an approximate
  subgradient, using only an approximate evaluation oracle.
+ The parameter 
+\begin_inset Formula $r_{2}$
+\end_inset
+
+ in the algorithm is chosen to optimize the final error of the output.
+ By making the ratio 
+\begin_inset Formula $r_{2}/r_{1}$
+\end_inset
+
+ sufficiently small, we can get a desired error for the subgradient.
  
 \end_layout
 
@@ -2434,7 +2475,7 @@ Set
 \begin_inset Formula $f$
 \end_inset
 
- to withing 
+ to within 
 \begin_inset Formula $\varepsilon$
 \end_inset
 
@@ -2768,6 +2809,18 @@ Setting
  completes the proof.
 \end_layout
 
+\begin_layout Standard
+Note that if we happened to have an exact oracle for 
+\begin_inset Formula $f$
+\end_inset
+
+, then we can make 
+\begin_inset Formula $r_{2}$
+\end_inset
+
+ arbitrarily small.
+\end_layout
+
 \begin_layout Exercise
 What is the best possible bound in Lemma 
 \begin_inset CommandInset ref
@@ -2904,31 +2957,7 @@ name "sec:From-Membership-to"
 In this section, we show that how to implement a separation oracle for a
  convex set using a nearly linear number of queries to a membership oracle.
  We divide this into two steps.
- In the first step (Section
-\begin_inset space ~
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:alg:separation_convex_Lip"
-
-\end_inset
-
-), we compute an approximate subgradient of a given Lipshitz convex function.
- Using this, in the second step (Section
-\begin_inset space ~
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:alg:separation_convex_set"
-
-\end_inset
-
-), we compute an approximate separating hyperplane.
- The algorithms are stated in Algorithm
+ In the first step (Algorithm
 \begin_inset space ~
 \end_inset
 
@@ -2936,10 +2965,14 @@ reference "sec:alg:separation_convex_set"
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "alg:separateFunc"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
- and Algorithm
+), we compute an approximate subgradient of a given Lipshitz convex function.
+ Using this, in the second step (Algorithm
 \begin_inset space ~
 \end_inset
 
@@ -2947,10 +2980,13 @@ reference "alg:separateFunc"
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "alg:sep_set"
+plural "false"
+caps "false"
+noprefix "false"
 
 \end_inset
 
-.
+), we compute an approximate separating hyperplane.
  
 \end_layout
 
@@ -2985,7 +3021,37 @@ Let
 \end_layout
 
 \begin_layout Standard
-By an approximate separation oracle we mean that either the queried point
+Throughout this section, let 
+\begin_inset Formula $K\subseteq\R^{n}$
+\end_inset
+
+ be a convex set that contains 
+\begin_inset Formula $B_{2}(0,r)$
+\end_inset
+
+ and is contained in 
+\begin_inset Formula $B_{2}(0,R)$
+\end_inset
+
+.
+ Recall that 
+\begin_inset Formula $B_{p}(x,r)$
+\end_inset
+
+ is the 
+\begin_inset Formula $p$
+\end_inset
+
+-norm ball of radius 
+\begin_inset Formula $r$
+\end_inset
+
+ centered at 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ By an approximate separation oracle we mean that either the queried point
  
 \begin_inset Formula $x$
 \end_inset
@@ -3018,29 +3084,12 @@ By an approximate separation oracle we mean that either the queried point
  We also define 
 \begin_inset Formula 
 \[
-B_{p}(K,-\delta)\defeq\{x\in\R^{n}:B_{p}(x,\delta)\subseteq K\},
+B_{p}(K,-\delta)\defeq\{x\in\R^{n}:B_{p}(x,\delta)\subseteq K\}.
 \]
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-Throughout this section, let 
-\begin_inset Formula $K\subseteq\R^{n}$
-\end_inset
-
- be a convex set that contains 
-\begin_inset Formula $B_{2}(0,r)$
-\end_inset
-
- and is contained in 
-\begin_inset Formula $B_{2}(0,R)$
-\end_inset
-
-.
- Given some point 
+Given some point 
 \begin_inset Formula $x\notin K$
 \end_inset
 
@@ -3608,7 +3657,7 @@ Case 1:
 , we have that 
 \begin_inset Formula 
 \[
-\left|h_{x}(d_{1})-h_{x}(d_{2})\right|\leq R+\delta\leq\frac{R+\delta}{r-\delta}\norm{d_{2}-d_{1}}_{2}\,.
+\left|h_{x}(d_{1})-h_{x}(d_{2})\right|\leq R+\delta\leq\frac{R+\delta}{r-\delta}\norm{d_{2}-d_{1}}_{2}.
 \]
 
 \end_inset
@@ -3857,6 +3906,15 @@ We let
  be the time complexity of this oracle.
 \end_layout
 
+\begin_layout Standard
+We can now state the main lemma for the separation oracle.
+ Since the algorithm is randomized, we have a parameter 
+\begin_inset Formula $\rho\in(0,1)$
+\end_inset
+
+ to denote the probability of failure.
+\end_layout
+
 \begin_layout Lemma
 \begin_inset CommandInset label
 LatexCommand label
@@ -4035,7 +4093,7 @@ Now, we note that
  Hence, 
 \begin_inset Formula 
 \[
-h_{x}(0)\geq-\left(1-\frac{\varepsilon}{r}\right)\norm x_{2}\geq-\norm x_{2}+\varepsilon\kappa.
+h_{x}(0)\geq-\left(1-\frac{\varepsilon}{r}\right)\norm x_{2}\geq-\norm x_{2}.
 \]
 
 \end_inset
@@ -4043,7 +4101,7 @@ h_{x}(0)\geq-\left(1-\frac{\varepsilon}{r}\right)\norm x_{2}\geq-\norm x_{2}+\va
 Therefore, we have
 \begin_inset Formula 
 \[
-h_{x}(0)+\left\langle \tilde{g},x\right\rangle \geq-\zeta\norm x_{\infty}-12nr_{1}\kappa^{2}+\varepsilon\kappa
+h_{x}(0)+\left\langle \tilde{g},x\right\rangle \geq-\zeta\norm x_{\infty}-12nr_{1}\kappa^{2}
 \]
 
 \end_inset
@@ -4329,18 +4387,8 @@ Setting
 
 \end_layout
 
-\begin_layout Section
+\begin_layout Subsection
 Gradient from Evaluation via Auto Differentiation 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-here
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -4358,7 +4406,8 @@ name "thm:auto_diff"
 \begin_inset Formula $f:\R^{n}\rightarrow\R$
 \end_inset
 
- represented by a circuit.
+ represented by an circuit whose gates compute differentiable functions
+ of a finite number of variables.
  Suppose that 
 \begin_inset Formula $f(x)$
 \end_inset
@@ -5031,7 +5080,7 @@ reference "thm:auto_diff"
 .
 \end_layout
 
-\begin_layout Section
+\begin_layout Subsection
 Gradient from Evaluation via Complex Step Differentiation
 \end_layout
 

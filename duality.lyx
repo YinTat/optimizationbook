@@ -115,12 +115,13 @@ difficult
 \begin_inset Formula $\min_{x}f(x)$
 \end_inset
 
-.
+, i.e., one that does not satisfy some smoothness condition which direct suggests
+ a faster than worst-case optimization method.
  Often, we can decompose the difficult problem as 
 \begin_inset Formula $f(x)=g(x)+h(Ax)$
 \end_inset
 
- such that 
+ such that the (sub)gradients 
 \begin_inset Formula $\nabla g^{*}(x)$
 \end_inset
 
@@ -129,7 +130,7 @@ difficult
 \end_inset
 
  are easy to compute.
- We can compute its dual as follows:
+ Then, it is useful to compute its dual as follows:
 \begin_inset Formula 
 \begin{align*}
 \min_{x}g(x)+h(Ax) & =\min_{x}\max_{\theta}g(x)+\theta^{\top}Ax-h^{*}(\theta)\\
@@ -248,19 +249,11 @@ We call
  the dual problem.
  Often, the dual problem gives us some insight on the primal problem.
  However, we note that there are many ways to split a problem into two and
- hence many dual problems.
+ hence many candidate dual problems.
 \end_layout
 
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Need to clarify this example!!
-\end_layout
-
-\begin_layout Plain Layout
-As an example, consider the unit capacity flow problem on a graph 
+\begin_layout Example
+Consider the unit capacity flow problem on a graph 
 \begin_inset Formula $G=(V,E)$
 \end_inset
 
@@ -280,16 +273,21 @@ where
 \begin_inset Formula $A\in\R^{V\times E}$
 \end_inset
 
- encodes the flow conservation constraints, 
+ encodes the vertex-edge adjacency matrix with two nonzeros per column,
+ 
 \begin_inset Formula $d$
 \end_inset
 
- is the demand vector and 
+ is the demand vector so that 
+\begin_inset Formula $Af=d$
+\end_inset
+
+ is flow conservation, and 
 \begin_inset Formula $c$
 \end_inset
 
  is the cost vector.
- We can take the dual as follows:
+ We can write the dual as follows:
 \begin_inset Formula 
 \begin{align*}
 \max_{Af=d,-1\leq f\leq1}c^{\top}f & =\max_{-1\leq f\leq1}\min_{\phi}c^{\top}f-\phi^{\top}(Af-d)\\
@@ -302,8 +300,8 @@ where
 
 \end_layout
 
-\begin_layout Plain Layout
-For the case 
+\begin_layout Standard
+When 
 \begin_inset Formula $c=0$
 \end_inset
 
@@ -311,17 +309,11 @@ For the case
 \begin_inset Formula $d=F\cdot1_{st}$
 \end_inset
 
- (the maximum flow problem
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Why?
-\end_layout
-
+ this is the maximum flow problem with flow value 
+\begin_inset Formula $F$
 \end_inset
 
-), the dual problem is the minimum 
+, and the dual problem is the minimum 
 \begin_inset Formula $s-t$
 \end_inset
 
@@ -330,6 +322,19 @@ Why?
 \end_inset
 
 .
+ We can view 
+\begin_inset Formula $\phi$
+\end_inset
+
+ as assigning a 
+\begin_inset Quotes eld
+\end_inset
+
+potential
+\begin_inset Quotes erd
+\end_inset
+
+ to every vertex of the graph.
  Note that there are 
 \begin_inset Formula $|E|$
 \end_inset
@@ -339,11 +344,8 @@ Why?
 \end_inset
 
  variables in dual.
- So, in some sense, the dual problem is easier for dense graphs.
-\end_layout
-
-\begin_layout Plain Layout
-Although we do not have a way to turn a minimum 
+ So, in this sense, the dual problem is easier for dense graphs.
+ Although we do not have a way to turn a minimum 
 \begin_inset Formula $s-t$
 \end_inset
 
@@ -353,11 +355,6 @@ Although we do not have a way to turn a minimum
 
  flow in general, we will see various tricks to reconstruct the primal solution
  from the dual solution by modifying the problem.
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Subsection

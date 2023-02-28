@@ -644,5 +644,47 @@ literal "false"
  
 \end_layout
 
+\begin_layout Exercise
+\begin_inset CommandInset citation
+LatexCommand cite
+key "brightwell1991counting"
+literal "false"
+
+\end_inset
+
+ Given a partial order 
+\begin_inset Formula $P$
+\end_inset
+
+ on an 
+\begin_inset Formula $n$
+\end_inset
+
+-element set, it is of interest to count the number of linear extensions,
+ i.e., total orders on the set that are consistent with 
+\begin_inset Formula $P$
+\end_inset
+
+.
+ We can define an associated polyhedron, 
+\begin_inset Formula 
+\[
+Q=\left\{ x\in[0,1]^{n}:\,x_{i}<x_{j}\mbox{ if }(i,j)\in P\right\} .
+\]
+
+\end_inset
+
+Show that the number of linear extensions of 
+\begin_inset Formula $P$
+\end_inset
+
+ is exactly 
+\begin_inset Formula $\vol(Q)n!$
+\end_inset
+
+.
+ 
+\end_layout
+
 \end_body
 \end_document
