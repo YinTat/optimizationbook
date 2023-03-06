@@ -359,10 +359,6 @@ Queried with a unit vector
 \begin_deeper
 \begin_layout Itemize
 finds a vector 
-\begin_inset Formula $y\in\Rn$
-\end_inset
-
- such that 
 \begin_inset Formula $y\in K$
 \end_inset
 
@@ -387,9 +383,9 @@ asserts that
 
 \end_deeper
 \begin_layout Standard
-According to the definitions, the separation oracle gives strictly more
- information than the membership oracle and the optimization oracle gives
- more information than the validity oracle.
+According to the definitions, the separation oracle gives more information
+ than the membership oracle and the optimization oracle gives more information
+ than the validity oracle.
  Depending on the problem, usually one of the oracles will be the preferred
  or more natural way to access the convex set.
  For example, for the polytope given by 
@@ -755,6 +751,7 @@ end{tikzpicture}
 
 \begin_layout Plain Layout
 The relationships among the four oracles for convex sets.
+ The arrows are implications.
  
 \begin_inset CommandInset label
 LatexCommand label
@@ -856,6 +853,18 @@ f(x)\geq f(y)+g^{\top}(x-y)\text{ for all }x\in\Rn\label{eq:grad_guarantee}
 
 \end_inset
 
+or outputs 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Formula $f(y)$
+\end_inset
+
+ undefined.
+\begin_inset Quotes erd
+\end_inset
+
 
 \end_layout
 
@@ -908,7 +917,7 @@ Note that
 \begin_inset Formula $f^{*}$
 \end_inset
 
- is convex because it is the maximum of linear functions.
+ is convex because it is the supremum of linear functions.
  Also, we have 
 \begin_inset Formula $f^{*}(0)=-\inf_{x\in\R^{n}}f(x)$
 \end_inset
@@ -1522,14 +1531,19 @@ Since
 \begin_inset Formula $\epi f$
 \end_inset
 
- is closed and convex, Corollary 
+ is a closed, convex set, Corollary 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "cor:convex_function_intersection"
 
 \end_inset
 
- shows that it is an intersection of halfspaces, i.e., 
+ shows that it must be an intersection of halfspaces, i.e., a set 
+\begin_inset Formula ${\cal H}$
+\end_inset
+
+ s.t.
+ 
 \begin_inset Formula 
 \[
 f(x)=\sup_{\{\theta,b\}\in\mathcal{H}}\theta^{\top}x-b
@@ -1595,7 +1609,11 @@ f(x)=\sup_{\{\theta,b\}\in\mathcal{H}}\theta^{\top}x-b^{*}=\sup_{\theta}\theta^{
 \end_layout
 
 \begin_layout Exercise
-Let f be a convex function with closed epigraph.
+Let 
+\begin_inset Formula $f$
+\end_inset
+
+ be a convex function with closed epigraph.
  Show that 
 \begin_inset Formula $f=f^{*}$
 \end_inset
@@ -4043,23 +4061,10 @@ for any
 \end_inset
 
  and 
-\begin_inset Formula $h_{x}(-\frac{x}{\kappa})\ge h_{x}(0)-\frac{1}{\kappa}\norm x_{2}$
+\begin_inset Formula $h_{x}(-\frac{x}{\kappa})=h_{x}(0)-\frac{1}{\kappa}\norm x_{2}$
 \end_inset
 
 .
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-This was previously 
-\begin_inset Formula $=$
-\end_inset
-
-, check.
-\end_layout
-
-\end_inset
-
  Hence, we have
 \begin_inset Formula 
 \[
@@ -4270,7 +4275,7 @@ First, we bound the running time.
 \end_inset
 
  with 
-\begin_inset Formula $\varepsilon$
+\begin_inset Formula $\delta$
 \end_inset
 
  additive error.
@@ -4433,7 +4438,7 @@ name "thm:auto_diff"
 \end_layout
 
 \begin_layout Remark*
-In practice, the runtime is roughly like 
+In practice, the runtime is roughly 
 \begin_inset Formula $2\mathcal{T}$
 \end_inset
 
@@ -5000,11 +5005,20 @@ To bound the runtime, we define the computation graph
 \end_inset
 
 .
- Note that both the cost of computing 
+ Note that each edge is examined 
+\begin_inset Formula $O(1)$
+\end_inset
+
+ times whether evaluating 
 \begin_inset Formula $f$
 \end_inset
 
- and the cost of our algorithm is 
+ or its gradient.
+ Hence, the cost of computing 
+\begin_inset Formula $f$
+\end_inset
+
+ and the cost of our algorithm are both 
 \begin_inset Formula $\Theta(m)$
 \end_inset
 
@@ -5099,15 +5113,17 @@ Auto differentiation is great if the function can be computed exactly.
 \begin_inset Formula $f$
 \end_inset
 
- is the energy usage of some aircraft design.
- Then, 
+ is the energy usage of some aircraft design, then 
 \begin_inset Formula $f$
 \end_inset
 
  can only be computed approximately via simulation and such computation
- is memory extensive (if we need to store all intermediate variables) and
- not exact.
- To introduce complex step differentiation, we recall the formula of finite
+ is memory expensive (if we need to store all intermediate variables) and
+ not exact, so the method in the previous subsection is not practical.
+\end_layout
+
+\begin_layout Standard
+To introduce complex step differentiation, we recall the formula of finite
  difference:
 \end_layout
 
@@ -5194,7 +5210,7 @@ where
 \end_layout
 
 \begin_layout Standard
-The complex complex step differentiation uses the step
+The complex step differentiation uses the step
 \begin_inset Formula 
 \[
 \frac{\mathrm{Im}f(x+ih)}{h}\approx f'(x)+O(h^{2})f''(\zeta).

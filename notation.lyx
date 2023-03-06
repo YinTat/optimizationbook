@@ -202,6 +202,9 @@ number of nonzeros
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $O^{*}(.)$
+\end_inset
+
 
 \end_layout
 
@@ -211,6 +214,33 @@ number of nonzeros
 \begin_inset Text
 
 \begin_layout Plain Layout
+Asymptotic complexity ignoring logarithms and error terms
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $B^{n}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Unit Euclidean ball in 
+\begin_inset Formula $\R^{n}$
+\end_inset
+
 
 \end_layout
 
@@ -222,6 +252,9 @@ number of nonzeros
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $B_{p}(x,r)$
+\end_inset
+
 
 \end_layout
 
@@ -231,6 +264,17 @@ number of nonzeros
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $p$
+\end_inset
+
+-norm ball of radius 
+\begin_inset Formula $r$
+\end_inset
+
+ centered at 
+\begin_inset Formula $x$
+\end_inset
+
 
 \end_layout
 
@@ -242,6 +286,9 @@ number of nonzeros
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $\norm ._{p}$
+\end_inset
+
 
 \end_layout
 
@@ -251,27 +298,14 @@ number of nonzeros
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
+\begin_inset Formula $p$
 \end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
 
-\begin_layout Plain Layout
-
-\end_layout
-
+-norm: 
+\begin_inset Formula $\left(\sum_{i}\left|x_{i}\right|^{p}\right)^{1/p}$
 \end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
 
-\begin_layout Plain Layout
-
+ 
 \end_layout
 
 \end_inset
