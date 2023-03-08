@@ -96,7 +96,7 @@ Define
 \begin_layout Standard
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="20" columns="2">
+<lyxtabular version="3" rows="21" columns="2">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -167,7 +167,7 @@ Description
 \begin_inset Text
 
 \begin_layout Plain Layout
-inner product 
+Inner product 
 \begin_inset Formula $a^{T}b$
 \end_inset
 
@@ -191,7 +191,30 @@ nnz
 \begin_inset Text
 
 \begin_layout Plain Layout
-number of nonzeros
+Number of nonzeros
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\tilde{O}(.)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Asymptotic complexity ignoring logarithmic terms
 \end_layout
 
 \end_inset
@@ -214,7 +237,7 @@ number of nonzeros
 \begin_inset Text
 
 \begin_layout Plain Layout
-Asymptotic complexity ignoring logarithms and error terms
+Asymptotic complexity ignoring logarithmic terms and error terms
 \end_layout
 
 \end_inset

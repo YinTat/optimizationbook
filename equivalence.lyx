@@ -980,7 +980,7 @@ name "lem:gradient_conjugate"
 
 \end_inset
 
-For any continuously differentiable function 
+For any continuous function 
 \begin_inset Formula $f$
 \end_inset
 
@@ -996,8 +996,129 @@ For any continuously differentiable function
 \end_layout
 
 \begin_layout Proof
+First we observe that the supremum is achieved.
+ Fix 
+\begin_inset Formula $\theta$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $g_{\theta}(x)=\theta^{\top}x-f(x)$
+\end_inset
+
+.
+ We assume 
+\begin_inset Formula $\sup_{x}g_{\theta}(x)=f^{*}(\theta)$
+\end_inset
+
+ is finite.
+ Let 
+\begin_inset Formula $\epsilon>0$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula $g_{\theta}(x)$
+\end_inset
+
+ is a continuous function, so 
+\begin_inset Formula $S=g_{\theta}^{-1}([f^{*}(\theta)-\epsilon,\infty))$
+\end_inset
+
+ is a closed set.
+ The set 
+\begin_inset Formula $S$
+\end_inset
+
+ is not empty because there is some 
+\begin_inset Formula $x$
+\end_inset
+
+ for which 
+\begin_inset Formula $g_{\theta}(x)\ge\sup_{z}g_{\theta}(z)-\epsilon$
+\end_inset
+
+.
+ Now suppose for a contradiction that 
+\begin_inset Formula $S$
+\end_inset
+
+ is not bounded.
+ Then, there exists a sequence 
+\begin_inset Formula $x_{i}\in\R^{n}$
+\end_inset
+
+ such that 
+\begin_inset Formula $\norm{x_{i}}\ge i$
+\end_inset
+
+ and 
+\begin_inset Formula $g_{\theta}(x_{i})\ge f^{*}(\theta)-\epsilon$
+\end_inset
+
+ for all 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ By the compactness of the unit sphere, we may assume by taking a subsequence
+ that 
+\begin_inset Formula $x_{i}/\lVert x_{i}\rVert\to u$
+\end_inset
+
+ for some unit vector 
+\begin_inset Formula $u\in\R^{n}$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula $u^{\top}x_{i}/\lVert x_{i}\rVert\to u^{\top}u=1$
+\end_inset
+
+, and since 
+\begin_inset Formula $\lVert x_{i}\rVert\to\infty$
+\end_inset
+
+, we have 
+\begin_inset Formula $u^{\top}x_{i}\to\infty$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $g_{\theta+u}(x_{i})=g_{\theta}(x_{i})+u^{\top}x_{i}\ge f^{*}(\theta)-\epsilon+u^{\top}x_{i}$
+\end_inset
+
+, this means that 
+\begin_inset Formula $g_{\theta+u}(x_{i})\to\infty$
+\end_inset
+
+, contradicting 
+\begin_inset Formula $f^{*}(\theta+u)$
+\end_inset
+
+ being finite.
+ Hence, 
+\begin_inset Formula $S$
+\end_inset
+
+ is bounded and thus compact, so 
+\begin_inset Formula $g_{\theta}(x)$
+\end_inset
+
+ attains its maximum in 
+\begin_inset Formula $S$
+\end_inset
+
+, and thus in 
+\begin_inset Formula $\R^{n}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
 Let 
-\begin_inset Formula $x_{\theta}=\arg\sup_{x}\theta^{\top}x-f(x)$
+\begin_inset Formula $x_{\theta}\in\arg\sup_{x}\theta^{\top}x-f(x)$
 \end_inset
 
 .
@@ -1023,17 +1144,7 @@ f^{*}(\eta)\geq f^{*}(\theta)+x_{\theta}^{\top}(\eta-\theta)\text{ for all }\eta
 \end_inset
 
 Therefore, 
-\begin_inset Formula $\nabla f^{*}(\theta)=x_{\theta}$
-\end_inset
-
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-This part is not rigorous.
-\end_layout
-
+\begin_inset Formula $x_{\theta}\in\nabla f^{*}(\theta)$
 \end_inset
 
 .
@@ -1546,7 +1657,7 @@ reference "cor:convex_function_intersection"
  
 \begin_inset Formula 
 \[
-f(x)=\sup_{\{\theta,b\}\in\mathcal{H}}\theta^{\top}x-b
+f(x)=\sup_{(\theta,b)\in\mathcal{H}}\theta^{\top}x-b
 \]
 
 \end_inset
@@ -1572,7 +1683,15 @@ where
 \end_inset
 
 .
- For a fixed 
+ Alternatively, we can write
+\begin_inset Formula 
+\[
+\epi(f)=\bigcap_{{\cal H}=\left\{ (\theta,b):\,\forall x,\,f(x)\ge\theta^{\top}x-b\right\} }\left\{ (x,t):t\ge\theta^{\top}x-b\right\} .
+\]
+
+\end_inset
+
+For a fixed 
 \begin_inset Formula $\theta$
 \end_inset
 
@@ -1600,7 +1719,7 @@ b^{*}=\sup_{x}\theta^{\top}x-f(x)=f^{*}(\theta).
 Hence, 
 \begin_inset Formula 
 \[
-f(x)=\sup_{\{\theta,b\}\in\mathcal{H}}\theta^{\top}x-b^{*}=\sup_{\theta}\theta^{\top}x-f^{*}(\theta)=f^{**}(x).
+f(x)=\sup_{(\theta,b)\in\mathcal{H}}\theta^{\top}x-b^{*}=\sup_{\theta}\theta^{\top}x-f^{*}(\theta)=f^{**}(x).
 \]
 
 \end_inset
@@ -1960,10 +2079,14 @@ When the function
 \end_inset
 
 , we can approximate the gradient of a function by calculating a finite
- difference
+ difference for sufficiently small 
+\begin_inset Formula $h$
+\end_inset
+
+:
 \begin_inset Formula 
 \[
-\frac{\partial f}{\partial x_{i}}=\frac{f(x+he_{i})-f(x)}{h}+o(1)
+\frac{\partial f}{\partial x_{i}}=\frac{f(x+he_{i})-f(x)}{h}+O(h)
 \]
 
 \end_inset
@@ -2232,7 +2355,7 @@ Since
 Therefore, we have
 \begin_inset Formula 
 \begin{align*}
-\E_{z\in B_{\infty}(y,r_{2})}\norm{\nabla f(z)-g(y)}_{1}dz & \leq\sqrt{n}r_{2}\E_{z\in B_{\infty}(y,r_{2})}\Delta f(z)dz\\
+\E_{z\in B_{\infty}(y,r_{2})}\norm{\nabla f(z)-g(y)}_{1} & \leq\sqrt{n}r_{2}\E_{z\in B_{\infty}(y,r_{2})}\Delta f(z)\\
  & =\sqrt{n}r_{2}\Delta h(y)
 \end{align*}
 
@@ -2327,6 +2450,26 @@ Therefore, we have that
 \end_inset
 
 
+\end_layout
+
+\begin_layout Exercise
+For a Lipschitz function 
+\begin_inset Formula $f:\R^{n}\rightarrow\R,$
+\end_inset
+
+and 
+\begin_inset Formula $h=f*\chi_{B_{\infty}(0,1/2)}$
+\end_inset
+
+, prove that 
+\begin_inset Formula $h$
+\end_inset
+
+ is Lipschitz and 
+\begin_inset Formula $\Delta h(y)=\E_{z\sim B_{\infty(y,1/2)}}(\Delta f(z))$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -3031,7 +3174,7 @@ noprefix "false"
 
 \end_inset
 
-), we compute an approximate subgradient of a given Lipshitz convex function.
+), we compute an approximate subgradient of a given Lipschitz convex function.
  Using this, in the second step (Algorithm
 \begin_inset space ~
 \end_inset
@@ -3224,7 +3367,17 @@ height
 \begin_inset Formula $d$
 \end_inset
 
-.
+ (see Fig.
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:height-function"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
 \end_layout
 
 \begin_layout Standard
@@ -3253,6 +3406,13 @@ The convex height function
 
 
 \end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:height-function"
 
 \end_inset
 
@@ -3852,7 +4012,7 @@ name "def:SEP-1"
 \begin_inset Formula $\delta,\delta'>0$
 \end_inset
 
-, with probability 
+, with probability at least 
 \begin_inset Formula $1-\delta'$
 \end_inset
 
@@ -3929,7 +4089,7 @@ name "def:MEM-1"
 \begin_inset Formula $\delta,\delta'>0$
 \end_inset
 
-, with probability 
+, with probability at least 
 \begin_inset Formula $1-\delta'$
 \end_inset
 
@@ -5074,17 +5234,20 @@ To bound the runtime, we define the computation graph
 
 .
  This completes the proof.
+ 
 \end_layout
 
 \begin_layout Standard
-We note that Theorem 
+We note that an efficient implementation of the chain rule is the heart
+ of the backpropagation algorithm fo neural networks.
+ To conclude this section, we see that Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:auto_diff"
 
 \end_inset
 
- is surprising even for some simple explicit functions.
+ can be surprisingly useful even for some simple explicit functions.
 \end_layout
 
 \begin_layout Corollary
@@ -5214,11 +5377,11 @@ where
 \end_inset
 
  is the floating point precision.
- Suppose that both 
+ Suppose that 
 \begin_inset Formula $f,f',f'',f'''$
 \end_inset
 
- are bounded by constants and suppose 
+ are all bounded by constants and suppose 
 \begin_inset Formula $\epsilon=(10)^{-8}$
 \end_inset
 
@@ -5268,7 +5431,7 @@ g numbers.
 
  close to machine accuracy.
  In general, ensuring algorithms give close to machine accuracy is important
- because algorithms often stack on top of each others.
+ because algorithms often stack on top of each other.
 \end_layout
 
 \end_body

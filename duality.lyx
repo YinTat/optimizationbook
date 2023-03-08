@@ -103,7 +103,15 @@ Motivation
 
 \begin_layout Standard
 In this section, we will discuss a few algorithmic applications of duality.
- Suppose we have a 
+ In general, two reasons to consider a dual problem are that (1) the dual
+ problem might have smaller dimension and (2) (sub)gradients are easier
+ to compute.
+ We will see such examples.
+ 
+\end_layout
+
+\begin_layout Standard
+Suppose we have a 
 \begin_inset Quotes eld
 \end_inset
 

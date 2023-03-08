@@ -217,19 +217,6 @@ Should we really abuse vector? Like
 status open
 
 \begin_layout Plain Layout
-Define isotropic.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
 Notation chart.
 \end_layout
 
@@ -838,6 +825,34 @@ for any
 \begin_layout Definition
 Note that the marginal is a convolution of the density with the indicator
  function of the subspace.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+A distribution 
+\begin_inset Formula $D$
+\end_inset
+
+ with support contained in 
+\begin_inset Formula $\R^{n}$
+\end_inset
+
+ is said to be isotropic if 
+\begin_inset Formula $\E_{D}(x)=0$
+\end_inset
+
+ and 
+\begin_inset Formula $\E_{D}(xx^{\top})=I$
+\end_inset
+
+.
  
 \end_layout
 
