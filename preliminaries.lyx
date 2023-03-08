@@ -327,6 +327,83 @@ A function
  derivative is continuous.
 \end_layout
 
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+\begin_inset CommandInset label
+LatexCommand label
+name "def:lower-semi"
+
+\end_inset
+
+A function 
+\begin_inset Formula ${\displaystyle f:X\subseteq\R^{n}\to\R}$
+\end_inset
+
+ is called lower semi-continuous at a point 
+\begin_inset Formula $x_{0}\in X$
+\end_inset
+
+ if for every real 
+\begin_inset Formula $y<f(x_{0})$
+\end_inset
+
+ there exists a neighborhood 
+\begin_inset Formula $U$
+\end_inset
+
+ of 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ such that 
+\begin_inset Formula $f(x)>y$
+\end_inset
+
+ for all 
+\begin_inset Formula $x\in U$
+\end_inset
+
+.
+ Equivalently, 
+\begin_inset Formula $f$
+\end_inset
+
+ is lower semi-continuous at 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ iff 
+\end_layout
+
+\begin_layout Definition
+\begin_inset Formula 
+\[
+{\displaystyle \liminf_{x\to x_{0}}f(x)\geq f(x_{0})}.
+\]
+
+\end_inset
+
+The function is lower semi-continuous if is it so at every point in its
+ domain.
+ The definition of upper semi-continuous is analogous with the inequalities
+ reversed and 
+\begin_inset Formula $\liminf$
+\end_inset
+
+ replaced by 
+\begin_inset Formula $\limsup$
+\end_inset
+
+.
+ 
+\end_layout
+
 \begin_layout Theorem
 \begin_inset Argument 1
 status open

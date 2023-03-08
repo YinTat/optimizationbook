@@ -519,8 +519,8 @@ P=\{x\in\R_{+}^{\left|E\right|}|\sum_{e\in E}x_{e}=|V|-1,\sum_{(u,v)\in E\cap(S\
 
 \end_inset
 
-The extreme points of this polytope are exactly the indicator vectors of
- spanning trees of 
+The extreme points of this polytope can be shown to exactly correspond to
+ the indicator vectors of spanning trees of 
 \begin_inset Formula $G$
 \end_inset
 
@@ -1783,8 +1783,12 @@ Order reversal
 \end_layout
 
 \begin_layout Exercise
-Interestingly, the convex conjugate is the unique transformation on convex
- functions that satisfies both involution and order reversal.
+Interestingly, the convex conjugate is the 
+\emph on
+unique
+\emph default
+ transformation on convex functions that satisfies both involution and order
+ reversal.
  
 \end_layout
 
@@ -1809,8 +1813,27 @@ Given a transformation
 \begin_inset Formula $\mathcal{T}$
 \end_inset
 
- that maps the set of lower semi-continuous convex functions onto itself
- such that 
+ that maps the set of lower semi-continuous
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+See Def.
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:lower-semi"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+ convex functions onto itself such that 
 \begin_inset Formula $\mathcal{T}\mathcal{T}\phi=\phi$
 \end_inset
 
@@ -1991,7 +2014,18 @@ For any
 \end_layout
 
 \begin_layout Proof
-We will only prove the part 
+The existence almost everywhere is classical (Alexandrov Theorem, see e.g.,
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "constantin2018convex"
+literal "false"
+
+\end_inset
+
+; see also Rademacher's theorem about the existence of the derivative almost
+ everywhere for Lipschitz functions).
+ We will only prove the part 
 \begin_inset Formula $\E_{x\in B(0,1)}\|\nabla^{2}f(x)\|_{F}\leq nL$
 \end_inset
 
@@ -2034,6 +2068,14 @@ Hence, we have
 \[
 \E_{x\in B(0,1)}\|\nabla^{2}f(x)\|_{F}\leq\frac{|\partial B(0,1)|}{|B(0,1)|}L=nL.
 \]
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "constantin2018convex"
+literal "false"
 
 \end_inset
 
