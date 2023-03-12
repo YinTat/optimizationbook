@@ -28,7 +28,9 @@
 \output_sync 0
 \bibtex_command default
 \index_command default
+\float_placement h
 \paperfontsize default
+\spacing single
 \use_hyperref false
 \papersize default
 \use_geometry false
@@ -44,6 +46,7 @@
 \use_package undertilde 1
 \cite_engine basic
 \cite_engine_type default
+\biblio_style plain
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
@@ -362,6 +365,49 @@ where
  The following exercise asks you to prove that this bound is tight.
 \end_layout
 
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Figures/Exercise_1.1.png
+	width 75col%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Optimizing general 
+\begin_inset Formula $1$
+\end_inset
+
+-Lipschitz functions
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Exercise
 Show that if 
 \begin_inset Formula $f$
@@ -476,6 +522,41 @@ convex
 \end_layout
 
 \begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Figures/Def_1.3.png
+	width 70col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Non-Convex Function; Convex Function
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \begin_inset Separator plain
 \end_inset
 
@@ -550,140 +631,14 @@ sideways false
 status open
 
 \begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-    
-\backslash
-begin{minipage}[t]{0.47
-\backslash
-linewidth}         
-\backslash
-centering         
-\backslash
-begin{scaletikzpicturetowidth}{
-\backslash
-linewidth}             
-\backslash
-begin{tikzpicture}[label distance = 2pt, scale = 
-\backslash
-tikzscale]                 
-\backslash
-draw[-, thick, red] (-1.5, 0) -- (3.5, 0);                 
-\backslash
-draw[-, thick, {black!50!green}] (-1, 0.75) -- (2, 1.5);                 
-\backslash
-draw[blue] (-1.5, 1.0625) node[label=left:$f$] {};                 
-\backslash
-draw[domain=-1.5:3, smooth, variable=
-\backslash
-x, blue] plot ({
-\backslash
-x},{
-\backslash
-x * 
-\backslash
-x / 4 + 0.5});                 
-\backslash
-draw node[mark size=1.5pt, color={black!50!green}] at (-1, 0.75) {
-\backslash
-pgfuseplotmark{*}};                 
-\backslash
-draw node[mark size=1.5pt, color={black!50!green}] at (2, 1.5) {
-\backslash
-pgfuseplotmark{*}};                 
-\backslash
-draw node[mark size=1.5pt, color={black!50!green}] at (0.5, 0.5625) {
-\backslash
-pgfuseplotmark{*}};                 
-\backslash
-draw node[mark size=5pt, color={black!50!green}, thick, label={[black!50!green]b
-elow:$x$}] at (-1, 0) {
-\backslash
-pgfuseplotmark{|}};                 
-\backslash
-draw node[mark size=5pt, color={black!50!green}, thick, label={[black!50!green]b
-elow:$y$}] at (2, 0) {
-\backslash
-pgfuseplotmark{|}};                 
-\backslash
-draw node[mark size=5pt, color={black!50!green}, thick] at (0.5, 0) {
-\backslash
-pgfuseplotmark{|}};             
-\backslash
-end{tikzpicture}         
-\backslash
-end{scaletikzpicturetowidth}         % 
-\backslash
-caption*{Convex function}     
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{minipage}
-\end_layout
-
-\begin_layout Plain Layout
-
- 
-\backslash
-hfill     
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{minipage}[t]{0.47
-\backslash
-linewidth}         
-\backslash
-centering         
-\backslash
-begin{scaletikzpicturetowidth}{
-\backslash
-linewidth}             
-\backslash
-begin{tikzpicture}[label distance = 2pt, scale = 
-\backslash
-tikzscale]                 
-\backslash
-draw[-, thick, red] (-4, 0) -- (5, 5.196152423);                 
-\backslash
-draw node[mark size=1.5pt, color={black!50!green}, thick, label={[black!50!green]
-left:$y$}] at (0, 3.464101615) {
-\backslash
-pgfuseplotmark{*}};                 
-\backslash
-draw[-, thick, blue] (0, 0) -- (1, 1.732050808) -- (3, 1.732050808) -- (4,
- 0) -- (3, -1.732050808) -- (1, -1.732050808) -- (0, 0);                 
-\backslash
-draw[blue] (1.5, 0) node[label=$K$] {};             
-\backslash
-end{tikzpicture}         
-\backslash
-end{scaletikzpicturetowidth}         % 
-\backslash
-caption*{Convex set}     
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{minipage}
-\end_layout
+\align center
+\begin_inset Graphics
+	filename Figures/Def_1.2.png
+	width 75col%
 
 \end_inset
 
 
-\end_layout
-
-\begin_layout Plain Layout
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
@@ -964,6 +919,45 @@ reference "thm:sep"
  as general as a convex set.
 \end_layout
 
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Figures/Thrm_1.6.png
+	width 50col%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Convex set with separating hyperplane
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Corollary
 \begin_inset CommandInset label
 LatexCommand label
@@ -1106,6 +1100,45 @@ reference "chap:Elimination"
 
 , we will see that this allows us to use binary search to minimize convex
  functions.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Figures/Thrm_1.20.png
+	width 50col%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+First-order condition for convexity of a function
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Theorem
@@ -1963,131 +1996,10 @@ sideways false
 status open
 
 \begin_layout Plain Layout
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
- 
-\backslash
-begin{minipage}[t]{0.47
-\backslash
-linewidth}         
-\backslash
-centering         
-\backslash
-begin{scaletikzpicturetowidth}{
-\backslash
-linewidth}             
-\backslash
-begin{tikzpicture}[label distance = 2pt, scale = 
-\backslash
-tikzscale]                 
-\backslash
-draw[-, thick, {black!50!green}] (-1.5, 1.375) -- (-1.5, 3);              
-   
-\backslash
-draw[-, thick, {black!50!green}] (-1, 0.75) -- (-1, 3);                 
-\backslash
-draw[-, thick, {black!50!green}] (-0.5, 0.375) -- (-0.5, 3);              
-   
-\backslash
-draw[-, thick, {black!50!green}] (0, 0.25) -- (0, 3);                 
-\backslash
-draw[-, thick, {black!50!green}] (0.5, 0.375) -- (0.5, 3);                
- 
-\backslash
-draw[-, thick, {black!50!green}] (1, 0.75) -- (1, 3);                 
-\backslash
-draw[-, thick, {black!50!green}] (1.5, 1.375) -- (1.5, 3);                
- 
-\backslash
-draw[black!50!green] (1.5, 2.5) node[label=right:$
-\backslash
-epi(f)$] {};                 
-\backslash
-draw[blue] (2, 2) node[label=right:$f$] {};                 
-\backslash
-draw[domain=-2:2, smooth, variable=
-\backslash
-x, blue] plot ({
-\backslash
-x},{
-\backslash
-x * 
-\backslash
-x / 2});             
-\backslash
-end{tikzpicture}         
-\backslash
-end{scaletikzpicturetowidth}         % 
-\backslash
-caption*{Epigraph of $f$}     
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{minipage}     
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-hfill     
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{minipage}[t]{0.47
-\backslash
-linewidth}         
-\backslash
-centering         
-\backslash
-begin{scaletikzpicturetowidth}{
-\backslash
-linewidth}             
-\backslash
-begin{tikzpicture}[label distance = 2pt, scale = 
-\backslash
-tikzscale]                 
-\backslash
-draw[-, thick, red] (0, 0) -- (10, 0);                 
-\backslash
-draw[blue] (1, 4) node[label=below left:$f$] {};                 
-\backslash
-draw[-, thick, blue] (0, 5) -- (1, 5) -- (1, 4) -- (2, 4) -- (3, 3) -- (4,
- 3);                 
-\backslash
-draw[thick, blue] plot [smooth, tension=2] coordinates{(4, 3) (5, 2) (6,
- 3)};                 
-\backslash
-draw[-, thick, blue, rounded corners=7pt] (6, 3) -- (7, 3) -- (7.5, 4) --
- (8.5, 4) -- (9, 5) -- (10, 5);             
-\backslash
-end{tikzpicture}         
-\backslash
-end{scaletikzpicturetowidth}         
-\end_layout
-
-\begin_layout Plain Layout
-
-% 
-\backslash
-caption*{Quasiconvex function}     
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{minipage}
-\end_layout
+\align center
+\begin_inset Graphics
+	filename Figures/Def_1.14.png
+	width 75col%
 
 \end_inset
 
@@ -2869,6 +2781,41 @@ The standard definition of a convex function in terms of gradients requires
  For the purpose of optimization algorithms, in almost all cases, a subgradient
  will suffice in place of a gradient.
  
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Figures/Section_1.6.png
+	width 50col%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Sub-gradient
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
