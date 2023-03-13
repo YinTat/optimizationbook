@@ -1488,7 +1488,7 @@ reference "lem:IPM_progress"
 \begin_inset Formula $t$
 \end_inset
 
- by 
+ to 
 \begin_inset Formula $t(1-\frac{1}{10\sqrt{n}})$
 \end_inset
 
