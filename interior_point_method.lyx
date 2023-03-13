@@ -964,49 +964,6 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-%For the feasibility, we have that $
-\backslash
-theta 
-\backslash
-leq 
-\backslash
-frac{ 
-\backslash
-delta }{ L R } 
-\backslash
-cdot 
-\backslash
-OPT _ 
-\backslash
-delta^2 
-\backslash
-leq 2 n 
-\backslash
-delta $ because $
-\backslash
-OPT = 
-\backslash
-min_{A x = b, x 
-\backslash
-geq 0} c^
-\backslash
-top x 
-\backslash
-leq n L R$.
- 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 Note that 
 \begin_inset Formula 
 \begin{align}
@@ -1135,10 +1092,6 @@ noprefix "false"
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-Thus, we complete the proof.
 \end_layout
 
 \begin_layout Subsection
@@ -1314,7 +1267,22 @@ Suppose
 \end_layout
 
 \begin_layout Proof
-Consider the orthogonal projection matrix 
+Note that 
+\begin_inset Formula $P^{2}=P$
+\end_inset
+
+.
+ However, in general 
+\begin_inset Formula $P\neq P^{\top},$
+\end_inset
+
+i.e.
+ 
+\begin_inset Formula $P$
+\end_inset
+
+ might not be an orthogonal projection matrix.
+ It will be convienient to consider the orthogonal projection matrix 
 \begin_inset Formula $P=S^{-\frac{1}{2}}X^{\frac{1}{2}}A^{\top}(AS^{-1}XA^{\top})^{-1}AS^{-\frac{1}{2}}X^{\frac{1}{2}}$
 \end_inset
 
@@ -2184,7 +2152,7 @@ Given a convex function
 \end_inset
 
  define the norm 
-\begin_inset Formula $\norm._{x}$
+\begin_inset Formula $\norm ._{x}$
 \end_inset
 
  as 
