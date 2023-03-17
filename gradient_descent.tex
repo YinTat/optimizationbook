@@ -1,0 +1,691 @@
+%% LyX 2.3.6.1 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[oneside,english]{book}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\input{preamble.tex}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+
+\section{Philosophy}
+
+Often, optimization methods follow the following framework:
+
+\begin{algorithm2e}[H]
+
+\caption{$\mathtt{OptimizationFramework}$}
+
+\SetAlgoLined
+
+\For{$k=0,1,\cdots$}{
+
+Approximate $f$ by a simpler function $f_{k}$ according to the current
+point $x^{(k)}$
+
+Do something using $f_{k}$ (such as set $x^{(k+1)}=\arg\min_{x}f_{k}(x)$)
+
+}
+
+\end{algorithm2e}
+
+The runtime depends on the number of iterations and the cost per iteration.
+Philosophically, difficulties of a problem can never be created nor
+destroyed, only converted from one form of difficulty to another.
+When we decrease the number of iterations, the cost per iteration
+often increase. The gain of new methods often come from avoiding some
+wasted computation, utilizing some forgotten information or giving
+a faster but tailored algorithm for a sub-problem.
+
+One key question to answer in designing an optimization algorithm
+is that what the problem looks like (or how can we approximate $f$
+by a simpler function). Here are some approximation we will used in
+this textbook:
+\begin{itemize}
+\item First-order Approximation: $f(y)\approx f(x)+\left\langle \nabla f(x),y-x\right\rangle $
+(Section \ref{sec:Gradient-Descent})
+\item Second-order Approximation: $f(y)\approx f(x)+\left\langle \nabla f(x),y-x\right\rangle +(y-x)^{\top}\nabla^{2}f(x)(y-x)$
+(Section \ref{sec:Newton-Method})
+\item Stochastic Approximation: $\sum_{i}f_{i}(x)\approx f_{j}(x)$ for
+a random $j$ (Section \ref{sec:Stochastic-Gradient-Descent})
+\item Matrix Approximation: Approximate $A$ by a simpler $B$ with $\frac{1}{2}A\preceq B\preceq2A$
+(Section \ref{sec:Subspace-embedding} and Section \ref{sec:Leverage-Score-Sampling})
+\item Set Approximation: Approximate a convex set by an ellipsoid or a polytope
+(Section \ref{sec:Cutting-Plane-Methods})
+\item Barrier Approximation: Approximate a convex set by a smooth function
+that blows up on the boundary (Section \ref{sec:IPM})
+\item Polynomial Approximation: Approximate a function by a polynomial (Section
+\ref{sec:Chebyshev-Polynomials})
+\item Partial Approximation: Split the problem into two parts and approximate
+only one part
+\end{itemize}
+Here are other approximation not covered:
+\begin{itemize}
+\item Taylor Approximation: $f(y)\approx\sum_{k=0}^{K}D^{k}f(x)[y-x]^{k}$
+\item Mixed $\ell^{2}$-$\ell^{p}$ Approximation: $f(y)\approx f(x)+\left\langle \nabla f(x),y-x\right\rangle +\sum_{i=1}^{n}\alpha_{i}(y_{i}-x_{i})^{2}+\beta_{i}(y_{i}-x_{i})^{p}$
+\item Stochastic Matrix Approximation: Approximate $A$ by a simpler random
+$B$ with $B\preceq2A$ and $\E B\succeq\frac{1}{2}A$ 
+\item Homotopy Method: Approximate a function by a family of functions 
+\item ...(Please give me more examples here)...
+\end{itemize}
+The second question to answer is how we maintain all the different
+approximations we created in each step. One simple way would be forget
+the approximation we got in previous steps, but this is often not
+optimal. Another way is to keep all previous approximations/information
+(such as Section \ref{sec:Cutting-Plane-Methods}). Often the best
+way will be combining previous and current approximation carefully
+to a better approximation (such as Section \ref{sec:Accelerated-Gradient-Descent}).
+
+\section{Basic Algorithm\label{sec:Gradient-Descent}}
+
+Perhaps the most natural algorithm for optimization is gradient descent.
+In fact it has many variants with different guarantees. Assume that
+the function $f$ to be optimized is continuously differentiable.
+By basic calculus, either the minimum (or point achieving the minimum)
+is unbounded or the gradient is zero at a minimum. So we try to find
+a point with gradient close to zero (which, of course, does not guarantee
+global optimality). The basic algorithm is the following:
+
+\begin{algorithm2e}[H]
+
+\caption{$\mathtt{GradientDescent}$ (GD)}
+
+\SetAlgoLined
+
+\textbf{Input:} Initial point $x^{(0)}\in\Rn$, step size $h>0$.
+
+\For{$k=0,1,\cdots$}{
+
+\lIf{$\|\nabla f(x^{(k)})\|_{2}\leq\epsilon$}{\Return$x^{(k)}$}
+
+\tcp{Alternatively, one can use $x^{(k+1)}\leftarrow\text{argmin}_{x=x^{(k)}+t\nabla f(x^{(k)})}f(x)$.}
+
+$x^{(k+1)}\leftarrow x^{(k)}-h\cdot\nabla f(x^{(k)})$.
+
+}
+
+\end{algorithm2e}
+
+One can view gradient descent as a greedy method for solving $\min_{x\in\Rn}f(x)$.
+At a point $x$, gradient descent goes to the minimizer of 
+\[
+\min_{\|\Delta\|_{2}\leq\eta}f(x)+\nabla f(x)^{\top}\Delta.
+\]
+The term $f(x)+\nabla f(x)^{\top}\Delta$ is simply the first-order
+approximation of $f(x+\Delta)$. Note that in this problem, the current
+point $x$ is fixed and we are optimizing the step $\Delta$. Certainly,
+there is no inherent reason for using first-order approximation and
+the Euclidean norm $\|x\|_{2}$. For example, if you use second-order
+approximation, then you would get a method involving Hessian of $f$.
+
+The step size of the algorithm usually either uses a fixed constant,
+or follows a predetermined schedule, or determined using a line search.
+
+If the iteration stops, we get a point with $\norm{\nabla f(x)}_{2}\le\epsilon$.
+Why is this good? The hope is that $x$ is a near-minimum in the neighborhood
+of $x$. However, this might not be true if the gradient can fluctuate
+wildly:
+\begin{defn}
+We call $f$ has $L$-Lipschitz gradient if $\nabla f$ is $L$-Lipschitz,
+namely, $\|\nabla f(x)-\nabla f(y)\|_{2}\leq L\|x-y\|_{2}$ for all
+$x,y$.
+
+Similar to Theorem \ref{thm:equ_convex}, we have the following equivalent:
+\end{defn}
+
+\begin{thm}
+\label{thm:L_equ_def}Let $f\in\mathcal{C}^{2}(\Rn)$. For any $\mu\geq0$,
+the following are equivalent:
+\begin{enumerate}
+\item $\|\nabla f(x)-\nabla f(y)\|_{2}\leq L\|x-y\|_{2}$ for all $x,y\in\Rn$.
+\item $-L\preceq\nabla^{2}f(x)\preceq L$ for all $x\in\Rn$.
+\item $f(y)=f(x)+\nabla f(x)^{\top}(y-x)\pm\frac{L}{2}\|y-x\|_{2}^{2}$
+for all $x,y\in\Rn$.
+\end{enumerate}
+\end{thm}
+
+\begin{proof}
+Suppose (1) holds. By the definition of $\nabla^{2}f$, we have
+\[
+\nabla^{2}f(x)v=\lim_{h\rightarrow0}\frac{\nabla f(x+hv)-\nabla f(x)}{h}.
+\]
+Since $\|\frac{\nabla f(x+hv)-\nabla f(x)}{h}\|_{2}\leq\frac{L}{h}\|hv\|_{2}=L\|v\|_{2}$,
+we have $\|\nabla^{2}f(x)v\|_{2}\leq L\|v\|_{2}$. This proves (2).
+
+Suppose (2) holds. Since $\nabla f(x)-\nabla f(y)=\int_{0}^{1}\nabla^{2}f(y+t(x-y))(x-y)dt$,
+we have that
+\[
+\|\nabla f(x)-\nabla f(y)\|_{2}\leq\int_{0}^{1}\|\nabla^{2}f(y+t(x-y))\|_{\op}\|x-y\|_{2}dt\leq L\|x-y\|_{2}.
+\]
+This gives (1).
+
+Suppose (2) holds. By Taylor expansion, we have
+\[
+f(y)=f(x)+\nabla f(x)^{\top}(y-x)+\int_{0}^{1}(1-t)(y-x)^{\top}\nabla^{2}f(x+t(y-x))(y-x)dt.
+\]
+Since $-L\preceq\nabla^{2}f(x)\preceq L$, we have
+\[
+(y-x)^{\top}\nabla^{2}f(x+t(y-x))(y-x)=\pm L\|y-x\|^{2}.
+\]
+Using this gives (3).
+
+Suppose (3) holds, then $g(x)=f(x)+\frac{L}{2}\|x\|^{2}$ satisfies
+$g(y)\geq g(x)+\nabla g(x)^{\top}(y-x)$ for all $x,y\in\Rn$. Theorem
+\ref{thm:equ_convex} shows that $g$ is convex and $\nabla^{2}g(x)\succeq0$.
+This shows that $\nabla^{2}f(x)\succeq-L$. Similarly, by taking $g(x)=\frac{L}{2}\|x\|^{2}-f(x)$,
+we have $\nabla^{2}f(x)\preceq L$. Hence, this gives (2).
+\end{proof}
+With this equivalent definition, we can have an alternative view of
+gradient descent. Each step, we perform
+\[
+x^{(k+1)}=\arg\min_{y}f(x^{(k)})+\left\langle \nabla f(x^{(k)}),y-x^{(k)}\right\rangle +\frac{L}{2}\|y-x^{(k)}\|_{2}^{2}.
+\]
+To see this is the same step, we let $g(y)=f(x^{(k)})+\left\langle \nabla f(x^{(k)}),y-x^{(k)}\right\rangle +\frac{L}{2}\|y-x^{(k)}\|_{2}^{2}$.
+The optimality condition shows that $0=\nabla g(x^{(k+1)})=\nabla f(x^{(k)})+L(x^{(k+1)}-x^{(k)})$.
+Hence, this gives the step $x^{(k+1)}=x^{(k)}-\frac{1}{L}\nabla f(x^{(k)})$.
+
+By Theorem \ref{thm:L_equ_def}, we know that $g$ is an upper bound
+of $f$, namely $g(y)\geq f(y)$ for all $y$. In general, many optimization
+methods involves minimizing some upper bound function every step.
+Note that the progress we made for $f$ is at least the progress we
+made for $g$. If $g$ is exactly $f$, we can get all the progress
+we can make in one step. Hence, we should believe if $g$ is a better
+approximation of $f$, then we are making more progress. For gradient
+descent, it uses the simplest first-order approximation. Although
+this is not the best approximation one can come up, but it is robust
+enough to use in all sort of applications.
+
+\subsection{Analysis for general functions}
+
+Gradient descent works for both convex and non-convex functions. For
+non-convex function, we can only find a point with small gradient
+(called an approximate saddle point).
+\begin{thm}
+\label{thm:gd_general}Let $f$ be a function with $L$-Lipschitz
+gradient and $x^{*}$ be any minimizer of $f$. The $\mathtt{GradientDescent}$
+with step size $h=\frac{1}{L}$ outputs a point $x$ such that $\|\nabla f(x)\|_{2}\leq\epsilon$
+in $\frac{2L}{\epsilon^{2}}\left(f(x^{(0)})-f(x^{*})\right)$ iterations.
+\end{thm}
+
+The proof idea involves showing the function value $f(x)$ decreases
+by at least $\frac{\epsilon^{2}}{2L}$ when $\|\nabla f(x)\|_{2}\geq\epsilon$.
+Since the function value can only decrease by at most $f(x^{(0)})-f(x^{*})$,
+this bounds the number of iterations.
+\begin{lem}
+\label{lem:gradient_progress}For any $f\in\mathcal{C}^{2}(\R^{n})$
+with $L$-Lipschitz gradient, we have
+\[
+f(x-\frac{1}{L}\nabla f(x))\leq f(x)-\frac{1}{2L}\|\nabla f(x)\|_{2}^{2}.
+\]
+\end{lem}
+
+\begin{proof}
+Lemma \ref{lem:second_order} shows that 
+\[
+f(x-\frac{1}{L}\nabla f(x))=f(x)-\frac{1}{L}\|\nabla f(x)\|_{2}^{2}+\frac{1}{2L^{2}}\nabla f(x)^{\top}\nabla^{2}f(z)\nabla f(x)
+\]
+for some $z\in[x,x-\frac{1}{L}\nabla f(x)]$. Since $\|\nabla^{2}f(x)\|_{\op}\leq L$,
+we have that $\nabla f(x)^{\top}\nabla^{2}f(z)\nabla f(x)\leq L\cdot\|\nabla f(x)\|_{2}^{2}$.
+Hence, we have the result.
+\end{proof}
+%
+\begin{proof}[Proof of Theorem \ref{thm:gd_general}]
+Since each step of gradient descent decreases $f$ by at least $\frac{\epsilon^{2}}{2L}$
+and since we can decrease $f$ by at most $f(x^{(0)})-f^{*}$, we
+have the result.
+\end{proof}
+Despite the simplicity of the algorithm and the proof, it is known
+that this is the best one can do via any algorithm for this general
+setting \cite{carmon2017lower}.
+
+\section{Analysis for convex functions}
+
+Assuming the function is convex, we can prove that gradient descent
+in fact converges to the global minimum. In particular, when $\|\nabla f(x)\|_{2}$
+is small, convexity shows that $f(x)-f^{*}$ is small (Theorem \ref{thm:first_order}).
+\begin{lem}
+\label{lem:f_diff_diameter}For any convex $f\in\mathcal{C}^{1}(\Rn)$,
+we have that $f(x)-f(y)\leq\|\nabla f(x)\|_{2}\cdot\|x-y\|_{2}$ for
+all $x,y$.
+\end{lem}
+
+\begin{proof}
+Theorem \ref{thm:first_order} and Cauchy-Schwarz inequality shows
+that 
+\[
+f(x)-f(y)\leq\left\langle \nabla f(x),x-y\right\rangle \leq\|\nabla f(x)\|_{2}\cdot\|x-y\|_{2}.
+\]
+\end{proof}
+This in turns give a better bound on the number of iterations because
+the bound in Theorem \ref{thm:gd_general} is affected by $f(x)-f^{*}$.
+\begin{thm}
+\label{thm:gd_convex}Let $f\in\mathcal{C}^{2}(\R^{n})$ be convex
+with $L$-Lipschitz gradient and $x^{*}$ be any minimizer of $f$.
+With step size $h=\frac{1}{L}$, the sequence $x^{(k)}$ in $\mathtt{GradientDescent}$
+satisfies
+\[
+f(x^{(k)})-f(x^{*})\leq\frac{2LR^{2}}{k+4}\text{ where }R=\max_{f(x)\leq f(x^{(0)})}\|x-x^{*}\|_{2}.
+\]
+\end{thm}
+
+\begin{proof}
+Let $\epsilon_{k}=f(x^{(k)})-f(x^{*})$. Lemma \ref{lem:gradient_progress}
+shows that
+\[
+f(x^{(k+1)})=f(x^{(k)}-\frac{1}{L}\nabla f(x^{(k)}))\leq f(x^{(k)})-\frac{1}{2L}\|\nabla f(x^{(k)})\|_{2}^{2}.
+\]
+Subtracting $f(x^{*})$ from both sides, we have $\epsilon_{k+1}\leq\epsilon_{k}-\frac{1}{2L}\|\nabla f(x^{(k)})\|_{2}^{2}$.
+Lemma \ref{lem:f_diff_diameter} shows that 
+\[
+\epsilon_{k}\leq\|\nabla f(x^{(k)})\|_{2}\cdot\|x^{(k)}-x^{*}\|_{2}\leq\|\nabla f(x^{(k)})\|_{2}\cdot R.
+\]
+Therefore, we have that
+\[
+\epsilon_{k+1}\leq\epsilon_{k}-\frac{1}{2L}\left(\frac{\epsilon_{k}}{R}\right)^{2}.
+\]
+Also, we have that 
+\[
+\epsilon_{0}=f(x^{(0)})-f^{*}\leq\nabla f(x^{*})^{\top}(x^{(0)}-x^{*})+\frac{L}{2}\|x^{(0)}-x^{*}\|_{2}^{2}\leq\frac{LR^{2}}{2}.
+\]
+Now, we need to solve the recursion. We note that
+\[
+\frac{1}{\epsilon_{k+1}}-\frac{1}{\epsilon_{k}}=\frac{\epsilon_{k}-\epsilon_{k+1}}{\epsilon_{k}\epsilon_{k+1}}\geq\frac{\epsilon_{k}-\epsilon_{k+1}}{\epsilon_{k}^{2}}\geq\frac{1}{2LR^{2}}.
+\]
+Therefore, after $k$ iterations, we have
+\[
+\frac{1}{\epsilon_{k}}\geq\frac{1}{\epsilon_{0}}+\frac{k}{2LR^{2}}\geq\frac{2}{LR^{2}}+\frac{k}{2LR^{2}}=\frac{k+4}{2LR^{2}}.
+\]
+\end{proof}
+This style of proof is typical in optimization. It shows that when
+the gradient is large, then we make large progress and when the gradient
+is small, we are close to optimal. 
+
+This proof did not use any property of $\ell_{2}$ or inner product
+space. Therefore, it works for general norms if the gradient descent
+step is defined using that norm. For the case of $\ell_{2}$, one
+can prove that $\|x^{(k)}-x^{*}\|_{2}$ is in fact decreasing:
+\begin{lem}
+For $h\leq\frac{2}{L}$, we have that $\|x^{(k+1)}-x^{*}\|_{2}\leq\|x^{(k)}-x^{*}\|_{2}$.
+Therefore, for $h=\frac{1}{L}$, we have
+\[
+f(x^{(k)})-f(x^{*})\leq\frac{2L\|x^{(0)}-x^{*}\|_{2}^{2}}{k+4}.
+\]
+\end{lem}
+
+\begin{proof}
+We compute the distance as follows:
+\begin{align*}
+\|x^{(k+1)}-x^{*}\|_{2}^{2} & =\|x^{(k)}-x^{*}-h\nabla f(x^{(k)})\|_{2}^{2}\\
+ & =\|x^{(k)}-x^{*}\|_{2}^{2}-2h\left\langle \nabla f(x^{(k)}),x^{(k)}-x^{*}\right\rangle +h^{2}\|\nabla f(x^{(k)})\|^{2}\\
+ & =\|x^{(k)}-x^{*}\|_{2}^{2}-2h\left\langle \nabla f(x^{(k)})-\nabla f(x^{*}),x^{(k)}-x^{*}\right\rangle +h^{2}\|\nabla f(x^{(k)})-\nabla f(x^{*})\|^{2}.
+\end{align*}
+To handle the term $\nabla f(x)-\nabla f(x^{*})$, we note that
+\[
+\nabla f(x^{(k)})-\nabla f(x^{*})=H(x^{(k)}-x^{*})
+\]
+with $H=\int_{0}^{1}\nabla^{2}f(x^{*}+t(x^{(k)}-x^{*}))dt$. Since
+$0\preceq H\preceq L$ and that $H\succeq\frac{1}{L}H^{2}$, we have
+\begin{align*}
+\left\langle \nabla f(x^{(k)})-\nabla f(x^{*}),x^{(k)}-x^{*}\right\rangle  & =(x^{(k)}-x^{*})^{\top}H(x^{(k)}-x^{*})\\
+ & \geq\frac{1}{L}(x^{(k)}-x^{*})^{\top}H^{2}(x^{(k)}-x^{*})\\
+ & =\frac{1}{L}\|\nabla f(x^{(k)})-\nabla f(x^{*})\|^{2}.
+\end{align*}
+Hence, we have
+\begin{align*}
+\|x^{(k+1)}-x^{*}\|_{2}^{2} & \leq\|x^{(k)}-x^{*}\|_{2}^{2}-(\frac{2h}{L}-h^{2})\|\nabla f(x^{(k)})-\nabla f(x^{*})\|^{2}\\
+ & \leq\|x^{(k)}-x^{*}\|_{2}^{2}.
+\end{align*}
+The error estimate follows from $\|x^{(k)}-x^{*}\|_{2}^{2}\leq\|x^{(0)}-x^{*}\|_{2}^{2}$
+for all $k$ and the proof in Theorem \ref{thm:gd_convex}.
+\end{proof}
+Rewriting the bound, Theorem \ref{thm:gd_convex} shows it takes $\frac{2L\|x^{(0)}-x^{*}\|_{2}^{2}}{\epsilon}$
+iterations. Compare to the bound $\frac{2L}{\epsilon^{2}}\left(f(x^{(0)})-f^{*}\right)$
+in Theorem \ref{thm:gd_general}, it seems the new result has a strictly
+better dependence on $\epsilon$. However, this is not true because
+one is measuring the error in terms of $\|\nabla f(x)\|_{2}$ and
+one is measuring the error in terms of $f(x)-f^{*}$. For $f(x)=x^{2}/2$,
+we have $f(x)-f^{*}=\|\nabla f(x)\|_{2}^{2}$ and hence both have
+the same dependence on $\epsilon$ for this particular function. So,
+the real benefit of Theorem \ref{thm:gd_convex} is its global convergence.
+
+\section{Strongly Convex Functions}
+
+We note that the convergence rate $\epsilon^{-1}$ or $\epsilon^{-2}$
+is not great if we need to solve the problem up to machine accuracy.
+Getting to machine accuracy is sometimes important if the optimization
+problem is used as a subroutine. We note that for the case $f(x)=\frac{1}{2}\|x\|_{2}^{2}$,
+gradient descent with step size $h=1$ takes exactly $1$ step. Therefore,
+it is natural to ask if one can improve the bound for functions close
+to quadratics. This motivates the following assumption:
+\begin{defn}
+We call a function $f\in\mathcal{C}^{1}(\Rn)$ is $\mu$-strongly
+convex if for any $x,y\in\Rn$ 
+\[
+f(y)\geq f(x)+\nabla f(x)^{\top}(y-x)+\frac{\mu}{2}\|y-x\|_{2}^{2}.
+\]
+\end{defn}
+
+Similar to the convex case (Theorem \ref{thm:equ_convex}), we have
+the following:
+\begin{thm}
+Let $f\in\mathcal{C}^{2}(\Rn)$. For any $\mu\geq0$, the following
+are equivalent:
+\begin{itemize}
+\item $f(\lambda x+(1-\lambda)y)\leq\lambda f(x)+(1-\lambda)f(y)-\frac{1}{2}\mu\lambda(1-\lambda)\|x-y\|_{2}^{2}$
+for all $x,y\in\Rn$ and $\lambda\in[0,1]$.
+\item $f(y)\geq f(x)+\nabla f(x)^{\top}(y-x)+\frac{\mu}{2}\|y-x\|_{2}^{2}$
+for all $x,y\in\Rn$.
+\item $\nabla^{2}f(x)\succeq\mu$ for all $x\in\Rn$
+\end{itemize}
+\end{thm}
+
+\begin{proof}
+It follows from applying Theorem \ref{thm:equ_convex} on the function
+$g(x)=f(x)-\frac{\mu}{2}\|x\|^{2}$.
+\end{proof}
+Now, we study gradient descent for $\mu$-strongly convex functions.
+\begin{thm}
+\label{thm:gd_convex_strongly}Let $f\in\mathcal{C}^{2}(\R^{n})$
+be $\mu$-strongly convex with $L$-Lipschitz gradient and $x^{*}$
+be any minimizer of $f$. With step size $h=\frac{1}{L}$, the sequence
+$x^{(k)}$ in $\mathtt{GradientDescent}$ satisfies
+\[
+f(x^{(k)})-f(x^{*})\leq(1-\frac{\mu}{L})^{k}(f(x^{(0)})-f(x^{*})).
+\]
+\end{thm}
+
+In a later chapter, we will see that an \emph{accelerated }variant
+of gradient descent improves this further by replacing the $\frac{\mu}{L}$
+term with $\sqrt{\frac{\mu}{L}}$.
+\begin{proof}
+Lemma \ref{lem:gradient_progress} shows that
+\begin{equation}
+f(x^{(k+1)})-f^{*}\leq f(x^{(k)})-f^{*}-\frac{1}{2L}\|\nabla f(x^{(k)})\|_{2}^{2}.\label{eq:strong_convex_progress}
+\end{equation}
+Next, the definition of $\mu$ strong convexity implies that
+\[
+f(x^{*})\geq f(x^{(k)})+\nabla f(x^{(k)})^{\top}(x^{*}-x^{(k)})+\frac{\mu}{2}\|x^{*}-x^{(k)}\|_{2}^{2}.
+\]
+Rearranging the term, we have
+\begin{equation}
+f(x^{(k)})-f^{*}\leq\nabla f(x^{(k)})^{\top}(x^{(k)}-x^{*})-\frac{\mu}{2}\|x^{(k)}-x^{*}\|_{2}^{2}\leq\max_{\Delta}\left(\nabla f(x^{(k)})^{\top}\Delta-\frac{\mu}{2}\|\Delta\|_{2}^{2}\right)=\frac{1}{2\mu}\|\nabla f(x^{(k)})\|_{2}^{2}.\label{eq:err_vs_grad}
+\end{equation}
+Putting this into the gradient term in (\ref{eq:strong_convex_progress})
+gives
+\[
+f(x^{(k+1)})-f^{*}\leq(1-\frac{\mu}{L})(f(x^{(k)})-f^{*}).
+\]
+
+The conclusion follows.
+\end{proof}
+It is natural to ask to what extent the assumption of convexity is
+essential for the bounds we obtained. This is the motivation for the
+next exercises.
+\begin{xca}
+Suppose $f$ satisfies $\left\langle \nabla f(x),x-x^{*}\right\rangle \ge\alpha\left(f(x)-f(x^{*})\right)$.
+Derive a bound similar to Theorem \ref{thm:gd_convex} for gradient
+descent.
+\end{xca}
+
+\begin{xca}
+Suppose $f$ satisfies $\norm{\nabla f(x)}_{2}^{2}\ge\mu\left(f(x)-f(x^{*})\right).$
+Derive a bound similar to Theorem \ref{thm:gd_convex_strongly} for
+gradient descent.
+\end{xca}
+
+\begin{xca}
+Give examples of nonconvex functions satisfying the above conditions.
+(Note: convex functions satisfy the first with $\alpha=1$ and $\mu$-strongly
+convex functions satisfy the second.)
+\end{xca}
+
+
+\section{Line Search}
+
+In practice, we often stop the line search early because we can make
+larger progress via a new direction. One standard stopping condition
+is called Wolfe conditions.
+\begin{defn}
+A step size $h$ satisfies the Wolfe conditions with respect to direction
+$p$ if
+\begin{enumerate}
+\item $f(x+hp)\leq f(x)+c_{1}h\cdot p^{\top}\nabla f(x)$,
+\item $-p^{\top}\nabla f(x+hp)\leq-c_{2}p^{\top}\nabla f(x)$.
+\end{enumerate}
+with $0<c_{1}<c_{2}<1$.
+\end{defn}
+
+Let the object progress $\phi(h)=f(x)-f(x+hp)$. The first condition
+requires the algorithm makes sufficient progress ($\phi(h)\geq c_{1}h\cdot\phi'(0)$).
+The second condition requires the slop reduced significantly ($\phi'(h)\leq c_{2}\phi'(0)$).
+One can think the first condition gives a upper bound on $h$ while
+the second condition gives a lower bound on $h$. In general, step
+size satisfying the Wolfe conditions will be larger than the step
+size $h=\frac{1}{L}$. In particular, one can show the following:
+\begin{xca}
+Suppose $f$ is $\mu$-strongly convex and has $L$-Lipschitz gradient.
+If a step size $h$ satisfies the Wolfe conditions with the direction
+$p=-\nabla f(x)$, then we have
+\[
+\frac{2(1-c_{1})}{\mu}\geq h\geq\frac{1-c_{2}}{L}.
+\]
+\end{xca}
+
+As a corollary, we have that the function value progress given by
+such step is at least $\Omega(\|\nabla f(x)\|^{2}/L)$. Therefore,
+this gives the same guarantee Theorem \ref{thm:gd_convex} and Theorem
+\ref{thm:gd_convex_strongly}. One common way to via backtracking
+line search. The algorithm starts with a large step size and decreases
+it by a constant factor when the Wolfe conditions are violated. For
+gradient descent, the next step involves exactly computing $\nabla f(x+hp)$
+and hence if our line search accepts the step size immediately, the
+line search almost cost nothing. Therefore, if we maintain a step
+size throughout the algorithm and decreases it only when it violates
+the condition, the total cost of the line search will be only an additive
+logarithmic number of gradient calls throughout the algorithm and
+it is negligible.
+
+Finally, we note that for problems of the form $\sum_{i}f_{i}(a_{i}^{\top}x)$,
+the bottleneck is often in computing $Ax$. In this case, exact line
+search is almost free because we can store the vectors $Ax$ and $Ah$.
+
+\section{Generalizing Gradient Descent}
+
+Now, we study what properties gradient descent are using for the strongly
+convex case. There are many ways to generalize it. One way is to view
+gradient descent approximate the function $f$ by splitting it into
+two terms, one term is the first-order approximation and the second
+term is just an $\ell_{2}$ norm. More generally, we can split a function
+into two terms, one term is easy to optimize and the another term
+we need to approximate with some error. Precisely, we consider the
+following 
+\begin{defn}
+We say $g+h$ is a $\alpha$-approximation to $f$ at $x$ if
+\begin{itemize}
+\item $g$ is convex, $g(x)=f(x)$,
+\item $h(x)=0$ and $h((1-\alpha)x+\lambda\widehat{x})\leq\lambda^{2}h(\widehat{x})$
+for all $\widehat{x}$,
+\item $g(y)+\alpha h(y)\leq f(y)\leq g(y)+h(y)\text{ for all }y.$ 
+\end{itemize}
+\end{defn}
+
+To understand this assumption, we note that if $f$ is $\mu$-strongly
+convex with $L$-Lipschitz gradient, then for any $x$, we can use
+$\alpha=\frac{\mu}{L}$ and
+\begin{align*}
+g(y) & =f(x)+\left\langle \nabla f(x),y-x\right\rangle ,\\
+h(y) & =\frac{L}{2}\|y-x\|^{2}.
+\end{align*}
+The condition requires $h$ converging to $0$ quadratically when
+$y\rightarrow x$. 
+
+Now, we consider the following algorithm:
+
+\begin{algorithm2e}[H]
+
+\caption{$\mathtt{GeneralizedGradientDescent}$}
+
+\SetAlgoLined
+
+\textbf{Input:} Initial point $x^{(0)}\in\Rn$, approximation factor
+$\alpha>0$.
+
+\For{$k=0,1,\cdots$}{
+
+Find a $\alpha$-approximation of $f$ at $x^{(k)}$ given by $g^{(k)}(x)+h^{(k)}(x)$.
+
+$x^{(k+1)}\leftarrow\arg\min_{y}g^{(k)}(y)+h^{(k)}(y)$.
+
+}
+
+\end{algorithm2e}
+\begin{thm}
+\label{thm:gd_general_apx}Given a convex function $f$ that we can
+find a $\alpha$-approximation at any $x$. Let $x^{*}$ be any minimizer
+of $f$. Then the sequence $x^{(k)}$ in $\mathtt{GeneralizedGradientDescent}$
+satisfies
+\[
+f(x^{(k)})-f(x^{*})\leq(1-\alpha)^{k}(f(x^{(0)})-f(x^{*})).
+\]
+\end{thm}
+
+\begin{proof}
+Using that $g^{(k)}+h^{(k)}$ is an upper bound of $f$, we have that
+our progress on $f$ is larger than the best possible progress on
+$g^{(k)}+h^{(k)}$:
+\[
+f(x^{(k+1)})\leq\min_{y}g^{(k)}(y)+h^{(k)}(y).
+\]
+To bound the best possible progress, we consider $\widehat{x}=\arg\min_{y}g^{(k)}(y)+\alpha h^{(k)}(y)$
+and $z=(1-\alpha)x^{(k)}+\alpha\widehat{x}$. We have that
+\begin{align*}
+\min_{y}g^{(k)}(y)+h^{(k)}(y) & \leq g^{(k)}(z)+h^{(k)}(z)\\
+ & \leq(1-\alpha)g^{(k)}(x^{(k)})+\alpha g^{(k)}(\widehat{x})+\alpha^{2}h^{(k)}(\widehat{x})\\
+ & \leq(1-\alpha)g^{(k)}(x^{(k)})+\alpha(g^{(k)}(x^{*})+\alpha h^{(k)}(x^{*}))
+\end{align*}
+where we used $g^{(k)}$ is convex and the assumption on $h$ in the
+second inequality, we used $\widehat{x}$ minimizes $g^{(k)}+\alpha h^{(k)}$.
+
+Combining both and using $g^{(k)}+\alpha h^{(k)}$ is a lower bound
+of $f$, we have
+\[
+f(x^{(k+1)})\leq(1-\alpha)f(x^{(k)})+\alpha f(x^{*}).
+\]
+This gives the result.
+\end{proof}
+Although Theorem \ref{thm:gd_general_apx} looks weird, it captures
+many theorems. Here we list some of them.
+
+\subsubsection*{Projected Gradient Descent / Proximal Gradient Descent}
+
+Given a convex set $K$, a $\mu$-strongly convex function $f$ with
+$L$-Lipschitz gradient, we consider the problem
+\[
+\min_{x\in K}f(x).
+\]
+To apply Theorem \ref{thm:gd_general_apx} to $F(x)\defeq f(x)+\delta_{K}(x)$,
+for any $x$, we consider the functions
+\begin{align*}
+g(y) & =f(x)+\left\langle \nabla f(x),y-x\right\rangle +\delta_{K}(y),\\
+h(y) & =\frac{L}{2}\|y-x\|_{2}^{2}.
+\end{align*}
+Note that $g+h$ is a $\frac{\mu}{L}$-approximation to $F$. Theorem
+\ref{thm:gd_general_apx} shows the $\mathtt{GeneralizedGradientDescent}$
+converges in $O(\frac{L}{\mu}\log(1/\epsilon))$ steps where each
+step involves solving the problem
+\[
+\min_{y\in K}f(x)+\left\langle \nabla f(x),y-x\right\rangle +\frac{L}{2}\|y-x\|_{2}^{2}.
+\]
+
+More generally, this works for problems of the form
+\[
+\min_{x}f(x)+\phi(x)
+\]
+for some convex function $\phi(x)$. Theorem \ref{thm:gd_general_apx}
+requires us to solve a sub-problem of the form
+\[
+\min_{y}f(x)+\left\langle \nabla f(x),y-x\right\rangle +\frac{L}{2}\|y-x\|_{2}^{2}+\phi(y).
+\]
+
+
+\subsubsection*{$\ell^{p}$ Regression}
+
+One can apply this framework for optimizing $\ell^{p}$ regression
+$\min_{x}\|Ax-b\|_{p}^{p}$. For example, one can approximate the
+function $f(x)=x^{p}$ by $g(y)=x^{p}+px^{p-1}(y-x)$ and $h(y)=p2^{p-1}(x^{p-2}(y-x)^{2}+(y-x)^{p})$.
+Using this, one can show that one can solve the problem
+\[
+\min_{x}\|Ax-b\|_{p}^{p}
+\]
+using the problem
+\[
+\min_{y}v^{\top}y+\|DA(y-x)\|_{2}^{2}+\|A(y-x)\|_{p}^{p}
+\]
+for some vector $v$ and some diagonal matrix $D$. One can show that
+Theorem \ref{thm:gd_general_apx} only need to solve sub-problem approximately.
+Therefore, this shows that one can solve $\ell^{p}$ regression with
+$\log(1/\epsilon)$ converging by solving mixed $\ell_{2}+\ell_{p}$
+regression approximately. 
+
+Recently, \cite{adil2019iterative} and \cite{kyng2019flows} applied
+these to obtain the fastest algorithms for $\ell^{p}$ regression
+and the $\ell^{p}$ flow problem. \cite{kathuria2020unit} showed
+that the $\ell^{p}$ flow problem can be used as a subroutine to solve
+uncapacitied maximum flow problem in $m^{4/3+o(1)}$ time.
+
+\subsubsection*{Other assumptions}
+
+Instead of assuming $h(x)$ converges to $0$ quadratically, \cite{lu2016relatively}
+proved Theorem \ref{thm:gd_general_apx} assuming $h$ is given by
+some divergence and showed its applications in D-optimal design.
+
+For some special case, it is possible to analyze this algorithm without
+convexity. One prominent application is compressive sensing: 
+\[
+\min_{\|x\|_{0}\leq k}\|Ax-b\|_{2}^{2}.
+\]
+For matrices $A$ satisfying restricted isometry property, one can
+apply $\mathtt{GeneralizedGradientDescent}$ to solve the problem
+with the splitting $g(x)=2A^{\top}(Ax-b)+\delta_{\|x\|_{0}\leq k}$
+and $h(x)=\|x\|^{2}$. In this case, the algorithm is called iterative
+hard-thresholding \cite{blumensath2009iterative} and the sub-problem
+has a closed form expression.
+\begin{xca}
+Give the close form solution for the sub-problem given by the splitting
+above.
+\end{xca}
+
+
+\section{Gradient Flow}
+
+In continuous time, gradient descent follows the ODE 
+\[
+\frac{dx_{t}}{dt}=-\nabla f(x_{t}).
+\]
+This can be viewed as the canonical continuous algorithm. Finding
+the right discretization has lead to many fruitful research directions.
+One benefit of the continuous view is to simplify some calculations.
+For example, the Theorem \ref{thm:gd_convex_strongly} now becomes
+\[
+\frac{d}{dt}(f(x_{t})-f(x^{*}))=\nabla f(x_{t})^{\top}\frac{dx_{t}}{dt}=-\|\nabla f(x_{t})\|_{2}^{2}\leq-2\mu(f(x_{t})-f(x^{*}))
+\]
+where we used (\ref{eq:err_vs_grad}) at the end. Solving this differential
+inequality, we have
+\[
+f(x_{t})-f(x^{*})\leq e^{-2\mu t}(f(x_{0})-f(x^{*})).
+\]
+Without the strongly convexity assumption, the gradient flow can behave
+wildly. For example, the length of the gradient flow can be exponential
+in $d$ on an unit ball \cite{manselli1991maximum}. Finally, we emphasize
+that this continuous view is mainly useful for understanding, indicative
+of but not necessarily an algorithmic result.
+\end{document}

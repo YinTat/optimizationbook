@@ -1,0 +1,676 @@
+%% LyX 2.3.6.1 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[oneside,english]{book}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\input{preamble.tex}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+In this book\footnote{In the UW course, only the optimization part is covered.},
+we will study two topics involving convexity, namely optimization
+and sampling. Given a multivariate, real-valued function $f$, (1)
+how fast can we find a point that minimizes $f$? (2) how fast can
+we sample a point according to the distribution with density defined
+by $f$, e.g., proportional to $e^{-f}$? These problems are quite
+closely connected, e.g., sampling from such distributions can be used
+to find near-optimal points. These problems are intractable in full
+generality, and have exponential (in dimension) complexity even under
+smoothness assumptions.
+
+Convexity and its natural extensions are a current frontier of tractable,
+i.e., polynomial-time, computation. The assumption of convexity induces
+structure in instances that makes them amenable to efficient algorithms.
+For example, the local minimum of a convex function is a global minimum.
+Convexity is maintained by natural operations such as intersection
+(for sets) and addition (for functions). Perhaps less obvious, but
+also crucial, is that convex sets can be approximated by ellipsoids
+in various ways.
+
+We will learn several techniques that lead us to some polynomial-time
+algorithms for both problems and (nearly) linear-time algorithms for
+the case $f$ is close to a quadratic function.
+
+Although convex optimization has been studied since the 19th century\footnote{Augustin-Louis Cauchy introduced gradient descent in 1847.}
+with many tight results emerging, there are still many basic open
+problems. Here is an example:
+\begin{problem*}
+Given an $n\times n$ random $0/1$ matrix $A$ with $O(n)$ nonzero
+entries, can we solve $Ax=b$ in $o(n^{2})$ time?
+\end{problem*}
+Computing the volume is an ancient problem, the early Egyptians and
+Greeks developed formulas for specific shapes of interest. Unlike
+convex optimization, even computing the volume of a convex body is
+intractable, as we will see later. Nevertheless, there are efficient
+randomized algorithms that can estimate the volume of convex bodies
+to arbitrary accuracy in time polynomial in the dimension and the
+desired accuracy. This extends to efficient algorithms for integrating
+\emph{logconcave} functions, i.e., functions of the form $e^{-f}$
+where $f$ is convex. The core ingredient is sampling in high dimension.
+Sampling and volume computation will be the motivating problems for
+the second part of this book. Again, many basic problems remain open.
+To illustrate:
+\begin{problem*}
+Given a polytope defined by $\left\{ x:\,Ax\le b\right\} $, can we
+estimate its volume to within a constant factor in nearly linear time?
+\end{problem*}
+
+\section{Why non-convex functions can be difficult}
+
+Before discussing convex functions, we note that optimizing general
+functions can be difficult. Consider the function
+\[
+f(x)=\begin{cases}
+1 & \text{if }x\neq x^{*}\\
+0 & \text{if }x=x^{*}
+\end{cases}
+\]
+and suppose that we can only access the function by computing its
+function value. This function $f$ always returns $1$ unless we know
+$x^{*}$. Hence, one can prove that it takes infinitely many calls
+to $f$ to find $x^{*}$.
+
+This function is difficult to optimize, and not merely because of
+its discontinuity. Similar functions can be constructed that are continuous.
+Consider the function $f:B(0_{n},1)\rightarrow\R$ defined by
+\begin{equation}
+f(x)=\min(\|x-x^{*}\|_{2},\epsilon)\label{eq:f_lower_bound}
+\end{equation}
+where $B(0_{n},1)$ is the unit ball centered at the origin, $0_{n}$.
+This function is $1$-Lipschitz and unless we query $f(x)$ with $x$
+that is $\epsilon$-close to $x^{*}$, it will always return $\epsilon$.
+Since the region where $f$ is not $\epsilon$ has volume $\frac{1}{\epsilon^{n}}$
+times the volume of the unit ball, one can show that it takes $\Omega\left(\frac{1}{\epsilon^{n}}\right)$
+calls to $f$ to find $x^{*}$. The following exercise asks you to
+prove that this bound is tight.
+\begin{xca}
+Show that if $f$ is $1$-Lipschitz on $B(0_{n},1)$, we can find
+$x$ such that $f(x)-\min_{x}f(x)\leq\epsilon$ by calling $f(x)$
+at $O(\frac{1}{\epsilon})^{n}$ points. 
+\end{xca}
+
+Thus $O(1/\epsilon)^{n}$ is the best possible bound for optimizing
+general $1$-Lipschitz functions. Similar constructions can also be
+made for infinitely differentiable functions. We note that it is easy
+to find local minima for all the functions above. In Section \ref{sec:Gradient-Descent},
+we will show that it is easy to find an approximate local minimum
+of a continuously differentiable function.
+
+\section{Why is Convexity Useful? Linear Separability!}
+
+In the last section, we saw that general functions are difficult to
+optimize because we can only find the minimum via exhaustive search.
+Now we define convex sets, convex functions and convex problems. One
+benefit of convexity is that it enables binary search.
+\begin{defn}
+A set $K$ in $\R^{n}$ is \emph{convex} if for every pair of points
+$x,y\in K$, we have $[x,y]\subseteq K$.
+\end{defn}
+
+\begin{defn}
+\label{def:convex_func}A function $f:\R^{n}\rightarrow\R\cup\{+\infty\}$
+is \emph{convex} if for any $\lambda\in[0,1]$, we have 
+\[
+f(\lambda x+(1-\lambda)y)\le\lambda f(x)+(1-\lambda)f(y).
+\]
+
+\begin{figure}
+    \begin{minipage}[t]{0.47\linewidth}         \centering         \begin{scaletikzpicturetowidth}{\linewidth}             \begin{tikzpicture}[label distance = 2pt, scale = \tikzscale]                 \draw[-, thick, red] (-1.5, 0) -- (3.5, 0);                 \draw[-, thick, {black!50!green}] (-1, 0.75) -- (2, 1.5);                 \draw[blue] (-1.5, 1.0625) node[label=left:$f$] {};                 \draw[domain=-1.5:3, smooth, variable=\x, blue] plot ({\x},{\x * \x / 4 + 0.5});                 \draw node[mark size=1.5pt, color={black!50!green}] at (-1, 0.75) {\pgfuseplotmark{*}};                 \draw node[mark size=1.5pt, color={black!50!green}] at (2, 1.5) {\pgfuseplotmark{*}};                 \draw node[mark size=1.5pt, color={black!50!green}] at (0.5, 0.5625) {\pgfuseplotmark{*}};                 \draw node[mark size=5pt, color={black!50!green}, thick, label={[black!50!green]below:$x$}] at (-1, 0) {\pgfuseplotmark{|}};                 \draw node[mark size=5pt, color={black!50!green}, thick, label={[black!50!green]below:$y$}] at (2, 0) {\pgfuseplotmark{|}};                 \draw node[mark size=5pt, color={black!50!green}, thick] at (0.5, 0) {\pgfuseplotmark{|}};             \end{tikzpicture}         \end{scaletikzpicturetowidth}         % \caption*{Convex function}     
+\end{minipage}
+ \hfill     
+\begin{minipage}[t]{0.47\linewidth}         \centering         \begin{scaletikzpicturetowidth}{\linewidth}             \begin{tikzpicture}[label distance = 2pt, scale = \tikzscale]                 \draw[-, thick, red] (-4, 0) -- (5, 5.196152423);                 \draw node[mark size=1.5pt, color={black!50!green}, thick, label={[black!50!green]left:$y$}] at (0, 3.464101615) {\pgfuseplotmark{*}};                 \draw[-, thick, blue] (0, 0) -- (1, 1.732050808) -- (3, 1.732050808) -- (4, 0) -- (3, -1.732050808) -- (1, -1.732050808) -- (0, 0);                 \draw[blue] (1.5, 0) node[label=$K$] {};             \end{tikzpicture}         \end{scaletikzpicturetowidth}         % \caption*{Convex set}     
+\end{minipage}
+
+\caption{Convex function; Convex set\label{fig:convex}}
+\end{figure}
+\end{defn}
+
+\begin{defn}
+An optimization problem $\min_{x\in K}f(x)$ is convex if $K$ and
+$f$ are convex.
+\end{defn}
+
+Any point not in a convex set can be separated by a hyperplane from
+the set. We will see in Chapter \ref{chap:Elimination} that separating
+hyperplanes allow us to do binary search to find a point in a convex
+set. This is the basis of all polynomial-time algorithms for optimizing
+general convex functions. We will explore these binary search algorithms
+in Chapter \ref{chap:Elimination}.
+\begin{thm}[Hyperplane separation theorem]
+\label{thm:sep}Let $K$ be a closed convex set in $\Rn$ and $y\notin K$.
+There is a non-zero $\theta\in\Rn$ such that 
+\[
+\left\langle \theta,y\right\rangle >\max_{x\in K}\left\langle \theta,x\right\rangle .
+\]
+\end{thm}
+
+\begin{proof}
+Let $x^{*}$ be a point in $K$ closest to $y$, namely $x^{*}\in\arg\min_{x\in K}\norm{x-y}_{2}^{2}$
+(such a minimizer always exists for closed convex sets; this is sometimes
+called Hilbert's projection theorem). Using convexity of $K$, for
+any $x\in K$ and any $0\leq t\leq1$, we have that $(1-t)x^{*}+tx\in K$
+and hence
+\[
+\norm{y-(1-t)x^{*}-tx}_{2}^{2}\geq\min_{x\in K}\norm{y-x}_{2}^{2}=\norm{y-x^{*}}_{2}^{2}.
+\]
+Expanding the LHS, we have
+\begin{align*}
+\norm{y-(1-t)x^{*}-tx}_{2}^{2} & =\norm{y-x^{*}+t(x^{*}-x)}_{2}^{2}\\
+ & =\norm{y-x^{*}}_{2}^{2}+2t\left\langle y-x^{*},x^{*}-x\right\rangle +t^{2}\norm{x^{*}-x}_{2}^{2}.
+\end{align*}
+Canceling the term $\norm{x^{*}-y}_{2}^{2}$ and dividing both sides
+by $t$, 
+\[
+2\left\langle y-x^{*},x^{*}-x\right\rangle +t\norm{x^{*}-x}_{2}^{2}\ge0.
+\]
+Taking $t\rightarrow0^{+}$, we have that
+\begin{equation}
+\left\langle y-x^{*},x^{*}-x\right\rangle \geq0\text{ for all }x\in K.\label{eq:seq_1}
+\end{equation}
+Taking $\theta=y-x^{*}$ and using (\ref{eq:seq_1}), for all $x\in K$,
+we have that
+\begin{align*}
+\left\langle \theta,y-x\right\rangle  & =\left\langle \theta,y-x^{*}\right\rangle +\left\langle y-x^{*},x^{*}-x\right\rangle \\
+ & =\|\theta\|^{2}+\left\langle y-x^{*},x^{*}-x\right\rangle \\
+ & >0
+\end{align*}
+where we used that $y\notin K$ and hence $\|\theta\|^{2}>0$.
+\end{proof}
+Theorem \ref{thm:sep} shows that a polytope (a finite intersection
+of halfspaces) is essentially as general as a convex set.
+\begin{cor}
+\label{cor:convex_function_intersection}Any closed convex set $K$
+can be written as the intersection of halfspaces as follows
+\[
+K=\bigcap_{\theta\in\Rn}\left\{ x:\ \left\langle \theta,x\right\rangle \leq\max_{y\in K}\left\langle \theta,y\right\rangle \right\} .
+\]
+In other words, any convex set is a limit of a sequence of polyhedra.
+\end{cor}
+
+\begin{proof}
+Let $L\defeq\bigcap_{\theta\in\Rn}\left\{ x:\ \left\langle \theta,x\right\rangle \leq\max_{y\in K}\left\langle \theta,y\right\rangle \right\} $.
+Since $K\subset\left\{ x:\ \left\langle \theta,x\right\rangle \leq\max_{y\in K}\left\langle \theta,y\right\rangle \right\} $,
+we have $K\subset L$. 
+
+For any $x\notin K$, Theorem \ref{thm:sep} shows that there is a
+$\theta$ such that $\theta^{\top}x>\max_{y\in K}\theta^{\top}y$.
+Hence, we have $x\notin L$ and hence $L\subset K$.
+\end{proof}
+This shows that convex optimization is related to linear programs
+(optimize linear functions over polytopes) as follows:
+\[
+\min_{x\in K}f(x)=\min_{(x,y)\in\{x\in K,y\in\R:y\geq f(x)\}}y
+\]
+where the set $\{x\in K,y\in\R:y\geq f(x)\}$ then can be approximated
+by intersection of halfspaces, namely $\{A\binom{x}{y}\leq b\}$ for
+some matrix $A\in\R^{m\times(n+1)}$ and vector $b\in\R^{m}$ with
+$m\rightarrow+\infty$.
+
+Similar to convex sets, we have a separation theorem similar to Theorem
+\ref{thm:sep} for convex functions. This shows that one can use binary
+search to find minimum of convex functions. (See Chapter \ref{chap:Elimination}.)
+\begin{thm}
+\label{thm:first_order}Let $f\in\mathcal{C}^{1}(\Rn)$ be convex.
+Then, 
+\begin{equation}
+f(y)\geq f(x)+\nabla f(x)^{\top}(y-x)\text{ for all }x,y\in\Rn\label{eq:f_lower}
+\end{equation}
+\end{thm}
+
+\begin{proof}
+Fix any $x,y\in\Rn$. Let $g(t)=f((1-t)x+ty)$. Since $f$ is convex,
+so is $g$ over $[0,1]$. Then, we have
+\[
+g(t)\leq(1-t)g(0)+tg(1)
+\]
+which implies that
+\[
+g(1)\geq g(0)+\frac{g(t)-g(0)}{t}.
+\]
+Taking $t\rightarrow0^{+}$, we have that $g(1)\geq g(0)+g'(0)$.
+In other words, using the chain rule for derivatives, we have $g'(0)=\left\langle \nabla f(x),y-x\right\rangle $
+and hence
+\[
+f(y)\geq f(x)+\left\langle \nabla f(x),y-x\right\rangle .
+\]
+\end{proof}
+This theorem shows that $\nabla f(x)=0$ (local minimum) implies $x$
+is a global minimum.
+\begin{thm}[Optimality condition for unconstrained problems]
+\label{thm:optimality_condition}Let $f\in\mathcal{C}^{1}(\Rn)$
+be convex. Then, $x\in\R^{n}$ is a minimizer of $f(x)$ if and only
+if $\nabla f(x)=0$.
+\end{thm}
+
+\begin{proof}
+If $\nabla f(x)\neq0$, then 
+\[
+f(x-\varepsilon\nabla f(x))=f(x)-\varepsilon\norm{\nabla f(x)}_{2}^{2}+O(\varepsilon^{2})\norm{\nabla f(x)}_{2}^{2}<f(x)
+\]
+for small enough $\varepsilon$. Hence, such a point cannot be the
+minimizer.
+
+On the other hand, if $\nabla f(x)=0$, Theorem \ref{thm:first_order}
+shows that
+\[
+f(y)\geq f(x)+\nabla f(x)^{\top}(y-x)=f(x)\text{ for all }y.
+\]
+\end{proof}
+We note that the proof above is in fact a constructive proof. If $x$
+is not a minimum, it suggests a point that has better function value.
+This will be the discussion of an upcoming section. For continuous
+convex functions, there is a weaker notion of gradient called sub-differential,
+which is a set instead of a vector. Both theorems above holds with
+gradients replaced by sub-differentials.
+
+\section{Convex Problems are Everywhere!}
+
+In this section, we give a few examples of convex problems to illustrate
+the wide applicability of convex optimization. 
+
+\subsection{Minimum Cost Flow Problem (Computer Science)}
+
+The min cost flow problem has lots of applications such as route planning,
+airline scheduling, image segmentation, recommendation systems, etc.
+In this problem, we are given a graph $G=(V,E)$ with $m\defeq|E|$
+edges and $n\defeq|V|$ vertices. Each edge $e\in E$ has capacity
+$u_{e}>0$ and cost $c_{e}$. The problem is to minimize the total
+cost of sending $d$ amount of flow from a source vertex $s\in V$
+to a sink vertex $t\in V$. Formally, the problem can be written as
+an optimization problem $\min_{f\in\R^{|E|}}\sum_{e\in E}c_{e}\cdot f_{e}$
+subject to the constraints:
+\begin{itemize}
+\item Capacity constraints: $0\leq f_{e}\leq u_{e}$ for all $e\in E$.
+\item Flow conservation: $\sum_{e\text{ enters }v}f_{e}=\sum_{e\text{ leaves }v}f_{e}$
+for all $v\in V\setminus\left\{ s,t\right\} $.
+\item Demand: $\sum_{e\text{ enters }t}f_{e}=\sum_{e\text{ leaves }s}f_{e}=d$.
+\end{itemize}
+To check this is a convex problem, we note that the objective function
+is a linear function $c^{\top}f$ which is convex. The domain is the
+intersection of three sets (the three set of equations above). The
+first set is a scaled hypercube, the second and last set is a linear
+subspace. All of them are convex and so is their intersection. Therefore,
+this is a convex problem.
+
+\subsection{Linear Programs (Operation Research/Economics)}
+
+Consider the diet problem: find a cheapest diet plan that satisfies
+the nutrients requirements. Formally, suppose there are $n$ different
+foods and $m$ different nutrients. The food $i$ has unit cost $c_{i}$,
+$a_{1i}$ unit of nutrient $1$, $a_{2i}$ unit of nutrient $2$,
+$\cdots$. Furthermore, every day we need $b_{j}$ unit of the nutrient
+$j$. Then, the problem is simply find an assignment $x$ such that
+\[
+\min_{x\geq0,Ax\geq b}c^{\top}x
+\]
+where $c\in\Rn$ is the cost vector, $b\in\Rm$ is the intake requirement
+vector and $A\in\R^{m\times n}$ is the matrix of nutrients contents
+of each food. Unfortunately, Nobel Laureate Stigler showed that \cite{stigler1945cost}
+the optimal meal is evaporated milk, cabbage, dried navy beans, and
+beef liver.
+
+Joking aside, both the diet problem and the minimum cost flow problem
+can be reformulated into the form
+\begin{equation}
+\min_{Ax=b,x\geq0}c^{\top}x\label{eq:LP_standard}
+\end{equation}
+for some vectors $c,b$ and some matrix $A$. These problems are called
+linear programs and have many applications in resource allocation.
+Special cases of linear programs are also of great interest; for example
+the diet problem is a packing/covering LP.
+\begin{xca}
+Show that both the minimum cost flow problem and the diet problem
+can be written as (\ref{eq:LP_standard}). Also, show that (\ref{eq:LP_standard})
+is a convex problem.
+\end{xca}
+
+
+\subsection{Logistic Regression (Machine Learning)}
+
+Consider the problem of predicting the likelihood of getting diabetes
+in the future. Suppose we have collected many examples $\{(x_{i},y_{i})\}_{i=1}^{n}$
+where $x_{i}\in\R^{d}$ represents the features of a person and $y_{i}\in\{\pm1\}$
+represents whether that person gets diabetes. For example, the feature
+vector can be (age, weight, height, BMI, fasting glucose level, ...).
+The features in the vector may be redundant and the purpose of extra
+variables is to make linear functions expressive enough to be able
+to classify. In particular, we assume that there is a vector $\theta$
+such that for most $i$, we have $\langle x^{i},\theta\rangle<0$
+if $y_{i}=1$ and $\langle x^{i},\theta\rangle>0$ if $y_{i}=-1$
+. The error of the vector $\theta$ is
+\[
+\frac{1}{n}\sum_{i=1}^{n}1_{y_{i}\langle x^{i},\theta\rangle>0}.
+\]
+This function is not convex in $\theta$. More generally, one considers
+the objective function (to be minimized over $\theta$)
+\begin{equation}
+R(\theta)=\frac{1}{n}\sum_{i=1}^{n}f(y_{i}\langle x^{i},\theta\rangle)+\lambda\|\theta\|_{1}\label{eq:logistic_regression}
+\end{equation}
+where $f$ is some function such that $f(z)$ is large when $z$ is
+positive and large and $f(z)=0$ when $z$ is highly negative, and
+$\lambda\|\theta\|_{1}$ is a \emph{regularization} term to make sure
+$\theta$ is bounded. One popular function is $f(z)=\log(1+e^{z})$,
+and this problem is called logistic regression. In the section \ref{sec:Checking-Convexity},
+we prove that the function (\ref{eq:logistic_regression}) is indeed
+convex when $f(z)=\log(1+e^{z})$.
+
+\subsection{Minimal Surface (Physics)}
+
+A surface $M\subset\R^{3}$ is a minimal surface if it has the minimum
+surface area among all surfaces with the same boundary. These surfaces
+appear naturally and has been studied extensively not just for $\R^{3}$
+but also for different manifold. For simplicity, we consider the case
+that the surface is parameterized by 
+\[
+M=\{(x,y,f(x,y)):0\leq x\leq1,0\leq y\leq1\}.
+\]
+In this case, $f$ is a minimal surface if
+\[
+f=\argmin_{\text{feasible }g}\text{SurfaceArea}(g)
+\]
+where we say $g$ is feasible if $g(x,y)=f(x,y)$ for all $x,y$ on
+the boundary of $[0,1]^{2}$. One natural question (called Plateau's
+problem) is to find a minimal surface with a given boundary. For this
+particular case we consider, we can simply use convex optimization.
+Note that the constraint ($g$ is feasible) is exactly a linear subspace
+on the space of functions on $[0,1]^{2}$. Furthermore, the objective
+is convex by using the fact that
+\[
+\text{SurfaceArea}(f)=\int_{0}^{1}\int_{0}^{1}\sqrt{(\frac{\partial f(x,y)}{\partial x})^{2}+(\frac{\partial f(x,y)}{\partial y})^{2}+1}dxdy.
+\]
+
+\begin{xca}
+Show that surface area is convex by using the definition.
+
+Calculus of variations is an area in mathematics studies the optimization
+on function spaces and there are many common theorems between this
+and convex optimization.
+\end{xca}
+
+
+\section{Examples of Convex Sets and Functions}
+
+There are many important convex sets and here we only list some that
+appear in this course. One of the most important classes of convex
+functions comes from convex sets.
+\begin{defn}
+For a convex set $K$, we define the indicator function of $K$ by
+\[
+\delta_{K}(x)=\begin{cases}
+0 & \text{if }x\in K\\
++\infty & \text{otherwise}
+\end{cases}.
+\]
+\end{defn}
+
+We can also construct convex sets by convex functions. We let the
+domain $\dom f\defeq\{x\in\Rn:\ f(x)<+\infty\}$. The definition of
+a convex function shows that $\dom f$ is a convex set if $f$ is
+a convex function. Alternatively, by looking at the set of points
+above the graph of the function, we obtain a convex set called an
+epigraph.
+\begin{defn}
+\label{def:epigraph}The \emph{epigraph} of $f:\Rn\rightarrow\R$
+is $\epi f\defeq\{(x,t)\subset\Rn\times\R:\ t\geq f(x)\}$.
+
+A function $f$ is convex if and only if  $\epi f$ is a convex set.
+\end{defn}
+
+\begin{figure}
+ \begin{minipage}[t]{0.47\linewidth}         \centering         \begin{scaletikzpicturetowidth}{\linewidth}             \begin{tikzpicture}[label distance = 2pt, scale = \tikzscale]                 \draw[-, thick, {black!50!green}] (-1.5, 1.375) -- (-1.5, 3);                 \draw[-, thick, {black!50!green}] (-1, 0.75) -- (-1, 3);                 \draw[-, thick, {black!50!green}] (-0.5, 0.375) -- (-0.5, 3);                 \draw[-, thick, {black!50!green}] (0, 0.25) -- (0, 3);                 \draw[-, thick, {black!50!green}] (0.5, 0.375) -- (0.5, 3);                 \draw[-, thick, {black!50!green}] (1, 0.75) -- (1, 3);                 \draw[-, thick, {black!50!green}] (1.5, 1.375) -- (1.5, 3);                 \draw[black!50!green] (1.5, 2.5) node[label=right:$\epi(f)$] {};                 \draw[blue] (2, 2) node[label=right:$f$] {};                 \draw[domain=-2:2, smooth, variable=\x, blue] plot ({\x},{\x * \x / 2});             \end{tikzpicture}         \end{scaletikzpicturetowidth}         % \caption*{Epigraph of $f$}     
+\end{minipage}     
+\hfill     
+\begin{minipage}[t]{0.47\linewidth}         \centering         \begin{scaletikzpicturetowidth}{\linewidth}             \begin{tikzpicture}[label distance = 2pt, scale = \tikzscale]                 \draw[-, thick, red] (0, 0) -- (10, 0);                 \draw[blue] (1, 4) node[label=below left:$f$] {};                 \draw[-, thick, blue] (0, 5) -- (1, 5) -- (1, 4) -- (2, 4) -- (3, 3) -- (4, 3);                 \draw[thick, blue] plot [smooth, tension=2] coordinates{(4, 3) (5, 2) (6, 3)};                 \draw[-, thick, blue, rounded corners=7pt] (6, 3) -- (7, 3) -- (7.5, 4) -- (8.5, 4) -- (9, 5) -- (10, 5);             \end{tikzpicture}         \end{scaletikzpicturetowidth}         
+% \caption*{Quasiconvex function}     
+\end{minipage}\caption{Epigraph of $f$; quasiconvex function\label{fig:rel-1-1}}
+\end{figure}
+
+This characterization shows that $\min_{x}f(x)$ is the same as $\min_{(t,x)\in\epi f}t$.
+Therefore, convex optimization is the same as optimizing a linear
+function over a convex set. Another important feature of a convex
+set is the following.
+\begin{fact}
+Any level set $\{x\in\Rn:\ f(x)\leq t\}$ of a convex function $f$
+is convex.
+\end{fact}
+
+In particular, this shows that the set of minimizers is connected.
+Therefore, any local minimum is a global minimum. We note that the
+converse of the fact above is not true. A function is \emph{quasiconvex}
+if every level set is convex. For example, Fig. \ref{fig:rel-1-1}
+shows a function that is quasiconvex but not convex.
+
+Finally, we note that many operations preserve convexity. Here is
+an example.
+\begin{xca}
+Given a matrix $A$, a vector $b$, positive scalars $t_{1},t_{2}\geq0$,
+convex functions $f_{1}$ and $f_{2}$, then $g(x)=t_{1}f_{1}(Ax+b)+t_{2}f_{2}(x)$
+is convex.
+\end{xca}
+
+Here are some convex sets and functions. In Section \ref{sec:Checking-Convexity},
+we illustrate how to check convexity.
+\begin{example*}
+Convex sets: polyhedron $\{x:\,Ax\leq b\}$, polytope $\conv\left(\left\{ v_{1},\ldots,v_{m}\right\} \right)$
+with $v_{1},\ldots,v_{m}\in\R^{n}$, ellipsoid $\{x:\,x^{\top}Ax\leq1\}$
+with $A\succeq0$, positive semidefinite cone $\{X\in\R^{n\times n}\text{ : }X\succeq0\}$,
+norm ball $\{x:\ \norm x_{p}\leq1\}$ for all $p\geq1$.
+\end{example*}
+%
+\begin{example*}
+Convex functions: $x$, $\max(x,0)$, $e^{x}$, $|x|^{a}$ for $a\geq1$,
+$-\log(x)$, $x\log x$, $\norm x_{p}$ for $p\geq1$, $(x,y)\rightarrow\frac{x^{2}}{y}$
+(for $y>0$), $A\rightarrow-\log\det A$ over PSD matrices $A$, $(x,Y)\rightarrow x^{\top}Y^{-1}x$
+(for $Y\succ0$), $\log\sum_{i}e^{x_{i}}$, $(\prod_{i}^{n}x_{i})^{\frac{1}{n}}$.
+\end{example*}
+\begin{xca}
+Show that the above sets and functions are all convex.
+\end{xca}
+
+
+\section{Checking Convexity\label{sec:Checking-Convexity}}
+
+It is often cumbersome to check if a function is convex via (\ref{def:convex_func}).
+The major benefit of that definition is that it works for non-differentiable
+functions and infinite dimensional space. However, when a function
+is twice differentiable, one can check the convexity by simply checking
+if the Hessian is positive semi-definite. (Recall the definition of
+$A\succeq0$ in \ref{def:PSD}.)
+
+To show this, we first prove the following second-order Taylor theorem.
+\begin{lem}
+\label{lem:second_order}For any $f\in\mathcal{C}^{2}(\R^{n})$, and
+any $x,y\in\R^{n}$, there is a $z\in[x,y]$ s.t. 
+\[
+f(y)=f(x)+\nabla f(x)^{\top}(y-x)+\frac{1}{2}(y-x)^{\top}\nabla^{2}f(z)(y-x).
+\]
+\end{lem}
+
+\begin{proof}
+Let $g(t)=f((1-t)x+ty)$. Taylor expansion (Theorem \ref{thm:taylor_expansion})
+shows that
+\[
+g(1)=g(0)+g'(0)+\frac{1}{2}g''(\zeta)
+\]
+where $\zeta\in[0,1]$. To see the result, note that $g(0)=f(x)$,
+$g'(0)=\nabla f(x)^{\top}(y-x)$ and $g''(\zeta)=(y-x)^{\top}\nabla^{2}f((1-\zeta)x+\zeta y)(y-x)$. 
+\end{proof}
+Now, we show that $f$ is convex if and only if $\nabla^{2}f(x)\succeq0$
+for all $x$.
+\begin{thm}
+\label{thm:equ_convex}Let $f\in\mathcal{C}^{2}(\Rn)$. Then, the
+following are equivalent:
+\begin{enumerate}
+\item $f$ is convex.
+\item $f(y)\geq f(x)+\nabla f(x)^{\top}(y-x)\text{ for all }x,y\in\Rn$.
+\item $\nabla^{2}f(x)\succeq0$ for all $x\in\Rn$.
+\end{enumerate}
+\end{thm}
+
+\begin{proof}
+We have proved (1) implies (2) in Theorem \ref{thm:first_order}.
+
+Suppose (2) holds. Then, for any $x,h\in\Rn$
+\[
+f(x+th)\geq f(x)+t\nabla f(x)^{\top}h.
+\]
+By Taylor expansion (Lemma \ref{lem:second_order}), we have that
+\[
+f(x+th)=f(x)+t\nabla f(x)^{\top}h+\frac{t^{2}}{2}h^{\top}\nabla^{2}f(z)h
+\]
+where $z\in[x,x+th]$. By comparing two equations, we have that $h^{\top}\nabla^{2}f(z)h\geq0$.
+Taking $t\rightarrow0$, we have $z\rightarrow x$ and hence $\nabla^{2}f(z)\rightarrow\nabla^{2}f(x)$.
+Therefore, we have that
+\[
+h^{\top}\nabla^{2}f(x)h\geq0
+\]
+for all $x$ and $h$. Hence, this gives (3).
+
+Suppose (3) holds. Fix $x,y\in\Rn$. Consider the function
+\[
+g(\lambda)=f(\lambda x+(1-\lambda)y)-\lambda f(x)-(1-\lambda)f(y).
+\]
+Consider $\lambda^{*}=\argmax_{\lambda\in[0,1]}g(\lambda)$. If $\lambda^{*}$
+is either $0$ or $1$, then we have $g(\lambda^{*})=0$. Otherwise,
+by Taylor's theorem, there is a $\zeta\in[\lambda^{*},1]$ such that
+\begin{align*}
+g(1) & =g(\lambda^{*})+g'(\lambda^{*})(1-\lambda^{*})+\frac{1}{2}g''(\zeta)(1-\lambda^{*})^{2}\\
+ & =g(\lambda^{*})+\frac{1}{2}g''(\zeta)(1-\lambda^{*})^{2}
+\end{align*}
+where we used that $g'(\lambda^{*})=0$. Note that 
+\begin{align*}
+g'(\zeta) & =\nabla f(\zeta x+(1-\zeta)y)^{\top}(x-y)-f(x)+f(y),\\
+g''(\zeta) & =(x-y)^{\top}\nabla^{2}f(\zeta x+(1-\zeta)y)(x-y).
+\end{align*}
+By the assumption (3), we have that $g''(\zeta)\geq0$ and hence $0=g(1)\geq g(\lambda^{*})$.
+Hence, in both cases, $\max_{\lambda\in[0,1]}g(\lambda)=g(\lambda^{*})\leq0$.
+This gives (1).
+\end{proof}
+Now, as an example, we prove that the function (\ref{eq:logistic_regression})
+is convex.
+\begin{example}
+The function (\ref{eq:logistic_regression}) is convex for $f(z)=\log(1+\exp(z))$.
+\end{example}
+
+\begin{proof}
+We write $R(\theta)=R_{1}(\theta)+R_{2}(\theta)$ where $R_{1}(\theta)=\frac{1}{n}\sum_{i=1}^{n}f(y_{i}\cdot\left\langle x^{i},\theta\right\rangle )$
+and $R_{2}(\theta)=\lambda\|\theta\|_{1}$. It is easy to check $R_{2}$
+is convex. So, it suffices to prove $R_{1}$ is convex. Now, we use
+Theorem \ref{thm:equ_convex} to prove that $R_{1}$ is convex. Note
+that
+\begin{align*}
+\nabla R_{1}(\theta) & =\frac{1}{n}\sum_{i=1}^{n}f'(\left\langle x^{i},\theta\right\rangle )x^{i},\\
+\nabla^{2}R_{1}(\theta) & =\frac{1}{n}\sum_{i=1}^{n}f''(\left\langle x^{i},\theta\right\rangle )x^{i}(x^{i})^{\top}.
+\end{align*}
+Since $x^{i}(x^{i})^{\top}\succeq0$, it suffices to prove that $f''(\left\langle x^{i},\theta\right\rangle )\geq0$.
+This follows from the calculation: $f'(z)=\frac{\exp(z)}{1+\exp(z)}=1-\frac{1}{1+\exp(z)}$
+and $f''(z)=\frac{\exp(z)}{(1+\exp(z))^{2}}\geq0$.
+\end{proof}
+
+\section{Logconcave Functions\label{sec:Logconcave-functions}}
+\begin{defn}
+A function $f:\R^{n}\rightarrow\R_{+}$ is \emph{logconcave} if $\log f$
+is concave, i.e., $f$ is nonnegative and for any $\lambda\in[0,1]$,
+we have $f(\lambda x+(1-\lambda)y)\ge f(x)^{\lambda}f(y)^{1-\lambda}$.
+\end{defn}
+
+\begin{example}
+The indicator function of a convex set $1_{K}(x)=\begin{cases}
+1 & \text{if }x\in K\\
+0 & \text{otherwise}
+\end{cases}$ is logconcave.
+\end{example}
+
+\begin{lem}[Dinghas; Prékopa; Leindler]
+\label{lem:marginal} The product, minimum and convolution of two
+logconcave functions is also logconcave; in particular, any linear
+transformation or any marginal of a logconcave density is logconcave;
+the distribution function of any logconcave density is logconcave.
+\end{lem}
+
+We next describe the basic theorem underlying the above properties.
+We will see their proofs in a later chapter.
+\begin{thm}[Prékopa-Leindler]
+\label{thm:Prekopa-Leindler}Fix $\lambda\in[0,1].$ Let $f,g,h:\R^{n}\rightarrow\R_{+}$
+be functions satisfying $h(\lambda x+(1-\lambda)y)\ge f(x)^{\lambda}g(x)^{1-\lambda}$
+for all $x\in\R^{n}$. Then,
+\[
+\int_{\R^{n}}h\ge\left(\int_{\R^{n}}f\right)^{\lambda}\left(\int_{\R^{n}}g\right)^{1-\lambda}.
+\]
+\end{thm}
+
+An equivalent version of the lemma for sets in $\R^{n}$ is often
+useful. By a \emph{measurable }set below, we mean Lebesgue measurable,
+which coincides with the definition of volume (for an axis aligned
+box, it is the product of the axis lengths; for any other set, it
+is the limit over increasingly finer partitions into boxes, of the
+sum of volumes of boxes that intersect the set).
+\begin{thm}[Brunn-Minkowski]
+\label{thm:Brunn-Minkowski}For any $\lambda\in[0,1]$ and measurable
+sets $A,B\subset\R^{n}$, we have 
+\[
+\vol(\lambda A+(1-\lambda)B)^{1/n}\ge\lambda\vol(A)^{1/n}+(1-\lambda)\vol(B)^{1/n}.
+\]
+\end{thm}
+
+An immediate consequence of the first theorem above is that any one-dimensional
+marginal distribution of a convex body is logconcave; the second implies
+that it is in fact $(1/(n-1))$-concave (a function is $s$-concave
+if $f^{s}$ is concave) if the body is in $\R^{n}$.
+\begin{xca}
+Prove both corollaries just mentioned.
+\end{xca}
+
+\begin{example}
+We give one example problem related to Bayesian inference. Suppose
+we have a signal $\theta=\left(\theta_{1},\theta_{2},\cdots,\theta_{n}\right)$
+and that we can take a measurement $y_{i}$ of $\theta_{i}$. The
+measurement only incurs unbiased Gaussian noise, i.e., $y_{i}=\theta_{i}+\epsilon_{i}$
+where $\epsilon_{i}\sim N(0,1)$. The question is to recover the signal
+$\theta$ using $y$. Without any prior on $\theta$, the only sensible
+recovery is $\theta=y$. With a prior, one can apply Bayes' theorem:
+\[
+\P(\theta|y)=\frac{\P(y|\theta)\P(\theta)}{\P(y)}.
+\]
+
+The Bayesian choice is to find $\theta$ with maximum likelihood,
+namely $\theta=\argmax_{\theta}\log\P(\theta|y)=\argmin_{\theta}-\log\P(\theta|y)$.
+
+Using the noise assumption, we have that 
+\[
+\P(y|\theta)\varpropto\exp(-\frac{1}{2}\sum_{i}(y_{i}-\theta_{i})^{2}).
+\]
+Now, say we know the signal is smooth and we model the prior as $\P(\theta)\varpropto\exp(-\lambda\sum_{i}(\theta_{i}-\theta_{i+1})^{2})$
+where $\lambda$ controls how smooth the signal is. Hence, 
+\[
+-\log\P(\theta|y)=c+\sum_{i}(y_{i}-\theta_{i})^{2}+\lambda\sum_{i}(\theta_{i}-\theta_{i+1})^{2}.
+\]
+Since each term in the function above is convex, so is the whole formula.
+Hence, the recovery question becomes a convex optimization problem
+\[
+\min_{\theta}\sum_{i}(y_{i}-\theta_{i})^{2}+\lambda\sum_{i}(\theta_{i}-\theta_{i+1})^{2}.
+\]
+
+When we recover a signal, we want to know how confident we are because
+there are many choices of $\theta$ that could explain the same measurement
+$y$. One way to do this is to sample multiple $\theta\varpropto\P(\theta|y)$
+and compute the empirical variance or other statistics. Note that
+\[
+\P(\theta|y)\varpropto e^{-\sum_{i}(y_{i}-\theta_{i})^{2}-\lambda\sum_{i}(\theta_{i}-\theta_{i+1})^{2}}
+\]
+which is a logconcave distribution. Therefore, one can study the signal
+and quality of signal recovery via logconcave sampling.
+\end{example}
+
+
+\end{document}

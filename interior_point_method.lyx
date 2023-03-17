@@ -498,6 +498,471 @@ Note that this algorithm only finds a solution with
 \end_layout
 
 \begin_layout Subsection
+Following the central path
+\end_layout
+
+\begin_layout Standard
+During the algorithm, we maintain a point 
+\begin_inset Formula $(x,y,s)$
+\end_inset
+
+ such that 
+\begin_inset Formula $Ax=b$
+\end_inset
+
+, 
+\begin_inset Formula $A^{\top}y+s=c$
+\end_inset
+
+ and 
+\begin_inset Formula $x_{i}s_{i}$
+\end_inset
+
+ is close to 
+\begin_inset Formula $t$
+\end_inset
+
+ for all 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ We show how to find a feasible 
+\begin_inset Formula $(x+\delta_{x},y+\delta_{y},s+\delta_{s})$
+\end_inset
+
+ such that it is even closer to 
+\begin_inset Formula $t$
+\end_inset
+
+.
+ We can write the equation as follows:
+\begin_inset Formula 
+\begin{align*}
+(x+\delta_{x})(s+\delta_{s}) & \thickapprox t,\\
+A(x+\delta_{x}) & =b,\\
+A^{\top}(y+\delta_{y})+(s+\delta_{s}) & =c.
+\end{align*}
+
+\end_inset
+
+(Omitted the non-negative conditions.) Using our assumption on 
+\begin_inset Formula $(x,y,s)$
+\end_inset
+
+ and noting that 
+\begin_inset Formula $\delta_{x}\cdot\delta_{s}$
+\end_inset
+
+ is small, the equation can simplified as follows.
+ We use the notation 
+\begin_inset Formula $X=\Diag(x)$
+\end_inset
+
+, 
+\begin_inset Formula $S=\Diag(s)$
+\end_inset
+
+.
+\begin_inset Formula 
+\[
+\left[\begin{array}{ccc}
+0 & A^{\top} & I\\
+A & 0 & 0\\
+S & 0 & X
+\end{array}\right]\left[\begin{array}{c}
+\delta_{x}\\
+\delta_{y}\\
+\delta_{s}
+\end{array}\right]=\left[\begin{array}{c}
+0\\
+0\\
+t-xs
+\end{array}\right].
+\]
+
+\end_inset
+
+This is a linear system and hence we can solve it exactly.
+\end_layout
+
+\begin_layout Exercise
+\begin_inset CommandInset label
+LatexCommand label
+name "exer:d_central"
+
+\end_inset
+
+Let 
+\begin_inset Formula $r=t-xs$
+\end_inset
+
+.
+ Prove that 
+\begin_inset Formula $S\delta_{x}=(I-\overline{P})r$
+\end_inset
+
+ and 
+\begin_inset Formula $X\delta_{s}=\overline{P}r$
+\end_inset
+
+ where 
+\begin_inset Formula $\overline{P}=XA^{\top}(AS^{-1}XA^{\top})^{-1}AS^{-1}$
+\end_inset
+
+.
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+I change 
+\begin_inset Formula $P$
+\end_inset
+
+ to 
+\begin_inset Formula $\overline{P}$
+\end_inset
+
+.
+ Coz it is only used here.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+First, we show that 
+\begin_inset Formula $x^{\new}=x+\delta_{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $s^{\new}=s+\delta_{s}$
+\end_inset
+
+ are feasible.
+\end_layout
+
+\begin_layout Lemma
+Suppose 
+\begin_inset Formula $\sum_{i}\left(x_{i}s{}_{i}-t\right)^{2}\leq\varepsilon^{2}t^{2}$
+\end_inset
+
+ with 
+\begin_inset Formula $\varepsilon<\frac{1}{2}$
+\end_inset
+
+.
+ Then,
+\begin_inset Formula $x_{i}^{\new}>0$
+\end_inset
+
+ and 
+\begin_inset Formula $s_{i}^{\new}>0$
+\end_inset
+
+ for all 
+\begin_inset Formula $i$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Note that 
+\begin_inset Formula $P^{2}=P$
+\end_inset
+
+.
+ However, in general 
+\begin_inset Formula $P\neq P^{\top},$
+\end_inset
+
+i.e.
+ 
+\begin_inset Formula $P$
+\end_inset
+
+ might not be an orthogonal projection matrix.
+ It will be convienient to consider the orthogonal projection matrix 
+\begin_inset Formula $P=S^{-\frac{1}{2}}X^{\frac{1}{2}}A^{\top}(AS^{-1}XA^{\top})^{-1}AS^{-\frac{1}{2}}X^{\frac{1}{2}}$
+\end_inset
+
+.
+ Note that
+\begin_inset Formula 
+\[
+X^{-1}\delta_{x}=S^{-\frac{1}{2}}X^{-\frac{1}{2}}(I-P)S^{-\frac{1}{2}}X^{-\frac{1}{2}}r.
+\]
+
+\end_inset
+
+By the assumption for each 
+\begin_inset Formula $i$
+\end_inset
+
+, 
+\begin_inset Formula $x_{i}s_{i}\ge(1-\varepsilon)t$
+\end_inset
+
+.
+ Therefore, we have
+\begin_inset Formula 
+\begin{align*}
+\|X^{-1}\delta_{x}\|_{2} & \leq\frac{1}{\sqrt{(1-\epsilon)t}}\|(I-P)S^{-\frac{1}{2}}X^{-\frac{1}{2}}r\|_{2}\\
+ & \leq\frac{1}{\sqrt{(1-\epsilon)t}}\|S^{-\frac{1}{2}}X^{-\frac{1}{2}}r\|_{2}\\
+ & \leq\frac{1}{(1-\epsilon)t}\|r\|_{2}\leq\frac{\epsilon}{1-\epsilon}.
+\end{align*}
+
+\end_inset
+
+Similarly, we have 
+\begin_inset Formula $S^{-1}\delta_{s}=S^{-\frac{1}{2}}X^{-\frac{1}{2}}PS^{-\frac{1}{2}}X^{-\frac{1}{2}}r$
+\end_inset
+
+.
+ Hence, we have 
+\begin_inset Formula $\|S^{-1}\delta_{s}\|_{2}\leq\frac{\epsilon}{1-\epsilon}$
+\end_inset
+
+.
+ Therefore, when 
+\begin_inset Formula $\epsilon<\frac{1}{2}$
+\end_inset
+
+, we have both 
+\begin_inset Formula $\|X^{-1}\delta_{x}\|_{\infty}$
+\end_inset
+
+ and 
+\begin_inset Formula $\|S^{-1}\delta_{s}\|_{\infty}$
+\end_inset
+
+ less than 
+\begin_inset Formula $1$
+\end_inset
+
+, which shows that both 
+\begin_inset Formula $x^{\new}$
+\end_inset
+
+ and 
+\begin_inset Formula $s^{\new}$
+\end_inset
+
+ are positive.
+\end_layout
+
+\begin_layout Proof
+Next, we show that 
+\begin_inset Formula $xs$
+\end_inset
+
+ is closer to 
+\begin_inset Formula $t$
+\end_inset
+
+ after one Newton step.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:IPM_progress"
+
+\end_inset
+
+ If 
+\begin_inset Formula $\sum_{i}\left(x_{i}s{}_{i}-t\right)^{2}\leq\varepsilon^{2}t^{2}$
+\end_inset
+
+ with 
+\begin_inset Formula $\epsilon<\frac{1}{4}$
+\end_inset
+
+, we have that 
+\begin_inset Formula 
+\[
+\sum_{i}\left(x_{i}^{\new}s_{i}^{\new}-t\right)^{2}\leq\left(\epsilon^{4}+16\epsilon^{5}\right)t^{2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+We have that 
+\begin_inset Formula $x_{i}\delta_{s,i}+s_{i}\delta_{x,i}=t-x_{i}s_{i}$
+\end_inset
+
+.
+ Using this, 
+\begin_inset Formula 
+\[
+\text{LHS}=\sum_{i}\left(x_{i}^{\new}s_{i}^{\new}-t\right)^{2}=\sum_{i}(x_{i}s_{i}+x_{i}\delta_{s,i}+s_{i}\delta_{x,i}+\delta_{x,i}\delta_{s,i}-t)^{2}=\sum_{i}\delta_{x,i}^{2}\delta_{s,i}^{2}\leq\left((1+\epsilon)t\right)^{2}\cdot\sum_{i}\left(\frac{\delta_{x,i}}{x_{i}}\right)^{2}\left(\frac{\delta_{s,i}}{s_{i}}\right)^{2}
+\]
+
+\end_inset
+
+where in the last step we used 
+\begin_inset Formula $x_{i}^{2}s_{i}^{2}\leq(1+\varepsilon)^{2}t^{2}$
+\end_inset
+
+.
+ Using the previous lemma, we have that
+\begin_inset Formula 
+\begin{align*}
+\text{LHS} & \leq\left((1+\epsilon)t\right)^{2}\cdot\|X^{-1}\delta_{x}\|_{4}^{2}\|S^{-1}\delta_{s}\|_{4}^{2}\\
+ & \leq\left((1+\epsilon)t\right)^{2}\cdot\|X^{-1}\delta_{x}\|_{2}^{2}\|S^{-1}\delta_{s}\|_{2}^{2}\\
+ & \leq\left((1+\epsilon)t\right)^{2}\left(\frac{\epsilon}{1-\epsilon}\right)^{4}\\
+ & \leq\left(\epsilon^{4}+16\epsilon^{5}\right)t^{2}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Using this, we have the main theorem.
+\end_layout
+
+\begin_layout Theorem
+We can solve a linear program to within 
+\begin_inset Formula $\delta$
+\end_inset
+
+ 
+\begin_inset Quotes eld
+\end_inset
+
+error
+\begin_inset Quotes erd
+\end_inset
+
+ (see Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:feasible_LP"
+
+\end_inset
+
+) in 
+\begin_inset Formula $O(\sqrt{n}\log(\frac{1}{\delta}))$
+\end_inset
+
+ iterations and each iteration only needs to solve a linear system.
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $\Phi=\sum_{i}\left(x_{i}s{}_{i}-t\right)^{2}$
+\end_inset
+
+ be the error of the current iteration.
+ We always maintain 
+\begin_inset Formula $\Phi\leq\frac{t^{2}}{16}$
+\end_inset
+
+ for the current 
+\begin_inset Formula $(x,y,s)$
+\end_inset
+
+ and 
+\begin_inset Formula $t$
+\end_inset
+
+.
+ At each step, we use Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:IPM_progress"
+
+\end_inset
+
+ which makes 
+\begin_inset Formula $\Phi\leq\frac{t^{2}}{50}$
+\end_inset
+
+.
+ Then, we decrease 
+\begin_inset Formula $t$
+\end_inset
+
+ to 
+\begin_inset Formula $t(1-\frac{1}{10\sqrt{n}})$
+\end_inset
+
+.
+ Note that
+\begin_inset Formula 
+\[
+\sum_{i}\left(x_{i}s{}_{i}-t(1-h)\right)^{2}\leq2\Phi+2t^{2}h^{2}n\leq\frac{2t^{2}}{50}+\frac{2t^{2}}{100}\leq\frac{(t(1-h))^{2}}{16}.
+\]
+
+\end_inset
+
+Therefore, the invariant is preserved after each step.
+ Since 
+\begin_inset Formula $t$
+\end_inset
+
+ is decreased by a 
+\begin_inset Formula $(1-\frac{1}{10\sqrt{n}})$
+\end_inset
+
+ factor each step, it takes 
+\begin_inset Formula $O(\sqrt{n}\log(\frac{1}{\delta}))$
+\end_inset
+
+ to decrease 
+\begin_inset Formula $t$
+\end_inset
+
+ from 
+\begin_inset Formula $1$
+\end_inset
+
+ to 
+\begin_inset Formula $\delta^{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+For many problems, this factor is polynomial and hence the total running
+ time is still 
+\begin_inset Formula $O(\sqrt{n}\log(\frac{n}{\varepsilon}))$
+\end_inset
+
+.
+ However, for some problem such as circuit evaluation, the factor can be
+ exponentially large and hence we only get a 
+\begin_inset Formula $n^{1.5}$
+\end_inset
+
+ time algorithm.
+ This is natural because otherwise, we would prove that any program can
+ be run in 
+\begin_inset Formula $\sqrt{n}$
+\end_inset
+
+ depth!
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
 Finding the initial point
 \end_layout
 
@@ -1092,471 +1557,6 @@ noprefix "false"
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Subsection
-Following the central path
-\end_layout
-
-\begin_layout Standard
-During the algorithm, we maintain a point 
-\begin_inset Formula $(x,y,s)$
-\end_inset
-
- such that 
-\begin_inset Formula $Ax=b$
-\end_inset
-
-, 
-\begin_inset Formula $A^{\top}y+s=c$
-\end_inset
-
- and 
-\begin_inset Formula $x_{i}s_{i}$
-\end_inset
-
- is close to 
-\begin_inset Formula $t$
-\end_inset
-
- for all 
-\begin_inset Formula $i$
-\end_inset
-
-.
- We show how to find a feasible 
-\begin_inset Formula $(x+\delta_{x},y+\delta_{y},s+\delta_{s})$
-\end_inset
-
- such that it is even closer to 
-\begin_inset Formula $t$
-\end_inset
-
-.
- We can write the equation as follows:
-\begin_inset Formula 
-\begin{align*}
-(x+\delta_{x})(s+\delta_{s}) & \thickapprox t,\\
-A(x+\delta_{x}) & =b,\\
-A^{\top}(y+\delta_{y})+(s+\delta_{s}) & =c.
-\end{align*}
-
-\end_inset
-
-(Omitted the non-negative conditions.) Using our assumption on 
-\begin_inset Formula $(x,y,s)$
-\end_inset
-
- and noting that 
-\begin_inset Formula $\delta_{x}\cdot\delta_{s}$
-\end_inset
-
- is small, the equation can simplified as follows.
- We use the notation 
-\begin_inset Formula $X=\Diag(x)$
-\end_inset
-
-, 
-\begin_inset Formula $S=\Diag(s)$
-\end_inset
-
-.
-\begin_inset Formula 
-\[
-\left[\begin{array}{ccc}
-0 & A^{\top} & I\\
-A & 0 & 0\\
-S & 0 & X
-\end{array}\right]\left[\begin{array}{c}
-\delta_{x}\\
-\delta_{y}\\
-\delta_{s}
-\end{array}\right]=\left[\begin{array}{c}
-0\\
-0\\
-t-xs
-\end{array}\right].
-\]
-
-\end_inset
-
-This is a linear system and hence we can solve it exactly.
-\end_layout
-
-\begin_layout Exercise
-\begin_inset CommandInset label
-LatexCommand label
-name "exer:d_central"
-
-\end_inset
-
-Let 
-\begin_inset Formula $r=t-xs$
-\end_inset
-
-.
- Prove that 
-\begin_inset Formula $S\delta_{x}=(I-\overline{P})r$
-\end_inset
-
- and 
-\begin_inset Formula $X\delta_{s}=\overline{P}r$
-\end_inset
-
- where 
-\begin_inset Formula $\overline{P}=XA^{\top}(AS^{-1}XA^{\top})^{-1}AS^{-1}$
-\end_inset
-
-.
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-I change 
-\begin_inset Formula $P$
-\end_inset
-
- to 
-\begin_inset Formula $\overline{P}$
-\end_inset
-
-.
- Coz it is only used here.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Exercise
-First, we show that 
-\begin_inset Formula $x^{\new}=x+\delta_{x}$
-\end_inset
-
- and 
-\begin_inset Formula $s^{\new}=s+\delta_{s}$
-\end_inset
-
- are feasible.
-\end_layout
-
-\begin_layout Lemma
-Suppose 
-\begin_inset Formula $\sum_{i}\left(x_{i}s{}_{i}-t\right)^{2}\leq\varepsilon^{2}t^{2}$
-\end_inset
-
- with 
-\begin_inset Formula $\varepsilon<\frac{1}{2}$
-\end_inset
-
-.
- Then,
-\begin_inset Formula $x_{i}^{\new}>0$
-\end_inset
-
- and 
-\begin_inset Formula $s_{i}^{\new}>0$
-\end_inset
-
- for all 
-\begin_inset Formula $i$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Proof
-Note that 
-\begin_inset Formula $P^{2}=P$
-\end_inset
-
-.
- However, in general 
-\begin_inset Formula $P\neq P^{\top},$
-\end_inset
-
-i.e.
- 
-\begin_inset Formula $P$
-\end_inset
-
- might not be an orthogonal projection matrix.
- It will be convienient to consider the orthogonal projection matrix 
-\begin_inset Formula $P=S^{-\frac{1}{2}}X^{\frac{1}{2}}A^{\top}(AS^{-1}XA^{\top})^{-1}AS^{-\frac{1}{2}}X^{\frac{1}{2}}$
-\end_inset
-
-.
- Note that
-\begin_inset Formula 
-\[
-X^{-1}\delta_{x}=S^{-\frac{1}{2}}X^{-\frac{1}{2}}(I-P)S^{-\frac{1}{2}}X^{-\frac{1}{2}}r.
-\]
-
-\end_inset
-
-By the assumption for each 
-\begin_inset Formula $i$
-\end_inset
-
-, 
-\begin_inset Formula $x_{i}s_{i}\ge(1-\varepsilon)t$
-\end_inset
-
-.
- Therefore, we have
-\begin_inset Formula 
-\begin{align*}
-\|X^{-1}\delta_{x}\|_{2} & \leq\frac{1}{\sqrt{(1-\epsilon)t}}\|(I-P)S^{-\frac{1}{2}}X^{-\frac{1}{2}}r\|_{2}\\
- & \leq\frac{1}{\sqrt{(1-\epsilon)t}}\|S^{-\frac{1}{2}}X^{-\frac{1}{2}}r\|_{2}\\
- & \leq\frac{1}{(1-\epsilon)t}\|r\|_{2}\leq\frac{\epsilon}{1-\epsilon}.
-\end{align*}
-
-\end_inset
-
-Similarly, we have 
-\begin_inset Formula $S^{-1}\delta_{s}=S^{-\frac{1}{2}}X^{-\frac{1}{2}}PS^{-\frac{1}{2}}X^{-\frac{1}{2}}r$
-\end_inset
-
-.
- Hence, we have 
-\begin_inset Formula $\|S^{-1}\delta_{s}\|_{2}\leq\frac{\epsilon}{1-\epsilon}$
-\end_inset
-
-.
- Therefore, when 
-\begin_inset Formula $\epsilon<\frac{1}{2}$
-\end_inset
-
-, we have both 
-\begin_inset Formula $\|X^{-1}\delta_{x}\|_{\infty}$
-\end_inset
-
- and 
-\begin_inset Formula $\|S^{-1}\delta_{s}\|_{\infty}$
-\end_inset
-
- less than 
-\begin_inset Formula $1$
-\end_inset
-
-, which shows that both 
-\begin_inset Formula $x^{\new}$
-\end_inset
-
- and 
-\begin_inset Formula $s^{\new}$
-\end_inset
-
- are positive.
-\end_layout
-
-\begin_layout Proof
-Next, we show that 
-\begin_inset Formula $xs$
-\end_inset
-
- is closer to 
-\begin_inset Formula $t$
-\end_inset
-
- after one Newton step.
-\end_layout
-
-\begin_layout Lemma
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:IPM_progress"
-
-\end_inset
-
- If 
-\begin_inset Formula $\sum_{i}\left(x_{i}s{}_{i}-t\right)^{2}\leq\varepsilon^{2}t^{2}$
-\end_inset
-
- with 
-\begin_inset Formula $\epsilon<\frac{1}{4}$
-\end_inset
-
-, we have that 
-\begin_inset Formula 
-\[
-\sum_{i}\left(x_{i}^{\new}s_{i}^{\new}-t\right)^{2}\leq\left(\epsilon^{4}+16\epsilon^{5}\right)t^{2}.
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-We have that 
-\begin_inset Formula $x_{i}\delta_{s,i}+s_{i}\delta_{x,i}=t-x_{i}s_{i}$
-\end_inset
-
-.
- Using this, 
-\begin_inset Formula 
-\[
-\text{LHS}=\sum_{i}\left(x_{i}^{\new}s_{i}^{\new}-t\right)^{2}=\sum_{i}(x_{i}s_{i}+x_{i}\delta_{s,i}+s_{i}\delta_{x,i}+\delta_{x,i}\delta_{s,i}-t)^{2}=\sum_{i}\delta_{x,i}^{2}\delta_{s,i}^{2}\leq\left((1+\epsilon)t\right)^{2}\cdot\sum_{i}\left(\frac{\delta_{x,i}}{x_{i}}\right)^{2}\left(\frac{\delta_{s,i}}{s_{i}}\right)^{2}
-\]
-
-\end_inset
-
-where in the last step we used 
-\begin_inset Formula $x_{i}^{2}s_{i}^{2}\leq(1+\varepsilon)^{2}t^{2}$
-\end_inset
-
-.
- Using the previous lemma, we have that
-\begin_inset Formula 
-\begin{align*}
-\text{LHS} & \leq\left((1+\epsilon)t\right)^{2}\cdot\|X^{-1}\delta_{x}\|_{4}^{2}\|S^{-1}\delta_{s}\|_{4}^{2}\\
- & \leq\left((1+\epsilon)t\right)^{2}\cdot\|X^{-1}\delta_{x}\|_{2}^{2}\|S^{-1}\delta_{s}\|_{2}^{2}\\
- & \leq\left((1+\epsilon)t\right)^{2}\left(\frac{\epsilon}{1-\epsilon}\right)^{4}\\
- & \leq\left(\epsilon^{4}+16\epsilon^{5}\right)t^{2}
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Using this, we have the main theorem.
-\end_layout
-
-\begin_layout Theorem
-We can solve a linear program to within 
-\begin_inset Formula $\delta$
-\end_inset
-
- 
-\begin_inset Quotes eld
-\end_inset
-
-error
-\begin_inset Quotes erd
-\end_inset
-
- (see Lemma 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:feasible_LP"
-
-\end_inset
-
-) in 
-\begin_inset Formula $O(\sqrt{n}\log(\frac{1}{\delta}))$
-\end_inset
-
- iterations and each iteration only needs to solve a linear system.
-\end_layout
-
-\begin_layout Proof
-Let 
-\begin_inset Formula $\Phi=\sum_{i}\left(x_{i}s{}_{i}-t\right)^{2}$
-\end_inset
-
- be the error of the current iteration.
- We always maintain 
-\begin_inset Formula $\Phi\leq\frac{t^{2}}{16}$
-\end_inset
-
- for the current 
-\begin_inset Formula $(x,y,s)$
-\end_inset
-
- and 
-\begin_inset Formula $t$
-\end_inset
-
-.
- At each step, we use Lemma 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:IPM_progress"
-
-\end_inset
-
- which makes 
-\begin_inset Formula $\Phi\leq\frac{t^{2}}{50}$
-\end_inset
-
-.
- Then, we decrease 
-\begin_inset Formula $t$
-\end_inset
-
- to 
-\begin_inset Formula $t(1-\frac{1}{10\sqrt{n}})$
-\end_inset
-
-.
- Note that
-\begin_inset Formula 
-\[
-\sum_{i}\left(x_{i}s{}_{i}-t(1-h)\right)^{2}\leq2\Phi+2t^{2}h^{2}n\leq\frac{2t^{2}}{50}+\frac{2t^{2}}{100}\leq\frac{(t(1-h))^{2}}{16}.
-\]
-
-\end_inset
-
-Therefore, the invariant is preserved after each step.
- Since 
-\begin_inset Formula $t$
-\end_inset
-
- is decreased by a 
-\begin_inset Formula $(1-\frac{1}{10\sqrt{n}})$
-\end_inset
-
- factor each step, it takes 
-\begin_inset Formula $O(\sqrt{n}\log(\frac{1}{\delta}))$
-\end_inset
-
- to decrease 
-\begin_inset Formula $t$
-\end_inset
-
- from 
-\begin_inset Formula $1$
-\end_inset
-
- to 
-\begin_inset Formula $\delta^{2}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-For many problems, this factor is polynomial and hence the total running
- time is still 
-\begin_inset Formula $O(\sqrt{n}\log(\frac{n}{\varepsilon}))$
-\end_inset
-
-.
- However, for some problem such as circuit evaluation, the factor can be
- exponentially large and hence we only get a 
-\begin_inset Formula $n^{1.5}$
-\end_inset
-
- time algorithm.
- This is natural because otherwise, we would prove that any program can
- be run in 
-\begin_inset Formula $\sqrt{n}$
-\end_inset
-
- depth!
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Subsection
