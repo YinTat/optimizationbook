@@ -925,7 +925,7 @@ Note that
 .
  Note that
 \begin_inset Foot
-status collapsed
+status open
 
 \begin_layout Plain Layout
 Recall that 
@@ -2294,7 +2294,7 @@ Let
  Then, we have that
 \begin_inset Formula 
 \[
-\int_{B_{\infty}(y,r_{2})}\norm{\nabla f(z)-g(y)}_{1}dz\leq\sum_{i}\int_{B_{\infty}(y,r_{2})}\left|\omega_{i}(z)\right|dz.
+\int_{B_{\infty}(y,r_{2})}\norm{\nabla f(z)-g(y)}_{1}dz=\sum_{i}\int_{B_{\infty}(y,r_{2})}\left|\omega_{i}(z)\right|dz.
 \]
 
 \end_inset
@@ -2444,7 +2444,7 @@ where
 Therefore, we have that
 \begin_inset Formula 
 \[
-\E_{y\in B_{\infty}(x,r_{1})}\E_{z\in B_{\infty}(y,r_{2})}\norm{\nabla f(z)-g(y)}_{1}dz\leq n^{3/2}\frac{r_{2}}{r_{1}}L.
+\E_{y\in B_{\infty}(x,r_{1})}\E_{z\in B_{\infty}(y,r_{2})}\norm{\nabla f(z)-g(y)}_{1}\leq n^{3/2}\frac{r_{2}}{r_{1}}L.
 \]
 
 \end_inset

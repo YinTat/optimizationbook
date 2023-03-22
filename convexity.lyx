@@ -1074,11 +1074,11 @@ Let
 \end_inset
 
  such that 
-\begin_inset Formula $\sup_{x\in A}v^{\top}x<\inf_{x\in B}v^{\top}x$
+\begin_inset Formula $\sup_{x\in A}v^{\top}x\le\inf_{x\in B}v^{\top}x$
 \end_inset
 
 .
- 
+ Show strict inequality if the sets are also bounded.
 \end_layout
 
 \begin_layout Standard

@@ -2,7 +2,75 @@
 \lyxformat 544
 \begin_document
 \begin_header
+\save_transient_properties true
+\origin unavailable
 \textclass optbook
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
 \end_header
 
 \begin_body
@@ -943,604 +1011,5 @@ First we consider the convergence in the case when
  up to a certain time that depends on the condition number.
 \end_layout
 
-\begin_layout Lemma
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:hmc_contraction"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Lemma
-Let 
-\begin_inset Formula $x(t)$
-\end_inset
-
- and 
-\begin_inset Formula $y(t)$
-\end_inset
-
- be the solution of HMC dynamics starting at 
-\begin_inset Formula $x(0)$
-\end_inset
-
- and 
-\begin_inset Formula $y(0)$
-\end_inset
-
- with initial direction 
-\begin_inset Formula $x'(0)=y'(0)$
-\end_inset
-
-.
- Suppose that 
-\begin_inset Formula $f$
-\end_inset
-
- satisfies 
-\begin_inset Formula 
-\[
-\mu\cdot I\preceq\nabla^{2}f(x)\preceq L\cdot I
-\]
-
-\end_inset
-
-for all 
-\begin_inset Formula $x$
-\end_inset
-
-.
- Then, for 
-\begin_inset Formula $0\leq t\leq\frac{\mu^{1/4}}{2L^{3/4}}$
-\end_inset
-
-, we have that 
-\begin_inset Formula 
-\[
-\|x(t)-y(t)\|_{2}^{2}\leq\left(1-\frac{\mu}{4}t^{2}\right)\|x(0)-y(0)\|_{2}^{2}.
-\]
-
-\end_inset
-
-With T set to the upper bound above, we have 
-\begin_inset Formula 
-\[
-\|x(T)-y(T)\|_{2}^{2}\leq\left(1-\frac{1}{16}\left(\frac{\mu}{L}\right)^{\frac{3}{2}}\right)\|x(0)-y(0)\|_{2}^{2}.
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-This gives us the following bound, by induction.
-\end_layout
-
-\begin_layout Theorem
-Suppose 
-\begin_inset Formula $f$
-\end_inset
-
- satisfies 
-\begin_inset Formula 
-\[
-\mu\cdot I\preceq\nabla^{2}f(x)\preceq L\cdot I.
-\]
-
-\end_inset
-
-For step-size 
-\begin_inset Formula $\delta=\frac{\mu^{1/4}}{2L^{3/4}}$
-\end_inset
-
- , let 
-\begin_inset Formula $X^{T}$
-\end_inset
-
- be and HMC sequence and 
-\begin_inset Formula $Y\sim e^{-f}$
-\end_inset
-
-.
- Then, after 
-\begin_inset Formula $T=O\left(\left(\frac{L}{\mu}\right)^{\frac{3}{2}}\log\frac{n}{\mu\epsilon}\right)$
-\end_inset
-
- steps, we have 
-\begin_inset Formula $W_{2}(X,Y)\leq\epsilon.$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-Besides the one-step contraction above, we need a bound on the initial distance.
- Let 
-\begin_inset Formula $x^{(\min)}$
-\end_inset
-
- be the minimum of 
-\begin_inset Formula $f$
-\end_inset
-
-.
- Then, we have 
-\begin_inset Formula 
-\[
-\|x^{(0)}-y^{(0)}\|_{2}^{2}\leq2\|x^{(0)}-x^{(\min)}\|_{2}^{2}+2\|y^{(0)}-x^{(\min)}\|_{2}^{2}.
-\]
-
-\end_inset
-
-The strong convexity of 
-\begin_inset Formula $f$
-\end_inset
-
- shows that 
-\begin_inset Formula 
-\[
-\|x^{(0)}-x^{(\min)}\|_{2}^{2}\leq\frac{1}{\mu^{2}}\|\nabla f(x^{(0)})\|_{2}^{2}.
-\]
-
-\end_inset
-
-For the second term, we use the following bound
-\end_layout
-
-\begin_layout Proof
-\begin_inset Formula 
-\[
-\E\left[\|y^{(0)}-x^{(\min)}\|_{2}^{2}\right]\leq\frac{d}{\mu}.
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-We now turn to the proof of the contraction bound.
- The following simple ODE bound will be useful for proving the main convergence
- lemma.
-\end_layout
-
-\begin_layout Lemma
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:cosh"
-
-\end_inset
-
-Given a continuous function 
-\begin_inset Formula $v(t)$
-\end_inset
-
- and positive scalars 
-\begin_inset Formula $\gamma$
-\end_inset
-
- such that 
-\begin_inset Formula 
-\[
-0\leq v(t)\leq\beta+\gamma\int_{0}^{t}(t-s)v(s)\,ds,
-\]
-
-\end_inset
-
- then we have that 
-\begin_inset Formula $v(t)\leq\beta\cosh(\sqrt{\gamma}t)$
-\end_inset
-
- for all 
-\begin_inset Formula $t\geq0$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Exercise
-Prove the above lemma.
- [Hint: first do it assuming the upper bound for each 
-\begin_inset Formula $t$
-\end_inset
-
- is equality.]
-\end_layout
-
-\begin_layout Proof
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-Proof of Lemma 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:hmc_contraction"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
- Let the error function be 
-\begin_inset Formula $u(t)=y(t)-x(t)$
-\end_inset
-
-.
- The definition of HMC shows that 
-\begin_inset Formula 
-\[
-u''(t)=-(\nabla f(y(t))-\nabla f(x(t)))=-H(t)\cdot u(t)
-\]
-
-\end_inset
-
- where
-\begin_inset Formula 
-\[
-H(t)=\int_{0}^{1}\nabla^{2}f(x(t)+s(y(t)-x(t)))\:ds
-\]
-
-\end_inset
-
-We have that 
-\begin_inset Formula $\mu\cdot I\preceq H(t)\preceq L\cdot I.$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-Without loss of generality, we can assume 
-\begin_inset Formula $\|u(0)\|_{2}=1\mbox{ and }u(0)=e_{1}$
-\end_inset
-
-.
- We first get a rough bound on 
-\begin_inset Formula $\|u(t)\|_{2}$
-\end_inset
-
- saying that it does not change by more than a constant factor, and then
- use it to get a strong bound showing contraction.
-\end_layout
-
-\begin_deeper
-\begin_layout Proof
-Integrating both sides of 
-\begin_inset Formula $u''(t)=-H(t)\cdot u(t)$
-\end_inset
-
- twice and using 
-\begin_inset Formula $u'(0)=0$
-\end_inset
-
- gives 
-\begin_inset Formula 
-\[
-u(t)=u(0)-\int_{0}^{t}(t-s)H(s)u(s)\,ds.
-\]
-
-\end_inset
-
-Therefore, 
-\begin_inset Formula 
-\[
-\|u(t)\|_{2}\leq1+L\cdot\int_{0}^{t}(t-s)\|u(s)\|_{2}\,ds.
-\]
-
-\end_inset
-
-Applying Lemma 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:cosh"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
- to this equation with 
-\begin_inset Formula $t\leq\frac{1}{2\sqrt{L}}$
-\end_inset
-
- gives 
-\begin_inset Formula 
-\[
-\|u(t)\|_{2}\leq\cosh(\sqrt{L}t)\leq\frac{6}{5}.
-\]
-
-\end_inset
-
-Putting it back in the integral equation, 
-\begin_inset Formula 
-\[
-\|u(t)-e_{1}\|_{2}\leq\int_{0}^{t}(t-s)\|H(s)\cdot u(s)\|_{2}\,ds=\int_{0}^{t}(t-s)\cdot L\cdot\frac{6}{5}\,ds=\frac{6}{10}Lt^{2}.
-\]
-
-\end_inset
-
-In particular, for any 
-\begin_inset Formula $0\leq t\leq\frac{1}{2\sqrt{L}}$
-\end_inset
-
-, we have that 
-\begin_inset Formula 
-\[
-\frac{5}{6}\leq u_{1}(t)\leq\frac{7}{6}.
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-Let 
-\begin_inset Formula $P_{1}$
-\end_inset
-
- be the orthogonal projection to the first coordinate and 
-\begin_inset Formula $P_{-1}=I-P_{1}$
-\end_inset
-
-.
- We write 
-\begin_inset Formula $u(t)=u_{1}(t)+u_{-1}(t)$
-\end_inset
-
- with 
-\begin_inset Formula $u_{1}(t)=P_{1}u(t)$
-\end_inset
-
- and 
-\begin_inset Formula $u_{-1}(t)=P_{-1}u(t)$
-\end_inset
-
-, namely, 
-\begin_inset Formula $u_{1}(t)$
-\end_inset
-
- is parallel to 
-\begin_inset Formula $e_{1}$
-\end_inset
-
- and 
-\begin_inset Formula $u_{-1}(t)$
-\end_inset
-
- is orthogonal to 
-\begin_inset Formula $e_{1}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Proof
-Fix any 
-\begin_inset Formula $0\leq t\leq T$
-\end_inset
-
-.
- Let 
-\begin_inset Formula $\beta(t)=e_{1}^{\top}u(t)$
-\end_inset
-
-.
- By the definition of 
-\begin_inset Formula $u$
-\end_inset
-
-, we have 
-\begin_inset Formula $u''(t)=-\beta(t)\cdot H(t)e_{1}-H(t)u_{-1}(t).$
-\end_inset
-
- Integrating both sides twice and using 
-\begin_inset Formula $u_{-1}(0)=0$
-\end_inset
-
-, we have 
-\begin_inset Formula 
-\begin{align*}
-u_{-1}(t) & =\int_{0}^{t}(t-s)P_{-1}u''(s)\,ds\\
- & =-\int_{0}^{t}(t-s)\cdot\beta(s)\cdot P_{-1}H(s)e_{1}\,ds-\int_{0}^{t}(t-s)P_{-1}H(s)u_{-1}(s)\,ds.
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-Using 
-\begin_inset Formula $0\preceq H(t)\preceq L\cdot I$
-\end_inset
-
- and 
-\begin_inset Formula $\frac{5}{6}\leq\beta(s)\leq\frac{7}{6}$
-\end_inset
-
-, we have that 
-\begin_inset Formula 
-\begin{align}
-\|u_{-1}(t)\|_{2}\leq & ~\int_{0}^{t}(t-s)\cdot\beta(s)\cdot\|H(s)e_{1}\|_{2}\,ds+L\cdot\int_{0}^{t}(t-s)\cdot\|u_{-1}(s)\|_{2}\,ds\nonumber \\
-\leq & ~\frac{7}{6}\int_{0}^{t}(t-s)\cdot\|H(s)e_{1}\|_{2}\,ds+L\cdot\int_{0}^{t}(t-s)\cdot\|u_{-1}(s)\|_{2}\,ds\nonumber \\
-\leq & ~\frac{7}{6}\alpha(T)+L\cdot\int_{0}^{t}(t-s)\cdot\|u_{-1}(s)\|_{2}\,ds\label{eq:u-1_bound}
-\end{align}
-
-\end_inset
-
-where 
-\begin_inset Formula $\alpha(T)\defeq\int_{0}^{T}(T-s)\cdot\|H(s)e_{1}\|_{2}\,ds$
-\end_inset
-
-.
- Solving this integral inequality using Lemma 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:cosh"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, we get 
-\begin_inset Formula 
-\begin{equation}
-\|u_{-1}(t)\|_{2}\leq\frac{7}{6}\alpha(T)\cdot\cosh(\sqrt{L}t)\leq\frac{7}{6}\alpha(T)\cdot\cosh(1/2)\leq\frac{4}{3}\alpha(T)\label{eq:u-1_bound2}
-\end{equation}
-
-\end_inset
-
-where the second step follows from 
-\begin_inset Formula $t\leq\frac{1}{2\sqrt{L}}$
-\end_inset
-
-, and the last step follows from 
-\begin_inset Formula $\cosh(1/2)\leq\frac{8}{7}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Proof
-Next we look at the first coordinate.
- 
-\begin_inset Formula 
-\begin{align}
-\beta''(t) & =-\beta(t)\cdot e_{1}^{\top}H(t)e_{1}-e_{1}^{\top}H(t)u_{-1}(t)\nonumber \\
- & \leq-\frac{5}{6}e_{1}^{\top}H(t)e_{1}+\|H(t)e_{1}\|_{2}\cdot\|u_{-1}(t)\|_{2}.\label{eq:ideal_HMC_beta}
-\end{align}
-
-\end_inset
-
-To bound the last term, we note that 
-\begin_inset Formula 
-\begin{align*}
-\|H(t)e_{1}\|_{2}= & ~\sqrt{e_{1}^{\top}H^{2}(t)e_{1}}\\
-\leq & ~\sqrt{L\cdot e_{1}^{\top}H(t)e_{1}} & \text{~since~}H^{2}(t)\preceq L\cdot H(t)\\
-%=
- & ~\sqrt{\frac{L}{\mu}}\sqrt{\frac{\mu}{e_{1}^{\top}H(t)e_{1}}}e_{1}^{\top}H(t)e_{1}\\
-\le & ~\sqrt{\frac{L}{\mu}}\cdot e_{1}^{\top}H(t)e_{1} & \text{~since~}\mu\leq e_{1}^{\top}H(t)e_{1}.
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-We bound 
-\begin_inset Formula $\alpha(t)$
-\end_inset
-
- as follows 
-\begin_inset Formula 
-\[
-\alpha(t)=\frac{1}{\|e(0)\|_{2}}\int_{0}^{t}(t-s)\cdot\|H(s)e(0)\|_{2}\,ds\leq L\int_{0}^{t}(t-s)\,ds=L\frac{t^{2}}{2}.
-\]
-
-\end_inset
-
-Therefore, for 
-\begin_inset Formula $0\leq t\leq\frac{\mu^{1/4}}{2L^{3/4}}$
-\end_inset
-
-, we have that 
-\begin_inset Formula $\alpha(T)\leq\frac{1}{8}\sqrt{\frac{\mu}{L}}$
-\end_inset
-
-.
- Using these bounds,
-\begin_inset Formula 
-\[
-\beta''(t)\leq-e_{1}^{\top}H(t)e_{1}\cdot\left(\frac{5}{6}-\frac{4}{3}\sqrt{\frac{L}{\mu}}\alpha(T)\right)\leq-\frac{2}{3}e_{1}^{\top}H(t)e_{1}.
-\]
-
-\end_inset
-
-Hence, 
-\begin_inset Formula 
-\begin{equation}
-\beta(t)\leq1-\frac{2}{3}\int_{0}^{t}(t-s)\cdot e_{1}^{\top}H(s)e_{1}\,ds.\label{eq:alpha_bound}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-Using this, 
-\begin_inset Formula $\beta(t)\geq\frac{5}{6}$
-\end_inset
-
- and (
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:u-1_bound2"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-), 
-\begin_inset Formula 
-\begin{align*}
-\|u(t)\|_{2}^{2} & =\beta^{2}(t)+\|u_{-1}(t)\|_{2}^{2}\\
- & \leq1-\int_{0}^{t}(t-s)\cdot e_{1}^{\top}H(s)e_{1}\,ds+\left(\frac{4}{3}\int_{0}^{T}(T-s)\cdot\|H(s)e_{1}\|_{2}\,ds\right)^{2}\\
- & \leq1-\int_{0}^{t}(t-s)\cdot e_{1}^{\top}H(s)e_{1}\,ds+2\sqrt{\frac{L}{\mu}}\int_{0}^{T}(T-s)\cdot e_{1}^{\top}H(s)e_{1}\,ds\cdot\alpha(T)\\
- & =1-\int_{0}^{t}(t-s)\cdot e_{1}^{\top}H(s)e_{1}\,ds\left(1-2\sqrt{\frac{L}{\mu}}\alpha(T)\right)\\
- & \leq1-\frac{1}{2}\int_{0}^{t}(t-s)\cdot e_{1}^{\top}H(s)e_{1}\,ds
-\end{align*}
-
-\end_inset
-
-where we used the bound on 
-\begin_inset Formula $\norm{H(t)e_{1}}_{2}$
-\end_inset
-
-at the second step and 
-\begin_inset Formula $\alpha(T)\leq\frac{1}{8}\sqrt{\frac{\mu}{L}}$
-\end_inset
-
- at the end.
-\end_layout
-
-\begin_layout Proof
-Now we can bound 
-\begin_inset Formula $e_{1}^{\top}H(s)e_{1}\geq L$
-\end_inset
-
- and get 
-\begin_inset Formula 
-\begin{align*}
-\int_{0}^{t}(t-s)\cdot e_{1}^{\top}H(s)e_{1}\,ds\geq\frac{\mu}{2}t^{2}
-\end{align*}
-
-\end_inset
-
-which implies 
-\begin_inset Formula 
-\begin{align*}
-\|u(t)\|_{2}^{2}\leq1-\frac{\mu}{4}t^{2}.
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\end_deeper
 \end_body
 \end_document

@@ -76,11 +76,11 @@
 \begin_body
 
 \begin_layout Standard
-In this chapter, we study some polynomial-time sampling algorithms.
+In this chapter, we study polynomial-time sampling algorithms.
 \end_layout
 
 \begin_layout Subsection*
-Ball Walk
+The Ball Walk
 \end_layout
 
 \begin_layout Standard
@@ -812,6 +812,22 @@ why atom free? otherwise we may have to assign some fractional value to
  and the supremum is achieved by some subset.
 \end_layout
 
+\begin_layout Standard
+If the target density 
+\begin_inset Formula $Q$
+\end_inset
+
+ has atoms, i.e., points of positive probability, then the function 
+\begin_inset Formula $g$
+\end_inset
+
+ achieving 
+\begin_inset Formula $h$
+\end_inset
+
+ might have a fractional value at one atom.
+\end_layout
+
 \begin_layout Lemma
 Let 
 \begin_inset Formula $Q$
@@ -1266,6 +1282,19 @@ H_{Q}(Q_{t})\le e^{-2\rho t}H_{Q}(Q_{0}).
 
 \end_layout
 
+\begin_layout Theorem
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Add proof!
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Conductance of the Ball Walk
 \end_layout
@@ -1413,6 +1442,76 @@ One-step overlap
 .
 \end_layout
 
+\begin_layout Proof
+First assume that 
+\begin_inset Formula $\ell=1$
+\end_inset
+
+.
+ This means that the balls of radius 
+\begin_inset Formula $\delta$
+\end_inset
+
+ centered at 
+\begin_inset Formula $u$
+\end_inset
+
+ and 
+\begin_inset Formula $v$
+\end_inset
+
+ are fully contained in 
+\begin_inset Formula $K$
+\end_inset
+
+.
+ The TV distance between these distributions is bounded by 
+\begin_inset Formula $\vol(u+\delta B^{n}\setminus v+\delta B^{n})=\vol(v+\delta B^{n}\setminus u+\delta B^{n})$
+\end_inset
+
+ divided by 
+\begin_inset Formula $\vol(\delta B^{n})$
+\end_inset
+
+.
+ This is exactly the volume of a band of thickness 
+\begin_inset Formula $\norm{u-v}$
+\end_inset
+
+ centered at the center of 
+\begin_inset Formula $\delta B^{n}$
+\end_inset
+
+ (see Fig.
+ ).
+ This has relative volume at most 
+\begin_inset Formula $t$
+\end_inset
+
+, proving the lemma under the assumption that 
+\begin_inset Formula $\ell=1$
+\end_inset
+
+.
+ For the general case, we note that when the balls are intersected with
+ a convex body, the increase in the TV distance is at most the probability
+ that there is no proper move at 
+\begin_inset Formula $u$
+\end_inset
+
+ (or 
+\begin_inset Formula $v$
+\end_inset
+
+), i.e., 
+\begin_inset Formula $1-\ell$
+\end_inset
+
+.
+ This completes the proof.
+ 
+\end_layout
+
 \begin_layout Standard
 Setting 
 \begin_inset Formula $t=\ell/2$
@@ -1487,6 +1586,12 @@ This can be generalized to any logconcave measure.
 \end_layout
 
 \begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:ball_walk_cond"
+
+\end_inset
+
 Let 
 \begin_inset Formula $K$
 \end_inset
@@ -1738,6 +1843,23 @@ Using the construction above of adding a small ball to every point of
 \end_inset
 
  on the mixing time.
+ As we will see presently, this can be improved to 
+\begin_inset Formula $n^{2}D^{2}$
+\end_inset
+
+ by avoiding the blow-up, and analyzing the 
+\emph on
+average 
+\emph default
+local conductance.
+ The example of starting near a corner (say of a hypercube) shows that this
+ cannot work in general; however, from a 
+\emph on
+warm
+\emph default
+ start, it will suffice to bound the average local conductance rather than
+ the minimum.
+ 
 \end_layout
 
 \begin_layout Subsection*
@@ -1749,9 +1871,9 @@ Warm Start and
 \end_layout
 
 \begin_layout Standard
-A more careful analysis, using a warm start and only bounding the conductance
- of large sets gives a better (and tight) bound for the mixing of the ball
- walk.
+In this section we give a better bound for the conductance of sufficiently
+ large subsets resulting in the following bound on the mixing rate of the
+ ball walk.
 \end_layout
 
 \begin_layout Theorem
@@ -1790,7 +1912,7 @@ name "lem:avg-local-conductance"
 
 \end_inset
 
-Let 
+ Let 
 \begin_inset Formula $K$
 \end_inset
 
@@ -1817,6 +1939,50 @@ Let
 
 \begin_layout Exercise
 Prove the first part of the previous lemma.
+\end_layout
+
+\begin_layout Standard
+The proof of the above lemma will use the following bound on crossing the
+ boundary of 
+\begin_inset Formula $K$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Lemma
+Let 
+\begin_inset Formula $L$
+\end_inset
+
+ be any measurable subset of the boundary of a convex body K and 
+\begin_inset Formula $S_{L}=\left\{ (x,y):x\in K,y\not\in K,\norm{x-y}\le\delta,[x,y]\cap L\neq\phi\right\} $
+\end_inset
+
+.
+ Then,, we have 
+\begin_inset Formula 
+\[
+\vol_{2n}(S_{L})\le\frac{\delta}{(n+1)}\frac{\vol(B^{n-1})}{\vol(B^{n})}\vol_{n-1}(L)\vol(\delta B^{n}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+It suffices to consider the case when 
+\begin_inset Formula $L$
+\end_inset
+
+ is infinitesimally small; and then we can assume that the surface of 
+\begin_inset Formula $K$
+\end_inset
+
+ is locally contained in a hyperplane.
+ 
 \end_layout
 
 \begin_layout Theorem
@@ -1848,7 +2014,281 @@ The
 \end_layout
 
 \begin_layout Standard
-The mixing rate follows by applying Theorem 
+This proof is similar to that of Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:ball_walk_cond"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, with one important extension.
+ Rather than applying the argument to a partition of the original convex
+ body 
+\begin_inset Formula $K$
+\end_inset
+
+, we restrict the argument to 
+\begin_inset Formula $K_{\delta},$
+\end_inset
+
+the points in 
+\begin_inset Formula $K$
+\end_inset
+
+ that have high local conductance.
+ Since this subset takes up most of 
+\begin_inset Formula $K$
+\end_inset
+
+, and is convex, we will able to use its isoperimetry to lower bound the
+ conductance.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+need figure!
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Proof
+As before, we consider the following partition of 
+\begin_inset Formula $K$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $K=S_{1}\cup S_{2}$
+\end_inset
+
+ be a partition into measurable sets.
+ We will prove that
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula 
+\begin{eqnarray}
+\int_{S_{1}}P_{x}(S_{2})\,dx & \ge & \frac{\delta}{C\sqrt{n}D}\min\{\vol(S_{1})-\frac{s}{2},\vol(S_{2})-\frac{s}{2}\}\label{COND-1}
+\end{eqnarray}
+
+\end_inset
+
+Since the uniform distribution is stationary, 
+\begin_inset Formula 
+\[
+\int_{S_{1}}P_{x}(S_{2})\,dx=\int_{S_{2}}P_{x}(S_{1})\,dx.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Consider the points that are 
+\begin_inset Quotes eld
+\end_inset
+
+deep
+\begin_inset Quotes erd
+\end_inset
+
+ inside these sets: 
+\begin_inset Formula 
+\[
+S_{1}'=\left\{ x\in S_{1}:P_{x}(S_{2})<\frac{1}{8}\right\} \mbox{ and }S_{2}'=\left\{ x\in S_{2}:P_{x}(S_{1})<\frac{1}{8}\right\} .
+\]
+
+\end_inset
+
+Let 
+\begin_inset Formula $S_{3}'$
+\end_inset
+
+ be the rest i.e., 
+\begin_inset Formula $S_{3}'=K\setminus S_{1}'\setminus S_{2}'$
+\end_inset
+
+.
+ Recall that 
+\begin_inset Formula 
+\[
+K_{\delta}=\left\{ x\in K:\ell(x)\ge\frac{3}{4}\right\} 
+\]
+
+\end_inset
+
+and define 
+\begin_inset Formula $S_{i}''=S_{i}'\cap K_{\delta}.$
+\end_inset
+
+ Note that by Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:avg-local-conductance"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, for 
+\begin_inset Formula $\delta\le s/(4\sqrt{n})$
+\end_inset
+
+, 
+\begin_inset Formula 
+\[
+\vol(S_{i}'')\ge\vol(S_{i}')-s.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Suppose 
+\begin_inset Formula $\vol(S_{1}'')<\vol(S_{1}\cap K_{\delta})/2$
+\end_inset
+
+.
+ Then 
+\begin_inset Formula 
+\[
+\int_{S_{1}}P_{x}(S_{2})\,dx\ge\frac{1}{8}\vol(S_{1}\cap K_{\delta}\setminus S_{1}'')\geq\frac{1}{16}\vol(S_{1}\cap K_{\delta})\ge\frac{1}{16}\left(\vol(S_{1})-\frac{s}{2}\right)
+\]
+
+\end_inset
+
+which proves (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "COND-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Proof
+So we can assume that 
+\begin_inset Formula $\vol(S_{1}'')\geq\vol(S_{1}\cap K_{\delta})/2$
+\end_inset
+
+ and similarly 
+\begin_inset Formula $\vol(S_{2}'')\geq\vol(S_{2}\cap K_{\delta})/2$
+\end_inset
+
+.
+ Now, for any 
+\begin_inset Formula $u\in S_{1}''$
+\end_inset
+
+ and 
+\begin_inset Formula $v\in S_{2}''$
+\end_inset
+
+, 
+\begin_inset Formula 
+\[
+d_{TV}(P_{u},P_{v})\geq1-P_{u}(S_{2})-P_{v}(S_{1})>1-\frac{1}{4}.
+\]
+
+\end_inset
+
+Applying Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:ONESTEP"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ with 
+\begin_inset Formula $t=3/8$
+\end_inset
+
+, we get that 
+\begin_inset Formula 
+\[
+|u-v|\geq\frac{3\delta}{8\sqrt{n}}.
+\]
+
+\end_inset
+
+Thus 
+\begin_inset Formula $d(S_{1}'',S_{2}'')\geq3\delta/(8\sqrt{n})$
+\end_inset
+
+.
+ Applying Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:isoD"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ to the partition 
+\begin_inset Formula $S_{1}'',S_{2}'',S_{3}''$
+\end_inset
+
+ of 
+\begin_inset Formula $K_{\delta}$
+\end_inset
+
+, we have 
+\begin_inset Formula 
+\begin{eqnarray*}
+\vol(S_{3}'') & \geq & \frac{3\delta}{4\sqrt{n}D}\min\{\vol(S_{1}''),\vol(S_{2}'')\}\\
+ & \geq & \frac{3\delta}{8\sqrt{n}D}\min\{\vol(S_{1})-\frac{s}{2},\vol(S_{2})-\frac{s}{2}\}.
+\end{eqnarray*}
+
+\end_inset
+
+We can now prove (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "COND-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) as follows: 
+\begin_inset Formula 
+\begin{eqnarray*}
+\int_{S_{1}}P_{x}(S_{2})\,dx & = & \frac{1}{2}\int_{S_{1}}P_{x}(S_{2})\,dx+\frac{1}{2}\int_{S_{2}}P_{x}(S_{1})\,dx\\
+ & \ge & \frac{1}{2}\vol(S_{3}'')\cdot\frac{1}{8}\\
+ & \ge & \frac{3\delta}{128\sqrt{n}D}\min\{\vol(S_{1}),\vol(S_{2})\}
+\end{eqnarray*}
+
+\end_inset
+
+which implies that the conductance is at least 
+\begin_inset Formula $3s/(512nD)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The mixing rate then follows by applying Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:s-mixing"
@@ -1963,16 +2403,21 @@ In the above analysis of the ball walk, the dependence on the error parameter
 \begin_inset Formula $x$
 \end_inset
 
-, we sample uniformly from the intersection of 
+, we sample the next step uniformly from the intersection of 
 \begin_inset Formula $(x+\delta B^{n})\cap K$
 \end_inset
 
- and go there.
+.
  The resulting Markov chain is the subsequence of 
 \emph on
 proper 
 \emph default
 steps of the ball walk.
+\end_layout
+
+\begin_layout Exercise
+Show that the stationary density of the speedy walk in a convex body is
+ proportional to the local conductance.
 \end_layout
 
 \begin_layout Theorem
@@ -1993,7 +2438,7 @@ wasted
 \end_inset
 
  steps is not too many.
- This follows from the assumption of a wam start and Lemma 
+ This follows from the assumption of a warm start and Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:avg-local-conductance"

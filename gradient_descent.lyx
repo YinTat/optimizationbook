@@ -1517,7 +1517,7 @@ f(x)-f(y)\leq\left\langle \nabla f(x),x-y\right\rangle \leq\|\nabla f(x)\|_{2}\c
 \end_layout
 
 \begin_layout Standard
-This in turns give a better bound on the number of iterations because the
+This in turn give a better bound on the number of iterations because the
  bound in Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1942,7 +1942,7 @@ growth
 \begin_inset Quotes erd
 \end_inset
 
- of a strongly convex function around any point is lower bound by a quadratic
+ of a strongly convex function around any point is lower bounded by a quadratic
  function.
  Clearly a strongly convex function is also convex and the sum of a strongly
  convex and convex function remains strongly convex.

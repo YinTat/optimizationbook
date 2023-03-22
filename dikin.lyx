@@ -1,0 +1,1000 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Dikin walk
+\end_layout
+
+\begin_layout Standard
+Both the ball walk and hit-and-run have a dependence on the 
+\begin_inset Quotes eld
+\end_inset
+
+roundness
+\begin_inset Quotes erd
+\end_inset
+
+ of the target distribution, e.g., via its diameter or average distance to
+ the center of gravity.
+ Reducing this dependence to logarithmic by rounding is polynomial time
+ but expensive.
+ The current best rounding algorithm (which achieves near-isotropic position)
+ has complexity 
+\begin_inset Formula $O^{*}(n^{3})$
+\end_inset
+
+.
+ Here we describe a different approach, which is affine-invariant, but requires
+ more knowledge of the convex body.
+ In particular, we will focus on the special case of sampling an explicit
+ polytope 
+\begin_inset Formula $P=\left\{ x:\,Ax\ge b\right\} $
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+For a point 
+\begin_inset Formula $x$
+\end_inset
+
+ in the interior of 
+\begin_inset Formula $P$
+\end_inset
+
+, let 
+\begin_inset Formula 
+\[
+\phi(x)=-\sum_{i=1}^{m}\ln(A_{i}x-b_{i})
+\]
+
+\end_inset
+
+be the logarithmic barrier function that we already encontered in the Interior
+ Point Method for linear optimization.
+ Recall the following.
+\end_layout
+
+\begin_layout Fact
+For the log barrier 
+\begin_inset Formula $\phi$
+\end_inset
+
+, we have 
+\begin_inset Formula 
+\[
+\nabla\phi(x)=-A^{T}s(x)^{-1}\mbox{ and }\nabla^{2}\phi(x)=A^{T}S(x)^{-2}A
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $s(x)=Ax-b$
+\end_inset
+
+ and 
+\begin_inset Formula $S(x)=\text{\Diag(s(x))}.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We are now ready to define the Dikin walk for the log barrier.
+ Let 
+\begin_inset Formula $\Sigma_{x}=\frac{1}{100n}(A^{T}S(x)^{-2}A)^{-1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\gamma_{x}(y)$
+\end_inset
+
+ be the density of 
+\begin_inset Formula $y$
+\end_inset
+
+ for the Gaussian 
+\begin_inset Formula $N(x,\Sigma_{x})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm2e}[H]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\mathtt{DikinWalk}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetAlgoLined
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Input: starting point 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ in a polytope 
+\begin_inset Formula $P=\left\{ x:\,Ax\ge b\right\} $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Repeat 
+\begin_inset Formula $T$
+\end_inset
+
+ times: at current point 
+\begin_inset Formula $x$
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Enumerate
+Pick 
+\begin_inset Formula $y$
+\end_inset
+
+ from 
+\begin_inset Formula $N(x,\Sigma_{x})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+If 
+\begin_inset Formula $y\in P$
+\end_inset
+
+ go to 
+\begin_inset Formula $y$
+\end_inset
+
+ with probability 
+\begin_inset Formula $\min\left\{ 1,\frac{\gamma_{y}(x)}{\gamma_{x}(y)}\right\} $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Return
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $x$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Each step of the walk can be implemented in matrix multiplication time 
+\begin_inset Formula $O(mn^{w-1})$
+\end_inset
+
+.
+ Due to the Metropolis filter, we have that the uniform distribution in
+ 
+\begin_inset Formula $P$
+\end_inset
+
+ is stationary for this walk.
+ The main theorem of this section is a bound on its rate of convergence,
+ originally proved in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "kannan2012random"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:dikin-cond"
+
+\end_inset
+
+For a polytope with 
+\begin_inset Formula $m$
+\end_inset
+
+ facets in 
+\begin_inset Formula $\R^{n}$
+\end_inset
+
+, the conductance of the Dikin walk is 
+\begin_inset Formula $\Omega(1/\sqrt{mn})$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Thus the mixing time from a warm start is 
+\begin_inset Formula $O(mn)$
+\end_inset
+
+ steps and a factor of 
+\begin_inset Formula $\text{\ensuremath{\tilde{O}(n)}}$
+\end_inset
+
+ higher from any start.
+ The notable feature of this guarantee is that it is affine-invariant and
+ does not depend on the coefficients of 
+\begin_inset Formula $A,b.$
+\end_inset
+
+ Thus, for the Dikin walk, unlike the ball walk and hit-and-run, there is
+ no need for rounding to obtain a polytime sampling algorithm.
+ As in previous analysis, the proof is based on two crucial lemmas: a geometric
+ isoperimetric inequality and an analysis of the overlap of next-step distributi
+ons from 
+\begin_inset Quotes eld
+\end_inset
+
+nearby
+\begin_inset Quotes erd
+\end_inset
+
+ points.
+ We have already seen the former, it is Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:iso-cross-ratio"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ To apply it, we need a simple property of the Dikin walk.
+\end_layout
+
+\begin_layout Standard
+For a matrix 
+\begin_inset Formula $A$
+\end_inset
+
+, let 
+\begin_inset Formula $\norm x_{A}^{2}=x^{T}Ax$
+\end_inset
+
+.
+ We recall that the Dikin ellipsoid at 
+\begin_inset Formula $u\in K$
+\end_inset
+
+ is given by 
+\begin_inset Formula $E_{u}=\left\{ x:\,(x-u)^{T}\nabla^{2}\phi(u)(x-u)\le1\right\} $
+\end_inset
+
+.
+ For convenience we write 
+\begin_inset Formula $\norm._{\nabla^{2}\phi(x)}$
+\end_inset
+
+ as 
+\begin_inset Formula $\norm._{x}$
+\end_inset
+
+.
+ The Dikin ellipsoid has the following property.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:dikin-john"
+
+\end_inset
+
+For any 
+\begin_inset Formula $u\in P$
+\end_inset
+
+, defined by 
+\begin_inset Formula $m$
+\end_inset
+
+ inequalities and the log barrier function 
+\begin_inset Formula $\phi:P\rightarrow\R$
+\end_inset
+
+, 
+\begin_inset Formula 
+\[
+u+E_{u}\subseteq P\cap(2u-P)\subseteq u+\sqrt{m}E_{u}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+By the definition of 
+\begin_inset Formula $E_{u}$
+\end_inset
+
+, for any 
+\begin_inset Formula $v\in P\cap(2u-P)$
+\end_inset
+
+, 
+\begin_inset Formula $\norm{A^{T}S(u)^{-1}(u-v)}_{\infty}\le1$
+\end_inset
+
+.
+ Hence, 
+\begin_inset Formula $\norm{(u-v)A^{T}S(u)^{-2}A(u-v)}\le m$
+\end_inset
+
+, as claimed.
+\end_layout
+
+\begin_layout Standard
+We will use this to prove a suitable isoperimetry.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:dikin-dist"
+
+\end_inset
+
+For 
+\begin_inset Formula $u,v\in P$
+\end_inset
+
+, 
+\begin_inset Formula 
+\[
+d_{P}(u,v)\ge\frac{\norm{u-v}_{u}}{\sqrt{m}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Consider the Dikin ellipsoid at 
+\begin_inset Formula $u$
+\end_inset
+
+.
+ For the chord 
+\begin_inset Formula $[p,q]$
+\end_inset
+
+ induced by 
+\begin_inset Formula $u,v$
+\end_inset
+
+ with these points in the order 
+\begin_inset Formula $p,u,v,q$
+\end_inset
+
+, suppose that 
+\begin_inset Formula $\|p-u\|_{2}\le\|v-q\|_{2}$
+\end_inset
+
+.
+ Then by Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:dikin-john"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset Formula $p\in K\cap(u-K)$
+\end_inset
+
+.
+ And hence 
+\begin_inset Formula $\|p-u\|_{u}\le\sqrt{m}.$
+\end_inset
+
+ Therefore, 
+\begin_inset Formula 
+\[
+d_{P}(u,v)=\frac{\|u-v\|_{2}\|p-q\|_{2}}{\|p-u\|_{2}\|v-q\|_{2}}\geq\frac{\|u-v\|_{2}}{\|p-u\|_{2}}=\frac{\|u-v\|_{u}}{\|p-u\|_{u}}\ge\frac{\|u-v\|_{u}}{\sqrt{m}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The following one-step coupling lemma uses the same norm.
+\end_layout
+
+\begin_layout Exercise
+Show that 
+\begin_inset Formula $\nabla\ln\det(A^{T}S(x)^{-2}A)=-2A^{T}S(x)^{-1}\sigma$
+\end_inset
+
+, where 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ is the leverage score vector of 
+\begin_inset Formula $S(x)^{-1}A$
+\end_inset
+
+ with components 
+\begin_inset Formula $\sigma_{i}=(S(x)^{-1}A)_{i}(A^{T}S(x)^{-2}A)^{-1}(S(x)^{-1}A)_{i}^{T}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:dikin-one-step"
+
+\end_inset
+
+For two points 
+\begin_inset Formula $x,y\in P$
+\end_inset
+
+, with 
+\begin_inset Formula $\norm{x-y}_{x}\le\frac{1}{10\sqrt{n}}$
+\end_inset
+
+, we have 
+\begin_inset Formula $d_{TV}(P_{x},P_{y})\le\frac{3}{4}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+We have to prove two things: first, the one-step overlap of the Gaussians
+ 
+\begin_inset Formula $\gamma_{x},\gamma_{y}$
+\end_inset
+
+ used by the Dikin walk at 
+\begin_inset Formula $u,v$
+\end_inset
+
+ have large overlap and second, the rejection probability is small.
+ Note that 
+\begin_inset Formula 
+\[
+\gamma_{x}(y)=\frac{1}{\sqrt{\det(\Sigma_{x})}}e^{-(y-x)^{T}\Sigma_{x}^{-1}(y-x)/2}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\Sigma_{x}=\frac{1}{100n}(A^{T}S(x)^{-2}A)^{-1}$
+\end_inset
+
+.
+ For the first we can use Pinsker's inequality
+\begin_inset Formula 
+\[
+d_{TV}(\gamma_{x},\gamma_{y})\le\sqrt{\frac{1}{2}d_{KL}(\gamma_{x}|\gamma_{y})}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+To bound the KL-divergence, we write (see exercise below)
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula 
+\begin{align*}
+2d_{KL}(N(x,\Sigma_{x})|N(y,\Sigma_{y})) & =\tr(\Sigma_{y}^{-1}\Sigma_{x})-n-\ln\frac{\det(\Sigma_{x})}{\det(\Sigma_{y})}+(x-y)^{T}\Sigma_{y}^{-1}(x-y).
+\end{align*}
+
+\end_inset
+
+We start with the first term:
+\begin_inset Formula 
+\begin{align*}
+\tr(\Sigma_{y}^{-1}\Sigma_{x}) & =\tr(A^{T}S(y)^{-2}A(A^{T}S(x)^{-2}A)^{-1})\\
+ & =\tr(S(y)^{-2}A(A^{T}S(x)^{-2}A)^{-1}A^{T}S(y)^{-1})\\
+ & =\sum_{i=1}^{m}(S(x)S(y)^{-1}(S(x)^{-1}A(A^{T}S(x)^{-2}A)^{-1}A^{T}S(x)^{-1})S(x)S(y)^{-1})_{ii}\\
+ & =\sum_{i=1}^{m}\sigma_{i}\left(\frac{s_{i}(x)}{s_{i}(y)}\right)^{2}.
+\end{align*}
+
+\end_inset
+
+where 
+\begin_inset Formula 
+\[
+\sigma_{i}=(S(x)^{-1}A(A^{T}S(x)^{-2}A)^{-1}A^{T}S(x)^{-1})_{ii}
+\]
+
+\end_inset
+
+is the leverage score of the 
+\begin_inset Formula $i$
+\end_inset
+
+'th row of 
+\begin_inset Formula $S(x)^{-1}A$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Next, consider 
+\begin_inset Formula 
+\[
+f(x)=\ln\det(A^{T}S(x)^{-2}A).
+\]
+
+\end_inset
+
+We have (see exercise above)
+\begin_inset Formula 
+\[
+\nabla f(x)=-2A^{T}S(x)^{-1}\sigma.
+\]
+
+\end_inset
+
+Since 
+\begin_inset Formula $f$
+\end_inset
+
+ is a convex function, 
+\begin_inset Formula 
+\begin{align*}
+\ln\frac{\det(\Sigma_{x})}{\det(\Sigma_{y})} & =f(y)-f(x).\\
+ & \ge\langle\nabla f(x),y-x\rangle\\
+ & =-2\sum_{i=1}^{m}\sigma_{i}\frac{A(y-x)}{s(x)_{i}}\\
+ & =2\sum_{i=1}^{m}\sigma_{i}\frac{s(x)_{i}-s(y)_{i}}{s(x)_{i}}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Therefore, using the fact that 
+\begin_inset Formula $\sigma_{i}\in[0,1]$
+\end_inset
+
+, and defining 
+\begin_inset Formula 
+\[
+\Delta_{i}=(s(x)_{i}-s(y)_{i})/s(x)_{i},
+\]
+
+\end_inset
+
+we have,
+\begin_inset Formula 
+\begin{align*}
+\tr(\Sigma_{y}^{-1}\Sigma_{x})-n-\ln\frac{\det(\Sigma_{x})}{\det(\Sigma_{y})} & \le\sum_{i=1}^{n}\sigma_{i}\left(\frac{s(x)_{i}}{s(y)_{i}}\right)^{2}-n-2\sum_{i=1}^{m}\sigma_{i}\frac{s(x)_{i}-s(y)_{i}}{s(x)_{i}}\\
+ & \le\sum_{i=1}^{m}\sigma_{i}\left(\left(\frac{s(x)_{i}}{s(y)_{i}}\right)^{2}-1-2\left(\frac{s(x)_{i}-s(y)_{i}}{s(x)_{i}}\right)\right)\\
+ & \le\sum_{i=1}^{m}\left(\frac{1}{(1-\Delta_{i})^{2}}-1-2\Delta_{i}\right)\\
+ & \le\sum_{i=1}^{m}\frac{3\Delta_{i}^{2}}{(1-\Delta_{i})^{2}}\\
+ & \le3\frac{\sum_{i=1}^{m}\Delta_{i}^{2}}{(1-\|\Delta\|_{\infty})^{2}}\\
+ & \le3\frac{\|x-y\|_{x}^{2}}{(1-\|x-y\|_{x})^{2}}
+\end{align*}
+
+\end_inset
+
+ In the last step, we used the observation that 
+\begin_inset Formula 
+\[
+\|x-y\|_{x}^{2}=\sum_{i=1}^{m}\Delta_{i}^{2}.
+\]
+
+\end_inset
+
+Thus, 
+\begin_inset Formula 
+\[
+d_{TV}(\gamma_{x},\gamma_{y})\le\sqrt{\frac{1}{2}d_{KL}(\gamma_{x}:\gamma_{y})}\le\sqrt{\frac{4}{2\cdot2}}\cdot\frac{\|x-y\|_{x}}{1-\|x-y\|_{x}}\le\frac{0.2}{\sqrt{n}}.
+\]
+
+\end_inset
+
+Next we bound the rejection probability.
+ This part will impose the stricter condition; the above only needs 
+\begin_inset Formula $\norm{x-y}_{x}$
+\end_inset
+
+ is bounded by a constant, not 
+\begin_inset Formula $O(1/\sqrt{n})$
+\end_inset
+
+.
+ Using the expression for 
+\begin_inset Formula $\gamma_{x}(y)$
+\end_inset
+
+ and the definition of 
+\begin_inset Formula $\Sigma_{x}$
+\end_inset
+
+,
+\begin_inset Formula 
+\begin{align*}
+2\ln\left(\frac{\gamma_{y}(x)}{\gamma_{x}(y)}\right) & =\ln\frac{\det(A^{T}S_{y}^{-2}A)}{\det(A^{T}S_{x}^{-2}A)}-100n(y-x)^{T}A^{T}S(y)^{-2}A(y-x)+100n(y-x)^{T}A^{T}S(x)^{-2}A(y-x)\\
+ & \ge\langle-2A^{T}S(x)^{-1}\sigma,y-x\rangle-100n(y-x)^{T}A^{T}S(y)^{-2}A(y-x)+100n(y-x)^{T}A^{T}S(x)^{-2}A(y-x).\\
+ & \ge-2\sqrt{(y-x)^{T}A^{T}S(x)^{-1}\Diag(\sigma^{2})S(x)^{-1}A(y-x)}-100n\norm{y-x}_{y}^{2}+100n\norm{y-x}_{x}^{2}\\
+ & \ge\frac{-2}{10\sqrt{n}}\sqrt{2\sum_{i=1}^{m}\sigma_{i}^{2}}-\frac{0.2}{n}\\
+ & \ge-0.4.
+\end{align*}
+
+\end_inset
+
+We used two facts above.
+ First, 
+\begin_inset Formula $\norm{S(x)^{-1}A(y-x)}_{\infty}\le\norm{S(x)^{-1}A(y-x)}=\norm{y-x}_{x}$
+\end_inset
+
+.
+ Next, since 
+\begin_inset Formula $y$
+\end_inset
+
+ is a random step from 
+\begin_inset Formula $x$
+\end_inset
+
+, 
+\begin_inset Formula $\E\norm{y-x}_{x}^{2}\le\frac{1}{100n}$
+\end_inset
+
+ and hence with very high probability, by Gaussian concentration,
+\begin_inset Formula $\norm{y-x}_{x}^{2}\le\frac{2}{100n}$
+\end_inset
+
+.
+ Using this,
+\begin_inset Formula 
+\[
+(y-x)^{T}A^{T}S(x)^{-1}\Diag(\sigma^{2})S(x)^{-1}A(y-x)\le\frac{\sum_{i=1}^{m}\sigma_{i}^{2}}{100n}\le\frac{1}{100}.
+\]
+
+\end_inset
+
+Second, 
+\begin_inset Formula $\norm{y-x}_{y}\le\frac{\norm{y-x}_{x}}{\left(1-\norm{y-x}_{x}\right)}\le\norm{y-x}_{x}\left(1+\frac{0.2}{\sqrt{n}}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Thus, the acceptance probability is at least 
+\begin_inset Formula $e^{-0.2}$
+\end_inset
+
+ and we conclude that 
+\begin_inset Formula $d_{TV}(P_{u},P_{v})<\frac{3}{4}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Exercise
+Show that 
+\begin_inset Formula 
+\begin{align*}
+2d_{KL}(N(x,\Sigma_{x})|N(y,\Sigma_{y})) & =\tr(\Sigma_{y}^{-1}\Sigma_{x})-n-\ln\frac{\det(\Sigma_{x})}{\det(\Sigma_{y})}+(x-y)^{T}\Sigma_{y}^{-1}(x-y).
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We can now prove the main conductance bound.
+\end_layout
+
+\begin_layout Proof
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Proof of Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:dikin-cond"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ We follow the standard high-level outline.
+ Consider any measurable subset 
+\begin_inset Formula $S_{1}\subseteq P$
+\end_inset
+
+ and let 
+\begin_inset Formula $S_{2}=P\setminus S_{1}$
+\end_inset
+
+ be its complement.
+ Define the points with low escape probability for these subsets as
+\begin_inset Formula 
+\[
+S_{i}'=\left\{ x\in S_{i}:\,P_{x}(P\setminus S_{i})<\frac{1}{8}\right\} 
+\]
+
+\end_inset
+
+and 
+\begin_inset Formula $S_{3}'=P\setminus S_{1}'\setminus S_{2}'$
+\end_inset
+
+.
+ Then, for any 
+\begin_inset Formula $u\in S_{1}'$
+\end_inset
+
+, 
+\begin_inset Formula $v\in S_{2}'$
+\end_inset
+
+, we have 
+\begin_inset Formula $d_{TV}(P_{u},P_{v})>1-\frac{1}{4}$
+\end_inset
+
+.
+ Hence, by Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:dikin-one-step"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we have 
+\begin_inset Formula 
+\[
+\norm{u-v}_{\nabla^{2}\phi(u)}\ge\frac{1}{10\sqrt{n}}.
+\]
+
+\end_inset
+
+Therefore, by Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:dikin-dist"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset Formula 
+\[
+d_{P}(u,v)\ge\frac{1}{10\sqrt{mn}}.
+\]
+
+\end_inset
+
+We can now bound the conductance of 
+\begin_inset Formula $S_{1}$
+\end_inset
+
+.
+ We may assume that 
+\begin_inset Formula $\vol(S_{i}')\ge\vol(S_{i})/2$
+\end_inset
+
+; otherwise, it immediately follows that the conductance of 
+\begin_inset Formula $S_{1}$
+\end_inset
+
+ is at least 
+\begin_inset Formula $1/2000.$
+\end_inset
+
+ Assuming this, 
+\begin_inset Formula 
+\begin{align*}
+\int_{S_{1}}P_{x}(S_{2})\,dx & \ge\frac{1}{2}\int_{S_{3}'}\frac{1}{8}dx\\
+ & \ge\frac{1}{16}\vol(S_{3}')\\
+\mbox{using isoperimetry} & \ge\frac{1}{16}d_{P}(S_{1}',S_{2}')\frac{\vol(S_{1}')\vol(S_{2}')}{\vol(P)}\\
+ & \ge\frac{1}{1000\sqrt{mn}}\min\left\{ \vol(S_{1}),\vol(S_{2})\right\} .
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
