@@ -80,10 +80,10 @@ Hit-and-Run
 \end_layout
 
 \begin_layout Standard
-The ball walk does not mix rapidly from some starting points.
+The ball walk does not mix rapidly from all starting points.
  While this hurdle can be overcome by starting with a deep point and carefully
  maintaining a warm start, it is natural to ask if there is a simple process
- that does mix rapidly from any starting point.
+ that does truly mix rapidly from any starting point.
  Hit-and-Run satisfies this requirement.
 \end_layout
 
@@ -415,7 +415,11 @@ any
 
 \begin_layout Standard
 The proof of the theorem follows the same high-level outline as that of
- the ball walk, needing two major ingredients.
+ the ball walk, needing two major ingredients, namely, one-step coupling
+ and isoperimetry.
+ Notably, the isoperimetry is for a non-Euclidean notion of distance.
+ We begin with some suitable definitions.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -503,14 +507,20 @@ The first ingredient shows that if two points are close geometrically, then
 \end_layout
 
 \begin_layout Lemma
-For two points 
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:har_one_step"
+
+\end_inset
+
+ For two points 
 \begin_inset Formula $u,v\in K$
 \end_inset
 
  with 
 \begin_inset Formula 
 \[
-d_{K}(u,v)<\frac{1}{8}\mbox{ and }\norm{u-v}\le\frac{2}{\sqrt{n}}\min\left\{ F(u),F(v)\right\} 
+d_{K}(u,v)<\frac{1}{8}\mbox{ and }\norm{u-v}\le\frac{2}{\sqrt{n}}\max\left\{ F(u),F(v)\right\} 
 \]
 
 \end_inset
@@ -571,7 +581,13 @@ distance between subsets
 \end_layout
 
 \begin_layout Theorem
-Let 
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:har_weighted_iso"
+
+\end_inset
+
+ Let 
 \begin_inset Formula $S_{1},S_{2},S_{3}$
 \end_inset
 
@@ -654,6 +670,37 @@ Show that the step-size function is concave over any convex body.
 \end_layout
 
 \begin_layout Exercise
+We will need the following relationship between the step-size function and
+ the median step function.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:step-size"
+
+\end_inset
+
+ We have 
+\begin_inset Formula 
+\[
+\E_{K}(s(x))\ge\frac{1-\gamma}{\sqrt{n}}.
+\]
+
+\end_inset
+
+Moreover, for 
+\begin_inset Formula $\gamma\ge63/64$
+\end_inset
+
+, we have 
+\begin_inset Formula $F(x)\ge s(x)/32.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 In the proof of Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -673,7 +720,298 @@ noprefix "false"
 \end_layout
 
 \begin_layout Proof
-Add proof.
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Proof of Thm.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:har-cond"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+ Let 
+\begin_inset Formula $K=S_{1}\cup S_{2}$
+\end_inset
+
+ be a partition of 
+\begin_inset Formula $K$
+\end_inset
+
+ into measurable sets.
+ We will prove that
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula 
+\begin{eqnarray}
+\int_{S_{1}}P_{x}(S_{2})\,dx & \ge & \frac{c}{nD}\min\{\vol(S_{1}),\vol(S_{2})\}\label{COND-2}
+\end{eqnarray}
+
+\end_inset
+
+Note that since the uniform distribution is stationary, 
+\begin_inset Formula 
+\[
+\int_{S_{1}}P_{x}(S_{2})\,dx=\int_{S_{2}}P_{x}(S_{1})\,dx.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Consider the points that are 
+\begin_inset Quotes eld
+\end_inset
+
+deep
+\begin_inset Quotes erd
+\end_inset
+
+ inside these sets, i.e., unlikely to jump out of the set: 
+\begin_inset Formula 
+\[
+S_{1}'=\left\{ x\in S_{1}:P_{x}(S_{2})<\frac{1}{1000}\right\} \mbox{ and }S_{2}'=\left\{ x\in S_{2}:P_{x}(S_{1})<\frac{1}{1000}\right\} .
+\]
+
+\end_inset
+
+Let 
+\begin_inset Formula $S_{3}'$
+\end_inset
+
+ be the rest i.e., 
+\begin_inset Formula $S_{3}'=K\setminus S_{1}'\setminus S_{2}'$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Suppose 
+\begin_inset Formula $\vol(S_{1}')<\vol(S_{1})/2$
+\end_inset
+
+.
+ Then 
+\begin_inset Formula 
+\[
+\int_{S_{1}}P_{x}(S_{2})\,dx\ge\frac{1}{1000}\vol(S_{1}\setminus S_{1}')\geq\frac{1}{2000}\vol(S_{1})
+\]
+
+\end_inset
+
+which proves (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "COND-2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Proof
+So we can assume that 
+\begin_inset Formula $\vol(S_{1}')\geq\vol(S_{1})/2$
+\end_inset
+
+ and similarly 
+\begin_inset Formula $\vol(S_{2}')\geq\vol(S_{2})/2$
+\end_inset
+
+.
+ Now, for any 
+\begin_inset Formula $u\in S_{1}'$
+\end_inset
+
+ and 
+\begin_inset Formula $v\in S_{2}'$
+\end_inset
+
+, 
+\begin_inset Formula 
+\[
+d_{TV}(P_{u},P_{v})\geq1-P_{u}(S_{2})-P_{v}(S_{1})>1-\frac{1}{500}.
+\]
+
+\end_inset
+
+Applying Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:har_one_step"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we get that that one of the following holds:
+\begin_inset Formula 
+\[
+d_{K}(u,v)\ge\frac{1}{8}\mbox{ or }\norm{u-v}\ge\frac{2}{\sqrt{n}}\max\left\{ F(u),F(v)\right\} 
+\]
+
+\end_inset
+
+We will now prove that Thm.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:har_weighted_iso"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ using 
+\begin_inset Formula $h(x)=\frac{s(x)}{48\sqrt{n}D}$
+\end_inset
+
+ where 
+\begin_inset Formula $s(x)$
+\end_inset
+
+ is defined with 
+\begin_inset Formula $\gamma=63/64.$
+\end_inset
+
+ To see that this is a valid choice, first note that if 
+\begin_inset Formula $d_{K}(u,v)\ge\frac{1}{8},$
+\end_inset
+
+then we have 
+\begin_inset Formula $h(x)\le d_{K}(u,v)/3$
+\end_inset
+
+, as needed.
+ So we can assume the second condition above holds.
+ Next, noting that 
+\begin_inset Formula $x$
+\end_inset
+
+ is some point on the chord through 
+\begin_inset Formula $u,v$
+\end_inset
+
+, let the endpoints of the chord be 
+\begin_inset Formula $p,q.$
+\end_inset
+
+ Suppose WLOG that 
+\begin_inset Formula $x\in[u,q]$
+\end_inset
+
+.
+ Then, by the concavity of 
+\begin_inset Formula $s(x)$
+\end_inset
+
+, and using the second part of Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:step-size"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we have,
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula 
+\begin{align*}
+s(x) & \le\frac{|x-p|}{|u-p|}s(u)\\
+ & \le32\frac{|x-p|}{|u-p|}F(u)\\
+ & \le16\sqrt{n}\frac{|x-p|}{|u-p|}\left|u-v\right|\\
+ & \le16d_{K}(u,v)\sqrt{n}D
+\end{align*}
+
+\end_inset
+
+which again implies the desired condition on 
+\begin_inset Formula $h$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+Now, applying Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:har_weighted_iso"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ to the partition 
+\begin_inset Formula $S_{1}',S_{2}',S_{3}'$
+\end_inset
+
+, and using the first part of Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:step-size"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we have 
+\begin_inset Formula 
+\begin{eqnarray*}
+\vol(S_{3}') & \geq & \E_{K}(h(x))\min\{\vol(S_{1}'),\vol(S_{2}')\}\\
+ & \geq & \frac{1}{4000nD}\min\{\vol(S_{1}),\vol(S_{2})\}.
+\end{eqnarray*}
+
+\end_inset
+
+We can now prove (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "COND-2"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) as follows: 
+\begin_inset Formula 
+\begin{eqnarray*}
+\int_{S_{1}}P_{x}(S_{2})\,dx & = & \frac{1}{2}\int_{S_{1}}P_{x}(S_{2})\,dx+\frac{1}{2}\int_{S_{2}}P_{x}(S_{1})\,dx\\
+ & \ge & \frac{1}{2}\vol(S_{3}')\frac{1}{1000}\\
+ & \ge & \frac{1}{2^{23}nD}\min\{\vol(S_{1}'),\vol(S_{2}')\}\\
+ & \ge & \frac{1}{2^{24}nD}\min\{\vol(S_{1}),\vol(S_{2})\}.
+\end{eqnarray*}
+
+\end_inset
+
+
 \end_layout
 
 \end_body

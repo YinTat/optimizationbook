@@ -1981,7 +1981,11 @@ It suffices to consider the case when
 \begin_inset Formula $K$
 \end_inset
 
- is locally contained in a hyperplane.
+ is locally a hyperplane and compute the measure of 
+\begin_inset Formula $S_{L}$
+\end_inset
+
+ explicitly.
  
 \end_layout
 

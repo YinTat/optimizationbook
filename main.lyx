@@ -1109,7 +1109,7 @@ filename "opt_from_mem.lyx"
 \end_layout
 
 \begin_layout Chapter
-Geometrization
+Geometrization 
 \end_layout
 
 \begin_layout Standard
@@ -1138,14 +1138,14 @@ filename "dikin.lyx"
 \end_inset
 
 
-\end_layout
+\begin_inset CommandInset include
+LatexCommand input
+filename "RHMC.lyx"
 
 \end_inset
 
 
-\begin_inset CommandInset include
-LatexCommand input
-filename "RHMC.lyx"
+\end_layout
 
 \end_inset
 
