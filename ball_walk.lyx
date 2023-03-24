@@ -3135,7 +3135,15 @@ literal "false"
 
 \end_inset
 
-.
+ (see also 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Bourgain96,Rudelson1999,srivastava2013covariance"
+literal "false"
+
+\end_inset
+
+).
 \end_layout
 
 \begin_layout Theorem
