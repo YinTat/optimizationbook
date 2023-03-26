@@ -28,7 +28,9 @@
 \output_sync 0
 \bibtex_command default
 \index_command default
+\float_placement h
 \paperfontsize default
+\spacing single
 \use_hyperref false
 \papersize default
 \use_geometry false
@@ -44,6 +46,7 @@
 \use_package undertilde 1
 \cite_engine basic
 \cite_engine_type default
+\biblio_style plain
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
@@ -2281,6 +2284,32 @@ where
 .
 \end_layout
 
+\begin_layout Lemma
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Figures/Lemma_4.21.png
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Proof
 Let 
 \begin_inset Formula $\omega_{i}(z)=\left\langle \nabla f(z)-g(y),e_{i}\right\rangle $
@@ -2822,6 +2851,36 @@ We assume that
 
 , we can reduce to this case by viewing it as a limit of twice-differentiable
  functions.
+\end_layout
+
+\begin_layout Proof
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Figures/Lemma_4.23.png
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Proof
@@ -3387,9 +3446,10 @@ sideways false
 status open
 
 \begin_layout Plain Layout
+\align center
 \begin_inset Graphics
-	filename height.JPG
-	height 2in
+	filename Figures/Thrm_4.27.png
+	width 60col%
 
 \end_inset
 
@@ -3397,6 +3457,7 @@ status open
 \end_layout
 
 \begin_layout Plain Layout
+\align center
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
@@ -3813,11 +3874,31 @@ name "lem:h_Lip"
 
 .
  
-\begin_inset Note Note
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Float figure
+wide false
+sideways false
 status open
 
 \begin_layout Plain Layout
-needs figure!
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Figures/Lemma_4.29.png
+	width 40col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \end_inset
