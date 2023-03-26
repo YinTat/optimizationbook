@@ -88,7 +88,7 @@ name "sec:Newton-Method"
 status open
 
 \begin_layout Plain Layout
-I should mention higher order method here.
+mention higher order method here.
 \end_layout
 
 \end_inset
@@ -172,15 +172,15 @@ x^{(k+1)}=x^{(k)}-\left(\nabla^{2}f(x^{(k)})\right)^{-1}\nabla f(x^{(k)}).
 \end_layout
 
 \begin_layout Standard
-Alternatively, we can derive the Newton step by 
+Alternatively, we can derive the Newton step as 
 \begin_inset Formula 
 \[
-x^{(k+1)}\leftarrow\min_{x}f(x^{(k)})+\left\langle \nabla f(x^{(k)}),x-x^{(k)}\right\rangle +\frac{1}{2}(y-x^{(k)})^{\mathsf{T}}(\nabla^{2}f(x^{(k)}))(y-x^{(k)}),
+x^{(k+1)}\leftarrow\min_{x}f(x^{(k)})+\left\langle \nabla f(x^{(k)}),x-x^{(k)}\right\rangle +\frac{1}{2}(y-x^{(k)})^{\mathsf{T}}(\nabla^{2}f(x^{(k)}))(y-x^{(k)}).
 \]
 
 \end_inset
 
-namely the Newton step finds the minimum of the second order approximation
+In words, the Newton step finds the minimum of the second order approximation
  of the function.
  We note that the Newton iteration is a natural idea, since
 \end_layout
@@ -225,7 +225,7 @@ We need
 
  in order the first coordinate to converge, but this will make the second
  coordinate converges too slowly.
- In general, we may want to take different step size for different direction
+ In general, we may want to take different step sizes for different directions
  and Newton method gives the best step if the function is quadratic.
 \end_layout
 
@@ -1070,7 +1070,7 @@ BFGS algorithm
 
 \begin_layout Standard
 Broyden–Fletcher–Goldfarb–Shanno (BFGS) algorithm is one of the most popular
- quasi-Newton method.
+ quasi-Newton methods.
  The algorithm maintains an approximate Hessian 
 \begin_inset Formula $J^{(k)}$
 \end_inset
@@ -1216,17 +1216,21 @@ In practice, the recursive formula
 \end_layout
 
 \begin_layout Subsection*
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Subsection*
 Semismooth Newton algorithm
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 \series bold
 This section is not done yet.
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Consider the function 
 \begin_inset Formula $f(x)=\begin{cases}
 x^{2} & \text{if }x>0\\
@@ -1248,14 +1252,14 @@ x^{2} & \text{if }x>0\\
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 In general, Newton method converges superlinearly for a large class of problems.
  For the rest of the section, we will go back to the root-finding setting.
 \begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
-reference: 
+reference:
 \end_layout
 
 \begin_layout Plain Layout
@@ -1272,7 +1276,7 @@ A Survey of Some Nonsmooth Equations and Smoothing Newton Methods
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Suppose 
 \begin_inset Formula $g:\R^{n}\rightarrow\R^{n}$
 \end_inset
@@ -1304,7 +1308,7 @@ Let
 .
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Separator plain
 \end_inset
 
@@ -1352,7 +1356,7 @@ Prove that
  is semismooth.
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 The function 
 \begin_inset Formula $\phi(a,b)$
 \end_inset
@@ -1369,7 +1373,7 @@ The function
  Hence, this is useful for the nonlinear complementarity problem.
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Separator plain
 \end_inset
 
@@ -1401,6 +1405,11 @@ Consider the generalized Newton method
 \end_inset
 
 .
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_body
