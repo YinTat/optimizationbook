@@ -186,8 +186,7 @@ In words, the Newton step finds the minimum of the second order approximation
 \end_layout
 
 \begin_layout Enumerate
-It is affine invariant (changing coordinate systems won't affect the convergence
-).
+It is affine invariant (changing coordinate systems does not affect convergence).
 \end_layout
 
 \begin_layout Enumerate
@@ -202,8 +201,8 @@ It is the fastest descent direction taking the Hessian into account.
 \end_layout
 
 \begin_layout Standard
-To see why affine invariant is important for optimization, we consider the
- following function
+To see why affine-invariance is important for optimization, we consider
+ the following function
 \begin_inset Formula 
 \[
 f(x_{1},x_{2})=\frac{100}{2}x_{1}^{2}+\frac{1}{2}x_{2}^{2}.
@@ -220,7 +219,7 @@ The gradient descent for this function is
 \end_inset
 
 We need 
-\begin_inset Formula $h<\frac{1}{50}$
+\begin_inset Formula $h<\frac{1}{100}$
 \end_inset
 
  in order the first coordinate to converge, but this will make the second
@@ -500,7 +499,7 @@ right? not just
 status open
 
 \begin_layout Plain Layout
-I should change this lemma to affine invariant version.
+should change this lemma to affine invariant version.
  Measure distance by the Jacobian norm.
 \end_layout
 
@@ -693,7 +692,7 @@ with
 
 .
  Then, we have that 
-\begin_inset Formula $g'(x)=a_{n}\cdot\sum_{i}\prod_{j\neq i}(x-\lambda_{i})$
+\begin_inset Formula $g'(x)=a_{n}\cdot\sum_{i}\prod_{j\neq i}(x-\lambda_{j})$
 \end_inset
 
  and hence
@@ -802,7 +801,7 @@ Assume that
 ,
 \begin_inset Formula 
 \[
-|x^{t}-x^{*}|\leq\frac{\alpha}{L}\left(\frac{L}{\alpha}|x^{t}-x^{*}|\right)^{2^{t}}.
+|x^{(k)}-x^{*}|\leq\frac{\alpha}{L}\left(\frac{L}{\alpha}|x^{(k)}-x^{*}|\right)^{2^{(k)}}.
 \]
 
 \end_inset
@@ -811,10 +810,10 @@ Assume that
 \end_layout
 
 \begin_layout Proof
-The iteration says 
+The iteration is 
 \begin_inset Formula 
 \[
-x^{t+1}-x^{*}=x^{t}-x^{*}-\frac{f(x^{t})}{f'(x^{t})}.
+x^{(k+1)}-x^{*}=x^{(k)}-x^{*}-\frac{f(x^{(k)})}{f'(x^{(k)})}.
 \]
 
 \end_inset
@@ -822,7 +821,7 @@ x^{t+1}-x^{*}=x^{t}-x^{*}-\frac{f(x^{t})}{f'(x^{t})}.
 
 \begin_inset Formula 
 \begin{align*}
-f(x^{*}) & =f(x^{t})+\int_{x^{t}}^{x^{*}}f'(z)dz=f(x^{t})+f'(x^{t})(x^{*}-x^{t})+\int_{x^{t}}^{x^{*}}(f'(z)-f'(x^{t}))dz.
+f(x^{*}) & =f(x^{(k)})+\int_{x^{t}}^{x^{*}}f'(z)dz=f(x^{(k)})+f'(x^{(k)})(x^{*}-x^{(k)})+\int_{x^{t}}^{x^{*}}(f'(z)-f'(x^{(k)}))dz.
 \end{align*}
 
 \end_inset
@@ -830,33 +829,33 @@ f(x^{*}) & =f(x^{t})+\int_{x^{t}}^{x^{*}}f'(z)dz=f(x^{t})+f'(x^{t})(x^{*}-x^{t})
 Therefore, 
 \begin_inset Formula 
 \begin{align*}
-x^{t+1}-x^{*} & =\frac{1}{f'(x^{t})}\int_{x^{t}}^{x^{*}}(f'(z)-f'(x^{t}))dz.\\
- & \leq\frac{L}{|f'(x^{t})|}\int_{x^{t}}^{x^{*}}|z-x^{t}|dz\\
- & =\frac{L|x^{*}-x^{t}|^{2}}{2|f'(x^{t})|}.
+x^{(k+1)}-x^{*} & =\frac{1}{f'(x^{(k)})}\int_{x^{t}}^{x^{*}}(f'(z)-f'(x^{(k)}))dz.\\
+ & \leq\frac{L}{|f'(x^{(k)})|}\int_{x^{t}}^{x^{*}}|z-x^{(k)}|dz\\
+ & =\frac{L|x^{*}-x^{(k)}|^{2}}{2|f'(x^{(k)})|}.
 \end{align*}
 
 \end_inset
 
 Since 
-\begin_inset Formula $f'(x^{t})\geq f'(x^{*})-L|x^{t}-x^{*}|$
+\begin_inset Formula $f'(x^{(k)})\geq f'(x^{*})-L|x^{(k)}-x^{*}|$
 \end_inset
 
-,
+
 \begin_inset Formula 
 \[
-\left|x^{t+1}-x^{*}\right|\le\frac{L}{2(\alpha-L|x^{t}-x^{*}|)}|x^{t}-x^{*}|^{2}.
+\left|x^{(k+1)}-x^{*}\right|\le\frac{L}{2(\alpha-L|x^{(k)}-x^{*}|)}|x^{(k)}-x^{*}|^{2}.
 \]
 
 \end_inset
 
 So, if 
-\begin_inset Formula $|x^{t}-x^{*}|\leq\frac{\alpha}{2L}$
+\begin_inset Formula $|x^{(k)}-x^{*}|\leq\frac{\alpha}{2L}$
 \end_inset
 
 ,
 \begin_inset Formula 
 \[
-|x^{t+1}-x^{*}|\leq\frac{L}{\alpha}|x^{t}-x^{*}|^{2}\le\frac{1}{2}|x^{t}-x^{*}|
+|x^{(k+1)}-x^{*}|\leq\frac{L}{\alpha}|x^{(k)}-x^{*}|^{2}\le\frac{1}{2}|x^{(k)}-x^{*}|
 \]
 
 \end_inset
@@ -864,7 +863,7 @@ So, if
 and 
 \begin_inset Formula 
 \[
-\frac{L}{\alpha}|x^{t+1}-x^{*}|\leq\left(\frac{L}{\alpha}|x^{t}-x^{*}|\right)^{2}.
+\frac{L}{\alpha}|x^{(k+1)}-x^{*}|\leq\left(\frac{L}{\alpha}|x^{(k)}-x^{*}|\right)^{2}.
 \]
 
 \end_inset
@@ -876,17 +875,17 @@ After
  steps,
 \begin_inset Formula 
 \[
-\frac{L}{\alpha}|x^{t}-x^{*}|\leq\left(\frac{L}{\alpha}\epsilon_{0}\right)^{2^{t}}
+\frac{L}{\alpha}|x^{(k)}-x^{*}|\leq\left(\frac{L}{\alpha}\epsilon_{0}\right)^{2^{(k)}}
 \]
 
 \end_inset
 
 implying 
-\begin_inset Formula $|x^{t}-x^{*}|<\epsilon$
+\begin_inset Formula $|x^{(k)}-x^{*}|<\epsilon$
 \end_inset
 
  after 
-\begin_inset Formula $\log\log(\frac{L\epsilon_{0}}{\alpha})$
+\begin_inset Formula $\log\log(\frac{L\epsilon_{0}}{\alpha\epsilon})$
 \end_inset
 
  steps.
@@ -906,7 +905,7 @@ Moving back to optimization, we can view the goal as finding a root of
  Newton's iteration is the update 
 \begin_inset Formula 
 \[
-x^{t+1}=x^{t}-(\nabla^{2}f(x^{t}))^{-1}\nabla f(x^{t}).
+x^{(k+1)}=x^{(k)}-(\nabla^{2}f(x^{(k)}))^{-1}\nabla f(x^{(k)}).
 \]
 
 \end_inset
@@ -924,7 +923,7 @@ When the Jacobian of
 \begin_inset Formula $g$
 \end_inset
 
- is not available, we can approximate it using existing information.
+ is not available, we can approximate it using the function itself.
  For one dimension, we can approximate the Newton method and get the following
  secant method 
 \begin_inset Formula 
