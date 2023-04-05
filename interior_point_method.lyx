@@ -2114,7 +2114,160 @@ literal "true"
 \end_layout
 
 \begin_layout Section
-Newton Method and Self-concordance
+Interior Point Method for Convex Programs
+\end_layout
+
+\begin_layout Standard
+The interior point method can be used to optimize any convex function.
+ For more in-depth treatment, please see the structural programming section
+ in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "nesterov1998introductory"
+literal "true"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Recall that any convex optimization problem
+\begin_inset Formula 
+\[
+\min_{x}f(x)
+\]
+
+\end_inset
+
+can be rewritten in the epigraph form as
+\begin_inset Formula 
+\[
+\min_{\{(x,t):\ f(x)\leq t\}}t.
+\]
+
+\end_inset
+
+Hence, it suffices to study the problem 
+\begin_inset Formula $\min_{x\in K}c^{\top}x$
+\end_inset
+
+.
+ Similar to the case of linear programs, we replace the hard constraint
+ 
+\begin_inset Formula $x\in K$
+\end_inset
+
+ by a soft constraint as follows:
+\begin_inset Formula 
+\[
+\min_{x}\phi_{t}(x)\text{ where }\phi_{t}(x)=tc^{\top}x+\phi(x).
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\phi(x)$
+\end_inset
+
+ is a convex function such that 
+\begin_inset Formula $\phi(x)\rightarrow+\infty$
+\end_inset
+
+ as 
+\begin_inset Formula $x\rightarrow\partial K$
+\end_inset
+
+.
+ Note that we put the parameter 
+\begin_inset Formula $t$
+\end_inset
+
+ in front of the cost 
+\begin_inset Formula $c^{\top}x$
+\end_inset
+
+ instead of 
+\begin_inset Formula $\phi$
+\end_inset
+
+ as in the last lecture, it is slightly more convenient here.
+ We say 
+\begin_inset Formula $\phi$
+\end_inset
+
+ is a 
+\emph on
+barrier
+\emph default
+ for 
+\begin_inset Formula $K$
+\end_inset
+
+.
+ To be concrete, we can always keep in mind 
+\begin_inset Formula $\phi(x)=-\sum_{i=1}^{n}\ln x_{i}$
+\end_inset
+
+.
+ As before, we define the central path.
+\end_layout
+
+\begin_layout Definition
+The central path 
+\begin_inset Formula $x_{t}=\arg\min_{x}\phi_{t}(x)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The interior point method follows the following framework:
+\end_layout
+
+\begin_layout Enumerate
+Find 
+\begin_inset Formula $x$
+\end_inset
+
+ close to 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+While 
+\begin_inset Formula $t$
+\end_inset
+
+ is not tiny,
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Move 
+\begin_inset Formula $x$
+\end_inset
+
+ closer to 
+\begin_inset Formula $x_{t}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $t\rightarrow(1+h)\cdot t$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Newton method and self-concordance
 \end_layout
 
 \begin_layout Standard
@@ -2518,7 +2671,7 @@ reference "lem:self_con_global"
 and hence
 \begin_inset Formula 
 \[
-\norm{\nabla f(x')}_{\nabla^{2}f(x')^{-1}}\leq\frac{\norm{\nabla f(x')}_{\nabla^{2}f(x)^{-1}}}{1-r}.
+\norm{\nabla f(x')}_{\nabla^{2}f(x')^{-1}}\leq\frac{\norm{\nabla f(x')}_{\nabla^{2}f(x)^{-1}}}{(1-r)}.
 \]
 
 \end_inset
@@ -2739,161 +2892,8 @@ where we used
  at the end.
 \end_layout
 
-\begin_layout Section
-Interior Point Method for Convex Programs
-\end_layout
-
-\begin_layout Standard
-The interior point method can be used to optimize any convex function.
- For more in-depth treatment, please see the structural programming section
- in 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "nesterov1998introductory"
-literal "true"
-
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-Recall that any convex optimization problem
-\begin_inset Formula 
-\[
-\min_{x}f(x)
-\]
-
-\end_inset
-
-can be rewritten in the epigraph form as
-\begin_inset Formula 
-\[
-\min_{\{(x,t):\ f(x)\leq t\}}t.
-\]
-
-\end_inset
-
-Hence, it suffices to study the problem 
-\begin_inset Formula $\min_{x\in K}c^{\top}x$
-\end_inset
-
-.
- Similar to the case of linear programs, we replace the hard constraint
- 
-\begin_inset Formula $x\in K$
-\end_inset
-
- by a soft constraint as follows:
-\begin_inset Formula 
-\[
-\min_{x}\phi_{t}(x)\text{ where }\phi_{t}(x)=tc^{\top}x+\phi(x).
-\]
-
-\end_inset
-
-where 
-\begin_inset Formula $\phi(x)$
-\end_inset
-
- is a convex function such that 
-\begin_inset Formula $\phi(x)\rightarrow+\infty$
-\end_inset
-
- as 
-\begin_inset Formula $x\rightarrow\partial K$
-\end_inset
-
-.
- Note that we put the parameter 
-\begin_inset Formula $t$
-\end_inset
-
- in front of the cost 
-\begin_inset Formula $c^{\top}x$
-\end_inset
-
- instead of 
-\begin_inset Formula $\phi$
-\end_inset
-
- as in the last lecture, it is slightly more convenient here.
- We say 
-\begin_inset Formula $\phi$
-\end_inset
-
- is a 
-\emph on
-barrier
-\emph default
- for 
-\begin_inset Formula $K$
-\end_inset
-
-.
- To be concrete, we can always keep in mind 
-\begin_inset Formula $\phi(x)=-\sum_{i=1}^{n}\ln x_{i}$
-\end_inset
-
-.
- As before, we define the central path.
-\end_layout
-
-\begin_layout Definition
-The central path 
-\begin_inset Formula $x_{t}=\arg\min_{x}\phi_{t}(x)$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-The interior point method follows the following framework:
-\end_layout
-
-\begin_layout Enumerate
-Find 
-\begin_inset Formula $x$
-\end_inset
-
- close to 
-\begin_inset Formula $x_{1}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Enumerate
-While 
-\begin_inset Formula $t$
-\end_inset
-
- is not tiny,
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-Move 
-\begin_inset Formula $x$
-\end_inset
-
- closer to 
-\begin_inset Formula $x_{t}$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Formula $t\rightarrow(1+h)\cdot t$
-\end_inset
-
-.
-\end_layout
-
-\end_deeper
 \begin_layout Subsection
-Self-concordant barrier function
+Self-concordant barrier functions
 \end_layout
 
 \begin_layout Standard
@@ -3192,7 +3192,7 @@ If
 \begin_inset Formula $\nu_{2}$
 \end_inset
 
--self concordant barriers on 
+-self concordant barriers for 
 \begin_inset Formula $K_{1}$
 \end_inset
 
@@ -3200,7 +3200,7 @@ If
 \begin_inset Formula $K_{2}$
 \end_inset
 
- with respectively, then 
+ respectively, then 
 \begin_inset Formula $\phi_{1}+\phi_{2}$
 \end_inset
 
@@ -3208,15 +3208,11 @@ If
 \begin_inset Formula $\nu_{1}+\nu_{2}$
 \end_inset
 
- self concordant barrier on 
+ self concordant barrier for 
 \begin_inset Formula $K_{1}\cap K_{2}$
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-
 \end_layout
 
 \begin_layout Standard
@@ -3235,20 +3231,20 @@ If
 \begin_inset Formula $\nu$
 \end_inset
 
--self concordant barrier on 
+-self concordant barrier for 
 \begin_inset Formula $K$
 \end_inset
 
 , then 
-\begin_inset Formula $\phi(Ax)$
+\begin_inset Formula $\phi(Ax+b)$
 \end_inset
 
  is 
 \begin_inset Formula $\nu$
 \end_inset
 
--self concordant on 
-\begin_inset Formula $\{y:Ay\in K\}$
+-self concordant for 
+\begin_inset Formula $\{y:Ay+b\in K\}$
 \end_inset
 
 .
@@ -3263,7 +3259,7 @@ Using the lemmas above, prove that
 \begin_inset Formula $m$
 \end_inset
 
--self concordant barrier on 
+-self concordant barrier for the convex set 
 \begin_inset Formula $\{Ax\geq b\}$
 \end_inset
 
@@ -3271,7 +3267,7 @@ Using the lemmas above, prove that
  
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Subsection
 Main Algorithm and Analysis
 \end_layout
 
@@ -3480,7 +3476,7 @@ end{algorithm2e}
 
 \begin_layout Standard
 We first explain the termination condition.
- Intuitively, we should think 
+ Intuitively, we can see that 
 \begin_inset Formula $\min f_{t}(x_{t})$
 \end_inset
 
