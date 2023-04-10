@@ -101,7 +101,7 @@ mention the relation between IPM and mirror descent? Need to make this section
 \begin_layout Standard
 In this section, we study interior point methods.
  In practice, this method reduces the problem of optimizing a convex function
- to solving a small number (often less than 
+ to solving a small number (typically less than 
 \begin_inset Formula $30$
 \end_inset
 
@@ -2267,7 +2267,7 @@ Move
 
 \end_deeper
 \begin_layout Subsection
-Newton method and self-concordance
+Self-concordance
 \end_layout
 
 \begin_layout Standard
@@ -2595,301 +2595,6 @@ Integrating both from
 \end_inset
 
  gives the result.
-\end_layout
-
-\begin_layout Standard
-Now we are ready to study the convergence of Newton method:
-\end_layout
-
-\begin_layout Lemma
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:Newton_improvement"
-
-\end_inset
-
-Given a self-concordant convex function 
-\begin_inset Formula $f$
-\end_inset
-
-, consider the iteration 
-\begin_inset Formula 
-\[
-x'=x-(\nabla^{2}f(x))^{-1}\nabla f(x).
-\]
-
-\end_inset
-
-Suppose that 
-\begin_inset Formula $r=\norm{\nabla f(x)}_{\nabla^{2}f(x)^{-1}}<1$
-\end_inset
-
-, then we have
-\begin_inset Formula 
-\[
-\norm{\nabla f(x')}_{\nabla^{2}f(x')^{-1}}\leq\frac{r^{2}}{(1-r)^{2}}.
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Remark
-Note that 
-\begin_inset Formula $\norm{\nabla f(x)}_{\nabla^{2}f(x)^{-1}}=\norm{\nabla^{2}f(x)^{-1}\nabla f(x)}_{x}$
-\end_inset
-
- is the step size of the Newton method.
- This is a measurement of the error, since the goal is to find 
-\begin_inset Formula $x$
-\end_inset
-
- with 
-\begin_inset Formula $\nabla f(x)=0$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Proof
-Lemma 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:self_con_global"
-
-\end_inset
-
- shows that
-\begin_inset Formula 
-\[
-\nabla^{2}f(x')\succeq(1-r)^{2}\nabla^{2}f(x).
-\]
-
-\end_inset
-
-and hence
-\begin_inset Formula 
-\[
-\norm{\nabla f(x')}_{\nabla^{2}f(x')^{-1}}\leq\frac{\norm{\nabla f(x')}_{\nabla^{2}f(x)^{-1}}}{(1-r)}.
-\]
-
-\end_inset
-
-To bound 
-\begin_inset Formula $\nabla f(x')$
-\end_inset
-
-, we calculate that
-\begin_inset Formula 
-\begin{align}
-\nabla f(x') & =\nabla f(x)+\int_{0}^{1}\nabla^{2}f(x+t(x'-x))(x'-x)dt\nonumber \\
- & =\nabla f(x)-\int_{0}^{1}\nabla^{2}f(x+t(x'-x))(\nabla^{2}f(x))^{-1}\nabla f(x)dt\nonumber \\
- & =\left(\nabla^{2}f(x)-\int_{0}^{1}\nabla^{2}f(x+t(x'-x))dt\right)(\nabla^{2}f(x))^{-1}\nabla f(x).\label{eq:grad_f_sc}
-\end{align}
-
-\end_inset
-
-For the term in the bracket, we use Lemma 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:self_con_global"
-
-\end_inset
-
- to get (note that 
-\begin_inset Formula $\int_{0}^{1}(1-tr)^{2}dt=1-r+\frac{1}{3}r^{2}$
-\end_inset
-
-):
-\begin_inset Formula 
-\[
-(1-r+\frac{1}{3}r^{2})\nabla^{2}f(x)\preceq\int_{0}^{1}\nabla^{2}f(x+t(x'-x))dt\preceq\frac{1}{1-r}\nabla^{2}f(x).
-\]
-
-\end_inset
-
-Therefore, we have
-\begin_inset Formula 
-\[
-\norm{(\nabla^{2}f(x))^{-\frac{1}{2}}\left(\nabla^{2}f(x)-\int_{0}^{1}\nabla^{2}f(x+t(x'-x))dt\right)(\nabla^{2}f(x))^{-\frac{1}{2}}}_{\text{op}}\leq\max(\frac{r}{1-r},r-\frac{1}{3}r^{2})=\frac{r}{1-r}.
-\]
-
-\end_inset
-
-Putting it into (
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:grad_f_sc"
-
-\end_inset
-
-) gives
-\begin_inset Formula 
-\begin{align*}
-\norm{\nabla f(x')}_{\nabla^{2}f(x)^{-1}} & =\norm{\nabla^{2}f(x)^{-\frac{1}{2}}\nabla f(x')}_{2}\\
- & \le\norm{(\nabla^{2}f(x))^{-\frac{1}{2}}\left(\nabla^{2}f(x)-\int_{0}^{1}\nabla^{2}f(x+t(x'-x))dt\right)(\nabla^{2}f(x))^{-\frac{1}{2}}}_{\text{op}}\norm{(\nabla^{2}f(x))^{-\frac{1}{2}}\nabla f(x)}_{2}\\
- & \leq\frac{r}{1-r}\cdot r\\
- & =\frac{r^{2}}{1-r}.
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Finally, we bound the error of the current iterate in terms of 
-\begin_inset Formula $\|\nabla f(x)\|_{\nabla^{2}f(x)^{-1}}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Lemma
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:self_concordant_err"
-
-\end_inset
-
-Given 
-\begin_inset Formula $x$
-\end_inset
-
- such that 
-\begin_inset Formula $\|\nabla f(x)\|_{\nabla^{2}f(x)^{-1}}\leq\frac{1}{6}$
-\end_inset
-
-, we have that
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-\begin_inset Formula $\|x-x^{*}\|_{x^{*}}\leq2\|\nabla f(x)\|_{\nabla^{2}f(x)^{-1}}$
-\end_inset
-
-,
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $\|x-x^{*}\|_{x}\leq\frac{4}{3}\|\nabla f(x)\|_{\nabla^{2}f(x)^{-1}}$
-\end_inset
-
-,
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $f(x)\leq f(x^{*})+\|\nabla f(x)\|_{\nabla^{2}f(x)^{-1}}^{2}.$
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\begin_layout Proof
-Let 
-\begin_inset Formula $r=\|x-x^{*}\|_{x}$
-\end_inset
-
-.
- Suppose that 
-\begin_inset Formula $r\leq\frac{1}{4}$
-\end_inset
-
-.
- Note that 
-\begin_inset Formula 
-\[
-\nabla f(x)=\nabla f(x)-\nabla f(x^{*})=\int_{0}^{1}\nabla^{2}f(x^{*}+t(x-x^{*}))(x-x^{*})dt.
-\]
-
-\end_inset
-
-Using that 
-\begin_inset Formula $\nabla^{2}f(x^{*}+t(x-x^{*}))\succeq(1-(1-t)r)^{2}\nabla^{2}f(x)$
-\end_inset
-
- (Lemma 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:self_con_global"
-
-\end_inset
-
-), we have
-\begin_inset Formula 
-\begin{align*}
-\|\nabla f(x)\|_{\nabla^{2}f(x)^{-1}} & =\norm{\int_{0}^{1}\nabla^{2}f(x^{*}+t(x-x^{*}))(x-x^{*})\,dt}_{\nabla^{2}f(x)^{-1}}\\
- & \geq\int_{0}^{1}(1-(1-t)r)^{2}\|x-x^{*}\|_{x}dt\\
- & =\left(1-r+\frac{r^{2}}{3}\right)r\geq\frac{3r}{4}.
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-Using 
-\begin_inset Formula $\|\nabla f(x)\|_{\nabla^{2}f(x)^{-1}}\leq\frac{1}{6}$
-\end_inset
-
-, we have indeed 
-\begin_inset Formula $r\leq\frac{1}{4}$
-\end_inset
-
- (our lower bound above is a non-decreasing function) Using Lemma 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:self_con_global"
-
-\end_inset
-
- again, we have
-\begin_inset Formula 
-\[
-\|x-x^{*}\|_{x^{*}}\leq\frac{\|x-x^{*}\|_{x}}{1-r}\leq\frac{4}{3}\frac{1}{1-\frac{1}{4}}\|\nabla f(x)\|_{\nabla^{2}f(x)^{-1}}\leq2\|\nabla f(x)\|_{\nabla^{2}f(x)^{-1}}.
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-For the bound for 
-\begin_inset Formula $f(x)$
-\end_inset
-
-, we have that
-\begin_inset Formula 
-\[
-f(x)=f(x^{*})+\left\langle \nabla f(x^{*}),x-x^{*}\right\rangle +\int_{0}^{1}(1-t)(x-x^{*})^{\top}\nabla^{2}f(x^{*}+t(x-x^{*}))(x-x^{*})dt.
-\]
-
-\end_inset
-
-Using that 
-\begin_inset Formula $\nabla^{2}f(x^{*}+t(x-x^{*}))\preceq\frac{1}{(1-(1-t)r)^{2}}\nabla^{2}f(x)$
-\end_inset
-
-, we have
-\begin_inset Formula 
-\begin{align*}
-f(x) & \leq f(x^{*})+\int_{0}^{1}\frac{1-t}{(1-(1-t)r)^{2}}dt\cdot\|x-x^{*}\|_{x}^{2}\\
- & =f(x^{*})+\frac{1}{r^{2}}(\frac{r}{1-r}+\log(1-r))\|x-x^{*}\|_{x}^{2}\\
- & \leq f(x^{*})+(\frac{1}{2}+r)\|x-x^{*}\|_{x}^{2}\\
- & \le f(x^{*})+\norm{\nabla f(x)}_{\nabla^{2}f(x)^{-1}}^{2}
-\end{align*}
-
-\end_inset
-
-where we used 
-\begin_inset Formula $r\leq\frac{1}{4}$
-\end_inset
-
- at the end.
 \end_layout
 
 \begin_layout Subsection
@@ -3265,6 +2970,305 @@ Using the lemmas above, prove that
 
 .
  
+\end_layout
+
+\begin_layout Subsection
+Convergence of Newton method for self-concordant functions
+\end_layout
+
+\begin_layout Standard
+Now we are ready to study the convergence of Newton method.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:Newton_improvement"
+
+\end_inset
+
+Given a self-concordant convex function 
+\begin_inset Formula $f$
+\end_inset
+
+, consider the iteration 
+\begin_inset Formula 
+\[
+x'=x-(\nabla^{2}f(x))^{-1}\nabla f(x).
+\]
+
+\end_inset
+
+Suppose that 
+\begin_inset Formula $r=\norm{\nabla f(x)}_{\nabla^{2}f(x)^{-1}}<1$
+\end_inset
+
+, then we have
+\begin_inset Formula 
+\[
+\norm{\nabla f(x')}_{\nabla^{2}f(x')^{-1}}\leq\frac{r^{2}}{(1-r)^{2}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+Note that 
+\begin_inset Formula $\norm{\nabla f(x)}_{\nabla^{2}f(x)^{-1}}=\norm{\nabla^{2}f(x)^{-1}\nabla f(x)}_{x}$
+\end_inset
+
+ is the step size of the Newton method.
+ This is a measurement of the error, since the goal is to find 
+\begin_inset Formula $x$
+\end_inset
+
+ with 
+\begin_inset Formula $\nabla f(x)=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:self_con_global"
+
+\end_inset
+
+ shows that
+\begin_inset Formula 
+\[
+\nabla^{2}f(x')\succeq(1-r)^{2}\nabla^{2}f(x).
+\]
+
+\end_inset
+
+and hence
+\begin_inset Formula 
+\[
+\norm{\nabla f(x')}_{\nabla^{2}f(x')^{-1}}\leq\frac{\norm{\nabla f(x')}_{\nabla^{2}f(x)^{-1}}}{(1-r)}.
+\]
+
+\end_inset
+
+To bound 
+\begin_inset Formula $\nabla f(x')$
+\end_inset
+
+, we calculate that
+\begin_inset Formula 
+\begin{align}
+\nabla f(x') & =\nabla f(x)+\int_{0}^{1}\nabla^{2}f(x+t(x'-x))(x'-x)dt\nonumber \\
+ & =\nabla f(x)-\int_{0}^{1}\nabla^{2}f(x+t(x'-x))(\nabla^{2}f(x))^{-1}\nabla f(x)dt\nonumber \\
+ & =\left(\nabla^{2}f(x)-\int_{0}^{1}\nabla^{2}f(x+t(x'-x))dt\right)(\nabla^{2}f(x))^{-1}\nabla f(x).\label{eq:grad_f_sc}
+\end{align}
+
+\end_inset
+
+For the term in the bracket, we use Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:self_con_global"
+
+\end_inset
+
+ to get (note that 
+\begin_inset Formula $\int_{0}^{1}(1-tr)^{2}dt=1-r+\frac{1}{3}r^{2}$
+\end_inset
+
+):
+\begin_inset Formula 
+\[
+(1-r+\frac{1}{3}r^{2})\nabla^{2}f(x)\preceq\int_{0}^{1}\nabla^{2}f(x+t(x'-x))dt\preceq\frac{1}{1-r}\nabla^{2}f(x).
+\]
+
+\end_inset
+
+Therefore, we have
+\begin_inset Formula 
+\[
+\norm{(\nabla^{2}f(x))^{-\frac{1}{2}}\left(\nabla^{2}f(x)-\int_{0}^{1}\nabla^{2}f(x+t(x'-x))dt\right)(\nabla^{2}f(x))^{-\frac{1}{2}}}_{\text{op}}\leq\max(\frac{r}{1-r},r-\frac{1}{3}r^{2})=\frac{r}{1-r}.
+\]
+
+\end_inset
+
+Putting it into (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:grad_f_sc"
+
+\end_inset
+
+) gives
+\begin_inset Formula 
+\begin{align*}
+\norm{\nabla f(x')}_{\nabla^{2}f(x)^{-1}} & =\norm{\nabla^{2}f(x)^{-\frac{1}{2}}\nabla f(x')}_{2}\\
+ & \le\norm{(\nabla^{2}f(x))^{-\frac{1}{2}}\left(\nabla^{2}f(x)-\int_{0}^{1}\nabla^{2}f(x+t(x'-x))dt\right)(\nabla^{2}f(x))^{-\frac{1}{2}}}_{\text{op}}\norm{(\nabla^{2}f(x))^{-\frac{1}{2}}\nabla f(x)}_{2}\\
+ & \leq\frac{r}{1-r}\cdot r\\
+ & =\frac{r^{2}}{1-r}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Finally, we bound the error of the current iterate in terms of 
+\begin_inset Formula $\|\nabla f(x)\|_{\nabla^{2}f(x)^{-1}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:self_concordant_err"
+
+\end_inset
+
+Given 
+\begin_inset Formula $x$
+\end_inset
+
+ such that 
+\begin_inset Formula $\|\nabla f(x)\|_{\nabla^{2}f(x)^{-1}}\leq\frac{1}{6}$
+\end_inset
+
+, we have that
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\|x-x^{*}\|_{x^{*}}\leq2\|\nabla f(x)\|_{\nabla^{2}f(x)^{-1}}$
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\|x-x^{*}\|_{x}\leq\frac{4}{3}\|\nabla f(x)\|_{\nabla^{2}f(x)^{-1}}$
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $f(x)\leq f(x^{*})+\|\nabla f(x)\|_{\nabla^{2}f(x)^{-1}}^{2}.$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Proof
+Let 
+\begin_inset Formula $r=\|x-x^{*}\|_{x}$
+\end_inset
+
+.
+ Suppose that 
+\begin_inset Formula $r\leq\frac{1}{4}$
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula 
+\[
+\nabla f(x)=\nabla f(x)-\nabla f(x^{*})=\int_{0}^{1}\nabla^{2}f(x^{*}+t(x-x^{*}))(x-x^{*})dt.
+\]
+
+\end_inset
+
+Using that 
+\begin_inset Formula $\nabla^{2}f(x^{*}+t(x-x^{*}))\succeq(1-(1-t)r)^{2}\nabla^{2}f(x)$
+\end_inset
+
+ (Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:self_con_global"
+
+\end_inset
+
+), we have
+\begin_inset Formula 
+\begin{align*}
+\|\nabla f(x)\|_{\nabla^{2}f(x)^{-1}} & =\norm{\int_{0}^{1}\nabla^{2}f(x^{*}+t(x-x^{*}))(x-x^{*})\,dt}_{\nabla^{2}f(x)^{-1}}\\
+ & \geq\int_{0}^{1}(1-(1-t)r)^{2}\|x-x^{*}\|_{x}dt\\
+ & =\left(1-r+\frac{r^{2}}{3}\right)r\geq\frac{3r}{4}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Using 
+\begin_inset Formula $\|\nabla f(x)\|_{\nabla^{2}f(x)^{-1}}\leq\frac{1}{6}$
+\end_inset
+
+, we have indeed 
+\begin_inset Formula $r\leq\frac{1}{4}$
+\end_inset
+
+ (our lower bound above is a non-decreasing function) Using Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:self_con_global"
+
+\end_inset
+
+ again, we have
+\begin_inset Formula 
+\[
+\|x-x^{*}\|_{x^{*}}\leq\frac{\|x-x^{*}\|_{x}}{1-r}\leq\frac{4}{3}\frac{1}{1-\frac{1}{4}}\|\nabla f(x)\|_{\nabla^{2}f(x)^{-1}}\leq2\|\nabla f(x)\|_{\nabla^{2}f(x)^{-1}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+For the bound for 
+\begin_inset Formula $f(x)$
+\end_inset
+
+, we have that
+\begin_inset Formula 
+\[
+f(x)=f(x^{*})+\left\langle \nabla f(x^{*}),x-x^{*}\right\rangle +\int_{0}^{1}(1-t)(x-x^{*})^{\top}\nabla^{2}f(x^{*}+t(x-x^{*}))(x-x^{*})dt.
+\]
+
+\end_inset
+
+Using that 
+\begin_inset Formula $\nabla^{2}f(x^{*}+t(x-x^{*}))\preceq\frac{1}{(1-(1-t)r)^{2}}\nabla^{2}f(x)$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\begin{align*}
+f(x) & \leq f(x^{*})+\int_{0}^{1}\frac{1-t}{(1-(1-t)r)^{2}}dt\cdot\|x-x^{*}\|_{x}^{2}\\
+ & =f(x^{*})+\frac{1}{r^{2}}(\frac{r}{1-r}+\log(1-r))\|x-x^{*}\|_{x}^{2}\\
+ & \leq f(x^{*})+(\frac{1}{2}+r)\|x-x^{*}\|_{x}^{2}\\
+ & \le f(x^{*})+\norm{\nabla f(x)}_{\nabla^{2}f(x)^{-1}}^{2}
+\end{align*}
+
+\end_inset
+
+where we used 
+\begin_inset Formula $r\leq\frac{1}{4}$
+\end_inset
+
+ at the end.
 \end_layout
 
 \begin_layout Subsection
