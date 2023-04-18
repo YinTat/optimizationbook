@@ -822,22 +822,13 @@ sideways false
 status open
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename Figures/Exercise_10.3.png
-	width 40col%
+	width 70text%
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
 
 \end_layout
 
