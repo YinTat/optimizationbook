@@ -190,7 +190,7 @@ Algorithm
 \end_layout
 
 \begin_layout Standard
-Now, we give another geometry dependent algorithm that relies on a different
+Now we give another geometry dependent algorithm that relies on a different
  set of assumptions.
  The problem we study in this section is of the form
 \begin_inset Formula 

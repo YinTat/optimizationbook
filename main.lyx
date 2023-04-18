@@ -906,7 +906,7 @@ filename "duality.lyx"
 \end_layout
 
 \begin_layout Chapter
-Geometrization 
+Geometrization
 \end_layout
 
 \begin_layout Standard
@@ -950,7 +950,7 @@ The proof for mirror descent is much easier.
 \end_layout
 
 \begin_layout Plain Layout
-Is the mirror descent is about the decomposition of online and offline part?
+Is mirror descent is about the decomposition of online and offline parts?
 \end_layout
 
 \begin_layout Plain Layout

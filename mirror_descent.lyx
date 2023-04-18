@@ -79,6 +79,168 @@
 In this chapter, we study techniques that further exploit the geometry of
  convex functions and associated norms.
  Many of these techniques are effective in practice for large scale problems.
+ We recall the following relevant definitions.
+\end_layout
+
+\begin_layout Section
+Norms and Local Metrics
+\end_layout
+
+\begin_layout Standard
+Any 
+\begin_inset Formula $0$
+\end_inset
+
+-symmetric convex body 
+\begin_inset Formula $K$
+\end_inset
+
+ induces the following norm: 
+\begin_inset Formula 
+\[
+\norm x_{K}=\inf\left\{ t:x\in tK\right\} .
+\]
+
+\end_inset
+
+For the usual Euclidean norm, the convex body is the Euclidean ball, 
+\begin_inset Formula $B_{2}^{n}$
+\end_inset
+
+.
+ Similarly, for an 
+\begin_inset Formula $\ell_{p}$
+\end_inset
+
+ norm, the convex body is the unit 
+\begin_inset Formula $\ell_{p}$
+\end_inset
+
+ ball.
+ 
+\end_layout
+
+\begin_layout Standard
+It is often useful to consider affine transformations, and the norms they
+ induce, e.g., for a PSD matrix 
+\begin_inset Formula $A$
+\end_inset
+
+, we can define the associated norm as follows:
+\begin_inset Formula 
+\[
+\norm x_{A}=\sqrt{x^{\top}Ax}.
+\]
+
+\end_inset
+
+The convex body (unit ball) of this norm is an ellipsoid centered at zero
+ and defined by the matrix 
+\begin_inset Formula $A$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+As we have encountered previously in this book, convex sets and functions
+ have duals.
+ For a convex body 
+\begin_inset Formula $K$
+\end_inset
+
+, the dual (or polar) is defined as follows:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+K^{*}=\left\{ y:\forall x\in K,\left\langle x,y\right\rangle \le1\right\} .
+\]
+
+\end_inset
+
+The dual norm for 
+\begin_inset Formula $\norm ._{K}$
+\end_inset
+
+ is 
+\begin_inset Formula $\norm ._{K^{*}}$
+\end_inset
+
+.
+ We can state a generalized Cauchy-Schwarz inequality.
+\end_layout
+
+\begin_layout Fact
+For 
+\begin_inset Formula $x,y\in\R^{n}$
+\end_inset
+
+ and any centrally symmetric convex body 
+\begin_inset Formula $K$
+\end_inset
+
+, we have 
+\begin_inset Formula $\left\langle x,y\right\rangle \le\norm x_{K}\norm y_{K^{*}}.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this chapter, an important idea will be 
+\emph on
+local
+\emph default
+ norms, i.e., at each point 
+\begin_inset Formula $x$
+\end_inset
+
+ in the domain, there could be a different norm.
+ Indeed, in a Riemannian metric 
+\begin_inset Formula ${\cal M}$
+\end_inset
+
+, for every 
+\begin_inset Formula $x\in{\cal M},$
+\end_inset
+
+there is a matrix 
+\begin_inset Formula $A(x)$
+\end_inset
+
+ s.t.
+ the norm at 
+\begin_inset Formula $x$
+\end_inset
+
+ is defined as 
+\begin_inset Formula $\norm v_{x}=\sqrt{v^{\top}A(x)v}.$
+\end_inset
+
+ A special class of Riemannian metrics of particular interest for us will
+ be 
+\emph on
+Hessian 
+\emph default
+metrics (corresponding to Hessian manifolds).
+ Here the matrix defining the local norm is the Hessian of a convex, twice-diffe
+rentiable function, i.e., 
+\begin_inset Formula 
+\[
+A(x)=\nabla^{2}\phi(x)
+\]
+
+\end_inset
+
+for some convex function 
+\begin_inset Formula $\phi$
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -923,6 +1085,29 @@ On the other hand, its gradient
  More precisely, we have the following tautology (directly follows from
  the definition of dual space, namely the set of all linear maps in the
  original space).
+\end_layout
+
+\begin_layout Definition
+A 
+\emph on
+Banach space 
+\emph default
+over the reals is a vector space over the reals together with a norm that
+ defines a complete metric space, i.e., for any Cauchy sequence, 
+\begin_inset Formula $X=(x_{i})_{i=1}^{\infty}$
+\end_inset
+
+, there is a vector 
+\begin_inset Formula $x$
+\end_inset
+
+ s.t.
+ 
+\begin_inset Formula $\lim_{n\rightarrow\infty}\norm{x_{n}-x}=0$
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Fact
