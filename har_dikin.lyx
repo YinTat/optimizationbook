@@ -1177,5 +1177,1665 @@ noprefix "false"
 
 \end_layout
 
+\begin_layout Section
+Dikin walk
+\end_layout
+
+\begin_layout Standard
+Both the ball walk and hit-and-run have a dependence on the 
+\begin_inset Quotes eld
+\end_inset
+
+roundness
+\begin_inset Quotes erd
+\end_inset
+
+ of the target distribution, e.g., via its diameter or average distance to
+ the center of gravity.
+ Reducing this dependence to logarithmic by rounding is polynomial time
+ but expensive.
+ The current best rounding algorithm (which achieves near-isotropic position)
+ has complexity 
+\begin_inset Formula $O^{*}(n^{3})$
+\end_inset
+
+.
+ Here we describe a different approach, which is affine-invariant, but requires
+ more knowledge of the convex body.
+ In particular, we will focus on the special case of sampling an explicit
+ polytope 
+\begin_inset Formula $P=\left\{ x:\,Ax\ge b\right\} $
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+The general Dikin walk is defined as follows.
+ For a convex set 
+\begin_inset Formula $K$
+\end_inset
+
+ with a positive definite matrix 
+\begin_inset Formula $\mh(u)$
+\end_inset
+
+ for each point 
+\begin_inset Formula $u\in K$
+\end_inset
+
+ , let
+\begin_inset Formula 
+\[
+E_{u}(r)=\left\{ x:\,(x-u)^{\top}\mh(u)(x-u)\le r\right\} .
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm2e}[H]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "algo:Dikin"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\mathtt{DikinWalk}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetAlgoLined
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Input:
+\series default
+ starting point 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ in a polytope 
+\begin_inset Formula $P=\left\{ x:\,\mathbf{A}x\ge b\right\} $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Set 
+\begin_inset Formula $r=\frac{1}{8}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Repeat 
+\begin_inset Formula $T$
+\end_inset
+
+ times: at current point 
+\begin_inset Formula $x$
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Enumerate
+Pick 
+\begin_inset Formula $y$
+\end_inset
+
+ from 
+\begin_inset Formula $E_{x}(r)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Go to 
+\begin_inset Formula $y$
+\end_inset
+
+ with probability 
+\begin_inset Formula $\min\left\{ 1,\frac{\vol(E_{x}(r))}{\vol(E_{y}(r))}\right\} $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Return
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $x$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Strong Self-Concordance
+\end_layout
+
+\begin_layout Standard
+We require a family of matrices to have the following properties.
+ Usually but not necessarily, these matrices come from the Hessian of some
+ convex function.
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Symmetric self-concordance
+\end_layout
+
+\end_inset
+
+For any convex set 
+\begin_inset Formula $K\subset\Rn$
+\end_inset
+
+, we call a matrix function 
+\begin_inset Formula $\mathbf{H}:K\rightarrow\R^{n\times n}$
+\end_inset
+
+ is self-concordant if for any 
+\begin_inset Formula $u\in K$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+-2\Vert h\Vert_{\mathbf{H}(u)}\mathbf{H}(u)\preceq\frac{d}{dt}\mathbf{H}(u+th)\preceq2\Vert h\Vert_{\mathbf{H}(u)}\mathbf{H}(u).
+\]
+
+\end_inset
+
+We call 
+\begin_inset Formula $\mathbf{H}$
+\end_inset
+
+ is a symmetric 
+\begin_inset Formula $\bar{\nu}$
+\end_inset
+
+-self-concordant barrier if 
+\begin_inset Formula $\mh$
+\end_inset
+
+ is self-concordant and for any 
+\begin_inset Formula $u\in K$
+\end_inset
+
+,
+\begin_inset Formula 
+\[
+E_{u}(1)\subseteq K\cap(2u-K)\subseteq E_{u}(\sqrt{\bar{\nu}}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The following lemma shows that self-concordant matrix functions also enjoy
+ a similar regularity as the usual self-concordant functions.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:global_self_concordant"
+
+\end_inset
+
+Given any self-concordant matrix function 
+\begin_inset Formula $\mh$
+\end_inset
+
+ on 
+\begin_inset Formula $K\subset\Rn$
+\end_inset
+
+, we define 
+\begin_inset Formula $\|v\|_{x}^{2}=v^{\top}\mathbf{H}(x)v$
+\end_inset
+
+.
+ Then, for any 
+\begin_inset Formula $x,y\in K$
+\end_inset
+
+ with 
+\begin_inset Formula $\Vert x-y\Vert_{x}<1$
+\end_inset
+
+, we have 
+\begin_inset Formula 
+\[
+\left(1-\Vert x-y\Vert_{x}\right)^{2}\mathbf{H}(x)\preceq\mathbf{H}(y)\preceq\frac{1}{\left(1-\Vert x-y\Vert_{x}\right)^{2}}\mathbf{H}(x).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $h=y-x$
+\end_inset
+
+, 
+\begin_inset Formula $x_{t}=x+th$
+\end_inset
+
+ and 
+\begin_inset Formula $\phi(t)=h^{\top}\mh(x_{t})h$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula 
+\[
+\left|\phi'(t)\right|=\left|h^{\top}\frac{d}{dt}\mh(x_{t})h\right|\leq2\|h\|_{x_{t}}^{3}=2\phi(t)^{3/2}.
+\]
+
+\end_inset
+
+Hence, we have 
+\begin_inset Formula $\left|\frac{d}{dt}\frac{1}{\sqrt{\phi(t)}}\right|\leq1$
+\end_inset
+
+.
+ Therefore, we have 
+\begin_inset Formula $\frac{1}{\sqrt{\phi(t)}}\geq\frac{1}{\sqrt{\phi(0)}}-t$
+\end_inset
+
+ and hence, 
+\begin_inset Formula 
+\begin{equation}
+\phi(t)\leq\frac{\phi(0)}{(1-t\sqrt{\phi(0)})^{2}}.\label{eq:phi_bound}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Now we fix any 
+\begin_inset Formula $v$
+\end_inset
+
+ and define 
+\begin_inset Formula $\psi(t)=v^{\top}\mh(x_{t})v$
+\end_inset
+
+.
+ Then, 
+\begin_inset Formula 
+\[
+\left|\psi'(t)\right|=\left|v^{\top}\frac{d}{dt}\mh(x_{t})v\right|\leq2\|h\|_{x_{t}}\|v\|_{x_{t}}^{2}=2\phi(t)\psi(t).
+\]
+
+\end_inset
+
+Using 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:phi_bound"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ at the end, we have
+\begin_inset Formula 
+\[
+\left|\frac{d}{dt}\ln\psi(t)\right|\leq\frac{2\sqrt{\phi(0)}}{(1-t\sqrt{\phi(0)})}.
+\]
+
+\end_inset
+
+Integrating both sides from 
+\begin_inset Formula $0$
+\end_inset
+
+ to 
+\begin_inset Formula $1$
+\end_inset
+
+, 
+\begin_inset Formula 
+\[
+\left|\ln\frac{\psi(1)}{\psi(0)}\right|\leq\int_{0}^{1}\frac{2\sqrt{\phi(0)}}{(1-t\sqrt{\phi(0)})}dt=2\ln(\frac{1}{1-\sqrt{\phi(0)}}).
+\]
+
+\end_inset
+
+The result follows from this, 
+\begin_inset Formula $\psi(1)=v^{\top}\mh(y)v$
+\end_inset
+
+, 
+\begin_inset Formula $\psi(0)=v^{\top}\mh(x)v$
+\end_inset
+
+, and 
+\begin_inset Formula $\phi(0)=\|x-y\|_{x}^{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Many natural barriers, including the logarithmic barrier and the LS-barrier,
+ satisfy a much stronger condition than self-concordant.
+ However, this is not always true, as one can construct counterexamples
+ even in one-dimension.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+What is the counterexample?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+For any convex set 
+\begin_inset Formula $K\subset\Rn$
+\end_inset
+
+, we say a matrix function 
+\begin_inset Formula $\mathbf{H}:K\rightarrow\R^{n\times n}$
+\end_inset
+
+ is strongly self-concordant if for any 
+\begin_inset Formula $u\in K$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+\norm{\mathbf{H}(x)^{-1/2}D\mathbf{H}(x)[h]\mathbf{H}(x)^{-1/2}}_{F}\le2\norm h_{x}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $D\mathbf{H}(x)[h]$
+\end_inset
+
+ is the directional derivative of 
+\begin_inset Formula $\mh$
+\end_inset
+
+ at 
+\begin_inset Formula $x$
+\end_inset
+
+ in the direction 
+\begin_inset Formula $h$
+\end_inset
+
+.
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "45text%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename ../../../../Dropbox (GaTech)/ls_dikin/arxiv/ls/symmetry.png
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "45text%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align left
+\begin_inset Graphics
+	filename ../../../../Dropbox (GaTech)/ls_dikin/arxiv/ls/ssc.png
+	scale 35
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+(a) 
+\begin_inset Formula $E_{u}(1)\subseteq K\cap(2u-K)\subseteq E_{u}(\sqrt{\bar{\nu}}).$
+\end_inset
+
+ (b) Strong self-concordance measures the rate of change of Hessian of a
+ barrier in the Frobenius norm
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Similar to Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:global_self_concordant"
+
+\end_inset
+
+, we have a global version of Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:global_self_concordant"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:global_strongly_self_concordant"
+
+\end_inset
+
+Given any strongly self-concordant matrix function 
+\begin_inset Formula $\mh$
+\end_inset
+
+ on 
+\begin_inset Formula $K\subset\Rn$
+\end_inset
+
+.
+ For any 
+\begin_inset Formula $x,y\in K$
+\end_inset
+
+ with 
+\begin_inset Formula $\Vert x-y\Vert_{x}<1$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+\|\mh(x)^{-\frac{1}{2}}(\mh(y)-\mh(x))\mh(x)^{-\frac{1}{2}}\|_{F}\leq\frac{\|x-y\|_{x}}{(1-\|x-y\|_{x})^{2}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $x_{t}=(1-t)x+ty$
+\end_inset
+
+.
+ Then, we have
+\begin_inset Formula 
+\begin{align*}
+\|\mh(x)^{-\frac{1}{2}}(\mh(y)-\mh(x))\mh(x)^{-\frac{1}{2}}\|_{F} & =\int_{0}^{1}\|\mh(x)^{-\frac{1}{2}}\frac{d}{dt}\mh(x_{t})\mh(x)^{-\frac{1}{2}}\|_{F}dt.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+We note that 
+\begin_inset Formula $\mh$
+\end_inset
+
+ is self-concordant.
+ Hence, Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:global_self_concordant"
+
+\end_inset
+
+ shows that
+\begin_inset Formula 
+\begin{align*}
+\|\mh(x)^{-\frac{1}{2}}\frac{d}{dt}\mh(x_{t})\mh(x)^{-\frac{1}{2}}\|_{F}^{2} & =\tr\mh(x)^{-1}\left(\frac{d}{dt}\mh(x_{t})\right)\mh(x)^{-1}\left(\frac{d}{dt}\mh(x_{t})\right)\\
+ & \leq\frac{1}{\left(1-\Vert x-x_{t}\Vert_{x}\right)^{4}}\tr\mh(x_{t})^{-1}\left(\frac{d}{dt}\mh(x_{t})\right)\mh(x_{t})^{-1}\left(\frac{d}{dt}\mh(x_{t})\right)\\
+ & \leq\frac{4}{\left(1-\Vert x-x_{t}\Vert_{x}\right)^{4}}\|x-x_{t}\|_{x_{t}}^{2}\\
+ & \leq\frac{4}{\left(1-\Vert x-x_{t}\Vert_{x}\right)^{6}}\|x-x_{t}\|_{x}^{2}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+where we used the assumption in the second inequality and Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:global_self_concordant"
+
+\end_inset
+
+ again for the last inequality.
+ Hence, 
+\begin_inset Formula 
+\begin{align*}
+\|\mh(x)^{-\frac{1}{2}}(\mh(y)-\mh(x))\mh(x)^{-\frac{1}{2}}\|_{F} & \leq\int_{0}^{1}\frac{2\|x-x_{t}\|_{x}}{\left(1-\Vert x-x_{t}\Vert_{x}\right)^{3}}dt\\
+ & =\int_{0}^{1}\frac{2t\|x-y\|_{x}}{(1-t\|x-y\|_{x})^{3}}dt\\
+ & =\frac{\|x-y\|_{x}}{(1-\|x-y\|_{x})^{2}}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We note that strong self-concordance is stronger than self-concordance since
+ the Frobenius norm is always larger or equal to the spectral norm.
+ As an example, we will verify that the conditions hold for the standard
+ log barrier (Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:dssc"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+The Dikin walk has the following guarantee.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:dikingeneral"
+
+\end_inset
+
+The mixing rate of the Dikin walk for a symmetric, strongly self-concordant
+ matrix function with convex log determinant is 
+\begin_inset Formula $O(n\bar{\nu})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Each step of the standard Dikin walk is fast, and does not need matrix multiplic
+ation.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:dikin"
+
+\end_inset
+
+The Dikin walk with the logarithmic barrier for a polytope 
+\begin_inset Formula $\{\mathbf{A}x\ge b\}$
+\end_inset
+
+ can be implemented in time 
+\begin_inset Formula $O(\nnz(\mathbf{A})+n^{2})$
+\end_inset
+
+ per step while maintaining the mixing rate of 
+\begin_inset Formula $O(mn)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The next lemma results from studying strong self-concordance for classical
+ barriers.
+ The KLS constant below is conjectured to be 
+\begin_inset Formula $O(1)$
+\end_inset
+
+ and known to be 
+\begin_inset Formula $O(\sqrt{\log n})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:SSC-KLS"
+
+\end_inset
+
+Let 
+\begin_inset Formula $\psi_{n}$
+\end_inset
+
+ be the KLS constant of isotropic logconcave densities in 
+\begin_inset Formula $\R^{n}$
+\end_inset
+
+, namely, for any isotropic logconcave density 
+\begin_inset Formula $p$
+\end_inset
+
+ and any set 
+\begin_inset Formula $S\subset\Rn$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+\int_{\partial S}p(x)dx\geq\frac{1}{\psi_{n}}\min\left\{ \int_{S}p(x)dx,\int_{\R^{n}\backslash S}p(x)dx\right\} .
+\]
+
+\end_inset
+
+Let 
+\begin_inset Formula $\mh(x)$
+\end_inset
+
+ be the Hessian of the universal or entropic barriers.
+ Then, we have
+\begin_inset Formula 
+\[
+\norm{\mathbf{H}(x)^{-1/2}D\mathbf{H}(x)[h]\mathbf{H}(x)^{-1/2}}_{F}=O(\psi_{n})\norm h_{x}.
+\]
+
+\end_inset
+
+In short, the universal and entropic barriers in 
+\begin_inset Formula $\R^{n}$
+\end_inset
+
+ are strongly self-concordant up to a scaling factor depending on 
+\begin_inset Formula $\psi_{n}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+In fact, the proof shows that up to a logarithmic factor the strong self-concord
+ance of these barriers is 
+\emph on
+equivalent 
+\emph default
+to the KLS conjecture.
+\end_layout
+
+\begin_layout Section
+Mixing with Strong Self-Concordance
+\end_layout
+
+\begin_layout Standard
+A key ingredient of the proof of Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:dikingeneral"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ is the following lemma.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:dikin-one-step-1"
+
+\end_inset
+
+For two points 
+\begin_inset Formula $x,y\in P$
+\end_inset
+
+, with 
+\begin_inset Formula $\Vert x-y\Vert_{x}\le\frac{1}{8\sqrt{n}}$
+\end_inset
+
+, we have 
+\begin_inset Formula $d_{TV}(P_{x},P_{y})\leq\frac{3}{4}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+We have to prove two things: first, the rejection probability is small,
+ second the ellipsoids used by the Dikin walk at 
+\begin_inset Formula $x,y$
+\end_inset
+
+ have large overlap.
+ More precisely, we have
+\begin_inset Formula 
+\begin{align}
+d_{\mathrm{TV}}(P_{x},P_{y}) & \leq\frac{1}{2}\text{rej}_{x}+\frac{1}{2}\text{rej}_{y}+\frac{1}{2}\frac{\vol(P_{x}\backslash P_{y})}{\vol(P_{x})}+\frac{1}{2}\frac{\vol(P_{y}\backslash P_{x})}{\vol(P_{y})}\nonumber \\
+ & =\frac{1}{2}\text{rej}_{x}+\frac{1}{2}\text{rej}_{y}+1-\frac{1}{2}\frac{\vol(P_{x}\cap P_{y})}{\vol(P_{x})}-\frac{1}{2}\frac{\vol(P_{x}\cap P_{y})}{\vol(P_{y})}\label{eq:dikin_formula}
+\end{align}
+
+\end_inset
+
+where 
+\begin_inset Formula $\text{rej}_{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $\text{rej}_{y}$
+\end_inset
+
+ are the rejection probabilities at 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $y$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+For the rejection probability at 
+\begin_inset Formula $x$
+\end_inset
+
+, we consider the algorithm pick 
+\begin_inset Formula $z$
+\end_inset
+
+ from 
+\begin_inset Formula $E_{x}(r)$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $f(z)=\ln\det\mathbf{H}(z)$
+\end_inset
+
+.
+ The acceptance probability of the sample 
+\begin_inset Formula $z$
+\end_inset
+
+ is
+\begin_inset Formula 
+\begin{equation}
+\min\left\{ 1,\frac{\vol(E_{x}(r))}{\vol(E_{z}(r))}\right\} =\min\left\{ 1,\sqrt{\frac{\det(\mathbf{H}(z))}{\det(\mathbf{H}(x))}}\right\} .\label{eq:reject_prob_z}
+\end{equation}
+
+\end_inset
+
+By the assumption that 
+\begin_inset Formula $f$
+\end_inset
+
+ is a convex function, we have that
+\begin_inset Formula 
+\begin{equation}
+\ln\frac{\det(\mathbf{H}(z))}{\det(\mathbf{H}(x))}=f(z)-f(x)\geq\langle\nabla f(x),z-x\rangle.\label{eq:log_det_Hzx}
+\end{equation}
+
+\end_inset
+
+To simplify the notation, we assume 
+\begin_inset Formula $\mh(x)=\mi$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $z$
+\end_inset
+
+ is sampled from unit ball of radius 
+\begin_inset Formula $r$
+\end_inset
+
+ centered at 
+\begin_inset Formula $x$
+\end_inset
+
+, we know that 
+\begin_inset Formula 
+\[
+\P(v^{\top}(z-x)\geq-\epsilon r\|v\|_{2})\geq1-e^{-n\epsilon^{2}/2}.
+\]
+
+\end_inset
+
+In particular, with probability at least 
+\begin_inset Formula $0.99$
+\end_inset
+
+ in 
+\begin_inset Formula $z$
+\end_inset
+
+, we have
+\begin_inset Formula 
+\begin{equation}
+\langle\nabla f(x),z-x\rangle\geq-\frac{4r}{\sqrt{n}}\|\nabla f(x)\|_{2}.\label{eq:grad_prob}
+\end{equation}
+
+\end_inset
+
+To compute 
+\begin_inset Formula $\|\nabla f(x)\|_{2}^{2}$
+\end_inset
+
+, it is easier to compute directional derivative of 
+\begin_inset Formula $\nabla f$
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula 
+\begin{align}
+\|\nabla f(x)\|_{2} & =\max_{\|v\|_{2}=1}\nabla f(x)^{\top}v\nonumber \\
+ & =\max_{\|v\|_{2}=1}\tr(\mh(x)^{-1}D\mh(x)[v])\nonumber \\
+ & =\max_{\|v\|_{2}=1}\tr\left(\mh(x)^{-\frac{1}{2}}D\mh(x)[v]\mh(x)^{-\frac{1}{2}}\right)\nonumber \\
+ & \leq\max_{\|v\|_{2}=1}\sqrt{n}\|\mh(x)^{-\frac{1}{2}}D\mh(x)[v]\mh(x)^{-\frac{1}{2}}\|_{F}\nonumber \\
+ & \leq\sqrt{n}\label{eq:grad_log_H}
+\end{align}
+
+\end_inset
+
+where the first inequality follows from 
+\begin_inset Formula $\left|\sum_{i=1}^{n}\lambda_{i}\right|\leq\sqrt{n}\sqrt{\sum_{i=1}^{n}\lambda_{i}^{2}}$
+\end_inset
+
+ and the second inequality follows from the definition of strong self-concordanc
+e.
+\end_layout
+
+\begin_layout Proof
+Combining 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:reject_prob_z"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:log_det_Hzx"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:grad_prob"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:grad_log_H"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we see that with probability at least 
+\begin_inset Formula $0.99$
+\end_inset
+
+ in 
+\begin_inset Formula $z$
+\end_inset
+
+, acceptance probability of the sample 
+\begin_inset Formula $z$
+\end_inset
+
+ is 
+\begin_inset Formula 
+\begin{equation}
+\min\left\{ 1,\frac{\vol(E_{x}(r))}{\vol(E_{z}(r))}\right\} \geq e^{-2r}\geq0.77\label{eq:rejection}
+\end{equation}
+
+\end_inset
+
+where we used that 
+\begin_inset Formula $r=\frac{1}{8}$
+\end_inset
+
+.
+ Hence, the overall rejection probability 
+\begin_inset Formula $\mathrm{rej}_{x}$
+\end_inset
+
+ (and similarly 
+\begin_inset Formula $\mathrm{rej}_{y}$
+\end_inset
+
+) satisfies
+\begin_inset Formula 
+\begin{equation}
+\mathrm{rej}_{x}\leq0.24\qquad\text{and}\qquad\mathrm{rej}_{y}\leq0.24.\label{eq:rej_xy}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Now, we bound the fraction of volume in the intersection of the ellipsoids
+ at 
+\begin_inset Formula $x,y$
+\end_inset
+
+.
+ Again, we can assume that 
+\begin_inset Formula $\mh(x)=\mi$
+\end_inset
+
+.
+ Then, the strongly self-concordance and Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:global_strongly_self_concordant"
+
+\end_inset
+
+ shows that
+\begin_inset Formula 
+\begin{equation}
+\|\mh(y)-\mi\|_{F}\leq2\|x-y\|_{x}\leq\frac{1}{4\sqrt{n}}.\label{eq:H_minus_I_F}
+\end{equation}
+
+\end_inset
+
+In particular, we have that 
+\begin_inset Formula 
+\begin{equation}
+\frac{1}{2}\mi\preceq\mh(y)\preceq\frac{3}{2}\mi.\label{eq:H_I_op}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+We partition the eigenvalues 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+ of 
+\begin_inset Formula $\mh(y)$
+\end_inset
+
+ into those of value at least 
+\begin_inset Formula $1$
+\end_inset
+
+ and the rest.
+ Then consider the ellipsoid 
+\begin_inset Formula $E$
+\end_inset
+
+ whose eigenvalues are 
+\begin_inset Formula $\min\left\{ 1,\lambda_{i}\right\} $
+\end_inset
+
+.
+ This is contained in both 
+\begin_inset Formula $E_{x}(1)$
+\end_inset
+
+ and 
+\begin_inset Formula $E_{y}(1)$
+\end_inset
+
+.
+ We will see that 
+\begin_inset Formula $\vol(E)$
+\end_inset
+
+ is a constant fraction of the volume of both 
+\begin_inset Formula $E_{x}(1)$
+\end_inset
+
+ and 
+\begin_inset Formula $E_{y}(1)$
+\end_inset
+
+.
+ First, we compare 
+\begin_inset Formula $E$
+\end_inset
+
+ and 
+\begin_inset Formula $E_{x}(1)$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\frac{\vol(E)}{\vol(E_{x}(1))}=\prod_{i:\lambda_{i}<1}\lambda_{i}=\prod_{i:\lambda_{i}<1}\left(1-(1-\lambda_{i})\right)\geq\exp\left(-2\sum_{i:\lambda_{i}<1}\left(1-\lambda_{i}\right)\right)\label{eq:vol_E_x}
+\end{equation}
+
+\end_inset
+
+where we used that 
+\begin_inset Formula $1-x\geq\exp(-2x)$
+\end_inset
+
+ for 
+\begin_inset Formula $0\leq x\leq\frac{1}{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $\lambda_{i}\geq\frac{1}{2}$
+\end_inset
+
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:H_I_op"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ From the inequality 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:H_minus_I_F"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, it follows that
+\begin_inset Formula 
+\[
+\sqrt{\sum_{i}(\lambda_{i}-1)^{2}}\le\frac{1}{4\sqrt{n}}.
+\]
+
+\end_inset
+
+Therefore, 
+\begin_inset Formula $\sum_{i:\lambda_{i}<1}|\lambda_{i}-1|\leq\frac{1}{4}$
+\end_inset
+
+.
+ Putting it into 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:vol_E_x"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we have
+\begin_inset Formula 
+\begin{equation}
+\frac{\vol(P_{x}\cap P_{y})}{\vol(P_{x})}=\frac{\vol(E)}{\vol(E_{x}(1))}\geq e^{-\frac{1}{2}}.\label{eq:volPxyPx}
+\end{equation}
+
+\end_inset
+
+Similarly, we have
+\begin_inset Formula 
+\begin{equation}
+\frac{\vol(P_{x}\cap P_{y})}{\vol(P_{y})}=\frac{\prod_{i:\lambda_{i}<1}\lambda_{i}}{\prod_{i:\lambda_{i}}\lambda_{i}}=\frac{1}{\prod_{i:\lambda_{i}>1}\lambda_{i}}\geq\frac{1}{\exp(\sum_{i:\lambda_{i}>1}(\lambda_{i}-1))}\geq e^{-\frac{1}{4}}.\label{eq:volPxyPy}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Putting 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:rej_xy"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:volPxyPx"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:volPxyPy"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ into 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:dikin_formula"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we have
+\begin_inset Formula 
+\[
+d_{\mathrm{TV}}(P_{x},P_{y})\leq\frac{0.24}{2}+\frac{0.24}{2}+1-\frac{e^{-\frac{1}{2}}}{2}+\frac{e^{-\frac{1}{4}}}{2}\leq\frac{3}{4}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The next lemma establishes isoperimetry.
+ This only needs the symmetric containment assumption.
+ The isoperimetry is for the cross-ratio distance.
+ For a convex body 
+\begin_inset Formula $K$
+\end_inset
+
+, and any two points 
+\begin_inset Formula $u,v\in K,$
+\end_inset
+
+suppose that 
+\begin_inset Formula $p,q$
+\end_inset
+
+ are the endpoints of the chord through 
+\begin_inset Formula $u,v$
+\end_inset
+
+ in 
+\begin_inset Formula $K$
+\end_inset
+
+, so that these points occur in the order 
+\begin_inset Formula $p,u,v,q.$
+\end_inset
+
+ Then, the 
+\emph on
+cross-ratio
+\emph default
+ distance between 
+\begin_inset Formula $u$
+\end_inset
+
+ and 
+\begin_inset Formula $v$
+\end_inset
+
+ is defined as 
+\begin_inset Formula 
+\[
+d_{K}(u,v)=\frac{\|u-v\|_{2}\|p-q\|_{2}}{\|p-u\|_{2}\|v-q\|_{2}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Tbis distance enjoyes the following isoperimetric inequality.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Lovasz1998"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:dK-iso"
+
+\end_inset
+
+For any convex body 
+\begin_inset Formula $K$
+\end_inset
+
+, and disjoint subsets 
+\begin_inset Formula $S_{1},S_{2}$
+\end_inset
+
+ of it, and 
+\begin_inset Formula $S_{3}=K\setminus S_{1}\setminus S_{2},$
+\end_inset
+
+we have
+\begin_inset Formula 
+\[
+\vol(S_{3})\ge d_{K}(S_{1},S_{2})\frac{\vol(S_{1})\vol(S_{2})}{\vol(K)}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We now relate the cross-ratio distance to the ellipsoidal norm.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:dikin-dist-1"
+
+\end_inset
+
+For 
+\begin_inset Formula $u,v\in K$
+\end_inset
+
+, 
+\begin_inset Formula $d_{K}(u,v)\ge\frac{\Vert u-v\Vert_{u}}{\sqrt{\bar{\nu}}}.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Consider the ellipsoid at 
+\begin_inset Formula $u$
+\end_inset
+
+.
+ For the chord 
+\begin_inset Formula $[p,q]$
+\end_inset
+
+ induced by 
+\begin_inset Formula $u,v$
+\end_inset
+
+ with these points in the order 
+\begin_inset Formula $p,u,v,q$
+\end_inset
+
+, suppose that 
+\begin_inset Formula $\|p-u\|_{2}\le\|v-q\|_{2}$
+\end_inset
+
+.
+ Then by Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:dikingeneral"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset Formula $p\in K\cap(2u-K)$
+\end_inset
+
+.
+ And hence 
+\begin_inset Formula $\|p-u\|_{u}\le\sqrt{\bar{\nu}}.$
+\end_inset
+
+ Therefore, 
+\begin_inset Formula 
+\[
+d_{K}(u,v)=\frac{\|u-v\|_{2}\|p-q\|_{2}}{\|p-u\|_{2}\|v-q\|_{2}}\geq\frac{\|u-v\|_{2}}{\|p-u\|_{2}}=\frac{\|u-v\|_{u}}{\|p-u\|_{u}}\ge\frac{\|u-v\|_{u}}{\sqrt{\bar{\nu}}}.
+\]
+
+\end_inset
+
+We can now prove the main conductance bound.
+\end_layout
+
+\begin_layout Proof
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+dikingeneral*
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+We follow the standard high-level outline 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "vempala2005geometric"
+literal "false"
+
+\end_inset
+
+.
+ Consider any measurable subset 
+\begin_inset Formula $S_{1}\subseteq K$
+\end_inset
+
+ and let 
+\begin_inset Formula $S_{2}=K\setminus S_{1}$
+\end_inset
+
+ be its complement.
+ Define the points with low escape probability for these subsets as
+\begin_inset Formula 
+\[
+S_{i}'=\left\{ x\in S_{i}:\,P_{x}(K\setminus S_{i})<\frac{1}{8}\right\} 
+\]
+
+\end_inset
+
+and 
+\begin_inset Formula $S_{3}'=K\setminus S_{1}'\setminus S_{2}'$
+\end_inset
+
+.
+ Then, for any 
+\begin_inset Formula $u\in S_{1}'$
+\end_inset
+
+, 
+\begin_inset Formula $v\in S_{2}'$
+\end_inset
+
+, we have 
+\begin_inset Formula $d_{TV}(P_{u},P_{v})>1-\frac{1}{4}$
+\end_inset
+
+.
+ Hence, by Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:dikin-one-step-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we have 
+\begin_inset Formula $\Vert u-v\Vert_{u}\ge\frac{1}{8\sqrt{n}}$
+\end_inset
+
+.
+ Therefore, by Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:dikin-dist-1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, 
+\begin_inset Formula 
+\[
+d_{K}(u,v)\ge\frac{1}{8\sqrt{n}\cdot\sqrt{\bar{\nu}}}.
+\]
+
+\end_inset
+
+We can now bound the conductance of 
+\begin_inset Formula $S_{1}$
+\end_inset
+
+.
+ We may assume that 
+\begin_inset Formula $\vol(S_{i}')\ge\vol(S_{i})/2$
+\end_inset
+
+; otherwise, it immediately follows that the conductance of 
+\begin_inset Formula $S_{1}$
+\end_inset
+
+ is 
+\begin_inset Formula $\Omega(1)$
+\end_inset
+
+.
+ Assuming this, we have
+\begin_inset Formula 
+\begin{align*}
+\int_{S_{1}}P_{x}(S_{2})\,dx & \ge\int_{S_{3}'}\frac{1}{8}dx\ge\frac{1}{8}\vol(S_{3}')\\
+\mbox{using isoperimetry (Theorem \ref{thm:dK-iso})} & \ge\frac{1}{8}d_{K}(S_{1}',S_{2}')\frac{\vol(S_{1}')\vol(S_{2}')}{\vol(P)}\\
+ & \ge\frac{1}{512\sqrt{n\bar{\nu}}}\min\left\{ \vol(S_{1}),\vol(S_{2})\right\} .
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
 \end_body
 \end_document

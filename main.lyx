@@ -5,6 +5,27 @@
 \save_transient_properties true
 \origin unavailable
 \textclass optbook
+\begin_preamble
+\usepackage{url}
+\usepackage{xargs}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+%\usepackage[pdftex,dvipsnames]{xcolor}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\usepackage[lined,boxed,ruled,norelsize,algo2e]{algorithm2e}
+\usepackage[small,bf]{caption}
+\usepackage{tikz}
+\usepackage{enumitem}
+\setlist{nolistsep}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=red,
+    filecolor=red,
+    linkcolor=red,
+    urlcolor=red
+}
+\end_preamble
 \use_default_options true
 \maintain_unincluded_children false
 \language english
@@ -220,6 +241,86 @@
 
 \begin_inset FormulaMacro
 \newcommand{\one}{\mathbb{{\bf 1}}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\abs}[1]{\left\vert #1\right\vert }
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\bdiag}{\mathbf{Diag}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\mh}{\mathbf{H}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\mi}{\mathbf{I}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\mv}{\mathbf{V}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\mw}{\mathbf{W}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\ms}{\mathbf{S}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\mproj}{\mathbf{P}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\msigma}{\mathbf{\Sigma}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\ma}{\mathbf{A}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\poly}{\mbox{poly}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\cov}{\mathrm{Cov}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Var}{\mathrm{Var}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\rank}{\mathrm{rank}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Ent}{\mathrm{Ent}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\spe}{\mathrm{op}}
 \end_inset
 
 
@@ -1127,25 +1228,9 @@ filename "har_dikin.lyx"
 \end_inset
 
 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset CommandInset include
-LatexCommand input
-filename "dikin.lyx"
-
-\end_inset
-
-
 \begin_inset CommandInset include
 LatexCommand input
 filename "RHMC.lyx"
-
-\end_inset
-
-
-\end_layout
 
 \end_inset
 

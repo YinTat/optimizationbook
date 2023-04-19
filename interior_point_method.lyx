@@ -2681,7 +2681,7 @@ Unfortunately, this is an existence result and the barrier function is expensive
 \end_layout
 
 \begin_layout Lemma
-We have the following self-concordant barriers.
+The following functions are self-concordant barriers.
  We use 
 \begin_inset Formula $\nu$
 \end_inset
