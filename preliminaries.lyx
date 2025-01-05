@@ -1,16 +1,16 @@
-#LyX 2.3 created this file. For more info see http://www.lyx.org/
-\lyxformat 544
+#LyX 2.4 created this file. For more info see https://www.lyx.org/
+\lyxformat 620
 \begin_document
 \begin_header
 \save_transient_properties true
 \origin unavailable
 \textclass optbook
 \use_default_options true
-\maintain_unincluded_children false
+\maintain_unincluded_children no
 \language english
 \language_package default
-\inputencoding auto
-\fontencoding global
+\inputencoding auto-legacy
+\fontencoding auto
 \font_roman "default" "default"
 \font_sans "default" "default"
 \font_typewriter "default" "default"
@@ -18,7 +18,9 @@
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
-\font_osf false
+\font_roman_osf false
+\font_sans_osf false
+\font_typewriter_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
 \use_microtype false
@@ -50,7 +52,9 @@
 \suppress_date false
 \justification true
 \use_refstyle 1
+\use_formatted_ref 0
 \use_minted 0
+\use_lineno 0
 \index Index
 \shortcut idx
 \color #008000
@@ -66,14 +70,23 @@
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
+\tablestyle default
 \tracking_changes false
 \output_changes false
+\change_bars false
+\postpone_fragile_content false
 \html_math_output 0
 \html_css_as_file 0
 \html_be_strict false
+\docbook_table_output 0
+\docbook_mathml_prefix 1
 \end_header
 
 \begin_body
+
+\begin_layout Section*
+Notation
+\end_layout
 
 \begin_layout Standard
 We use 
@@ -92,7 +105,8 @@ We use
 \begin_inset Formula $r$
 \end_inset
 
-: 
+:
+ 
 \begin_inset Formula $\left\{ y:\norm{y-x}_{2}\le r\right\} $
 \end_inset
 
@@ -105,7 +119,8 @@ We use
 \begin_inset Formula $X$
 \end_inset
 
-, namely 
+,
+ namely 
 \begin_inset Formula $\conv(X)=\{\sum\alpha_{i}x_{i}:\ \alpha_{i}\geq0,\sum\alpha_{i}=1,x_{i}\in X\}$
 \end_inset
 
@@ -135,7 +150,9 @@ We use
 \begin_inset Formula $x,y\in\Rn$
 \end_inset
 
-, we view them as column vectors, and use 
+,
+ we view them as column vectors,
+ and use 
 \begin_inset Formula $[x,y]$
 \end_inset
 
@@ -143,7 +160,9 @@ We use
 \begin_inset Formula $\conv(\{x,y\})$
 \end_inset
 
-, namely, the line segment between 
+,
+ namely,
+ the line segment between 
 \begin_inset Formula $x$
 \end_inset
 
@@ -152,31 +171,7 @@ We use
 \end_inset
 
 .
- Unless specified otherwise, 
-\begin_inset Formula $\norm x$
-\end_inset
-
- will be the 
-\begin_inset Formula $\ell_{2}$
-\end_inset
-
- norm 
-\begin_inset Formula $\norm x_{2}$
-\end_inset
-
-.
  
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-I think the student is correct, it is horrible to assume this.
- We should fix it whenever we do.
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -184,15 +179,15 @@ We use
 \begin_inset Formula $e_{i}$
 \end_inset
 
- to denote the coordinate vector with 
+ to denote the coordinate vector whose 
 \begin_inset Formula $i$
 \end_inset
 
--th coordinate is 1 and 
+-th coordinate is 1 and all other coordinates are 
 \begin_inset Formula $0$
 \end_inset
 
- otherwise.
+.
 \end_layout
 
 \begin_layout Standard
@@ -200,11 +195,13 @@ We use
 status open
 
 \begin_layout Plain Layout
-Should we really abuse vector? Like 
+Should we really abuse vector?
+ Like 
 \begin_inset Formula $f(x)_{i}=f(x_{i})$
 \end_inset
 
-? Or we use bold letter?
+?
+ Or we use bold letter?
 \end_layout
 
 \end_inset
@@ -243,7 +240,8 @@ Probability measure.
 status open
 
 \begin_layout Plain Layout
-Manifold, tangent space.
+Manifold,
+ tangent space.
 \end_layout
 
 \end_inset
@@ -260,7 +258,8 @@ For any
 \begin_inset Formula $L\geq0$
 \end_inset
 
-, a function 
+,
+ a function 
 \begin_inset Formula $f:V\rightarrow W$
 \end_inset
 
@@ -357,7 +356,8 @@ A function
 \end_inset
 
 .
- Equivalently, 
+ Equivalently,
+ 
 \begin_inset Formula $f$
 \end_inset
 
@@ -376,10 +376,8 @@ A function
 
 \end_inset
 
-The function is lower semi-continuous if is it so at every point in its
- domain.
- The definition of upper semi-continuous is analogous with the inequalities
- reversed and 
+The function is lower semi-continuous if is it so at every point in its domain.
+ The definition of upper semi-continuous is analogous with the inequalities reversed and 
 \begin_inset Formula $\liminf$
 \end_inset
 
@@ -412,7 +410,8 @@ For any
 \begin_inset Formula $g\in\mathcal{C}^{k+1}(\R)$
 \end_inset
 
-, and any 
+,
+ and any 
 \begin_inset Formula $x$
 \end_inset
 
@@ -420,7 +419,8 @@ For any
 \begin_inset Formula $y$
 \end_inset
 
-, there is a 
+,
+ there is a 
 \begin_inset Formula $\zeta\in[x,y]$
 \end_inset
 
@@ -475,8 +475,8 @@ A real symmetric matrix
 \end_inset
 
 .
- Equivalently, a real symmetric matrix with all nonnegative eigenvalues
- is PSD.
+ Equivalently,
+ a real symmetric matrix with all nonnegative eigenvalues is PSD.
  We write 
 \begin_inset Formula $A\succeq0$
 \end_inset
@@ -508,15 +508,21 @@ For any matrix
 \begin_inset Formula $A$
 \end_inset
 
-, we define its trace, 
+,
+ we define its trace,
+ 
 \begin_inset Formula $\tr A=\sum A_{ii}$
 \end_inset
 
-, Frobenius norm, 
+,
+ Frobenius norm,
+ 
 \begin_inset Formula $\,\|A\|_{F}^{2}=\tr(A^{\top}A)=\sum_{i,j}A_{ij}^{2}$
 \end_inset
 
-, and operator norm, 
+,
+ and operator norm,
+ 
 \begin_inset Formula $\,\|A\|_{\op}=\sup_{\|x\|_{2}=1}\|Ax\|_{2}$
 \end_inset
 
@@ -525,7 +531,8 @@ For any matrix
 \begin_inset Formula $x^{\top}Ax=\tr(Axx^{\top})$
 \end_inset
 
- and in general, 
+ and in general,
+ 
 \begin_inset Formula $\tr(AB)=\tr(BA)$
 \end_inset
 
@@ -537,11 +544,13 @@ For symmetric
 \begin_inset Formula $A$
 \end_inset
 
-, we have 
+,
+ we have 
 \begin_inset Formula $\tr A=\sum_{i}\lambda_{i}$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $\|A\|_{F}^{2}=\sum_{i}\lambda_{i}^{2}$
 \end_inset
 
@@ -565,15 +574,18 @@ For a vector
 \begin_inset Formula $x$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $\norm x_{A}=\sqrt{x^{T}Ax}$
 \end_inset
 
-; for a matrix 
+;
+ for a matrix 
 \begin_inset Formula $B$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula 
 \[
 \norm B_{A}=\sup_{x}\frac{\norm{Bx}_{A}}{\norm x_{A}}.
@@ -602,7 +614,8 @@ Sherman-Morrison-Woodbury
 \begin_inset Formula $u,v\in\R^{n}$
 \end_inset
 
-, we have
+,
+ we have
 \begin_inset Formula 
 \[
 \left(A+uv^{\top}\right)^{-1}=A^{-1}-\frac{A^{-1}uv^{\top}A^{-1}}{1+u^{\top}Av}.
@@ -823,8 +836,7 @@ for any
 \end_layout
 
 \begin_layout Definition
-Note that the marginal is a convolution of the density with the indicator
- function of the subspace.
+Note that the marginal is a convolution of the density with the indicator function of the subspace.
  
 \end_layout
 
@@ -865,7 +877,8 @@ We denote the unit Euclidean ball as
 \begin_inset Formula $B^{n}=\left\{ x:\norm x_{2}\le1\right\} .$
 \end_inset
 
- More generally, we define the 
+ More generally,
+ we define the 
 \begin_inset Formula $\ell_{p}$
 \end_inset
 

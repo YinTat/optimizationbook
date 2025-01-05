@@ -1,16 +1,16 @@
-#LyX 2.3 created this file. For more info see http://www.lyx.org/
-\lyxformat 544
+#LyX 2.4 created this file. For more info see https://www.lyx.org/
+\lyxformat 620
 \begin_document
 \begin_header
 \save_transient_properties true
 \origin unavailable
 \textclass optbook
 \use_default_options true
-\maintain_unincluded_children false
+\maintain_unincluded_children no
 \language english
 \language_package default
-\inputencoding auto
-\fontencoding global
+\inputencoding auto-legacy
+\fontencoding auto
 \font_roman "default" "default"
 \font_sans "default" "default"
 \font_typewriter "default" "default"
@@ -18,7 +18,9 @@
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
-\font_osf false
+\font_roman_osf false
+\font_sans_osf false
+\font_typewriter_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
 \use_microtype false
@@ -50,7 +52,9 @@
 \suppress_date false
 \justification true
 \use_refstyle 1
+\use_formatted_ref 0
 \use_minted 0
+\use_lineno 0
 \index Index
 \shortcut idx
 \color #008000
@@ -66,11 +70,16 @@
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
+\tablestyle default
 \tracking_changes false
 \output_changes false
+\change_bars false
+\postpone_fragile_content false
 \html_math_output 0
 \html_css_as_file 0
 \html_be_strict false
+\docbook_table_output 0
+\docbook_mathml_prefix 1
 \end_header
 
 \begin_body
@@ -80,50 +89,67 @@ Examples
 \end_layout
 
 \begin_layout Standard
-Here is a list we want to cover:
+Here is a list of problems we want to cover with general techniques:
 \end_layout
 
 \begin_layout Itemize
-linear system, SDD, M matrices, directed Laplacian, multi-commodity flow,
+linear system,
+ SDD,
+ M matrices,
+ directed Laplacian,
+ multi-commodity flow,
  totally unimodular matrices (what other linear systems?) 
 \end_layout
 
 \begin_layout Itemize
-logistic regression, other regressions, 
+logistic regression,
+ other regressions,
+ 
 \begin_inset Formula $\ell_{p}$
 \end_inset
 
- regression, convex regression
+ regression,
+ convex regression
 \end_layout
 
 \begin_layout Itemize
-linear program < quadratic program < second order cone program < semidefinite
- program < conic program < convex program
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-Example: John ellipsoid, minimum incrible ball, geometric programming and
- matrix scaling?
-\end_layout
-
-\end_deeper
-\begin_layout Itemize
-Shortest Path, maximum flow, min cost flow
+linear program < quadratic program < second order cone program < semidefinite program < conic program < convex program
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-Example: Transportation
+Example:
+ John ellipsoid,
+ minimum enclosing ball,
+ geometric programming,
+ matrix scaling.
 \end_layout
 
 \end_deeper
 \begin_layout Itemize
-Markov Decision Process
+Shortest Path,
+ maximum flow,
+ min-cost flow
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Example:
+ Transportation
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Markov Decision Processes
 \end_layout
 
 \begin_layout Itemize
-matroid intersection, submodular minimization
+matroid intersection,
+ submodular minimization
+\end_layout
+
+\begin_layout Itemize
+Analogous sampling problems in all of the above
 \end_layout
 
 \end_body
