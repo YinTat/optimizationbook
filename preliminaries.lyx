@@ -687,6 +687,16 @@ The KL-divergence of a density
 \begin_inset Formula $\nu$
 \end_inset
 
+,
+ also known as relative entropy of 
+\begin_inset Formula $\rho$
+\end_inset
+
+ with respect to 
+\begin_inset Formula $\nu$
+\end_inset
+
+,
  is 
 \begin_inset Formula 
 \[
@@ -800,6 +810,203 @@ where
 \end_layout
 
 \begin_layout Definition
+\begin_inset CommandInset label
+LatexCommand label
+name "def:p-dist"
+
+\end_inset
+
+ For 
+\begin_inset Formula $\mu,\nu$
+\end_inset
+
+ probability measures in 
+\begin_inset Formula $\R^{n}$
+\end_inset
+
+,
+ the 
+\emph on
+
+\begin_inset Formula $f$
+\end_inset
+
+-divergence
+\emph default
+ of 
+\begin_inset Formula $\mu$
+\end_inset
+
+ towards 
+\begin_inset Formula $\nu$
+\end_inset
+
+ with 
+\begin_inset Formula $\mu\ll\nu$
+\end_inset
+
+ is defined as,
+ for a convex function 
+\begin_inset Formula $f:\R_{+}\to\R$
+\end_inset
+
+ with 
+\begin_inset Formula $f(1)=0$
+\end_inset
+
+ and 
+\begin_inset Formula $f'(\infty)=\infty$
+\end_inset
+
+,
+ 
+\begin_inset Formula 
+\[
+D_{f}(\mu\|\nu):=\int f\left(\frac{d\mu}{d\nu}\right)\,d\nu\,.
+\]
+
+\end_inset
+
+For 
+\begin_inset Formula $q\in(1,\infty)$
+\end_inset
+
+,
+ the 
+\emph on
+
+\begin_inset Formula $\KL$
+\end_inset
+
+-divergence and 
+\begin_inset Formula $\chi^{q}$
+\end_inset
+
+-divergence
+\emph default
+ correspond to 
+\begin_inset Formula $f(x)=x\log x$
+\end_inset
+
+ and 
+\begin_inset Formula $x^{q}-1$
+\end_inset
+
+,
+ respectively.
+ The 
+\emph on
+
+\begin_inset Formula $q$
+\end_inset
+
+-R
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+'e
+\end_layout
+
+\end_inset
+
+nyi divergence
+\emph default
+ is defined as 
+\begin_inset Formula 
+\[
+\RR_{q}(\mu\|\nu):=\tfrac{1}{q-1}\log\left(\chi^{q}(\mu\|\nu)+1\right).
+\]
+
+\end_inset
+
+The 
+\emph on
+R
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+'enyi
+\end_layout
+
+\end_inset
+
+-infinity divergence
+\emph default
+ is defined as
+\begin_inset Formula 
+\[
+\RR_{\infty}(\mu\|\nu):=\log\esssup_{\mu}\frac{d\mu}{d\nu}\,.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Fact
+\begin_inset Formula $\KL=\lim_{q\downarrow1}\RR_{q}\leq\RR_{q}\leq\RR_{q'}\leq\RR_{\infty}$
+\end_inset
+
+ for 
+\begin_inset Formula $1\leq q\leq q'$
+\end_inset
+
+ and 
+\begin_inset Formula $2\,\norm{\cdot}_{\tv}^{2}\leq\KL\leq\RR_{2}=\log(\chi^{2}+1)\leq\chi^{2}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+We refer readers to 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "van2014renyi"
+literal "false"
+
+\end_inset
+
+ for other basic properties of  R
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+'e
+\end_layout
+
+\end_inset
+
+nyi-divergence.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
 The 
 \emph on
 marginal
@@ -856,7 +1063,11 @@ A distribution
 \begin_inset Formula $\R^{n}$
 \end_inset
 
- is said to be isotropic if 
+ is said to be 
+\series bold
+isotropic
+\series default
+ if 
 \begin_inset Formula $\E_{D}(x)=0$
 \end_inset
 

@@ -919,7 +919,7 @@ nolink "false"
 \end_inset
 
 ,
- we have the following equivalent:
+ we have the following equivalence.
 \end_layout
 
 \begin_layout Theorem
@@ -1016,7 +1016,7 @@ Since
 \begin_inset Formula $\nabla^{2}f$
 \end_inset
 
- are atmost 
+ are at most 
 \begin_inset Formula $L$
 \end_inset
 
@@ -2628,15 +2628,14 @@ Generalizing Gradient Descent*
 \end_layout
 
 \begin_layout Standard
-Now,
- we study properties of gradient descent that were actually used for the strongly convex case.
- There are many ways to generalize it.
+Here we study properties of gradient descent that were actually used for the strongly convex case.
+ There are many ways to generalize this case.
  One way is to view gradient descent is as approximating the function 
 \begin_inset Formula $f$
 \end_inset
 
  by splitting it into two terms,
- one term is the first-order approximation and the second term is just an 
+ one is the first-order approximation and the second is just a squared 
 \begin_inset Formula $\ell_{2}$
 \end_inset
 
@@ -2674,7 +2673,11 @@ We say
 \end_inset
 
  is convex,
- with the same value at 
+ with the same value as 
+\begin_inset Formula $f$
+\end_inset
+
+ at 
 \begin_inset Formula $x$
 \end_inset
 
@@ -2711,11 +2714,7 @@ We say
 status open
 
 \begin_layout Plain Layout
-Sushant said the quadratic lower bound condition can be removed and 
-\end_layout
-
-\begin_layout Plain Layout
-use
+Sushant said the quadratic lower bound condition can be replaced by 
 \end_layout
 
 \begin_layout Plain Layout
