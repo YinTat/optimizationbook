@@ -1,16 +1,16 @@
-#LyX 2.3 created this file. For more info see http://www.lyx.org/
-\lyxformat 544
+#LyX 2.4 created this file. For more info see https://www.lyx.org/
+\lyxformat 620
 \begin_document
 \begin_header
 \save_transient_properties true
 \origin unavailable
 \textclass optbook
 \use_default_options true
-\maintain_unincluded_children false
+\maintain_unincluded_children no
 \language english
 \language_package default
-\inputencoding auto
-\fontencoding global
+\inputencoding auto-legacy
+\fontencoding auto
 \font_roman "default" "default"
 \font_sans "default" "default"
 \font_typewriter "default" "default"
@@ -18,7 +18,9 @@
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
-\font_osf false
+\font_roman_osf false
+\font_sans_osf false
+\font_typewriter_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
 \use_microtype false
@@ -53,7 +55,9 @@
 \suppress_date false
 \justification true
 \use_refstyle 1
+\use_formatted_ref 0
 \use_minted 0
+\use_lineno 0
 \index Index
 \shortcut idx
 \color #008000
@@ -69,11 +73,16 @@
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
+\tablestyle default
 \tracking_changes false
 \output_changes false
+\change_bars false
+\postpone_fragile_content false
 \html_math_output 0
 \html_css_as_file 0
 \html_be_strict false
+\docbook_table_output 0
+\docbook_mathml_prefix 1
 \end_header
 
 \begin_body
@@ -90,10 +99,9 @@ name "sec:Cutting-Plane-Methods"
 \end_layout
 
 \begin_layout Standard
-The goal of this chapter is to present some polynomial-time algorithms for
- convex optimization.
- These algorithms use knowledge of the function in a minimal way, essentially
- by querying the function value and weak bounds on its support/range.
+The goal of this chapter is to present some polynomial-time algorithms for convex optimization.
+ These algorithms use knowledge of the function in a minimal way,
+ essentially by querying the function value and weak bounds on its support/range.
 \end_layout
 
 \begin_layout Standard
@@ -101,10 +109,12 @@ Given a continuously differentiable convex function
 \begin_inset Formula $f$
 \end_inset
 
-, Theorem 
+,
+ Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:first_order"
+nolink "false"
 
 \end_inset
 
@@ -133,7 +143,8 @@ Let
 \begin_inset Formula $x^{*}$
 \end_inset
 
-, we have that 
+,
+ we have that 
 \begin_inset Formula 
 \[
 f(x)\geq f(x^{*})\geq f(x)+\left\langle \nabla f(x),x^{*}-x\right\rangle .
@@ -141,12 +152,14 @@ f(x)\geq f(x^{*})\geq f(x)+\left\langle \nabla f(x),x^{*}-x\right\rangle .
 
 \end_inset
 
-Therefore, we know that 
+Therefore,
+ we know that 
 \begin_inset Formula $\left\langle \nabla f(x),x^{*}-x\right\rangle \leq0$
 \end_inset
 
 .
- Namely, 
+ Namely,
+ 
 \begin_inset Formula $x^{*}$
 \end_inset
 
@@ -159,10 +172,10 @@ Therefore, we know that
 \end_inset
 
 .
- Roughly speaking, this shows that each gradient computation cuts the set
- of possible solutions in half.
- In one dimension, this allows us to do a binary search to minimize convex
- functions.
+ Roughly speaking,
+ this shows that each gradient computation cuts the set of possible solutions in half.
+ In one dimension,
+ this allows us to do a binary search to minimize convex functions.
  
 \end_layout
 
@@ -171,19 +184,29 @@ It turns out that in
 \begin_inset Formula $\Rn$
 \end_inset
 
-, binary search still works.
- In this chapter, we will cover several ways to do this binary search.
- All of them follow the same framework, called the 
+,
+ binary search still works.
+ In this chapter,
+ we will cover several ways to do this binary search.
+ All of them follow the same framework,
+ called the 
 \emph on
 cutting plane method
 \emph default
 .
- In this method, the convex set or function of interest is given by an oracle,
- typically a separation oracle: for any 
+ In this method,
+ the convex set or function of interest is given by an oracle,
+ typically a 
+\emph on
+separation oracle
+\emph default
+:
+ for any 
 \begin_inset Formula $x\notin K\subseteq\R^{n}$
 \end_inset
 
-, the oracle finds a vector 
+,
+ the oracle finds a vector 
 \begin_inset Formula $g(x)\in\R^{n}$
 \end_inset
 
@@ -227,7 +250,8 @@ Given
 \begin_inset Formula $K\subseteq R\cdot B^{n}$
 \end_inset
 
- specified by a separation oracle, find a point 
+ specified by a separation oracle,
+ find a point 
 \begin_inset Formula $y\in K$
 \end_inset
 
@@ -236,12 +260,12 @@ Given
 \end_inset
 
 .
- The complexity of an algorithm is measured by the number of calls to the
- oracle and the number of arithmetic operations.
+ The complexity of an algorithm is measured by the number of calls to the oracle and the number of arithmetic operations.
 \end_layout
 
 \begin_layout Remark*
-To minimize a convex function, we set 
+To minimize a convex function,
+ we set 
 \begin_inset Formula $g(x)=\nabla f(x)$
 \end_inset
 
@@ -258,10 +282,12 @@ To minimize a convex function, we set
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:vol2val"
+nolink "false"
 
 \end_inset
 
-, we relate the problem of proving that 
+,
+ we relate the problem of proving that 
 \begin_inset Formula $\vol(K)$
 \end_inset
 
@@ -273,7 +299,8 @@ reference "sec:vol2val"
 \end_layout
 
 \begin_layout Standard
-In this framework, we maintain a convex set 
+In this framework,
+ we maintain a convex set 
 \begin_inset Formula $E^{(k)}$
 \end_inset
 
@@ -282,7 +309,8 @@ In this framework, we maintain a convex set
 \end_inset
 
 .
- Each iteration, we choose some 
+ In each iteration,
+ we choose some 
 \begin_inset Formula $x^{(k)}$
 \end_inset
 
@@ -401,6 +429,7 @@ SetAlgoLined
 
 \series bold
 Input:
+
 \series default
  Initial set 
 \begin_inset Formula $E^{(0)}\subseteq\Rn$
@@ -555,7 +584,8 @@ end{algorithm2e}
 \end_layout
 
 \begin_layout Standard
-To analyze the algorithm, the main questions we need to answer are:
+To analyze the algorithm,
+ the main questions we need to answer are:
 \end_layout
 
 \begin_layout Enumerate
@@ -589,6 +619,7 @@ Progress on the cutting plane method is shown in the next table.
 \begin_layout Standard
 \begin_inset Float table
 placement h
+alignment document
 wide false
 sideways false
 status open
@@ -1182,9 +1213,11 @@ Ellipsoid Method
 
 \begin_layout Standard
 \begin_inset Float figure
+placement document
+alignment document
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -1250,10 +1283,12 @@ that contains
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:Hk"
+nolink "false"
 
 \end_inset
 
-), we define 
+),
+ we define 
 \begin_inset Formula $E^{(k+1)}$
 \end_inset
 
@@ -1271,8 +1306,7 @@ reference "eq:Hk"
 \end_inset
 
  every iteration.
- This volume property holds for any halfspace through the center of the
- current ellipsoid (not only for the one whose normal is the gradient),
+ This volume property holds for any halfspace through the center of the current ellipsoid (not only for the one whose normal is the gradient),
  a property we will exploit in the next chapter.
 \end_layout
 
@@ -1350,6 +1384,7 @@ SetAlgoLined
 
 \series bold
 Input:
+
 \series default
  Initial ellipsoid 
 \begin_inset Formula $E^{(0)}=\{y\in\Rn:\ (y-x^{(0)})^{\top}\left(A^{(0)}\right)^{-1}(y-x^{(0)})\leq1\}$
@@ -1512,10 +1547,12 @@ For the Ellipsoid method (Algorithm
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "alg:ellipsoid_method"
+nolink "false"
 
 \end_inset
 
-), we have 
+),
+ we have 
 \begin_inset Formula 
 \[
 \vol E^{(k+1)}<e^{-\frac{1}{2n+2}}\vol E^{(k)}\quad\mbox{and}\quad E^{(k)}\cap H^{(k)}\subset E^{(k+1)}.
@@ -1532,8 +1569,11 @@ Note that the proof below also shows that
 \end_inset
 
 .
- Therefore, the ellipsoid method does not run faster even for any function,
- e.g., a linear function, making it provably 
+ Therefore,
+ the ellipsoid method does not run faster even for any function,
+ e.g.,
+ a linear function,
+ making it provably 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1549,13 +1589,15 @@ Note that the ratio of
 \begin_inset Formula $\vol E^{(k+1)}/\vol E^{(k)}$
 \end_inset
 
- does not change under any affine transformation, and neither does set containme
-nt.
- Therefore, we can do a transformation so that 
+ does not change under any affine transformation,
+ and neither does set containment.
+ Therefore,
+ we can do a transformation so that 
 \begin_inset Formula $A^{(k)}=I$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $x^{(k)}=0$
 \end_inset
 
@@ -1574,7 +1616,8 @@ nt.
 
 .
  This simplifies our calculation.
- We need to prove two statements: 
+ We need to prove two statements:
+ 
 \begin_inset Formula $\vol E^{(k+1)}<e^{-\frac{1}{2n+2}}\vol E^{(k)}$
 \end_inset
 
@@ -1586,7 +1629,8 @@ nt.
 \end_layout
 
 \begin_layout Proof
-Claim 1: 
+Claim 1:
+ 
 \begin_inset Formula $\vol E^{(k+1)}<e^{-\frac{1}{2(n+1)}}\vol E^{(k)}$
 \end_inset
 
@@ -1603,7 +1647,8 @@ we have
 \end_inset
 
 .
- Therefore, we have that
+ Therefore,
+ we have that
 \begin_inset Formula 
 \begin{align*}
 \left(\frac{\vol E^{(k+1)}}{\vol E^{(k)}}\right)^{2}=\left|\frac{\det A^{(k+1)}}{\det A^{(k)}}\right| & =\left(\frac{n^{2}}{n^{2}-1}\right)^{n}\det\left(I-\frac{2}{n+1}e_{1}e_{1}^{\top}\right)\\
@@ -1643,7 +1688,8 @@ and the assumption
 \begin_inset Formula $A^{(k)}=I$
 \end_inset
 
-, we have 
+,
+ we have 
 \begin_inset Formula 
 \[
 x^{(k+1)}=-\frac{e_{1}}{n+1}
@@ -1651,11 +1697,13 @@ x^{(k+1)}=-\frac{e_{1}}{n+1}
 
 \end_inset
 
-and, for any 
+and,
+ for any 
 \begin_inset Formula $x\in E^{(k)}\cap H^{(k)}$
 \end_inset
 
-, we have that 
+,
+ we have that 
 \begin_inset Formula $\|x\|_{2}\leq1$
 \end_inset
 
@@ -1664,7 +1712,8 @@ and, for any
 \end_inset
 
 .
- By direct computation, using the fact that 
+ By direct computation,
+ using the fact that 
 \begin_inset Formula 
 \[
 \left(I-\frac{2}{n+1}e_{1}e_{1}^{\top}\right)^{-1}=\left(I+\frac{2}{n-1}e_{1}e_{1}^{\top}\right)
@@ -1723,7 +1772,8 @@ Show that the ellipsoid
 
 \begin_layout Exercise
 Suppose that we used a box instead of an ellipsoid.
- Could we ensure progress in each iteration? What about a simplex?
+ Could we ensure progress in each iteration?
+ What about a simplex?
 \end_layout
 
 \begin_layout Section
@@ -1742,22 +1792,23 @@ Lemma
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:ellipsoid_vol_decrease"
+nolink "false"
 
 \end_inset
 
- shows that the volume of a set containing all minimizers decreases by a
- constant factor every 
+ shows that the volume of a set containing all minimizers decreases by a constant factor every 
 \begin_inset Formula $n$
 \end_inset
 
  steps.
- In general, knowing that the optimal 
+ In general,
+ knowing that the optimal 
 \begin_inset Formula $x^{*}$
 \end_inset
 
- lies in a small volume set does not provide enough information to find
- a point with small function value.
- For example, if we only knew that 
+ lies in a small volume set does not provide enough information to find a point with small function value.
+ For example,
+ if we only knew that 
 \begin_inset Formula $x^{*}$
 \end_inset
 
@@ -1765,7 +1816,8 @@ reference "lem:ellipsoid_vol_decrease"
 \begin_inset Formula $\{x:x_{1}=0\}$
 \end_inset
 
-, we would still need to search for 
+,
+ we would still need to search for 
 \begin_inset Formula $x^{*}$
 \end_inset
 
@@ -1774,16 +1826,17 @@ reference "lem:ellipsoid_vol_decrease"
 \end_inset
 
  dimensional space.
- However, if the set is constructed by the cutting plane framework (Algorithm
- 
+ However,
+ if the set is constructed by the cutting plane framework (Algorithm 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "alg:cutting_plane"
+nolink "false"
 
 \end_inset
 
-), then we can guarantee that small volume implies that any point in the
- set has close to optimal function value.
+),
+ then we can guarantee that small volume implies that any point in the set has close to optimal function value.
 \end_layout
 
 \begin_layout Standard
@@ -1796,9 +1849,10 @@ This implies that we can minimize any convex function with
 \end_inset
 
  iterations.
- To make the statement more general, we note that the Ellipsoid method can
- be used for non-differentiable functions.
- In the next theorem, we allow for a general 
+ To make the statement more general,
+ we note that the Ellipsoid method can be used for non-differentiable functions.
+ In the next theorem,
+ we allow for a general 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1811,8 +1865,8 @@ progress
 \end_inset
 
 .
- The convergence argument works for any monotonic, scale-and-shift-invariant
- progress measure.
+ The convergence argument works for any monotonic,
+ scale-and-shift-invariant progress measure.
 \end_layout
 
 \begin_layout Theorem
@@ -1826,11 +1880,11 @@ Let
 \begin_inset Formula $x^{(k)}$
 \end_inset
 
- be the sequence of points produced by the cutting plane framework (Algorithm
- 
+ be the sequence of points produced by the cutting plane framework (Algorithm 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "alg:cutting_plane"
+nolink "false"
 
 \end_inset
 
@@ -1856,7 +1910,8 @@ reference "alg:cutting_plane"
 \begin_inset Formula $S\subseteq\R^{n}$
 \end_inset
 
-, any vector 
+,
+ any vector 
 \begin_inset Formula $y$
 \end_inset
 
@@ -1864,7 +1919,8 @@ reference "alg:cutting_plane"
 \begin_inset Formula $\alpha\geq0$
 \end_inset
 
-, we have 
+,
+ we have 
 \begin_inset Formula $\mathcal{V}(\alpha S+y)=\alpha\mathcal{V}(S)$
 \end_inset
 
@@ -1880,7 +1936,8 @@ reference "alg:cutting_plane"
 \begin_inset Formula $T\subset S$
 \end_inset
 
-, we have that 
+,
+ we have that 
 \begin_inset Formula $\mathcal{V}(T)\leq\mathcal{V}(S)$
 \end_inset
 
@@ -1889,15 +1946,18 @@ reference "alg:cutting_plane"
 
 \end_deeper
 \begin_layout Theorem
-Then, for any set 
+Then,
+ for any set 
 \begin_inset Formula $\Omega\subseteq E^{(0)}$
 \end_inset
 
-, with 
+,
+ with 
 \begin_inset Formula $\mathcal{V}(\Omega)>0$
 \end_inset
 
-, we have
+,
+ we have
 \begin_inset Formula 
 \[
 \min_{i=1,2,\cdots k}f(x^{(i)})-\min_{y\in\Omega}f(y)\leq\frac{\mathcal{V}(E^{(k)})}{\mathcal{V}(\Omega)}\cdot\left(\max_{z\in\Omega}f(z)-\min_{x\in\Omega}f(x)\right)\enspace.
@@ -1918,7 +1978,8 @@ We can think
 \end_inset
 
 .
- It can be radius, mean-width or any other way to measure 
+ It can be radius,
+ mean-width or any other way to measure 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1927,7 +1988,8 @@ size
 \end_inset
 
 .
- For the ellipsoid method, we use 
+ For the ellipsoid method,
+ we use 
 \begin_inset Formula $\mathcal{V}(E)=\vol(E)^{\frac{1}{n}}$
 \end_inset
 
@@ -1935,6 +1997,7 @@ size
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:ellipsoid_vol_decrease"
+nolink "false"
 
 \end_inset
 
@@ -1944,9 +2007,8 @@ reference "lem:ellipsoid_vol_decrease"
 \end_inset
 
  to satisfy linearity.
- Also note that we only guarantee that one of the previous query points
- has a small function value; of course we can simply use the point with
- minimum function value.
+ Also note that we only guarantee that one of the previous query points has a small function value;
+ of course we can simply use the point with minimum function value.
 \end_layout
 
 \begin_layout Proof
@@ -1971,11 +2033,13 @@ Let
 \begin_inset Formula $S=(1-\alpha)x^{*}+\alpha\Omega$
 \end_inset
 
-, by the linearity of 
+,
+ by the linearity of 
 \begin_inset Formula $\mathcal{V}$
 \end_inset
 
-, we have that 
+,
+ we have that 
 \begin_inset Formula 
 \[
 \mathcal{V}(S)=\alpha\mathcal{V}(\Omega)>\mathcal{V}(E^{(k)})
@@ -1983,7 +2047,8 @@ Let
 
 \end_inset
 
-Therefore, 
+Therefore,
+ 
 \begin_inset Formula $S$
 \end_inset
 
@@ -2009,11 +2074,13 @@ Therefore,
 \begin_inset Formula $i\leq k$
 \end_inset
 
-, namely for some 
+,
+ namely for some 
 \begin_inset Formula $i\le k$
 \end_inset
 
-, we have (denoting the subgradient by 
+,
+ we have (denoting the subgradient by 
 \begin_inset Formula $\nabla f$
 \end_inset
 
@@ -2029,7 +2096,8 @@ By the convexity of
 \begin_inset Formula $f$
 \end_inset
 
-, it follows that 
+,
+ it follows that 
 \begin_inset Formula $f(x^{(i)})\leq f(y).$
 \end_inset
 
@@ -2037,7 +2105,8 @@ By the convexity of
 \begin_inset Formula $y\in S$
 \end_inset
 
-, we have 
+,
+ we have 
 \begin_inset Formula $y=(1-\alpha)x^{*}+\alpha z$
 \end_inset
 
@@ -2046,7 +2115,8 @@ By the convexity of
 \end_inset
 
 .
- Thus, the convexity of 
+ Thus,
+ the convexity of 
 \begin_inset Formula $f$
 \end_inset
 
@@ -2058,7 +2128,8 @@ f(x^{(i)})\leq f(y)\leq(1-\alpha)f(x^{*})+\alpha f(z).
 
 \end_inset
 
-Therefore, we have
+Therefore,
+ we have
 \begin_inset Formula 
 \[
 \min_{i=1,2,\cdots k}f(x^{(i)})-\min_{x\in\Omega}f(x)\leq\alpha\left(\max_{z\in\Omega}f(z)-\min_{x\in\Omega}f(x)\right).
@@ -2070,7 +2141,8 @@ Since this holds for any
 \begin_inset Formula $\alpha>\frac{\mathcal{V}(E^{(k)})}{\mathcal{V}(\Omega)}$
 \end_inset
 
-, we have the result.
+,
+ we have the result.
 \end_layout
 
 \begin_layout Standard
@@ -2078,6 +2150,7 @@ Combining Lemma
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:ellipsoid_vol_decrease"
+nolink "false"
 
 \end_inset
 
@@ -2085,10 +2158,12 @@ reference "lem:ellipsoid_vol_decrease"
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:conv_opt"
+nolink "false"
 
 \end_inset
 
-, we have the following rate of convergence.
+,
+ we have the following rate of convergence.
 \end_layout
 
 \begin_layout Theorem
@@ -2106,7 +2181,8 @@ Let
 \begin_inset Formula $\Rn$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $E^{(0)}$
 \end_inset
 
@@ -2119,11 +2195,14 @@ Let
 \begin_inset Formula $x\in E^{(0)}$
 \end_inset
 
-, we can find, in time 
+,
+ we can find,
+ in time 
 \begin_inset Formula $\mathcal{T}$
 \end_inset
 
-, a nonzero vector 
+,
+ a nonzero vector 
 \begin_inset Formula $g(x)$
 \end_inset
 
@@ -2139,7 +2218,8 @@ f(y)\geq f(x)\text{ for any }y\text{ such that }g(x)^{\top}(y-x)\geq0.
 \end_layout
 
 \begin_layout Theorem
-Then, we have
+Then,
+ we have
 \begin_inset Formula 
 \[
 \min_{i=1,2,\cdots k}f(x^{(i)})-\min_{y\in\Omega}f(y)\leq\left(\frac{\vol(E^{(0)})}{\vol(\Omega)}\right)^{\frac{1}{n}}\exp\left(-\frac{k}{2n(n+1)}\right)\left(\max_{z\in\Omega}f(z)-\min_{x\in\Omega}f(x)\right)\enspace.
@@ -2147,7 +2227,8 @@ Then, we have
 
 \end_inset
 
-Moreover, each iteration takes 
+Moreover,
+ each iteration takes 
 \begin_inset Formula $O(n^{2}+\mathcal{T})$
 \end_inset
 
@@ -2155,8 +2236,8 @@ Moreover, each iteration takes
 \end_layout
 
 \begin_layout Remark
-We note that for this rate of convergence (and hence the entire algorithm)
- to be polynomial, we need some bound on the range of the function value.
+We note that for this rate of convergence (and hence the entire algorithm) to be polynomial,
+ we need some bound on the range of the function value.
  This often follows from a bound on the diameter of the support.
 \end_layout
 
@@ -2165,16 +2246,17 @@ Lemma
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:ellipsoid_vol_decrease"
+nolink "false"
 
 \end_inset
 
- shows that the volume of the ellipsoid maintained decreases by a factor
- of 
+ shows that the volume of the ellipsoid maintained decreases by a factor of 
 \begin_inset Formula $\exp(-\frac{1}{2n+2})$
 \end_inset
 
  in every iteration.
- Hence, 
+ Hence,
+ 
 \begin_inset Formula $\vol^{\frac{1}{n}}$
 \end_inset
 
@@ -2187,6 +2269,7 @@ reference "lem:ellipsoid_vol_decrease"
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:conv_opt"
+nolink "false"
 
 \end_inset
 
@@ -2202,10 +2285,12 @@ reference "thm:conv_opt"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-, we have 
+,
+ we have 
 \begin_inset Formula 
 \begin{align*}
 \min_{i=1,2,\cdots k}f(x^{(i)})-\min_{y\in\Omega}f(y) & \le\left(\frac{\vol(E^{(k)})}{\vol(\Omega)}\right)^{\frac{1}{n}}\left(\max_{z\in\Omega}f(z)-\min_{x\in\Omega}f(x)\right)\\
@@ -2218,16 +2303,18 @@ noprefix "false"
 \end_layout
 
 \begin_layout Proof
-Next, we note the proof of Theorem 
+Next,
+ we note the proof of Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:conv_opt"
+nolink "false"
 
 \end_inset
 
- only used the fact that one side of halfspace defined by the gradient has
- higher value.
- Therefore, we can replace the gradient with the vector 
+ only used the fact that one side of halfspace defined by the gradient has higher value.
+ Therefore,
+ we can replace the gradient with the vector 
 \begin_inset Formula $g(x)$
 \end_inset
 
@@ -2236,15 +2323,16 @@ reference "thm:conv_opt"
 \end_layout
 
 \begin_layout Proof
-To bound the time per iteration, note that we make one query to the separation
- oracle per iteration, and then compute the next Ellipsoid using the formulas
- in Algorithm 
+To bound the time per iteration,
+ note that we make one query to the separation oracle per iteration,
+ and then compute the next Ellipsoid using the formulas in Algorithm 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "alg:ellipsoid_method"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -2257,7 +2345,8 @@ noprefix "false"
 \begin_inset Formula $n$
 \end_inset
 
--vector, which has complexity 
+-vector,
+ which has complexity 
 \begin_inset Formula $O(n^{2})$
 \end_inset
 
@@ -2266,8 +2355,8 @@ noprefix "false"
 
 \begin_layout Standard
 This theorem can be used to solve many problems in polynomial time.
- As an illustration, we show how to solve linear programs in polynomial
- time here.
+ As an illustration,
+ we show how to solve linear programs to desired approximation in polynomial time here.
  
 \end_layout
 
@@ -2294,7 +2383,8 @@ Given a linear program
 \end_inset
 
 .
- Then, we can find 
+ Then,
+ we can find 
 \begin_inset Formula $x\in P$
 \end_inset
 
@@ -2326,8 +2416,8 @@ If the dimension
 \begin_inset Formula $n$
 \end_inset
 
- is constant, this algorithm is nearly linear time (linear in the number
- of constraints)!
+ is constant,
+ this algorithm is nearly linear time (linear in the number of constraints)!
 \end_layout
 
 \begin_layout Proof
@@ -2335,7 +2425,8 @@ For the linear program
 \begin_inset Formula $\min_{Ax\geq b}c^{\top}x$
 \end_inset
 
-, the function we want to minimize is
+,
+ the function we want to minimize is
 \begin_inset Formula 
 \begin{equation}
 L(x)=c^{\top}x+\delta_{Ax\geq b}(x)\quad\text{where}\quad\delta_{Ax\geq b}(x)=\begin{cases}
@@ -2354,7 +2445,8 @@ For this function
 \begin_inset Formula $L$
 \end_inset
 
-, we can use the separation oracle 
+,
+ we can use the separation oracle 
 \begin_inset Formula $v(x)=c$
 \end_inset
 
@@ -2371,11 +2463,13 @@ For this function
 \end_inset
 
 .
- If there are many violated constraints, any one of them will do.
+ If there are many violated constraints,
+ any one of them will do.
 \end_layout
 
 \begin_layout Proof
-In this case, we can set 
+In this case,
+ we can set 
 \begin_inset Formula $\Omega=P$
 \end_inset
 
@@ -2397,6 +2491,7 @@ In this case, we can set
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:ellipsoid"
+nolink "false"
 
 \end_inset
 
@@ -2437,7 +2532,8 @@ Give a bound on
 \begin_inset Formula $n,\langle A\rangle,\langle b\rangle$
 \end_inset
 
-, where 
+,
+ where 
 \begin_inset Formula $\langle A\rangle,\langle b\rangle$
 \end_inset
 
@@ -2449,13 +2545,14 @@ Give a bound on
 \end_layout
 
 \begin_layout Standard
-To get the solution exactly, i.e., 
+To get the solution exactly,
+ i.e.,
+ 
 \begin_inset Formula $\varepsilon=0$
 \end_inset
 
-, we need to assume the linear program has integral (or rational) coefficients
- and then the running time will depend on the sizes of the numbers in the
- matrix 
+,
+ we need to assume the linear program has integral (or rational) coefficients and then the running time will depend on the sizes of the numbers in the matrix 
 \begin_inset Formula $A$
 \end_inset
 
@@ -2468,9 +2565,7 @@ To get the solution exactly, i.e.,
 \end_inset
 
 .
- It is still open how to solve linear programs in time bounded by a polynomial
- in only the number of variables and constraints (and not the bit sizes
- of the coefficients).
+ It is still open how to solve linear programs in time bounded by a polynomial in only the number of variables and constraints (and not the bit sizes of the coefficients).
  Such a running time is called 
 \emph on
 strongly polynomial.
@@ -2486,18 +2581,21 @@ Center of Gravity Method
 \end_layout
 
 \begin_layout Standard
-In the Ellipsoid method, we used an ellipsoid as the current set, and its
- center as the next query point.
+In the Ellipsoid method,
+ we used an ellipsoid as the current set,
+ and its center as the next query point.
 \end_layout
 
 \begin_layout Standard
-In the center of gravity method, we start with any bounded convex set containing
- a minimizer, e.g., a large enough cube, and the set maintained is simply
- the intersection of all halfspaces used so far with the original set.
- The query point will be the center of gravity (or barycenter) of the current
- set.
- Recall that the center of gravity of a bounded set is the average of points
- in the set, i.e., 
+In the center of gravity method,
+ we start with any bounded convex set containing a minimizer,
+ e.g.,
+ a large enough cube,
+ and the set maintained is simply the intersection of all halfspaces used so far with the original set.
+ The query point will be the center of gravity (or barycenter) of the current set.
+ Recall that the center of gravity of a bounded set is the average of points in the set,
+ i.e.,
+ 
 \begin_inset Formula 
 \[
 z_{K}=\frac{1}{\vol(K)}\int_{K}x\:dx.
@@ -2511,8 +2609,8 @@ The measure of progress will once again be the volume (or more precisely,
 
 \begin_layout Standard
 It is clear that the volume can only decrease in each iteration.
- But at what rate? The following classical theorem shows that the volume
- of the convex body decreases by a constant factor (no more than 
+ But at what rate?
+ The following classical theorem shows that the volume of the convex body decreases by a constant factor (no more than 
 \begin_inset Formula $1-\frac{1}{e}$
 \end_inset
 
@@ -2556,7 +2654,8 @@ Let
 \end_inset
 
 .
- Then, 
+ Then,
+ 
 \begin_inset Formula 
 \[
 \vol(K\cap H)\ge\left(\frac{n}{n+1}\right)^{n}\vol(K).
@@ -2574,8 +2673,8 @@ Note that the constant on the RHS is at least
 
 .
  We prove the theorem later in this chapter.
- Unfortunately, computing the center of gravity even of a polytope is #P-hard
- 
+ Unfortunately,
+ computing the center of gravity even of a polytope is #P-hard 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "rademacher2007approximating"
@@ -2584,14 +2683,14 @@ literal "false"
 \end_inset
 
 .
- For the purpose of efficient approximations, it is important to establish
- a stable version of the theorem that does not require an exact center of
- gravity.
+ For the purpose of efficient approximations,
+ it is important to establish a stable version of the theorem that does not require an exact center of gravity.
 \end_layout
 
 \begin_layout Standard
 Recall that a nonnegative function is logconcave if its logarithm is concave,
- i.e., for any 
+ i.e.,
+ for any 
 \begin_inset Formula $x,y\in\R^{n}$
 \end_inset
 
@@ -2599,7 +2698,8 @@ Recall that a nonnegative function is logconcave if its logarithm is concave,
 \begin_inset Formula $\lambda\in[0,1]$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula 
 \[
 f(\lambda x+(1-\lambda)y)\ge f(x)^{\lambda}f(y)^{1-\lambda}.
@@ -2611,6 +2711,7 @@ We refer to Section
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:Logconcave-functions"
+nolink "false"
 
 \end_inset
 
@@ -2623,12 +2724,12 @@ reference "sec:Logconcave-functions"
 \emph on
 isotropic
 \emph default
- if the mean of a random variable drawn from the distribution is zero and
- the covariance is the identity matrix.
+ if the mean of a random variable drawn from the distribution is zero and the covariance is the identity matrix.
 \end_layout
 
 \begin_layout Standard
-The randomized center of gravity method defined as follows: 
+The randomized center of gravity method defined as follows:
+ 
 \end_layout
 
 \begin_layout Standard
@@ -2705,6 +2806,7 @@ SetAlgoLined
 
 \series bold
 Input:
+
 \series default
  Initial convex set 
 \begin_inset Formula $E^{(0)}$
@@ -2861,10 +2963,8 @@ end{algorithm2e}
 \end_layout
 
 \begin_layout Remark
-The question of how to samply (nearly) uniform random points is an important
- one that we will address in detail in this book.
- Using sampling to approximate the center of gravity leads to the reduction
- in the time per iteration from 
+The question of how to samply (nearly) uniform random points is an important one that we will address in detail in this book.
+ Using sampling to approximate the center of gravity leads to the reduction in the time per iteration from 
 \begin_inset Formula $n^{n}$
 \end_inset
 
@@ -2879,6 +2979,7 @@ reference "table:cpm"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -2886,19 +2987,20 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-To prove the convergence of the method, we will use a robust version of
- Theorem 
+To prove the convergence of the method,
+ we will use a robust version of Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:Grunbaum"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-, which will give a similar result despite using only an approximate center
- of gravity.
+,
+ which will give a similar result despite using only an approximate center of gravity.
 \end_layout
 
 \begin_layout Theorem
@@ -2939,7 +3041,8 @@ Let
 \begin_inset Formula $p$
 \end_inset
 
- be an isotropic logconcave distribution, namely 
+ be an isotropic logconcave distribution,
+ namely 
 \begin_inset Formula $\E_{x\sim p}x=0$
 \end_inset
 
@@ -2952,7 +3055,8 @@ Let
 \begin_inset Formula $\theta\in\R^{n}$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $t\in\R$
 \end_inset
 
@@ -2972,7 +3076,8 @@ By taking the marginal with respect to the direction
 \begin_inset Formula $\theta$
 \end_inset
 
-, we can assume the distribution is one-dimensional.
+,
+ we can assume the distribution is one-dimensional.
  Let 
 \begin_inset Formula $P(t)=\P_{x\sim p}(x^{\top}\theta\le t)$
 \end_inset
@@ -2991,15 +3096,18 @@ By taking the marginal with respect to the direction
 \end_inset
 
 .
- Hence, it is logconcave (Lemma 
+ Hence,
+ it is logconcave (Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:marginal"
+nolink "false"
 
 \end_inset
 
 ).
- By some limit arguments, we can assume 
+ By some limit arguments,
+ we can assume 
 \begin_inset Formula $P(-M)=0$
 \end_inset
 
@@ -3011,7 +3119,8 @@ reference "lem:marginal"
 \begin_inset Formula $M$
 \end_inset
 
- (to be rigorous, we do the proof below for finite 
+ (to be rigorous,
+ we do the proof below for finite 
 \begin_inset Formula $M$
 \end_inset
 
@@ -3019,7 +3128,8 @@ reference "lem:marginal"
 \begin_inset Formula $\epsilon(M)$
 \end_inset
 
- instead of zero, then take the limit 
+ instead of zero,
+ then take the limit 
 \begin_inset Formula $M\rightarrow\infty$
 \end_inset
 
@@ -3028,7 +3138,8 @@ reference "lem:marginal"
 \begin_inset Formula $\E_{x\sim p}x=0$
 \end_inset
 
-, we have that
+,
+ we have that
 \begin_inset Formula 
 \[
 \int_{-M}^{M}t\frac{dP(t)}{dt}\,dt=0
@@ -3045,24 +3156,30 @@ Integration by parts gives that
 \begin_inset Formula $P(t)$
 \end_inset
 
- is increasing logconcave, if 
+ is increasing logconcave,
+ if 
 \begin_inset Formula $P(0)$
 \end_inset
 
- is too small, it would make 
+ is too small,
+ it would make 
 \begin_inset Formula $\int_{-M}^{M}P(t)dt$
 \end_inset
 
  too small.
- To be precise, since 
+ To be precise,
+ since 
 \begin_inset Formula $P$
 \end_inset
 
- is logconcave, i.e., 
+ is logconcave,
+ i.e.,
+ 
 \begin_inset Formula $-\log P(t)$
 \end_inset
 
- is convex, and so we have,
+ is convex,
+ and so we have,
 \begin_inset Formula 
 \[
 -\log P(t)\geq-\log P(0)-\frac{\frac{d}{dt}P(0)}{P(0)}t.
@@ -3095,13 +3212,15 @@ This shows that
 \end_layout
 
 \begin_layout Proof
-Next, Lemma 
+Next,
+ Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:logcon_max-1"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -3110,7 +3229,8 @@ noprefix "false"
 \end_inset
 
 .
- Therefore, the cumulative distribution 
+ Therefore,
+ the cumulative distribution 
 \begin_inset Formula $P$
 \end_inset
 
@@ -3197,13 +3317,14 @@ reference "thm:grun-1"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-, we get the following algorithm, which uses uniform random points from
- the current set.
- Obtaining such a random sample algorithmically is an interesting problem
- that we will study in the second part of this book.
+,
+ we get the following algorithm,
+ which uses uniform random points from the current set.
+ Obtaining such a random sample algorithmically is an interesting problem that we will study in the second part of this book.
 \end_layout
 
 \begin_layout Lemma
@@ -3229,7 +3350,8 @@ Suppose
 \begin_inset Formula $y$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula 
 \[
 \E(\vol(K\cap H))\le\left(1-\frac{1}{e}+\sqrt{\frac{n}{N}}\right)\vol(K).
@@ -3241,11 +3363,14 @@ Suppose
 \end_layout
 
 \begin_layout Proof
-Without loss of generality, we assume that 
+Without loss of generality,
+ we assume that 
 \begin_inset Formula $K$
 \end_inset
 
- is in isotropic position, i.e., 
+ is in isotropic position,
+ i.e.,
+ 
 \begin_inset Formula $\E_{K}(y^{(i)})=0$
 \end_inset
 
@@ -3274,13 +3399,15 @@ Therefore,
 
 \end_inset
 
-Thus, we can apply Theorem 
+Thus,
+ we can apply Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:grun-1"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -3304,11 +3431,12 @@ reference "thm:conv_opt"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
- readily gives the following guarantee for convex optimization, again using
- volume radius as the measure of progress.
+ readily gives the following guarantee for convex optimization,
+ again using volume radius as the measure of progress.
 \end_layout
 
 \begin_layout Theorem
@@ -3320,7 +3448,8 @@ Let
 \begin_inset Formula $\Rn$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $E^{(0)}$
 \end_inset
 
@@ -3333,7 +3462,8 @@ Let
 \begin_inset Formula $x\in E^{(0)}$
 \end_inset
 
-, we can find a nonzero vector 
+,
+ we can find a nonzero vector 
 \begin_inset Formula $g(x)$
 \end_inset
 
@@ -3349,11 +3479,13 @@ f(y)\geq f(x)\text{ for any }y\text{ such that }g(x)^{\top}(y-x)\geq0.
 \end_layout
 
 \begin_layout Theorem
-Then, for the center of gravity method with 
+Then,
+ for the center of gravity method with 
 \begin_inset Formula $N=10n$
 \end_inset
 
-, we have
+,
+ we have
 \begin_inset Formula 
 \[
 \E\left(\min_{i=1,2,\cdots k}f(x^{(i)})\right)-\min_{y\in\Omega}f(y)\leq\left(\frac{\vol(E^{(0)})}{\vol(\Omega)}\right)^{\frac{1}{n}}\left(0.95\right)^{\frac{k}{n}}\left(\max_{z\in\Omega}f(z)-\min_{x\in\Omega}f(x)\right)\enspace.
@@ -3372,6 +3504,7 @@ reference "thm:Grunbaum"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -3380,6 +3513,7 @@ noprefix "false"
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:grun-1"
+nolink "false"
 
 \end_inset
 
@@ -3387,8 +3521,9 @@ reference "thm:grun-1"
 \end_layout
 
 \begin_layout Proof
-Since affine transformations do not affect ratios of volumes, without loss
- of generality, assume that the center of gravity of 
+Since affine transformations do not affect ratios of volumes,
+ without loss of generality,
+ assume that the center of gravity of 
 \begin_inset Formula $K$
 \end_inset
 
@@ -3405,7 +3540,8 @@ Since affine transformations do not affect ratios of volumes, without loss
 \begin_inset Formula $t\in\R$
 \end_inset
 
-, let 
+,
+ let 
 \begin_inset Formula $A(t)=K\cap\left\{ x:\ x_{1}=t\right\} $
 \end_inset
 
@@ -3443,6 +3579,8 @@ Since affine transformations do not affect ratios of volumes, without loss
 
 \begin_layout Proof
 \begin_inset Float figure
+placement document
+alignment document
 wide false
 sideways false
 status open
@@ -3477,24 +3615,26 @@ Affine transformations for Centre of Gravity method
 \end_layout
 
 \begin_layout Proof
-The goal of the proof is to show that the smallest possible halfspace volume
- is achieved for a cone by a cut perpendicular to its axis.
- In the first step, we will symmetrize 
+The goal of the proof is to show that the smallest possible halfspace volume is achieved for a cone by a cut perpendicular to its axis.
+ In the first step,
+ we will symmetrize 
 \begin_inset Formula $K$
 \end_inset
 
- as follows: replace each cross-section 
+ as follows:
+ replace each cross-section 
 \begin_inset Formula $A(t)$
 \end_inset
 
- by a ball of the same volume, centered at 
+ by a ball of the same volume,
+ centered at 
 \begin_inset Formula $(t,0,\ldots,0)^{T}$
 \end_inset
 
 .
  We claim that the resulting rotationally symmetric body is convex.
- To see this, note that all we have to show is that the radius function
- 
+ To see this,
+ note that all we have to show is that the radius function 
 \begin_inset Formula $r(t)$
 \end_inset
 
@@ -3507,7 +3647,8 @@ The goal of the proof is to show that the smallest possible halfspace volume
 \begin_inset Formula $\lambda\in[0,1]$
 \end_inset
 
-, we have by convexity of 
+,
+ we have by convexity of 
 \begin_inset Formula $K$
 \end_inset
 
@@ -3526,6 +3667,7 @@ reference "thm:Brunn-Minkowski"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -3533,7 +3675,8 @@ noprefix "false"
 \begin_inset Formula $A(s),A(t)$
 \end_inset
 
-, the function 
+,
+ the function 
 \begin_inset Formula $\vol_{n-1}(A(s))^{1/(n-1)}$
 \end_inset
 
@@ -3549,7 +3692,8 @@ From this and the definition of
 \begin_inset Formula $r(t)$
 \end_inset
 
-, it follows that
+,
+ it follows that
 \begin_inset Formula 
 \[
 r(\lambda s+(1-\lambda)t)\ge\lambda r(s)+(1-\lambda)r(t)
@@ -3582,13 +3726,14 @@ Next consider the subset
 \begin_inset Formula $\vol(K_{1}).$
 \end_inset
 
- Using the concavity of the radial function, this transformation can only
- decrease the center of gravity along 
+ Using the concavity of the radial function,
+ this transformation can only decrease the center of gravity along 
 \begin_inset Formula $e_{1}$
 \end_inset
 
 .
- Therefore, proving a lower bound on the transformed body 
+ Therefore,
+ proving a lower bound on the transformed body 
 \begin_inset Formula $K_{1}$
 \end_inset
 
@@ -3598,7 +3743,9 @@ Next consider the subset
 
 .
  So assume we do this and the center of gravity is the origin.
- Next, extend the cone to the right, so that it remains a rotational cone,
+ Next,
+ extend the cone to the right,
+ so that it remains a rotational cone,
  and the volume in the positive halfspace along 
 \begin_inset Formula $e_{1}$
 \end_inset
@@ -3608,19 +3755,18 @@ Next consider the subset
 \end_inset
 
 .
- Once again, the center of gravity can only move to the left, and so the
- volume of 
+ Once again,
+ the center of gravity can only move to the left,
+ and so the volume of 
 \begin_inset Formula $K_{1}$
 \end_inset
 
  can only decrease by this transformation.
- At the end we have shown that the lower bound for any convex body follows
- by proving for a rotational cone with axis along the normal to the halfspace.
- The intersection of this cone with the halfspace is the original cone scaled
- down by the ratio of the distance from the apex to the center of gravity,
+ At the end we have shown that the lower bound for any convex body follows by proving for a rotational cone with axis along the normal to the halfspace.
+ The intersection of this cone with the halfspace is the original cone scaled down by the ratio of the distance from the apex to the center of gravity,
  to the height of the cone.
- So all that remains to be done is to compute the relative distance of the
- center of gravity from the apex, which is exactly 
+ So all that remains to be done is to compute the relative distance of the center of gravity from the apex,
+ which is exactly 
 \begin_inset Formula $n/(n+1)$
 \end_inset
 
@@ -3645,7 +3791,9 @@ Show that for a cone of height
 \begin_inset Formula $\R^{n}$
 \end_inset
 
-, i.e., the convex hull of a convex body 
+,
+ i.e.,
+ the convex hull of a convex body 
 \begin_inset Formula $K\subset\R^{n-1}$
 \end_inset
 
@@ -3665,7 +3813,8 @@ Show that for a cone of height
 \begin_inset Formula $K$
 \end_inset
 
-, the distance of the center of gravity 
+,
+ the distance of the center of gravity 
 \begin_inset Formula $z$
 \end_inset
 
@@ -3681,9 +3830,8 @@ Show that for a cone of height
 \end_layout
 
 \begin_layout Standard
-To conclude this section, we note that the number of separation oracle queries
- made by the center-of-gravity cutting plane method is asymptotically the
- best possible.
+To conclude this section,
+ we note that the number of separation oracle queries made by the center-of-gravity cutting plane method is asymptotically the best possible.
 \end_layout
 
 \begin_layout Theorem
@@ -3694,6 +3842,7 @@ reference "prob:abstract_convex_problem"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -3723,9 +3872,7 @@ Suppose
 \end_inset
 
 .
- Consider the oracle that always returns an axis parallel halfspace that
- does not cut any little cube and contains at least half of the volume of
- the 
+ Consider the oracle that always returns an axis parallel halfspace that does not cut any little cube and contains at least half of the volume of the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -3733,13 +3880,13 @@ remaining
 \begin_inset Quotes erd
 \end_inset
 
- region, i.e., the set given by the original cube intersected with all halfspaces
- given by the oracle so far.
- This is always possible since for any halfspace either the halfspace or
- its complement will contain at least half the volume of any set.
+ region,
+ i.e.,
+ the set given by the original cube intersected with all halfspaces given by the oracle so far.
+ This is always possible since for any halfspace either the halfspace or its complement will contain at least half the volume of any set.
  Thus each query at best halves the remaining volume.
- To solve the problem, the algorithm needs to cut down to a set of volume
- 
+ To solve the problem,
+ the algorithm needs to cut down to a set of volume 
 \begin_inset Formula $\epsilon^{n}$
 \end_inset
 
@@ -3756,6 +3903,8 @@ remaining
 
 \begin_layout Standard
 \begin_inset Float figure
+placement document
+alignment document
 wide false
 sideways false
 status open
@@ -3790,8 +3939,7 @@ Discussion
 \end_layout
 
 \begin_layout Standard
-In later chapters we will see how to implement each iteration of the center
- of gravity method in polynomial time.
+In later chapters we will see how to implement each iteration of the center of gravity method in polynomial time.
  Computing the exact center of gravity is #P-hard even for a polytope 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -3800,11 +3948,13 @@ literal "false"
 
 \end_inset
 
-, but we can find an arbitrarily close approximation in randomized polynomial
- time via sampling.
- The method generalizes to certain noisy computation models, e.g., when the
- oracle reports a function value that is within a bounded additive error,
- i.e., a noisy function oracle.
+,
+ but we can find an arbitrarily close approximation in randomized polynomial time via sampling.
+ The method generalizes to certain noisy computation models,
+ e.g.,
+ when the oracle reports a function value that is within a bounded additive error,
+ i.e.,
+ a noisy function oracle.
 \end_layout
 
 \end_body
