@@ -1729,11 +1729,23 @@ Now,
 
 \end_inset
 
-Also,
+Also, by Thm.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:L_equ_def"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+,
  we have that 
 \begin_inset Formula 
 \[
-\epsilon_{0}=f(x^{(0)})-f^{*}\leq\nabla f(x^{*})^{\top}(x^{(0)}-x^{*})+\frac{L}{2}\|x^{(0)}-x^{*}\|_{2}^{2}\leq\frac{LR^{2}}{2}.
+\epsilon_{0}=f(x^{(0)})-f(x^{*})\leq\nabla f(x^{*})^{\top}(x^{(0)}-x^{*})+\frac{L}{2}\|x^{(0)}-x^{*}\|_{2}^{2}\leq\frac{LR^{2}}{2}.
 \]
 
 \end_inset
