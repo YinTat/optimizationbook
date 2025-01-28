@@ -101,7 +101,7 @@ name "sec:Cutting-Plane-Methods"
 \begin_layout Standard
 The goal of this chapter is to present some polynomial-time algorithms for convex optimization.
  These algorithms use knowledge of the function in a minimal way,
- essentially by querying the function value and weak bounds on its support/range.
+ essentially by querying the function value along with weak bounds on its support and range.
 \end_layout
 
 \begin_layout Standard
@@ -200,7 +200,31 @@ cutting plane method
 \emph on
 separation oracle
 \emph default
-:
+ (for definitions in a broader context,
+ see Defs.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:SEP"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:GRAD"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ in the next chapter):
  for any 
 \begin_inset Formula $x\notin K\subseteq\R^{n}$
 \end_inset
@@ -1867,6 +1891,22 @@ progress
 .
  The convergence argument works for any monotonic,
  scale-and-shift-invariant progress measure.
+ To allow for non-differentiable convex functions,
+ in place of gradient,
+ we use the subgradient (see Sec.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Subgradients"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+).
+ 
 \end_layout
 
 \begin_layout Theorem
