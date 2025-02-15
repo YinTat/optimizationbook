@@ -1,16 +1,16 @@
-#LyX 2.3 created this file. For more info see http://www.lyx.org/
-\lyxformat 544
+#LyX 2.4 created this file. For more info see https://www.lyx.org/
+\lyxformat 620
 \begin_document
 \begin_header
 \save_transient_properties true
 \origin unavailable
 \textclass optbook
 \use_default_options true
-\maintain_unincluded_children false
+\maintain_unincluded_children no
 \language english
 \language_package default
-\inputencoding auto
-\fontencoding global
+\inputencoding auto-legacy
+\fontencoding auto
 \font_roman "default" "default"
 \font_sans "default" "default"
 \font_typewriter "default" "default"
@@ -18,7 +18,9 @@
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
-\font_osf false
+\font_roman_osf false
+\font_sans_osf false
+\font_typewriter_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
 \use_microtype false
@@ -53,7 +55,9 @@
 \suppress_date false
 \justification true
 \use_refstyle 1
+\use_formatted_ref 0
 \use_minted 0
+\use_lineno 0
 \index Index
 \shortcut idx
 \color #008000
@@ -69,11 +73,16 @@
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
+\tablestyle default
 \tracking_changes false
 \output_changes false
+\change_bars false
+\postpone_fragile_content false
 \html_math_output 0
 \html_css_as_file 0
 \html_be_strict false
+\docbook_table_output 0
+\docbook_mathml_prefix 1
 \end_header
 
 \begin_body
@@ -87,7 +96,8 @@ Oracles for Convex Sets
 \end_layout
 
 \begin_layout Standard
-Grötschel, Lov
+Grötschel,
+ Lov
 \begin_inset ERT
 status open
 
@@ -108,9 +118,8 @@ literal "true"
 
 \end_inset
 
- defined five different oracles to access convex sets, showed they are equivalen
-t and used them to get polynomial-time algorithms for a variety of combinatorial
- problems (including the first ones in many cases).
+ defined five different oracles to access convex sets,
+ showed they are equivalent and used them to get polynomial-time algorithms for a variety of combinatorial problems (including the first ones in many cases).
  
 \end_layout
 
@@ -128,9 +137,9 @@ literal "true"
 
 \end_inset
 
-, which checks whether the convex set satisfies a given inequality or gives
- a violating point in the convex set, since this is equivalent to the OPT
- oracle below up to a logarithmic factor.
+,
+ which checks whether the convex set satisfies a given inequality or gives a violating point in the convex set,
+ since this is equivalent to the OPT oracle below up to a logarithmic factor.
 \end_layout
 
 \end_inset
@@ -140,8 +149,9 @@ literal "true"
 \end_inset
 
 .
- Later we will allow for error parameters in each oracle, i.e., approximate
- versions of all the oracles below.
+ Later we will allow for error parameters in each oracle,
+ i.e.,
+ approximate versions of all the oracles below.
  We begin with exact oracles for simplicity.
 \end_layout
 
@@ -166,7 +176,8 @@ Queried with a vector
 \begin_inset Formula $y\in\Rn$
 \end_inset
 
-, the oracle either
+,
+ the oracle either
 \begin_inset Separator latexpar
 \end_inset
 
@@ -179,7 +190,8 @@ asserts that
 \begin_inset Formula $y\in K$
 \end_inset
 
-, or
+,
+ or
 \end_layout
 
 \begin_layout Itemize
@@ -219,7 +231,8 @@ Queried with a vector
 \begin_inset Formula $y\in\Rn$
 \end_inset
 
-, the oracle either
+,
+ the oracle either
 \begin_inset Separator latexpar
 \end_inset
 
@@ -232,7 +245,8 @@ asserts that
 \begin_inset Formula $y\in K$
 \end_inset
 
-, or
+,
+ or
 \end_layout
 
 \begin_layout Itemize
@@ -280,7 +294,8 @@ Queried with a unit vector
 \begin_inset Formula $c\in\Rn$
 \end_inset
 
-, the oracle either
+,
+ the oracle either
 \begin_inset Foot
 status open
 
@@ -312,7 +327,8 @@ outputs
 \begin_inset Formula $\max_{x\in K}c^{\top}x$
 \end_inset
 
-, or
+,
+ or
 \end_layout
 
 \begin_layout Itemize
@@ -352,7 +368,8 @@ Queried with a unit vector
 \begin_inset Formula $c\in\Rn$
 \end_inset
 
-, the oracle either
+,
+ the oracle either
 \begin_inset Separator latexpar
 \end_inset
 
@@ -373,7 +390,8 @@ finds a vector
 \begin_inset Formula $x\in K$
 \end_inset
 
-, or
+,
+ or
 \end_layout
 
 \begin_layout Itemize
@@ -386,19 +404,20 @@ asserts that
 
 \end_deeper
 \begin_layout Standard
-According to the definitions, the separation oracle gives more information
- than the membership oracle and the optimization oracle gives more information
- than the validity oracle.
- Depending on the problem, usually one of the oracles will be the preferred
- or more natural way to access the convex set.
- For example, for the polytope given by 
+According to the definitions,
+ the separation oracle gives more information than the membership oracle and the optimization oracle gives more information than the validity oracle.
+ Depending on the problem,
+ usually one of the oracles will be the preferred or more natural way to access the convex set.
+ For example,
+ for the polytope given by 
 \begin_inset Formula $\{Ax\geq b\}$
 \end_inset
 
-, the separation oracle is the preferred way because the membership oracle
- takes as much time as the separation oracle, and both validity and optimization
- involve solving a linear program.
- On the contrary, the preferred oracle for the convex set 
+,
+ the separation oracle is the preferred way because the membership oracle takes as much time as the separation oracle,
+ and both validity and optimization involve solving a linear program.
+ On the contrary,
+ the preferred oracle for the convex set 
 \begin_inset Formula $\conv(\{a_{i}\})$
 \end_inset
 
@@ -415,9 +434,8 @@ According to the definitions, the separation oracle gives more information
 \end_inset
 
 .
- In combinatorial optimization, many polytopes have exponentially many vertices
- and constraints but one can use combinatorial structure to solve the optimizati
-on problem efficiently.
+ In combinatorial optimization,
+ many polytopes have exponentially many vertices and constraints but one can use combinatorial structure to solve the optimization problem efficiently.
 \end_layout
 
 \begin_layout Standard
@@ -462,7 +480,8 @@ Say we have vectors
 \begin_inset Formula $a_{1},a_{2},\cdots,a_{n}\in\R^{k+\ell}$
 \end_inset
 
-, the polytope
+,
+ the polytope
 \begin_inset Formula 
 \[
 K=\{\sum_{i=1}^{n}\lambda_{i}a_{i}\in\R^{k+\ell}|0\leq\lambda_{i}\leq1\text{ for all }i\}
@@ -470,7 +489,8 @@ K=\{\sum_{i=1}^{n}\lambda_{i}a_{i}\in\R^{k+\ell}|0\leq\lambda_{i}\leq1\text{ for
 
 \end_inset
 
-represents the set of possible feasible (input, output) pairs.
+represents the set of possible feasible (input,
+ output) pairs.
  Many production problems can be written as
 \begin_inset Formula 
 \[
@@ -479,7 +499,8 @@ represents the set of possible feasible (input, output) pairs.
 
 \end_inset
 
-Question: Which oracle for 
+Question:
+ Which oracle for 
 \begin_inset Formula $K$
 \end_inset
 
@@ -487,20 +508,24 @@ Question: Which oracle for
 \end_layout
 
 \begin_layout Plain Layout
-Membership: ???
+Membership:
+ ???
 \end_layout
 
 \begin_layout Plain Layout
-Separation: ???
+Separation:
+ ???
 \end_layout
 
 \begin_layout Plain Layout
-Value: Easy.
+Value:
+ Easy.
  The problem is independent
 \end_layout
 
 \begin_layout Plain Layout
-Optimization: Easy.
+Optimization:
+ Easy.
  The problem is independent
 \end_layout
 
@@ -522,14 +547,13 @@ P=\{x\in\R_{+}^{\left|E\right|}|\sum_{e\in E}x_{e}=|V|-1,\sum_{(u,v)\in E\cap(S\
 
 \end_inset
 
-The extreme points of this polytope can be shown to exactly correspond to
- the indicator vectors of spanning trees of 
+The extreme points of this polytope can be shown to exactly correspond to the indicator vectors of spanning trees of 
 \begin_inset Formula $G$
 \end_inset
 
 .
- Thus, the optimization oracle in this case is to simply find a maximum
- cost spanning tree.
+ Thus,
+ the optimization oracle in this case is to simply find a maximum cost spanning tree.
 \end_layout
 
 \begin_layout Exercise
@@ -538,6 +562,8 @@ Design a membership oracle for the spanning tree polytope.
 
 \begin_layout Standard
 \begin_inset Float figure
+placement document
+alignment document
 wide false
 sideways false
 status open
@@ -564,22 +590,28 @@ begin{tikzpicture}[node distance = 1.8cm]
 
 
 \backslash
-tikzstyle{block} = [rectangle, draw, text width=6.5em, text centered, rounded
- corners, minimum height=4em]
+tikzstyle{block} = [rectangle,
+ draw,
+ text width=6.5em,
+ text centered,
+ rounded corners,
+ minimum height=4em]
 \end_layout
 
 \begin_layout Plain Layout
 
 
 \backslash
-tikzstyle{line} = [draw, -tonew,arrowhead=0.085cm]
+tikzstyle{line} = [draw,
+ -tonew,arrowhead=0.085cm]
 \end_layout
 
 \begin_layout Plain Layout
 
 
 \backslash
-tikzstyle{dot_line} = [draw, -tonew,dashed,arrowhead=0.085cm]
+tikzstyle{dot_line} = [draw,
+ -tonew,dashed,arrowhead=0.085cm]
 \end_layout
 
 \begin_layout Plain Layout
@@ -604,7 +636,9 @@ delta_K}*$};
 
    
 \backslash
-node [block, below of=opt, node distance=1.8cm] (val) {
+node [block,
+ below of=opt,
+ node distance=1.8cm] (val) {
 \backslash
 scriptsize $VAL(K) = {
 \backslash
@@ -615,7 +649,9 @@ delta_K}*$};
 
    
 \backslash
-node [block, right of=opt, node distance=3cm] (sepp) {
+node [block,
+ right of=opt,
+ node distance=3cm] (sepp) {
 \backslash
 scriptsize $SEP(K) = 
 \backslash
@@ -628,7 +664,9 @@ delta_K}$};
 
    
 \backslash
-node [block, below of=sepp, node distance=1.8cm] (mem) {
+node [block,
+ below of=sepp,
+ node distance=1.8cm] (mem) {
 \backslash
 scriptsize $MEM(K) = {
 \backslash
@@ -639,14 +677,16 @@ delta_K}$};
 
    
 \backslash
-node [left of=opt, node distance=3cm] (viol) {};
+node [left of=opt,
+ node distance=3cm] (viol) {};
 \end_layout
 
 \begin_layout Plain Layout
 
    
 \backslash
-node [below of=viol, node distance=1.5cm] {$
+node [below of=viol,
+ node distance=1.5cm] {$
 \backslash
 xrightarrow{
 \backslash
@@ -663,7 +703,8 @@ tilde{O}(1)$};
 
    
 \backslash
-node [below of=viol, node distance=2.1cm] {$
+node [below of=viol,
+ node distance=2.1cm] {$
 \backslash
 xdashrightarrow{
 \backslash
@@ -673,7 +714,8 @@ quad}
 \backslash
 mbox{ is } 
 \backslash
-tilde{O}(n)$}; 
+tilde{O}(n)$};
+ 
 \end_layout
 
 \begin_layout Plain Layout
@@ -734,7 +776,8 @@ path [dot_line,transform canvas={yshift=-0.25cm}] (opt) -- (sepp);
 
    
 \backslash
-path [dot_line,transform canvas={yshift=0.25cm}] (sepp) -- (opt);  
+path [dot_line,transform canvas={yshift=0.25cm}] (sepp) -- (opt);
+  
 \end_layout
 
 \begin_layout Plain Layout
@@ -780,7 +823,8 @@ Oracles for Convex Functions
 \end_layout
 
 \begin_layout Standard
-Now, we generalize the oracles for convex sets to convex functions.
+Now,
+ we generalize the oracles for convex sets to convex functions.
  The membership oracle and separation oracle can be generalized as follows
 \end_layout
 
@@ -805,7 +849,8 @@ Queried with a vector
 \begin_inset Formula $y$
 \end_inset
 
-, the oracle outputs 
+,
+ the oracle outputs 
 \begin_inset Formula $f(y)$
 \end_inset
 
@@ -813,10 +858,8 @@ Queried with a vector
 \end_layout
 
 \begin_layout Standard
-The next oracle generalizes gradients to subgradients so that they can be
- computed for general convex functions.
- Any vector output by the oracle is a subgradient of the function at the
- query point.
+The next oracle generalizes gradients to subgradients so that they can be computed for general convex functions.
+ Any vector output by the oracle is a subgradient of the function at the query point.
 \end_layout
 
 \begin_layout Definition
@@ -840,7 +883,8 @@ Queried with a vector
 \begin_inset Formula $y$
 \end_inset
 
-, the oracle outputs 
+,
+ the oracle outputs 
 \begin_inset Formula $f(y)$
 \end_inset
 
@@ -872,8 +916,8 @@ or outputs
 \end_layout
 
 \begin_layout Standard
-To generalize the validity oracle, we define the convex (Fenchel) conjugate
- of 
+To generalize the validity oracle,
+ we define the convex (Fenchel) conjugate of 
 \begin_inset Formula $f$
 \end_inset
 
@@ -904,7 +948,8 @@ For any function
 \begin_inset Formula $f$
 \end_inset
 
-, we define the convex conjugate 
+,
+ we define the convex conjugate 
 \begin_inset Formula 
 \[
 f^{*}(\theta)\defeq\sup_{x\in\R^{n}}\theta^{\top}x-f(x).
@@ -921,7 +966,8 @@ Note that
 \end_inset
 
  is convex because it is the supremum of linear functions.
- Also, we have 
+ Also,
+ we have 
 \begin_inset Formula $f^{*}(0)=-\inf_{x\in\R^{n}}f(x)$
 \end_inset
 
@@ -953,7 +999,8 @@ Recall that
 \end_inset
 
 .
- Therefore, the validity oracle for 
+ Therefore,
+ the validity oracle for 
 \begin_inset Formula $\delta_{K}$
 \end_inset
 
@@ -962,8 +1009,7 @@ Recall that
 \end_inset
 
 .
- The following lemma shows that the optimization oracle is simply the (sub)gradi
-ent oracle for 
+ The following lemma shows that the optimization oracle is simply the (sub)gradient oracle for 
 \begin_inset Formula $\delta_{K}^{*}$
 \end_inset
 
@@ -991,7 +1037,8 @@ For any continuous function
 \begin_inset Formula $f^{*}$
 \end_inset
 
-, we have that 
+,
+ we have that 
 \begin_inset Formula $\nabla f^{*}(\theta)=\arg\max_{x}\theta^{\top}x-f(x)$
 \end_inset
 
@@ -1020,11 +1067,13 @@ First we observe that the supremum is achieved.
 \end_inset
 
 .
- Then, 
+ Then,
+ 
 \begin_inset Formula $g_{\theta}(x)$
 \end_inset
 
- is a continuous function, so 
+ is a continuous function,
+ so 
 \begin_inset Formula $S=g_{\theta}^{-1}([f^{*}(\theta)-\epsilon,\infty))$
 \end_inset
 
@@ -1047,7 +1096,8 @@ First we observe that the supremum is achieved.
 \end_inset
 
  is not bounded.
- Then, there exists a sequence 
+ Then,
+ there exists a sequence 
 \begin_inset Formula $x_{i}\in\R^{n}$
 \end_inset
 
@@ -1064,8 +1114,8 @@ First we observe that the supremum is achieved.
 \end_inset
 
 .
- By the compactness of the unit sphere, we may assume by taking a subsequence
- that 
+ By the compactness of the unit sphere,
+ we may assume by taking a subsequence that 
 \begin_inset Formula $x_{i}/\lVert x_{i}\rVert\to u$
 \end_inset
 
@@ -1074,15 +1124,18 @@ First we observe that the supremum is achieved.
 \end_inset
 
 .
- Then, 
+ Then,
+ 
 \begin_inset Formula $u^{\top}x_{i}/\lVert x_{i}\rVert\to u^{\top}u=1$
 \end_inset
 
-, and since 
+,
+ and since 
 \begin_inset Formula $\lVert x_{i}\rVert\to\infty$
 \end_inset
 
-, we have 
+,
+ we have 
 \begin_inset Formula $u^{\top}x_{i}\to\infty$
 \end_inset
 
@@ -1091,20 +1144,24 @@ First we observe that the supremum is achieved.
 \begin_inset Formula $g_{\theta+u}(x_{i})=g_{\theta}(x_{i})+u^{\top}x_{i}\ge f^{*}(\theta)-\epsilon+u^{\top}x_{i}$
 \end_inset
 
-, this means that 
+,
+ this means that 
 \begin_inset Formula $g_{\theta+u}(x_{i})\to\infty$
 \end_inset
 
-, contradicting 
+,
+ contradicting 
 \begin_inset Formula $f^{*}(\theta+u)$
 \end_inset
 
  being finite.
- Hence, 
+ Hence,
+ 
 \begin_inset Formula $S$
 \end_inset
 
- is bounded and thus compact, so 
+ is bounded and thus compact,
+ so 
 \begin_inset Formula $g_{\theta}(x)$
 \end_inset
 
@@ -1112,7 +1169,8 @@ First we observe that the supremum is achieved.
 \begin_inset Formula $S$
 \end_inset
 
-, and thus in 
+,
+ and thus in 
 \begin_inset Formula $\R^{n}$
 \end_inset
 
@@ -1125,7 +1183,8 @@ Let
 \end_inset
 
 .
- By definition, we have that 
+ By definition,
+ we have that 
 \begin_inset Formula $f^{*}(\theta)=\theta^{\top}x_{\theta}-f(x_{\theta})$
 \end_inset
 
@@ -1138,7 +1197,8 @@ Let
 \end_inset
 
 .
- Therefore, 
+ Therefore,
+ 
 \begin_inset Formula 
 \[
 f^{*}(\eta)\geq f^{*}(\theta)+x_{\theta}^{\top}(\eta-\theta)\text{ for all }\eta.
@@ -1146,7 +1206,8 @@ f^{*}(\eta)\geq f^{*}(\theta)+x_{\theta}^{\top}(\eta-\theta)\text{ for all }\eta
 
 \end_inset
 
-Therefore, 
+Therefore,
+ 
 \begin_inset Formula $x_{\theta}\in\nabla f^{*}(\theta)$
 \end_inset
 
@@ -1159,7 +1220,8 @@ Note that this lemma shows that
 \end_inset
 
 .
- So, the gradient oracle for 
+ So,
+ the gradient oracle for 
 \begin_inset Formula $\delta_{K}^{*}$
 \end_inset
 
@@ -1175,18 +1237,18 @@ Figure
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:rel"
+nolink "false"
 
 \end_inset
 
  shows the current best reduction between these four function oracles.
- Note that according to our definition of the GRAD oracle, it also outputs
- the function value (EVAL).
+ Note that according to our definition of the GRAD oracle,
+ it also outputs the function value (EVAL).
  It is not hard to show that you can use 
 \begin_inset Formula $n+1$
 \end_inset
 
- calls to evaluation oracle to compute one gradient approximately (using
- finite difference) and that you can use 
+ calls to evaluation oracle to compute one gradient approximately (using finite difference) and that you can use 
 \begin_inset Formula $\tilde{O}(n)$
 \end_inset
 
@@ -1207,12 +1269,14 @@ reference "sec:From-EVAL-to"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-), we will see the remaining reductions.
- However, it is still an open question if all of these reductions are the
- best possible.
+),
+ we will see the remaining reductions.
+ However,
+ it is still an open question if all of these reductions are the best possible.
  
 \end_layout
 
@@ -1234,6 +1298,8 @@ Prove that it takes
 
 \begin_layout Standard
 \begin_inset Float figure
+placement document
+alignment document
 wide false
 sideways false
 status open
@@ -1260,22 +1326,28 @@ begin{tikzpicture}[node distance = 1.8cm]
 
 
 \backslash
-tikzstyle{block} = [rectangle, draw, text width=6.5em, text centered, rounded
- corners, minimum height=4em]
+tikzstyle{block} = [rectangle,
+ draw,
+ text width=6.5em,
+ text centered,
+ rounded corners,
+ minimum height=4em]
 \end_layout
 
 \begin_layout Plain Layout
 
 
 \backslash
-tikzstyle{line} = [draw, -tonew,arrowhead=0.085cm]
+tikzstyle{line} = [draw,
+ -tonew,arrowhead=0.085cm]
 \end_layout
 
 \begin_layout Plain Layout
 
 
 \backslash
-tikzstyle{dot_line} = [draw, -tonew,dashed,arrowhead=0.085cm]
+tikzstyle{dot_line} = [draw,
+ -tonew,dashed,arrowhead=0.085cm]
 \end_layout
 
 \begin_layout Plain Layout
@@ -1296,7 +1368,9 @@ scriptsize $GRAD(f^*)$};
 
    
 \backslash
-node [block, below of=opt, node distance=1.8cm] (val) {
+node [block,
+ below of=opt,
+ node distance=1.8cm] (val) {
 \backslash
 scriptsize $EVAL(f^*)$};
 \end_layout
@@ -1305,7 +1379,9 @@ scriptsize $EVAL(f^*)$};
 
    
 \backslash
-node [block, right of=opt, node distance=3cm] (sepp) {
+node [block,
+ right of=opt,
+ node distance=3cm] (sepp) {
 \backslash
 scriptsize $GRAD(f)$};
 \end_layout
@@ -1314,7 +1390,9 @@ scriptsize $GRAD(f)$};
 
    
 \backslash
-node [block, below of=sepp, node distance=1.8cm] (mem) {
+node [block,
+ below of=sepp,
+ node distance=1.8cm] (mem) {
 \backslash
 scriptsize $EVAL(f)$};
 \end_layout
@@ -1323,14 +1401,16 @@ scriptsize $EVAL(f)$};
 
    
 \backslash
-node [left of=opt, node distance=3cm] (viol) {};
+node [left of=opt,
+ node distance=3cm] (viol) {};
 \end_layout
 
 \begin_layout Plain Layout
 
    
 \backslash
-node [below of=viol, node distance=1.5cm] {$
+node [below of=viol,
+ node distance=1.5cm] {$
 \backslash
 xrightarrow{
 \backslash
@@ -1347,7 +1427,8 @@ tilde{O}(1)$};
 
    
 \backslash
-node [below of=viol, node distance=2.1cm] {$
+node [below of=viol,
+ node distance=2.1cm] {$
 \backslash
 xdashrightarrow{
 \backslash
@@ -1357,14 +1438,16 @@ quad}
 \backslash
 mbox{ is } 
 \backslash
-tilde{O}(n)$}; 
+tilde{O}(n)$};
+ 
 \end_layout
 
 \begin_layout Plain Layout
 
    %
 \backslash
-node [below of=viol, node distance=1.5cm] {$
+node [below of=viol,
+ node distance=1.5cm] {$
 \backslash
 tilde{O}(1) 
 \backslash
@@ -1379,7 +1462,8 @@ quad}$};
 
    %
 \backslash
-node [below of=viol, node distance=2.1cm] {$
+node [below of=viol,
+ node distance=2.1cm] {$
 \backslash
 tilde{O}(n) 
 \backslash
@@ -1387,7 +1471,8 @@ xdashrightarrow{
 \backslash
 quad
 \backslash
-quad}$}; 
+quad}$};
+ 
 \end_layout
 
 \begin_layout Plain Layout
@@ -1434,7 +1519,8 @@ path [dot_line,transform canvas={yshift=-0.25cm}] (opt) -- (sepp);
 
    
 \backslash
-path [dot_line,transform canvas={yshift=0.25cm}] (sepp) -- (opt);  
+path [dot_line,transform canvas={yshift=0.25cm}] (sepp) -- (opt);
+  
 \end_layout
 
 \begin_layout Plain Layout
@@ -1556,7 +1642,8 @@ For any
 \begin_inset Formula $x,\theta$
 \end_inset
 
-, we have 
+,
+ we have 
 \begin_inset Formula $\theta^{\top}x\leq f(x)+f^{*}(\theta)$
 \end_inset
 
@@ -1623,7 +1710,8 @@ For any convex function
 \begin_inset Formula $f$
 \end_inset
 
- with a closed epigraph, we have that 
+ with a closed epigraph,
+ we have that 
 \begin_inset Formula $f^{**}=f$
 \end_inset
 
@@ -1635,8 +1723,8 @@ For any convex function
 status open
 
 \begin_layout Plain Layout
-The proof is not exactly rigorous.
- There can be vertical cutting plane
+The proof is not completely rigorous.
+ There can be a vertical cutting plane
 \end_layout
 
 \end_inset
@@ -1645,14 +1733,19 @@ Since
 \begin_inset Formula $\epi f$
 \end_inset
 
- is a closed, convex set, Corollary 
+ is a closed,
+ convex set,
+ Corollary 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "cor:convex_function_intersection"
+nolink "false"
 
 \end_inset
 
- shows that it must be an intersection of halfspaces, i.e., a set 
+ shows that it must be an intersection of halfspaces,
+ i.e.,
+ a set 
 \begin_inset Formula ${\cal H}$
 \end_inset
 
@@ -1677,7 +1770,9 @@ where
 \begin_inset Formula $f$
 \end_inset
 
-, namely, 
+,
+ namely,
+ 
 \begin_inset Formula $f(x)\geq\theta^{\top}x-b$
 \end_inset
 
@@ -1686,7 +1781,8 @@ where
 \end_inset
 
 .
- Alternatively, we can write
+ Alternatively,
+ we can write
 \begin_inset Formula 
 \[
 \epi(f)=\bigcap_{{\cal H}=\left\{ (\theta,b):\,\forall x,\,f(x)\ge\theta^{\top}x-b\right\} }\left\{ (x,t):t\ge\theta^{\top}x-b\right\} .
@@ -1698,7 +1794,8 @@ For a fixed
 \begin_inset Formula $\theta$
 \end_inset
 
-, any feasible 
+,
+ any feasible 
 \begin_inset Formula $b$
 \end_inset
 
@@ -1711,7 +1808,8 @@ For a fixed
 \end_inset
 
 .
- So, the smallest feasible value satisfies 
+ So,
+ the smallest feasible value satisfies 
 \begin_inset Formula 
 \[
 b^{*}=\sup_{x}\theta^{\top}x-f(x)=f^{*}(\theta).
@@ -1719,7 +1817,8 @@ b^{*}=\sup_{x}\theta^{\top}x-f(x)=f^{*}(\theta).
 
 \end_inset
 
-Hence, 
+Hence,
+ 
 \begin_inset Formula 
 \[
 f(x)=\sup_{(\theta,b)\in\mathcal{H}}\theta^{\top}x-b^{*}=\sup_{\theta}\theta^{\top}x-f^{*}(\theta)=f^{**}(x).
@@ -1748,11 +1847,14 @@ Let
 \end_layout
 
 \begin_layout Standard
-Since we can use the gradient, 
+Since we can use the gradient,
+ 
 \begin_inset Formula $\nabla f$
 \end_inset
 
-, to compute the gradient of the dual, 
+,
+ to compute the gradient of the dual,
+ 
 \begin_inset Formula $\nabla f^{*}$
 \end_inset
 
@@ -1766,7 +1868,8 @@ Maybe make this part more explicit with an algorithm box?
 
 \end_inset
 
-, the involution property shows that we can do the reverse – use 
+,
+ the involution property shows that we can do the reverse – use 
 \begin_inset Formula $\nabla f^{*}$
 \end_inset
 
@@ -1779,15 +1882,19 @@ Maybe make this part more explicit with an algorithm box?
 \begin_inset Formula $\conv(\{a_{i}\})$
 \end_inset
 
-, since we know how to compute 
+,
+ since we know how to compute 
 \begin_inset Formula $\max_{x\in\conv(\{a_{i}\})}\theta^{\top}x=\delta_{\conv(\{a_{i}\})}^{*}(\theta)$
 \end_inset
 
-, this reduction gives us a way to separate 
+,
+ this reduction gives us a way to separate 
 \begin_inset Formula $\conv(\{a_{i}\})$
 \end_inset
 
-, or equivalently, to compute the (sub)gradient of 
+,
+ or equivalently,
+ to compute the (sub)gradient of 
 \begin_inset Formula $\delta_{\conv(\{a_{i}\})}^{*}$
 \end_inset
 
@@ -1812,11 +1919,14 @@ Recall that for any linear space
 \begin_inset Formula $X$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $X^{*}$
 \end_inset
 
- denotes the dual space, i.e., the set of all linear functions on 
+ denotes the dual space,
+ i.e.,
+ the set of all linear functions on 
 \begin_inset Formula $X$
 \end_inset
 
@@ -1842,12 +1952,14 @@ The dual of the dual of a vector space
 
 \end_inset
 
-, we have 
+,
+ we have 
 \begin_inset Formula $X^{**}=X$
 \end_inset
 
 .
- Therefore, there are two natural 
+ Therefore,
+ there are two natural 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1855,7 +1967,8 @@ coordinate systems
 \begin_inset Quotes erd
 \end_inset
 
- to record a convex function, the primal space 
+ to record a convex function,
+ the primal space 
 \begin_inset Formula $X$
 \end_inset
 
@@ -1872,7 +1985,8 @@ coordinate systems
 \begin_inset Quotes erd
 \end_inset
 
-, we have the dual functions 
+,
+ we have the dual functions 
 \begin_inset Formula $f$
 \end_inset
 
@@ -1905,12 +2019,12 @@ Order reversal
 \end_layout
 
 \begin_layout Exercise
-Interestingly, the convex conjugate is the 
+Interestingly,
+ the convex conjugate is the 
 \emph on
 unique
 \emph default
- transformation on convex functions that satisfies both involution and order
- reversal.
+ transformation on convex functions that satisfies both involution and order reversal.
  
 \end_layout
 
@@ -1947,6 +2061,7 @@ reference "def:lower-semi"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -1972,16 +2087,19 @@ noprefix "false"
 \end_inset
 
 .
- Then, 
+ Then,
+ 
 \begin_inset Formula $\mathcal{T}$
 \end_inset
 
- is essentially the convex conjugate, namely, there is an invertible symmetric
- linear transformation 
+ is essentially the convex conjugate,
+ namely,
+ there is an invertible symmetric linear transformation 
 \begin_inset Formula $B$
 \end_inset
 
-, a vector 
+,
+ a vector 
 \begin_inset Formula $v_{0}$
 \end_inset
 
@@ -2001,12 +2119,12 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-In combinatorial optimization, many convex sets are given by the convex
- hull for some discrete objects.
- In many cases, the only known way to do the separation is via such reductions.
- In this chapter, we will study the following general theorem showing that
- optimization can be reduced to membership/evaluation with a quadratic overhead
- in dimension for the number of oracle queries.
+In combinatorial optimization,
+ many convex sets are given by the convex hull for some discrete objects.
+ In many cases,
+ the only known way to do the separation is via such reductions.
+ In this chapter,
+ we will study the following general theorem showing that optimization can be reduced to membership/evaluation with a quadratic overhead in dimension for the number of oracle queries.
  
 \end_layout
 
@@ -2015,11 +2133,13 @@ Let
 \begin_inset Formula $K$
 \end_inset
 
- be a convex set specified by a membership oracle, a point 
+ be a convex set specified by a membership oracle,
+ a point 
 \begin_inset Formula $x_{0}\in\R^{n}$
 \end_inset
 
-, and numbers 
+,
+ and numbers 
 \begin_inset Formula $0<r<R$
 \end_inset
 
@@ -2036,7 +2156,8 @@ Let
 \begin_inset Formula $\epsilon>0$
 \end_inset
 
-, there is a randomized algorithm that computes a point 
+,
+ there is a randomized algorithm that computes a point 
 \begin_inset Formula $z\in B(K,\epsilon)$
 \end_inset
 
@@ -2081,8 +2202,8 @@ When the function
 \begin_inset Formula $\mathcal{C}^{1}$
 \end_inset
 
-, we can approximate the gradient of a function by calculating a finite
- difference for sufficiently small 
+,
+ we can approximate the gradient of a function by calculating a finite difference for sufficiently small 
 \begin_inset Formula $h$
 \end_inset
 
@@ -2104,18 +2225,20 @@ which only takes
 
 ).
  The only issue is that the convex function may not be differentiable.
- However, any convex Lipschitz function is twice differentiable almost everywher
-e (see the proof below).
- Therefore, we can simply perturb 
+ However,
+ any convex Lipschitz function is twice differentiable almost everywhere (see the proof below).
+ Therefore,
+ we can simply perturb 
 \begin_inset Formula $x$
 \end_inset
 
- with random noise, then apply a finite difference.
- To see the idea more precisely, we first observe that the norm of the Hessian
- can be bounded in expectation for a Lipschitz function.
- Note that this is Lipschitzness of the function, not its gradient.
- The proof below uses the basic fact that the gradient is defined almost
- everywhere for Lipschitz functions.
+ with random noise,
+ then apply a finite difference.
+ To see the idea more precisely,
+ we first observe that the norm of the Hessian can be bounded in expectation for a Lipschitz function.
+ Note that this is Lipschitzness of the function,
+ not its gradient.
+ The proof below uses the basic fact that the gradient is defined almost everywhere for Lipschitz functions.
  
 \end_layout
 
@@ -2128,7 +2251,8 @@ For any
 \begin_inset Formula $f$
 \end_inset
 
- defined in a unit ball, we have 
+ defined in a unit ball,
+ we have 
 \begin_inset Formula $\nabla^{2}f(x)$
 \end_inset
 
@@ -2140,7 +2264,8 @@ For any
 \end_layout
 
 \begin_layout Proof
-The existence almost everywhere is classical (Alexandrov Theorem, see e.g.,
+The existence almost everywhere is classical (Alexandrov Theorem,
+ see e.g.,
  
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -2149,8 +2274,8 @@ literal "false"
 
 \end_inset
 
-; see also Rademacher's theorem about the existence of the derivative almost
- everywhere for Lipschitz functions).
+;
+ see also Rademacher's theorem about the existence of the derivative almost everywhere for Lipschitz functions).
  We will only prove the part 
 \begin_inset Formula $\E_{x\in B(0,1)}\|\nabla^{2}f(x)\|_{F}\leq nL$
 \end_inset
@@ -2160,12 +2285,14 @@ literal "false"
 \begin_inset Formula $\nabla^{2}f\succeq0$
 \end_inset
 
- (where defined), we have 
+ (where defined),
+ we have 
 \begin_inset Formula $\|\nabla^{2}f(x)\|_{F}\leq\tr\nabla^{2}f(x)$
 \end_inset
 
 .
- Therefore, 
+ Therefore,
+ 
 \begin_inset Formula 
 \[
 \int_{B(0,1)}\|\nabla^{2}f(x)\|_{F}dx\leq\int_{B(0,1)}\tr\nabla^{2}f(x)dx=\int_{B(0,1)}\Delta f(x)dx.
@@ -2173,7 +2300,8 @@ literal "false"
 
 \end_inset
 
-Using Stokes' Theorem, and letting 
+Using Stokes' Theorem,
+ and letting 
 \begin_inset Formula $\nu(x)$
 \end_inset
 
@@ -2181,7 +2309,8 @@ Using Stokes' Theorem, and letting
 \begin_inset Formula $x$
 \end_inset
 
-, we have 
+,
+ we have 
 \begin_inset Formula 
 \[
 \int_{B(0,1)}\Delta f(x)dx=\int_{\partial B(0,1)}\left\langle \nabla f(x),\nu(x)\right\rangle dx\leq|\partial B(0,1)|\cdot L.
@@ -2189,7 +2318,8 @@ Using Stokes' Theorem, and letting
 
 \end_inset
 
-Hence, we have
+Hence,
+ we have
 \begin_inset Formula 
 \[
 \E_{x\in B(0,1)}\|\nabla^{2}f(x)\|_{F}\leq\frac{|\partial B(0,1)|}{|B(0,1)|}L=nL.
@@ -2198,18 +2328,11 @@ Hence, we have
 \end_inset
 
 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "constantin2018convex"
-literal "false"
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
-To turn this into an algorithm, we need to develop it a bit further.
+To turn this into an algorithm,
+ we need to develop it a bit further.
 \end_layout
 
 \begin_layout Lemma
@@ -2286,6 +2409,8 @@ where
 
 \begin_layout Lemma
 \begin_inset Float figure
+placement document
+alignment document
 wide false
 sideways false
 status open
@@ -2320,7 +2445,8 @@ Let
 \end_inset
 
 .
- Then, we have that
+ Then,
+ we have that
 \begin_inset Formula 
 \[
 \int_{B_{\infty}(y,r_{2})}\norm{\nabla f(z)-g(y)}_{1}dz=\sum_{i}\int_{B_{\infty}(y,r_{2})}\left|\omega_{i}(z)\right|dz.
@@ -2332,7 +2458,8 @@ Since
 \begin_inset Formula $\int_{B_{\infty}(y,r_{2})}\omega_{i}(z)dz=0$
 \end_inset
 
-, the Poincar
+,
+ the Poincar
 \begin_inset ERT
 status open
 
@@ -2352,6 +2479,7 @@ reference "thm:box-poincare"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -2373,7 +2501,8 @@ Since
 \begin_inset Formula $f$
 \end_inset
 
- is convex, eigenvalues of the Hessian are nonnegative and so we have 
+ is convex,
+ eigenvalues of the Hessian are nonnegative and so we have 
 \begin_inset Formula 
 \[
 \norm{\nabla^{2}f(z)}_{F}=\sqrt{\sum_{i}\lambda_{i}^{2}}\le\sum_{i}\lambda_{i}=\tr\nabla^{2}f(z)=\Delta f(z).
@@ -2381,7 +2510,8 @@ Since
 
 \end_inset
 
-Therefore, we have
+Therefore,
+ we have
 \begin_inset Formula 
 \begin{align*}
 \E_{z\in B_{\infty}(y,r_{2})}\norm{\nabla f(z)-g(y)}_{1} & \leq\sqrt{n}r_{2}\E_{z\in B_{\infty}(y,r_{2})}\Delta f(z)\\
@@ -2414,7 +2544,8 @@ where
 \end_layout
 
 \begin_layout Proof
-Integrating by parts, we have that
+Integrating by parts,
+ we have that
 \begin_inset Formula 
 \[
 \int_{B_{\infty}(x,r_{1})}\Delta h(y)dy=\int_{\partial B_{\infty}(x,r_{1})}\left\langle \nabla h(y),n(y)\right\rangle dy
@@ -2438,7 +2569,8 @@ where
 \begin_inset Formula $B_{\infty}(x,r_{1})$
 \end_inset
 
-, i.e.
+,
+ i.e.
  standard basis vectors.
  Since 
 \begin_inset Formula $f$
@@ -2456,13 +2588,15 @@ where
 \begin_inset Formula $h$
 \end_inset
 
-, i.e.
+,
+ i.e.
  
 \begin_inset Formula $\norm{\nabla h(z)}_{\infty}\leq L$
 \end_inset
 
 .
- Hence, we have that
+ Hence,
+ we have that
 \begin_inset Formula 
 \[
 \E_{y\in B_{\infty}(x,r_{1})}\Delta h(y)\leq\frac{1}{(2r_{1})^{n}}\int_{\partial B_{\infty}(x,r_{1})}\norm{\nabla h(y)}_{\infty}\norm{n(y)}_{1}dy\leq\frac{1}{(2r_{1})^{n}}\cdot2n(2r_{1})^{n-1}\cdot L=\frac{nL}{r_{1}}.
@@ -2470,7 +2604,8 @@ where
 
 \end_inset
 
-Therefore, we have that
+Therefore,
+ we have that
 \begin_inset Formula 
 \[
 \E_{y\in B_{\infty}(x,r_{1})}\E_{z\in B_{\infty}(y,r_{2})}\norm{\nabla f(z)-g(y)}_{1}\leq n^{3/2}\frac{r_{2}}{r_{1}}L.
@@ -2482,7 +2617,11 @@ Therefore, we have that
 \end_layout
 
 \begin_layout Exercise
-For a Lipschitz function 
+For an 
+\begin_inset Formula $L$
+\end_inset
+
+-gradient-Lipschitz function 
 \begin_inset Formula $f:\R^{n}\rightarrow\R,$
 \end_inset
 
@@ -2490,11 +2629,16 @@ and
 \begin_inset Formula $h=f*\chi_{B_{\infty}(0,1/2)}$
 \end_inset
 
-, prove that 
+,
+ prove that 
 \begin_inset Formula $h$
 \end_inset
 
- is Lipschitz and 
+ is also 
+\begin_inset Formula $L$
+\end_inset
+
+-gradient-Lipschitz and 
 \begin_inset Formula $\Delta h(y)=\E_{z\sim B_{\infty(y,1/2)}}(\Delta f(z))$
 \end_inset
 
@@ -2502,20 +2646,22 @@ and
 \end_layout
 
 \begin_layout Standard
-This lemma shows that we can implement an approximate gradient oracle (GRAD)
- using an evaluation oracle (EVAL) even for non-differentiable functions.
- By the involution property again, this completes all the reductions in
- Figure 
+This lemma shows that we can implement an approximate gradient oracle (GRAD) using an evaluation oracle (EVAL) even for non-differentiable functions.
+ By the involution property again,
+ this completes all the reductions in Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:rel"
+nolink "false"
 
 \end_inset
 
 .
- With the above fact asserting that, on average, the gradient is approximated
- by its average in a small ball, we now proceed to construct an approximate
- subgradient, using only an approximate evaluation oracle.
+ With the above fact asserting that,
+ on average,
+ the gradient is approximated by its average in a small ball,
+ we now proceed to construct an approximate subgradient,
+ using only an approximate evaluation oracle.
  The parameter 
 \begin_inset Formula $r_{2}$
 \end_inset
@@ -2525,7 +2671,8 @@ reference "fig:rel"
 \begin_inset Formula $r_{2}/r_{1}$
 \end_inset
 
- sufficiently small, we can get a desired error for the subgradient.
+ sufficiently small,
+ we can get a desired error for the subgradient.
  
 \end_layout
 
@@ -2603,12 +2750,14 @@ SetAlgoLined
 
 \series bold
 Require:
+
 \series default
  
 \begin_inset Formula $r_{1}>0$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $\norm{\partial f(z)}_{\infty}\leq L$
 \end_inset
 
@@ -2816,7 +2965,8 @@ on
 \end_inset
 
 .
- Then, there is random variable 
+ Then,
+ there is random variable 
 \begin_inset Formula $\zeta\geq0$
 \end_inset
 
@@ -2849,12 +2999,14 @@ We assume that
 \begin_inset Formula $f$
 \end_inset
 
-, we can reduce to this case by viewing it as a limit of twice-differentiable
- functions.
+,
+ we can reduce to this case by viewing it as a limit of twice-differentiable functions.
 \end_layout
 
 \begin_layout Proof
 \begin_inset Float figure
+placement document
+alignment document
 wide false
 sideways false
 status open
@@ -2884,11 +3036,13 @@ status open
 \end_layout
 
 \begin_layout Proof
-First, we assume that we can compute 
+First,
+ we assume that we can compute 
 \begin_inset Formula $f$
 \end_inset
 
- exactly, namely 
+ exactly,
+ namely 
 \begin_inset Formula $\varepsilon=0$
 \end_inset
 
@@ -2911,11 +3065,13 @@ First, we assume that we can compute
 \end_inset
 
 .
- Then, for the function 
+ Then,
+ for the function 
 \begin_inset Formula $\tilde{g}$
 \end_inset
 
- computed by the algorithm, we have that
+ computed by the algorithm,
+ we have that
 \begin_inset Formula 
 \begin{align*}
 \E_{z}\left|\tilde{g}_{i}-g(y)_{i}\right| & =\E_{z}\left|\frac{f(\beta_{i})-f(\alpha_{i})}{2r_{2}}-g(y)_{i}\right|\\
@@ -2938,7 +3094,8 @@ where we used that both
 \end_inset
 
  in the last line.
- Hence, we have
+ Hence,
+ we have
 \begin_inset Formula 
 \[
 \E_{z}\norm{\tilde{g}-\nabla f(z)}_{1}\leq\E_{z}\norm{\nabla f(z)-g(y)}_{1}+\E_{z}\norm{\tilde{g}-g(y)}_{1}\leq2\E_{z}\norm{\nabla f(z)-g(y)}_{1}.
@@ -2946,7 +3103,8 @@ where we used that both
 
 \end_inset
 
-Now, applying the convexity of 
+Now,
+ applying the convexity of 
 \begin_inset Formula $f$
 \end_inset
 
@@ -2960,7 +3118,8 @@ f(q) & \geq f(z)+\left\langle \nabla f(z),q-z\right\rangle \\
 
 \end_inset
 
-Now, using 
+Now,
+ using 
 \begin_inset Formula $f$
 \end_inset
 
@@ -2976,12 +3135,14 @@ Now, using
 \begin_inset Formula $z$
 \end_inset
 
-, we have that 
+,
+ we have that 
 \begin_inset Formula $f(z)\geq f(x)-L\cdot\norm{x-z}_{1}$
 \end_inset
 
 .
- Hence, we have
+ Hence,
+ we have
 \begin_inset Formula 
 \[
 f(q)\geq f(x)+\left\langle \tilde{g},q-x\right\rangle -\norm{\nabla f(z)-\tilde{g}}_{1}\norm{q-x}_{\infty}-2L\norm{x-z}_{1}.
@@ -2994,7 +3155,8 @@ Note that
 \end_inset
 
  by assumption.
- Moreover, we can apply Lemma
+ Moreover,
+ we can apply Lemma
 \begin_inset space ~
 \end_inset
 
@@ -3002,6 +3164,7 @@ Note that
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:convex_almost_flat"
+nolink "false"
 
 \end_inset
 
@@ -3022,20 +3185,10 @@ f(q)\geq f(x)+\left\langle \tilde{g},q-x\right\rangle -\zeta\norm{q-x}_{\infty}-
 \end_inset
 
 with 
-\begin_inset Formula $\E\zeta\leq n^{3/2}\frac{r_{2}}{r_{1}}L$
+\begin_inset Formula $\E\zeta\leq2n^{3/2}\frac{r_{2}}{r_{1}}L$
 \end_inset
 
 .
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-removed factor of 2, is it needed?
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Proof
@@ -3047,7 +3200,8 @@ Since we only compute
 \begin_inset Formula $\varepsilon$
 \end_inset
 
- additive error, it introduces 
+ additive error,
+ it introduces 
 \begin_inset Formula $\frac{\varepsilon}{r_{2}}$
 \end_inset
 
@@ -3056,16 +3210,17 @@ Since we only compute
 \end_inset
 
 .
- Hence, we instead have that
+ Hence,
+ we instead have that
 \begin_inset Formula 
 \[
-\E\zeta\leq n^{3/2}\frac{r_{2}}{r_{1}}L+\frac{\varepsilon n}{r_{2}}.
+\E\zeta\leq2n^{3/2}\frac{r_{2}}{r_{1}}L+\frac{\varepsilon n}{2r_{2}}.
 \]
 
 \end_inset
 
 Setting 
-\begin_inset Formula $r_{2}=\sqrt{\frac{\varepsilon r_{1}}{\sqrt{n}L}}$
+\begin_inset Formula $r_{2}=\frac{1}{2}\sqrt{\frac{\varepsilon r_{1}}{\sqrt{n}L}}$
 \end_inset
 
  completes the proof.
@@ -3076,7 +3231,8 @@ Note that if we happened to have an exact oracle for
 \begin_inset Formula $f$
 \end_inset
 
-, then we can make 
+,
+ then we can make 
 \begin_inset Formula $r_{2}$
 \end_inset
 
@@ -3091,10 +3247,12 @@ reference "lem:convex_almost_flat"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-?
+,
+ in particular is the dependence on the dimension tight?
 \end_layout
 
 \begin_layout Standard
@@ -3105,16 +3263,18 @@ reference "lem:convex_almost_flat"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-, we used the following fact applied to the case when 
+,
+ we used the following fact applied to the case when 
 \begin_inset Formula $\Omega$
 \end_inset
 
  is a cube.
- In this case, the coefficient on the RHS is given by the Cheeger or KLS
- constant of the cube and is 
+ In this case,
+ the coefficient on the RHS is given by the Cheeger or KLS constant of the cube and is 
 \begin_inset Formula $1$
 \end_inset
 
@@ -3160,9 +3320,9 @@ status open
 \begin_inset Formula $\Omega$
 \end_inset
 
- be connected, bounded and open.
- Then the following (best-possible) inequality holds for any smooth function
- 
+ be connected,
+ bounded and open.
+ Then the following (best-possible) inequality holds for any smooth function 
 \begin_inset Formula $f:\Omega\rightarrow\R$
 \end_inset
 
@@ -3188,6 +3348,16 @@ status open
 \end_inset
 
  are both connected.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Add figure!
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Exercise
@@ -3198,10 +3368,11 @@ reference "thm:box-poincare"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
- using the classical coarea formula.
+ using the classical co-area formula.
 \end_layout
 
 \begin_layout Section
@@ -3216,8 +3387,8 @@ name "sec:From-Membership-to"
 \end_layout
 
 \begin_layout Standard
-In this section, we show that how to implement a separation oracle for a
- convex set using a nearly linear number of queries to a membership oracle.
+In this section,
+ we show that how to implement a separation oracle for a convex set using a nearly linear number of queries to a membership oracle.
  We divide this into two steps.
  In the first step (Algorithm
 \begin_inset space ~
@@ -3230,11 +3401,14 @@ reference "alg:separateFunc"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-), we compute an approximate subgradient of a given Lipschitz convex function.
- Using this, in the second step (Algorithm
+),
+ we compute an approximate subgradient of a given Lipschitz convex function.
+ Using this,
+ in the second step (Algorithm
 \begin_inset space ~
 \end_inset
 
@@ -3245,10 +3419,12 @@ reference "alg:sep_set"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-), we compute an approximate separating hyperplane.
+),
+ we compute an approximate separating hyperplane.
  
 \end_layout
 
@@ -3263,11 +3439,13 @@ Let
 \end_inset
 
 .
- Then, for any 
+ Then,
+ for any 
 \begin_inset Formula $0<\eta\leq1/2$
 \end_inset
 
-, we can compute an 
+,
+ we can compute an 
 \begin_inset Formula $\eta$
 \end_inset
 
@@ -3283,7 +3461,8 @@ Let
 \end_layout
 
 \begin_layout Standard
-Throughout this section, let 
+Throughout this section,
+ let 
 \begin_inset Formula $K\subseteq\R^{n}$
 \end_inset
 
@@ -3313,8 +3492,7 @@ Throughout this section, let
 \end_inset
 
 .
- By an approximate separation oracle we mean that either the queried point
- 
+ By an approximate separation oracle we mean that either the queried point 
 \begin_inset Formula $x$
 \end_inset
 
@@ -3326,7 +3504,8 @@ Throughout this section, let
 \begin_inset Formula $K$
 \end_inset
 
-, or the oracle provides a halfspace 
+,
+ or the oracle provides a halfspace 
 \begin_inset Formula $c^{T}y\le c^{T}x+\eta$
 \end_inset
 
@@ -3355,7 +3534,8 @@ Given some point
 \begin_inset Formula $x\notin K$
 \end_inset
 
-, we wish to separate 
+,
+ we wish to separate 
 \begin_inset Formula $x$
 \end_inset
 
@@ -3364,8 +3544,8 @@ Given some point
 \end_inset
 
  using a halfspace.
- To do this, we reduce this problem to computing an approximate subgradient
- of a Lipschitz convex function 
+ To do this,
+ we reduce this problem to computing an approximate subgradient of a Lipschitz convex function 
 \begin_inset Formula $h_{x}(d)$
 \end_inset
 
@@ -3373,7 +3553,8 @@ Given some point
 \begin_inset Formula $K.$
 \end_inset
 
- Roughly speaking, it is the 
+ Roughly speaking,
+ it is the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -3414,7 +3595,8 @@ height
 \begin_inset Formula $x$
 \end_inset
 
-, and 
+,
+ and 
 \begin_inset Formula $-h_{x}(d)$
 \end_inset
 
@@ -3433,6 +3615,7 @@ reference "fig:height-function"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -3441,6 +3624,8 @@ noprefix "false"
 
 \begin_layout Standard
 \begin_inset Float figure
+placement document
+alignment document
 wide false
 sideways false
 status open
@@ -3559,6 +3744,7 @@ SetAlgoLined
 
 \series bold
 Require:
+
 \series default
  
 \begin_inset Formula $B_{2}(0,r)\subset K\subset B_{2}(0,R)$
@@ -3606,6 +3792,7 @@ status open
 
 \series bold
 Output:
+
 \series default
  
 \begin_inset Quotes eld
@@ -3657,6 +3844,7 @@ status open
 
 \series bold
 Output:
+
 \series default
  the halfspace 
 \begin_inset Formula $\{y:0\geq\left\langle y-x,x\right\rangle \}$
@@ -3684,7 +3872,8 @@ Let
 \begin_inset Formula $\kappa=R/r$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $\alpha_{x}(d)=\max_{d+\alpha x\in K}\alpha$
 \end_inset
 
@@ -3698,12 +3887,12 @@ Let
 status open
 
 \begin_layout Plain Layout
-Should define 
-\begin_inset Formula $h_{x}$
+Should discuss using approximate 
+\begin_inset Formula $\alpha_{x}$
 \end_inset
 
- and talk about additive error here for completeness? what do you mean by
- talk about additive error? I just mean that the binary search is inexact.
+,
+ since binary search is not exact.
 \end_layout
 
 \end_inset
@@ -3721,6 +3910,7 @@ The evaluation oracle of
 \end_inset
 
 .
+ 
 \end_layout
 
 \begin_layout Standard
@@ -3743,6 +3933,7 @@ Compute
 
 \series bold
 Output:
+
 \series default
  the halfspace
 \begin_inset Formula 
@@ -3772,17 +3963,18 @@ end{algorithm2e}
 \end_layout
 
 \begin_layout Standard
-The output of the algorithm for separation is a halfspace that approximately
- contains 
+The output of the algorithm for separation is a halfspace that approximately contains 
 \begin_inset Formula $K$
 \end_inset
 
-, and the input point 
+,
+ and the input point 
 \begin_inset Formula $x$
 \end_inset
 
  is close to its bounding hyperplane.
  It uses a call to the subgradient function above.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -3834,7 +4026,8 @@ Let
 
 \end_inset
 
-Therefore, if we let 
+Therefore,
+ if we let 
 \begin_inset Formula $d\defeq\lambda d_{1}+(1-\lambda)d_{2}$
 \end_inset
 
@@ -3878,6 +4071,8 @@ name "lem:h_Lip"
 
 \begin_layout Lemma
 \begin_inset Float figure
+placement document
+alignment document
 wide false
 sideways false
 status open
@@ -3937,7 +4132,8 @@ Let
 
 \end_inset
 
-Consequently, it suffices to lower bound 
+Consequently,
+ it suffices to lower bound 
 \begin_inset Formula $\alpha_{x}(d_{2})$
 \end_inset
 
@@ -3946,7 +4142,8 @@ Consequently, it suffices to lower bound
 \end_layout
 
 \begin_layout Proof
-Case 1: 
+Case 1:
+ 
 \begin_inset Formula $\norm{d_{2}-d_{1}}_{2}\geq r-\delta$
 \end_inset
 
@@ -3955,7 +4152,8 @@ Case 1:
 \begin_inset Formula $0\geq h_{x}(d_{1}),h_{x}(d_{2})\geq-R-\delta$
 \end_inset
 
-, we have that 
+,
+ we have that 
 \begin_inset Formula 
 \[
 \left|h_{x}(d_{1})-h_{x}(d_{2})\right|\leq R+\delta\leq\frac{R+\delta}{r-\delta}\norm{d_{2}-d_{1}}_{2}.
@@ -3967,7 +4165,8 @@ Case 1:
 \end_layout
 
 \begin_layout Proof
-Case 2: 
+Case 2:
+ 
 \begin_inset Formula $\norm{d_{2}-d_{1}}_{2}\leq r-\delta$
 \end_inset
 
@@ -3989,7 +4188,8 @@ Case 2:
 
 \end_inset
 
-Hence, 
+Hence,
+ 
 \begin_inset Formula $d_{3}\in K$
 \end_inset
 
@@ -4002,12 +4202,14 @@ Hence,
 \begin_inset Formula $K$
 \end_inset
 
- is convex, we have that 
+ is convex,
+ we have that 
 \begin_inset Formula $\lambda\cdot d_{3}+(1-\lambda)\cdot\left[d_{1}+\alpha_{x}(d_{1})x\right]\in K$
 \end_inset
 
 .
- Now, we note that
+ Now,
+ we note that
 \begin_inset Formula 
 \[
 \lambda\cdot d_{3}+(1-\lambda)\cdot\left[d_{1}+\alpha_{x}(d_{1})x\right]=d_{2}+(1-\lambda)\cdot\alpha_{x}(d_{1})x
@@ -4027,7 +4229,8 @@ Since
 \begin_inset Formula $d_{1}+\alpha_{x}(d_{1})x\in K\subset B_{2}(0,R)$
 \end_inset
 
-, we have that 
+,
+ we have that 
 \begin_inset Formula $\alpha_{x}(d_{1})\cdot\norm x_{2}\leq R+\delta$
 \end_inset
 
@@ -4039,7 +4242,8 @@ Since
 
 \end_inset
 
- In either case, as claimed we have
+ In either case,
+ as claimed we have
 \begin_inset Formula 
 \[
 \left|h_{x}(d_{1})-h_{x}(d_{2})\right|\leq\frac{R+\delta}{r-\delta}\norm{d_{2}-d_{1}}_{2}.
@@ -4055,8 +4259,7 @@ The next lemma shows that
 \begin_inset Formula $h_{x}$
 \end_inset
 
- gives us a way to implement an approximation separation oracle and only
- needs access to an approximation evaluation oracle for 
+ gives us a way to implement an approximation separation oracle and only needs access to an approximation evaluation oracle for 
 \begin_inset Formula $h_{x}$
 \end_inset
 
@@ -4065,7 +4268,8 @@ The next lemma shows that
 \end_inset
 
 .
- To be precise, we define approximate oracles.
+ To be precise,
+ we define approximate oracles.
 \end_layout
 
 \begin_layout Definition
@@ -4093,11 +4297,13 @@ name "def:SEP-1"
 \begin_inset Formula $\delta,\delta'>0$
 \end_inset
 
-, with probability at least 
+,
+ with probability at least 
 \begin_inset Formula $1-\delta'$
 \end_inset
 
-, the oracle either
+,
+ the oracle either
 \begin_inset Separator latexpar
 \end_inset
 
@@ -4110,7 +4316,8 @@ assert that
 \begin_inset Formula $y\in B(K,\delta)$
 \end_inset
 
-, or
+,
+ or
 \end_layout
 
 \begin_layout Itemize
@@ -4170,11 +4377,13 @@ name "def:MEM-1"
 \begin_inset Formula $\delta,\delta'>0$
 \end_inset
 
-, with probability at least 
+,
+ with probability at least 
 \begin_inset Formula $1-\delta'$
 \end_inset
 
-, either
+,
+ either
 \begin_inset Separator latexpar
 \end_inset
 
@@ -4187,7 +4396,8 @@ assert that
 \begin_inset Formula $y\in B(K,\delta)$
 \end_inset
 
-, or
+,
+ or
 \end_layout
 
 \begin_layout Itemize
@@ -4209,7 +4419,8 @@ We let
 
 \begin_layout Standard
 We can now state the main lemma for the separation oracle.
- Since the algorithm is randomized, we have a parameter 
+ Since the algorithm is randomized,
+ we have a parameter 
 \begin_inset Formula $\rho\in(0,1)$
 \end_inset
 
@@ -4245,7 +4456,8 @@ name "lem:separate_set"
 \begin_inset Formula $1-\rho$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $\mathtt{Separate}_{\varepsilon,\rho}(K,x)$
 \end_inset
 
@@ -4262,12 +4474,14 @@ When
 \begin_inset Formula $x\notin B_{2}(0,R)$
 \end_inset
 
-, the algorithm outputs a valid separation for 
+,
+ the algorithm outputs a valid separation for 
 \begin_inset Formula $B_{2}(0,R)$
 \end_inset
 
 .
- For the rest of the proof, we assume 
+ For the rest of the proof,
+ we assume 
 \begin_inset Formula $x\notin B(K,-\varepsilon)$
 \end_inset
 
@@ -4283,6 +4497,7 @@ By Lemma
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:h_convex"
+nolink "false"
 
 \end_inset
 
@@ -4290,10 +4505,12 @@ reference "lem:h_convex"
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:h_Lip"
+nolink "false"
 
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $h_{x}$
 \end_inset
 
@@ -4314,15 +4531,18 @@ reference "lem:h_Lip"
 \begin_inset Formula $r_{1}$
 \end_inset
 
-, we have that 
+,
+ we have that 
 \begin_inset Formula $B_{\infty}(0,2r_{1})\subset B_{2}(0,\frac{r}{2})$
 \end_inset
 
 .
- Hence, we can apply Lemma 
+ Hence,
+ we can apply Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:separate_conv_func"
+nolink "false"
 
 \end_inset
 
@@ -4348,7 +4568,8 @@ for any
 \end_inset
 
 .
- Hence, we have
+ Hence,
+ we have
 \begin_inset Formula 
 \[
 h_{x}(0)-\frac{1}{\kappa}\norm x_{2}=h_{x}(-\frac{1}{\kappa}x)\geq h_{x}(0)+\left\langle \tilde{g},-\frac{1}{\kappa}x\right\rangle -\frac{1}{\kappa}\zeta\norm x_{\infty}-12nr_{1}\kappa.
@@ -4356,7 +4577,8 @@ h_{x}(0)-\frac{1}{\kappa}\norm x_{2}=h_{x}(-\frac{1}{\kappa}x)\geq h_{x}(0)+\lef
 
 \end_inset
 
-Therefore, we have
+Therefore,
+ we have
 \begin_inset Formula 
 \begin{equation}
 \left\langle \tilde{g},x\right\rangle \geq\norm x_{2}-\zeta\norm x_{\infty}-12nr_{1}\kappa^{2}.\label{eq:lowerbound_g}
@@ -4364,7 +4586,8 @@ Therefore, we have
 
 \end_inset
 
-Now, we note that 
+Now,
+ we note that 
 \begin_inset Formula $x\notin B(K,-\varepsilon)$
 \end_inset
 
@@ -4373,12 +4596,14 @@ Now, we note that
 \begin_inset Formula $B(0,r)\subset K$
 \end_inset
 
-, we have 
+,
+ we have 
 \begin_inset Formula $(1-\frac{\varepsilon}{r})K\subset B(K,-\varepsilon)$
 \end_inset
 
 .
- Hence, 
+ Hence,
+ 
 \begin_inset Formula 
 \[
 h_{x}(0)\geq-\left(1-\frac{\varepsilon}{r}\right)\norm x_{2}\geq-\norm x_{2}.
@@ -4386,7 +4611,8 @@ h_{x}(0)\geq-\left(1-\frac{\varepsilon}{r}\right)\norm x_{2}\geq-\norm x_{2}.
 
 \end_inset
 
-Therefore, we have
+Therefore,
+ we have
 \begin_inset Formula 
 \[
 h_{x}(0)+\left\langle \tilde{g},x\right\rangle \geq-\zeta\norm x_{\infty}-12nr_{1}\kappa^{2}
@@ -4398,10 +4624,12 @@ Combining this with
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:hxy-1"
+nolink "false"
 
 \end_inset
 
-, we have that 
+,
+ we have that 
 \begin_inset Formula 
 \begin{align*}
 h_{x}(y) & \geq\left\langle \tilde{g},y-x\right\rangle -\zeta\norm y_{\infty}-\zeta\norm x_{\infty}-12nr_{1}\kappa-12nr_{1}\kappa^{2}\\
@@ -4419,6 +4647,7 @@ for any
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:separate_conv_func"
+nolink "false"
 
 \end_inset
 
@@ -4434,22 +4663,13 @@ reference "lem:separate_conv_func"
 \begin_inset Formula $\E\zeta\leq2\sqrt{\frac{3\kappa\varepsilon}{r_{1}}}n^{5/4}$
 \end_inset
 
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-changed factor of 12 to 3 inside square-root.
-\end_layout
-
-\end_inset
-
 .
  For any 
 \begin_inset Formula $y\in K$
 \end_inset
 
-, we have that 
+,
+ we have that 
 \begin_inset Formula $h_{x}(y)\leq0$
 \end_inset
 
@@ -4501,7 +4721,8 @@ Suppose we can evaluate the subgradient of
 \begin_inset Formula $x\not\in K$
 \end_inset
 
-, we have 
+,
+ we have 
 \begin_inset Formula $\langle\nabla h_{x}(0),y-x\rangle\le0$
 \end_inset
 
@@ -4540,7 +4761,8 @@ name "thm:separate_set"
 \begin_inset Formula $0\leq\eta<\frac{1}{2}$
 \end_inset
 
-, we have that
+,
+ we have that
 \begin_inset Formula 
 \[
 \text{SEP}_{\eta}(K)\leq O\left(n\log\left(\frac{n\kappa}{\eta}\right)\right)\text{MEM}_{(\eta/n\kappa)^{O(1)}}(K).
@@ -4552,7 +4774,8 @@ name "thm:separate_set"
 \end_layout
 
 \begin_layout Proof
-First, we bound the running time.
+First,
+ we bound the running time.
  Note that the bottleneck is to compute 
 \begin_inset Formula $h_{x}$
 \end_inset
@@ -4570,7 +4793,8 @@ First, we bound the running time.
 \begin_inset Formula $y\in B_{2}(0,O(1))$
 \end_inset
 
-, one can compute 
+,
+ one can compute 
 \begin_inset Formula $h_{x}(y)$
 \end_inset
 
@@ -4582,7 +4806,8 @@ First, we bound the running time.
 \end_layout
 
 \begin_layout Proof
-Next, we check that 
+Next,
+ we check that 
 \begin_inset Formula $\mathtt{Separate}_{\delta,\rho}(K,x)$
 \end_inset
 
@@ -4600,7 +4825,8 @@ Next, we check that
 \end_inset
 
 .
- So, we need to a lower bound 
+ So,
+ we need to a lower bound 
 \begin_inset Formula $\norm{\tilde{g}}_{2}$
 \end_inset
 
@@ -4613,6 +4839,7 @@ From
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:lowerbound_g"
+nolink "false"
 
 \end_inset
 
@@ -4620,11 +4847,13 @@ reference "eq:lowerbound_g"
 \begin_inset Formula $r_{1}$
 \end_inset
 
-, if 
+,
+ if 
 \begin_inset Formula $\delta\leq\frac{\rho^{3}}{10^{6}n^{6}\kappa^{6}}$
 \end_inset
 
-, then we have that
+,
+ then we have that
 \begin_inset Formula 
 \begin{align*}
 \left\langle \tilde{g},x\right\rangle  & \geq\norm x_{2}-\zeta\norm x_{\infty}-12nr_{1}\kappa^{2}\geq\frac{r}{4}.
@@ -4632,12 +4861,14 @@ reference "eq:lowerbound_g"
 
 \end_inset
 
-Hence, we have that 
+Hence,
+ we have that 
 \begin_inset Formula $\norm{\tilde{g}}_{2}\geq\frac{1}{4\kappa}$
 \end_inset
 
 .
- Therefore, this algorithm is a separation oracle with error 
+ Therefore,
+ this algorithm is a separation oracle with error 
 \begin_inset Formula $\frac{400}{\rho}n^{7/6}\kappa^{2}\delta^{1/3}$
 \end_inset
 
@@ -4664,7 +4895,8 @@ Setting
 \begin_inset Formula $\delta=\Theta\left(\frac{\eta^{6}}{n^{7/2}\kappa^{6}}\right)$
 \end_inset
 
-, we have that 
+,
+ we have that 
 \begin_inset Formula 
 \[
 \text{SEP}_{\eta}(K)\leq O(\log(\frac{n\kappa}{\eta}))\text{MEM}_{\eta^{6}/(n^{7/2}\kappa^{6})}(K).
@@ -4680,7 +4912,8 @@ Gradient from Evaluation via Auto Differentiation
 \end_layout
 
 \begin_layout Standard
-In this section, we give yet another way to compute gradients using evaluations.
+In this section,
+ we give yet another way to compute gradients using evaluations.
 \end_layout
 
 \begin_layout Theorem
@@ -4694,8 +4927,7 @@ name "thm:auto_diff"
 \begin_inset Formula $f:\R^{n}\rightarrow\R$
 \end_inset
 
- represented by an circuit whose gates compute differentiable functions
- of a finite number of variables.
+ represented by an circuit whose gates compute differentiable functions of a finite number of variables.
  Suppose that 
 \begin_inset Formula $f(x)$
 \end_inset
@@ -4704,7 +4936,8 @@ name "thm:auto_diff"
 \begin_inset Formula $\mathcal{T}$
 \end_inset
 
- (namely, the circuit has 
+ (namely,
+ the circuit has 
 \begin_inset Formula $\mathcal{T}$
 \end_inset
 
@@ -4721,7 +4954,8 @@ name "thm:auto_diff"
 \end_layout
 
 \begin_layout Remark*
-In practice, the runtime is roughly 
+In practice,
+ the runtime is roughly 
 \begin_inset Formula $2\mathcal{T}$
 \end_inset
 
@@ -4730,7 +4964,8 @@ In practice, the runtime is roughly
 \end_layout
 
 \begin_layout Remark*
-Before proving it formally, we first go through an example.
+Before proving it formally,
+ we first go through an example.
  Consider the function 
 \begin_inset Formula $f(x_{1},x_{2})=\sin(x_{1}/x_{2})+x_{1}x_{2}$
 \end_inset
@@ -4741,7 +4976,8 @@ Before proving it formally, we first go through an example.
 \end_inset
 
  to denote both the input and all intermediate variables.
- Then, we can write the program in 
+ Then,
+ we can write the program in 
 \begin_inset Formula $\mathcal{T}=6$
 \end_inset
 
@@ -4752,23 +4988,28 @@ Before proving it formally, we first go through an example.
 \begin_inset Formula $x_{1}=x_{1}$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $x_{2}=x_{2}$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $x_{3}=x_{1}/x_{2}$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $x_{4}=\sin(x_{3})$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $x_{5}=x_{1}x_{2}$
 \end_inset
 
-, Output 
+,
+ Output 
 \begin_inset Formula $x_{6}=x_{4}+x_{5}$
 \end_inset
 
@@ -4801,8 +5042,10 @@ with simple functions
 \begin_inset Formula $x_{2}$
 \end_inset
 
-, but also for all intermediate variables.
- Here, we use 
+,
+ but also for all intermediate variables.
+ Here,
+ we use 
 \begin_inset Formula $\frac{\partial f}{\partial x_{i}}$
 \end_inset
 
@@ -4823,11 +5066,13 @@ with simple functions
 \end_inset
 
  is an input).
- For the example above, suppose we want to compute 
+ For the example above,
+ suppose we want to compute 
 \begin_inset Formula $\nabla f(\pi,2)$
 \end_inset
 
-, we can simply compute first compute all 
+,
+ we can simply compute first compute all 
 \begin_inset Formula $x_{i}$
 \end_inset
 
@@ -4835,7 +5080,8 @@ with simple functions
 \begin_inset Formula $i=1,2,\cdots,6$
 \end_inset
 
-, then 
+,
+ then 
 \begin_inset Formula $\frac{\partial f}{\partial x_{i}}$
 \end_inset
 
@@ -4850,23 +5096,28 @@ with simple functions
 \begin_inset Formula $x_{1}=\pi$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $x_{2}=2$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $x_{3}=\pi/2$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $x_{4}=\sin(x_{3})=1$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $x_{5}=x_{1}x_{2}=2\pi$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $x_{6}=x_{4}+x_{5}=2\pi+1$
 \end_inset
 
@@ -4877,11 +5128,13 @@ with simple functions
 \begin_inset Formula $\frac{\partial f}{\partial x_{6}}=1$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $\frac{\partial f}{\partial x_{5}}=\frac{\partial\left(x_{4}+x_{5}\right)}{\partial x_{5}}=1$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $\frac{\partial f}{\partial x_{4}}=\frac{\partial\left(x_{4}+x_{5}\right)}{\partial x_{4}}=1$
 \end_inset
 
@@ -4985,6 +5238,7 @@ SetAlgoLined
 
 \series bold
 Input:
+
 \series default
  a function 
 \begin_inset Formula $f(x_{1},x_{2},\cdots,x_{n})$
@@ -5173,6 +5427,7 @@ Proof of Theorem
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:auto_diff"
+nolink "false"
 
 \end_inset
 
@@ -5190,7 +5445,8 @@ We prove by induction that the formula
 \begin_inset Formula $i=m$
 \end_inset
 
-, we have 
+,
+ we have 
 \begin_inset Formula $f=x_{m}$
 \end_inset
 
@@ -5199,7 +5455,8 @@ We prove by induction that the formula
 \end_inset
 
 .
- For the induction, we let 
+ For the induction,
+ we let 
 \begin_inset Formula $L_{i}=\{x_{j_{1}},x_{j_{2}},\cdots,x_{j_{k}}\}$
 \end_inset
 
@@ -5208,7 +5465,8 @@ We prove by induction that the formula
 \begin_inset Formula $x_{1},x_{2},\cdots,x_{i-1}$
 \end_inset
 
-, then 
+,
+ then 
 \begin_inset Formula $f$
 \end_inset
 
@@ -5229,7 +5487,8 @@ We prove by induction that the formula
 \begin_inset Formula $x_{i}$
 \end_inset
 
-, we can also view 
+,
+ we can also view 
 \begin_inset Formula $f$
 \end_inset
 
@@ -5238,7 +5497,8 @@ We prove by induction that the formula
 \end_inset
 
 .
- More precisely, we have
+ More precisely,
+ we have
 \begin_inset Formula 
 \[
 f(x_{i})=f(x_{j_{1}}(x_{i},x_{j_{-1}}),x_{j_{2}}(x_{i},x_{j_{-2}}),\cdots,x_{j_{k}}(x_{i},x_{j_{-k}}))
@@ -5255,7 +5515,8 @@ where we use
 \end_inset
 
 .
- By chain rule, we have
+ By chain rule,
+ we have
 \begin_inset Formula 
 \[
 \frac{\partial f}{\partial x_{i}}=\sum_{j\in L_{i}}\frac{\partial f}{\partial x_{j}}\frac{\partial x_{j}}{\partial x_{i}}.
@@ -5267,7 +5528,8 @@ where we use
 \end_layout
 
 \begin_layout Proof
-To bound the runtime, we define the computation graph 
+To bound the runtime,
+ we define the computation graph 
 \begin_inset Formula $G$
 \end_inset
 
@@ -5297,7 +5559,8 @@ To bound the runtime, we define the computation graph
 \end_inset
 
  or its gradient.
- Hence, the cost of computing 
+ Hence,
+ the cost of computing 
 \begin_inset Formula $f$
 \end_inset
 
@@ -5319,12 +5582,13 @@ To bound the runtime, we define the computation graph
 \end_layout
 
 \begin_layout Standard
-We note that an efficient implementation of the chain rule is the heart
- of the backpropagation algorithm fo neural networks.
- To conclude this section, we see that Theorem 
+We note that an efficient implementation of the chain rule is the heart of the backpropagation algorithm fo neural networks.
+ To conclude this section,
+ we see that Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:auto_diff"
+nolink "false"
 
 \end_inset
 
@@ -5340,7 +5604,8 @@ If we can compute
 \begin_inset Formula $\mathcal{T}$
 \end_inset
 
-, then we can compute 
+,
+ then we can compute 
 \begin_inset Formula $A^{-1}$
 \end_inset
 
@@ -5357,7 +5622,8 @@ Note that
 \end_inset
 
 .
- Hence, 
+ Hence,
+ 
 \begin_inset Formula $\nabla\log\det A=A^{-\top}$
 \end_inset
 
@@ -5366,6 +5632,7 @@ Note that
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:auto_diff"
+nolink "false"
 
 \end_inset
 
@@ -5386,7 +5653,8 @@ Gradient from Evaluation via Complex Step Differentiation
 
 \begin_layout Standard
 Auto differentiation is great if the function can be computed exactly.
- However, it does not work well if 
+ However,
+ it does not work well if 
 \begin_inset Formula $f$
 \end_inset
 
@@ -5395,26 +5663,28 @@ Auto differentiation is great if the function can be computed exactly.
 \end_inset
 
  involves too many variables.
- For example, if 
+ For example,
+ if 
 \begin_inset Formula $f$
 \end_inset
 
- is the energy usage of some aircraft design, then 
+ is the energy usage of some aircraft design,
+ then 
 \begin_inset Formula $f$
 \end_inset
 
- can only be computed approximately via simulation and such computation
- is memory expensive (if we need to store all intermediate variables) and
- not exact, so the method in the previous subsection is not practical.
+ can only be computed approximately via simulation and such computation is memory expensive (if we need to store all intermediate variables) and not exact,
+ so the method in the previous subsection is not practical.
 \end_layout
 
 \begin_layout Standard
-To introduce complex step differentiation, we recall the formula of finite
- difference:
+To introduce complex step differentiation,
+ we recall the formula of finite difference:
 \end_layout
 
 \begin_layout Itemize
-Forward/Backward difference: 
+Forward/Backward difference:
+ 
 \begin_inset Formula $\frac{f(x\pm h)-f(x)}{\pm h}=f'(x)+hf''(\zeta)$
 \end_inset
 
@@ -5422,7 +5692,8 @@ Forward/Backward difference:
 \end_layout
 
 \begin_layout Itemize
-Central difference: 
+Central difference:
+ 
 \begin_inset Formula $\frac{f(x+h)-f(x-h)}{2h}=f'(x)+O(h^{2})f'''(\zeta)$
 \end_inset
 
@@ -5431,13 +5702,13 @@ Central difference:
 
 \begin_layout Standard
 Note that the error analysis above assumes no numerical error involved.
- The formula involves subtracting two close numbers and dividing by a small
- number and this step creates lots of error.
+ The formula involves subtracting two close numbers and dividing by a small number and this step creates lots of error.
  If we are computing 
 \begin_inset Formula $f$
 \end_inset
 
- as floating point, we have
+ as floating point,
+ we have
 \begin_inset Formula 
 \[
 \frac{(1\pm\epsilon)f(x\pm h)-(1\pm\epsilon)f(x)}{\pm h}=f'(x)+O(\frac{\epsilon}{h})f(\zeta_{1})+O(h)f''(\zeta_{2})
@@ -5466,7 +5737,8 @@ where
 \begin_inset Formula $\epsilon=(10)^{-8}$
 \end_inset
 
- (single precision floating point), then we should pick 
+ (single precision floating point),
+ then we should pick 
 \begin_inset Formula $h=\sqrt{\epsilon}$
 \end_inset
 
@@ -5475,7 +5747,8 @@ where
 \end_inset
 
  in the second case.
- Hence, forward/backward difference gives only accuracy 
+ Hence,
+ forward/backward difference gives only accuracy 
 \begin_inset Formula $\epsilon^{1/2}\approx(10)^{-4}$
 \end_inset
 
@@ -5484,7 +5757,8 @@ where
 \end_inset
 
 .
- In reality, the error will be larger because 
+ In reality,
+ the error will be larger because 
 \begin_inset Formula $f''$
 \end_inset
 
@@ -5504,15 +5778,16 @@ The complex step differentiation uses the step
 
 \end_inset
 
-This formula works only for complex analytic functions, but it avoids subtractin
-g numbers.
- In practice, this really allows us to compute 
+This formula works only for complex analytic functions,
+ but it avoids subtracting numbers.
+ In practice,
+ this really allows us to compute 
 \begin_inset Formula $f'(x)$
 \end_inset
 
  close to machine accuracy.
- In general, ensuring algorithms give close to machine accuracy is important
- because algorithms often stack on top of each other.
+ In general,
+ ensuring algorithms give close to machine accuracy is important because algorithms often stack on top of each other.
 \end_layout
 
 \end_body

@@ -3623,7 +3623,7 @@ placement document
 alignment document
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -3961,7 +3961,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Complexity using separation oracle
+Complexity using a separation oracle
 \end_layout
 
 \end_inset

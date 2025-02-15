@@ -1729,7 +1729,8 @@ Now,
 
 \end_inset
 
-Also, by Thm.
+Also,
+ by Thm.
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -2027,7 +2028,7 @@ We note that the convergence rate
 \end_layout
 
 \begin_layout Definition
-We call a function 
+We say a function 
 \begin_inset Formula $f\in\mathcal{C}^{1}(\Rn)$
 \end_inset
 
