@@ -475,60 +475,51 @@ According to the definitions,
  many polytopes have exponentially many vertices and constraints but one can use combinatorial structure to solve the optimization problem efficiently.
 \end_layout
 
-\begin_layout Standard
-\begin_inset Note Note
+\begin_layout Example
+\begin_inset Argument 1
 status open
 
 \begin_layout Plain Layout
-Give an example about zonotope here
+Zonotope
 \end_layout
 
-\begin_layout Plain Layout
-Just to be more concrete.
-\end_layout
+\end_inset
 
-\begin_layout Plain Layout
-Imagine you have 
-\begin_inset Formula $k$
+ Imagine you have 
+\begin_inset Formula $n$
 \end_inset
 
  machines.
-\end_layout
-
-\begin_layout Plain Layout
-Each machine uses resources 
-\begin_inset Formula $(r_{1},r_{2},\cdots,r_{k})$
+ Each machine uses resources 
+\begin_inset Formula $(r_{1},r_{2},\cdots,r_{k})\in\R_{+}^{k}$
 \end_inset
 
  and produces goods 
-\begin_inset Formula $(g_{1},g_{2},\cdots,g_{\ell})$
+\begin_inset Formula $(g_{1},g_{2},\cdots,g_{\ell})\in\R_{+}^{\ell}$
 \end_inset
 
 .
- We represent the machine by simply a vector 
+ We represent a machine simply by the vector 
 \begin_inset Formula $a=(r_{1},r_{2},\cdots,r_{k},g_{1},g_{2},\cdots,g_{\ell})$
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Plain Layout
-Say we have vectors 
+ Say we have vectors 
 \begin_inset Formula $a_{1},a_{2},\cdots,a_{n}\in\R^{k+\ell}$
 \end_inset
 
 ,
- the polytope
+ then the polytope
 \begin_inset Formula 
 \[
-K=\{\sum_{i=1}^{n}\lambda_{i}a_{i}\in\R^{k+\ell}|0\leq\lambda_{i}\leq1\text{ for all }i\}
+K=\left\{ \sum_{i=1}^{n}\lambda_{i}a_{i}\in\R^{k+\ell}|0\leq\lambda_{i}\leq1\text{ for all }i\right\} 
 \]
 
 \end_inset
 
-represents the set of possible feasible (input,
+represents the set of feasible (input,
  output) pairs.
- Many production problems can be written as
+ Many production problems can then be written as
 \begin_inset Formula 
 \[
 \min_{z\in K}f(z).
@@ -536,39 +527,11 @@ represents the set of possible feasible (input,
 
 \end_inset
 
-Question:
- Which oracle for 
-\begin_inset Formula $K$
-\end_inset
 
- is easy to implement?
 \end_layout
 
-\begin_layout Plain Layout
-Membership:
- ???
-\end_layout
-
-\begin_layout Plain Layout
-Separation:
- ???
-\end_layout
-
-\begin_layout Plain Layout
-Value:
- Easy.
- The problem is independent
-\end_layout
-
-\begin_layout Plain Layout
-Optimization:
- Easy.
- The problem is independent
-\end_layout
-
-\end_inset
-
-
+\begin_layout Exercise
+Evaluate the complexity of each of the basic oracles for the Zonotope problem above.
 \end_layout
 
 \begin_layout Example
@@ -3277,6 +3240,53 @@ Note that if we happened to have an exact oracle for
 \end_layout
 
 \begin_layout Exercise
+Suppose in Algorithm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:separateFunc"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ we apply the idea of a linear approximation directly to a small box around the query point 
+\begin_inset Formula $x$
+\end_inset
+
+,
+ i.e.,
+ we pick a random point 
+\begin_inset Formula $z$
+\end_inset
+
+,
+ avoiding the intermediate point 
+\begin_inset Formula $y$
+\end_inset
+
+ entirely,
+ and use 
+\begin_inset Formula $z$
+\end_inset
+
+ to find endpoints of chords through 
+\begin_inset Formula $z$
+\end_inset
+
+ and compute an estimate of the gradient.
+ Why is this not accurate in general?
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
 What is the best possible bound in Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -4885,11 +4895,20 @@ nolink "false"
 \end_inset
 
 ,
- if 
-\begin_inset Formula $\delta\leq\frac{\rho^{3}}{10^{6}n^{6}\kappa^{6}}$
+ if we set 
+\begin_inset Formula $\varepsilon=\delta\leq\frac{\rho^{3}}{10^{6}n^{6}\kappa^{6}}$
 \end_inset
 
 ,
+ where 
+\begin_inset Formula $\delta$
+\end_inset
+
+ is the error and 
+\begin_inset Formula $\rho$
+\end_inset
+
+ is the failure probability of the separation oracle,
  then we have that
 \begin_inset Formula 
 \begin{align*}
@@ -4909,14 +4928,13 @@ Hence,
 \begin_inset Formula $\frac{400}{\rho}n^{7/6}\kappa^{2}\delta^{1/3}$
 \end_inset
 
- and failure probability 
+ and by the union bound,
+ with failure probability 
 \begin_inset Formula $O(\rho+\log(1/\delta)\delta)$
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Proof
+ Therefore,
 \begin_inset Formula 
 \[
 \text{SEP}_{\Omega(\max(n^{7/6}\kappa^{2}\delta^{1/3}/\rho+\rho+\log(1/\delta)\delta)}(K)\leq O(\log(1/\delta))\text{MEM}_{\delta}(K).
