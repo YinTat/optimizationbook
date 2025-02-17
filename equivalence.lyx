@@ -4896,7 +4896,7 @@ nolink "false"
 
 ,
  if we set 
-\begin_inset Formula $\varepsilon=\delta\leq\frac{\rho^{3}}{10^{6}n^{6}\kappa^{6}}$
+\begin_inset Formula $\varepsilon=\delta$
 \end_inset
 
 ,
