@@ -87,6 +87,42 @@
 
 \begin_body
 
+\begin_layout Standard
+The goal of this chapter is to present some polynomial-time algorithms for convex optimization.
+ These algorithms use knowledge of the function in a minimal way,
+ essentially by querying the function value along with weak bounds on its support and range.
+ Historically,
+ the ideas in this chapter originated in the work of 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Grunbaum1960,yudin1976evaluation"
+literal "false"
+
+\end_inset
+
+,
+ developed into polynomial-time algorithms by 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "khachiyan1980polynomial,grotschel1981ellipsoid,bertsimas2004solving"
+literal "false"
+
+\end_inset
+
+.
+ For a comprehensive presentation of related problems and ellipsoid-based algorithms,
+ the reader is referred to the classic book 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "grotschel2012geometric"
+literal "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
 \begin_layout Section
 Cutting Plane Methods
 \begin_inset CommandInset label
@@ -96,12 +132,6 @@ name "sec:Cutting-Plane-Methods"
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-The goal of this chapter is to present some polynomial-time algorithms for convex optimization.
- These algorithms use knowledge of the function in a minimal way,
- essentially by querying the function value along with weak bounds on its support and range.
 \end_layout
 
 \begin_layout Standard

@@ -87,6 +87,43 @@
 
 \begin_body
 
+\begin_layout Standard
+Reduction is a powerful paradigm in both algorithms and complexity.
+ In algorithms,
+ a dual view of a problem can sometimes provide a window to a more efficient algorithm.
+ With this as the main motivation,
+ we discuss the problem of convex optimization given different types of access to the instance at hand.
+ Despite appearing to be rather different,
+ all these perspectives will turn out to be equivalent,
+ i.e.,
+ reducible to each other,
+ with only polynomial overhead.
+ The main tool is duality.
+ This chapter elaborates on these ideas.
+ For the classical treatment of oracle models,
+ the reader is referred to 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "grotschel2012geometric"
+literal "false"
+
+\end_inset
+
+.
+ For the most efficient known reductions,
+ which are conjectured to be optimal up to logarithmic factors,
+ see 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "lee2020efficient"
+literal "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
 \begin_layout Section
 Equivalences between Oracles
 \end_layout
