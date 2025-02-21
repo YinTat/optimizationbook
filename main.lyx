@@ -1,5 +1,5 @@
-#LyX 2.4 created this file. For more info see https://www.lyx.org/
-\lyxformat 620
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
 \begin_document
 \begin_header
 \save_transient_properties true
@@ -16,6 +16,7 @@
 \usepackage[small,bf]{caption}
 \usepackage{tikz}
 \usepackage{enumitem}
+\usepackage[stable]{footmisc}
 \setlist{nolistsep}
 \usepackage{hyperref}
 \hypersetup{
@@ -27,11 +28,11 @@
 }
 \end_preamble
 \use_default_options true
-\maintain_unincluded_children no
+\maintain_unincluded_children false
 \language english
 \language_package none
-\inputencoding auto-legacy
-\fontencoding auto
+\inputencoding auto
+\fontencoding global
 \font_roman "default" "default"
 \font_sans "default" "default"
 \font_typewriter "default" "default"
@@ -39,15 +40,13 @@
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
-\font_roman_osf false
-\font_sans_osf false
-\font_typewriter_osf false
+\font_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
 \use_microtype false
 \use_dash_ligatures true
 \graphics default
-\default_output_format default
+\default_output_format pdf2
 \output_sync 0
 \bibtex_command default
 \index_command default
@@ -75,9 +74,7 @@
 \suppress_date false
 \justification true
 \use_refstyle 1
-\use_formatted_ref 0
 \use_minted 0
-\use_lineno 0
 \index Index
 \shortcut idx
 \color #008000
@@ -93,16 +90,11 @@
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
-\tablestyle default
 \tracking_changes false
 \output_changes false
-\change_bars false
-\postpone_fragile_content false
 \html_math_output 0
 \html_css_as_file 0
 \html_be_strict false
-\docbook_table_output 0
-\docbook_mathml_prefix 1
 \end_header
 
 \begin_body
@@ -361,11 +353,9 @@ status collapsed
 
 \begin_layout Plain Layout
 yintat@uw.edu.
- This work is supported in part by CCF-1749609,
- DMS-1839116,
- DMS-2023166,
- Microsoft Research Faculty Fellowship,
- Sloan Research Fellowship and Packard Fellowships.
+ This work is supported in part by CCF-1749609, DMS-1839116, DMS-2023166,
+ Microsoft Research Faculty Fellowship, Sloan Research Fellowship and Packard
+ Fellowships.
 \end_layout
 
 \end_inset
@@ -401,9 +391,8 @@ status collapsed
 
 \begin_layout Plain Layout
 vempala@gatech.edu.
- This work is supported in part by CCF-1563838,
- E2CDA-1640081,
- CCF-1717349 and DMS-1839323.
+ This work is supported in part by CCF-1563838, E2CDA-1640081, CCF-1717349
+ and DMS-1839323.
 \end_layout
 
 \end_inset
@@ -607,8 +596,7 @@ Black-box Problem
 
 \begin_deeper
 \begin_layout Itemize
-Gradient descent,
- etc
+Gradient descent, etc
 \end_layout
 
 \end_deeper
@@ -685,8 +673,7 @@ Newton method?
 status open
 
 \begin_layout Plain Layout
-in general,
- 
+in general, 
 \end_layout
 
 \begin_layout Plain Layout
@@ -702,12 +689,13 @@ in general,
 \end_layout
 
 \begin_layout Plain Layout
--- some discussion at beginning and end of chapter (like the story you plan to tell in lecture) but I agree with your plan for both to sign off each section
+-- some discussion at beginning and end of chapter (like the story you plan
+ to tell in lecture) but I agree with your plan for both to sign off each
+ section
 \end_layout
 
 \begin_layout Plain Layout
-– use more displaystyle math (separate line),
- easier to read and reference
+– use more displaystyle math (separate line), easier to read and reference
 \end_layout
 
 \begin_layout Plain Layout
@@ -724,8 +712,7 @@ in general,
 status open
 
 \begin_layout Plain Layout
-For the Langevin dynamics,
- give example of SDE.
+For the Langevin dynamics, give example of SDE.
 \end_layout
 
 \begin_layout Plain Layout
@@ -737,8 +724,8 @@ add figures (lots!)
 \end_layout
 
 \begin_layout Plain Layout
-Mirror descent section:
- Define the parameter of the mirror map..highlight what is the result for 
+Mirror descent section: Define the parameter of the mirror map..highlight
+ what is the result for 
 \begin_inset Formula $\ell_{1}$
 \end_inset
 
@@ -747,8 +734,7 @@ Mirror descent section:
 \end_inset
 
  ball.
- Also,
- the SDP ball.
+ Also, the SDP ball.
 \end_layout
 
 \begin_layout Plain Layout
@@ -793,38 +779,18 @@ Make the book mathematically rigorous?
 
 \begin_layout Plain Layout
 —
-
 \end_layout
 
 \begin_layout Plain Layout
-Acknowledge:
- Swati,
- Andre Wibisono,
- Mohit Singh,
- Arkadi,
- Siva Theja Magaluri,
+Acknowledge: Swati, Andre Wibisono, Mohit Singh, Arkadi, Siva Theja Magaluri,
  ...
 \end_layout
 
 \begin_layout Plain Layout
-Minor acknowledge:
- Ollin Boer Bohan,
- Ewin Tang,
- Andrew Wei,
- Omid Sadeghi,
- XiuJun Li,
- Ofir Press,
- Cyrus Hettle,
- Jiaming Lang,
- Samantha Petti,
- Matthew Fahrbach,
- Ziyi Yin,
- rafael orozco,
- Kunal Chawla,
- Anand Chaturvedi,
- Letian Chen,
- Huang Zan,
- Pranshu Trivedi
+Minor acknowledge: Ollin Boer Bohan, Ewin Tang, Andrew Wei, Omid Sadeghi,
+ XiuJun Li, Ofir Press, Cyrus Hettle, Jiaming Lang, Samantha Petti, Matthew
+ Fahrbach, Ziyi Yin, rafael orozco, Kunal Chawla, Anand Chaturvedi, Letian
+ Chen, Huang Zan, Pranshu Trivedi
 \end_layout
 
 \begin_layout Plain Layout
@@ -836,13 +802,11 @@ Explain the lagrangian somewhere
 \end_layout
 
 \begin_layout Plain Layout
-Add defs of Wasserstein,
- log-Sob
+Add defs of Wasserstein, log-Sob
 \end_layout
 
 \begin_layout Plain Layout
 —
-
 \end_layout
 
 \begin_layout Plain Layout
@@ -907,7 +871,6 @@ Preliminaries
 \begin_inset CommandInset include
 LatexCommand input
 filename "preliminaries.lyx"
-literal "true"
 
 \end_inset
 
@@ -918,7 +881,6 @@ literal "true"
 \begin_inset CommandInset include
 LatexCommand input
 filename "examples.lyx"
-literal "true"
 
 \end_inset
 
@@ -933,7 +895,6 @@ Introduction
 \begin_inset CommandInset include
 LatexCommand input
 filename "convexity.lyx"
-literal "true"
 
 \end_inset
 
@@ -953,23 +914,21 @@ Maybe I can add a plot somewhere looks like this:
 \end_layout
 
 \begin_layout Plain Layout
-Sublinear time --- SGD (close to quadratic,
- 1/eps)
+Sublinear time --- SGD (close to quadratic, 1/eps)
 \end_layout
 
 \begin_layout Plain Layout
-Linear time --- GD (close to quadratic ,
- log(1/eps)) n^{1.5-2.5} time --- 
+Linear time --- GD (close to quadratic , log(1/eps)) n^{1.5-2.5} time ---
+ 
 \end_layout
 
 \begin_layout Plain Layout
-IPM (structure,
- log(1/eps)) n^3 time --- 
+IPM (structure, log(1/eps)) n^3 time --- 
 \end_layout
 
 \begin_layout Plain Layout
-cutting plane (log(1/eps)) n^O(1) time --- (exact if solution is integral and bounded) 2^{exp(sqrt(n)} time --- (structure,
- exact if soln is integral)
+cutting plane (log(1/eps)) n^O(1) time --- (exact if solution is integral
+ and bounded) 2^{exp(sqrt(n)} time --- (structure, exact if soln is integral)
 \end_layout
 
 \end_inset
@@ -985,7 +944,6 @@ Gradient Descent
 \begin_inset CommandInset include
 LatexCommand input
 filename "gradient_descent.lyx"
-literal "true"
 
 \end_inset
 
@@ -1007,7 +965,6 @@ name "chap:Elimination"
 \begin_inset CommandInset include
 LatexCommand input
 filename "cutting_plane.lyx"
-literal "true"
 
 \end_inset
 
@@ -1015,7 +972,6 @@ literal "true"
 \begin_inset CommandInset include
 LatexCommand input
 filename "geometric_descent.lyx"
-literal "true"
 
 \end_inset
 
@@ -1023,7 +979,6 @@ literal "true"
 \begin_inset CommandInset include
 LatexCommand input
 filename "lower_bound.lyx"
-literal "true"
 
 \end_inset
 
@@ -1038,7 +993,6 @@ Reduction
 \begin_inset CommandInset include
 LatexCommand input
 filename "equivalence.lyx"
-literal "true"
 
 \end_inset
 
@@ -1047,12 +1001,12 @@ literal "true"
 status open
 
 \begin_layout Plain Layout
-I don't like the current outline where I couple the equivalence with the convex conjugate.
+I don't like the current outline where I couple the equivalence with the
+ convex conjugate.
 \end_layout
 
 \begin_layout Plain Layout
-For some people,
- the equivalence is not that important.
+For some people, the equivalence is not that important.
  But the convex conjugate is important for anyone.
 \end_layout
 
@@ -1062,7 +1016,6 @@ For some people,
 \begin_inset CommandInset include
 LatexCommand input
 filename "duality.lyx"
-literal "true"
 
 \end_inset
 
@@ -1095,7 +1048,6 @@ Just we never use in that way?
 \begin_inset CommandInset include
 LatexCommand input
 filename "mirror_descent.lyx"
-literal "true"
 
 \end_inset
 
@@ -1132,14 +1084,14 @@ Is mirror descent is about the decomposition of online and offline parts?
 status open
 
 \begin_layout Plain Layout
-Incorporate some of the contents after I have introduced the subgradient method
+Incorporate some of the contents after I have introduced the subgradient
+ method
 \end_layout
 
 \begin_layout Plain Layout
 \begin_inset CommandInset include
 LatexCommand input
 filename "reduction.lyx"
-literal "true"
 
 \end_inset
 
@@ -1155,7 +1107,6 @@ literal "true"
 \begin_inset CommandInset include
 LatexCommand input
 filename "frank_wolfe.lyx"
-literal "true"
 
 \end_inset
 
@@ -1163,7 +1114,6 @@ literal "true"
 \begin_inset CommandInset include
 LatexCommand input
 filename "newton_method.lyx"
-literal "true"
 
 \end_inset
 
@@ -1171,7 +1121,6 @@ literal "true"
 \begin_inset CommandInset include
 LatexCommand input
 filename "interior_point_method.lyx"
-literal "true"
 
 \end_inset
 
@@ -1186,7 +1135,6 @@ Sparsification
 \begin_inset CommandInset include
 LatexCommand input
 filename "subspace_embedding.lyx"
-literal "true"
 
 \end_inset
 
@@ -1194,7 +1142,6 @@ literal "true"
 \begin_inset CommandInset include
 LatexCommand input
 filename "leverage_score_sampling.lyx"
-literal "true"
 
 \end_inset
 
@@ -1202,7 +1149,6 @@ literal "true"
 \begin_inset CommandInset include
 LatexCommand input
 filename "stochastic_gradient_descent.lyx"
-literal "true"
 
 \end_inset
 
@@ -1217,7 +1163,6 @@ Acceleration
 \begin_inset CommandInset include
 LatexCommand input
 filename "chebyshev.lyx"
-literal "true"
 
 \end_inset
 
@@ -1225,7 +1170,6 @@ literal "true"
 \begin_inset CommandInset include
 LatexCommand input
 filename "conjugate_gradient.lyx"
-literal "true"
 
 \end_inset
 
@@ -1233,7 +1177,6 @@ literal "true"
 \begin_inset CommandInset include
 LatexCommand input
 filename "accelerated_gradient_descent.lyx"
-literal "true"
 
 \end_inset
 
@@ -1252,7 +1195,6 @@ Gradient-based Sampling
 \begin_inset CommandInset include
 LatexCommand input
 filename "langevin_dynamics.lyx"
-literal "true"
 
 \end_inset
 
@@ -1267,7 +1209,6 @@ Elimination and Reduction
 \begin_inset CommandInset include
 LatexCommand input
 filename "cutting_plane_volume.lyx"
-literal "true"
 
 \end_inset
 
@@ -1278,7 +1219,6 @@ literal "true"
 \begin_inset CommandInset include
 LatexCommand input
 filename "opt_from_mem.lyx"
-literal "true"
 
 \end_inset
 
@@ -1293,7 +1233,6 @@ Geometrization
 \begin_inset CommandInset include
 LatexCommand input
 filename "ball_walk.lyx"
-literal "true"
 
 \end_inset
 
@@ -1301,7 +1240,6 @@ literal "true"
 \begin_inset CommandInset include
 LatexCommand input
 filename "har_dikin.lyx"
-literal "true"
 
 \end_inset
 
@@ -1309,7 +1247,6 @@ literal "true"
 \begin_inset CommandInset include
 LatexCommand input
 filename "RHMC.lyx"
-literal "true"
 
 \end_inset
 
@@ -1331,7 +1268,6 @@ name "chap:Annealing"
 \begin_inset CommandInset include
 LatexCommand input
 filename "annealing.lyx"
-literal "true"
 
 \end_inset
 
@@ -1339,7 +1275,6 @@ literal "true"
 \begin_inset CommandInset include
 LatexCommand input
 filename "annealing_volume.lyx"
-literal "true"
 
 \end_inset
 
@@ -1351,7 +1286,6 @@ status open
 \begin_inset CommandInset include
 LatexCommand input
 filename "rounding.lyx"
-literal "true"
 
 \end_inset
 
@@ -1391,7 +1325,6 @@ Calculus - Review
 \begin_inset CommandInset include
 LatexCommand input
 filename "appendix.lyx"
-literal "true"
 
 \end_inset
 
@@ -1400,8 +1333,8 @@ literal "true"
 status open
 
 \begin_layout Plain Layout
-Probably should first have a more comprehensive introduction,
- covering what we need to use in this book..
+Probably should first have a more comprehensive introduction, covering what
+ we need to use in this book..
 \end_layout
 
 \end_inset
@@ -1417,7 +1350,6 @@ Notation
 \begin_inset CommandInset include
 LatexCommand input
 filename "notation.lyx"
-literal "true"
 
 \end_inset
 
@@ -1438,8 +1370,7 @@ end{document}
 \end_layout
 
 \begin_layout Chapter
-—
--
+—-
 \end_layout
 
 \begin_layout Chapter
@@ -1450,7 +1381,6 @@ Expansion
 \begin_inset CommandInset include
 LatexCommand input
 filename "ode.lyx"
-literal "true"
 
 \end_inset
 
@@ -1458,7 +1388,6 @@ literal "true"
 \begin_inset CommandInset include
 LatexCommand input
 filename "collocation_method.lyx"
-literal "true"
 
 \end_inset
 
@@ -1473,7 +1402,6 @@ Decomposition
 \begin_inset CommandInset include
 LatexCommand input
 filename "cholesky_decomposition.lyx"
-literal "true"
 
 \end_inset
 
@@ -1481,7 +1409,6 @@ literal "true"
 \begin_inset CommandInset include
 LatexCommand input
 filename "multigrid.lyx"
-literal "true"
 
 \end_inset
 
