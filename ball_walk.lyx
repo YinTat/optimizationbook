@@ -625,7 +625,8 @@ If
 \end_inset
 
  is stationary w.r.t.
- a lazy ergodic Markov chain,
+ a lazy,
+ ergodic Markov chain,
  then it is the unique stationary distribution for that Markov chain.
 \end_layout
 
@@ -675,6 +676,19 @@ Total variation distance is
 \end_layout
 
 \begin_layout Enumerate
+KL-divergence:
+ 
+\begin_inset Formula 
+\[
+d_{KL}(P,Q)=\int_{K}\log\frac{dP(u)}{dQ(u)}\,dP(u).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
 Warmth:
  
 \begin_inset Formula $P$
@@ -691,6 +705,61 @@ Warmth:
 
  if 
 \begin_inset Formula $M=\sup_{A\in\mathcal{A}}\frac{P(A)}{Q(A)}.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+We say that a distribution 
+\begin_inset Formula $P$
+\end_inset
+
+ is 
+\emph on
+absolutely continuous 
+\emph default
+w.r.t.
+ another distribution 
+\begin_inset Formula $Q$
+\end_inset
+
+ if for any set 
+\begin_inset Formula $A$
+\end_inset
+
+ for which 
+\begin_inset Formula $Q(A)=0$
+\end_inset
+
+ we also have 
+\begin_inset Formula $P(A)=0$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+The following relationships hold when 
+\begin_inset Formula $P$
+\end_inset
+
+ is absolutely continuous w.r.t.
+ 
+\begin_inset Formula $Q$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Fact
+We have 
+\begin_inset Formula 
+\[
+\frac{1}{2}d_{TV}(P,Q)^{2}\le d_{KL}(P,Q)\le\chi^{2}(P,Q)\qquad\mbox{ and }\qquad d_{TV}(P,Q)^{2}\le\chi^{2}(P,Q).
+\]
+
 \end_inset
 
 
@@ -829,7 +898,7 @@ h_{t}(x)=\sup_{g\in{\cal G}_{x}}\int_{u\in K}g(u)\ (dQ_{t}(u)-dQ(u))=\sup_{g\in{
 
 \end_inset
 
-This function is strongly concave.
+This function is concave.
 \end_layout
 
 \begin_layout Exercise

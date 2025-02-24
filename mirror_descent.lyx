@@ -198,7 +198,13 @@ One could wish to prove that the polar operator is a involution,
 \end_layout
 
 \begin_layout Proposition
-Let 
+\begin_inset CommandInset label
+LatexCommand label
+name "prop:K**"
+
+\end_inset
+
+ Let 
 \begin_inset Formula $K\subseteq$
 \end_inset
 
