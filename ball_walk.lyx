@@ -694,11 +694,15 @@ Warmth:
 \begin_inset Formula $P$
 \end_inset
 
- is said to be 
+ is said to be
+\emph on
+ 
 \begin_inset Formula $M$
 \end_inset
 
--warm w.r.t.
+-warm
+\emph default
+ w.r.t.
  
 \begin_inset Formula $Q$
 \end_inset
@@ -757,7 +761,7 @@ The following relationships hold when
 We have 
 \begin_inset Formula 
 \[
-\frac{1}{2}d_{TV}(P,Q)^{2}\le d_{KL}(P,Q)\le\chi^{2}(P,Q)\qquad\mbox{ and }\qquad d_{TV}(P,Q)^{2}\le\chi^{2}(P,Q).
+\frac{1}{2}d_{TV}(P,Q)^{2}\le d_{KL}(P,Q)\le\chi^{2}(P,Q).
 \]
 
 \end_inset
