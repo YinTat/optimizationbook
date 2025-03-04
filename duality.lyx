@@ -1,16 +1,16 @@
-#LyX 2.3 created this file. For more info see http://www.lyx.org/
-\lyxformat 544
+#LyX 2.4 created this file. For more info see https://www.lyx.org/
+\lyxformat 620
 \begin_document
 \begin_header
 \save_transient_properties true
 \origin unavailable
 \textclass optbook
 \use_default_options true
-\maintain_unincluded_children false
+\maintain_unincluded_children no
 \language english
 \language_package default
-\inputencoding auto
-\fontencoding global
+\inputencoding auto-legacy
+\fontencoding auto
 \font_roman "default" "default"
 \font_sans "default" "default"
 \font_typewriter "default" "default"
@@ -18,7 +18,9 @@
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
-\font_osf false
+\font_roman_osf false
+\font_sans_osf false
+\font_typewriter_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
 \use_microtype false
@@ -50,7 +52,9 @@
 \suppress_date false
 \justification true
 \use_refstyle 1
+\use_formatted_ref 0
 \use_minted 0
+\use_lineno 0
 \index Index
 \shortcut idx
 \color #008000
@@ -66,11 +70,16 @@
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
+\tablestyle default
 \tracking_changes false
 \output_changes false
+\change_bars false
+\postpone_fragile_content false
 \html_math_output 0
 \html_css_as_file 0
 \html_be_strict false
+\docbook_table_output 0
+\docbook_mathml_prefix 1
 \end_header
 
 \begin_body
@@ -85,7 +94,7 @@ status open
 
 \begin_layout Plain Layout
 Mention Alternative Projection.
- (Copy some material from here https://web.stanford.edu/class/ee392o/alt_proj.pdf)
+ (material from here https://web.stanford.edu/class/ee392o/alt_proj.pdf)
 \end_layout
 
 \begin_layout Plain Layout
@@ -102,10 +111,10 @@ Motivation
 \end_layout
 
 \begin_layout Standard
-In this section, we will discuss a few algorithmic applications of duality.
- In general, two reasons to consider a dual problem are that (1) the dual
- problem might have smaller dimension and (2) (sub)gradients are easier
- to compute.
+In this section,
+ we will discuss a few algorithmic applications of duality.
+ In general,
+ two reasons to consider a dual problem are that (1) the dual problem might have smaller dimension and (2) (sub)gradients are easier to compute.
  We will see such examples.
  
 \end_layout
@@ -123,9 +132,11 @@ difficult
 \begin_inset Formula $\min_{x}f(x)$
 \end_inset
 
-, i.e., one that does not satisfy some smoothness condition which direct suggests
- a faster than worst-case optimization method.
- Often, we can decompose the difficult problem as 
+,
+ i.e.,
+ one that does not satisfy some smoothness condition which direct suggests a faster than worst-case optimization method.
+ Often,
+ we can decompose the difficult problem as 
 \begin_inset Formula $f(x)=g(x)+h(Ax)$
 \end_inset
 
@@ -138,7 +149,8 @@ difficult
 \end_inset
 
  are easy to compute.
- Then, it is useful to compute its dual as follows:
+ Then,
+ it is useful to compute its dual as follows:
 \begin_inset Formula 
 \begin{align*}
 \min_{x}g(x)+h(Ax) & =\min_{x}\max_{\theta}g(x)+\theta^{\top}Ax-h^{*}(\theta)\\
@@ -153,8 +165,9 @@ where we used
 \begin_inset Formula $h=h^{**}$
 \end_inset
 
- in the first line, the following minimax theorem on the second line, and
- the definition of 
+ in the first line,
+ the following minimax theorem on the second line,
+ and the definition of 
 \begin_inset Formula $g^{*}$
 \end_inset
 
@@ -209,7 +222,8 @@ Let
 \end_inset
 
 .
- Then, we have
+ Then,
+ we have
 \begin_inset Formula 
 \[
 \min_{x\in X}\sup_{y\in Y}f(x,y)=\sup_{y\in Y}\min_{x\in X}f(x,y).
@@ -257,9 +271,10 @@ We call
 \end_inset
 
  the dual problem.
- Often, the dual problem gives us some insight on the primal problem.
- However, we note that there are many ways to split a problem into two and
- hence many candidate dual problems.
+ Often,
+ the dual problem gives us some insight on the primal problem.
+ However,
+ we note that there are many ways to split a problem into two and hence many candidate dual problems.
 \end_layout
 
 \begin_layout Example
@@ -279,7 +294,8 @@ where
 \begin_inset Formula $f\in\R^{E}$
 \end_inset
 
- is the flow vector, 
+ is the flow vector,
+ 
 \begin_inset Formula $A\in\R^{V\times E}$
 \end_inset
 
@@ -292,7 +308,8 @@ where
 \begin_inset Formula $Af=d$
 \end_inset
 
- is flow conservation, and 
+ is flow conservation,
+ and 
 \begin_inset Formula $c$
 \end_inset
 
@@ -323,7 +340,8 @@ When
 \begin_inset Formula $F$
 \end_inset
 
-, and the dual problem is the minimum 
+,
+ and the dual problem is the minimum 
 \begin_inset Formula $s-t$
 \end_inset
 
@@ -354,7 +372,9 @@ potential
 \end_inset
 
  variables in dual.
- So, in this sense, the dual problem is easier for dense graphs.
+ So,
+ in this sense,
+ the dual problem is easier for dense graphs.
  Although we do not have a way to turn a minimum 
 \begin_inset Formula $s-t$
 \end_inset
@@ -363,24 +383,28 @@ potential
 \begin_inset Formula $s-t$
 \end_inset
 
- flow in general, we will see various tricks to reconstruct the primal solution
- from the dual solution by modifying the problem.
+ flow in general,
+ we will see various tricks to reconstruct the primal solution from the dual solution by modifying the problem.
 \end_layout
 
 \begin_layout Subsection
-Example: Semidefinite Programming
+Example:
+ Semidefinite Programming
 \end_layout
 
 \begin_layout Standard
-When you can solve the dual problem, the proof of the optimality of the
- dual problem often directly gives you the solution of the primal problem,
+When you can solve the dual problem,
+ the proof of the optimality of the dual problem often directly gives you the solution of the primal problem,
  or gives you some way to solve the primal problem efficiently.
- Here, we use the semidefinite programming as an concrete example.
+ Here,
+ we use the semidefinite programming as an concrete example.
  Define 
 \begin_inset Formula $\bullet$
 \end_inset
 
- as the inner product of matrices, i.e., 
+ as the inner product of matrices,
+ i.e.,
+ 
 \begin_inset Formula 
 \[
 A\bullet B=\sum_{i,j}A_{ij}B_{ij}.
@@ -408,11 +432,13 @@ where
 \begin_inset Formula $X$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $C$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $A_{i}$
 \end_inset
 
@@ -425,10 +451,9 @@ where
 \end_inset
 
 .
- SDP is a generalization of linear programming and is useful for various
- problems involving matrices.
- If we apply the current-best cutting plane method naively on the primal
- problem, we would get 
+ SDP is a generalization of linear programming and is useful for various problems involving matrices.
+ If we apply the current-best cutting plane method naively on the primal problem,
+ we would get 
 \begin_inset Formula $\tilde{O}(n^{2}(Z+n^{4}))$
 \end_inset
 
@@ -457,7 +482,8 @@ where
 \begin_inset Formula $\sum y_{i}A_{i}$
 \end_inset
 
- and finding its minimum eigenvalue.) Generally, 
+ and finding its minimum eigenvalue.) Generally,
+ 
 \begin_inset Formula $n^{2}\gg m$
 \end_inset
 
@@ -473,8 +499,8 @@ We note that
 
 \end_inset
 
-In each step of the cutting plane method, the (sub)gradient oracle either
- outputs 
+In each step of the cutting plane method,
+ the (sub)gradient oracle either outputs 
 \begin_inset Formula $b$
 \end_inset
 
@@ -491,13 +517,15 @@ Let
 \end_inset
 
  be the set of all cutting planes used in the algorithm.
- Then, the proof of the cutting plane method 
+ Then,
+ the proof of the cutting plane method 
 \begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
 Make it more explicit.
- Also, make the proof rigr
+ Also,
+ make the proof rigr
 \end_layout
 
 \end_inset
@@ -510,9 +538,9 @@ shows that
 
 \end_inset
 
-The key idea to obtaining the primal solution is to take the dual of the
- right hand side (which is an approximate dual of the original problem).
- Now, we have
+The key idea to obtaining the primal solution is to take the dual of the right hand side (which is an approximate dual of the original problem).
+ Now,
+ we have
 \begin_inset Formula 
 \begin{align*}
 \min_{v^{\top}(\sum_{i=1}^{m}y_{i}A_{i}-C)v\geq0\ \forall v\in\mathcal{S}}b^{\top}y & =\min_{y}\max_{\lambda_{v}\geq0}b^{\top}y-\sum_{v\in\mathcal{S}}\lambda_{v}v^{\top}(\sum_{i=1}^{m}y_{i}A_{i}-C)v\\
@@ -523,8 +551,8 @@ The key idea to obtaining the primal solution is to take the dual of the
 
 \end_inset
 
-Note that this is exactly the primal SDP problem, except that we restrict
- the set of solutions to the form 
+Note that this is exactly the primal SDP problem,
+ except that we restrict the set of solutions to the form 
 \begin_inset Formula $\sum_{v\in\mathcal{S}}\lambda_{v}vv^{\top}$
 \end_inset
 
@@ -533,7 +561,8 @@ Note that this is exactly the primal SDP problem, except that we restrict
 \end_inset
 
 .
- Also, we can write this problem as a linear program:
+ Also,
+ we can write this problem as a linear program:
 \begin_inset Formula 
 \begin{equation}
 \max_{\sum_{v}\lambda_{v}v^{\top}A_{i}v=b_{i}\text{ for all }i,\lambda_{v}\geq0}\sum_{v}\lambda_{v}v^{\top}Cv.\label{eq:SDP_LP}
@@ -541,26 +570,28 @@ Note that this is exactly the primal SDP problem, except that we restrict
 
 \end_inset
 
-Therefore, we can simply solve this linear program and recover an approximate
- solution for the SDP.
+Therefore,
+ we can simply solve this linear program and recover an approximate solution for the SDP.
  By (
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:SDP_apx"
+nolink "false"
 
 \end_inset
 
-), we know that this is an approximate solution with the same guarantee
- as the dual SDP.
+),
+ we know that this is an approximate solution with the same guarantee as the dual SDP.
  
 \end_layout
 
 \begin_layout Standard
-Now, we analyze the runtime of this algorithm.
- This algorithm contains two phases: solve the dual SDP via cutting plane
- method, and solve the primal linear program.
- Note that each step of the cutting plane method involves finding a separating
- hyperplane of 
+Now,
+ we analyze the runtime of this algorithm.
+ This algorithm contains two phases:
+ solve the dual SDP via cutting plane method,
+ and solve the primal linear program.
+ Note that each step of the cutting plane method involves finding a separating hyperplane of 
 \begin_inset Formula $\sum_{i=1}^{m}y_{i}A_{i}\succeq C$
 \end_inset
 
@@ -583,7 +614,8 @@ Let
 status open
 
 \begin_layout Plain Layout
-This is arithmetic complexity, not bit complexity!
+This is arithmetic complexity,
+ not bit complexity!
 \end_layout
 
 \end_inset
@@ -592,7 +624,8 @@ This is arithmetic complexity, not bit complexity!
 \end_layout
 
 \begin_layout Standard
-Therefore, the first phase takes 
+Therefore,
+ the first phase takes 
 \begin_inset Formula $O^{*}(m(Z+n^{\omega}+m^{2}))$
 \end_inset
 
@@ -601,15 +634,18 @@ Therefore, the first phase takes
 \begin_inset Formula $O^{*}(m)$
 \end_inset
 
- steps, we have 
+ steps,
+ we have 
 \begin_inset Formula $|\mathcal{S}|=O^{*}(m)$
 \end_inset
 
 .
- In the second phase, we need to solve a linear program (
+ In the second phase,
+ we need to solve a linear program (
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:SDP_LP"
+nolink "false"
 
 \end_inset
 
@@ -635,7 +671,8 @@ literal "true"
 \end_inset
 
 .
- Hence, the total cost is dominated by the first phase 
+ Hence,
+ the total cost is dominated by the first phase 
 \begin_inset Formula 
 \[
 O^{*}\left(mZ+mn^{\omega}+m^{3}\right).
@@ -647,14 +684,16 @@ O^{*}\left(mZ+mn^{\omega}+m^{3}\right).
 \end_layout
 
 \begin_layout Problem
-In the first phase, each step involves computing an eigenvector of similar
- matrices.
- So, can we use matrix update formulas to decrease the cost per step in
- the cutting plane to 
+In the first phase,
+ each step involves computing an eigenvector of similar matrices.
+ So,
+ can we use matrix update formulas to decrease the cost per step in the cutting plane to 
 \begin_inset Formula $O^{*}(Z+n^{2})$
 \end_inset
 
-? Namely, can we solve SDP in time 
+?
+ Namely,
+ can we solve SDP in time 
 \begin_inset Formula $O^{*}\left(mZ+m^{3}\right)?$
 \end_inset
 
@@ -671,12 +710,14 @@ The problem
 \end_inset
 
  in general can be solved by a similar trick.
- To make this geometric picture clearer, we consider its linear optimization
- version: 
+ To make this geometric picture clearer,
+ we consider its linear optimization version:
+ 
 \begin_inset Formula $\min_{(x,t_{1})\in\epi\,g,(Ax,t_{2})\in\epi\,h}t_{1}+t_{2}.$
 \end_inset
 
- To simplify the notation, we consider the problem
+ To simplify the notation,
+ we consider the problem
 \begin_inset Formula 
 \[
 \min_{x\in K_{1},Mx\in K_{2}}c^{\top}x
@@ -688,7 +729,8 @@ where
 \begin_inset Formula $M\in\R^{m\times n}$
 \end_inset
 
-, and we have convex sets 
+,
+ and we have convex sets 
 \begin_inset Formula $K_{1}\subset\Rn$
 \end_inset
 
@@ -701,12 +743,14 @@ where
 \end_layout
 
 \begin_layout Standard
-To be concrete, let us consider the following example.
+To be concrete,
+ let us consider the following example.
  Let 
 \begin_inset Formula $V_{1}$
 \end_inset
 
- be a set of students, 
+ be a set of students,
+ 
 \begin_inset Formula $V_{2}$
 \end_inset
 
@@ -720,10 +764,8 @@ To be concrete, let us consider the following example.
 \begin_inset Formula $w_{e}$
 \end_inset
 
- be the happiness of a school/student if the student is assigned to that
- school.
- Suppose that every student can only be assigned to one school and school
- 
+ be the happiness of a school/student if the student is assigned to that school.
+ Suppose that every student can only be assigned to one school and school 
 \begin_inset Formula $b$
 \end_inset
 
@@ -732,7 +774,8 @@ To be concrete, let us consider the following example.
 \end_inset
 
  students.
- Then, the problem can be formulated as
+ Then,
+ the problem can be formulated as
 \begin_inset Formula 
 \[
 \max_{x_{e}\geq0}\sum_{e\in E}w_{e}x_{e}\text{ subject to }\sum_{(a,b)\in E}x_{(a,b)}\leq1\ \forall a\in V_{1},\sum_{(a,b)\in E}x_{(a,b)}\leq c_{b}\ \forall b\in V_{2}.
@@ -741,10 +784,12 @@ To be concrete, let us consider the following example.
 \end_inset
 
 This is the weighted b-matching problem.
- Typically, the number of students is much more than the number of schools.
- Therefore, an algorithm with running time linear in the number of students
- is preferable.
- To apply our framework, we let
+ Typically,
+ the number of students is much more than the number of schools.
+ Therefore,
+ an algorithm with running time linear in the number of students is preferable.
+ To apply our framework,
+ we let
 \begin_inset Formula 
 \begin{align*}
 K_{1} & =\{x\in\R^{E},x_{e}\geq0,\sum_{(a,b)\in E}x_{(a,b)}\leq1\ \forall a\in V_{1}\},\\
@@ -765,19 +810,23 @@ and
 \end_layout
 
 \begin_layout Standard
-To further emphasize its importance, consider some general examples here:
+To further emphasize its importance,
+ consider some general examples here:
 \end_layout
 
 \begin_layout Itemize
-Linear programming: 
+Linear programming:
+ 
 \begin_inset Formula $\min_{Ax=b,x\geq0}c^{\top}x$
 \end_inset
 
-: 
+:
+ 
 \begin_inset Formula $K_{1}=\{x\geq0\}$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $K_{2}=\{b\}$
 \end_inset
 
@@ -789,15 +838,18 @@ Linear programming:
 \end_layout
 
 \begin_layout Itemize
-Semidefinite programming: 
+Semidefinite programming:
+ 
 \begin_inset Formula $\min_{A_{i}\bullet X=b_{i},X\succeq0}C\bullet X$
 \end_inset
 
-: 
+:
+ 
 \begin_inset Formula $K_{1}=\{X\succeq0\}$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $K_{2}=\{b\}$
 \end_inset
 
@@ -813,11 +865,13 @@ Semidefinite programming:
 \end_layout
 
 \begin_layout Itemize
-Matroid intersection: 
+Matroid intersection:
+ 
 \begin_inset Formula $\min_{x\in M_{1}\cap M_{2}}1^{\top}x$
 \end_inset
 
-: 
+:
+ 
 \begin_inset Formula $K_{1}=M_{1}$
 \end_inset
 
@@ -825,7 +879,8 @@ Matroid intersection:
 \begin_inset Formula $K_{2}=M_{2}$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $M=I$
 \end_inset
 
@@ -833,15 +888,18 @@ Matroid intersection:
 \end_layout
 
 \begin_layout Itemize
-Submodular minimization: 
+Submodular minimization:
+ 
 \begin_inset Formula $K_{1}=\{y\in\Rn:\sum_{i\in S}y_{i}\leq f(S)\text{ for all }S\subset[n]\}$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $K_{2}=\{y\leq0\}$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $M=I$
 \end_inset
 
@@ -849,15 +907,18 @@ Submodular minimization:
 \end_layout
 
 \begin_layout Itemize
-Submodular flow: 
+Submodular flow:
+ 
 \begin_inset Formula $K_{1}=\{\varphi\in\R^{E},\ell_{e}\leq\varphi_{e}\leq u_{e}\text{ for all }e\in E\}$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $K_{2}=\{y\in\R^{V}:\sum_{i\in S}y_{i}\leq f(S)\text{ for all }S\subset[n]\}$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $M$
 \end_inset
 
@@ -865,7 +926,8 @@ Submodular flow:
 \end_layout
 
 \begin_layout Standard
-In all of these examples, it is easy to compute the gradient of 
+In all of these examples,
+ it is easy to compute the gradient of 
 \begin_inset Formula $\delta_{K_{1}}^{*}$
 \end_inset
 
@@ -878,7 +940,8 @@ In all of these examples, it is easy to compute the gradient of
 status open
 
 \begin_layout Plain Layout
-why? what is 
+why?
+ what is 
 \begin_inset Formula $\nabla\delta_{K}^{*}$
 \end_inset
 
@@ -887,8 +950,8 @@ why? what is
 
 \end_inset
 
- For the last three examples, it is not clear how to compute gradient of
- 
+ For the last three examples,
+ it is not clear how to compute gradient of 
 \begin_inset Formula $\delta_{K_{1}}$
 \end_inset
 
@@ -897,12 +960,15 @@ why? what is
 \end_inset
 
  directly.
- Furthermore, in all examples, 
+ Furthermore,
+ in all examples,
+ 
 \begin_inset Formula $M$
 \end_inset
 
  maps from a larger space to the same or smaller space.
- Therefore, it is good to take advantage of the smaller space.
+ Therefore,
+ it is good to take advantage of the smaller space.
 \end_layout
 
 \begin_layout Standard
@@ -914,7 +980,8 @@ literal "true"
 
 \end_inset
 
-, the standard way was to use the equivalence of 
+,
+ the standard way was to use the equivalence of 
 \begin_inset Formula $\nabla\delta_{K_{1}}^{*}$
 \end_inset
 
@@ -922,9 +989,10 @@ literal "true"
 \begin_inset Formula $\nabla\delta_{K_{1}}$
 \end_inset
 
- , and apply cutting plane methods.
- With the running time of cutting plane methods, such an algorithm usually
- had theoretical running time at least 
+ ,
+ and apply cutting plane methods.
+ With the running time of cutting plane methods,
+ such an algorithm usually had theoretical running time at least 
 \begin_inset Formula $n^{5}$
 \end_inset
 
@@ -945,9 +1013,12 @@ Now we rewrite the problem as we did in the beginning:
 \end_inset
 
 Taking the dual has two benefits.
- First, the number of variables is smaller.
- Second, the gradient oracle is something we can compute efficiently.
- Hence, cutting plane methods can be used to solve it in 
+ First,
+ the number of variables is smaller.
+ Second,
+ the gradient oracle is something we can compute efficiently.
+ Hence,
+ cutting plane methods can be used to solve it in 
 \begin_inset Formula $O^{*}(m\mathcal{T}+m^{3})$
 \end_inset
 
@@ -990,13 +1061,13 @@ Let
 \end_inset
 
  similarly.
- Suppose that the cutting plane method ends with the guarantee that the
- additive error is less than 
+ Suppose that the cutting plane method ends with the guarantee that the additive error is less than 
 \begin_inset Formula $\varepsilon$
 \end_inset
 
 .
- Then, we have that
+ Then,
+ we have that
 \begin_inset Formula 
 \[
 \min_{x\in K_{1},Tx\in K_{2}}c^{\top}x\leq\min_{x\in\widetilde{K_{1}},Tx\in\widetilde{K_{2}}}c^{\top}x\leq\min_{x\in K_{1},Tx\in K_{2}}c^{\top}x+\varepsilon
@@ -1042,7 +1113,8 @@ Let
 \end_inset
 
 .
- Having this, the algorithm cannot distinguish between 
+ Having this,
+ the algorithm cannot distinguish between 
 \begin_inset Formula $\widetilde{K_{1}}$
 \end_inset
 
@@ -1050,7 +1122,8 @@ Let
 \begin_inset Formula $K_{1}$
 \end_inset
 
-, and between 
+,
+ and between 
 \begin_inset Formula $\widetilde{K_{2}}$
 \end_inset
 
@@ -1059,14 +1132,19 @@ Let
 \end_inset
 
 .
- Hence, the algorithm runs exactly the same, i.e., uses the same sequence
- of points.
- Therefore, we get the same value 
+ Hence,
+ the algorithm runs exactly the same,
+ i.e.,
+ uses the same sequence of points.
+ Therefore,
+ we get the same value 
 \begin_inset Formula $c^{\top}x$
 \end_inset
 
 .
- However, by the guarantee of cutting plane method, we have that
+ However,
+ by the guarantee of cutting plane method,
+ we have that
 \begin_inset Formula 
 \[
 \min_{x\in\widetilde{K_{1}},Tx\in\widetilde{K_{2}}}c^{\top}x\leq c^{\top}x\leq\min_{x\in K_{1},Tx\in K_{2}}c^{\top}x+\varepsilon.
@@ -1078,7 +1156,8 @@ Let
 \end_layout
 
 \begin_layout Proof
-To prove the claim, we note that 
+To prove the claim,
+ we note that 
 \begin_inset Formula $x_{i}\in\nabla\delta_{\widetilde{K_{1}}}^{*}(\theta_{i})$
 \end_inset
 
@@ -1092,7 +1171,8 @@ To prove the claim, we note that
 \end_inset
 
 .
- Also, note that 
+ Also,
+ note that 
 \begin_inset Formula 
 \[
 x_{i}=\arg\min_{x\in K_{1}}\theta_{i}^{\top}x\in\widetilde{K_{1}}
@@ -1105,12 +1185,14 @@ and hence
 \end_inset
 
 .
- Therefore, we have that 
+ Therefore,
+ we have that 
 \begin_inset Formula $\min_{x\in\widetilde{K_{1}}}\theta_{i}^{\top}x=\min_{x\in K_{1}}\theta_{i}^{\top}x$
 \end_inset
 
 .
- Therefore, 
+ Therefore,
+ 
 \begin_inset Formula $x_{i}\in\arg\min_{x\in K_{1}}\theta_{i}^{\top}x$
 \end_inset
 
@@ -1133,12 +1215,14 @@ This reduces the problem into the form
 \end_inset
 
 .
- For the second phase, we let 
+ For the second phase,
+ we let 
 \begin_inset Formula $z_{i}=Mx_{i}\in\Rm$
 \end_inset
 
 .
- Then, we have
+ Then,
+ we have
 \begin_inset Formula 
 \begin{align*}
 \min_{x\in\widetilde{K_{1}},Mx\in\widetilde{K_{2}}}c^{\top}x= & \min_{t_{i}\geq0,s_{i}\geq0,M\sum_{i}t_{i}x_{i}=\sum_{i}s_{i}y_{i}}c^{\top}(\sum_{i}t_{i}x_{i})\\
@@ -1160,7 +1244,8 @@ Note that it takes
 \end_inset
 
 .
- Next, we note that this linear program has 
+ Next,
+ we note that this linear program has 
 \begin_inset Formula $O^{*}(m)$
 \end_inset
 
@@ -1169,7 +1254,8 @@ Note that it takes
 \end_inset
 
  constraints.
- Therefore, we can solve it in 
+ Therefore,
+ we can solve it in 
 \begin_inset Formula $O^{*}(m^{2.38})$
 \end_inset
 
@@ -1178,7 +1264,8 @@ Note that it takes
 \end_layout
 
 \begin_layout Standard
-Therefore, the total running time is 
+Therefore,
+ the total running time is 
 \begin_inset Formula 
 \[
 O^{*}(m(\mathcal{T}+m^{2})+(mZ+m^{2.38})).
@@ -1190,7 +1277,8 @@ O^{*}(m(\mathcal{T}+m^{2})+(mZ+m^{2.38})).
 \end_layout
 
 \begin_layout Standard
-To conclude, we have the following theorem.
+To conclude,
+ we have the following theorem.
 \end_layout
 
 \begin_layout Theorem
@@ -1214,7 +1302,8 @@ Given convex sets
 \begin_inset Formula $Z$
 \end_inset
 
- non-zeros, let 
+ non-zeros,
+ let 
 \begin_inset Formula $\mathcal{T}$
 \end_inset
 
@@ -1227,7 +1316,8 @@ Given convex sets
 \end_inset
 
 .
- Then, we can solve the problem
+ Then,
+ we can solve the problem
 \begin_inset Formula 
 \[
 \min_{x\in K_{1},Mx\in K_{2}}c^{\top}x
@@ -1248,12 +1338,13 @@ We hid all sorts of terms in the log term hidden in
 \end_inset
 
  such as the diameter of the set.
- Also this is the number of arithmetic operations, not the bit complexity.
+ Also this is the number of arithmetic operations,
+ not the bit complexity.
 \end_layout
 
 \begin_layout Standard
-Going back to the school/student problem, this algorithm gives a running
- time of
+Going back to the school/student problem,
+ this algorithm gives a running time of
 \begin_inset Formula 
 \[
 O^{*}(|V_{2}||E|+|V_{2}|^{3})
@@ -1265,8 +1356,9 @@ which is linear in the number of students!
 \end_layout
 
 \begin_layout Standard
-In general, this statement says that if we can split a convex problem into
- two parts, with both being easy to solve and one part having fewer variables,
+In general,
+ this statement says that if we can split a convex problem into two parts,
+ with both being easy to solve and one part having fewer variables,
  then we can solve the entire problem in time depending on the smaller dimension.
 \end_layout
 

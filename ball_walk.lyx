@@ -90,6 +90,13 @@
 \begin_layout Standard
 In this chapter,
  we study polynomial-time sampling algorithms.
+ As a primary motivation for much of the analysis,
+ we consider the 
+\emph on
+ball walk
+\emph default
+.
+ 
 \end_layout
 
 \begin_layout Subsection*
@@ -1367,6 +1374,28 @@ d_{TV}(Q_{t},Q)\leq\varepsilon+\sqrt{\frac{M}{\varepsilon}}\left(1-\frac{\phi^{2
 \end_layout
 
 \end_deeper
+\begin_layout Exercise
+Show that for a lazy,
+ time-reversible Markov chain with stationary distribution 
+\begin_inset Formula $Q$
+\end_inset
+
+ and conductance 
+\begin_inset Formula $\phi$
+\end_inset
+
+,
+ we have 
+\begin_inset Formula 
+\[
+\chi^{2}(Q_{t},Q)\le\left(1-\frac{\phi^{2}}{2}\right)^{t}\chi^{2}(Q_{0},Q).
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection*
 Convergence via Log-Sobolev
 \end_layout
@@ -3713,7 +3742,16 @@ Thus,
 \end_layout
 
 \begin_layout Conjecture
-The isoperimetric ratio of any isotropic logconcave density in 
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+KLS Hyperplane Conjecture.
+\end_layout
+
+\end_inset
+
+ The isoperimetric ratio of any isotropic logconcave density in 
 \begin_inset Formula $\R^{n}$
 \end_inset
 
@@ -3907,7 +3945,7 @@ nolink "false"
 
  up to a constant.
  One benefit of localization is that it does not require a carefully crafted potential.
- Localization has recently been generalized to Riemannian setting 
+ Localization has been extended to Riemannian setting 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "klartag2017needle"
@@ -4617,7 +4655,7 @@ literal "true"
  We note that the same theorem can be obtained by other means 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "Ledoux1999,Eldan2013"
+key "Ledoux1999"
 literal "true"
 
 \end_inset
@@ -4895,7 +4933,7 @@ Since we know the maximizer of any convex function is at extreme points,
 \begin_inset Formula $\Phi$
 \end_inset
 
- by checking Dirac measures and log-affine functions.
+ by only checking Dirac measures and log-affine functions.
 \end_layout
 
 \end_body
