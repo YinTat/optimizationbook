@@ -4792,6 +4792,126 @@ Let
 
 \end_layout
 
+\begin_layout Subsection
+Alternative formulations of Localization
+\end_layout
+
+\begin_layout Standard
+Here we give some alternative equivalent version of Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:LOCALIZATION"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ which are sometimes more convenient in applications.
+\end_layout
+
+\begin_layout Standard
+The first is in terms of single inequality on products of integrals.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Localization:
+ Product form]
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+The next is in terms of exponential needles,
+ i.e.,
+ we replace the linear functions obtained in the one-dimensional case in Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:LOCALIZATION"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ with truncated exponentials.
+ 
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Localization:
+ Exponential Needles]
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:localization_exp_needles"
+
+\end_inset
+
+ Let 
+\begin_inset Formula $f_{1},f_{2},f_{3},f_{4}:[a,b]\rightarrow\R_{+}$
+\end_inset
+
+ be nonnegative,
+ continuous integrable functions.
+ Then the following are equivalent:
+\end_layout
+
+\begin_layout Enumerate
+For every logconcave function 
+\begin_inset Formula $F:\R\rightarrow\R_{+}$
+\end_inset
+
+,
+ we have
+\begin_inset Formula 
+\[
+\int_{a}^{b}F(x)f_{1}(x)\,dx\int_{a}^{b}F(x)f_{2}(x)\,dx\le\int_{a}^{b}F(x)f_{3}(x)\,dx\int_{a}^{b}F(x)f_{4}(x)\,dx.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+For every subinterval 
+\begin_inset Formula $[a',b']\subseteq[a,b]\in\R$
+\end_inset
+
+ and every 
+\begin_inset Formula $\gamma\in\R$
+\end_inset
+
+,
+ we have 
+\begin_inset Formula 
+\[
+\int_{a'}^{b'}e^{\gamma t}f_{1}(t)\,dt\int_{a'}^{b'}e^{\gamma t}f_{2}(t)\,dt\le\int_{a'}^{b'}e^{\gamma t}f_{3}(t)\,dt\int_{a'}^{b'}e^{\gamma t}f_{4}(t)\,dt.
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 We conclude this section with a nice interpretation of the localization lemma by Fradelizi and Guedon.
  They also give a version that extends localization to multiple inequalities.
