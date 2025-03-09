@@ -1230,13 +1230,14 @@ nolink "false"
 \end_inset
 
 
-\end_layout
+\begin_inset Note Note
+status collapsed
 
-\begin_layout Section
+\begin_layout Plain Layout
 Dikin walk
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Both the ball walk and hit-and-run have a dependence on the 
 \begin_inset Quotes eld
 \end_inset
@@ -1266,7 +1267,7 @@ roundness
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 The general Dikin walk is defined as follows.
  For a convex set 
 \begin_inset Formula $K$
@@ -1292,7 +1293,7 @@ E_{u}(r)=\left\{ x:\,(x-u)^{\top}\mh(u)(x-u)\le r\right\} .
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset ERT
 status open
 
@@ -1315,7 +1316,7 @@ name "algo:Dikin"
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset ERT
 status open
 
@@ -1346,7 +1347,7 @@ status open
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset ERT
 status open
 
@@ -1362,7 +1363,7 @@ SetAlgoLined
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 \series bold
 Input:
@@ -1379,7 +1380,7 @@ Input:
 .
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Set 
 \begin_inset Formula $r=\frac{1}{8}$
 \end_inset
@@ -1387,7 +1388,7 @@ Set
 .
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Repeat 
 \begin_inset Formula $T$
 \end_inset
@@ -1429,7 +1430,7 @@ If
 .
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset ERT
 status open
 
@@ -1449,7 +1450,7 @@ Return
 .
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset ERT
 status open
 
@@ -1469,7 +1470,7 @@ end{algorithm2e}
 Strong Self-Concordance
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 We require a family of matrices to have the following properties.
  Usually but not necessarily,
  these matrices come from the Hessian of some convex function.
@@ -1534,7 +1535,7 @@ E_{u}(1)\subseteq K\cap(2u-K)\subseteq E_{u}(\sqrt{\bar{\nu}}).
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 The following lemma shows that self-concordant matrix functions also enjoy a similar regularity as the usual self-concordant functions.
 \end_layout
 
@@ -1701,7 +1702,7 @@ The result follows from this,
 .
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Many natural barriers,
  including the logarithmic barrier and the LS-barrier,
  satisfy a much stronger condition than self-concordant.
@@ -1862,7 +1863,7 @@ status open
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Similar to Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1990,21 +1991,13 @@ nolink "false"
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 We note that strong self-concordance is stronger than self-concordance since the Frobenius norm is always larger or equal to the spectral norm.
  As an example,
- we will verify that the conditions hold for the standard log barrier (Lemma 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:dssc"
-nolink "false"
-
-\end_inset
-
-).
+ we will verify that the conditions hold for the standard log barrier.
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 The Dikin walk has the following guarantee.
 \end_layout
 
@@ -2023,7 +2016,7 @@ The mixing rate of the Dikin walk for a symmetric,
 .
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Each step of the standard Dikin walk is fast,
  and does not need matrix multiplication.
 \end_layout
@@ -2050,7 +2043,7 @@ The Dikin walk with the logarithmic barrier for a polytope
 .
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 The next lemma results from studying strong self-concordance for classical barriers.
  The KLS constant below is conjectured to be 
 \begin_inset Formula $O(1)$
@@ -2123,7 +2116,7 @@ In short,
 .
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 In fact,
  the proof shows that up to a logarithmic factor the strong self-concordance of these barriers is 
 \emph on
@@ -2136,7 +2129,7 @@ to the KLS conjecture.
 Mixing with Strong Self-Concordance
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 A key ingredient of the proof of Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -2671,7 +2664,7 @@ d_{\mathrm{TV}}(P_{x},P_{y})\leq\frac{0.24}{2}+\frac{0.24}{2}+1-\frac{e^{-\frac{
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 The next lemma establishes isoperimetry.
  This only needs the symmetric containment assumption.
  The isoperimetry is for the cross-ratio distance.
@@ -2725,7 +2718,7 @@ d_{K}(u,v)=\frac{\|u-v\|_{2}\|p-q\|_{2}}{\|p-u\|_{2}\|v-q\|_{2}}.
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Tbis distance enjoyes the following isoperimetric inequality.
 \end_layout
 
@@ -2778,7 +2771,7 @@ we have
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 We now relate the cross-ratio distance to the ellipsoidal norm.
 \end_layout
 
@@ -2989,6 +2982,11 @@ We can now bound the conductance of
 \mbox{using isoperimetry (Theorem \ref{thm:dK-iso})} & \ge\frac{1}{8}d_{K}(S_{1}',S_{2}')\frac{\vol(S_{1}')\vol(S_{2}')}{\vol(P)}\\
  & \ge\frac{1}{512\sqrt{n\bar{\nu}}}\min\left\{ \vol(S_{1}),\vol(S_{2})\right\} .
 \end{align*}
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
