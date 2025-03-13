@@ -4984,14 +4984,82 @@ For every subinterval
 \begin_layout Remark
 We can also write the exponential needle version of localization in terms of two inequalities or one equality and one inequality:
  
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+For every logconcave 
+\begin_inset Formula $\ensuremath{F:\R\rightarrow\R_{+}}$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\nospellcheck default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+
 \begin_inset Formula 
 \[
-\mbox{For every logconcave \ensuremath{F:\R\rightarrow\R_{+}}, }\int_{a}^{b}Ff_{1}=0,\ \int_{a}^{b}Ff_{2}>0\Leftrightarrow\mbox{for every subinterval \ensuremath{[a',b']\subseteq[a,b]} and every}\gamma\in\R,\int_{a'}^{b'}e^{\gamma t}f_{1}=0,\ \int_{a'}^{b'}e^{\gamma t}f_{2}>0.
+\int_{a}^{b}Ff_{1}=0,\ \int_{a}^{b}Ff_{2}>0
 \]
 
 \end_inset
 
- We conclude this section with a nice interpretation of the localization lemma by Fradelizi and Guedon.
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+iff for every subinterval 
+\begin_inset Formula $\ensuremath{[a',b']\subseteq[a,b]}$
+\end_inset
+
+,
+ and every 
+\begin_inset Formula $\gamma\in\R$
+\end_inset
+
+,
+ 
+\begin_inset Formula 
+\[
+\int_{a'}^{b'}e^{\gamma t}f_{1}=0,\ \int_{a'}^{b'}e^{\gamma t}f_{2}>0.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+We conclude this section with a nice interpretation of the localization lemma by Fradelizi and Guedon.
  They also give a version that extends localization to multiple inequalities.
 \end_layout
 
