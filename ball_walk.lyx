@@ -4813,6 +4813,32 @@ nolink "false"
 
 \begin_layout Standard
 The first is in terms of single inequality on products of integrals.
+ Note that an 
+\begin_inset Formula $n$
+\end_inset
+
+-dimensional needle 
+\begin_inset Formula $N$
+\end_inset
+
+ is specified by a pair of points 
+\begin_inset Formula $a,b\in\R^{n}$
+\end_inset
+
+ and a linear function 
+\begin_inset Formula $\ell:[0,1]\rightarrow\R_{+}$
+\end_inset
+
+.
+ The integral over a needle is defined as 
+\begin_inset Formula 
+\[
+\int_{N}f=\int_{0}^{1}f((1-t)a+tb)\ell(t)^{n-1}\,dt.
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Lemma
@@ -4826,11 +4852,54 @@ Localization:
 
 \end_inset
 
- 
+ Let 
+\begin_inset Formula $f_{1},f_{2},f_{3},f_{4}:[a,b]\rightarrow\R_{+}$
+\end_inset
+
+ be nonnegative,
+ continuous functions.
+ Then the following are equivalent:
+\end_layout
+
+\begin_layout Enumerate
+For every convex body 
+\begin_inset Formula $K\subset\R^{n},$
+\end_inset
+
+we have
+\begin_inset Formula 
+\[
+\int_{K}f_{1}\int_{K}f_{2}\le\int_{K}f_{3}\int_{K}f_{4}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+For every needle 
+\begin_inset Formula $N$
+\end_inset
+
+ in 
+\begin_inset Formula $\R^{n}$
+\end_inset
+
+,
+ we have
+\begin_inset Formula 
+\[
+\int_{N}f_{1}\int_{N}f_{2}\le\int_{N}f_{3}\int_{N}f_{4}.
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-The next is in terms of exponential needles,
+The next version is in terms of exponential needles,
  i.e.,
  we replace the linear functions obtained in the one-dimensional case in Lemma 
 \begin_inset CommandInset ref
@@ -4870,7 +4939,7 @@ name "lem:localization_exp_needles"
 \end_inset
 
  be nonnegative,
- continuous integrable functions.
+ continuous functions.
  Then the following are equivalent:
 \end_layout
 
@@ -4912,8 +4981,17 @@ For every subinterval
 
 \end_layout
 
-\begin_layout Standard
-We conclude this section with a nice interpretation of the localization lemma by Fradelizi and Guedon.
+\begin_layout Remark
+We can also write the exponential needle version of localization in terms of two inequalities or one equality and one inequality:
+ 
+\begin_inset Formula 
+\[
+\mbox{For every logconcave \ensuremath{F:\R\rightarrow\R_{+}}, }\int_{a}^{b}Ff_{1}=0,\ \int_{a}^{b}Ff_{2}>0\Leftrightarrow\mbox{for every subinterval \ensuremath{[a',b']\subseteq[a,b]} and every}\gamma\in\R,\int_{a'}^{b'}e^{\gamma t}f_{1}=0,\ \int_{a'}^{b'}e^{\gamma t}f_{2}>0.
+\]
+
+\end_inset
+
+ We conclude this section with a nice interpretation of the localization lemma by Fradelizi and Guedon.
  They also give a version that extends localization to multiple inequalities.
 \end_layout
 
