@@ -645,7 +645,7 @@ f(tx+(1-t)y)\le tf(x)+(1-t)f(y).
 \end_layout
 
 \begin_layout Exercise
-Suppose we have a function 
+Suppose we have a continuous function 
 \begin_inset Formula $f:\R^{n}\rightarrow\R\cup\{+\infty\}$
 \end_inset
 
