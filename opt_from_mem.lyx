@@ -172,7 +172,17 @@ We will show that the worst case is when the convex set
 \end_inset
 
  is an infinite cone.
- WLOG assume that the minimum is at 
+ WLOG
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Without loss of generality.
+\end_layout
+
+\end_inset
+
+ assume that the minimum is at 
 \begin_inset Formula $x=0.$
 \end_inset
 
@@ -246,12 +256,13 @@ Now for this infinite cone, we compute, using
 \begin{align*}
 \E\left(c^{T}x\right) & =\frac{\int_{0}^{\infty}ye^{-\alpha y}y^{n-1}\,dy}{\int_{0}^{\infty}e^{-\alpha y}y^{n-1}\,dy}\\
  & =\frac{1}{\alpha}\frac{\int_{0}^{\infty}e^{-y}y^{n}\,dy}{\int_{0}^{\infty}e^{-y}y^{n-1}\,dy}\\
- & =\frac{1}{\alpha}\frac{n!}{(n-1)!}=\frac{n}{\alpha}.
+ & =\frac{1}{\alpha}\frac{n!}{(n-1)!}=\frac{n}{\alpha}\,,
 \end{align*}
 
 \end_inset
 
-
+where the equality in the last line follows from properties of the Gamma
+ functions.
 \end_layout
 
 \begin_layout Standard
@@ -274,7 +285,7 @@ The theorem says that if we sample according to
  that is focused close to the minimum.
  This method is known as 
 \emph on
-simulated annearling 
+simulated annealing 
 \emph default
 and is the subject of Chapter 
 \begin_inset CommandInset ref

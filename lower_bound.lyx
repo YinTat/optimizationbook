@@ -1,16 +1,16 @@
-#LyX 2.4 created this file. For more info see https://www.lyx.org/
-\lyxformat 620
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
 \begin_document
 \begin_header
 \save_transient_properties true
 \origin unavailable
 \textclass optbook
 \use_default_options true
-\maintain_unincluded_children no
+\maintain_unincluded_children false
 \language american
 \language_package default
-\inputencoding utf8
-\fontencoding auto
+\inputencoding auto
+\fontencoding global
 \font_roman "default" "default"
 \font_sans "default" "default"
 \font_typewriter "default" "default"
@@ -18,9 +18,7 @@
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
-\font_roman_osf false
-\font_sans_osf false
-\font_typewriter_osf false
+\font_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
 \use_microtype false
@@ -31,6 +29,7 @@
 \bibtex_command default
 \index_command default
 \paperfontsize default
+\spacing single
 \use_hyperref false
 \papersize default
 \use_geometry false
@@ -46,15 +45,14 @@
 \use_package undertilde 1
 \cite_engine basic
 \cite_engine_type default
+\biblio_style plain
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
 \suppress_date false
 \justification true
 \use_refstyle 1
-\use_formatted_ref 0
 \use_minted 0
-\use_lineno 0
 \index Index
 \shortcut idx
 \color #008000
@@ -70,16 +68,11 @@
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
-\tablestyle default
 \tracking_changes false
 \output_changes false
-\change_bars false
-\postpone_fragile_content true
 \html_math_output 0
 \html_css_as_file 0
 \html_be_strict false
-\docbook_table_output 0
-\docbook_mathml_prefix 1
 \end_header
 
 \begin_body
@@ -96,10 +89,8 @@ name "sec:Lower-Bounds"
 \end_layout
 
 \begin_layout Standard
-In this chapter,
- we have discussed a few cutting plane methods.
- In particular,
- we showed that 
+In this chapter, we have discussed a few cutting plane methods.
+ In particular, we showed that 
 \begin_inset Formula $O(\min(n,\sqrt{\frac{L}{\mu}})\log(\frac{1}{\epsilon}))$
 \end_inset
 
@@ -160,8 +151,7 @@ which satisfies
 \end_inset
 
 .
- Then,
- for 
+ Then, for 
 \begin_inset Formula $k<n$
 \end_inset
 
@@ -177,8 +167,7 @@ f(x^{(k)})-\min_{x}f(x)\geq(\frac{\mu}{L})^{3/2}(\frac{\sqrt{L/\mu}-1}{\sqrt{L/\
 \end_layout
 
 \begin_layout Proof
-First,
- we check the strong convexity and smoothness.
+First, we check the strong convexity and smoothness.
  Note that 
 \begin_inset Formula $f(x)=-x_{1}+\frac{1}{2}x^{\top}Ax$
 \end_inset
@@ -188,14 +177,12 @@ First,
 \end_inset
 
 .
- Hence,
- 
+ Hence, 
 \begin_inset Formula $\nabla^{2}f(x)=A$
 \end_inset
 
 .
- Hence,
- we have
+ Hence, we have
 \begin_inset Formula 
 \[
 \theta^{\top}\nabla^{2}f(x)\theta=\frac{L-\mu}{4}\sum_{i=1}^{n-1}(\theta_{i}-\theta_{i+1})^{2}+\frac{L-\mu}{4}\theta_{1}^{2}+\mu\sum_{i=1}^{n}\theta_{i}^{2}+\frac{\sqrt{L\mu}-\mu}{2}\theta_{n}^{2}
@@ -207,8 +194,7 @@ For the upper bound
 \begin_inset Formula $\nabla^{2}f(x)\preceq L\cdot I$
 \end_inset
 
-,
- we note that 
+, we note that 
 \begin_inset Formula 
 \begin{align*}
 \theta^{\top}\nabla^{2}f(x)\theta & \leq\frac{L-\mu}{4}\sum_{i=1}^{n-1}(2\theta_{i}^{2}+2\theta_{i+1}^{2})+\frac{L-\mu}{4}\theta_{1}^{2}+\mu\sum_{i=1}^{n}\theta_{i}^{2}+(\frac{\sqrt{L\mu}-\mu}{2})\theta_{n}^{2}\\
@@ -222,8 +208,7 @@ For the lower bound
 \begin_inset Formula $\nabla^{2}f(x)\succeq\mu\cdot I$
 \end_inset
 
-,
- we note that
+, we note that
 \begin_inset Formula 
 \[
 \theta^{\top}\nabla^{2}f(x)\theta\geq\mu\sum_{i=1}^{n}\theta_{i}^{2}.
@@ -235,8 +220,7 @@ For the lower bound
 \end_layout
 
 \begin_layout Proof
-To lower bound the error,
- we note that the gradient at 
+To lower bound the error, we note that the gradient at 
 \begin_inset Formula $x^{(0)}$
 \end_inset
 
@@ -253,8 +237,7 @@ To lower bound the error,
 \end_inset
 
 .
- By induction,
- only the first 
+ By induction, only the first 
 \begin_inset Formula $k$
 \end_inset
 
@@ -266,8 +249,7 @@ To lower bound the error,
 \end_layout
 
 \begin_layout Proof
-Now,
- we compute the minimizer of 
+Now, we compute the minimizer of 
 \begin_inset Formula $f(x)$
 \end_inset
 
@@ -281,8 +263,7 @@ Now,
 \end_inset
 
 .
- By the optimality condition,
- we have that
+ By the optimality condition, we have that
 \begin_inset Formula 
 \begin{align*}
 -\frac{L-\mu}{4}+\frac{L-\mu}{4}(x_{1}^{*}-x_{2}^{*})+\frac{L-\mu}{4}x_{1}^{*}+\mu x_{1}^{*} & =0,\\
@@ -292,14 +273,12 @@ Now,
 
 \end_inset
 
-By a direct substitution,
- we have that 
+By a direct substitution, we have that 
 \begin_inset Formula $x_{i}^{*}=(\frac{\sqrt{L/\mu}-1}{\sqrt{L/\mu}+1})^{i}$
 \end_inset
 
  is a solution of the above equation.
- Now,
- we note that
+ Now, we note that
 \begin_inset Formula 
 \begin{align*}
 \|x^{(k)}-x^{*}\|_{2}^{2} & \geq\sum_{i=k+1}^{n}(\frac{\sqrt{L/\mu}-1}{\sqrt{L/\mu}+1})^{2i}\geq(\frac{\sqrt{L/\mu}-1}{\sqrt{L/\mu}+1})^{2(k+1)}
@@ -315,13 +294,11 @@ and that
 
 \end_inset
 
-Now,
- by smoothness and by the strong convexity of 
+Now, by smoothness and by the strong convexity of 
 \begin_inset Formula $f$
 \end_inset
 
-,
- we have
+, we have
 \begin_inset Formula 
 \[
 \frac{f(x^{(k)})-f(x^{*})}{f(x^{(0)})-f(x^{*})}\geq\frac{\mu}{L}\cdot\frac{\|x^{(k)}-x^{*}\|_{2}^{2}}{\|x^{(0)}-x^{*}\|_{2}^{2}}\geq(\frac{\mu}{L})^{3/2}(\frac{\sqrt{L/\mu}-1}{\sqrt{L/\mu}+1})^{2k}.
@@ -342,12 +319,10 @@ worst
 \end_inset
 
  function naturally appears in many problems.
- So,
- it is a problem we need to address.
- In some sense,
- the proof points out a common issue of any algorithm which only uses gradient information.
- Given any convex function,
- we construct the dependence graph 
+ So, it is a problem we need to address.
+ In some sense, the proof points out a common issue of any algorithm which
+ only uses gradient information.
+ Given any convex function, we construct the dependence graph 
 \begin_inset Formula $G$
 \end_inset
 
@@ -388,16 +363,14 @@ worst
 \begin_inset Formula $n$
 \end_inset
 
- vertex path,
- whose diameter is 
+ vertex path, whose diameter is 
 \begin_inset Formula $n-1$
 \end_inset
 
 .
- Also,
- note that gradient descent can only transmit information from one vertex to another in each iteration.
- Therefore,
- it takes at least 
+ Also, note that gradient descent can only transmit information from one
+ vertex to another in each iteration.
+ Therefore, it takes at least 
 \begin_inset Formula $\Omega(\mathrm{diameter})$
 \end_inset
 
@@ -406,8 +379,7 @@ worst
 \end_inset
 
  is small).
- However,
- we note that this is not a lower bound for all algorithms.
+ However, we note that this is not a lower bound for all algorithms.
 \end_layout
 
 \begin_layout Standard
@@ -415,18 +387,17 @@ The problem (
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:worst_function"
-nolink "false"
 
 \end_inset
 
-) belongs to a general class of functions called Laplacian systems and it can be solved in nearly linear time using spectral graph theory.
+) belongs to a general class of functions called Laplacian systems and it
+ can be solved in nearly linear time using spectral graph theory.
  
 \begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
-TODO:
- add citations.
+TODO: add citations.
 \end_layout
 
 \end_inset
