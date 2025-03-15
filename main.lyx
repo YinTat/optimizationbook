@@ -11,6 +11,7 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 %\usepackage[pdftex,dvipsnames]{xcolor}
+\usepackage{float}
 \usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
 \usepackage[lined,boxed,ruled,norelsize,algo2e]{algorithm2e}
 \usepackage[small,bf]{caption}
@@ -30,7 +31,7 @@
 \use_default_options true
 \maintain_unincluded_children false
 \language english
-\language_package none
+\language_package default
 \inputencoding auto
 \fontencoding global
 \font_roman "default" "default"
@@ -331,8 +332,13 @@
 
 
 \begin_inset FormulaMacro
-\newcommand{\esssup}{\on{ess\,sup}}
+\newcommand{\esssup}{\operatorname{ess\,sup}}
 {\textup{ess\,sup}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\tv}{\mathrm{TV}}
 \end_inset
 
 

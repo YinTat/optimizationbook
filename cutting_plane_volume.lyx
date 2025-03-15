@@ -80,10 +80,33 @@ Cutting Plane method for Volume Computation
 \end_layout
 
 \begin_layout Standard
-The cutting plane method gives a simple algorithm for computing the volume
- of a bounded set, or the integral of a function.
+Volume computation of a given set is a fundamental problem in theoretical
+ computer science, with diverse applications to other problems (see Exercise
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "ex: linExt-volume"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ The cutting plane method provides a simple algorithm for computing the
+ volume of a bounded set or, more generally, the integral of a function.
  The algorithm relies crucially on the ability to compute the center of
- gravity of the original set/function restricted by halfspaces.
+ gravity (or centroid) of the original set/function restricted by halfspaces.
  For simplicity we describe it here for the case when the input object is
  a convex body.
 \end_layout
@@ -133,6 +156,13 @@ status open
 \end_inset
 
 
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:cutting-plane-volume"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -172,7 +202,7 @@ Fix an ordering on the axes:
 \begin_inset Formula $e_{1},e_{2},\ldots e_{n}$
 \end_inset
 
-
+.
 \end_layout
 
 \begin_layout Standard
@@ -180,10 +210,10 @@ Fix an ordering on the axes:
 \end_inset
 
  
-\begin_inset Formula $z^{(0)}=\mbox{centroid}(K^{(0)}),V=1,k=0.$
+\begin_inset Formula $z^{(0)}=\mbox{centroid}(K^{(0)}),k=0,V_{0}=1$
 \end_inset
 
-
+.
 \end_layout
 
 \begin_layout Standard
@@ -329,7 +359,7 @@ Let
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $V\leftarrow V\cdot\frac{\norm{\widehat{z}-z^{(k+1)}}}{\norm{\widehat{z}-z^{(k)}}}$
+\begin_inset Formula $V_{k+1}=V_{k}\cdot\frac{\norm{\widehat{z}-z^{(k+1)}}}{\norm{\widehat{z}-z^{(k)}}}$
 \end_inset
 
 .
@@ -351,7 +381,7 @@ status open
 
 \begin_layout Standard
 Return 
-\begin_inset Formula $V\cdot\prod_{i=1}^{n}w_{i}(K^{(k+1)})$
+\begin_inset Formula $V_{\text{last}}\cdot\prod_{i=1}^{n}w_{i}(K^{(k+1)})$
 \end_inset
 
  where 
@@ -384,8 +414,25 @@ end{algorithm2e}
 \begin_layout Standard
 The idea behind the algorithm is simple: when we cut a set with a hyperplane
  through its centroid, the line joining the centroids of the two sides passes
- through the original centroid; moreover, the ratio of the two segments
- is exactly the ratio of the volumes of the two halfspaces.
+ through the original centroid (see Figure
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\backslash
+ref{fig:cutting-volume}
+\end_layout
+
+\end_inset
+
+); moreover, the ratio of the two segments is exactly the ratio of the volumes
+ of the two halfspaces (i.e., 
+\begin_inset Formula $V_{k}=\vol(K^{(0)})/\vol(K^{(k)})$
+\end_inset
+
+).
 \end_layout
 
 \begin_layout Lemma
@@ -410,7 +457,7 @@ For any measurable bounded set S in
 , we have 
 \begin_inset Formula 
 \[
-\mbox{centroid}(S)=\frac{\vol(S\cap H)}{\vol(S)}\mbox{centroid}(S\cap H)+\frac{vol(S\cap\overline{H})}{\vol(S)}\mbox{centroid}(S\cap\overline{H}).
+\mbox{centroid}(S)=\frac{\vol(S\cap H)}{\vol(S)}\,\mbox{centroid}(S\cap H)+\frac{\vol(S\cap\overline{H})}{\vol(S)}\,\mbox{centroid}(S\cap\overline{H}).
 \]
 
 \end_inset
@@ -627,6 +674,168 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{figure}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+    % Draw the outer boundary (arbitrary convex shape)
+\end_layout
+
+\begin_layout Plain Layout
+
+     
+\backslash
+draw[thick] plot[smooth cycle] coordinates {(-3,2) (-1,3) (2,3) (3,1) (2,-2)
+ (-1,-2) (-3,0)};
+\end_layout
+
+\begin_layout Plain Layout
+
+    % Draw the red line segment (adjusted for z_L and z_R shift)     
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+draw[red, thick] (-1,0.2) -- (1,-0.2);
+\end_layout
+
+\begin_layout Plain Layout
+
+    % Draw the cutting plane (blue vertical line)
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+draw[blue, thick] (0,-2) -- (0,3);          
+\end_layout
+
+\begin_layout Plain Layout
+
+	% Draw points     
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+filldraw[black] (-1,0.2) circle (2pt);  % zL (moved up)     
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+filldraw[black] (1,-0.2) circle (2pt);  % zR (moved down)     
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+filldraw[red] (0,0) circle (2pt);  % z (center)
+\end_layout
+
+\begin_layout Plain Layout
+
+    % Add labels with adjusted positions     
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+node[left] at (-1,0.3) {
+\backslash
+Large $z_L$};     
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+node[right] at (1,-0.3) {
+\backslash
+Large $z_R$};    
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+node[above] at (0,0) {
+\backslash
+Large 
+\backslash
+textcolor{red}{$z$}};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\backslash
+label{fig:cutting-volume} Insights into Algorithm~
+\backslash
+ref{alg:cutting-plane-volume}.
+ The blue line indicates a halfspace $H$ passing through the centroid $z$
+ of the convex set $K$, while $z_L$ is that of the left convex set $K
+\backslash
+cap H$ and $z_R$ is that of the right convex set $K
+\backslash
+cap 
+\backslash
+overline{H}$.
+ Note that the centroid $z$ lies on  the line segment joining $z_L$ and
+ $z_R$.}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{figure}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 The above algorithm shows that computing the volume is polytime reducible
  to computing the centroid.
  Since volume is known to be #P-hard for explicit polytopes, this means
@@ -649,6 +858,13 @@ literal "false"
 LatexCommand cite
 key "brightwell1991counting"
 literal "false"
+
+\end_inset
+
+ 
+\begin_inset CommandInset label
+LatexCommand label
+name "ex: linExt-volume"
 
 \end_inset
 
