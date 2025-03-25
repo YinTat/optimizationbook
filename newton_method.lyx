@@ -1,16 +1,16 @@
-#LyX 2.3 created this file. For more info see http://www.lyx.org/
-\lyxformat 544
+#LyX 2.4 created this file. For more info see https://www.lyx.org/
+\lyxformat 620
 \begin_document
 \begin_header
 \save_transient_properties true
 \origin unavailable
 \textclass optbook
 \use_default_options true
-\maintain_unincluded_children false
+\maintain_unincluded_children no
 \language english
 \language_package default
-\inputencoding auto
-\fontencoding global
+\inputencoding auto-legacy
+\fontencoding auto
 \font_roman "default" "default"
 \font_sans "default" "default"
 \font_typewriter "default" "default"
@@ -18,7 +18,9 @@
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
-\font_osf false
+\font_roman_osf false
+\font_sans_osf false
+\font_typewriter_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
 \use_microtype false
@@ -50,7 +52,9 @@
 \suppress_date false
 \justification true
 \use_refstyle 1
+\use_formatted_ref 0
 \use_minted 0
+\use_lineno 0
 \index Index
 \shortcut idx
 \color #008000
@@ -66,11 +70,16 @@
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
+\tablestyle default
 \tracking_changes false
 \output_changes false
+\change_bars false
+\postpone_fragile_content false
 \html_math_output 0
 \html_css_as_file 0
 \html_be_strict false
+\docbook_table_output 0
+\docbook_mathml_prefix 1
 \end_header
 
 \begin_body
@@ -97,12 +106,12 @@ mention higher order method here.
 \end_layout
 
 \begin_layout Standard
-We begin with the Newton-Raphson method for finding the zeros of a function
- 
+We begin with the Newton-Raphson method for finding the zeros of a function 
 \begin_inset Formula $g$
 \end_inset
 
-, i.e.
+,
+ i.e.
  finding 
 \begin_inset Formula $x$
 \end_inset
@@ -112,7 +121,9 @@ We begin with the Newton-Raphson method for finding the zeros of a function
 \end_inset
 
 .
- In optimization, the goal is to find a root of the gradient, 
+ In optimization,
+ the goal is to find a root of the gradient,
+ 
 \begin_inset Formula $\nabla f(x)=0$
 \end_inset
 
@@ -120,7 +131,8 @@ We begin with the Newton-Raphson method for finding the zeros of a function
  The Newton-Raphson iteration approximates a function by its gradient/Jacobian,
  then guesses where the gradient intersects the zero line as a likely zero,
  repeating this process until a sufficient approximation has been found.
- In one dimension, we approximate the function 
+ In one dimension,
+ we approximate the function 
 \begin_inset Formula $g$
 \end_inset
 
@@ -132,7 +144,8 @@ g(x)\sim g(x^{(k)})+g'(x^{(k)})(x-x^{(k)}).
 
 \end_inset
 
-Finding the zeros of the right hand side, we have the Newton step
+Finding the zeros of the right hand side,
+ we have the Newton step
 \begin_inset Formula 
 \[
 x^{(k+1)}=x^{(k)}-\frac{g(x^{(k)})}{g'(x^{(k)})}.
@@ -140,7 +153,8 @@ x^{(k+1)}=x^{(k)}-\frac{g(x^{(k)})}{g'(x^{(k)})}.
 
 \end_inset
 
-In high dimension, we can approximate the function by its Jacobian 
+In high dimension,
+ we can approximate the function by its Jacobian 
 \begin_inset Formula $g(x)\sim g(x^{(k)})+Dg(x^{(k)})(x-x^{(k)})$
 \end_inset
 
@@ -160,7 +174,8 @@ When the function
 \begin_inset Formula $g(x)=\nabla f(x)$
 \end_inset
 
-, then the Newton step becomes
+,
+ then the Newton step becomes
 \begin_inset Formula 
 \[
 x^{(k+1)}=x^{(k)}-\left(\nabla^{2}f(x^{(k)})\right)^{-1}\nabla f(x^{(k)}).
@@ -172,17 +187,19 @@ x^{(k+1)}=x^{(k)}-\left(\nabla^{2}f(x^{(k)})\right)^{-1}\nabla f(x^{(k)}).
 \end_layout
 
 \begin_layout Standard
-Alternatively, we can derive the Newton step as 
+Alternatively,
+ we can derive the Newton step as 
 \begin_inset Formula 
 \[
-x^{(k+1)}\leftarrow\min_{x}f(x^{(k)})+\left\langle \nabla f(x^{(k)}),x-x^{(k)}\right\rangle +\frac{1}{2}(y-x^{(k)})^{\mathsf{T}}(\nabla^{2}f(x^{(k)}))(y-x^{(k)}).
+x^{(k+1)}\leftarrow\min_{x}f(x^{(k)})+\left\langle \nabla f(x^{(k)}),x-x^{(k)}\right\rangle +\frac{1}{2}(x-x^{(k)})^{\mathsf{T}}(\nabla^{2}f(x^{(k)}))(x-x^{(k)}).
 \]
 
 \end_inset
 
-In words, the Newton step finds the minimum of the second order approximation
- of the function.
- We note that the Newton iteration is a natural idea, since
+In words,
+ the Newton step finds the minimum of the second order approximation of the function.
+ We note that the Newton iteration is a natural idea,
+ since
 \end_layout
 
 \begin_layout Enumerate
@@ -201,8 +218,8 @@ It is the fastest descent direction taking the Hessian into account.
 \end_layout
 
 \begin_layout Standard
-To see why affine-invariance is important for optimization, we consider
- the following function
+To see why affine-invariance is important for optimization,
+ we consider the following function
 \begin_inset Formula 
 \[
 f(x_{1},x_{2})=\frac{100}{2}x_{1}^{2}+\frac{1}{2}x_{2}^{2}.
@@ -222,15 +239,16 @@ We need
 \begin_inset Formula $h<\frac{1}{100}$
 \end_inset
 
- in order the first coordinate to converge, but this will make the second
- coordinate converges too slowly.
- In general, we may want to take different step sizes for different directions
- and Newton method gives the best step if the function is quadratic.
+ in order the first coordinate to converge,
+ but this will make the second coordinate converges too slowly.
+ In general,
+ we may want to take different step sizes for different directions and Newton method gives the best step if the function is quadratic.
 \end_layout
 
 \begin_layout Standard
-For many classes of functions, gradient methods converge to the solution
- linearly (namely, it takes 
+For many classes of functions,
+ gradient methods converge to the solution linearly (namely,
+ it takes 
 \begin_inset Formula $c\cdot\log\frac{1}{\epsilon}$
 \end_inset
 
@@ -238,8 +256,8 @@ For many classes of functions, gradient methods converge to the solution
 \begin_inset Formula $c$
 \end_inset
 
- depending on the problem) while the Newton method converges to the solution
- quadratically (namely, it takes 
+ depending on the problem) while the Newton method converges to the solution quadratically (namely,
+ it takes 
 \begin_inset Formula $c'\cdot\log\log\frac{1}{\epsilon}$
 \end_inset
 
@@ -248,10 +266,11 @@ For many classes of functions, gradient methods converge to the solution
 \end_inset
 
 ) if the starting point is sufficiently close to a root.
- However, each step of Newton method involves solving a linear system, which
- can be much more expensive.
- Furthermore, Newton method may not converges if the starting point is far
- away.
+ However,
+ each step of Newton method involves solving a linear system,
+ which can be much more expensive.
+ Furthermore,
+ Newton method may not converges if the starting point is far away.
 \end_layout
 
 \begin_layout Standard
@@ -321,6 +340,7 @@ SetAlgoLined
 
 \series bold
 Input:
+
 \series default
  Initial point 
 \begin_inset Formula $x^{(0)}\in\Rn$
@@ -454,11 +474,13 @@ Assume that
 \end_inset
 
  is invertible.
- Then, for 
+ Then,
+ for 
 \begin_inset Formula $k$
 \end_inset
 
- large enough, we have
+ large enough,
+ we have
 \begin_inset Note Note
 status open
 
@@ -467,7 +489,8 @@ we need bound on operator norm below for every
 \begin_inset Formula $x^{(k)}$
 \end_inset
 
-right? not just 
+right?
+ not just 
 \begin_inset Formula $x^{*}?$
 \end_inset
 
@@ -476,7 +499,8 @@ right? not just
 \end_inset
 
  is twice continuously differentiable.
- So, they are same.
+ So,
+ they are same.
  We already assume 
 \begin_inset Formula $x^{(k)}$
 \end_inset
@@ -514,7 +538,8 @@ Let
 \end_inset
 
 .
- Then, we have that
+ Then,
+ we have that
 \begin_inset Formula 
 \[
 g(x^{*})=g(x^{(k)})+Dg(x^{(k)})[e^{(k)}]+\int_{0}^{1}(1-s)D^{2}g(x^{(k)}+se^{(k)})[e^{(k)},e^{(k)}]ds.
@@ -522,7 +547,8 @@ g(x^{*})=g(x^{(k)})+Dg(x^{(k)})[e^{(k)}]+\int_{0}^{1}(1-s)D^{2}g(x^{(k)}+se^{(k)
 
 \end_inset
 
-Hence, we have
+Hence,
+ we have
 \begin_inset Formula 
 \[
 0=Dg(x^{(k)})^{-1}g(x^{(k)})+x^{*}-x^{(k)}+\int_{0}^{1}(1-s)Dg(x^{(k)})^{-1}D^{2}g(x^{(k)}+se^{(k)})[e^{(k)},e^{(k)}]ds.
@@ -534,7 +560,8 @@ Since
 \begin_inset Formula $x^{(k+1)}=x^{(k)}-Dg(x^{(k)})^{-1}g(x^{(k)})$
 \end_inset
 
-, we have
+,
+ we have
 \begin_inset Formula 
 \[
 x^{(k+1)}-x^{*}=\int_{0}^{1}(1-s)Dg(x^{(k)})^{-1}D^{2}g(x^{(k)}+se^{(k)})[e^{(k)},e^{(k)}]ds.
@@ -542,7 +569,8 @@ x^{(k+1)}-x^{*}=\int_{0}^{1}(1-s)Dg(x^{(k)})^{-1}D^{2}g(x^{(k)}+se^{(k)})[e^{(k)
 
 \end_inset
 
-So, we have
+So,
+ we have
 \begin_inset Formula 
 \begin{align*}
 \|x^{(k+1)}-x^{*}\| & \leq\int_{0}^{1}(1-s)\|Dg(x^{(k)})^{-1}D^{2}g(x^{(k)}+se^{(k)})[e^{(k)},e^{(k)}]\|ds\\
@@ -555,7 +583,8 @@ Since
 \begin_inset Formula $x^{(k)}\rightarrow x^{*}$
 \end_inset
 
-, we have that 
+,
+ we have that 
 \begin_inset Formula 
 \[
 Dg(x^{(k)})^{-1}D^{2}g(x^{(k)}+se^{(k)})\rightarrow Dg(x^{*})^{-1}D^{2}g(x^{*})
@@ -567,7 +596,8 @@ and for large enough
 \begin_inset Formula $k$
 \end_inset
 
-, we can assume 
+,
+ we can assume 
 \begin_inset Formula 
 \[
 \|Dg(x^{(k)})^{-1}D^{2}g(x^{(k)}+se^{(k)})\|_{\op}\le2\|Dg(x^{*})^{-1}D^{2}g(x^{*})\|_{\op}.
@@ -588,9 +618,10 @@ This argument above uses only that
 \begin_inset Formula $g$
 \end_inset
 
-, the Newton method does not always converge to a root.
- The argument above only shows that if the algorithm converges, then it
- converges quadratically eventually.
+,
+ the Newton method does not always converge to a root.
+ The argument above only shows that if the algorithm converges,
+ then it converges quadratically eventually.
  We call this 
 \begin_inset Quotes eld
 \end_inset
@@ -608,13 +639,13 @@ local
 \end_inset
 
 .
- In comparison, all earlier analyses in this book are about global convergence,
+ In comparison,
+ all earlier analyses in this book are about global convergence,
  bounding the total number of iterations.
- In practice, both analyses are important; global convergence makes sure
- the algorithm is robust and local quadratic convergence makes sure the
- algorithm converges to machine accuracy quickly enough.
- The local quadratic convergence is particularly important for simple problems
- such as computing 
+ In practice,
+ both analyses are important;
+ global convergence makes sure the algorithm is robust and local quadratic convergence makes sure the algorithm converges to machine accuracy quickly enough.
+ The local quadratic convergence is particularly important for simple problems such as computing 
 \begin_inset Formula $\sqrt{x}$
 \end_inset
 
@@ -626,8 +657,10 @@ Finding the largest root of a real-rooted polynomial
 \end_layout
 
 \begin_layout Standard
-In general, the Newton method does not converge globally.
- Here, we give an application that does converge 
+In general,
+ the Newton method does not converge globally.
+ Here,
+ we give an application that does converge 
 \begin_inset Quotes eld
 \end_inset
 
@@ -654,11 +687,13 @@ Given a polynomial
 \end_inset
 
 .
- Then, after 
+ Then,
+ after 
 \begin_inset Formula $O(n\log(\frac{1}{\epsilon}))$
 \end_inset
 
- iterations, the Newton method finds 
+ iterations,
+ the Newton method finds 
 \begin_inset Formula $x^{(k)}$
 \end_inset
 
@@ -678,7 +713,8 @@ Since the roots of
 \begin_inset Formula $g$
 \end_inset
 
- are real, we can write
+ are real,
+ we can write
 \begin_inset Formula 
 \[
 g(x)=a_{n}\cdot\prod_{i=1}^{n}(x-\lambda_{i})
@@ -691,7 +727,8 @@ with
 \end_inset
 
 .
- Then, we have that 
+ Then,
+ we have that 
 \begin_inset Formula $g'(x)=a_{n}\cdot\sum_{i}\prod_{j\neq i}(x-\lambda_{j})$
 \end_inset
 
@@ -707,7 +744,8 @@ For any
 \begin_inset Formula $x\geq\lambda_{1}$
 \end_inset
 
-, we have 
+,
+ we have 
 \begin_inset Formula 
 \begin{align*}
 \frac{g(x)}{g'(x)} & \leq\frac{1}{\frac{1}{x-\lambda_{1}}}=x-\lambda_{1},\\
@@ -716,7 +754,9 @@ For any
 
 \end_inset
 
-Hence, by induction, we have that 
+Hence,
+ by induction,
+ we have that 
 \begin_inset Formula $x^{(k)}\geq\lambda_{1}$
 \end_inset
 
@@ -732,7 +772,8 @@ x^{(k+1)}-\lambda_{1}\leq(1-\frac{1}{n})(x^{(k)}-\lambda_{1}).
 \end_layout
 
 \begin_layout Exercise
-Consider the following iteration: 
+Consider the following iteration:
+ 
 \begin_inset Formula 
 \[
 x^{t+1}=x^{t}-\frac{1}{n^{1/k}}\frac{g^{(k-1)}(x)}{g^{(k)}(x)}
@@ -749,7 +790,8 @@ where
 \begin_inset Formula $k=1$
 \end_inset
 
-, this is exactly the Newton iteration as 
+,
+ this is exactly the Newton iteration as 
 \begin_inset Formula $g^{(0)}(x)=n$
 \end_inset
 
@@ -758,12 +800,13 @@ where
 \begin_inset Formula $n$
 \end_inset
 
- real-rooted polynomial, starting with 
+ real-rooted polynomial,
+ starting with 
 \begin_inset Formula $x^{(0)}>\lambda_{1}$
 \end_inset
 
-, in each iteration the distance to the largest root decreases by a factor
- of 
+,
+ in each iteration the distance to the largest root decreases by a factor of 
 \begin_inset Formula $1-\frac{1}{n^{1/k}}$
 \end_inset
 
@@ -776,8 +819,8 @@ Such a dependence of
 \end_inset
 
  is called linear convergence.
- The convergence of the Newton method can be quadratic, when close enough
- to a root.
+ The convergence of the Newton method can be quadratic,
+ when close enough to a root.
 \end_layout
 
 \begin_layout Theorem
@@ -794,7 +837,8 @@ Assume that
 \end_inset
 
 -Lipschitz.
- Then, if 
+ Then,
+ if 
 \begin_inset Formula $|x^{0}-x^{*}|\le\frac{\alpha}{2L}$
 \end_inset
 
@@ -826,7 +870,8 @@ f(x^{*}) & =f(x^{(k)})+\int_{x^{t}}^{x^{*}}f'(z)dz=f(x^{(k)})+f'(x^{(k)})(x^{*}-
 
 \end_inset
 
-Therefore, 
+Therefore,
+ 
 \begin_inset Formula 
 \begin{align*}
 x^{(k+1)}-x^{*} & =\frac{1}{f'(x^{(k)})}\int_{x^{t}}^{x^{*}}(f'(z)-f'(x^{(k)}))dz.\\
@@ -848,7 +893,8 @@ Since
 
 \end_inset
 
-So, if 
+So,
+ if 
 \begin_inset Formula $|x^{(k)}-x^{*}|\leq\frac{\alpha}{2L}$
 \end_inset
 
@@ -897,7 +943,8 @@ implying
 \end_layout
 
 \begin_layout Standard
-Moving back to optimization, we can view the goal as finding a root of 
+Moving back to optimization,
+ we can view the goal as finding a root of 
 \begin_inset Formula $\nabla f(x)=0$
 \end_inset
 
@@ -910,8 +957,8 @@ x^{(k+1)}=x^{(k)}-(\nabla^{2}f(x^{(k)}))^{-1}\nabla f(x^{(k)}).
 
 \end_inset
 
-By the above proof, Newton's iteration has quadratic convergence from points
- close enough to the optimal.
+By the above proof,
+ Newton's iteration has quadratic convergence from points close enough to the optimal.
 \end_layout
 
 \begin_layout Subsection*
@@ -923,9 +970,10 @@ When the Jacobian of
 \begin_inset Formula $g$
 \end_inset
 
- is not available, we can approximate it using the function itself.
- For one dimension, we can approximate the Newton method and get the following
- secant method 
+ is not available,
+ we can approximate it using the function itself.
+ For one dimension,
+ we can approximate the Newton method and get the following secant method 
 \begin_inset Formula 
 \[
 x^{(k+1)}=x^{(k)}-g(x^{(k)})\frac{x^{(k)}-x^{(k-1)}}{g(x^{(k)})-g(x^{(k-1)})}
@@ -942,15 +990,18 @@ where we approximated the
 \end_inset
 
 .
- For nice enough function, the convergence rate satisfies 
+ For nice enough function,
+ the convergence rate satisfies 
 \begin_inset Formula $\varepsilon_{k+1}\leq C\cdot\varepsilon_{k}^{\frac{1+\sqrt{5}}{2}}$
 \end_inset
 
-, which is super linearly but not quadratic.
+,
+ which is super linearly but not quadratic.
 \end_layout
 
 \begin_layout Standard
-For higher dimension, we need to approximate the Jacobian of 
+For higher dimension,
+ we need to approximate the Jacobian of 
 \begin_inset Formula $g$
 \end_inset
 
@@ -964,7 +1015,8 @@ For higher dimension, we need to approximate the Jacobian of
 \end_inset
 
  iteration.
- Similar to the secant method, we want to enforce
+ Similar to the secant method,
+ we want to enforce
 \begin_inset Formula 
 \[
 J^{(k+1)}\cdot(x^{(k)}-x^{(k-1)})=g(x^{(k)})-g(x^{(k-1)}).
@@ -972,7 +1024,8 @@ J^{(k+1)}\cdot(x^{(k)}-x^{(k-1)})=g(x^{(k)})-g(x^{(k-1)}).
 
 \end_inset
 
-In dimension higher than one, this does not uniquely define the 
+In dimension higher than one,
+ this does not uniquely define the 
 \begin_inset Formula $J^{(k+1)}$
 \end_inset
 
@@ -1018,6 +1071,7 @@ Prove that the equation (
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:broyden_method"
+nolink "false"
 
 \end_inset
 
@@ -1028,6 +1082,7 @@ reference "eq:broyden_method_opt"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -1043,7 +1098,8 @@ When
 \begin_inset Formula $f$
 \end_inset
 
-, we know that the Jacobian of 
+,
+ we know that the Jacobian of 
 \begin_inset Formula $g$
 \end_inset
 
@@ -1052,7 +1108,8 @@ When
 \end_inset
 
 .
- Therefore, we should impose some conditions such that 
+ Therefore,
+ we should impose some conditions such that 
 \begin_inset Formula $J^{(k)}\succeq0$
 \end_inset
 
@@ -1068,8 +1125,7 @@ BFGS algorithm
 \end_layout
 
 \begin_layout Standard
-Broyden–Fletcher–Goldfarb–Shanno (BFGS) algorithm is one of the most popular
- quasi-Newton methods.
+Broyden–Fletcher–Goldfarb–Shanno (BFGS) algorithm is one of the most popular quasi-Newton methods.
  The algorithm maintains an approximate Hessian 
 \begin_inset Formula $J^{(k)}$
 \end_inset
@@ -1103,7 +1159,8 @@ Broyden–Fletcher–Goldfarb–Shanno (BFGS) algorithm is one of the most popul
 \end_layout
 
 \begin_layout Standard
-To achieve all of these conditions, the natural optimization is 
+To achieve all of these conditions,
+ the natural optimization is 
 \begin_inset Formula 
 \[
 J^{(k+1)}\defeq\arg\min_{Js=y,J=J^{\top}}\norm{W^{\frac{1}{2}}\left(J^{-1}-\left(J^{(k)}\right)^{-1}\right)W^{\frac{1}{2}}}_{F}^{2}
@@ -1115,7 +1172,8 @@ where
 \begin_inset Formula $s^{(k)}=x^{(k)}-x^{(k-1)}$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $y^{(k)}=\nabla f(x^{(k)})-\nabla f(x^{(k-1)})$
 \end_inset
 
@@ -1132,7 +1190,8 @@ where
 \end_inset
 
 ).
- In some sense, the 
+ In some sense,
+ the 
 \begin_inset Formula $W^{-\frac{1}{2}}$
 \end_inset
 
@@ -1145,7 +1204,8 @@ literal "false"
 
 \end_inset
 
-, one obtain the update
+,
+ one obtain the update
 \begin_inset Formula 
 \begin{equation}
 \left(J^{(k+1)}\right)^{-1}=(I-\rho_{k}\cdot s^{(k)}y^{(k)\top})\left(J^{(k)}\right)^{-1}(I-\rho_{k}\cdot y^{(k)}s^{(k)\top})+\rho_{k}\cdot s^{(k)}s^{(k)\top}\label{eq:recursive}
@@ -1158,7 +1218,8 @@ where
 \end_inset
 
 .
- Alternatively, one can also show that 
+ Alternatively,
+ one can also show that 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "fletcher1991new"
@@ -1178,15 +1239,18 @@ J^{(k+1)}=\arg\min_{Js=y,J=J^{\top}}D_{KL}(\mathcal{N}(0,J)\|\mathcal{N}(0,J^{(k
 \end_layout
 
 \begin_layout Standard
-To implement the BFGS algorithm, it suffices to compute 
+To implement the BFGS algorithm,
+ it suffices to compute 
 \begin_inset Formula $\left(J^{(k)}\right)^{-1}\nabla f(x^{(k)})$
 \end_inset
 
 .
- Therefore, we can directly use the recursive formula (
+ Therefore,
+ we can directly use the recursive formula (
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:recursive"
+nolink "false"
 
 \end_inset
 
@@ -1206,12 +1270,13 @@ reference "eq:recursive"
 \end_layout
 
 \begin_layout Standard
-In practice, the recursive formula 
+In practice,
+ the recursive formula 
 \begin_inset Formula $J^{(k)}$
 \end_inset
 
- becomes too expensive and hence one can stop the recursive formula after
- constant steps, which gives the limited-memory BFGS algorithm.
+ becomes too expensive and hence one can stop the recursive formula after constant steps,
+ which gives the limited-memory BFGS algorithm.
 \end_layout
 
 \begin_layout Subsection*
@@ -1238,8 +1303,8 @@ x^{2} & \text{if }x>0\\
 \end_inset
 
 .
- When we apply Newton method to find its minimizer, it is clear that it
- converges in 
+ When we apply Newton method to find its minimizer,
+ it is clear that it converges in 
 \begin_inset Formula $1$
 \end_inset
 
@@ -1252,8 +1317,10 @@ x^{2} & \text{if }x>0\\
 \end_layout
 
 \begin_layout Plain Layout
-In general, Newton method converges superlinearly for a large class of problems.
- For the rest of the section, we will go back to the root-finding setting.
+In general,
+ Newton method converges superlinearly for a large class of problems.
+ For the rest of the section,
+ we will go back to the root-finding setting.
 \begin_inset Note Note
 status open
 
@@ -1262,8 +1329,7 @@ reference:
 \end_layout
 
 \begin_layout Plain Layout
-The semismooth-related properties of a merit function and a descent method
- for the nonlinear complementarity problem
+The semismooth-related properties of a merit function and a descent method for the nonlinear complementarity problem
 \end_layout
 
 \begin_layout Plain Layout
@@ -1281,7 +1347,8 @@ Suppose
 \end_inset
 
  is locally Lipschitz.
- By Rademacher’s Theorem, 
+ By Rademacher’s Theorem,
+ 
 \begin_inset Formula $g$
 \end_inset
 
@@ -1331,7 +1398,8 @@ We say
 \begin_inset Formula $V\in\partial g(x+h)$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $g(x+h)-g(x)-Vh=o(\|h\|)$
 \end_inset
 
@@ -1369,7 +1437,8 @@ The function
 \end_inset
 
 .
- Hence, this is useful for the nonlinear complementarity problem.
+ Hence,
+ this is useful for the nonlinear complementarity problem.
 \end_layout
 
 \begin_layout Plain Layout
@@ -1398,8 +1467,7 @@ Consider the generalized Newton method
 \end_inset
 
  are invertible.
- Then generalized Newton method is super-linear convergence in a neighborhood
- of 
+ Then generalized Newton method is super-linear convergence in a neighborhood of 
 \begin_inset Formula $x^{*}$
 \end_inset
 
