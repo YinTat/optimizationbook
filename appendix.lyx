@@ -354,7 +354,7 @@ From this,
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\int_{\Omega}\nabla f\cdot v=\int_{\Omega}\nabla\cdot(fv)-\int_{\omega}f(\nabla\cdot v).
+\int_{\Omega}\nabla f\cdot v=\int_{\Omega}\nabla\cdot(fv)-\int_{\Omega}f(\nabla\cdot v).
 \]
 
 \end_inset
@@ -378,7 +378,7 @@ is the normal vector at a point in
  we have:
 \begin_inset Formula 
 \[
-\int_{\Omega}\nabla f\cdot v=\int_{\partial\Omega}fv\cdot\overrightarrow{n}-\int_{\omega}f(\nabla\cdot v).
+\int_{\Omega}\nabla f\cdot v=\int_{\partial\Omega}fv\cdot\overrightarrow{n}-\int_{\Omega}f(\nabla\cdot v).
 \]
 
 \end_inset
