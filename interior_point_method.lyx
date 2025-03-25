@@ -1040,6 +1040,7 @@ The idea of the construction is simple:
 
 ,
  the solution could have negative components.
+ So we will allow negative components but penalize them heavily in the objective.
 \end_layout
 
 \begin_layout Lemma
