@@ -90,46 +90,58 @@ Examples
 
 \begin_layout Standard
 Here is a list of problems we want to cover with general techniques:
+ 
+\begin_inset Note Comment
+status open
+
+\begin_layout Plain Layout
+I think in the previous draft consistent capitalization is missing.
+ I have capitalized everything here for the problem names.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Itemize
-linear system,
+Linear system,
  SDD,
- M matrices,
- directed Laplacian,
- multi-commodity flow,
- totally unimodular matrices (what other linear systems?) 
+ M-matrices,
+ Directed Laplacian,
+ Multi-Commodity Flow,
+ Totally Unimodular Matrices (what other linear systems?) 
 \end_layout
 
 \begin_layout Itemize
-logistic regression,
+Logistic Regression,
  other regressions,
  
 \begin_inset Formula $\ell_{p}$
 \end_inset
 
- regression,
- convex regression
+ Regression,
+ Convex Regression
 \end_layout
 
 \begin_layout Itemize
-linear program < quadratic program < second order cone program < semidefinite program < conic program < convex program
+Linear Program < Quadratic Program < Second-Order Cone Program < Semidefinite Program < Conic Program < Convex Program
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
 Example:
- John ellipsoid,
- minimum enclosing ball,
- geometric programming,
- matrix scaling.
+ John Ellipsoid,
+ Minimum Enclosing Ball,
+ Geometric Programming,
+ Matrix Scaling.
 \end_layout
 
 \end_deeper
 \begin_layout Itemize
 Shortest Path,
- maximum flow,
- min-cost flow
+ Maximum Flow,
+ Min-Cost Flow
 \end_layout
 
 \begin_deeper
@@ -144,8 +156,8 @@ Markov Decision Processes
 \end_layout
 
 \begin_layout Itemize
-matroid intersection,
- submodular minimization
+Matroid Intersection,
+ Submodular Minimization
 \end_layout
 
 \begin_layout Itemize

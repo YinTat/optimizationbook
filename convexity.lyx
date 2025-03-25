@@ -294,7 +294,7 @@ and suppose that we can only access the function by querying the function value 
 \end_inset
 
  (the adversary simply reports 
-\begin_inset Formula $0$
+\begin_inset Formula $1$
 \end_inset
 
  for all queries,
@@ -951,7 +951,7 @@ nolink "false"
 \begin_inset Formula 
 \begin{align*}
 \left\langle \theta,y-x\right\rangle  & =\left\langle \theta,y-x^{*}\right\rangle +\left\langle y-x^{*},x^{*}-x\right\rangle \\
- & =\|\theta\|^{2}+\left\langle y-x^{*},x^{*}-x\right\rangle \\
+ & =\|\theta\|_{2}^{2}+\left\langle y-x^{*},x^{*}-x\right\rangle \\
  & >0
 \end{align*}
 
@@ -962,7 +962,7 @@ where we used that
 \end_inset
 
  and hence 
-\begin_inset Formula $\|\theta\|^{2}>0$
+\begin_inset Formula $\|\theta\|_{2}^{2}>0$
 \end_inset
 
 .
@@ -2202,7 +2202,7 @@ quasiconvex
  
 \begin_inset Formula 
 \[
-f((1-t)x+ty)\le\max f(x),f(y).
+f((1-t)x+ty)\le\max\{f(x),f(y)\}.
 \]
 
 \end_inset
