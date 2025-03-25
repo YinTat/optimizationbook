@@ -418,7 +418,7 @@ Computing gradients via directional derivatives
 Usually,
  computing gradients coordinate-by-coordinate is not the best way and we should avoid using summation notation as much as possible as it creates too many subscripts and is prone to mistakes.
  Instead,
- it is usually better to compute the gradient via directional deriatives.
+ it is usually better to compute the gradient via directional derivatives.
  Here,
  we give a few examples for this.
  We define 
