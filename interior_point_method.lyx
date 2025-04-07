@@ -111,8 +111,16 @@ mention the relation between IPM and mirror descent?
 In this section,
  we study interior point methods.
  In practice,
- this method reduces the problem of optimizing a convex function to solving a small number (typically less than 
+ this method reduces the problem of optimizing a convex function to solving a small number (
+\begin_inset Quotes eld
+\end_inset
+
+typically less than 
 \begin_inset Formula $30$
+\end_inset
+
+
+\begin_inset Quotes erd
 \end_inset
 
 ) linear systems.
@@ -520,6 +528,163 @@ Note that this algorithm only finds a solution with
  and round it off to the closest integral point.
 \end_layout
 
+\begin_layout Standard
+To see why there is a pair 
+\begin_inset Formula $(x,s)\in\PriR^{\circ}\times\DualR^{\circ}$
+\end_inset
+
+ satisfying the invariant 
+\begin_inset Formula $xs=t$
+\end_inset
+
+,
+ we prove the following generalization.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Quadrant Representation of Primal-Dual
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:primal_dual_representation"
+
+\end_inset
+
+Suppose 
+\begin_inset Formula $\PriR$
+\end_inset
+
+ is non-empty and bounded.
+ For any positive vector 
+\begin_inset Formula $\mu\in\R_{>0}^{n}$
+\end_inset
+
+,
+ there is an unique pair 
+\begin_inset Formula $(x_{\mu},s_{\mu})\in\PriR^{\circ}\times\DualR^{\circ}$
+\end_inset
+
+ such that 
+\begin_inset Formula $x_{\mu}s_{\mu}=\mu$
+\end_inset
+
+.
+ Furthermore,
+ 
+\begin_inset Formula $x_{\mu}=\arg\min_{x\in\PriR}f_{\mu}(x)$
+\end_inset
+
+ where
+\begin_inset Formula 
+\[
+f_{\mu}(x)=c^{\top}x-\sum_{i=1}^{n}\mu_{i}\ln x_{i}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Fix 
+\begin_inset Formula $\mu\in\R_{>0}^{n}$
+\end_inset
+
+.
+ We define 
+\begin_inset Formula $x_{\mu}=\arg\min_{x\in\PriR}f_{\mu}(x)$
+\end_inset
+
+ and prove that 
+\begin_inset Formula $(x_{\mu},s_{\mu})\in\PriR^{\circ}\times\DualR^{\circ}$
+\end_inset
+
+ with 
+\begin_inset Formula $x_{\mu}s_{\mu}=\mu$
+\end_inset
+
+ for some 
+\begin_inset Formula $s_{\mu}$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $\PriR$
+\end_inset
+
+ is non-empty and bounded and since 
+\begin_inset Formula $f_{\mu}$
+\end_inset
+
+ is strictly convex,
+ such an 
+\begin_inset Formula $x_{\mu}$
+\end_inset
+
+ exists.
+ Furthermore,
+ since 
+\begin_inset Formula $f_{\mu}(x)\rightarrow+\infty$
+\end_inset
+
+ as 
+\begin_inset Formula $x_{i}\rightarrow0$
+\end_inset
+
+ for any 
+\begin_inset Formula $i$
+\end_inset
+
+,
+ we have that 
+\begin_inset Formula $x_{\mu}\in\PriR^{\circ}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+By the KKT optimality condition for 
+\begin_inset Formula $f_{\mu}$
+\end_inset
+
+,
+ there is a vector 
+\begin_inset Formula $y$
+\end_inset
+
+ such that
+\begin_inset Formula 
+\[
+\nabla f_{\mu}(x_{\mu})=c-\frac{\mu}{x_{\mu}}=\ma^{\top}y.
+\]
+
+\end_inset
+
+Define 
+\begin_inset Formula $s_{\mu}=\frac{\mu}{x_{\mu}}$
+\end_inset
+
+,
+ then one can check that 
+\begin_inset Formula $s_{\mu}\in\DualR^{\circ}$
+\end_inset
+
+ and 
+\begin_inset Formula $x_{\mu}s_{\mu}=\mu$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Subsection
 Following the central path
 \end_layout
@@ -638,25 +803,6 @@ Let
 \end_inset
 
 .
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-I change 
-\begin_inset Formula $P$
-\end_inset
-
- to 
-\begin_inset Formula $\overline{P}$
-\end_inset
-
-.
- Coz it is only used here.
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Exercise
@@ -1649,6 +1795,1974 @@ nolink "false"
 \end_layout
 
 \begin_layout Subsection
+Finding a feasible solution close to the Central Path
+\end_layout
+
+\begin_layout Definition
+\begin_inset CommandInset label
+LatexCommand label
+name "def:LP_para"
+
+\end_inset
+
+We define the following parameters for the linear program 
+\begin_inset Formula $\min_{\ma x=b,x\geq0}c^{\top}x$
+\end_inset
+
+:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Inner radius 
+\begin_inset Formula $r$
+\end_inset
+
+:
+ There exists a 
+\begin_inset Formula $x\in\PriR$
+\end_inset
+
+ such that 
+\begin_inset Formula $x_{i}\geq r$
+\end_inset
+
+ for all 
+\begin_inset Formula $i\in[n]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Outer radius 
+\begin_inset Formula $R$
+\end_inset
+
+:
+ For any 
+\begin_inset Formula $x\geq0$
+\end_inset
+
+ with 
+\begin_inset Formula $\ma x=b$
+\end_inset
+
+,
+ we have that 
+\begin_inset Formula $\|x\|_{2}\leq R$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Lipschitz constant 
+\begin_inset Formula $L$
+\end_inset
+
+:
+ 
+\begin_inset Formula $\|c\|_{2}\leq L$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+Since 
+\begin_inset Formula $\mathtt{L2Step}$
+\end_inset
+
+ requires a feasible point near the central path,
+ we modify the linear program to make it happen.
+ To satisfy the constraint 
+\begin_inset Formula $\ma x=b$
+\end_inset
+
+,
+ we start the algorithm by taking a least square solution of the constraint 
+\begin_inset Formula $\ma x=b$
+\end_inset
+
+.
+ Since it can be negative,
+ we write the variable 
+\begin_inset Formula $x=x^{+}-x^{-}$
+\end_inset
+
+ with both 
+\begin_inset Formula $x^{+},x^{-}\geq0$
+\end_inset
+
+.
+ We put a large cost vector on 
+\begin_inset Formula $x^{-}$
+\end_inset
+
+ to ensure the solution is roughly the same.
+ The crux of the proof is that if we optimize this new program well enough,
+ we will have 
+\begin_inset Formula $x^{+}-x^{-}>0$
+\end_inset
+
+ and hence 
+\begin_inset Formula $x^{+}-x^{-}$
+\end_inset
+
+ gives a good starting point of the original program.
+ We need to put an extra constraint 
+\begin_inset Formula $1^{\top}x^{+}\leq\Lambda$
+\end_inset
+
+ for a suitable 
+\begin_inset Formula $\Lambda$
+\end_inset
+
+ to ensure that the problem is bounded.
+ The precise formulation of the modified linear program is as follows.
+ 
+\end_layout
+
+\begin_layout Definition
+\begin_inset CommandInset label
+LatexCommand label
+name "def:IPM_interior_modified"
+
+\end_inset
+
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Modified Linear Program
+\end_layout
+
+\end_inset
+
+Consider a linear program 
+\begin_inset Formula $\min_{\ma x=b,x\geq0}c^{\top}x$
+\end_inset
+
+ with inner radius 
+\begin_inset Formula $r$
+\end_inset
+
+,
+ outer radius 
+\begin_inset Formula $R$
+\end_inset
+
+ and Lipschitz constant 
+\begin_inset Formula $L$
+\end_inset
+
+.
+ For any 
+\begin_inset Formula $\overline{R}\geq10R$
+\end_inset
+
+,
+ 
+\begin_inset Formula $t\geq8L\overline{R}$
+\end_inset
+
+,
+ we define the modified primal linear program by 
+\begin_inset Formula 
+\[
+\min_{(x^{+},x^{-},x^{\theta})\in\mathcal{P}_{\overline{R},t}}c^{\top}x^{+}+\widetilde{c}^{\top}x^{-}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula 
+\[
+\mathcal{P}_{\overline{R},t}=\{(x^{+},x^{-},x^{\theta})\in\R_{\geq0}^{2n+1}:\ma(x^{+}-x^{-})=b,\sum_{i=1}^{n}x_{i}^{+}+x^{\theta}=\widetilde{b}\}
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $x_{c}^{+}=\frac{t}{c+t/\overline{R}},x_{c}^{-}=x_{c}^{+}-\ma^{\top}(\ma\ma^{\top})^{-1}b,\widetilde{c}=t/x_{c}^{-}$
+\end_inset
+
+,
+ 
+\begin_inset Formula $\widetilde{b}=\sum_{i}x_{c,i}^{+}+\overline{R}$
+\end_inset
+
+.
+ We define the corresponding dual polytope by
+\begin_inset Formula 
+\[
+\mathcal{D}_{\overline{R},t}=\{(s^{+},s^{-},s^{\theta})\in\R_{\geq0}^{2n+1}:\ma^{\top}y+\lambda\mathbf{1}+s^{+}=c,-\ma^{\top}y+s^{-}=\widetilde{c},\lambda+s^{\theta}=0\text{ for some }y\in\R^{d}\text{ and }\lambda\in\R\}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The main result about the modified program is the following.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:IPM_interior"
+
+\end_inset
+
+Given a linear program 
+\begin_inset Formula $\min_{\ma x=b,x\in\R_{\geq}^{n}}c^{\top}x$
+\end_inset
+
+ with inner radius 
+\begin_inset Formula $r$
+\end_inset
+
+,
+ outer radius 
+\begin_inset Formula $R$
+\end_inset
+
+ and Lipschitz constant 
+\begin_inset Formula $L$
+\end_inset
+
+.
+ For any 
+\begin_inset Formula $0\leq\epsilon\leq\frac{1}{2}$
+\end_inset
+
+,
+ the modified linear program (Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:IPM_interior_modified"
+nolink "false"
+
+\end_inset
+
+) with 
+\begin_inset Formula $\overline{R}=\frac{5}{\epsilon}R,t=2^{16}\epsilon^{-3}n^{2}\frac{R}{r}\cdot LR$
+\end_inset
+
+ has the following properties:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+The point 
+\begin_inset Formula $(x_{c}^{+},x_{c}^{-},\overline{R})$
+\end_inset
+
+ is on the central path of the modified program at 
+\begin_inset Formula $t$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+For any primal 
+\begin_inset Formula $x\defeq(x^{+},x^{-},x^{\theta})\in\mathcal{P}_{\overline{R},t}$
+\end_inset
+
+ and dual 
+\begin_inset Formula $s\defeq(s^{+},s^{-},s^{\theta})\in\mathcal{D}_{\overline{R},t}$
+\end_inset
+
+ such that 
+\begin_inset Formula $\frac{5}{6}LR\leq x_{i}s_{i}\leq\frac{7}{6}LR$
+\end_inset
+
+,
+ we have that
+\begin_inset Formula 
+\[
+(x^{+}-x^{-},s^{+}-s^{\theta})\in\PriR\times\DualR
+\]
+
+\end_inset
+
+and that 
+\begin_inset Formula $x_{i}^{-}\leq\epsilon x_{i}^{+}$
+\end_inset
+
+ and 
+\begin_inset Formula $s^{\theta}\leq\epsilon s_{i}^{+}$
+\end_inset
+
+ for all 
+\begin_inset Formula $i$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+The proof of this theorem is deferred to the end of this section.
+ Now we state our main algorithm.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm2e}[H]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\mathtt{SlowSolveLP}(\ma,b,c,x^{(0)},\delta)$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:SlowSolveLP"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Assumption:
+ the linear program has inner radius 
+\begin_inset Formula $r$
+\end_inset
+
+,
+ outer radius 
+\begin_inset Formula $R$
+\end_inset
+
+ and Lipschitz constant 
+\begin_inset Formula $L$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $\epsilon=1/(100\sqrt{n})$
+\end_inset
+
+,
+ 
+\begin_inset Formula $\overline{R}=\frac{5}{\epsilon}R$
+\end_inset
+
+,
+ 
+\begin_inset Formula $t=2^{16}\epsilon^{-3}n^{2}\frac{R}{r}\cdot LR$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tcp{
+\end_layout
+
+\end_inset
+
+Define the modified program 
+\begin_inset Formula $\min_{\oma x=\overline{b}}\overline{c}^{\top}x$
+\end_inset
+
+ by Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:IPM_interior_modified"
+nolink "false"
+
+\end_inset
+
+ with parameters 
+\begin_inset Formula $\overline{R}$
+\end_inset
+
+ and 
+\begin_inset Formula $t$
+\end_inset
+
+.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $\oma=\left[\begin{array}{ccc}
+\ma & -\ma & 0\\
+1 & 0 & 1
+\end{array}\right]$
+\end_inset
+
+,
+ 
+\begin_inset Formula $\overline{c}=(c,\widetilde{c})$
+\end_inset
+
+,
+ 
+\begin_inset Formula $\overline{b}=(b,\widetilde{b})$
+\end_inset
+
+ where 
+\begin_inset Formula $\widetilde{c}$
+\end_inset
+
+ and 
+\begin_inset Formula $\widetilde{b}$
+\end_inset
+
+ are defined in Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:IPM_interior_modified"
+nolink "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+tcp{
+\end_layout
+
+\end_inset
+
+Write down the central path at 
+\begin_inset Formula $t$
+\end_inset
+
+ for modified linear program.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\overline{x}=(x_{c}^{+},x_{c}^{-},\overline{R})$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\overline{s}=x/t$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $(\overline{x},\overline{s})=\mathtt{L2Step}(\oma,\overline{x},\overline{s},t,LR)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $(x,s)=(x^{+}-x^{-},s^{+}-s^{\theta})$
+\end_inset
+
+ where 
+\begin_inset Formula $\overline{x}=(x^{+},x^{-},x^{\theta})$
+\end_inset
+
+ and 
+\begin_inset Formula $\overline{s}=(s^{+},s^{-},s^{\theta})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $(x_{\mathrm{end}},s_{\mathrm{end}})=\mathtt{L2Step}(\ma,x^{+}-x^{-},s^{+}-s^{\theta},LR,t_{\mathrm{end}})$
+\end_inset
+
+ with 
+\begin_inset Formula $t_{\mathrm{end}}=\delta LR/(2n)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Return
+\series default
+ 
+\begin_inset Formula $x_{\mathrm{end}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:SlowSolveLP"
+
+\end_inset
+
+Consider a linear program 
+\begin_inset Formula $\min_{\ma x=b,x\geq0}c^{\top}x$
+\end_inset
+
+ with 
+\begin_inset Formula $n$
+\end_inset
+
+ variables and 
+\begin_inset Formula $d$
+\end_inset
+
+ constraints.
+ Assume the linear program has inner radius 
+\begin_inset Formula $r$
+\end_inset
+
+,
+ outer radius 
+\begin_inset Formula $R$
+\end_inset
+
+ and Lipschitz constant 
+\begin_inset Formula $L$
+\end_inset
+
+ (see Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:LP_para"
+nolink "false"
+
+\end_inset
+
+).
+ Then,
+ 
+\begin_inset Formula $\mathtt{SlowSolveLP}$
+\end_inset
+
+ outputs 
+\begin_inset Formula $x$
+\end_inset
+
+ such that
+\begin_inset Formula 
+\begin{align*}
+c^{\top}x & \leq\min_{\ma x=b,x\geq0}c^{\top}x+\delta LR,\\
+\ma x & =b,\\
+x & \geq0.
+\end{align*}
+
+\end_inset
+
+The algorithm takes 
+\begin_inset Formula $O(\sqrt{n}\log(nR/(\delta r)))$
+\end_inset
+
+ Newton steps.
+\end_layout
+
+\begin_layout Theorem
+If we further assume that the solution 
+\begin_inset Formula $x^{*}=\arg\min_{\ma x=b,x\geq0}c^{\top}x$
+\end_inset
+
+ is unique and that 
+\begin_inset Formula $c^{\top}x\geq c^{\top}x^{*}+\eta LR$
+\end_inset
+
+ for any other vertex 
+\begin_inset Formula $x$
+\end_inset
+
+ of 
+\begin_inset Formula $\{\ma x=b,x\geq0\}$
+\end_inset
+
+ for some 
+\begin_inset Formula $\eta>\delta\geq0$
+\end_inset
+
+,
+ then we have that 
+\begin_inset Formula $\|x-x^{*}\|_{2}\leq\frac{2\delta R}{\eta}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+By Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:IPM_interior"
+nolink "false"
+
+\end_inset
+
+,
+ the point 
+\begin_inset Formula $(x_{c}^{+},x_{c}^{-},\overline{R})$
+\end_inset
+
+ is on the central path of the modified program at 
+\begin_inset Formula $t$
+\end_inset
+
+.
+ After the first call of 
+\begin_inset Formula $\mathtt{L2Step}$
+\end_inset
+
+,
+ we have 
+\begin_inset Formula $(\overline{x},\overline{s})$
+\end_inset
+
+ such that 
+\begin_inset Formula $\|\overline{x}\overline{s}-t\|_{2}\leq\frac{t}{6}$
+\end_inset
+
+ with 
+\begin_inset Formula $t=LR$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:IPM_interior"
+nolink "false"
+
+\end_inset
+
+ shows that 
+\begin_inset Formula $(x,s)=(x^{+}-x^{-},s^{+}-s^{\theta})\in\PriR\times\DualR$
+\end_inset
+
+ and that 
+\begin_inset Formula $x=(1\pm\epsilon)x^{+}$
+\end_inset
+
+ and 
+\begin_inset Formula $s=(1\pm\epsilon)s^{+}$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $\epsilon=\frac{1}{100\sqrt{n}}$
+\end_inset
+
+ and 
+\begin_inset Formula $\|x^{+}s^{+}-t\|_{2}\leq\frac{t}{6}$
+\end_inset
+
+ with 
+\begin_inset Formula $t=LR$
+\end_inset
+
+,
+ we have that 
+\begin_inset Formula $\|xs-t\|_{2}\leq\frac{t}{4}$
+\end_inset
+
+.
+ This verifies the condition for the second call of 
+\begin_inset Formula $\mathtt{L2Step}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+After the second call of 
+\begin_inset Formula $\mathtt{L2Step}$
+\end_inset
+
+,
+ we have 
+\begin_inset Formula $(x_{\mathrm{end}},s_{\mathrm{end}})$
+\end_inset
+
+ such that 
+\begin_inset Formula $\|x_{\mathrm{end}}s_{\mathrm{end}}-t_{\mathrm{end}}\|_{2}\leq\frac{t}{6}$
+\end_inset
+
+ with 
+\begin_inset Formula $t_{\mathrm{end}}=\delta LR/(2n)$
+\end_inset
+
+.
+ Hence,
+ by the bound on the duality gap,
+ 
+\begin_inset Formula 
+\[
+c^{\top}x_{\mathrm{end}}\leq\min_{\ma x=b,x\geq0}c^{\top}x+x_{\mathrm{end}}^{\top}s_{\mathrm{end}}\leq\min_{\ma x=b,x\geq0}c^{\top}x+2t_{\mathrm{end}}n\leq\min_{\ma x=b,x\geq0}c^{\top}x+\delta LR.
+\]
+
+\end_inset
+
+For the runtime,
+ note that 
+\begin_inset Formula $\mathtt{L2Step}$
+\end_inset
+
+ decreases 
+\begin_inset Formula $t$
+\end_inset
+
+ by 
+\begin_inset Formula $1-\Omega(n^{-1/2})$
+\end_inset
+
+ factor each step.
+ Hence,
+ the first call takes 
+\begin_inset Formula $O(\sqrt{n}\log(nR/r))$
+\end_inset
+
+ Newton steps and second call takes 
+\begin_inset Formula $O(\sqrt{n}\log(n/\delta))$
+\end_inset
+
+ Newton steps.
+\end_layout
+
+\begin_layout Proof
+For the last conclusion,
+ we assume 
+\begin_inset Formula $\delta\leq\eta$
+\end_inset
+
+ and let 
+\begin_inset Formula $\mathcal{P}_{t}=\mathcal{P}\cap\{c^{\top}x\leq c^{\top}x^{*}+tLR\}$
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula $\mathcal{P}_{\eta}$
+\end_inset
+
+ is a cone at 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ (because there is no vertex except 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ with value less than 
+\begin_inset Formula $c^{\top}x^{*}+tLR$
+\end_inset
+
+).
+ Hence,
+ we have 
+\begin_inset Formula $\mathcal{P}_{\delta}-x^{*}=\frac{\delta}{\eta}(\mathcal{P}_{\eta}-x^{*})$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $x\in\mathcal{P}_{\delta}$
+\end_inset
+
+,
+ we have that 
+\begin_inset Formula 
+\[
+\|x-x^{*}\|_{2}\leq\frac{\delta}{\eta}\text{diameter}(\mathcal{P}_{\eta}-x^{*})\leq\frac{2\delta R}{\eta}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If we know the solution of the linear program is integral or rational with some bound on the number of bits,
+ then getting a solution close enough to 
+\begin_inset Formula $x^{*}$
+\end_inset
+
+ allows us to round the solution to an integral solution.
+ Therefore,
+ the last conclusion of the theorem above gives us an exact linear programming algorithm assuming 
+\begin_inset Formula $\ma,b,c$
+\end_inset
+
+ are integral and bounded.
+ The uniqueness assumption can be achieved by perturbing the cost vector by a random vector.
+\end_layout
+
+\begin_layout Standard
+First,
+ we show that 
+\begin_inset Formula $x^{(0)}$
+\end_inset
+
+ defined in Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:IPM_interior"
+nolink "false"
+
+\end_inset
+
+ is indeed on the central path of the modified linear program.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:ipm_interior_modified"
+
+\end_inset
+
+The modified linear program (Definition 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "def:IPM_interior_modified"
+nolink "false"
+
+\end_inset
+
+) has an explicit central path point 
+\begin_inset Formula $x^{(0)}=(x_{c}^{+},x_{c}^{-},\overline{R})$
+\end_inset
+
+ at 
+\begin_inset Formula $t$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Recall that we say 
+\begin_inset Formula $(x^{+},x^{-},x^{\theta})$
+\end_inset
+
+ is on the central path at 
+\begin_inset Formula $t$
+\end_inset
+
+ if 
+\begin_inset Formula $x^{+},x^{-},x^{\theta}$
+\end_inset
+
+ are positive and it satisfies the following equation
+\begin_inset Formula 
+\begin{align}
+\ma x^{+}-\ma x^{-} & =b,\nonumber \\
+\sum_{i=1}^{n}x_{i}^{+}+x^{\theta} & =\widetilde{b},\nonumber \\
+\ma^{\top}y+\lambda+s^{+} & =c,\label{eq:KKT_modified_LP}\\
+-\ma^{\top}y+s^{-} & =\widetilde{c},\nonumber \\
+\lambda+s^{\theta} & =0,\nonumber 
+\end{align}
+
+\end_inset
+
+for some 
+\begin_inset Formula $s^{+},s^{-}\in\R_{>0}^{n}$
+\end_inset
+
+,
+ 
+\begin_inset Formula $s^{\theta}>0$
+\end_inset
+
+,
+ 
+\begin_inset Formula $y\in\R^{d}$
+\end_inset
+
+ and 
+\begin_inset Formula $\lambda\in\R$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Now,
+ we verify the solution 
+\begin_inset Formula $x^{+}=\frac{t}{c+t/\overline{R}}$
+\end_inset
+
+,
+ 
+\begin_inset Formula $x^{-}=\frac{t}{c+t/\overline{R}}-x_{\circ}$
+\end_inset
+
+,
+ 
+\begin_inset Formula $x^{\theta}=\overline{R}$
+\end_inset
+
+,
+ 
+\begin_inset Formula $x_{\circ}=\ma^{\top}(\ma\ma^{\top})^{-1}b$
+\end_inset
+
+,
+ 
+\begin_inset Formula $y=0$
+\end_inset
+
+,
+ 
+\begin_inset Formula $s^{+}=\frac{t}{x^{+}}$
+\end_inset
+
+,
+ 
+\begin_inset Formula $s^{-}=\frac{t}{x^{-}}$
+\end_inset
+
+,
+ 
+\begin_inset Formula $s^{\theta}=\frac{t}{x^{\theta}}$
+\end_inset
+
+,
+ 
+\begin_inset Formula $\lambda=-s^{\theta}$
+\end_inset
+
+.
+ Using 
+\begin_inset Formula $\ma x_{\circ}=b$
+\end_inset
+
+,
+ one can check it satisfies all the equality constraints above.
+ 
+\end_layout
+
+\begin_layout Proof
+For the inequality constraints,
+ using 
+\begin_inset Formula $\|c\|_{\infty}\leq L$
+\end_inset
+
+ and 
+\begin_inset Formula $t\geq8L\overline{R}$
+\end_inset
+
+,
+ we have
+\begin_inset Formula 
+\begin{equation}
+\frac{3}{4}\overline{R}\leq\frac{t}{L+t/\overline{R}}\leq x_{i}^{+}\leq\frac{t}{-L+t/\overline{R}}\leq\frac{3}{2}\overline{R}\label{eq:x_pos_bound}
+\end{equation}
+
+\end_inset
+
+and hence 
+\begin_inset Formula $x^{+}>0$
+\end_inset
+
+ and so is 
+\begin_inset Formula $s^{+}$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $\|x_{\circ}\|_{2}\leq R\leq\frac{\overline{R}}{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $x_{i}^{+}\geq\frac{3}{4}\overline{R}$
+\end_inset
+
+ for all 
+\begin_inset Formula $i$
+\end_inset
+
+,
+ we have 
+\begin_inset Formula $x_{i}^{-}\geq0$
+\end_inset
+
+ for all 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ Hence,
+ 
+\begin_inset Formula $x^{-}$
+\end_inset
+
+ and 
+\begin_inset Formula $s^{-}$
+\end_inset
+
+ are positive.
+ Finally,
+ 
+\begin_inset Formula $x^{\theta}$
+\end_inset
+
+ and 
+\begin_inset Formula $s^{\theta}$
+\end_inset
+
+ are positive.
+ This proves that 
+\begin_inset Formula $(\frac{t}{c+t/\overline{R}},\frac{t}{c+t/\overline{R}}-x_{\circ},\overline{R})$
+\end_inset
+
+ is on the central path point at 
+\begin_inset Formula $t$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Next,
+ we show that the near-central-path point 
+\begin_inset Formula $(x,s)$
+\end_inset
+
+ at 
+\begin_inset Formula $t=LR$
+\end_inset
+
+ is far from the constraints 
+\begin_inset Formula $x^{+}\geq0$
+\end_inset
+
+ and is close to the constraints 
+\begin_inset Formula $x^{-}\geq0$
+\end_inset
+
+.
+ The proof for both involves the same idea:
+ use the optimality condition of 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ Throughout the rest of the section,
+ we are given 
+\begin_inset Formula $(x,s)\in\mathcal{P}_{\overline{R},t}\times\mathcal{D}_{\overline{R},t}$
+\end_inset
+
+ such that 
+\begin_inset Formula $\mu=xs$
+\end_inset
+
+ satisfies
+\begin_inset Formula 
+\[
+\frac{5}{6}LR\leq\mu\leq\frac{7}{6}LR.
+\]
+
+\end_inset
+
+We write 
+\begin_inset Formula $\mu$
+\end_inset
+
+ into its three parts 
+\begin_inset Formula $(\mu^{+},\mu^{-},\mu^{\theta})$
+\end_inset
+
+.
+ By Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:primal_dual_representation"
+nolink "false"
+
+\end_inset
+
+,
+ we have that 
+\begin_inset Formula $x\defeq(x^{+},x^{-},x^{\theta})$
+\end_inset
+
+ minimizes the function
+\begin_inset Formula 
+\[
+f(x^{+},x^{-},x^{\theta})\defeq c^{\top}x^{+}+\widetilde{c}^{\top}x^{-}-\sum_{i=1}^{n}\mu_{i}^{+}\log x_{i}^{+}-\sum_{i=1}^{n}\mu_{i}^{-}\log x_{i}^{-}-\mu^{\theta}\log x^{\theta}
+\]
+
+\end_inset
+
+over the domain 
+\begin_inset Formula $\mathcal{P}_{\overline{R},t}$
+\end_inset
+
+.
+ The gradient of 
+\begin_inset Formula $f$
+\end_inset
+
+ is a bit complicated.
+ We avoid it by considering the directional derivative at 
+\begin_inset Formula $x$
+\end_inset
+
+ along the direction 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Formula $v-x$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+ where 
+\begin_inset Formula $v$
+\end_inset
+
+ is the point such that 
+\begin_inset Formula $\ma v=b$
+\end_inset
+
+ and 
+\begin_inset Formula $v\geq r$
+\end_inset
+
+.
+ Since our domain is in 
+\begin_inset Formula $\mathcal{P}_{\overline{R},t}\subset\R^{2n+1}$
+\end_inset
+
+,
+ we need to lift 
+\begin_inset Formula $v$
+\end_inset
+
+ to higher dimension.
+ So we define the point
+\begin_inset Formula 
+\begin{align*}
+v^{-} & =\min(x^{-},\frac{8L\overline{R}}{t}\cdot R),\\
+v^{+} & =v+v^{-},\\
+v^{\theta} & =\widetilde{b}-\sum_{i=1}^{n}v_{i}^{+}.
+\end{align*}
+
+\end_inset
+
+First,
+ we need to get some basic bounds on 
+\begin_inset Formula $\widetilde{b}$
+\end_inset
+
+ and 
+\begin_inset Formula $\widetilde{c}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:ipm_propert_modified"
+
+\end_inset
+
+We have that 
+\begin_inset Formula $\frac{3}{4}n\overline{R}\leq\widetilde{b}\leq3n\overline{R}$
+\end_inset
+
+ and 
+\begin_inset Formula $\widetilde{c}_{i}\geq t/(2\overline{R})$
+\end_inset
+
+ for all 
+\begin_inset Formula $i$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+By 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:x_pos_bound"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+,
+ we have 
+\begin_inset Formula $\frac{3}{4}\overline{R}\leq x_{c,i}^{+}\leq\frac{3}{2}\overline{R}$
+\end_inset
+
+.
+ By the definition of 
+\begin_inset Formula $\widetilde{b}$
+\end_inset
+
+,
+ we have
+\begin_inset Formula 
+\[
+\widetilde{b}=\sum_{i=1}^{n}x_{c,i}^{+}+\overline{R}\leq\frac{3}{2}n\overline{R}+\overline{R}\leq3n\overline{R}.
+\]
+
+\end_inset
+
+Similarly,
+ we have 
+\begin_inset Formula $\widetilde{b}=\sum_{i}x_{i}^{+}+\overline{R}\geq\frac{3}{4}n\overline{R}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+For the bound on 
+\begin_inset Formula $\widetilde{c}$
+\end_inset
+
+,
+ recall that 
+\begin_inset Formula $\widetilde{c}=t/x_{c}^{-}$
+\end_inset
+
+ with 
+\begin_inset Formula $x_{c}^{-}=x_{c}^{+}-x_{\circ}$
+\end_inset
+
+ and 
+\begin_inset Formula $x_{\circ}=\ma^{\top}(\ma\ma^{\top})^{-1}b=\arg\min_{\ma x=b}\|x\|_{2}$
+\end_inset
+
+.
+ Since we assumed the linear program has outer radius 
+\begin_inset Formula $R$
+\end_inset
+
+,
+ we have that 
+\begin_inset Formula $\|x_{\circ}\|_{2}\leq R$
+\end_inset
+
+.
+ Hence,
+ 
+\begin_inset Formula 
+\[
+x_{c,i}^{-}\leq\frac{3}{2}\overline{R}+R\leq2\overline{R}.
+\]
+
+\end_inset
+
+Therefore,
+ 
+\begin_inset Formula $\widetilde{c}\geq t/(2\overline{R})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The following lemma shows that 
+\begin_inset Formula $(v^{+},v^{-},v^{\theta})\in\mathcal{P}_{\overline{R},t}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:IPM_exact_inner_pt"
+
+\end_inset
+
+We have that 
+\begin_inset Formula $(v^{+},v^{-},v^{\theta})\in\mathcal{P}_{\overline{R},t}$
+\end_inset
+
+.
+ Furthermore,
+ we have 
+\begin_inset Formula $v^{\theta}\geq\frac{1}{2}n\overline{R}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Note that 
+\begin_inset Formula $(v^{+},v^{-},v^{\theta})$
+\end_inset
+
+ satisfies the linear constraints of 
+\begin_inset Formula $\mathcal{P}_{\overline{R},t}$
+\end_inset
+
+ by construction.
+ It suffices to prove the vector is positive.
+ Since 
+\begin_inset Formula $x^{-}>0$
+\end_inset
+
+,
+ we have 
+\begin_inset Formula $v^{-}>0$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $v\geq r$
+\end_inset
+
+,
+ we also have 
+\begin_inset Formula $v^{+}>0$
+\end_inset
+
+.
+ For 
+\begin_inset Formula $v^{\theta}$
+\end_inset
+
+,
+ we use 
+\begin_inset Formula $\widetilde{b}\geq\frac{3}{4}n\overline{R}$
+\end_inset
+
+ (Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:ipm_propert_modified"
+nolink "false"
+
+\end_inset
+
+),
+ 
+\begin_inset Formula $v\leq R$
+\end_inset
+
+ and 
+\begin_inset Formula $v^{-}\leq\frac{8L\overline{R}}{t}\cdot R\leq R$
+\end_inset
+
+ to get
+\begin_inset Formula 
+\begin{align*}
+v^{\theta}=\widetilde{b}-\sum_{i=1}^{n}v_{i}^{+} & \geq\frac{3}{4}n\overline{R}-\sum_{i=1}^{n}(v_{i}+v_{i}^{-})\geq\frac{1}{2}n\overline{R}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Next,
+ we define the path 
+\begin_inset Formula $p(t)=(1-t)(x^{+},x^{-},x^{\theta})+t(v^{+},v^{-},v^{\theta})$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $p(0)$
+\end_inset
+
+ minimizes 
+\begin_inset Formula $f$
+\end_inset
+
+,
+ we have that 
+\begin_inset Formula $\frac{d}{dt}f(p(t))|_{t=0}\geq0$
+\end_inset
+
+.
+ In particular,
+ we have
+\begin_inset Formula 
+\begin{align}
+0 & \leq\frac{d}{dt}f(p(t))|_{t=0}\nonumber \\
+ & =c^{\top}(v^{+}-x^{+})+\widetilde{c}^{\top}(v^{-}-x^{-})-\sum_{i=1}^{n}\frac{\mu_{i}^{+}}{x_{i}^{+}}(v^{+}-x^{+})_{i}-\sum_{i=1}^{n}\frac{\mu_{i}^{-}}{x_{i}^{-}}(v^{-}-x^{-})_{i}-\frac{\mu^{\theta}}{x^{\theta}}(v_{\theta}-x^{\theta})\nonumber \\
+ & =\frac{\mu^{\theta}}{x^{\theta}}(x^{\theta}-v_{\theta})+\sum_{i=1}^{n}(c_{i}-\frac{\mu_{i}^{+}}{x_{i}^{+}})(v^{+}-x^{+})_{i}+\sum_{i=1}^{n}(\widetilde{c}_{i}-\frac{\mu_{i}^{-}}{x_{i}^{-}})(v^{-}-x^{-})_{i}.\label{eq:LP_exact_3_term}
+\end{align}
+
+\end_inset
+
+Now,
+ we bound each term one by one.
+ For the first term,
+ we note that 
+\begin_inset Formula 
+\begin{equation}
+\frac{\mu^{\theta}}{x^{\theta}}(x^{\theta}-v_{\theta})\leq\mu^{\theta}\leq2LR.\label{eq:LP_exact_3_term_1}
+\end{equation}
+
+\end_inset
+
+For the second term in 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:LP_exact_3_term"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+,
+ we have the following
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:LP_exact_3_term_1"
+
+\end_inset
+
+We have that 
+\begin_inset Formula $\sum_{i=1}^{n}(c_{i}-\frac{\mu_{i}^{+}}{x_{i}^{+}})(v^{+}-x^{+})_{i}\leq4nL\overline{R}-\frac{LRr}{2\min_{i}x_{i}^{+}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Note that
+\begin_inset Formula 
+\begin{align*}
+\sum_{i=1}^{n}(c_{i}-\frac{\mu_{i}^{+}}{x_{i}^{+}})(v^{+}-x^{+})_{i} & =\sum_{i=1}^{n}(c_{i}v_{i}^{+}-\frac{\mu_{i}^{+}}{x_{i}^{+}}v_{i}^{+}-c_{i}x_{i}^{+}+\mu_{i}^{+})\\
+ & \leq\sum_{i=1}^{n}c_{i}v_{i}^{+}+\sum_{i=1}^{n}\mu_{i}^{+}-\sum_{i=1}^{n}\frac{\mu_{i}^{+}}{x_{i}^{+}}v_{i}^{+}\\
+ & \leq\|c\|_{\infty}\|v^{+}\|_{1}+2nLR-\frac{1}{2}\sum_{i=1}^{n}\frac{LRr}{x_{i}^{+}}
+\end{align*}
+
+\end_inset
+
+where we used 
+\begin_inset Formula $\mu_{i}^{+}\in[\frac{LR}{2},2LR]$
+\end_inset
+
+ and 
+\begin_inset Formula $v_{i}^{+}\geq v_{i}\geq r$
+\end_inset
+
+ at the end.
+ The result follows from 
+\begin_inset Formula $\|c\|_{\infty}\leq L$
+\end_inset
+
+,
+ 
+\begin_inset Formula $\|v^{+}\|_{1}\leq\widetilde{b}\leq3n\overline{R}$
+\end_inset
+
+ (Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:ipm_propert_modified"
+nolink "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+For the third term in 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:LP_exact_3_term"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+,
+ we have the following
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:LP_exact_3_term_2"
+
+\end_inset
+
+We have that 
+\begin_inset Formula $\sum_{i=1}^{n}(\widetilde{c}_{i}-\frac{\mu_{i}^{-}}{x_{i}^{-}})(v^{-}-x^{-})_{i}\leq2LR-\frac{t}{4\overline{R}}\max_{i}x_{i}^{-}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Using 
+\begin_inset Formula $v^{-}=\min(x^{-},\frac{8L\overline{R}}{t}\cdot R)$
+\end_inset
+
+,
+ we have 
+\begin_inset Formula $v_{i}^{-}\leq x_{i}^{-}$
+\end_inset
+
+.
+ We can ignore the terms with 
+\begin_inset Formula $v_{i}^{-}=x_{i}^{-}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+For 
+\begin_inset Formula $v_{i}^{-}<x_{i}^{-}$
+\end_inset
+
+,
+ we have 
+\begin_inset Formula $x_{i}^{-}\geq\frac{8L\overline{R}}{t}R$
+\end_inset
+
+.
+ Using 
+\begin_inset Formula $\widetilde{c}_{i}\geq\frac{t}{2\overline{R}}$
+\end_inset
+
+ (Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:ipm_propert_modified"
+nolink "false"
+
+\end_inset
+
+),
+ we have
+\begin_inset Formula 
+\[
+\widetilde{c}_{i}-\frac{\mu_{i}^{-}}{x_{i}^{-}}\geq\widetilde{c}_{i}-\frac{\mu_{i}^{-}}{\frac{8L\overline{R}}{t}R}\geq\widetilde{c}_{i}-\frac{2LR}{\frac{8L\overline{R}}{t}R}=\widetilde{c}_{i}-\frac{t}{4\overline{R}}\geq\frac{t}{4\overline{R}}.
+\]
+
+\end_inset
+
+Hence,
+ we have
+\begin_inset Formula 
+\[
+\sum_{i=1}^{n}(\widetilde{c}_{i}-\frac{\mu_{i}^{-}}{x_{i}^{-}})(v^{-}-x^{-})_{i}\leq\frac{t}{4\overline{R}}\sum_{i=1}^{n}(v^{-}-x^{-})_{i}\leq\frac{t}{4\overline{R}}(\frac{8L\overline{R}}{t}\cdot R-\max_{i}x_{i}^{-}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Combining 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:LP_exact_3_term"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+,
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:LP_exact_3_term_1"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+,
+ Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:LP_exact_3_term_1"
+nolink "false"
+
+\end_inset
+
+ and Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:LP_exact_3_term_2"
+nolink "false"
+
+\end_inset
+
+,
+ we have
+\begin_inset Formula 
+\begin{align*}
+0 & \leq\frac{\mu^{\theta}}{x^{\theta}}(x^{\theta}-v_{\theta})+\sum_{i=1}^{n}(c_{i}-\frac{\mu_{i}^{+}}{x_{i}^{+}})(v^{+}-x^{+})_{i}+\sum_{i=1}^{n}(\widetilde{c}_{i}-\frac{\mu_{i}^{-}}{x_{i}^{-}})(v^{-}-x^{-})_{i}\\
+ & \leq2LR+4nL\overline{R}-\frac{LRr}{2\min_{i}x_{i}^{+}}+2LR-\frac{t}{4\overline{R}}\max_{i}x_{i}^{-}\\
+ & =5nL\overline{R}-\frac{LRr}{2\min_{i}x_{i}^{+}}-\frac{t}{4\overline{R}}\max_{i}x_{i}^{-}.
+\end{align*}
+
+\end_inset
+
+Hence,
+ we show that 
+\begin_inset Formula $(x^{+},x^{-},x^{\theta})$
+\end_inset
+
+ is close to the central path at 
+\begin_inset Formula $t=LR$
+\end_inset
+
+ implies that 
+\begin_inset Formula $\min_{i}x_{i}^{+}$
+\end_inset
+
+ cannot be too small and 
+\begin_inset Formula $\max_{i}x_{i}^{-}$
+\end_inset
+
+ cannot be too large
+\begin_inset Formula 
+\[
+\frac{LRr}{2\min_{i}x_{i}^{+}}+\frac{t}{4\overline{R}}\max_{i}x_{i}^{-}\leq5nL\overline{R}.
+\]
+
+\end_inset
+
+In particular,
+ this shows the following:
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:LP_exact_distance_OPT"
+
+\end_inset
+
+We have that 
+\begin_inset Formula $\min_{i}x_{i}^{+}\geq\frac{Rr}{10n\overline{R}}$
+\end_inset
+
+ and 
+\begin_inset Formula $\max_{i}x_{i}^{-}\leq\frac{20nL\overline{R}}{t}\cdot\overline{R}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Now,
+ we are ready to prove the second conclusion of Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:IPM_interior"
+nolink "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lemma:IPM_center_original"
+
+\end_inset
+
+For any primal 
+\begin_inset Formula $x\defeq(x^{+},x^{-},x^{\theta})\in\mathcal{P}_{\overline{R},t}$
+\end_inset
+
+ and dual 
+\begin_inset Formula $s\defeq(s^{+},s^{-},s^{\theta})\in\mathcal{D}_{\overline{R},t}$
+\end_inset
+
+ such that 
+\begin_inset Formula $\frac{5}{6}LR\leq x_{i}s_{i}\leq\frac{7}{6}LR$
+\end_inset
+
+,
+ we have that
+\begin_inset Formula 
+\[
+(x^{+}-x^{-},s^{+}-s^{\theta})\in\PriR\times\DualR
+\]
+
+\end_inset
+
+and that 
+\begin_inset Formula $x_{i}^{-}\leq\epsilon x_{i}^{+}$
+\end_inset
+
+ and 
+\begin_inset Formula $s^{\theta}\leq\epsilon s_{i}^{+}$
+\end_inset
+
+ for all 
+\begin_inset Formula $i$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+First we check 
+\begin_inset Formula $x\defeq x^{+}-x^{-}\in\PriR$
+\end_inset
+
+.
+ By the choice of 
+\begin_inset Formula $\overline{R}$
+\end_inset
+
+ and 
+\begin_inset Formula $t$
+\end_inset
+
+,
+ Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:LP_exact_distance_OPT"
+nolink "false"
+
+\end_inset
+
+ shows that 
+\begin_inset Formula 
+\[
+\frac{\max_{i}x_{i}^{-}}{\min_{i}x_{i}^{+}}\leq\frac{\frac{20nL\overline{R}}{t}\cdot\overline{R}}{\frac{Rr}{10n\overline{R}}}=\frac{200n^{2}L\frac{\overline{R}^{3}}{Rr}}{t}\leq\epsilon.
+\]
+
+\end_inset
+
+Hence,
+ we have 
+\begin_inset Formula $x^{+}-x^{-}>0$
+\end_inset
+
+ and that 
+\begin_inset Formula $\ma(x^{+}-x^{-})=b$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+Next,
+ we check 
+\begin_inset Formula $s\defeq s^{+}-s^{\theta}\in\DualR$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $x\in\mathcal{P}$
+\end_inset
+
+,
+ we have 
+\begin_inset Formula $x\leq R$
+\end_inset
+
+ and 
+\begin_inset Formula $x_{i}^{+}\leq\frac{3}{2}x_{i}\leq\frac{3}{2}R$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $x_{i}^{+}s_{i}^{+}\geq\frac{5}{6}LR$
+\end_inset
+
+,
+ we have 
+\begin_inset Formula $s_{i}^{+}\geq\frac{1}{2}L.$
+\end_inset
+
+ On the other hand,
+ we have 
+\begin_inset Formula $x^{\theta}=\widetilde{b}-\sum_{i=1}^{n}x_{i}^{+}\geq\widetilde{b}-2nR\geq\frac{1}{2}n\overline{R}$
+\end_inset
+
+ (Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:ipm_propert_modified"
+nolink "false"
+
+\end_inset
+
+).
+ Hence,
+ 
+\begin_inset Formula $s^{\theta}\leq\frac{\frac{7}{6}LR}{\frac{1}{2}n\overline{R}}\leq\frac{5LR}{2n\overline{R}}.$
+\end_inset
+
+ Combining both and the choice of 
+\begin_inset Formula $\overline{R}$
+\end_inset
+
+,
+ we have
+\begin_inset Formula 
+\[
+\frac{s^{\theta}}{\min_{i}s_{i}^{+}}\leq\frac{\frac{5LR}{2n\overline{R}}}{L/2}=\frac{5R}{n\overline{R}}\leq\epsilon
+\]
+
+\end_inset
+
+Hence,
+ we have 
+\begin_inset Formula $s=s^{+}-s^{\theta}>0$
+\end_inset
+
+ and that 
+\begin_inset Formula $\ma^{\top}y+s=\ma^{\top}y+s^{+}-s^{\theta}=\ma^{\top}y+s^{+}+\lambda=c$
+\end_inset
+
+ (See 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:KKT_modified_LP"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Subsection
 Why 
 \begin_inset Formula $\sqrt{n}$
 \end_inset
@@ -2423,7 +4537,7 @@ Given a convex function
 \end_inset
 
  define the norm 
-\begin_inset Formula $\norm._{x}$
+\begin_inset Formula $\norm ._{x}$
 \end_inset
 
  as 
@@ -2568,20 +4682,6 @@ Given a self-concordant function
 \[
 D^{3}f(x)[h_{1},h_{2},h_{3}]\leq2\norm{h_{1}}_{x}\norm{h_{2}}_{x}\norm{h_{3}}_{x}.
 \]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Lemma
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-I don't like the proof in the nesterov nem book.
- It seems too complicated.
-\end_layout
 
 \end_inset
 
@@ -3640,8 +5740,31 @@ end{algorithm2e}
 \end_layout
 
 \begin_layout Standard
-We first explain the termination condition.
- Intuitively,
+We first explain the initialization and termination conditions.
+ We start with the point 
+\begin_inset Formula $x^{(0)}=\arg\min\phi(x)$
+\end_inset
+
+ (or a point very close to it).
+ The choice of 
+\begin_inset Formula $t_{0}$
+\end_inset
+
+ is to ensure that the norm of the initial gradient in the inverse Hessian norm is bounded by a convenient constant less than 
+\begin_inset Formula $1$
+\end_inset
+
+ (we use 
+\begin_inset Formula $1/6$
+\end_inset
+
+).
+ 
+\end_layout
+
+\begin_layout Standard
+For the termination,
+ intuitively,
  we can see that 
 \begin_inset Formula $\min f_{t}(x_{t})$
 \end_inset
