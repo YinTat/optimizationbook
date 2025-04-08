@@ -6036,7 +6036,7 @@ Given a
  in 
 \begin_inset Formula 
 \[
-O(\sqrt{\nu}\log(\frac{\nu}{\epsilon}\|c\|_{\nabla^{2}\phi(x)^{-1}}))
+O(\sqrt{\nu}\log(\frac{\nu}{\epsilon}\|c\|_{\nabla^{2}\phi(x^{(0)})^{-1}}))
 \]
 
 \end_inset
