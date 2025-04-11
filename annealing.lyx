@@ -1,31 +1,1264 @@
-#LyX 2.3 created this file. For more info see http://www.lyx.org/
-\lyxformat 544
+#LyX 2.4 created this file. For more info see https://www.lyx.org/
+\lyxformat 620
 \begin_document
 \begin_header
+\save_transient_properties true
+\origin unavailable
 \textclass optbook
+\use_default_options true
+\maintain_unincluded_children no
+\language american
+\language_package default
+\inputencoding utf8
+\fontencoding auto
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_roman_osf false
+\font_sans_osf false
+\font_typewriter_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement class
+\float_alignment class
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_formatted_ref 0
+\use_minted 0
+\use_lineno 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tablestyle default
+\tracking_changes false
+\output_changes false
+\change_bars false
+\postpone_fragile_content true
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\docbook_table_output 0
+\docbook_mathml_prefix 1
 \end_header
 
 \begin_body
+
+\begin_layout Standard
+In this chapter,
+ we develop efficient algorithms for volume computation and integration based on a technique called 
+\emph on
+Simulated Annealing,
+ 
+\emph default
+which is also provably efficient for convex optimization.
+ Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:volume"
+nolink "false"
+
+\end_inset
+
+ below summarizes progress on the volume problem over the past three decades.
+ Besides improving the complexity of volume computation,
+ each step has typically resulted in new techniques.
+ For more details,
+ we refer the reader to surveys on the topic 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Simonovits03,VemSurvey"
+literal "true"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement h
+alignment document
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="11" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="left" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Year/Authors
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+New ingredients
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Steps
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1989/Dyer-Frieze-Kannan 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DyerFK89"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Everything
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n^{23}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1990/Lovász-Simonovits 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "LS90"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Better isoperimetry
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n^{16}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1990/Lovász 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "L90"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Ball walk
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n^{10}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1991/Applegate-Kannan 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "applegate1991sampling"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Logconcave sampling
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n^{10}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1990/Dyer-Frieze 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DyerF90"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Better error analysis
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n^{8}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1993/Lovász-Simonovits 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "LS93"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Localization lemma
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n^{7}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1997/Kannan-Lovász-Simonovits 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "kannan1997random"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Speedy walk,
+ isotropy
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n^{5}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2003/Lovász-Vempala 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "LV2003"
+literal "true"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Annealing,
+ hit-and-run
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n^{4}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2015/Cousins-Vempala 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "CV2015"
+literal "true"
+
+\end_inset
+
+ (well-rounded)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Gaussian Cooling
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n^{3}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2017/Lee-Vempala (polytopes)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Hamiltonian Walk
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $mn^{\frac{2}{3}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:volume"
+
+\end_inset
+
+ The complexity of volume estimation,
+ each step uses 
+\begin_inset Formula $\widetilde{O}(n)$
+\end_inset
+
+ bit of randomness.
+ The last algorithm needs 
+\begin_inset Formula $\widetilde{O}\left(mn^{\omega-1}\right)$
+\end_inset
+
+ steps per iteration while the rest need 
+\begin_inset Formula $O(n^{2})$
+\end_inset
+
+ per oracle query.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+We begin with a description and analysis of the DFK algorithm to estimate the volume of a convex body in high dimension.
+\end_layout
+
+\begin_layout Section
+Volume Computation:
+ the DFK Algorithm
+\end_layout
+
+\begin_layout Problem
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Volume Estimation
+\end_layout
+
+\end_inset
+
+ Given a membership oracle for a convex body 
+\begin_inset Formula $K$
+\end_inset
+
+ in 
+\begin_inset Formula $\R^{n}$
+\end_inset
+
+,
+ 
+\begin_inset Formula $R$
+\end_inset
+
+ such that 
+\begin_inset Formula $B_{n}\subseteq K\subseteq RB_{n}$
+\end_inset
+
+ and 
+\begin_inset Formula $\varepsilon>0$
+\end_inset
+
+,
+ output a number 
+\begin_inset Formula $A$
+\end_inset
+
+ s.t.
+ 
+\begin_inset Formula 
+\[
+(1-\varepsilon)\vol(K)\le A\le(1+\varepsilon)\vol(K).
+\]
+
+\end_inset
+
+As in all problems in oracle models discussed in this book,
+ the complexity of an algorithm to solve the above problem is given by the number of oracles calls and the number of arithmetic operations.
+ 
+\end_layout
+
+\begin_layout Theorem
+There exists a randomized algorithm that given any 
+\begin_inset Formula $\varepsilon,\delta>0$
+\end_inset
+
+,
+ and any convex body 
+\begin_inset Formula $K$
+\end_inset
+
+ with probability at least 
+\begin_inset Formula $1-\delta$
+\end_inset
+
+ solves the Volume Estimation problem for 
+\begin_inset Formula $K$
+\end_inset
+
+ using 
+\begin_inset Formula $\mbox{poly}(n,1/\varepsilon,\ln(1/\delta),\ln R)$
+\end_inset
+
+ oracle queries and arithmetic operations.
+ 
+\end_layout
+
+\begin_layout Standard
+The next exercise is the general observation that any algorithm that succeeds with failure probability less than 
+\begin_inset Formula $1/2$
+\end_inset
+
+ can be converted to one with failure probability at most 
+\begin_inset Formula $\delta$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Exercise
+Show that a randomized algorithm that outputs an acceptable estimate of a real number with failure probability at most 
+\begin_inset Formula $1/4$
+\end_inset
+
+ can be converted to one that outputs an acceptable estimate with failure probability at most 
+\begin_inset Formula $\delta$
+\end_inset
+
+ by repeating the algorithm independently 
+\begin_inset Formula $O(\ln(1/\delta))$
+\end_inset
+
+ times and taking the median of the outputs of the independent trials.
+\end_layout
+
+\begin_layout Exercise
+Going forward,
+ we ignore the parameter 
+\begin_inset Formula $\delta$
+\end_inset
+
+,
+ and focus on algorithms with constant failure probability.
+ 
+\end_layout
+
+\begin_layout Exercise
+The polynomial-time algorithm of Dyer,
+ Frieze and Kannan 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DyerFK89"
+literal "true"
+
+\end_inset
+
+ is based on the following idea.
+ We consider a sequence of convex bodies 
+\begin_inset Formula $K_{0}=B_{n}\subset K_{1}\subseteq\ldots\subseteq K_{m}=K$
+\end_inset
+
+,
+ starting with the ball contained inside the input body 
+\begin_inset Formula $K$
+\end_inset
+
+ and ending with 
+\begin_inset Formula $K$
+\end_inset
+
+ itself.
+ Then the following telescoping formula suggests an algorithm:
+\begin_inset Formula 
+\[
+\vol(K)=\vol(K_{0})\cdot\frac{\vol(K_{1})}{\vol(K_{0})}\cdot\ldots\cdot\frac{\vol(K_{m})}{\vol(K_{m-1})}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+To estimate the volume of 
+\begin_inset Formula $K$
+\end_inset
+
+,
+ we estimate each of the ratios on the RHS and output their product together with the volume of the unit ball.
+ We need to set up the sequence so that the sequence is not too long and this estimator is accurate and efficient.
+ In the DFK algorithm,
+ each body in the sequence is a ball intersected with the given convex body 
+\begin_inset Formula $K$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+K_{i}=2^{\frac{i}{n}}B\cap K.
+\]
+
+\end_inset
+
+ The length the sequence is 
+\begin_inset Formula $m=\lceil n\log R\rceil$
+\end_inset
+
+ so that the final body is just 
+\begin_inset Formula $K$
+\end_inset
+
+.
+ We can now state the algorithm.
+ In each iteration the algorithm estimates the ratio 
+\begin_inset Formula $\vol(K_{i})/\vol(K_{i+1})$
+\end_inset
+
+ by sampling uniformly from 
+\begin_inset Formula $K_{i+1}$
+\end_inset
+
+ and using the fraction of the sample that lies in 
+\begin_inset Formula $K_{i}$
+\end_inset
+
+ as the estimator.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm2e}[H]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\mathtt{DFK\ Volume}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetAlgoLined
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+For 
+\begin_inset Formula $i=0,\ldots,m=\lceil n\log_{2}R\rceil$
+\end_inset
+
+,
+ let 
+\begin_inset Formula $K_{i}=2^{\frac{i}{n}}B\cap K.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+For 
+\begin_inset Formula $i=0,\ldots,m-1$
+\end_inset
+
+,
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+uniformly sample 
+\begin_inset Formula $X^{(1)},X^{(2)},\ldots,X^{(N)}$
+\end_inset
+
+ from 
+\begin_inset Formula $K_{i+1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Set 
+\begin_inset Formula $Y_{i}=|{j:X^{(j)}\in K_{i}}|/N$
+\end_inset
+
+.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Let 
+\begin_inset Formula $Y=\prod_{i=1}^{m-1}Y_{i}$
+\end_inset
+
+ and return 
+\begin_inset Formula $\vol(B_{n})/Y$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The following observation is immediate.
+\end_layout
+
+\begin_layout Lemma
+Let 
+\begin_inset Formula $r_{i}=\vol(K_{i})/\vol(K_{i+1})$
+\end_inset
+
+.
+ Then 
+\begin_inset Formula $\E(Y_{i})=r_{i}$
+\end_inset
+
+ and 
+\begin_inset Formula $\Var(Y_{i})=r_{i}(1-r_{i})/N.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Since we want to output a multiplicative approximation,
+ we need 
+\begin_inset Formula $\Var(Y)$
+\end_inset
+
+ to be small compared to 
+\begin_inset Formula $\E(Y)^{2}$
+\end_inset
+
+,
+ which means we need 
+\begin_inset Formula $r_{i}$
+\end_inset
+
+ to be bounded from below.
+ The choice of 
+\begin_inset Formula $K_{i}$
+\end_inset
+
+ is precisely to ensure this.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:r_bound"
+
+\end_inset
+
+For all 
+\begin_inset Formula $i=0,\ldots,m-1$
+\end_inset
+
+,
+ we have 
+\begin_inset Formula $\vol(K_{i+1})\le2\vol(K_{i})$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+We have 
+\begin_inset Formula 
+\[
+K_{i+1}=2^{(i+1)/n}B_{n}\cap K\subseteq2^{1/n}(2^{i/n}B_{n}\cap K)=2^{1/n}K_{i}.
+\]
+
+\end_inset
+
+The lemma follows.
+\end_layout
+
+\begin_layout Standard
+Using the above lemmas in each phase,
+ and keeping the total error over 
+\begin_inset Formula $m$
+\end_inset
+
+ phases smaller than a target 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ leads to a bound of 
+\begin_inset Formula $N=O(m^{3}/\varepsilon^{2})$
+\end_inset
+
+ samples per phase.
+ The next lemma which applies to any product of independent random variables gives us the 
+\begin_inset Quotes eld
+\end_inset
+
+right
+\begin_inset Quotes erd
+\end_inset
+
+ bound.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:prod_var"
+
+\end_inset
+
+Let 
+\begin_inset Formula $Y=\prod_{i=0}^{m-1}Y_{i}$
+\end_inset
+
+ where 
+\begin_inset Formula $Y_{i}\ge0$
+\end_inset
+
+ are independent real-valued random variables.
+ Then,
+ 
+\begin_inset Formula 
+\[
+\frac{\Var(Y)}{\E(Y)^{2}}=\prod_{i=0}^{m-1}\left(1+\frac{\Var(Y_{i})}{\E(Y_{i})^{2}}\right)-1.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We can now prove the main theorem about the sample complexity of the DFK volume algorithm.
+\end_layout
+
+\begin_layout Theorem
+For any input convex body 
+\begin_inset Formula $K$
+\end_inset
+
+ satisfying 
+\begin_inset Formula $B_{n}\subseteq K\subseteq RB_{n}$
+\end_inset
+
+ given by a membership oracle and any 
+\begin_inset Formula $\varepsilon>0$
+\end_inset
+
+,
+ with 
+\begin_inset Formula $N=O(\varepsilon^{-2}n\log R)$
+\end_inset
+
+ samples per phase,
+ with probability at least 
+\begin_inset Formula $3/4$
+\end_inset
+
+,
+ the DFK volume algorithm outputs a multiplicative 
+\begin_inset Formula $(1+\varepsilon)$
+\end_inset
+
+ approximation to the volume of 
+\begin_inset Formula $K$
+\end_inset
+
+.
+ The total number of samples is thus 
+\begin_inset Formula $O^{*}(m^{2})=O^{*}(n^{2})$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+In each phase we have 
+\begin_inset Formula 
+\[
+\frac{\Var(Y_{i})}{\E(Y_{i})^{2}}=\frac{r_{i}(1-r_{i})}{Nr_{i}^{2}}=\frac{1-r_{i}}{Nr_{i}}\le\frac{1}{N}
+\]
+
+\end_inset
+
+where we used the fact that 
+\begin_inset Formula $r_{i}\ge1/2$
+\end_inset
+
+ from Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:r_bound"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+.
+ Now using Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:prod_var"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+,
+ we have 
+\begin_inset Formula 
+\[
+\frac{\Var(Y)}{\E(Y)^{2}}\le\left(1+\frac{1}{N}\right)^{m}-1\le\frac{\varepsilon^{2}}{4}
+\]
+
+\end_inset
+
+for 
+\begin_inset Formula $N\ge8m/\varepsilon^{2}$
+\end_inset
+
+.
+ The theorem follows using Chebychev's inequality.
+\end_layout
+
+\begin_layout Standard
+In 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "kannan1997random"
+literal "true"
+
+\end_inset
+
+,
+ it was shown that the amortized complexity of uniform sampling is 
+\begin_inset Formula $O^{*}(n^{3})$
+\end_inset
+
+ per sample when 
+\begin_inset Formula $\Omega(n^{2})$
+\end_inset
+
+ samples are needed,
+ giving an overall oracle complexity of 
+\begin_inset Formula $O^{*}(n^{5})$
+\end_inset
+
+ for the entire algorithm.
+ To make this rigorous,
+ besides establishing the amortized complexity of uniform sampling,
+ we have to deal with some nontrivial technical issues:
+ (1) the distribution from which samples are produced is close to the target uniform distribution but not exactly uniform (2) samples are nearly independent but not perfectly independent.
+ Another important problem that will arise in establishing the complexity of (approximate) uniform sampling is 
+\begin_inset Quotes eld
+\end_inset
+
+rounding
+\begin_inset Quotes erd
+\end_inset
+
+ which allows us to reduce the dependence of the sampling complexity from polynomial in 
+\begin_inset Formula $R$
+\end_inset
+
+ to polynomial in 
+\begin_inset Formula $\log R$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+The quadratic sample complexity might appear to be nearly optimal – the final ratio being estimated could be as large as 
+\begin_inset Formula $R^{n}$
+\end_inset
+
+ or 
+\begin_inset Formula $n^{n}$
+\end_inset
+
+,
+ which means that any sequence that uses at most 
+\begin_inset Formula $m$
+\end_inset
+
+ phases estimates a ratio as large as 
+\begin_inset Formula $n^{n/m}$
+\end_inset
+
+ needing as many samples,
+ and this means that 
+\begin_inset Formula $m=\Omega(n)$
+\end_inset
+
+ is needed to get polynomial complexity even.
+ We will soon see that this intuitive reasoning is not valid.
+ 
+\end_layout
 
 \begin_layout Section
 Simulated Annealing
 \end_layout
 
 \begin_layout Standard
-In this chapter we study a sampling-based approach for optimization and
- integration in high dimension.
- The main idea is to sample a sequence of logconcave distributions, starting
- with one that is easy to integrate and ending with the function whose integral
- is desired.
+In this section we introduce a sampling-based approach for optimization and integration in high dimension.
+ The main idea is to sample a sequence of logconcave distributions,
+ starting with one that is easy to integrate and ending with the function whose integral is desired.
  This process is known as 
 \emph on
 simulated annealing.
  
 \emph default
-The same high-level algorithm can be used for optimization, volume computation/i
-ntegration or rounding.
- For integration, the desired integral can be expressed as the following
- telescoping product:
+The same high-level algorithm can be used for optimization,
+ volume computation/integration or rounding.
+ For integration,
+ the desired integral can be expressed as the following telescoping product:
 \end_layout
 
 \begin_layout Standard
@@ -129,7 +1362,8 @@ For
 \begin_inset Formula $i=0,\ldots,m$
 \end_inset
 
-, define
+,
+ define
 \begin_inset Formula 
 \[
 a_{i}=b\left(1+\frac{1}{\sqrt{n}}\right)^{i}\mbox{ and }f_{i}(x)=f(x)^{a_{i}}.
@@ -157,44 +1391,28 @@ For
 \begin_inset Formula $i=0,\ldots,m-1$
 \end_inset
 
-: starting with 
+:
+ starting with 
 \begin_inset Formula $X_{i}^{1},\ldots,X_{i}^{k}$
 \end_inset
 
-, generate random points 
+,
+ generate random points 
 \begin_inset Formula $X_{i+1}=\{X_{i+1}^{1},\ldots,X_{i+1}^{k}\}$
 \end_inset
 
-; update a running estimate 
+;
+ update a running estimate 
 \begin_inset Formula $g$
 \end_inset
 
- based on these samples; update the isotropy transformation using the samples.
+ based on these samples;
+ update the isotropy transformation using the samples.
 \end_layout
 
 \begin_layout Enumerate
 Output the final estimate of 
 \begin_inset Formula $g$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-Return
-\end_layout
-
-\end_inset
-
- 
-\begin_inset Formula $x$
 \end_inset
 
 .
@@ -217,7 +1435,8 @@ end{algorithm2e}
 \end_layout
 
 \begin_layout Standard
-For optimization, the function 
+For optimization,
+ the function 
 \begin_inset Formula $f_{m}$
 \end_inset
 
@@ -225,17 +1444,21 @@ For optimization, the function
 \begin_inset Formula $f$
 \end_inset
 
-, the function to be maximized while 
+,
+ the function to be maximized while 
 \begin_inset Formula $g$
 \end_inset
 
  is simply the maximum objective value so far.
- For integration and rounding, 
+ For integration and rounding,
+ 
 \begin_inset Formula $f_{m}=f$
 \end_inset
 
-, the target function to be integrated or rounded.
- For integration, the function 
+,
+ the target function to be integrated or rounded.
+ For integration,
+ the function 
 \begin_inset Formula $g$
 \end_inset
 
@@ -248,17 +1471,17 @@ For optimization, the function
 \end_inset
 
  in each step.
- For rounding, 
+ For rounding,
+ 
 \begin_inset Formula $g$
 \end_inset
 
- is simply the estimate of the isotropic transformation for the current
- function.
+ is simply the estimate of the isotropic transformation for the current function.
 \end_layout
 
 \begin_layout Standard
-For sampling and optimization, it is natural to ask why one uses a sequence
- of functions rather than jumping straight to the target function 
+For sampling and optimization,
+ it is natural to ask why one uses a sequence of functions rather than jumping straight to the target function 
 \begin_inset Formula $f_{m}$
 \end_inset
 
@@ -271,7 +1494,8 @@ For sampling and optimization, it is natural to ask why one uses a sequence
 \begin_inset Formula $K$
 \end_inset
 
-, all we need to do is sample according to the density proportional to 
+,
+ all we need to do is sample according to the density proportional to 
 \begin_inset Formula $e^{-a(c^{T}x)}$
 \end_inset
 
@@ -286,6 +1510,7 @@ reference "thm:OPTviaSampling"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -298,10 +1523,9 @@ noprefix "false"
 \begin_inset Formula $p_{m}$
 \end_inset
 
- can be very far from the starting function or distribution, and hence the
- mixing time can be high.
- The sequence ensures that samples from the current function provide a good
- (warm) start for sampling from the next function.
+ can be very far from the starting function or distribution,
+ and hence the mixing time can be high.
+ The sequence ensures that samples from the current function provide a good (warm) start for sampling from the next function.
  This is captured in the next lemma.
 \end_layout
 
@@ -364,7 +1588,8 @@ Let
 \begin_inset Formula $K$
 \end_inset
 
-, then 
+,
+ then 
 \begin_inset Formula $Z(a)=a^{n}\int_{K}f(ax)$
 \end_inset
 
