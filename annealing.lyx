@@ -1258,7 +1258,11 @@ simulated annealing.
 The same high-level algorithm can be used for optimization,
  volume computation/integration or rounding.
  For integration,
- the desired integral can be expressed as the following telescoping product:
+ the desired integral of a function 
+\begin_inset Formula $f:\R^{n}\rightarrow\R_{+}$
+\end_inset
+
+ can be expressed as the following telescoping product:
 \end_layout
 
 \begin_layout Standard
@@ -1270,28 +1274,116 @@ The same high-level algorithm can be used for optimization,
 \end_inset
 
 where 
+\begin_inset Formula $f_{0}$
+\end_inset
+
+ is chosen to be a function with an easy integral (typically a formula) and 
 \begin_inset Formula $f_{m}=f$
 \end_inset
 
 .
- Each ratio 
-\begin_inset Formula $\int f_{i+1}/\int f_{i}$
+ To compute any the ratio 
+\begin_inset Formula $\int g/\int h$
 \end_inset
 
- is the expectation of the estimator 
-\begin_inset Formula $Y=\frac{f_{i+1}(X)}{f_{i}(X)}$
+ we can do the following:
+ 
+\end_layout
+
+\begin_layout Enumerate
+Sample 
+\begin_inset Formula $X$
 \end_inset
 
+ from the distribution with density proportional to 
+\begin_inset Formula $h$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Use the estimator 
+\begin_inset Formula $Y=\frac{g(X)}{h(X)}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+It is easy to establish the following fact about this estimator.
+ 
+\end_layout
+
+\begin_layout Lemma
+For integrable functions 
+\begin_inset Formula $g,h$
+\end_inset
+
+ with with support of 
+\begin_inset Formula $g$
+\end_inset
+
+ contained in the support of 
+\begin_inset Formula $h$
+\end_inset
+
+ and 
+\begin_inset Formula $g(X)/h(X)$
+\end_inset
+
+ defined everywhere in the support of 
+\begin_inset Formula $h$
+\end_inset
+
+,
  for 
 \begin_inset Formula $X$
 \end_inset
 
- drawn from the density proportional to 
-\begin_inset Formula $f_{i}$
+ drawn from the distribution with density proportional to 
+\begin_inset Formula $h$
 \end_inset
 
-.
+ and 
+\begin_inset Formula $Y=g(X)/h(X)$
+\end_inset
+
+,
+ we have 
+\begin_inset Formula 
+\[
+\E(Y)=\frac{\int g}{\int h}.
+\]
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+Of course,
+ the accuracy of the estimator depends on its variance.
+ Our goal is to choose a sequence of functions that are easy to sample and lead to a small variance estimator.
  What sequence of functions should we use?
+\end_layout
+
+\begin_layout Standard
+In fact,
+ we can view annealing as a general framework for efficient statistical estimation by following a sequence of distributions,
+ starting with a particularly simple one and ending with the distribution of interest.
+ We state this 
+\begin_inset Quotes eld
+\end_inset
+
+meta
+\begin_inset Quotes erd
+\end_inset
+
+-algorithm below and later we will specialize it to optimization and integration.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -1407,11 +1499,11 @@ For
 \end_inset
 
  based on these samples;
- update the isotropy transformation using the samples.
+ update the isotropic transformation using the samples.
 \end_layout
 
 \begin_layout Enumerate
-Output the final estimate of 
+Output the final 
 \begin_inset Formula $g$
 \end_inset
 
@@ -1525,7 +1617,15 @@ nolink "false"
 
  can be very far from the starting function or distribution,
  and hence the mixing time can be high.
- The sequence ensures that samples from the current function provide a good (warm) start for sampling from the next function.
+ The sequence ensures that samples from the current function provide a 
+\begin_inset Quotes eld
+\end_inset
+
+warm
+\begin_inset Quotes erd
+\end_inset
+
+ start for sampling from the next function.
  This is captured in the next lemma.
 \end_layout
 
@@ -1563,7 +1663,13 @@ The underlying mathematical property behind this lemma is the following.
 \end_layout
 
 \begin_layout Lemma
-Let 
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:ratio_var"
+
+\end_inset
+
+ Let 
 \begin_inset Formula $f$
 \end_inset
 
@@ -1595,6 +1701,77 @@ Let
 
  is logconcave for 
 \begin_inset Formula $a>0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Consider the function 
+\begin_inset Formula 
+\[
+F(x,t)=f\left(\frac{x}{t}\right)^{t}
+\]
+
+\end_inset
+
+for 
+\begin_inset Formula $x\in\R^{n}$
+\end_inset
+
+ and 
+\begin_inset Formula $t>0$
+\end_inset
+
+.
+ Then 
+\begin_inset Formula $F$
+\end_inset
+
+ is logconcave as verified below.
+ Consider 
+\begin_inset Formula $(x,t),(y,s)$
+\end_inset
+
+ for 
+\begin_inset Formula $t,s>0$
+\end_inset
+
+ and proceed as follows using logconcavity:
+ 
+\begin_inset Formula 
+\begin{align*}
+F\left(\frac{x+y}{2},\frac{t+s}{2}\right) & =f\left(\frac{x+y}{t+s}\right)^{\frac{t+s}{2}}\\
+ & =f\left(\frac{x}{t}\cdot\frac{t}{t+s}+\frac{y}{s}\cdot\frac{s}{t+s}\right)^{\frac{t+s}{2}}\\
+ & \ge f\left(\frac{x}{t}\right)^{\frac{t}{2}}f\left(\frac{y}{s}\right)^{\frac{s}{2}}=\sqrt{F(x,t)F(y,s)}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Now by the Prekopa-Leindler Theorem,
+ the marginal of 
+\begin_inset Formula $F$
+\end_inset
+
+ in 
+\begin_inset Formula $t$
+\end_inset
+
+ is also logconcave.
+ This marginal is 
+\begin_inset Formula 
+\[
+\int_{\R^{n}}F(x,t)\,dx=\int_{\R^{n}}f\left(\frac{x}{t}\right)^{t}\,dx=t^{n}\int_{\R^{n}}f(y)^{t}\,dy
+\]
+
+\end_inset
+
+where we made the substitution 
+\begin_inset Formula $y=x/t$
 \end_inset
 
 .

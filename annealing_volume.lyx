@@ -91,7 +91,11 @@ Volume Computation by Annealing
 \begin_layout Standard
 For volume computation,
  we can apply annealing as follows.
- We consider the following estimator:
+ We consider the following estimator that uses a random sample from the distribution with density proportional to 
+\begin_inset Formula $f_{i}$
+\end_inset
+
+:
 \end_layout
 
 \begin_layout Standard
@@ -207,6 +211,80 @@ which is bounded by a constant for
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Proof
+Let 
+\begin_inset Formula $F(a)=\int_{K}f(x)^{a}\,dx$
+\end_inset
+
+.
+ Then
+\begin_inset Formula 
+\[
+\E(Y)=\frac{F(a_{i+1})}{F(a_{i})}\ \mbox{ and }\ \E(Y^{2})=\int\frac{f(x)^{2a_{i+1}}}{f(x)^{2a_{i}}}\cdot\frac{f(x)^{a_{i}}}{F(a_{i})}=\frac{F(2a_{i+1}-a_{i})}{F(a_{i})}.
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\frac{\E\left(Y^{2}\right)}{\E\left(Y\right)^{2}} & =\frac{F(2a_{i+1}-a_{i})F(a_{i})}{F(a_{i+1})^{2}}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+By Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:ratio_var"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+,
+ 
+\begin_inset Formula $F$
+\end_inset
+
+ is logconcave in 
+\begin_inset Formula $a$
+\end_inset
+
+ and hence
+\begin_inset Formula 
+\[
+\frac{F(2a_{i+1}-a_{i})F(a_{i})}{F(a_{i+1})^{2}}\le\left(\frac{a_{i+1}^{2}}{(2a_{i+1}-a_{i})a_{i}}\right)^{n}.
+\]
+
+\end_inset
+
+For 
+\begin_inset Formula $a_{i}=a_{i+1}(1+\frac{1}{\sqrt{n}})$
+\end_inset
+
+,
+ we have 
+\begin_inset Formula 
+\[
+\frac{\E\left(Y^{2}\right)}{\E\left(Y\right)^{2}}\le\left(\frac{1/(1+\frac{1}{\sqrt{n}})^{2}}{(\frac{2}{1+\frac{1}{\sqrt{n}}}-1)}\right)^{n}=\left(\frac{1}{(1+\frac{1}{\sqrt{n}})(1-\frac{1}{\sqrt{n}})}\right)^{n}=\left(1+\frac{1}{n-1}\right)^{n}\le4
+\]
+
+\end_inset
+
+ for 
+\begin_inset Formula $n\ge2.$
+\end_inset
+
+ 
 \end_layout
 
 \begin_layout Theorem
