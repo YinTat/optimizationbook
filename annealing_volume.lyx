@@ -648,7 +648,19 @@ nolink "false"
 \end_inset
 
 .
- We will see in the next section that we can transform the body to near-isotropic position so that 
+ By Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:convex_body_rounding"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+,
+ we can transform the body to near-isotropic position so that 
 \begin_inset Formula $R^{2}=O(n)$
 \end_inset
 

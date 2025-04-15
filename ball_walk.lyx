@@ -2296,16 +2296,38 @@ In this section we give a better bound for the conductance of sufficiently large
 \end_layout
 
 \begin_layout Theorem
-From a warm start,
- the ball walk in a convex body of diameter 
-\begin_inset Formula $D$
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:ballwalk_warmstart"
+
 \end_inset
 
- containing a unit ball has a mixing rate of 
-\begin_inset Formula $O(n^{2}D^{2})$
+ From an 
+\begin_inset Formula $O(1)$
+\end_inset
+
+-warm start,
+ the ball walk in a convex body with isoperimetric coefficient 
+\begin_inset Formula $\psi$
+\end_inset
+
+ and containing a unit ball has a mixing rate of 
+\begin_inset Formula $O(n^{2}/\psi^{2})$
 \end_inset
 
  steps.
+ In particular,
+ if the convex body has diameter 
+\begin_inset Formula $D$
+\end_inset
+
+,
+ the mixing rate is 
+\begin_inset Formula $O(n^{2}D^{2})$
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -2425,14 +2447,14 @@ The
 \begin_inset Formula $K$
 \end_inset
 
- of diameter 
-\begin_inset Formula $D$
+ with isoperimetric coefficient 
+\begin_inset Formula $\psi$
 \end_inset
 
  and containing the unit ball satisfies 
 \begin_inset Formula 
 \[
-\phi_{s}\gtrsim\frac{s}{nD}.
+\phi_{s}\gtrsim\frac{s\psi}{n}.
 \]
 
 \end_inset
@@ -2505,7 +2527,7 @@ As before,
 \begin_layout Proof
 \begin_inset Formula 
 \begin{eqnarray}
-\int_{S_{1}}P_{x}(S_{2})\,dx & \ge & \frac{\delta}{C\sqrt{n}D}\min\{\vol(S_{1})-\frac{s}{2},\vol(S_{2})-\frac{s}{2}\}\label{COND-1}
+\int_{S_{1}}P_{x}(S_{2})\,dx & \ge & \frac{\delta\psi}{C\sqrt{n}}\min\{\vol(S_{1})-\frac{s}{2},\vol(S_{2})-\frac{s}{2}\}\label{COND-1}
 \end{eqnarray}
 
 \end_inset
@@ -2675,18 +2697,7 @@ Thus
 \end_inset
 
 .
- Applying Theorem 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "thm:isoD"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
-
-\end_inset
-
- to the partition 
+ Using the bound on the isoperimetric coefficient applied to the partition 
 \begin_inset Formula $S_{1}'',S_{2}'',S_{3}''$
 \end_inset
 
@@ -2698,8 +2709,8 @@ nolink "false"
  we have 
 \begin_inset Formula 
 \begin{eqnarray*}
-\vol(S_{3}'') & \geq & \frac{3\delta}{4\sqrt{n}D}\min\{\vol(S_{1}''),\vol(S_{2}'')\}\\
- & \geq & \frac{3\delta}{8\sqrt{n}D}\min\{\vol(S_{1})-\frac{s}{2},\vol(S_{2})-\frac{s}{2}\}.
+\vol(S_{3}'') & \geq & \frac{3\delta\psi}{8\sqrt{n}}\min\{\vol(S_{1}''),\vol(S_{2}'')\}\\
+ & \geq & \frac{3\delta\psi}{16\sqrt{n}}\min\{\vol(S_{1})-\frac{s}{2},\vol(S_{2})-\frac{s}{2}\}.
 \end{eqnarray*}
 
 \end_inset
@@ -2721,13 +2732,13 @@ nolink "false"
 \begin{eqnarray*}
 \int_{S_{1}}P_{x}(S_{2})\,dx & = & \frac{1}{2}\int_{S_{1}}P_{x}(S_{2})\,dx+\frac{1}{2}\int_{S_{2}}P_{x}(S_{1})\,dx\\
  & \ge & \frac{1}{2}\vol(S_{3}'')\cdot\frac{1}{8}\\
- & \ge & \frac{3\delta}{128\sqrt{n}D}\min\{\vol(S_{1}),\vol(S_{2})\}
+ & \ge & \frac{3\delta\psi}{256\sqrt{n}}\min\{\vol(S_{1}),\vol(S_{2})\}
 \end{eqnarray*}
 
 \end_inset
 
 which implies that the conductance is at least 
-\begin_inset Formula $3s/(512nD)$
+\begin_inset Formula $3s\psi/(1024n)$
 \end_inset
 
 .
@@ -3391,7 +3402,7 @@ Input:
 
  s.t.
  
-\begin_inset Formula $B^{n}\subseteq K\subseteq DB^{n}$
+\begin_inset Formula $B^{n}\subseteq K\subseteq RB^{n}$
 \end_inset
 
 .
@@ -3432,7 +3443,7 @@ For{
 \end_inset
 
 
-\begin_inset Formula $i=1,\cdots,n\log D$
+\begin_inset Formula $i=1,\cdots,n\log R$
 \end_inset
 
 
@@ -3552,14 +3563,6 @@ We will choose
 \begin_inset Formula $2$
 \end_inset
 
--isotropic and therefore 
-\begin_inset Formula $K_{i+1}$
-\end_inset
-
- is 
-\begin_inset Formula $6$
-\end_inset
-
 -isotropic.
  We can bound 
 \begin_inset Formula $N$
@@ -3639,9 +3642,30 @@ For an isotropic logconcave distribution
 .
 \end_layout
 
+\begin_layout Lemma
+If 
+\begin_inset Formula $K_{i}$
+\end_inset
+
+ is 
+\begin_inset Formula $C$
+\end_inset
+
+-isotropic,
+ then 
+\begin_inset Formula $K_{i+1}$
+\end_inset
+
+ is 
+\begin_inset Formula $3C$
+\end_inset
+
+-isotropic.
+\end_layout
+
 \begin_layout Standard
 Thus the overall algorithm needs 
-\begin_inset Formula $O(n\log D)$
+\begin_inset Formula $O(n\log R)$
 \end_inset
 
  phases,
@@ -3655,6 +3679,38 @@ Thus the overall algorithm needs
 \end_inset
 
 ) steps per sample.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:convex_body_rounding"
+
+\end_inset
+
+ Any convex body 
+\begin_inset Formula $K$
+\end_inset
+
+ with 
+\begin_inset Formula $B_{n}\subseteq K\subseteq RB_{n}$
+\end_inset
+
+ given by a membership oracle can be put in 
+\begin_inset Formula $2$
+\end_inset
+
+-isotropic position with probability at least 
+\begin_inset Formula $9/10$
+\end_inset
+
+,
+ using 
+\begin_inset Formula $\widetilde{O}(n^{4})$
+\end_inset
+
+ oracle queries.
+  
 \end_layout
 
 \begin_layout Section
