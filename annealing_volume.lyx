@@ -7,7 +7,7 @@
 \textclass optbook
 \use_default_options true
 \maintain_unincluded_children no
-\language english
+\language american
 \language_package default
 \inputencoding auto-legacy
 \fontencoding auto
@@ -30,7 +30,10 @@
 \output_sync 0
 \bibtex_command default
 \index_command default
+\float_placement class
+\float_alignment class
 \paperfontsize default
+\spacing single
 \use_hyperref false
 \papersize default
 \use_geometry false
@@ -46,6 +49,7 @@
 \use_package undertilde 1
 \cite_engine basic
 \cite_engine_type default
+\biblio_style plain
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
@@ -114,10 +118,14 @@ We see that
 
 \end_inset
 
-In the algorithm of DFK and KLS,
- this ratio is bounded by a constant in each phase,
- giving a total of 
-\begin_inset Formula $O^{*}(n)$
+In the DFK algorithm,
+ this ratio is bounded by a constant (in fact 
+\begin_inset Formula $2$
+\end_inset
+
+) in each phase,
+ giving a total of roughly 
+\begin_inset Formula $n$
 \end_inset
 
  phases since the ratio of final to initial integrals is exponential.
@@ -125,7 +133,7 @@ In the algorithm of DFK and KLS,
  we consider 
 \begin_inset Formula 
 \[
-f_{i}(x)\propto\exp(-a_{i}\norm x)\chi_{K}(x)\mbox{ or }f_{i}(x)\propto\exp(-a_{i}\norm x^{2})\chi_{K}(x).
+f_{i}(x)=\exp(-a_{i}\norm x)\chi_{K}(x)\mbox{ or }f_{i}(x)=\exp(-a_{i}\norm x^{2})\chi_{K}(x).
 \]
 
 \end_inset
@@ -167,12 +175,170 @@ temperature
 \end_inset
 
  in one or more phases.
- The key insight is that even though the expected ratio might be large,
+ In the algorithm below,
+ we assume that 
+\begin_inset Formula $B_{n}\subseteq K\subseteq RB_{n}$
+\end_inset
+
+ and 
+\begin_inset Formula $f(x)=\exp(-\|x\|^{2}/2)\chi_{K}(x).$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm2e}[H]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\mathtt{LV\ Volume}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetAlgoLined
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+For 
+\begin_inset Formula $i=0,\ldots,m=\lceil\sqrt{n}\ln(4R^{2}n/\varepsilon\rceil$
+\end_inset
+
+,
+ let 
+\begin_inset Formula $a_{i}=2n/(1+\frac{1}{\sqrt{n}})^{i}$
+\end_inset
+
+ and 
+\begin_inset Formula $f_{i}=f(x)^{a_{i}}.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+For 
+\begin_inset Formula $i=0,\ldots,m-1$
+\end_inset
+
+,
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+sample 
+\begin_inset Formula $X^{(1)},X^{(2)},\ldots,X^{(N)}$
+\end_inset
+
+ from 
+\begin_inset Formula $\pi_{f_{i}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Set 
+\begin_inset Formula $Y_{i}=\frac{1}{N}\sum_{j=1}^{N}\frac{f_{i+1}(X^{(j)})}{f_{i}(X^{(j)})}$
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Let 
+\begin_inset Formula $Y=\prod_{i=1}^{m-1}Y_{i}$
+\end_inset
+
+ and return 
+\begin_inset Formula $Y\cdot(\pi/n)^{n/2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The key insight is that even though the expected ratio might be large,
  its variance is not.
 \end_layout
 
 \begin_layout Lemma
-For 
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:chebychev_ratio"
+
+\end_inset
+
+ For 
 \begin_inset Formula $X\sim f_{i}$
 \end_inset
 
@@ -189,7 +355,7 @@ For
 \begin_inset Formula $f_{i}(x)=f(x)^{a_{i}}$
 \end_inset
 
- for a logconcave function 
+ for an integrable logconcave function 
 \begin_inset Formula $f$
 \end_inset
 
@@ -288,6 +454,67 @@ For
 \end_layout
 
 \begin_layout Theorem
+Let 
+\begin_inset Formula $r=\E(Y)$
+\end_inset
+
+ in the LV algorithm.
+ With probability at least 
+\begin_inset Formula $9/10$
+\end_inset
+
+,
+ we have 
+\begin_inset Formula $\left|Y-r\right|\le\frac{\varepsilon}{2}r$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+By Lemmas 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:prod_var"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:prod_var"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+,
+ we have 
+\begin_inset Formula 
+\begin{align*}
+\frac{\Var(Y)}{\E(Y)^{2}} & =\prod_{i=0}^{m-1}\left(1+\frac{\Var(Y_{i})}{\E(Y_{i})^{2}}\right)-1\\
+ & \le\left(1+\frac{\varepsilon^{2}}{32m}\right)^{m}-1\\
+ & \le\frac{\varepsilon^{2}}{16}.
+\end{align*}
+
+\end_inset
+
+Now the result follows from Chebychev's inequality.
+ 
+\end_layout
+
+\begin_layout Standard
+We can now state the main result of this section.
+\end_layout
+
+\begin_layout Theorem
 \begin_inset Argument 1
 status open
 
@@ -304,12 +531,16 @@ literal "true"
 
 \end_inset
 
-The volume of a convex body in 
+The LV algorithm estimates the volume of a convex body in 
 \begin_inset Formula $\R^{n}$
 \end_inset
 
- (given by a membership oracle) can be computed to relative error 
+ given by a membership oracle to relative error 
 \begin_inset Formula $\varepsilon$
+\end_inset
+
+ with probability at least 
+\begin_inset Formula $3/4$
 \end_inset
 
  using 
@@ -321,6 +552,109 @@ The volume of a convex body in
 \end_inset
 
  arithmetic operations per query.
+\end_layout
+
+\begin_layout Proof
+We first note that since 
+\begin_inset Formula $f_{0}$
+\end_inset
+
+ corresponds to a Gaussian of variance 
+\begin_inset Formula $1/2n$
+\end_inset
+
+,
+ we have 
+\begin_inset Formula 
+\[
+\int_{B^{n}}f_{0}(x)\ge(1-2^{-n})\int_{\R^{n}}f_{0}(x)\,dx=(1-2^{-n})\left(\frac{\pi}{n}\right)^{n/2}.
+\]
+
+\end_inset
+
+Next,
+ 
+\begin_inset Formula $a_{m}\le\varepsilon/(4R^{2})$
+\end_inset
+
+ and hence 
+\begin_inset Formula 
+\[
+f_{m}(x)=e^{-\frac{a_{m}}{2}\norm x^{2}}\ge e^{-\varepsilon/4}.
+\]
+
+\end_inset
+
+Together with the previous theorem,
+ this shows that the algorithm's output is a relative 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ approximation of the volume of the input convex body with probability at least 
+\begin_inset Formula $3/4$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+For the complexity,
+ the algorithm has 
+\begin_inset Formula $m$
+\end_inset
+
+ phases with 
+\begin_inset Formula $O(m/\varepsilon^{2})$
+\end_inset
+
+ samples per phase.
+ The number of membership queries per sample is 
+\begin_inset Formula $\widetilde{O}(n^{2}R^{2})$
+\end_inset
+
+ from an 
+\begin_inset Formula $L_{2}$
+\end_inset
+
+-warm start using the hit-and-run algorithm for sampling.
+ By Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:L2_warm_start"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+,
+ samples from the 
+\begin_inset Formula $i$
+\end_inset
+
+'th phase provide an 
+\begin_inset Formula $\ell_{2}$
+\end_inset
+
+-warm start for the 
+\begin_inset Formula $(i+1)$
+\end_inset
+
+'st phase.
+ This gives an overall complexity of 
+\begin_inset Formula $O^{*}(n^{3}R^{2})$
+\end_inset
+
+.
+ We will see in the next section that we can transform the body to near-isotropic position so that 
+\begin_inset Formula $R^{2}=O(n)$
+\end_inset
+
+,
+ establishing the theorem.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -419,49 +753,6 @@ The volume of a well-rounded convex body,
 \end_inset
 
 ,
- can be computed using 
-\begin_inset Formula $O^{*}(n^{3})$
-\end_inset
-
- oracle calls.
-\end_layout
-
-\begin_layout Standard
-In 2021,
- it was shown that the complexity of rounding a convex body can be bounded as 
-\begin_inset Formula $O^{*}(n^{3}\psi_{n}^{2})$
-\end_inset
-
- where 
-\begin_inset Formula $\psi_{n}$
-\end_inset
-
- is the KLS constant bound for any isotropic logconcave density in 
-\begin_inset Formula $\R^{n}.$
-\end_inset
-
- Together with the next theorem,
- it follows that the volume of a convex body can be computed in the same complexity.
- The current bound on the KLS constant implies that this is in fact 
-\begin_inset Formula $O^{*}(n^{3}).$
-\end_inset
-
- 
-\end_layout
-
-\begin_layout Theorem
-A near-isotropic transformation for any convex body in 
-\begin_inset Formula $\R^{n}$
-\end_inset
-
- can be computed using 
-\begin_inset Formula $\tilde{O}(n^{3})$
-\end_inset
-
- oracle calls and the volume of any convex body in 
-\begin_inset Formula $\R^{n}$
-\end_inset
-
  can be computed using 
 \begin_inset Formula $O^{*}(n^{3})$
 \end_inset

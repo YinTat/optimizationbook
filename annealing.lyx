@@ -1629,8 +1629,14 @@ warm
  This is captured in the next lemma.
 \end_layout
 
-\begin_layout Theorem
-Let 
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:L2_warm_start"
+
+\end_inset
+
+ Let 
 \begin_inset Formula $p_{i}(x)=f_{i}(x)/\int f_{i}$
 \end_inset
 
