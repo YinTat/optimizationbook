@@ -96,7 +96,136 @@ Simulated Annealing,
  
 \emph default
 which is also provably efficient for convex optimization.
- Table 
+ We recall these problems.
+\end_layout
+
+\begin_layout Problem
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Volume Estimation
+\end_layout
+
+\end_inset
+
+ Given a membership oracle for a convex body 
+\begin_inset Formula $K$
+\end_inset
+
+ in 
+\begin_inset Formula $\R^{n}$
+\end_inset
+
+,
+ 
+\begin_inset Formula $R$
+\end_inset
+
+ such that 
+\begin_inset Formula $B_{n}\subseteq K\subseteq RB_{n}$
+\end_inset
+
+ and 
+\begin_inset Formula $\varepsilon>0$
+\end_inset
+
+,
+ output a number 
+\begin_inset Formula $A$
+\end_inset
+
+ s.t.
+ 
+\begin_inset Formula 
+\[
+(1-\varepsilon)\vol(K)\le A\le(1+\varepsilon)\vol(K).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Integration is a further generalization.
+\end_layout
+
+\begin_layout Problem
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Integration
+\end_layout
+
+\end_inset
+
+ Given an evaluation oracle for an integrable logconcave function 
+\begin_inset Formula $f:\R^{n}\rightarrow\R$
+\end_inset
+
+,
+ a point 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+ s.t.
+ 
+\begin_inset Formula $f(x_{0})\ge\beta,$
+\end_inset
+
+numbers 
+\begin_inset Formula $r,R>0$
+\end_inset
+
+ s.t.
+ (i) 
+\begin_inset Formula $\E(\norm{x-x_{0}}^{2})\le R^{2}$
+\end_inset
+
+ (ii) the level set of 
+\begin_inset Formula $\pi_{f}$
+\end_inset
+
+ of measure 
+\begin_inset Formula $1/8$
+\end_inset
+
+ contains a ball of radius 
+\begin_inset Formula $r$
+\end_inset
+
+,
+ and 
+\begin_inset Formula $\varepsilon>0$
+\end_inset
+
+,
+ output a number 
+\begin_inset Formula $A$
+\end_inset
+
+ s.t.
+ 
+\begin_inset Formula 
+\[
+(1-\varepsilon)\int f\le A\le(1+\varepsilon)\int f.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Problem
+As in all problems in oracle models discussed in this book,
+ the complexity of an algorithm to solve the above problem is given by the number of oracles calls and the number of arithmetic operations.
+ 
+\end_layout
+
+\begin_layout Standard
+Table 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:volume"
@@ -602,56 +731,6 @@ We begin with a description and analysis of the DFK algorithm to estimate the vo
 \begin_layout Section
 Volume Computation:
  the DFK Algorithm
-\end_layout
-
-\begin_layout Problem
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-Volume Estimation
-\end_layout
-
-\end_inset
-
- Given a membership oracle for a convex body 
-\begin_inset Formula $K$
-\end_inset
-
- in 
-\begin_inset Formula $\R^{n}$
-\end_inset
-
-,
- 
-\begin_inset Formula $R$
-\end_inset
-
- such that 
-\begin_inset Formula $B_{n}\subseteq K\subseteq RB_{n}$
-\end_inset
-
- and 
-\begin_inset Formula $\varepsilon>0$
-\end_inset
-
-,
- output a number 
-\begin_inset Formula $A$
-\end_inset
-
- s.t.
- 
-\begin_inset Formula 
-\[
-(1-\varepsilon)\vol(K)\le A\le(1+\varepsilon)\vol(K).
-\]
-
-\end_inset
-
-As in all problems in oracle models discussed in this book,
- the complexity of an algorithm to solve the above problem is given by the number of oracles calls and the number of arithmetic operations.
- 
 \end_layout
 
 \begin_layout Theorem

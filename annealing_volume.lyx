@@ -772,5 +772,230 @@ The volume of a well-rounded convex body,
  oracle calls.
 \end_layout
 
+\begin_layout Section
+Integration by Annealing
+\end_layout
+
+\begin_layout Standard
+The reader will notice that the LV algorithm of the previous section for volume computation is naturally suited to the more general problem of integrating logconcave functions.
+ In fact,
+ we can apply it directly,
+ with minimal changes.
+ The first step of the algorithm is an affine transformation that we will discuss in the next section.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{algorithm2e}[H]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\mathtt{LV\ Integration}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetAlgoLined
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Put 
+\begin_inset Formula $\pi_{f}$
+\end_inset
+
+ in near-isotropic position.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Restrict 
+\begin_inset Formula $f$
+\end_inset
+
+ to the convex body 
+\begin_inset Formula $K=B(0,4\sqrt{n})\cap L_{f}(M_{f}e^{-4n})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Let 
+\begin_inset Formula $Y_{0}$
+\end_inset
+
+ be an estimate of the volume of 
+\begin_inset Formula $K.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+For 
+\begin_inset Formula $i=0,\ldots,m-1$
+\end_inset
+
+,
+ let 
+\begin_inset Formula $a_{i}=\frac{1}{B}(1+\frac{1}{\sqrt{n}})^{i},\,a_{m}=1$
+\end_inset
+
+ and 
+\begin_inset Formula $f_{i}=f(x)^{a_{i}}$
+\end_inset
+
+,
+ with 
+\begin_inset Formula $m-1$
+\end_inset
+
+ being the largest integer s.t.
+ 
+\begin_inset Formula $a_{m-1}<1$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Enumerate
+For 
+\begin_inset Formula $i=0,\ldots,m-1$
+\end_inset
+
+,
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+sample 
+\begin_inset Formula $X^{(1)},X^{(2)},\ldots,X^{(N)}$
+\end_inset
+
+ from 
+\begin_inset Formula $\pi_{f_{i}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Set 
+\begin_inset Formula $Y_{i}=\frac{1}{N}\sum_{j=1}^{N}f(x)^{a_{i+1}-a_{i}}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Let 
+\begin_inset Formula $Y=\prod_{i=1}^{m-1}Y_{i}$
+\end_inset
+
+ and return 
+\begin_inset Formula $Y_{o}\cdot Y$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{algorithm2e}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+The LV algorithm applied to an integrable logconcave function 
+\begin_inset Formula $f:\R^{n}\rightarrow\R$
+\end_inset
+
+,
+ estimates the integral of 
+\begin_inset Formula $f$
+\end_inset
+
+ to relative error 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ with probability at least 
+\begin_inset Formula $3/4$
+\end_inset
+
+ using 
+\begin_inset Formula $\widetilde{O}(n^{4}/\varepsilon^{2})$
+\end_inset
+
+ evaluation oracle queries and 
+\begin_inset Formula $\widetilde{O}(n^{2})$
+\end_inset
+
+ arithmetic operations per query.
+\end_layout
+
 \end_body
 \end_document
