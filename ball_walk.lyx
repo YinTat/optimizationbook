@@ -1,16 +1,16 @@
-#LyX 2.4 created this file. For more info see https://www.lyx.org/
-\lyxformat 620
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
 \begin_document
 \begin_header
 \save_transient_properties true
 \origin unavailable
 \textclass optbook
 \use_default_options true
-\maintain_unincluded_children no
+\maintain_unincluded_children false
 \language english
 \language_package default
-\inputencoding auto-legacy
-\fontencoding auto
+\inputencoding auto
+\fontencoding global
 \font_roman "default" "default"
 \font_sans "default" "default"
 \font_typewriter "default" "default"
@@ -18,9 +18,7 @@
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
-\font_roman_osf false
-\font_sans_osf false
-\font_typewriter_osf false
+\font_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
 \use_microtype false
@@ -55,9 +53,7 @@
 \suppress_date false
 \justification true
 \use_refstyle 1
-\use_formatted_ref 0
 \use_minted 0
-\use_lineno 0
 \index Index
 \shortcut idx
 \color #008000
@@ -73,25 +69,18 @@
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
-\tablestyle default
 \tracking_changes false
 \output_changes false
-\change_bars false
-\postpone_fragile_content false
 \html_math_output 0
 \html_css_as_file 0
 \html_be_strict false
-\docbook_table_output 0
-\docbook_mathml_prefix 1
 \end_header
 
 \begin_body
 
 \begin_layout Standard
-In this chapter,
- we study polynomial-time sampling algorithms.
- As a primary motivation for much of the analysis,
- we consider the 
+In this chapter, we study polynomial-time sampling algorithms.
+ As a primary motivation for much of the analysis, we consider the 
 \emph on
 ball walk
 \emph default
@@ -104,23 +93,21 @@ The Ball Walk
 \end_layout
 
 \begin_layout Standard
-The simplest continuous algorithm for exploring space is Brownian motion with the ODE 
+The simplest continuous algorithm for exploring space is Brownian motion
+ with the ODE 
 \begin_inset Formula $dx_{t}=dW_{t}$
 \end_inset
 
 .
- To turn this into a sampling algorithm,
- for a convex function 
+ To turn this into a sampling algorithm, for a convex function 
 \begin_inset Formula $f$
 \end_inset
 
-,
- we saw an extension using the gradient of 
+, we saw an extension using the gradient of 
 \begin_inset Formula $f$
 \end_inset
 
-,
- namely 
+, namely 
 \begin_inset Formula 
 \[
 dx_{t}=-\nabla f(x_{t})+\sqrt{2}dW_{t}
@@ -133,9 +120,9 @@ which can be used to sample according to the density proportional to
 \end_inset
 
 .
- In this chapter we will begin with an even simpler method,
- which does not need access to the gradient or assume differentiability,
- only an oracle that can evaluate 
+ In this chapter we will begin with an even simpler method, which does not
+ need access to the gradient or assume differentiability, only an oracle
+ that can evaluate 
 \begin_inset Formula $F$
 \end_inset
 
@@ -206,18 +193,15 @@ SetAlgoLined
 \end_layout
 
 \begin_layout Standard
-Input:
- Step-size 
+Input: Step-size 
 \begin_inset Formula $\delta$
 \end_inset
 
-,
- number of steps 
+, number of steps 
 \begin_inset Formula $T$
 \end_inset
 
-,
- starting point 
+, starting point 
 \begin_inset Formula $x_{0}$
 \end_inset
 
@@ -233,8 +217,7 @@ Repeat
 \begin_inset Formula $T$
 \end_inset
 
- times:
- at a point 
+ times: at a point 
 \begin_inset Formula $x$
 \end_inset
 
@@ -314,10 +297,8 @@ Show that the distribution with density
 \emph on
 stationary 
 \emph default
-for the ball walk in a connected,
- compact full-dimensional set,
- i.e.,
- if the distribution of the current point 
+for the ball walk in a connected, compact full-dimensional set, i.e., if the
+ distribution of the current point 
 \begin_inset Formula $x$
 \end_inset
 
@@ -325,8 +306,7 @@ for the ball walk in a connected,
 \begin_inset Formula $Q$
 \end_inset
 
-,
- it remains 
+, it remains 
 \begin_inset Formula $Q$
 \end_inset
 
@@ -334,18 +314,18 @@ for the ball walk in a connected,
 \end_layout
 
 \begin_layout Standard
-Under mild conditions,
- the distribution of the current point approaches the target density 
+Under mild conditions, the distribution of the current point approaches
+ the target density 
 \begin_inset Formula $Q$
 \end_inset
 
 .
- The main question is the rate of convergence,
- which would allow us to bound the number of steps.
- Note that each step involves only a function evaluation,
- to an oracle that outputs the value of a function proportional to the desired density.
- To bound the rate of convergence (and as a result the uniqueness of the stationary distribution),
- we first develop some general tools.
+ The main question is the rate of convergence, which would allow us to bound
+ the number of steps.
+ Note that each step involves only a function evaluation, to an oracle that
+ outputs the value of a function proportional to the desired density.
+ To bound the rate of convergence (and as a result the uniqueness of the
+ stationary distribution), we first develop some general tools.
 \end_layout
 
 \begin_layout Section
@@ -353,9 +333,8 @@ Basics of Markov chains
 \end_layout
 
 \begin_layout Standard
-For more detailed reading,
- including additional properties,
- see Section 1 of 
+For more detailed reading, including additional properties, see Section
+ 1 of 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "lovasz1993random"
@@ -375,8 +354,7 @@ A Markov chain is defined using a
 \begin_inset Formula $(K,{\cal A})$
 \end_inset
 
-,
- where 
+, where 
 \begin_inset Formula $K$
 \end_inset
 
@@ -397,8 +375,7 @@ A Markov chain is defined using a
 \begin_inset Formula $K$
 \end_inset
 
-,
- we have a probability measure 
+, we have a probability measure 
 \begin_inset Formula $P_{u}$
 \end_inset
 
@@ -406,9 +383,7 @@ A Markov chain is defined using a
 \begin_inset Formula $(K,{\cal A})$
 \end_inset
 
-,
- i.e.,
- each set 
+, i.e., each set 
 \begin_inset Formula $A\in{\cal A}$
 \end_inset
 
@@ -417,8 +392,7 @@ A Markov chain is defined using a
 \end_inset
 
 .
- Informally,
- 
+ Informally, 
 \begin_inset Formula $P_{u}$
 \end_inset
 
@@ -435,19 +409,15 @@ A Markov chain is defined using a
 \begin_inset Formula $Q_{0}$
 \end_inset
 
- defines a Markov chain,
- i.e.,
- a sequence of elements of 
+ defines a Markov chain, i.e., a sequence of elements of 
 \begin_inset Formula $K$
 \end_inset
 
-,
- 
+, 
 \begin_inset Formula $w_{0},w_{1},\ldots$
 \end_inset
 
-,
- where 
+, where 
 \begin_inset Formula $w_{0}$
 \end_inset
 
@@ -493,14 +463,11 @@ A distribution
 \emph on
 stationary
 \emph default
- if taking one step from it maintains the distribution,
- i.e.,
- for any 
+ if taking one step from it maintains the distribution, i.e., for any 
 \begin_inset Formula $A\in{\cal A}$
 \end_inset
 
-,
- 
+, 
 \begin_inset Formula 
 \[
 \int_{K}P_{u}(A)\,dQ(u)=Q(A).
@@ -528,13 +495,11 @@ atom-free
 \end_layout
 
 \begin_layout Example*
-For the ball walk in a convex body,
- the state space 
+For the ball walk in a convex body, the state space 
 \begin_inset Formula $K$
 \end_inset
 
- is the convex body,
- and 
+ is the convex body, and 
 \begin_inset Formula $A$
 \end_inset
 
@@ -555,8 +520,7 @@ and for any measurable subset
 \begin_inset Formula $A$
 \end_inset
 
-,
- 
+, 
 \begin_inset Formula 
 \[
 P_{u}(A)=\frac{\vol\left(A\cap(u+\delta B_{n})\right)}{\vol(\delta B_{n})}+1_{u\in A}(u)P_{u}(\{u\})
@@ -564,9 +528,7 @@ P_{u}(A)=\frac{\vol\left(A\cap(u+\delta B_{n})\right)}{\vol(\delta B_{n})}+1_{u\
 
 \end_inset
 
-The uniform distribution is stationary,
- i.e.,
- 
+The uniform distribution is stationary, i.e., 
 \begin_inset Formula $Q(A)=\frac{\vol(A)}{\vol(K)}$
 \end_inset
 
@@ -614,15 +576,12 @@ A distribution
 lazy
 \emph default
  Markov chains.
- In a lazy version of a given Markov chain,
- at each step,
- with probability 
+ In a lazy version of a given Markov chain, at each step, with probability
+ 
 \begin_inset Formula $1/2$
 \end_inset
 
-,
- we do nothing;
- with the rest we take a step according to the Markov chain.
+, we do nothing; with the rest we take a step according to the Markov chain.
  The next theorem is folklore.
 \end_layout
 
@@ -632,14 +591,14 @@ If
 \end_inset
 
  is stationary w.r.t.
- a lazy,
- ergodic Markov chain,
- then it is the unique stationary distribution for that Markov chain.
+ a lazy, ergodic Markov chain, then it is the unique stationary distribution
+ for that Markov chain.
 \end_layout
 
 \begin_layout Standard
-Informally,
- the mixing rate of a random walk is the number of steps required to reduce some measure of the distance of the current distribution to the stationary distribution by a constant factor.
+Informally, the mixing rate of a random walk is the number of steps required
+ to reduce some measure of the distance of the current distribution to the
+ stationary distribution by a constant factor.
  The following notions will be useful for comparing two distributions 
 \begin_inset Formula $P,Q$
 \end_inset
@@ -683,8 +642,7 @@ Total variation distance is
 \end_layout
 
 \begin_layout Enumerate
-KL-divergence:
- 
+KL-divergence: 
 \begin_inset Formula 
 \[
 d_{KL}(P,Q)=\int_{K}\log\frac{dP(u)}{dQ(u)}\,dP(u).
@@ -696,8 +654,7 @@ d_{KL}(P,Q)=\int_{K}\log\frac{dP(u)}{dQ(u)}\,dP(u).
 \end_layout
 
 \begin_layout Enumerate
-Warmth:
- 
+Warmth: 
 \begin_inset Formula $P$
 \end_inset
 
@@ -843,8 +800,7 @@ For any
 \begin_inset Formula $0\leq s<\frac{1}{2}$
 \end_inset
 
-,
- the 
+, the 
 \begin_inset Formula $s$
 \end_inset
 
@@ -864,8 +820,7 @@ Ideally we would like to show that
 \begin_inset Formula $d(Q_{t},Q)$
 \end_inset
 
-,
- the distance between the distribution after 
+, the distance between the distribution after 
 \begin_inset Formula $t$
 \end_inset
 
@@ -887,8 +842,7 @@ for each
 \end_inset
 
 .
- To prove inductively that this quantity decreases,
- Let 
+ To prove inductively that this quantity decreases, Let 
 \begin_inset Formula ${\cal G}_{x}$
 \end_inset
 
@@ -900,8 +854,7 @@ for each
 
 \end_inset
 
-Using this,
- define 
+Using this, define 
 \begin_inset Formula 
 \[
 h_{t}(x)=\sup_{g\in{\cal G}_{x}}\int_{u\in K}g(u)\ (dQ_{t}(u)-dQ(u))=\sup_{g\in{\cal G}_{x}}\int_{u\in K}g(u)\ dQ_{t}(u)-x.
@@ -917,8 +870,7 @@ Show that the function
 \begin_inset Formula $h_{t}$
 \end_inset
 
- is concave,
- and if 
+ is concave, and if 
 \begin_inset Formula $Q$
 \end_inset
 
@@ -927,14 +879,13 @@ Show that the function
 status open
 
 \begin_layout Plain Layout
-why atom free?
- otherwise we may have to assign some fractional value to the atom.
+why atom free? otherwise we may have to assign some fractional value to
+ the atom.
 \end_layout
 
 \end_inset
 
-,
- then 
+, then 
 \begin_inset Formula $h_{t}(x)=\sup_{A:Q(A)=x}Q_{t}(A)-Q(A)$
 \end_inset
 
@@ -943,8 +894,6 @@ why atom free?
 
 \begin_layout Exercise
 \begin_inset Float figure
-placement document
-alignment document
 wide false
 sideways false
 status open
@@ -970,10 +919,7 @@ If the target density
 \begin_inset Formula $Q$
 \end_inset
 
- has atoms,
- i.e.,
- points of positive probability,
- then the function 
+ has atoms, i.e., points of positive probability, then the function 
 \begin_inset Formula $g$
 \end_inset
 
@@ -998,14 +944,12 @@ Let
 \begin_inset Formula $0\leq x\leq1$
 \end_inset
 
-,
- let 
+, let 
 \begin_inset Formula $y=\min\{x,1-x\}$
 \end_inset
 
 .
- Then,
- 
+ Then, 
 \begin_inset Formula 
 \[
 h_{t}(x)\le\frac{1}{2}h_{t-1}(x-2\phi y)+\frac{1}{2}h_{t-1}(x+2\phi y).
@@ -1022,8 +966,7 @@ Assume that
 \end_inset
 
 .
- We construct two functions,
- 
+ We construct two functions, 
 \begin_inset Formula $g_{1}$
 \end_inset
 
@@ -1031,8 +974,7 @@ Assume that
 \begin_inset Formula $g_{2}$
 \end_inset
 
-,
- and use these to bound 
+, and use these to bound 
 \begin_inset Formula $h_{t}(x)$
 \end_inset
 
@@ -1071,8 +1013,7 @@ Note that
 \begin_inset Formula $u\in K$
 \end_inset
 
-,
- which means that 
+, which means that 
 \begin_inset Formula 
 \[
 \frac{1}{2}\int_{u\in K}g_{1}(u)\ dQ_{t-1}(u)+\frac{1}{2}\int_{u\in K}g_{2}(u)\,dQ_{t-1}(u)=\int_{u\in K}P_{u}(A)\,dQ_{t-1}(u)=Q_{t}(A).
@@ -1080,8 +1021,7 @@ Note that
 
 \end_inset
 
-Since the walk is lazy,
- 
+Since the walk is lazy, 
 \begin_inset Formula $P_{u}(A)\geq\frac{1}{2}$
 \end_inset
 
@@ -1089,8 +1029,7 @@ Since the walk is lazy,
 \begin_inset Formula $u\in A$
 \end_inset
 
-,
- the range of the functions 
+, the range of the functions 
 \begin_inset Formula $g_{1},g_{2}$
 \end_inset
 
@@ -1116,8 +1055,7 @@ then
 \end_inset
 
 .
- Moreover,
- 
+ Moreover, 
 \begin_inset Formula 
 \[
 \frac{1}{2}(x_{1}+x_{2})=\frac{1}{2}\int_{u\in K}g_{1}(u)\ dQ(u)+\frac{1}{2}\int_{u\in K}g_{2}(u)\ dQ(u)=\int_{u\in K}P_{u}(A)\ dQ(u)=Q(A)=x.
@@ -1144,8 +1082,7 @@ h_{t}(x) & = & Q_{t}(A)-Q(A)\\
 \end_layout
 
 \begin_layout Proof
-Next,
- 
+Next, 
 \begin_inset Formula 
 \begin{eqnarray*}
 x_{1} & = & \int_{u\in K}g_{1}(u)\ dQ(u)\\
@@ -1159,8 +1096,7 @@ x_{1} & = & \int_{u\in K}g_{1}(u)\ dQ(u)\\
 
 \end_inset
 
-Thus we have,
- 
+Thus we have, 
 \begin_inset Formula $x_{1}\leq x(1-2\phi)\leq x\leq x(1+2\phi)\leq x_{2}.$
 \end_inset
 
@@ -1168,8 +1104,7 @@ Thus we have,
 \begin_inset Formula $h_{t-1}$
 \end_inset
 
- is concave,
- the chord from 
+ is concave, the chord from 
 \begin_inset Formula $x_{1}$
 \end_inset
 
@@ -1186,8 +1121,7 @@ Thus we have,
 \end_inset
 
 ].
- Therefore,
- 
+ Therefore, 
 \begin_inset Formula 
 \[
 h_{t}(x)\le\frac{1}{2}h_{t-1}(x(1-2\phi))+\frac{1}{2}h_{t-1}(x(1+2\phi)).
@@ -1216,8 +1150,7 @@ Let
 \begin_inset Formula $s\leq x\leq1-s$
 \end_inset
 
-,
- let 
+, let 
 \begin_inset Formula $y=\min\{x-s,1-x-s\}$
 \end_inset
 
@@ -1226,8 +1159,7 @@ Let
 \begin_inset Formula $t>0$
 \end_inset
 
-,
- 
+, 
 \begin_inset Formula 
 \[
 h_{t}(x)\leq\frac{1}{2}h_{t-1}(x-2\phi_{s}y)+\frac{1}{2}h_{t-1}(x+2\phi_{s}y).
@@ -1317,8 +1249,7 @@ Let
 \end_inset
 
 .
- Then,
- 
+ Then, 
 \begin_inset Formula 
 \[
 d_{TV}(Q_{t},Q)\le\sqrt{M}\left(1-\frac{\phi^{2}}{2}\right)^{t}.
@@ -1339,8 +1270,7 @@ Let
 \end_inset
 
 .
- Then,
- 
+ Then, 
 \begin_inset Formula 
 \[
 d_{TV}(Q_{t},Q)\leq H_{s}+\frac{H_{s}}{s}\left(1-\frac{\phi_{s}^{2}}{2}\right)^{t}.
@@ -1361,8 +1291,7 @@ Let
 \begin_inset Formula $\varepsilon>0$
 \end_inset
 
-,
- 
+, 
 \begin_inset Formula 
 \[
 d_{TV}(Q_{t},Q)\leq\varepsilon+\sqrt{\frac{M}{\varepsilon}}\left(1-\frac{\phi^{2}}{2}\right)^{t}.
@@ -1375,8 +1304,8 @@ d_{TV}(Q_{t},Q)\leq\varepsilon+\sqrt{\frac{M}{\varepsilon}}\left(1-\frac{\phi^{2
 
 \end_deeper
 \begin_layout Exercise
-Show that for a lazy,
- time-reversible Markov chain with stationary distribution 
+Show that for a lazy, time-reversible Markov chain with stationary distribution
+ 
 \begin_inset Formula $Q$
 \end_inset
 
@@ -1384,8 +1313,7 @@ Show that for a lazy,
 \begin_inset Formula $\phi$
 \end_inset
 
-,
- we have 
+, we have 
 \begin_inset Formula 
 \[
 \chi^{2}(Q_{t},Q)\le\left(1-\frac{\phi^{2}}{2}\right)^{t}\chi^{2}(Q_{0},Q).
@@ -1401,15 +1329,15 @@ Convergence via Log-Sobolev
 \end_layout
 
 \begin_layout Standard
-For a warm start,
- the convergence rate established by conductance is asymptotically optimal in many cases of interest,
- including the ball walk for convex body.
- However,
- when the starting distribution is more focused,
- e.g.,
- a single point,
- then there is a significant starting penalty usually a factor of the dimension or larger.
- One way to avoid this is to observe that the conductance of smaller subsets is in fact even higher and that one does not need to pay this large starting penalty.
+For a warm start, the convergence rate established by conductance is asymptotica
+lly optimal in many cases of interest, including the ball walk for convex
+ body.
+ However, when the starting distribution is more focused, e.g., a single point,
+ then there is a significant starting penalty usually a factor of the dimension
+ or larger.
+ One way to avoid this is to observe that the conductance of smaller subsets
+ is in fact even higher and that one does not need to pay this large starting
+ penalty.
  A classical technique in this regard is the log-Sobolev constant.
  For a Markov chain with stationary density 
 \begin_inset Formula $Q$
@@ -1419,8 +1347,7 @@ For a warm start,
 \begin_inset Formula $P$
 \end_inset
 
-,
- we can define it as follows.
+, we can define it as follows.
  
 \begin_inset Formula 
 \[
@@ -1433,7 +1360,8 @@ For a warm start,
 \end_layout
 
 \begin_layout Standard
-This parameter allows us to show convergence of the current distribution to the target in relative entropy.
+This parameter allows us to show convergence of the current distribution
+ to the target in relative entropy.
  Recall that the relative entropy of a distribution 
 \begin_inset Formula $P$
 \end_inset
@@ -1462,13 +1390,11 @@ For a Markov chain with distribution
 \begin_inset Formula $t$
 \end_inset
 
-,
- and log-Sobolev parameter 
+, and log-Sobolev parameter 
 \begin_inset Formula $\rho$
 \end_inset
 
-,
- we have 
+, we have 
 \begin_inset Formula 
 \[
 H_{Q}(Q_{t})\le e^{-2\rho t}H_{Q}(Q_{0}).
@@ -1497,15 +1423,14 @@ Conductance of the Ball Walk
 \end_layout
 
 \begin_layout Standard
-In the section we bound the conductance of the ball walk when applied to the indicator function of a convex body.
- At first glance,
- the ball walk is not an efficient algorithm,
- even for uniformly sampling a convex body.
- The reason is simply that the local conductance could be exponentially small (consider a point close to the vertex of a polyhedron).
+In the section we bound the conductance of the ball walk when applied to
+ the indicator function of a convex body.
+ At first glance, the ball walk is not an efficient algorithm, even for
+ uniformly sampling a convex body.
+ The reason is simply that the local conductance could be exponentially
+ small (consider a point close to the vertex of a polyhedron).
  We can get around this in two ways.
- The first,
- which is simpler,
- but less efficient is to 
+ The first, which is simpler, but less efficient is to 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1514,8 +1439,7 @@ smoothen
 \end_inset
 
  the convex body by taking the Minkowski sum with a small Euclidean ball,
- i.e.,
- replace 
+ i.e., replace 
 \begin_inset Formula $K$
 \end_inset
 
@@ -1528,8 +1452,6 @@ smoothen
 
 \begin_layout Standard
 \begin_inset Float figure
-placement document
-alignment document
 wide false
 sideways false
 status open
@@ -1580,13 +1502,11 @@ Let
 \end_layout
 
 \begin_layout Exercise
-Using the exercise,
- it suffices to set 
+Using the exercise, it suffices to set 
 \begin_inset Formula $\alpha=1/n$
 \end_inset
 
-,
- so that a sample from 
+, so that a sample from 
 \begin_inset Formula $K+\alpha B^{n}$
 \end_inset
 
@@ -1602,8 +1522,8 @@ Using the exercise,
 \end_layout
 
 \begin_layout Exercise
-The second approach is to show that the local conductance is in fact large almost everywhere,
- and if the starting distribution is 
+The second approach is to show that the local conductance is in fact large
+ almost everywhere, and if the starting distribution is 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1616,8 +1536,7 @@ warm
 \begin_inset Formula $\delta$
 \end_inset
 
- much larger,
- namely 
+ much larger, namely 
 \begin_inset Formula $\delta=1/\sqrt{n}.$
 \end_inset
 
@@ -1625,14 +1544,13 @@ warm
 \end_layout
 
 \begin_layout Standard
-To convey the main ideas of the analysis,
- we focus on the first approach here.
- The goal is to show that the conductance of any subset is large,
- i.e.,
- the probability of crossing over in one step is at least proportional to the measure of the set or its complement,
- whichever is smaller.
- First,
- we argue that the one-step distributions of two points will have a significant overlap if the points are sufficient close.
+To convey the main ideas of the analysis, we focus on the first approach
+ here.
+ The goal is to show that the conductance of any subset is large, i.e., the
+ probability of crossing over in one step is at least proportional to the
+ measure of the set or its complement, whichever is smaller.
+ First, we argue that the one-step distributions of two points will have
+ a significant overlap if the points are sufficient close.
 \end_layout
 
 \begin_layout Lemma
@@ -1675,8 +1593,6 @@ One-step overlap
 
 \begin_layout Lemma
 \begin_inset Float figure
-placement document
-alignment document
 wide false
 sideways false
 status open
@@ -1697,7 +1613,13 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-One-step overlap fully contained in K
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:fully-contained"
+
+\end_inset
+
+ One-step overlap fully contained in K
 \end_layout
 
 \end_inset
@@ -1751,20 +1673,39 @@ First assume that
 \end_inset
 
  (see Fig.
- ).
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:fully-contained"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
  This has relative volume at most 
 \begin_inset Formula $t$
 \end_inset
 
-,
- proving the lemma under the assumption that 
+, proving the lemma under the assumption that 
 \begin_inset Formula $\ell=1$
 \end_inset
 
 .
- For the general case,
- we note that when the balls are intersected with a convex body,
- the increase in the TV distance is at most the probability that there is no proper move at 
+ For the general case, we note that when the balls are intersected with
+ a convex body, the increase in the TV distance is at most the probability
+ that there is no proper move at 
 \begin_inset Formula $u$
 \end_inset
 
@@ -1772,9 +1713,7 @@ First assume that
 \begin_inset Formula $v$
 \end_inset
 
-),
- i.e.,
- 
+), i.e., 
 \begin_inset Formula $1-\ell$
 \end_inset
 
@@ -1785,8 +1724,6 @@ First assume that
 
 \begin_layout Proof
 \begin_inset Float figure
-placement document
-alignment document
 wide false
 sideways false
 status open
@@ -1829,8 +1766,8 @@ Setting
 \begin_inset Formula $t=\ell/2$
 \end_inset
 
-,
- this says that if the total variation distance between the one-step distributions from 
+, this says that if the total variation distance between the one-step distributi
+ons from 
 \begin_inset Formula $u,v$
 \end_inset
 
@@ -1838,15 +1775,16 @@ Setting
 \begin_inset Formula $1-\ell/2$
 \end_inset
 
-,
- then the distance between them is at least 
+, then the distance between them is at least 
 \begin_inset Formula $\frac{\ell\delta}{2\sqrt{n}}$
 \end_inset
 
 .
- What this effectively says is that points close to the internal boundary of a subset are likely to cross over to the other side.
- To complete a proof we would need to show that the internal boundary of any subset is large if the subset (or its complement) is large,
- a purely geometric property.
+ What this effectively says is that points close to the internal boundary
+ of a subset are likely to cross over to the other side.
+ To complete a proof we would need to show that the internal boundary of
+ any subset is large if the subset (or its complement) is large, a purely
+ geometric property.
 \end_layout
 
 \begin_layout Theorem
@@ -1898,8 +1836,6 @@ This can be generalized to any logconcave measure.
 
 \begin_layout Standard
 \begin_inset Float figure
-placement document
-alignment document
 wide false
 sideways false
 status open
@@ -1992,8 +1928,7 @@ Let
 
 \end_inset
 
-Note that since the uniform distribution is stationary,
- 
+Note that since the uniform distribution is stationary, 
 \begin_inset Formula 
 \[
 \int_{S_{1}}P_{x}(S_{2})\,dx=\int_{S_{2}}P_{x}(S_{1})\,dx.
@@ -2013,10 +1948,7 @@ deep
 \begin_inset Quotes erd
 \end_inset
 
- inside these sets,
- i.e.,
- unlikely to jump out of the set:
- 
+ inside these sets, i.e., unlikely to jump out of the set: 
 \begin_inset Formula 
 \[
 S_{1}'=\left\{ x\in S_{1}:P_{x}(S_{2})<\frac{\ell}{4}\right\} \mbox{ and }S_{2}'=\left\{ x\in S_{2}:P_{x}(S_{1})<\frac{\ell}{4}\right\} .
@@ -2028,8 +1960,7 @@ Let
 \begin_inset Formula $S_{3}'$
 \end_inset
 
- be the rest i.e.,
- 
+ be the rest i.e., 
 \begin_inset Formula $S_{3}'=K\setminus S_{1}'\setminus S_{2}'$
 \end_inset
 
@@ -2057,7 +1988,6 @@ reference "COND"
 plural "false"
 caps "false"
 noprefix "false"
-nolink "false"
 
 \end_inset
 
@@ -2074,8 +2004,7 @@ So we can assume that
 \end_inset
 
 .
- Now,
- for any 
+ Now, for any 
 \begin_inset Formula $u\in S_{1}'$
 \end_inset
 
@@ -2083,8 +2012,7 @@ So we can assume that
 \begin_inset Formula $v\in S_{2}'$
 \end_inset
 
-,
- 
+, 
 \begin_inset Formula 
 \[
 ||P_{u}-P_{v}||_{tv}\geq1-P_{u}(S_{2})-P_{v}(S_{1})>1-\frac{\ell}{2}.
@@ -2099,7 +2027,6 @@ reference "lem:ONESTEP"
 plural "false"
 caps "false"
 noprefix "false"
-nolink "false"
 
 \end_inset
 
@@ -2107,8 +2034,7 @@ nolink "false"
 \begin_inset Formula $t=\ell/2$
 \end_inset
 
-,
- we get that 
+, we get that 
 \begin_inset Formula 
 \[
 |u-v|\geq\frac{\ell\delta}{2\sqrt{n}}.
@@ -2128,7 +2054,6 @@ reference "thm:isoD"
 plural "false"
 caps "false"
 noprefix "false"
-nolink "false"
 
 \end_inset
 
@@ -2136,8 +2061,7 @@ nolink "false"
 \begin_inset Formula $S_{1}',S_{2}',S_{3}'$
 \end_inset
 
-,
- we have 
+, we have 
 \begin_inset Formula 
 \begin{eqnarray*}
 \vol(S_{3}') & \geq & \frac{\ell\delta}{\sqrt{n}D}\min\{\vol(S_{1}'),\vol(S_{2}')\}\\
@@ -2153,12 +2077,10 @@ reference "COND"
 plural "false"
 caps "false"
 noprefix "false"
-nolink "false"
 
 \end_inset
 
-) as follows:
- 
+) as follows: 
 \begin_inset Formula 
 \begin{eqnarray*}
 \int_{S_{1}}P_{x}(S_{2})\,dx & = & \frac{1}{2}\int_{S_{1}}P_{x}(S_{2})\,dx+\frac{1}{2}\int_{S_{2}}P_{x}(S_{1})\,dx\\
@@ -2173,8 +2095,6 @@ nolink "false"
 
 \begin_layout Proof
 \begin_inset Float figure
-placement document
-alignment document
 wide false
 sideways false
 status open
@@ -2201,8 +2121,6 @@ status open
 
 \begin_layout Proof
 \begin_inset Float figure
-placement document
-alignment document
 wide false
 sideways false
 status open
@@ -2237,7 +2155,7 @@ The ball walk in a convex body with local conductance at least
 \end_inset
 
  everywhere has mixing rate 
-\begin_inset Formula $O(nD^{2}\delta^{2}/\ell^{4})$
+\begin_inset Formula $O(\frac{nD^{2}}{\delta^{2}\ell^{4}})$
 \end_inset
 
 .
@@ -2261,25 +2179,22 @@ Using the construction above of adding a small ball to every point of
 \end_inset
 
  on the mixing time.
- As we will see presently,
- this can be improved to 
+ As we will see presently, this can be improved to 
 \begin_inset Formula $n^{2}D^{2}$
 \end_inset
 
- by avoiding the blow-up,
- and analyzing the 
+ by avoiding the blow-up, and analyzing the 
 \emph on
 average 
 \emph default
 local conductance.
- The example of starting near a corner (say of a hypercube) shows that this cannot work in general;
- however,
- from a 
+ The example of starting near a corner (say of a hypercube) shows that this
+ cannot work in general; however, from a 
 \emph on
 warm
 \emph default
- start,
- it will suffice to bound the average local conductance rather than the minimum.
+ start, it will suffice to bound the average local conductance rather than
+ the minimum.
  
 \end_layout
 
@@ -2292,7 +2207,9 @@ Warm Start and
 \end_layout
 
 \begin_layout Standard
-In this section we give a better bound for the conductance of sufficiently large subsets resulting in the following bound on the mixing rate of the ball walk.
+In this section we give a better bound for the conductance of sufficiently
+ large subsets resulting in the following bound on the mixing rate of the
+ ball walk.
 \end_layout
 
 \begin_layout Theorem
@@ -2306,8 +2223,8 @@ name "thm:ballwalk_warmstart"
 \begin_inset Formula $O(1)$
 \end_inset
 
--warm start,
- the ball walk in a convex body with isoperimetric coefficient 
+-warm start, the ball walk in a convex body with isoperimetric coefficient
+ 
 \begin_inset Formula $\psi$
 \end_inset
 
@@ -2316,13 +2233,11 @@ name "thm:ballwalk_warmstart"
 \end_inset
 
  steps.
- In particular,
- if the convex body has diameter 
+ In particular, if the convex body has diameter 
 \begin_inset Formula $D$
 \end_inset
 
-,
- the mixing rate is 
+, the mixing rate is 
 \begin_inset Formula $O(n^{2}D^{2})$
 \end_inset
 
@@ -2331,8 +2246,8 @@ name "thm:ballwalk_warmstart"
 \end_layout
 
 \begin_layout Standard
-This is based on two ideas:
- (1) most points of a convex body containing a unit ball have large local conductance and we can use 
+This is based on two ideas: (1) most points of a convex body containing
+ a unit ball have large local conductance and we can use 
 \begin_inset Formula $\delta=1/\sqrt{n}$
 \end_inset
 
@@ -2340,8 +2255,7 @@ This is based on two ideas:
 \begin_inset Formula $1/n^{3/2}$
 \end_inset
 
-,
- (2) the 
+, (2) the 
 \begin_inset Formula $s$
 \end_inset
 
@@ -2364,8 +2278,7 @@ name "lem:avg-local-conductance"
 \begin_inset Formula $\delta$
 \end_inset
 
- step size,
- let 
+ step size, let 
 \begin_inset Formula $K_{\delta}=\left\{ u\in K:\:\ell(u)\ge\frac{3}{4}\right\} $
 \end_inset
 
@@ -2386,7 +2299,8 @@ Prove the first part of the previous lemma.
 \end_layout
 
 \begin_layout Standard
-The proof of the above lemma will use the following bound on crossing the boundary of 
+The proof of the above lemma will use the following bound on crossing the
+ boundary of 
 \begin_inset Formula $K$
 \end_inset
 
@@ -2400,12 +2314,11 @@ Let
 \end_inset
 
  be any measurable subset of the boundary of a convex body K and 
-\begin_inset Formula $S_{L}=\left\{ (x,y):x\in K,y\not\in K,\norm{x-y}\le\delta,[x,y]\cap L\neq\phi\right\} $
+\begin_inset Formula $S_{L}=\{(x,y):x\in K,y\not\in K,\norm{x-y}\le\delta,[x,y]\cap L\neq\phi\}$
 \end_inset
 
 .
- Then,,
- we have 
+ Then,, we have 
 \begin_inset Formula 
 \[
 \vol_{2n}(S_{L})\le\frac{\delta}{(n+1)}\frac{\vol(B^{n-1})}{\vol(B^{n})}\vol_{n-1}(L)\vol(\delta B^{n}).
@@ -2421,8 +2334,7 @@ It suffices to consider the case when
 \begin_inset Formula $L$
 \end_inset
 
- is infinitesimally small;
- and then we can assume that the surface of 
+ is infinitesimally small; and then we can assume that the surface of 
 \begin_inset Formula $K$
 \end_inset
 
@@ -2470,18 +2382,16 @@ reference "thm:ball_walk_cond"
 plural "false"
 caps "false"
 noprefix "false"
-nolink "false"
 
 \end_inset
 
-,
- with one important extension.
- Rather than applying the argument to a partition of the original convex body 
+, with one important extension.
+ Rather than applying the argument to a partition of the original convex
+ body 
 \begin_inset Formula $K$
 \end_inset
 
-,
- we restrict the argument to 
+, we restrict the argument to 
 \begin_inset Formula $K_{\delta},$
 \end_inset
 
@@ -2494,9 +2404,8 @@ the points in
 \begin_inset Formula $K$
 \end_inset
 
-,
- and is convex,
- we will able to use its isoperimetry to lower bound the conductance.
+, and is convex, we will able to use its isoperimetry to lower bound the
+ conductance.
 \begin_inset Note Note
 status open
 
@@ -2510,8 +2419,7 @@ need figure!
 \end_layout
 
 \begin_layout Proof
-As before,
- we consider the following partition of 
+As before, we consider the following partition of 
 \begin_inset Formula $K$
 \end_inset
 
@@ -2532,8 +2440,7 @@ As before,
 
 \end_inset
 
-Since the uniform distribution is stationary,
- 
+Since the uniform distribution is stationary, 
 \begin_inset Formula 
 \[
 \int_{S_{1}}P_{x}(S_{2})\,dx=\int_{S_{2}}P_{x}(S_{1})\,dx.
@@ -2553,8 +2460,7 @@ deep
 \begin_inset Quotes erd
 \end_inset
 
- inside these sets:
- 
+ inside these sets: 
 \begin_inset Formula 
 \[
 S_{1}'=\left\{ x\in S_{1}:P_{x}(S_{2})<\frac{1}{8}\right\} \mbox{ and }S_{2}'=\left\{ x\in S_{2}:P_{x}(S_{1})<\frac{1}{8}\right\} .
@@ -2566,8 +2472,7 @@ Let
 \begin_inset Formula $S_{3}'$
 \end_inset
 
- be the rest i.e.,
- 
+ be the rest i.e., 
 \begin_inset Formula $S_{3}'=K\setminus S_{1}'\setminus S_{2}'$
 \end_inset
 
@@ -2591,17 +2496,14 @@ reference "lem:avg-local-conductance"
 plural "false"
 caps "false"
 noprefix "false"
-nolink "false"
 
 \end_inset
 
-,
- for 
+, for 
 \begin_inset Formula $\delta\le s/(4\sqrt{n})$
 \end_inset
 
-,
- 
+, 
 \begin_inset Formula 
 \[
 \vol(S_{i}'')\ge\vol(S_{i}')-s.
@@ -2633,7 +2535,6 @@ reference "COND-1"
 plural "false"
 caps "false"
 noprefix "false"
-nolink "false"
 
 \end_inset
 
@@ -2650,8 +2551,7 @@ So we can assume that
 \end_inset
 
 .
- Now,
- for any 
+ Now, for any 
 \begin_inset Formula $u\in S_{1}''$
 \end_inset
 
@@ -2659,8 +2559,7 @@ So we can assume that
 \begin_inset Formula $v\in S_{2}''$
 \end_inset
 
-,
- 
+, 
 \begin_inset Formula 
 \[
 d_{TV}(P_{u},P_{v})\geq1-P_{u}(S_{2})-P_{v}(S_{1})>1-\frac{1}{4}.
@@ -2675,7 +2574,6 @@ reference "lem:ONESTEP"
 plural "false"
 caps "false"
 noprefix "false"
-nolink "false"
 
 \end_inset
 
@@ -2683,8 +2581,7 @@ nolink "false"
 \begin_inset Formula $t=3/8$
 \end_inset
 
-,
- we get that 
+, we get that 
 \begin_inset Formula 
 \[
 |u-v|\geq\frac{3\delta}{8\sqrt{n}}.
@@ -2697,7 +2594,8 @@ Thus
 \end_inset
 
 .
- Using the bound on the isoperimetric coefficient applied to the partition 
+ Using the bound on the isoperimetric coefficient applied to the partition
+ 
 \begin_inset Formula $S_{1}'',S_{2}'',S_{3}''$
 \end_inset
 
@@ -2705,8 +2603,7 @@ Thus
 \begin_inset Formula $K_{\delta}$
 \end_inset
 
-,
- we have 
+, we have 
 \begin_inset Formula 
 \begin{eqnarray*}
 \vol(S_{3}'') & \geq & \frac{3\delta\psi}{8\sqrt{n}}\min\{\vol(S_{1}''),\vol(S_{2}'')\}\\
@@ -2722,12 +2619,10 @@ reference "COND-1"
 plural "false"
 caps "false"
 noprefix "false"
-nolink "false"
 
 \end_inset
 
-) as follows:
- 
+) as follows: 
 \begin_inset Formula 
 \begin{eqnarray*}
 \int_{S_{1}}P_{x}(S_{2})\,dx & = & \frac{1}{2}\int_{S_{1}}P_{x}(S_{2})\,dx+\frac{1}{2}\int_{S_{2}}P_{x}(S_{1})\,dx\\
@@ -2752,7 +2647,6 @@ reference "thm:s-mixing"
 plural "false"
 caps "false"
 noprefix "false"
-nolink "false"
 
 \end_inset
 
@@ -2763,7 +2657,6 @@ reference "cor:s-mixing"
 plural "false"
 caps "false"
 noprefix "false"
-nolink "false"
 
 \end_inset
 
@@ -2779,13 +2672,14 @@ The mixing rate of
 \begin_inset Formula $O(n^{2}D^{2})$
 \end_inset
 
- for the ball walk is in fact the best possible even from a warm start (with the assumption of a unit ball inside the convex body and diameter 
+ for the ball walk is in fact the best possible even from a warm start (with
+ the assumption of a unit ball inside the convex body and diameter 
 \begin_inset Formula $D$
 \end_inset
 
 ).
- To see this,
- consider a cylinder whose cross-section is a unit ball and axis is 
+ To see this, consider a cylinder whose cross-section is a unit ball and
+ axis is 
 \begin_inset Formula $[0,D]$
 \end_inset
 
@@ -2794,7 +2688,8 @@ The mixing rate of
 \end_inset
 
 .
- Suppose the starting distribution is uniform in the part of the cylinder in 
+ Suppose the starting distribution is uniform in the part of the cylinder
+ in 
 \begin_inset Formula $[0,D/3]$
 \end_inset
 
@@ -2808,8 +2703,7 @@ The mixing rate of
 \begin_inset Formula $\delta$
 \end_inset
 
- in a random direction,
- and this is about 
+ in a random direction, and this is about 
 \begin_inset Formula $\delta/\sqrt{n}$
 \end_inset
 
@@ -2822,8 +2716,7 @@ The mixing rate of
 \begin_inset Formula $e_{1}$
 \end_inset
 
-,
- the effective diameter is 
+, the effective diameter is 
 \begin_inset Formula $D/(\delta/\sqrt{n})$
 \end_inset
 
@@ -2847,26 +2740,22 @@ Speedy walk
 \end_layout
 
 \begin_layout Standard
-In the above analysis of the ball walk,
- the dependence on the error parameter 
+In the above analysis of the ball walk, the dependence on the error parameter
+ 
 \begin_inset Formula $\varepsilon$
 \end_inset
 
-,
- the distance to the target distribution,
- is polynomial in 
+, the distance to the target distribution, is polynomial in 
 \begin_inset Formula $1/\varepsilon$
 \end_inset
 
  rather than its logarithm.
  The speedy walk is a way to improve the analysis.
- In the speedy walk,
- at a point 
+ In the speedy walk, at a point 
 \begin_inset Formula $x$
 \end_inset
 
-,
- we sample the next step uniformly from the intersection of 
+, we sample the next step uniformly from the intersection of 
 \begin_inset Formula $(x+\delta B^{n})\cap K$
 \end_inset
 
@@ -2879,7 +2768,8 @@ steps of the ball walk.
 \end_layout
 
 \begin_layout Exercise
-Show that the stationary density of the speedy walk in a convex body is proportional to the local conductance.
+Show that the stationary density of the speedy walk in a convex body is
+ proportional to the local conductance.
 \end_layout
 
 \begin_layout Theorem
@@ -2891,8 +2781,7 @@ The conductance of the speedy walk is
 \end_layout
 
 \begin_layout Standard
-To analyze the ball walk,
- we then need to show that the number of 
+To analyze the ball walk, we then need to show that the number of 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2908,7 +2797,6 @@ reference "lem:avg-local-conductance"
 plural "false"
 caps "false"
 noprefix "false"
-nolink "false"
 
 \end_inset
 
@@ -2924,10 +2812,8 @@ To get the mixing rate of
 \begin_inset Formula $O(n^{2}D^{2})$
 \end_inset
 
-,
- we need a warm start,
- i.e.,
- a distribution whose density at any point is within 
+, we need a warm start, i.e., a distribution whose density at any point is
+ within 
 \begin_inset Formula $O(1)$
 \end_inset
 
@@ -2998,8 +2884,7 @@ SetAlgoLined
 \end_layout
 
 \begin_layout Standard
-Input:
- membership oracle for 
+Input: membership oracle for 
 \begin_inset Formula $K$
 \end_inset
 
@@ -3137,8 +3022,7 @@ Since
 \begin_inset Formula $K_{i+1}\subseteq2^{1/n}K_{i}$
 \end_inset
 
-,
- we have 
+, we have 
 \begin_inset Formula $\vol(K_{i+1})\le2\vol(K_{i})$
 \end_inset
 
@@ -3151,9 +3035,8 @@ Since
 \begin_inset Formula $K$
 \end_inset
 
-,
- subsequent random points can be generated by simply continuing the ball walk;
- thus the cost of the warm start is only for the first sample.
+, subsequent random points can be generated by simply continuing the ball
+ walk; thus the cost of the warm start is only for the first sample.
 \end_layout
 
 \begin_layout Section
@@ -3183,8 +3066,7 @@ The complexity of sampling with the ball walk is polynomial in
 \end_inset
 
 .
- To get a polynomial algorithm,
- we need one more ingredient.
+ To get a polynomial algorithm, we need one more ingredient.
 \end_layout
 
 \begin_layout Standard
@@ -3204,9 +3086,7 @@ isotropic
 \begin_inset Formula $\E_{Q}(xx^{T})=I$
 \end_inset
 
-,
- i.e.,
- the mean is zero and the covariance matrix (exists and) is the identity.
+, i.e., the mean is zero and the covariance matrix (exists and) is the identity.
  We say that the distribution is 
 \begin_inset Formula $C$
 \end_inset
@@ -3227,8 +3107,7 @@ isotropic tranformation
 Any distribution with bounded second moments has an isotropic transformation.
  It is clear that satisfying the first condition is merely a translation,
  so assume the mean is zero.
- For the second,
- suppose the covariance matrix is 
+ For the second, suppose the covariance matrix is 
 \begin_inset Formula $\E_{Q}(xx^{T})=A$
 \end_inset
 
@@ -3250,14 +3129,12 @@ Any distribution with bounded second moments has an isotropic transformation.
 \end_layout
 
 \begin_layout Standard
-For convex bodies,
- isotropic position comes with a strong guarantee.
+For convex bodies, isotropic position comes with a strong guarantee.
 \end_layout
 
 \begin_layout Theorem
-For a convex body in isotropic position (i.e.,
- the uniform distribution over the body is isotropic),
- we have
+For a convex body in isotropic position (i.e., the uniform distribution over
+ the body is isotropic), we have
 \begin_inset Formula 
 \[
 \sqrt{\frac{n+2}{n}}B^{n}\subseteq K\subseteq\sqrt{n(n+2)}B^{n}.
@@ -3280,8 +3157,8 @@ Thus the effective diameter is
 \end_inset
 
 ) algorithm.
- In fact,
- it is even better than this as most points are within distance 
+ In fact, it is even better than this as most points are within distance
+ 
 \begin_inset Formula $O(\sqrt{n})$
 \end_inset
 
@@ -3302,8 +3179,7 @@ For an isotropic logconcave density
 \begin_inset Formula $t\ge1$
 \end_inset
 
-,
- 
+, 
 \begin_inset Formula 
 \[
 \Pr_{p}\left(\norm x\ge ct\sqrt{n}\right)\le e^{-t\sqrt{n}}.
@@ -3315,19 +3191,16 @@ For an isotropic logconcave density
 \end_layout
 
 \begin_layout Standard
-How to compute an isotropic transformation?
- This is easy,
- from the definition,
- all we need is to estimate its covariance matrix,
- which can be done from random samples.
- Thus,
- if we could sample 
+How to compute an isotropic transformation? This is easy, from the definition,
+ all we need is to estimate its covariance matrix, which can be done from
+ random samples.
+ Thus, if we could sample 
 \begin_inset Formula $K$
 \end_inset
 
-,
- we can compute an isotropic transformation for it.
- This appears cyclic – we need isotropy for efficient sampling and efficient sampling for isotropy.
+, we can compute an isotropic transformation for it.
+ This appears cyclic – we need isotropy for efficient sampling and efficient
+ sampling for isotropy.
  The solution is simply to bootstrap them.
 \end_layout
 
@@ -3395,8 +3268,7 @@ SetAlgoLined
 \end_layout
 
 \begin_layout Standard
-Input:
- membership oracle for 
+Input: membership oracle for 
 \begin_inset Formula $K$
 \end_inset
 
@@ -3417,8 +3289,7 @@ Let
 \begin_inset Formula $B^{n}$
 \end_inset
 
-,
- 
+, 
 \begin_inset Formula $A=I$
 \end_inset
 
@@ -3576,13 +3447,11 @@ Show that if
 \begin_inset Formula $K$
 \end_inset
 
- is isotropic,
- then with 
+ is isotropic, then with 
 \begin_inset Formula $N=O(n^{2})$
 \end_inset
 
-,
- the matrix 
+, the matrix 
 \begin_inset Formula $A=\frac{1}{N}\sum_{i=1}^{N}x_{i}x_{i}^{T}$
 \end_inset
 
@@ -3630,8 +3499,7 @@ For an isotropic logconcave distribution
 \begin_inset Formula $\R^{n}$
 \end_inset
 
-,
- the covariance 
+, the covariance 
 \begin_inset Formula $N=O(n)$
 \end_inset
 
@@ -3651,8 +3519,7 @@ If
 \begin_inset Formula $C$
 \end_inset
 
--isotropic,
- then 
+-isotropic, then 
 \begin_inset Formula $K_{i+1}$
 \end_inset
 
@@ -3668,13 +3535,11 @@ Thus the overall algorithm needs
 \begin_inset Formula $O(n\log R)$
 \end_inset
 
- phases,
- with 
+ phases, with 
 \begin_inset Formula $O(n)$
 \end_inset
 
- samples in each phase from a near-isotropic distribution,
- and thus poly(
+ samples in each phase from a near-isotropic distribution, and thus poly(
 \begin_inset Formula $n$
 \end_inset
 
@@ -3704,8 +3569,7 @@ name "thm:convex_body_rounding"
 \begin_inset Formula $9/10$
 \end_inset
 
-,
- using 
+, using 
 \begin_inset Formula $\widetilde{O}(n^{4})$
 \end_inset
 
@@ -3725,7 +3589,6 @@ reference "thm:isoD"
 plural "false"
 caps "false"
 noprefix "false"
-nolink "false"
 
 \end_inset
 
@@ -3749,8 +3612,7 @@ For any partition
 \begin_inset Formula $\R^{n}$
 \end_inset
 
-,
- and any logconcave measure 
+, and any logconcave measure 
 \begin_inset Formula $\mu$
 \end_inset
 
@@ -3758,8 +3620,7 @@ For any partition
 \begin_inset Formula $\R^{n}$
 \end_inset
 
-,
- 
+, 
 \begin_inset Formula 
 \[
 \mu(S_{3})\ge\frac{\ln2}{\E_{\mu}(\norm{x-\bar{x}})}\min\left\{ \mu(S_{1}),\mu(S_{2})\right\} .
@@ -3771,9 +3632,8 @@ For any partition
 \end_layout
 
 \begin_layout Standard
-Thus,
- for a (near-)isotropic distribution,
- the diameter can be replaced by 
+Thus, for a (near-)isotropic distribution, the diameter can be replaced
+ by 
 \begin_inset Formula $O(\sqrt{n})$
 \end_inset
 
@@ -3782,7 +3642,8 @@ Thus,
 \end_inset
 
  from a warm start.
- One way to summarize the analysis so far is that the complexity of sampling a convex body (and in fact a logconcave density) from a warm start is 
+ One way to summarize the analysis so far is that the complexity of sampling
+ a convex body (and in fact a logconcave density) from a warm start is 
 \begin_inset Formula $O^{*}(n^{2}/\psi^{2})$
 \end_inset
 
@@ -3791,9 +3652,10 @@ Thus,
 \end_inset
 
  is the isoperimetric ratio of the convex body.
- In other words,
- the expansion of the Markov chain reduces to the expansion of the target logconcave density.
- It then becomes a natural question to find the best possible estimate for the isoperimetric ratio.
+ In other words, the expansion of the Markov chain reduces to the expansion
+ of the target logconcave density.
+ It then becomes a natural question to find the best possible estimate for
+ the isoperimetric ratio.
  KLS also provided a conjecture for this.
 \end_layout
 
@@ -3820,14 +3682,19 @@ KLS Hyperplane Conjecture.
 
 \begin_layout Standard
 The bound of the conjecture holds for all halfspace induced subsets.
- So the conjecture says that the worst isoperimetry is achieved up to a constant factor by a halfspace (this version does not need isotropic position).
+ So the conjecture says that the worst isoperimetry is achieved up to a
+ constant factor by a halfspace (this version does not need isotropic position).
  Here we discuss a powerful technique for proving such inequalities.
 \end_layout
 
 \begin_layout Standard
-Classical proofs of isoperimetry for special distributions are based on different types of symmetrization that effectively identify the extremal subsets.
- Bounding the Cheeger constant for general convex bodies and logconcave densities is more complicated since the extremal sets can be nonlinear and hard to describe precisely,
- due to the trade-off between minimizing the boundary measure of a subset and utilizing as much of the 
+Classical proofs of isoperimetry for special distributions are based on
+ different types of symmetrization that effectively identify the extremal
+ subsets.
+ Bounding the Cheeger constant for general convex bodies and logconcave
+ densities is more complicated since the extremal sets can be nonlinear
+ and hard to describe precisely, due to the trade-off between minimizing
+ the boundary measure of a subset and utilizing as much of the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -3840,8 +3707,8 @@ external
 \emph on
 localization
 \emph default
-,
- a method to reduce inequalities in high dimension to inequalities in one dimension.
+, a method to reduce inequalities in high dimension to inequalities in one
+ dimension.
  We now describe this technique with a few applications.
  
 \end_layout
@@ -3851,7 +3718,8 @@ Localization
 \end_layout
 
 \begin_layout Standard
-We will sketch a proof of the following theorem to illustrate the use of localization.
+We will sketch a proof of the following theorem to illustrate the use of
+ localization.
  This theorem was also proved by Karzanov and Khachiyan 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -3860,8 +3728,7 @@ literal "true"
 
 \end_inset
 
- using a different,
- more direct approach.
+ using a different, more direct approach.
 \end_layout
 
 \begin_layout Theorem
@@ -3924,8 +3791,8 @@ Let
 \end_layout
 
 \begin_layout Standard
-Before discussing the proof,
- we note that there is a variant of this result in the Riemannian setting.
+Before discussing the proof, we note that there is a variant of this result
+ in the Riemannian setting.
 \end_layout
 
 \begin_layout Theorem
@@ -3949,8 +3816,7 @@ If
 \begin_inset Formula $K\subset(M,g)$
 \end_inset
 
- is a locally convex bounded domain with smooth boundary,
- diameter 
+ is a locally convex bounded domain with smooth boundary, diameter 
 \begin_inset Formula $D$
 \end_inset
 
@@ -3958,14 +3824,11 @@ If
 \begin_inset Formula $Ric_{g}\geq0$
 \end_inset
 
-,
- then the Poincaré constant is at least 
+, then the Poincaré constant is at least 
 \begin_inset Formula $\frac{\pi^{2}}{4D^{2}}$
 \end_inset
 
-,
- i.e.,
- for any 
+, i.e., for any 
 \begin_inset Formula $g$
 \end_inset
 
@@ -3973,8 +3836,7 @@ If
 \begin_inset Formula $\int g=0$
 \end_inset
 
-,
- we have that
+, we have that
 \begin_inset Formula 
 \[
 \int\left|\nabla g(x)\right|^{2}dx\geq\frac{\pi^{2}}{4D^{2}}\int g(x)^{2}dx.
@@ -3990,17 +3852,16 @@ For the case of convex bodies in
 \begin_inset Formula $\Rn$
 \end_inset
 
-,
- this result is equivalent to Theorem 
+, this result is equivalent to Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "ISO2"
-nolink "false"
 
 \end_inset
 
  up to a constant.
- One benefit of localization is that it does not require a carefully crafted potential.
+ One benefit of localization is that it does not require a carefully crafted
+ potential.
  Localization has been extended to Riemannian setting 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -4027,15 +3888,12 @@ We begin the proof of Theorem
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "ISO2"
-nolink "false"
 
 \end_inset
 
 .
- For a proof by contradiction,
- let us assume the converse of its conclusion,
- i.e.,
- for some partition 
+ For a proof by contradiction, let us assume the converse of its conclusion,
+ i.e., for some partition 
 \begin_inset Formula $S_{1},S_{2},S_{3}$
 \end_inset
 
@@ -4047,8 +3905,7 @@ nolink "false"
 \begin_inset Formula $f$
 \end_inset
 
-,
- assume that
+, assume that
 \end_layout
 
 \begin_layout Standard
@@ -4173,8 +4030,7 @@ The points
 \begin_inset Formula $b$
 \end_inset
 
-,
- the integrals of 
+, the integrals of 
 \begin_inset Formula $g$
 \end_inset
 
@@ -4183,9 +4039,7 @@ The points
 \end_inset
 
  are positive.
- Also,
- without loss of generality,
- we can assume that 
+ Also, without loss of generality, we can assume that 
 \begin_inset Formula $a,b$
 \end_inset
 
@@ -4233,8 +4087,7 @@ Let us call this a bisecting halfspace.
 
 \end_inset
 
-Thus,
- either 
+Thus, either 
 \begin_inset Formula $H$
 \end_inset
 
@@ -4246,14 +4099,13 @@ Thus,
 \begin_inset Formula $h$
 \end_inset
 
-,
- reducing the domain of the integrals from 
+, reducing the domain of the integrals from 
 \begin_inset Formula $\R^{n}$
 \end_inset
 
  to a halfspace.
- If we could repeat this,
- we might hope to reduce the dimensionality of the domain.
+ If we could repeat this, we might hope to reduce the dimensionality of
+ the domain.
  For any 
 \begin_inset Formula $(n-2)$
 \end_inset
@@ -4262,14 +4114,12 @@ Thus,
 \begin_inset Formula $L$
 \end_inset
 
-,
- there is a bisecting halfspace containing 
+, there is a bisecting halfspace containing 
 \begin_inset Formula $L$
 \end_inset
 
  in its bounding hyperplane.
- To see this,
- let 
+ To see this, let 
 \begin_inset Formula $H$
 \end_inset
 
@@ -4291,8 +4141,7 @@ Thus,
 \begin_inset Formula $H'$
 \end_inset
 
-,
- the complementary halfspace of 
+, the complementary halfspace of 
 \begin_inset Formula $H$
 \end_inset
 
@@ -4310,8 +4159,8 @@ Thus,
 \end_inset
 
 .
- Since this is a continuous family,
- there must be a halfspace for which the function is zero.
+ Since this is a continuous family, there must be a halfspace for which
+ the function is zero.
 \end_layout
 
 \begin_layout Proof
@@ -4327,18 +4176,16 @@ If we take all
 \begin_inset Formula $r_{1},r_{2}$
 \end_inset
 
- are rational,
- then the intersection of all the corresponding bisecting halfspaces is a line or a point (by choosing only rational values for 
+ are rational, then the intersection of all the corresponding bisecting
+ halfspaces is a line or a point (by choosing only rational values for 
 \begin_inset Formula $x_{i}$
 \end_inset
 
-,
- we are considering a countable intersection).
- To see why it is a line or a point,
- assume we are left with a two or higher dimensional set.
- Since the intersection is convex,
- there is a point in its interior with at least two coordinates that are rational,
- say 
+, we are considering a countable intersection).
+ To see why it is a line or a point, assume we are left with a two or higher
+ dimensional set.
+ Since the intersection is convex, there is a point in its interior with
+ at least two coordinates that are rational, say 
 \begin_inset Formula $x_{1}=r_{1}$
 \end_inset
 
@@ -4355,18 +4202,17 @@ If we take all
 \begin_inset Formula $x_{1}=r_{1},\,x_{2}=r_{2}$
 \end_inset
 
- in its boundary,
- and so it properly partitions the current set.
+ in its boundary, and so it properly partitions the current set.
 \end_layout
 
 \begin_layout Proof
-Thus the limit of this bisection process is a function supported on an interval (which could be a single point),
- and since the function itself is a limit of convex sets (intersections of halfspaces) containing this interval,
+Thus the limit of this bisection process is a function supported on an interval
+ (which could be a single point), and since the function itself is a limit
+ of convex sets (intersections of halfspaces) containing this interval,
  it is a limit of a sequence of concave functions and is itself concave,
  with positive integrals.
  Simplifying further from concave to linear takes quite a bit of work.
- For the full proof,
- we refer the reader to 
+ For the full proof, we refer the reader to 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "LS93"
@@ -4382,12 +4228,10 @@ Going back to the proof sketch of Theorem
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "ISO2"
-nolink "false"
 
 \end_inset
 
-,
- we can apply the localization lemma to get an interval 
+, we can apply the localization lemma to get an interval 
 \begin_inset Formula $[a,b]$
 \end_inset
 
@@ -4408,8 +4252,7 @@ The functions
 \end_inset
 
  as we have defined them are not lower semi-continuous.
- However,
- this can be addressed by expanding 
+ However, this can be addressed by expanding 
 \begin_inset Formula $S_{1}$
 \end_inset
 
@@ -4417,20 +4260,17 @@ The functions
 \begin_inset Formula $S_{2}$
 \end_inset
 
- slightly so as to make them open sets,
- and making the support of 
+ slightly so as to make them open sets, and making the support of 
 \begin_inset Formula $f$
 \end_inset
 
  an open set.
- Since we are proving strict inequalities,
- these modifications do not affect the conclusion.
+ Since we are proving strict inequalities, these modifications do not affect
+ the conclusion.
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float figure
-placement document
-alignment document
 wide false
 sideways false
 status open
@@ -4469,8 +4309,7 @@ Let us partition
 \begin_inset Formula $Z_{1},Z_{2},Z_{3}$
 \end_inset
 
- as follows:
- 
+ as follows: 
 \begin_inset Formula 
 \[
 Z_{i}=\{t\in[0,1]\,:\,(1-t)a+tb\in S_{i}\}.
@@ -4487,7 +4326,6 @@ Note that for any pair of points
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "AFTERLEMMA"
-nolink "false"
 
 \end_inset
 
@@ -4515,14 +4353,12 @@ The functions
 \begin_inset Formula $\ell(\cdot)^{n-1}$
 \end_inset
 
- are both logconcave,
- so 
+ are both logconcave, so 
 \begin_inset Formula $F(t)=\ell(t)^{n-1}f((1-t)a+tb)$
 \end_inset
 
  is also logconcave.
- We get,
- 
+ We get, 
 \begin_inset Formula 
 \begin{equation}
 \int_{Z_{3}}F(t)\,dt<C\min\left\{ \int_{Z_{1}}F(t)\,dt,\int_{Z_{2}}F(t)\,dt\right\} .\label{FEQ}
@@ -4534,7 +4370,6 @@ Now consider what Theorem
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "ISO2"
-nolink "false"
 
 \end_inset
 
@@ -4550,8 +4385,7 @@ nolink "false"
 \begin_inset Formula $Z_{1},Z_{2},Z_{3}$
 \end_inset
 
-:
- 
+: 
 \begin_inset Formula 
 \begin{equation}
 \int_{Z_{3}}F(t)\,dt\geq2d(Z_{1},Z_{2})\min\left\{ \int_{Z_{1}}F(t)\,dt,\int_{Z_{2}}F(t)\,dt\right\} .\label{FEQ2}
@@ -4568,18 +4402,15 @@ We have substituted
 \end_inset
 
 .
- Also,
- 
+ Also, 
 \begin_inset Formula $2d(Z_{1},Z_{2})\geq2d(S_{1},S_{2})/D=C$
 \end_inset
 
 .
- Thus,
- Theorem 
+ Thus, Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "ISO2"
-nolink "false"
 
 \end_inset
 
@@ -4591,12 +4422,11 @@ nolink "false"
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "FEQ"
-nolink "false"
 
 \end_inset
 
- and to prove the theorem in general,
- and it suffices to prove it in the one-dimensional case.
+ and to prove the theorem in general, and it suffices to prove it in the
+ one-dimensional case.
  A combinatorial argument reduces this to the case when each 
 \begin_inset Formula $Z_{i}$
 \end_inset
@@ -4616,7 +4446,6 @@ nolink "false"
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "ISO2"
-nolink "false"
 
 \end_inset
 
@@ -4624,17 +4453,17 @@ nolink "false"
 \end_layout
 
 \begin_layout Standard
-The localization lemma has been used to prove a variety of isoperimetric inequalities.
+The localization lemma has been used to prove a variety of isoperimetric
+ inequalities.
  The next theorem is a refinement of Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "ISO2"
-nolink "false"
 
 \end_inset
 
-,
- replacing the diameter by the square-root of the expected squared distance of a random point from the mean.
+, replacing the diameter by the square-root of the expected squared distance
+ of a random point from the mean.
  For an isotropic distribution this is an improvement from 
 \begin_inset Formula $n$
 \end_inset
@@ -4644,7 +4473,8 @@ nolink "false"
 \end_inset
 
 .
- This theorem was proved by Kannan-Lovász-Simonovits in the same paper in which they proposed the KLS conjecture.
+ This theorem was proved by Kannan-Lovász-Simonovits in the same paper in
+ which they proposed the KLS conjecture.
  
 \end_layout
 
@@ -4684,8 +4514,7 @@ name "thm:KLS_thm"
 \begin_inset Formula $A$
 \end_inset
 
-,
- the KLS constant satisfies
+, the KLS constant satisfies
 \begin_inset Formula 
 \[
 \psi_{p}\gtrsim\frac{1}{\sqrt{\tr(A)}}.
@@ -4697,7 +4526,8 @@ name "thm:KLS_thm"
 \end_layout
 
 \begin_layout Standard
-The next theorem shows that the KLS conjecture is true for an important family of distributions.
+The next theorem shows that the KLS conjecture is true for an important
+ family of distributions.
  The proof is again by localization 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -4706,8 +4536,7 @@ literal "true"
 
 \end_inset
 
-,
- and the one-dimensional inequality obtained is a Brascamp-Lieb Theorem.
+, and the one-dimensional inequality obtained is a Brascamp-Lieb Theorem.
  We note that the same theorem can be obtained by other means 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -4759,8 +4588,7 @@ Let
 
 \end_inset
 
-In other words,
- the expansion of h is 
+In other words, the expansion of h is 
 \begin_inset Formula $\Omega(\norm{B^{-1}}_{\op}^{-\frac{1}{2}})$
 \end_inset
 
@@ -4822,13 +4650,11 @@ Let
 \begin_inset Formula $1$
 \end_inset
 
-,
- any 
+, any 
 \begin_inset Formula $\epsilon>0$
 \end_inset
 
-,
- and 
+, and 
 \begin_inset Formula $x$
 \end_inset
 
@@ -4836,8 +4662,7 @@ Let
 \begin_inset Formula $K$
 \end_inset
 
-,
- 
+, 
 \begin_inset Formula 
 \[
 \Pr_{x\sim K}\left(|q(x)|\le\epsilon\max_{K}|q(x)|\right)\lesssim\epsilon^{\frac{1}{d}}d
@@ -4860,7 +4685,6 @@ reference "lem:LOCALIZATION"
 plural "false"
 caps "false"
 noprefix "false"
-nolink "false"
 
 \end_inset
 
@@ -4902,8 +4726,7 @@ The first is in terms of single inequality on products of integrals.
 status open
 
 \begin_layout Plain Layout
-Localization:
- Product form]
+Localization: Product form]
 \end_layout
 
 \end_inset
@@ -4912,8 +4735,7 @@ Localization:
 \begin_inset Formula $f_{1},f_{2},f_{3},f_{4}:[a,b]\rightarrow\R_{+}$
 \end_inset
 
- be nonnegative,
- continuous functions.
+ be nonnegative, continuous functions.
  Then the following are equivalent:
 \end_layout
 
@@ -4942,8 +4764,7 @@ For every needle
 \begin_inset Formula $\R^{n}$
 \end_inset
 
-,
- we have
+, we have
 \begin_inset Formula 
 \[
 \int_{N}f_{1}\int_{N}f_{2}\le\int_{N}f_{3}\int_{N}f_{4}.
@@ -4955,16 +4776,14 @@ For every needle
 \end_layout
 
 \begin_layout Standard
-The next version is in terms of exponential needles,
- i.e.,
- we replace the linear functions obtained in the one-dimensional case in Lemma 
+The next version is in terms of exponential needles, i.e., we replace the
+ linear functions obtained in the one-dimensional case in Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:LOCALIZATION"
 plural "false"
 caps "false"
 noprefix "false"
-nolink "false"
 
 \end_inset
 
@@ -4977,8 +4796,7 @@ nolink "false"
 status open
 
 \begin_layout Plain Layout
-Localization:
- Exponential Needles]
+Localization: Exponential Needles]
 \end_layout
 
 \end_inset
@@ -4994,8 +4812,7 @@ name "lem:localization_exp_needles"
 \begin_inset Formula $f_{1},f_{2},f_{3},f_{4}:[a,b]\rightarrow\R_{+}$
 \end_inset
 
- be nonnegative,
- continuous functions.
+ be nonnegative, continuous functions.
  Then the following are equivalent:
 \end_layout
 
@@ -5004,8 +4821,7 @@ For every logconcave function
 \begin_inset Formula $F:\R\rightarrow\R_{+}$
 \end_inset
 
-,
- we have
+, we have
 \begin_inset Formula 
 \[
 \int_{a}^{b}F(x)f_{1}(x)\,dx\int_{a}^{b}F(x)f_{2}(x)\,dx\le\int_{a}^{b}F(x)f_{3}(x)\,dx\int_{a}^{b}F(x)f_{4}(x)\,dx.
@@ -5025,8 +4841,7 @@ For every subinterval
 \begin_inset Formula $\gamma\in\R$
 \end_inset
 
-,
- we have 
+, we have 
 \begin_inset Formula 
 \[
 \int_{a'}^{b'}e^{\gamma t}f_{1}(t)\,dt\int_{a'}^{b'}e^{\gamma t}f_{2}(t)\,dt\le\int_{a'}^{b'}e^{\gamma t}f_{3}(t)\,dt\int_{a'}^{b'}e^{\gamma t}f_{4}(t)\,dt.
@@ -5038,14 +4853,13 @@ For every subinterval
 \end_layout
 
 \begin_layout Remark
-We can also write the exponential needle version of localization in terms of two inequalities or one equality and one inequality:
- 
+We can also write the exponential needle version of localization in terms
+ of two inequalities or one equality and one inequality: 
 \family roman
 \series medium
 \shape up
 \size normal
 \emph off
-\nospellcheck off
 \bar no
 \strikeout off
 \xout off
@@ -5063,7 +4877,6 @@ For every logconcave
 \shape default
 \size default
 \emph default
-\nospellcheck default
 \bar default
 \strikeout default
 \xout default
@@ -5085,7 +4898,6 @@ For every logconcave
 \shape up
 \size normal
 \emph off
-\nospellcheck off
 \bar no
 \strikeout off
 \xout off
@@ -5097,13 +4909,11 @@ iff for every subinterval
 \begin_inset Formula $\ensuremath{[a',b']\subseteq[a,b]}$
 \end_inset
 
-,
- and every 
+, and every 
 \begin_inset Formula $\gamma\in\R$
 \end_inset
 
-,
- 
+, 
 \begin_inset Formula 
 \[
 \int_{a'}^{b'}e^{\gamma t}f_{1}=0,\ \int_{a'}^{b'}e^{\gamma t}f_{2}>0.
@@ -5115,7 +4925,8 @@ iff for every subinterval
 \end_layout
 
 \begin_layout Remark
-We conclude this section with a nice interpretation of the localization lemma by Fradelizi and Guedon.
+We conclude this section with a nice interpretation of the localization
+ lemma by Fradelizi and Guedon.
  They also give a version that extends localization to multiple inequalities.
 \end_layout
 
@@ -5168,7 +4979,7 @@ Let
 
 .
  The set of extreme points of 
-\begin_inset Formula $\text{conv}P_{f}$
+\begin_inset Formula $\text{conv}\,P_{f}$
 \end_inset
 
  is exactly:
@@ -5184,8 +4995,7 @@ the Dirac measure at points
 \begin_inset Formula $f(x)\geq0$
 \end_inset
 
-,
- or
+, or
 \end_layout
 
 \begin_layout Enumerate
