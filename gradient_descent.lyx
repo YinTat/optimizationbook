@@ -3374,11 +3374,15 @@ For matrices
 \end_inset
 
  to solve the problem with the splitting 
-\begin_inset Formula $g(x)=2A^{\top}(Ax-b)+\delta_{\|x\|_{0}\leq k}$
+\begin_inset Formula $g(x)=\norm{Ax-b}_{2}^{2}+\langle2A^{\top}(Ax-b),y-x\rangle+\delta_{\|y\|_{0}\leq k}$
 \end_inset
 
  and 
+<<<<<<< Updated upstream
 \begin_inset Formula $h(x)=\|x\|_{2}^{2}$
+=======
+\begin_inset Formula $h(y)=\|y-x\|_{2}^{2}$
+>>>>>>> Stashed changes
 \end_inset
 
 .
