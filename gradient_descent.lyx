@@ -471,7 +471,7 @@ Stochastic Matrix Approximation:
 \end_inset
 
  and 
-\begin_inset Formula $\E (B)\succeq\frac{1}{2}A$
+\begin_inset Formula $\E(B)\succeq\frac{1}{2}A$
 \end_inset
 
  
@@ -1179,8 +1179,7 @@ Prove that if
 \end_layout
 
 \begin_layout Standard
-With the equivalent definitions in Theorem
- 
+With the equivalent definitions in Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:L_equ_def"
@@ -1730,8 +1729,7 @@ Now,
 \end_inset
 
 Also,
- by Theorem
- 
+ by Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:L_equ_def"
@@ -3374,19 +3372,12 @@ For matrices
 \end_inset
 
  to solve the problem with the splitting 
-\begin_inset Formula $g(x)=\norm{Ax-b}_{2}^{2}+\langle2A^{\top}(Ax-b),y-x\rangle+\delta_{\|y\|_{0}\leq k}$
+\begin_inset Formula $g(y)=\norm{Ax-b}_{2}^{2}+\langle2A^{\top}(Ax-b),y-x\rangle+\delta_{\|y\|_{0}\leq k}$
 \end_inset
 
  and 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-\begin_inset Formula $h(x)=\|x\|_{2}^{2}$
-=======
 \begin_inset Formula $h(y)=\|y-x\|_{2}^{2}$
->>>>>>> Stashed changes
-=======
-\begin_inset Formula $h(y)=\|y-x\|_{2}^{2}$
->>>>>>> Stashed changes
+
 \end_inset
 
 .
