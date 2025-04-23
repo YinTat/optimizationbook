@@ -3379,7 +3379,11 @@ For matrices
 
  and 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 \begin_inset Formula $h(x)=\|x\|_{2}^{2}$
+=======
+\begin_inset Formula $h(y)=\|y-x\|_{2}^{2}$
+>>>>>>> Stashed changes
 =======
 \begin_inset Formula $h(y)=\|y-x\|_{2}^{2}$
 >>>>>>> Stashed changes
