@@ -1290,7 +1290,7 @@ nolink "false"
 \end_layout
 
 \begin_layout Exercise
-Show that any convex function is Lipschitz over any compact subset of its domain.
+Show that any continuous convex function is Lipschitz over any compact subset of its domain.
 \end_layout
 
 \begin_layout Subsection
@@ -1300,7 +1300,11 @@ Analysis for general functions
 \begin_layout Standard
 Gradient descent works for both convex and non-convex functions.
  For non-convex function,
- we can only find a point with small gradient (called an approximate saddle point).
+ we can only find a point with small gradient (called an 
+\emph on
+approximate stationary
+\emph default
+ point).
 \end_layout
 
 \begin_layout Theorem
