@@ -374,7 +374,7 @@ where
 \end_inset
 
  has volume 
-\begin_inset Formula $\frac{1}{\epsilon^{n}}$
+\begin_inset Formula $\epsilon^{n}$
 \end_inset
 
  times the volume of the unit ball,
@@ -1814,7 +1814,7 @@ Consider the problem of predicting the likelihood of getting diabetes in the fut
 
 ,
  we have 
-\begin_inset Formula $\langle x^{i},\theta\rangle<0$
+\begin_inset Formula $\langle x_{i},\theta\rangle<0$
 \end_inset
 
  if 
@@ -1822,7 +1822,7 @@ Consider the problem of predicting the likelihood of getting diabetes in the fut
 \end_inset
 
  and 
-\begin_inset Formula $\langle x^{i},\theta\rangle>0$
+\begin_inset Formula $\langle x_{i},\theta\rangle>0$
 \end_inset
 
  if 
@@ -1837,7 +1837,7 @@ Consider the problem of predicting the likelihood of getting diabetes in the fut
  is
 \begin_inset Formula 
 \[
-\frac{1}{n}\sum_{i=1}^{n}1_{y_{i}\langle x^{i},\theta\rangle>0}.
+\frac{1}{n}\sum_{i=1}^{n}1_{y_{i}\langle x_{i},\theta\rangle>0}.
 \]
 
 \end_inset
@@ -1855,7 +1855,7 @@ This function is not convex in
 )
 \begin_inset Formula 
 \begin{equation}
-R(\theta)=\frac{1}{n}\sum_{i=1}^{n}f(y_{i}\langle x^{i},\theta\rangle)+\lambda\|\theta\|_{1}\label{eq:logistic_regression}
+R(\theta)=\frac{1}{n}\sum_{i=1}^{n}f(y_{i}\langle x_{i},\theta\rangle)+\lambda\|\theta\|_{1}\label{eq:logistic_regression}
 \end{equation}
 
 \end_inset
@@ -2079,7 +2079,7 @@ The
 epigraph
 \emph default
  of 
-\begin_inset Formula $f:\Rn\rightarrow\R$
+\begin_inset Formula $f:\Rn\rightarrow\R\cup\{+\infty\}$
 \end_inset
 
  is 
@@ -2430,7 +2430,7 @@ Show that the intersection of convex sets is convex;
 
 ,
  the function 
-\begin_inset Formula $h(x)=\max f(x),g(x)$
+\begin_inset Formula $h(x)=\max \{f(x),g(x)\}$
 \end_inset
 
  is also convex.
@@ -2486,7 +2486,7 @@ To show this,
  and to define a suitable one-dimensional function.
 \end_layout
 
-\begin_layout Theorem
+\begin_layout Lemma
 \begin_inset CommandInset label
 LatexCommand label
 name "lem:second_order"
@@ -2860,7 +2860,7 @@ We write
 \end_inset
 
  where 
-\begin_inset Formula $R_{1}(\theta)=\frac{1}{n}\sum_{i=1}^{n}f(y_{i}\cdot\left\langle x^{i},\theta\right\rangle )$
+\begin_inset Formula $R_{1}(\theta)=\frac{1}{n}\sum_{i=1}^{n}f(y_{i}\cdot\left\langle x_{i},\theta\right\rangle )$
 \end_inset
 
  and 
@@ -2896,24 +2896,24 @@ nolink "false"
  Note that
 \begin_inset Formula 
 \begin{align*}
-\nabla R_{1}(\theta) & =\frac{1}{n}\sum_{i=1}^{n}f'(y^{i}\left\langle x^{i},\theta\right\rangle )y^{i}x^{i},\\
-\nabla^{2}R_{1}(\theta) & =\frac{1}{n}\sum_{i=1}^{n}f''(y^{i}\left\langle x^{i},\theta\right\rangle )x^{i}(x^{i})^{\top}
+\nabla R_{1}(\theta) & =\frac{1}{n}\sum_{i=1}^{n}f'(y_{i}\left\langle x_{i},\theta\right\rangle )y_{i}x_{i},\\
+\nabla^{2}R_{1}(\theta) & =\frac{1}{n}\sum_{i=1}^{n}f''(y_{i}\left\langle x_{i},\theta\right\rangle )x_{i}(x_{i})^{\top}
 \end{align*}
 
 \end_inset
 
 where we used 
-\begin_inset Formula $(y^{i})^{2}=1$
+\begin_inset Formula $(y_{i})^{2}=1$
 \end_inset
 
 .
  Since 
-\begin_inset Formula $x^{i}(x^{i})^{\top}\succeq0$
+\begin_inset Formula $x_{i}(x_{i})^{\top}\succeq0$
 \end_inset
 
 ,
  it suffices to prove that 
-\begin_inset Formula $f''(y^{i}\left\langle x^{i},\theta\right\rangle )\geq0$
+\begin_inset Formula $f''(y_{i}\left\langle x_{i},\theta\right\rangle )\geq0$
 \end_inset
 
 .
@@ -2992,7 +2992,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Sub-gradient
+Subgradient
 \end_layout
 
 \end_inset
@@ -3186,7 +3186,7 @@ Fix
 \end_inset
 
  be functions satisfying 
-\begin_inset Formula $h(\lambda x+(1-\lambda)y)\ge f(x)^{\lambda}g(x)^{1-\lambda}$
+\begin_inset Formula $h(\lambda x+(1-\lambda)y)\ge f(x)^{\lambda}g(y)^{1-\lambda}$
 \end_inset
 
  for all 
@@ -3411,7 +3411,7 @@ When we recover a signal,
 
 .
  One way to do this is to sample multiple 
-\begin_inset Formula $\theta\varpropto\P(\theta|y)$
+\begin_inset Formula $\theta\sim\P(\theta|y)$
 \end_inset
 
  and compute the empirical variance or other statistics.

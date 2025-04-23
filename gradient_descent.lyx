@@ -436,7 +436,7 @@ Mixed
 
  Approximation:
  
-\begin_inset Formula $f(y)\approx f(x)+\left\langle \nabla f(x),y-x\right\rangle +\sum_{i=1}^{n}\alpha_{i}(y_{i}-x_{i})^{2}+\beta_{i}(y_{i}-x_{i})^{p}$
+\begin_inset Formula $f(y)\approx f(x)+\left\langle \nabla f(x),y-x\right\rangle +\sum_{i=1}^{n}(\alpha_{i}(y_{i}-x_{i})^{2}+\beta_{i}(y_{i}-x_{i})^{p})$
 \end_inset
 
  
@@ -471,7 +471,7 @@ Stochastic Matrix Approximation:
 \end_inset
 
  and 
-\begin_inset Formula $\E B\succeq\frac{1}{2}A$
+\begin_inset Formula $\E (B)\succeq\frac{1}{2}A$
 \end_inset
 
  
@@ -1077,7 +1077,7 @@ Since
  we have
 \begin_inset Formula 
 \[
-\left|(y-x)^{\top}\nabla^{2}f(x+t(y-x))(y-x)\right|\le L\|y-x\|^{2}.
+\left|(y-x)^{\top}\nabla^{2}f(x+t(y-x))(y-x)\right|\le L\|y-x\|_{2}^{2}.
 \]
 
 \end_inset
@@ -1088,7 +1088,7 @@ This gives (3).
 \begin_layout Proof
 Suppose (3) holds,
  then 
-\begin_inset Formula $g(x)=f(x)+\frac{L}{2}\|x\|^{2}$
+\begin_inset Formula $g(x)=f(x)+\frac{L}{2}\|x\|_{2}^{2}$
 \end_inset
 
  satisfies 
@@ -1125,7 +1125,7 @@ nolink "false"
 .
  Similarly,
  by taking 
-\begin_inset Formula $g(x)=\frac{L}{2}\|x\|^{2}-f(x)$
+\begin_inset Formula $g(x)=\frac{L}{2}\|x\|_{2}^{2}-f(x)$
 \end_inset
 
 ,
@@ -1179,7 +1179,7 @@ Prove that if
 \end_layout
 
 \begin_layout Standard
-With the equivalent definitions in Thm.
+With the equivalent definitions in Theorem
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1730,7 +1730,7 @@ Now,
 \end_inset
 
 Also,
- by Thm.
+ by Theorem
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1843,8 +1843,8 @@ We compute the distance to an optimal point as follows,
 \begin_inset Formula 
 \begin{align*}
 \|x^{(k+1)}-x^{*}\|_{2}^{2} & =\|x^{(k)}-x^{*}-h\nabla f(x^{(k)})\|_{2}^{2}\\
- & =\|x^{(k)}-x^{*}\|_{2}^{2}-2h\left\langle \nabla f(x^{(k)}),x^{(k)}-x^{*}\right\rangle +h^{2}\|\nabla f(x^{(k)})\|^{2}\\
- & =\|x^{(k)}-x^{*}\|_{2}^{2}-2h\left\langle \nabla f(x^{(k)})-\nabla f(x^{*}),x^{(k)}-x^{*}\right\rangle +h^{2}\|\nabla f(x^{(k)})-\nabla f(x^{*})\|^{2}.
+ & =\|x^{(k)}-x^{*}\|_{2}^{2}-2h\left\langle \nabla f(x^{(k)}),x^{(k)}-x^{*}\right\rangle +h^{2}\|\nabla f(x^{(k)})\|_{2}^{2}\\
+ & =\|x^{(k)}-x^{*}\|_{2}^{2}-2h\left\langle \nabla f(x^{(k)})-\nabla f(x^{*}),x^{(k)}-x^{*}\right\rangle +h^{2}\|\nabla f(x^{(k)})-\nabla f(x^{*})\|_{2}^{2}.
 \end{align*}
 
 \end_inset
@@ -1881,7 +1881,7 @@ with
 \begin{align*}
 \left\langle \nabla f(x^{(k)})-\nabla f(x^{*}),x^{(k)}-x^{*}\right\rangle  & =(x^{(k)}-x^{*})^{\top}H(x^{(k)}-x^{*})\\
  & \geq\frac{1}{L}(x^{(k)}-x^{*})^{\top}H^{2}(x^{(k)}-x^{*})\\
- & =\frac{1}{L}\|\nabla f(x^{(k)})-\nabla f(x^{*})\|^{2}.
+ & =\frac{1}{L}\|\nabla f(x^{(k)})-\nabla f(x^{*})\|_{2}^{2}.
 \end{align*}
 
 \end_inset
@@ -1890,7 +1890,7 @@ Hence,
  we have
 \begin_inset Formula 
 \begin{align*}
-\|x^{(k+1)}-x^{*}\|_{2}^{2} & \leq\|x^{(k)}-x^{*}\|_{2}^{2}-(\frac{2h}{L}-h^{2})\|\nabla f(x^{(k)})-\nabla f(x^{*})\|^{2}\\
+\|x^{(k+1)}-x^{*}\|_{2}^{2} & \leq\|x^{(k)}-x^{*}\|_{2}^{2}-(\frac{2h}{L}-h^{2})\|\nabla f(x^{(k)})-\nabla f(x^{*})\|_{2}^{2}\\
  & \leq\|x^{(k)}-x^{*}\|_{2}^{2}.
 \end{align*}
 
@@ -2142,7 +2142,7 @@ nolink "false"
 \end_inset
 
  on the function 
-\begin_inset Formula $g(x)=f(x)-\frac{\mu}{2}\|x\|^{2}$
+\begin_inset Formula $g(x)=f(x)-\frac{\mu}{2}\|x\|_{2}^{2}$
 \end_inset
 
 .
@@ -2181,7 +2181,7 @@ Let
 we have
 \begin_inset Formula 
 \[
-\norm{\nabla f(x)}^{2}\ge2\mu\left(f(x)-f(y)\right).
+\norm{\nabla f(x)}_{2}^{2}\ge2\mu\left(f(x)-f(y)\right).
 \]
 
 \end_inset
@@ -2198,7 +2198,7 @@ By the definition of
  we have 
 \begin_inset Formula 
 \[
-f(y)\ge f(x)+\langle\nabla f(x),y-x\rangle+\frac{\mu}{2}\norm{x-y}^{2}.
+f(y)\ge f(x)+\langle\nabla f(x),y-x\rangle+\frac{\mu}{2}\norm{x-y}_{2}^{2}.
 \]
 
 \end_inset
@@ -2211,7 +2211,7 @@ Rearranging,
  we have 
 \begin_inset Formula 
 \[
-f(x)-f(y)\le\langle\nabla f(x),x-y\rangle-\frac{\mu}{2}\norm{x-y}^{2}\le\max_{\Delta}\nabla f(x)^{\top}\Delta-\frac{\mu}{2}\norm{\Delta}^{2}=\frac{1}{2\mu}\norm{\nabla f(x)}^{2}.
+f(x)-f(y)\le\langle\nabla f(x),x-y\rangle-\frac{\mu}{2}\norm{x-y}_{2}^{2}\le\max_{\Delta}\nabla f(x)^{\top}\Delta-\frac{\mu}{2}\norm{\Delta}_{2}^{2}=\frac{1}{2\mu}\norm{\nabla f(x)}_{2}^{2}.
 \]
 
 \end_inset
@@ -2420,7 +2420,7 @@ Suppose
 \end_inset
 
  satisfies 
-\begin_inset Formula $\norm{\nabla f(x)}_{2}^{2}\ge\mu\left(f(x)-f(x^{*})\right).$
+\begin_inset Formula $\norm{\nabla f(x)}_{2}^{2}\ge2\mu\left(f(x)-f(x^{*})\right).$
 \end_inset
 
  Derive a bound similar to Theorem 
@@ -3118,7 +3118,7 @@ nolink "false"
 \end_layout
 
 \begin_layout Exercise
-Show that the second condition in the definition of 
+Show that the third condition in the definition of 
 \begin_inset Formula $\alpha$
 \end_inset
 
@@ -3378,7 +3378,7 @@ For matrices
 \end_inset
 
  and 
-\begin_inset Formula $h(x)=\|x\|^{2}$
+\begin_inset Formula $h(x)=\|x\|_{2}^{2}$
 \end_inset
 
 .
