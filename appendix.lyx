@@ -318,7 +318,7 @@ Divergence and Integration by Parts
 
 \begin_layout Standard
 The divergence (operator) of a function 
-\begin_inset Formula $\phi:\R^{n}\rightarrow\R$
+\begin_inset Formula $f:\R^{n}\rightarrow\R$
 \end_inset
 
  is given by

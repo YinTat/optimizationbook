@@ -487,15 +487,15 @@ nolink "false"
  and 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "lem:prod_var"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
+reference "lem:chebychev_ratio"
 
 \end_inset
 
 ,
+ for 
+\begin_inset Formula $N\geq100m/\varepsilon^{2}$
+\end_inset
+
  we have 
 \begin_inset Formula 
 \begin{align*}
@@ -506,7 +506,7 @@ nolink "false"
 
 \end_inset
 
-Now the result follows from Chebychev's inequality.
+Now the result follows from Chebyshev's inequality.
  
 \end_layout
 
@@ -709,7 +709,7 @@ well-rounded
 \end_inset
 
 .
- Connecting improvements in the Cheeger constant directly to the complexity of volume computation was an open question for a couple of decades.
+ Connecting improvements in the Cheeger constant (which is the minimum isoperimetric ratio over all subsets) directly to the complexity of volume computation was an open question for a couple of decades.
  To apply improvements in the Cheeger constant,
  one would need to replace well-roundedness with (near-)isotropy and maintain that.
  However,
