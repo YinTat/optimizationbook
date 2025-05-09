@@ -175,7 +175,7 @@ Integration
 \begin_inset Formula $f(x_{0})\ge\beta,$
 \end_inset
 
-numbers 
+ numbers 
 \begin_inset Formula $r,R>0$
 \end_inset
 
@@ -981,7 +981,7 @@ uniformly sample
 
 \begin_layout Enumerate
 Set 
-\begin_inset Formula $Y_{i}=|{j:X^{(j)}\in K_{i}}|/N$
+\begin_inset Formula $Y_{i}=|{\{j:X^{(j)}\in K_{i}\}}|/N$
 \end_inset
 
 .
@@ -1237,12 +1237,16 @@ nolink "false"
 
 \end_inset
 
-for 
+where we used that 
+\begin_inset Formula $(1+\frac{1}{N})^{m}-1\leq\frac{2m}{N}$
+\end_inset
+
+ for 
 \begin_inset Formula $N\ge8m/\varepsilon^{2}$
 \end_inset
 
 .
- The theorem follows using Chebychev's inequality.
+ The theorem follows using Chebyshev's inequality.
 \end_layout
 
 \begin_layout Standard
@@ -1347,7 +1351,7 @@ The same high-level algorithm can be used for optimization,
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\int_{\R^{n}}f=\int f_{0}\frac{\int f_{i}}{\int f_{0}}\frac{\int f_{2}}{\int f_{3}}\ldots\frac{\int f_{m}}{\int f_{m-1}}
+\int_{\R^{n}}f=\int f_{0}\frac{\int f_{1}}{\int f_{0}}\frac{\int f_{2}}{\int f_{3}}\cdots\frac{\int f_{m}}{\int f_{m-1}}
 \]
 
 \end_inset
@@ -1837,7 +1841,18 @@ F\left(\frac{x+y}{2},\frac{t+s}{2}\right) & =f\left(\frac{x+y}{t+s}\right)^{\fra
 \end_layout
 
 \begin_layout Proof
-Now by the Prekopa-Leindler Theorem,
+Now by the Prekopa-Leindler Theorem 
+\lang english
+(see
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:marginal"
+
+\end_inset
+
+
+\lang american
+),
  the marginal of 
 \begin_inset Formula $F$
 \end_inset
@@ -1857,6 +1872,49 @@ Now by the Prekopa-Leindler Theorem,
 
 where we made the substitution 
 \begin_inset Formula $y=x/t$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Note that in the simulated annealing algorithm we choose 
+\begin_inset Formula $\frac{a_{\{i+1\}}}{a_{i}}=(1+\frac{1}{\sqrt{{n\}}}})$
+\end_inset
+
+ since this guarantees that the distribution with density proportional to
+\lang english
+ 
+\begin_inset Formula $f_{i}$
+\end_inset
+
+ has 
+\begin_inset Formula $\chi^{2}$
+\end_inset
+
+-distance 
+\begin_inset Formula $O(1)$
+\end_inset
+
+ to the distribution with density proportional to 
+\begin_inset Formula $f_{i+1}$
+\end_inset
+
+.
+ This will be useful later in bounding 
+\begin_inset Formula $\text{{var}(Y)/\ensuremath{\mathbb{E}[Y]^{2}}}$
+\end_inset
+
+ of the random variable given by 
+\begin_inset Formula $Y=f_{i+1}(X)/f_{i}(X)$
+\end_inset
+
+ for a random sample 
+\begin_inset Formula $X$
+\end_inset
+
+ drawn from the distribution with density proportional to 
+\begin_inset Formula $f_{i}$
 \end_inset
 
 .
