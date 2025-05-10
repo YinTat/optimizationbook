@@ -796,7 +796,7 @@ Going forward,
 
 ,
  and focus on algorithms with constant failure probability.
- 
+ We will now show an algorithm for volume computation (as a first attempt) whose analysis yields a suboptimal bound on the sample complexity.
 \end_layout
 
 \begin_layout Exercise

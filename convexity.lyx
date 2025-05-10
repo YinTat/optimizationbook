@@ -1384,6 +1384,11 @@ for small enough
 \begin_inset Formula $\varepsilon$
 \end_inset
 
+,
+ where we use Taylor approximation and the third term follows as a result of the boundedness of the Hessian of 
+\begin_inset Formula $f(x)$
+\end_inset
+
 .
  Hence,
  such a point cannot be the minimizer.
@@ -2430,7 +2435,7 @@ Show that the intersection of convex sets is convex;
 
 ,
  the function 
-\begin_inset Formula $h(x)=\max \{f(x),g(x)\}$
+\begin_inset Formula $h(x)=\max\{f(x),g(x)\}$
 \end_inset
 
  is also convex.
@@ -3140,7 +3145,7 @@ Dinghas;
 
 \end_inset
 
-
+ 
 \begin_inset CommandInset label
 LatexCommand label
 name "lem:marginal"
