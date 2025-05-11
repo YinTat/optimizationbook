@@ -132,13 +132,13 @@ For the usual Euclidean norm,
 
 \begin_layout Standard
 It is often useful to consider affine transformations,
- and the norms they induce,
+ and the (semi)norms they induce,
  e.g.,
  for a PSD matrix 
 \begin_inset Formula $A$
 \end_inset
 
-,
+ (would be an induced norm in the case when A is PD),
  we can define the associated norm as follows:
 \begin_inset Formula 
 \[
