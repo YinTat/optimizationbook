@@ -629,7 +629,7 @@ scriptsize $OPT(K) =
 \backslash
 partial {
 \backslash
-delta_K}*$};
+delta_K^*}$};
 \end_layout
 
 \begin_layout Plain Layout
@@ -642,7 +642,7 @@ node [block,
 \backslash
 scriptsize $VAL(K) = {
 \backslash
-delta_K}*$};
+delta_K^*}$};
 \end_layout
 
 \begin_layout Plain Layout
@@ -3670,7 +3670,7 @@ name "sec:From-Membership-to"
 
 \begin_layout Standard
 In this section,
- we show that how to implement a separation oracle for a convex set using a nearly linear number of queries to a membership oracle.
+ we show how to implement a separation oracle for a convex set using a nearly linear number of queries to a membership oracle.
  We divide this into two steps.
  In the first step (Algorithm
 \begin_inset space ~
