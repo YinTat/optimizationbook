@@ -771,7 +771,7 @@ Hence,
  and that
 \begin_inset Formula 
 \[
-x^{(k+1)}-\lambda_{1}\leq(1-\frac{1}{n})(x^{(k)}-\lambda_{1})
+x^{(k+1)}-\lambda_{1}\leq\left(1-\frac{1}{n}\right)(x^{(k)}-\lambda_{1})
 \]
 
 \end_inset
