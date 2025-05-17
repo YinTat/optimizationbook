@@ -2095,8 +2095,13 @@ Let
 \end_inset
 
 .
+ Note that the conclusion of the theorem is trivial if 
+\begin_inset Formula $\mathcal{V}(E^{(k)})\ge\mathcal{V}(\Omega)$
+\end_inset
+
+.
  For any 
-\begin_inset Formula $\alpha>\frac{\mathcal{V}(E^{(k)})}{\mathcal{V}(\Omega)}$
+\begin_inset Formula $1\ge\alpha>\frac{\mathcal{V}(E^{(k)})}{\mathcal{V}(\Omega)}$
 \end_inset
 
  and 

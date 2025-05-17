@@ -450,14 +450,6 @@ LatexCommand tableofcontents
 status open
 
 \begin_layout Itemize
-Move to github (done)
-\end_layout
-
-\begin_layout Itemize
-Make todo (here)
-\end_layout
-
-\begin_layout Itemize
 Latex
 \end_layout
 
