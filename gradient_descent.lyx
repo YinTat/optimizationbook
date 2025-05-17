@@ -453,7 +453,7 @@ Cite
 \end_layout
 
 \begin_layout Standard
-Here are other approximation not covered:
+Here are other approximations not covered:
 \end_layout
 
 \begin_layout Itemize
@@ -1540,7 +1540,7 @@ Assuming the function is convex,
 
  is small,
  convexity shows that 
-\begin_inset Formula $f(x)-f^{*}$
+\begin_inset Formula $f(x)-f(x^{*})$
 \end_inset
 
  is small (Theorem 
@@ -1607,7 +1607,7 @@ nolink "false"
 \end_inset
 
  is affected by 
-\begin_inset Formula $f(x)-f^{*}$
+\begin_inset Formula $f(x)-f(x^{*})$
 \end_inset
 
  rather than 
@@ -1773,7 +1773,7 @@ Therefore,
 \begin_layout Standard
 This style of proof is typical in optimization.
  It shows that when the gradient is large,
- then we make large progress and when the gradient is small,
+ we make large progress and when the gradient is small,
  we are close to optimal.
  
 \end_layout
@@ -1933,7 +1933,7 @@ nolink "false"
 
  iterations.
  Compare to the bound 
-\begin_inset Formula $\frac{2L}{\epsilon^{2}}\left(f(x^{(0)})-f^{*}\right)$
+\begin_inset Formula $\frac{2L}{\epsilon^{2}}\left(f(x^{(0)})-f(x^{*})\right)$
 \end_inset
 
  in Theorem 
@@ -1956,7 +1956,7 @@ nolink "false"
 \end_inset
 
  while the other is in terms of 
-\begin_inset Formula $f(x)-f^{*}$
+\begin_inset Formula $f(x)-f(x^{*})$
 \end_inset
 
 .
@@ -1966,7 +1966,7 @@ nolink "false"
 
 ,
  we have 
-\begin_inset Formula $f(x)-f^{*}=\|\nabla f(x)\|_{2}^{2}$
+\begin_inset Formula $f(x)-f(x^{*})=\|\nabla f(x)\|_{2}^{2}$
 \end_inset
 
  and hence both have the same dependence on 
@@ -2307,8 +2307,8 @@ nolink "false"
  shows that
 \begin_inset Formula 
 \begin{align}
-f(x^{(k+1)})-f^{*} & \leq f(x^{(k)})-f^{*}-\frac{1}{2L}\|\nabla f(x^{(k)})\|_{2}^{2}\label{eq:strong_convex_progress}\\
- & \le f(x^{(k)})-f^{*}-\frac{\mu}{L}\left(f(x^{(k)})-f^{*}\right)\\
+f(x^{(k+1)})-f(x^{*}) & \leq f(x^{(k)})-f(x^{*})-\frac{1}{2L}\|\nabla f(x^{(k)})\|_{2}^{2}\label{eq:strong_convex_progress}\\
+ & \le f(x^{(k)})-f(x^{*})-\frac{\mu}{L}\left(f(x^{(k)})-f^{*}\right)\\
  & =\left(1-\frac{\mu}{L}\right)\left(f(x^{(k)})-f^{*}\right)
 \end{align}
 
@@ -2447,7 +2447,8 @@ nolink "false"
 \end_layout
 
 \begin_layout Exercise
-Give examples of nonconvex functions satisfying the above conditions.
+For each of the above conditions,
+ give an example of a nonconvex function that satisfies it.
  (Note:
  convex functions satisfy the first with 
 \begin_inset Formula $\alpha=1$
@@ -3381,7 +3382,6 @@ For matrices
 
  and 
 \begin_inset Formula $h(y)=\|y-x\|_{2}^{2}$
-
 \end_inset
 
 .
@@ -3468,7 +3468,7 @@ Without the strong convexity assumption,
 \begin_inset Formula $d$
 \end_inset
 
- on an unit ball 
+ on a unit ball 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "manselli1991maximum"

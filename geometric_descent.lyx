@@ -1,16 +1,16 @@
-#LyX 2.3 created this file. For more info see http://www.lyx.org/
-\lyxformat 544
+#LyX 2.4 created this file. For more info see https://www.lyx.org/
+\lyxformat 620
 \begin_document
 \begin_header
 \save_transient_properties true
 \origin unavailable
 \textclass optbook
 \use_default_options true
-\maintain_unincluded_children false
+\maintain_unincluded_children no
 \language english
 \language_package default
-\inputencoding auto
-\fontencoding global
+\inputencoding auto-legacy
+\fontencoding auto
 \font_roman "default" "default"
 \font_sans "default" "default"
 \font_typewriter "default" "default"
@@ -18,7 +18,9 @@
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
-\font_osf false
+\font_roman_osf false
+\font_sans_osf false
+\font_typewriter_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
 \use_microtype false
@@ -50,7 +52,9 @@
 \suppress_date false
 \justification true
 \use_refstyle 1
+\use_formatted_ref 0
 \use_minted 0
+\use_lineno 0
 \index Index
 \shortcut idx
 \color #008000
@@ -66,11 +70,16 @@
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
+\tablestyle default
 \tracking_changes false
 \output_changes false
+\change_bars false
+\postpone_fragile_content false
 \html_math_output 0
 \html_css_as_file 0
 \html_be_strict false
+\docbook_table_output 0
+\docbook_mathml_prefix 1
 \end_header
 
 \begin_body
@@ -94,10 +103,12 @@ In Section
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:Gradient-Descent"
+nolink "false"
 
 \end_inset
 
-, we proved that gradient descent converges at the rate 
+,
+ we proved that gradient descent converges at the rate 
 \begin_inset Formula $(1-\frac{\mu}{L})^{k}$
 \end_inset
 
@@ -110,12 +121,13 @@ reference "sec:Gradient-Descent"
 \end_inset
 
 .
- Hence, if 
+ Hence,
+ if 
 \begin_inset Formula $\frac{L}{\mu}$
 \end_inset
 
- is not too large, this rate of decrease of the function value can be much
- better than the 
+ is not too large,
+ this rate of decrease of the function value can be much better than the 
 \begin_inset Formula $\left(1-\frac{1}{n^{2}}\right)^{k}$
 \end_inset
 
@@ -123,21 +135,20 @@ reference "sec:Gradient-Descent"
 \begin_inset Formula $\left(1-\frac{1}{n}\right)^{k}$
 \end_inset
 
- rate of the center of gravity method (recall that the convergence rate
- in function value is 
+ rate of the center of gravity method (recall that the convergence rate in function value is 
 \begin_inset Formula $n$
 \end_inset
 
  times slower than the convergence rate in volume).
- In this section, we show how to modify the ellipsoid method to get a faster
- convergence rate when 
+ In this section,
+ we show how to modify the ellipsoid method to get a faster convergence rate when 
 \begin_inset Formula $\frac{L}{\mu}$
 \end_inset
 
  is small.
- One can view this whole section as just an interpretation of accelerated
- gradient descent (which we haven't seen yet) in the cutting plane framework.
- In a later section, we will give another interpretation.
+ One can view this whole section as just an interpretation of accelerated gradient descent (which we haven't seen yet) in the cutting plane framework.
+ In a later section,
+ we will give another interpretation.
 \end_layout
 
 \begin_layout Subsection
@@ -145,14 +156,15 @@ Sphere Method
 \end_layout
 
 \begin_layout Standard
-We have been using convexity to find a halfspace containing the optimum
- with the current point on its boundary.
- For a strongly convex function, any optimal 
+We have been using convexity to find a halfspace containing the optimum with the current point on its boundary.
+ For a strongly convex function,
+ any optimal 
 \begin_inset Formula $x^{*}$
 \end_inset
 
  is contained in a strictly smaller region than a halfspace.
- In particular, we have
+ In particular,
+ we have
 \begin_inset Formula 
 \[
 f(x^{*})\geq f(x)+\nabla f(x)^{\top}(x^{*}-x)+\frac{\mu}{2}\norm{x^{*}-x}_{2}^{2}.
@@ -160,7 +172,8 @@ f(x^{*})\geq f(x)+\nabla f(x)^{\top}(x^{*}-x)+\frac{\mu}{2}\norm{x^{*}-x}_{2}^{2
 
 \end_inset
 
-Completing the square, we have that
+Completing the square,
+ we have that
 \begin_inset Formula 
 \[
 \frac{\mu}{2}\norm{(x^{*}-x)+\frac{1}{\mu}\nabla f(x)}_{2}^{2}-\frac{\norm{\nabla f(x)}_{2}^{2}}{2\mu}\le-\left(f(x)-f(x^{*})\right)
@@ -176,7 +189,8 @@ Using
 \begin_inset Formula $x^{++}\defeq x-\frac{1}{\mu}\nabla f(x)$
 \end_inset
 
-, we can write
+,
+ we can write
 \begin_inset Formula 
 \begin{equation}
 \norm{x^{*}-x^{++}}_{2}^{2}\leq\frac{\norm{\nabla f(x)}_{2}^{2}}{\mu^{2}}-\frac{2}{\mu}(f(x)-f(x^{*})).\label{eq:geometricdescent_ball-1}
@@ -184,8 +198,8 @@ Using
 
 \end_inset
 
-To use this formula in the cutting plane framework, we need a crude upper
- bound on 
+To use this formula in the cutting plane framework,
+ we need a crude upper bound on 
 \begin_inset Formula $f(x^{*})$
 \end_inset
 
@@ -195,10 +209,12 @@ To use this formula in the cutting plane framework, we need a crude upper
 \end_inset
 
 .
- Or, we can use Lemma 
+ Or,
+ we can use Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:gradient_progress"
+nolink "false"
 
 \end_inset
 
@@ -218,10 +234,12 @@ Putting it into (
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:geometricdescent_ball-1"
+nolink "false"
 
 \end_inset
 
-), we see that
+),
+ we see that
 \begin_inset Formula 
 \begin{align}
 \norm{x^{*}-x^{++}}_{2}^{2} & \leq\frac{1}{\mu^{2}}\left(\norm{\nabla f(x)}_{2}^{2}-2\mu\cdot\left(f(x)-f(x^{*})\right)\right)\nonumber \\
@@ -232,7 +250,8 @@ reference "eq:geometricdescent_ball-1"
 
 \end_inset
 
-Therefore, using the trivial bound of zero for the second term on the RHS,
+Therefore,
+ using the trivial bound of zero for the second term on the RHS,
  
 \begin_inset Formula $x^{*}$
 \end_inset
@@ -328,16 +347,19 @@ SetAlgoLined
 
 \series bold
 Input:
+
 \series default
  Initial point 
 \begin_inset Formula $x^{(0)}\in\Rn$
 \end_inset
 
-, strong convexity parameter 
+,
+ strong convexity parameter 
 \begin_inset Formula $\mu$
 \end_inset
 
-, Lipschitz gradient parameter 
+,
+ Lipschitz gradient parameter 
 \begin_inset Formula $L$
 \end_inset
 
@@ -365,7 +387,7 @@ For{
 \end_inset
 
 
-\begin_inset Formula $k=0,\cdots$
+\begin_inset Formula $k=0,1,\cdots$
 \end_inset
 
 
@@ -451,10 +473,13 @@ To analyze
 \begin_inset Formula $\mathtt{SphereMethod}$
 \end_inset
 
-, we need the following lemma, which is illustrated in Figure 
+,
+ we need the following lemma,
+ which is illustrated in Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:geometric_descent-1"
+nolink "false"
 
 \end_inset
 
@@ -476,7 +501,8 @@ For any
 \begin_inset Formula $\epsilon\in(0,1)$
 \end_inset
 
-, we have 
+,
+ we have 
 \begin_inset Formula $B(0,1)\cap B(g,\|g\|_{2}\sqrt{1-\epsilon})\subset B(x,\sqrt{1-\epsilon})$
 \end_inset
 
@@ -488,8 +514,9 @@ For any
 \end_layout
 
 \begin_layout Proof
-By symmetry, it suffices to consider the two-dimensional case, and to assume
- that 
+By symmetry,
+ it suffices to consider the two-dimensional case,
+ and to assume that 
 \begin_inset Formula $g=ae_{1}$
 \end_inset
 
@@ -498,12 +525,14 @@ By symmetry, it suffices to consider the two-dimensional case, and to assume
 \begin_inset Formula $a\leq1$
 \end_inset
 
-, we can simply pick 
+,
+ we can simply pick 
 \begin_inset Formula $x=g$
 \end_inset
 
 .
- Otherwise, let 
+ Otherwise,
+ let 
 \begin_inset Formula $(x,0)$
 \end_inset
 
@@ -517,6 +546,7 @@ By symmetry, it suffices to consider the two-dimensional case, and to assume
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:geometric_descent-1"
+nolink "false"
 
 \end_inset
 
@@ -555,7 +585,8 @@ Let the measure of progress
 \end_inset
 
 .
- Then, we have that 
+ Then,
+ we have that 
 \begin_inset Formula $x^{*}\in Q^{(k)}$
 \end_inset
 
@@ -575,6 +606,7 @@ The function value decrease follows from Theorem
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:conv_opt"
+nolink "false"
 
 \end_inset
 
@@ -600,7 +632,8 @@ The fact
 \end_inset
 
 .
- For the decrease of radius, suppose that 
+ For the decrease of radius,
+ suppose that 
 \begin_inset Formula 
 \[
 Q^{(k)}=\left\{ x\in\Rn:\|x-x^{(k)}\|\leq R^{(k)}\right\} .
@@ -608,7 +641,8 @@ Q^{(k)}=\left\{ x\in\Rn:\|x-x^{(k)}\|\leq R^{(k)}\right\} .
 
 \end_inset
 
-Then, the new ball is given by
+Then,
+ the new ball is given by
 \begin_inset Formula 
 \[
 Q^{(k+1)}=\mathtt{minSphere}\left(\left\{ \norm{x-(x^{(k)}-\frac{1}{\mu}\nabla f(x^{(k)}))}_{2}^{2}\leq\frac{1-\frac{\mu}{L}}{\mu^{2}}\cdot\norm{\nabla f(x^{(k)})}_{2}^{2}\right\} \cap\left\{ \|x-x^{(k)}\|\leq R^{(k)}\right\} \right).
@@ -620,7 +654,8 @@ To compute
 \begin_inset Formula $\frac{\mathrm{radius}(Q^{(k+1)})^{2}}{\mathrm{radius}(Q^{(k)})^{2}}$
 \end_inset
 
-, we can assume 
+,
+ we can assume 
 \begin_inset Formula $x^{(k)}=0$
 \end_inset
 
@@ -633,7 +668,8 @@ To compute
 \end_inset
 
 .
- Hence, we have
+ Hence,
+ we have
 \begin_inset Formula 
 \[
 Q^{(k+1)}=\mathtt{minSphere}\left(\left\{ \norm{x-g}_{2}^{2}\leq(1-\frac{\mu}{L})\cdot\norm g_{2}^{2}\right\} \cap\left\{ \|x\|\leq1\right\} \right).
@@ -645,6 +681,7 @@ Now Lemma
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:one_ball_shrink-1"
+nolink "false"
 
 \end_inset
 
@@ -660,8 +697,7 @@ reference "lem:one_ball_shrink-1"
 \end_layout
 
 \begin_layout Standard
-Note that this gives the same convergence rate as gradient descent for strongly
- convex functions.
+Note that this gives the same convergence rate as gradient descent for strongly convex functions.
  Each iteration is much faster than the 
 \begin_inset Formula $O(n^{2})$
 \end_inset
@@ -671,6 +707,8 @@ Note that this gives the same convergence rate as gradient descent for strongly
 
 \begin_layout Standard
 \begin_inset Float figure
+placement document
+alignment document
 wide false
 sideways false
 status open
@@ -702,7 +740,8 @@ status open
 
 
 \backslash
-begin{tikzpicture}[scale=0.7, every node/.style={transform shape}]
+begin{tikzpicture}[scale=0.7,
+ every node/.style={transform shape}]
 \end_layout
 
 \begin_layout Plain Layout
@@ -734,14 +773,16 @@ draw  (4,0) ellipse (3.85 and 3.85);
 
 
 \backslash
-draw [|-|] (4,0) -- (4,4) node[pos=0.5, right] {$|g|$};
+draw [|-|] (4,0) -- (4,4) node[pos=0.5,
+ right] {$|g|$};
 \end_layout
 
 \begin_layout Plain Layout
 
 
 \backslash
-draw [|-|] (4,0) -- (7.85,0) node[pos=0.5, above] {$
+draw [|-|] (4,0) -- (7.85,0) node[pos=0.5,
+ above] {$
 \backslash
 sqrt{1-
 \backslash
@@ -797,14 +838,16 @@ draw (0,0) node[cross=5pt] {};
 
 
 \backslash
-draw [|-|] (0,0) -- (-2,0) node[pos=0.4, above] {$1$};
+draw [|-|] (0,0) -- (-2,0) node[pos=0.4,
+ above] {$1$};
 \end_layout
 
 \begin_layout Plain Layout
 
 
 \backslash
-draw [|-|] (0.64719,0) -- (2.53958,0) node[pos=0.35, above] {$
+draw [|-|] (0.64719,0) -- (2.53958,0) node[pos=0.35,
+ above] {$
 \backslash
 sqrt{1-
 \backslash
@@ -894,7 +937,8 @@ status open
 
 
 \backslash
-begin{tikzpicture}[scale=0.7, every node/.style={transform shape}]
+begin{tikzpicture}[scale=0.7,
+ every node/.style={transform shape}]
 \end_layout
 
 \begin_layout Plain Layout
@@ -929,14 +973,16 @@ draw  (4,0) ellipse (3.85 and 3.85);
 
 
 \backslash
-draw [|-|] (4,0) -- (4,4) node[pos=0.5, right] {$|g|$};
+draw [|-|] (4,0) -- (4,4) node[pos=0.5,
+ right] {$|g|$};
 \end_layout
 
 \begin_layout Plain Layout
 
 
 \backslash
-draw [|-|] (4,0) -- (7.85,0) node[pos=0.5, above] {$
+draw [|-|] (4,0) -- (7.85,0) node[pos=0.5,
+ above] {$
 \backslash
 sqrt{1-
 \backslash
@@ -992,7 +1038,8 @@ draw (0,0) node[cross=4pt] {};
 
 
 \backslash
-draw [->] (0,3) -- (0,1.68) node[pos=0, above] {radius = $
+draw [->] (0,3) -- (0,1.68) node[pos=0,
+ above] {radius = $
 \backslash
 sqrt{1-
 \backslash
@@ -1003,7 +1050,8 @@ epsilon |g|^2}$};
 
 %
 \backslash
-draw [|-|] (0,-3) -- (-1.68,-3) node[pos=0.5, above] {$
+draw [|-|] (0,-3) -- (-1.68,-3) node[pos=0.5,
+ above] {$
 \backslash
 sqrt{1-
 \backslash
@@ -1014,7 +1062,8 @@ epsilon |g|^2}$};
 
 
 \backslash
-draw [|-|] (0.5,0) -- (2.1044,0) node[pos=0.3, above] {
+draw [|-|] (0.5,0) -- (2.1044,0) node[pos=0.3,
+ above] {
 \backslash
 scriptsize $
 \backslash
@@ -1095,9 +1144,8 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-The left diagram shows the intersection shrinks at the same rate if only
- one of the ball shrinks; the right diagram shows the intersection shrinks
- much faster if two balls shrink at the same absolute amount.
+The left diagram shows the intersection shrinks at the same rate if only one of the ball shrinks;
+ the right diagram shows the intersection shrinks much faster if two balls shrink at the same absolute amount.
 \begin_inset CommandInset label
 LatexCommand label
 name "fig:geometric_descent-1"
@@ -1122,8 +1170,8 @@ Parabola Method Via Epigraph
 \end_layout
 
 \begin_layout Standard
-In previous sections, we have discussed cutting plane methods that maintain
- a region that contains the minimizer 
+In previous sections,
+ we have discussed cutting plane methods that maintain a region that contains the minimizer 
 \begin_inset Formula $x^{*}$
 \end_inset
 
@@ -1140,13 +1188,13 @@ f(x)>f(x^{*})\geq f(x)+\left\langle \nabla f(x),x^{*}-x\right\rangle \label{eq:e
 
 \end_inset
 
-Notice that the left-hand side is a strict inequality (unless we already
- solved the problem).
+Notice that the left-hand side is a strict inequality (unless we already solved the problem).
  We infer a halfspace containing the optimum using the subgradient at 
 \begin_inset Formula $x$
 \end_inset
 
-, namely 
+,
+ namely 
 \begin_inset Formula 
 \[
 \left\langle \nabla f(x),x^{*}-x\right\rangle \le0.
@@ -1154,7 +1202,8 @@ Notice that the left-hand side is a strict inequality (unless we already
 
 \end_inset
 
-As the algorithm proceeds, we find a new point 
+As the algorithm proceeds,
+ we find a new point 
 \begin_inset Formula $x^{\new}$
 \end_inset
 
@@ -1163,7 +1212,8 @@ As the algorithm proceeds, we find a new point
 \end_inset
 
 .
- Therefore, the original inequality can be strengthened to 
+ Therefore,
+ the original inequality can be strengthened to 
 \begin_inset Formula 
 \[
 f(x^{(new)})>f(x)+\left\langle \nabla f(x),x^{*}-x\right\rangle 
@@ -1179,10 +1229,8 @@ or
 
 \end_inset
 
-This suggests we should move earlier halfspaces and thereby reduce the measure
- of the next set.
- We expect merely updating the halfspaces can improve the convergence rate
- from 
+This suggests we should move earlier halfspaces and thereby reduce the measure of the next set.
+ We expect merely updating the halfspaces can improve the convergence rate from 
 \begin_inset Formula $1-\frac{\mu}{L}$
 \end_inset
 
@@ -1194,17 +1242,18 @@ This suggests we should move earlier halfspaces and thereby reduce the measure
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:geometric_descent-1"
+nolink "false"
 
 \end_inset
 
 .
- An efficient way to manage all this information is to directly maintain
- a region that contains 
+ An efficient way to manage all this information is to directly maintain a region that contains 
 \begin_inset Formula $(x^{*},f(x^{*}))$
 \end_inset
 
 .
- Now, we can view the inequality 
+ Now,
+ we can view the inequality 
 \begin_inset Formula $f(y)\geq f(x)+\left\langle \nabla f(x),y-x\right\rangle $
 \end_inset
 
@@ -1286,6 +1335,7 @@ SetAlgoLined
 
 \series bold
 Input:
+
 \series default
  Initial point 
 \begin_inset Formula $x^{(0)}\in\Rn$
@@ -1319,7 +1369,7 @@ For{
 \end_inset
 
 
-\begin_inset Formula $k=0,\cdots$
+\begin_inset Formula $k=0,1,\cdots$
 \end_inset
 
 
@@ -1365,7 +1415,8 @@ Let
 \begin_inset Formula $x$
 \end_inset
 
-, and 
+,
+ and 
 \begin_inset Formula $p$
 \end_inset
 
@@ -1389,7 +1440,8 @@ tcp{
 
 \end_inset
 
-Alternatively, one can use 
+Alternatively,
+ one can use 
 \begin_inset Formula $x^{(k+\frac{1}{2})}\leftarrow x^{(k)}-\frac{1}{L}\nabla f(x^{(k)})$
 \end_inset
 
@@ -1466,11 +1518,13 @@ end{algorithm2e}
 \end_layout
 
 \begin_layout Standard
-As in gradient descent, to avoid using the parameter 
+As in gradient descent,
+ to avoid using the parameter 
 \begin_inset Formula $L$
 \end_inset
 
-, we do a line search from 
+,
+ we do a line search from 
 \begin_inset Formula $x^{(k)}$
 \end_inset
 
@@ -1517,12 +1571,14 @@ Both ellipsoid method and
 \end_inset
 
  of the ellipsoid/sphere.
- However, the function value 
+ However,
+ the function value 
 \begin_inset Formula $f(c^{(k)})$
 \end_inset
 
  may be larger than some point we evaluated before.
- On the other hand, evaluating 
+ On the other hand,
+ evaluating 
 \begin_inset Formula $\nabla f$
 \end_inset
 
@@ -1530,8 +1586,7 @@ Both ellipsoid method and
 \begin_inset Formula $x^{(k+\frac{1}{2})}$
 \end_inset
 
- does not work either because the gradient at this point cannot cut the
- domain by 
+ does not work either because the gradient at this point cannot cut the domain by 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1540,8 +1595,8 @@ half
 \end_inset
 
  like the center of ellipsoid.
- Therefore, the algorithm instead uses a line search between the center
- 
+ Therefore,
+ the algorithm instead uses a line search between the center 
 \begin_inset Formula $c^{(k)}$
 \end_inset
 
@@ -1556,12 +1611,14 @@ half
 
  at the point with smallest function value we have ever seen.
  This make sure that all the balls shrink every step.
- Furthermore, since this is a line search from the center, the cutting plane
- induced by the gradient must cut away the center.
+ Furthermore,
+ since this is a line search from the center,
+ the cutting plane induced by the gradient must cut away the center.
  See the right diagram in Figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:geometric_descent-1"
+nolink "false"
 
 \end_inset
 
@@ -1594,7 +1651,9 @@ literal "true"
 status open
 
 \begin_layout Plain Layout
-BTW, this looks a lot like Nesterov: there are two sequences of points 
+BTW,
+ this looks a lot like Nesterov:
+ there are two sequences of points 
 \begin_inset Formula $x^{k}$
 \end_inset
 
@@ -1602,8 +1661,9 @@ BTW, this looks a lot like Nesterov: there are two sequences of points
 \begin_inset Formula $c^{k}$
 \end_inset
 
- updating each other; is there a more direct connection? They are probably
- very similar algorithm except this algorithm is more 
+ updating each other;
+ is there a more direct connection?
+ They are probably very similar algorithm except this algorithm is more 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1686,6 +1746,7 @@ SetAlgoLined
 
 \series bold
 Input:
+
 \series default
  
 \begin_inset Formula $q_{A}(x)=v_{A}+\frac{\mu}{2}\|x-c_{A}\|_{2}^{2}$
@@ -1723,7 +1784,8 @@ Compute
 \begin_layout Standard
 
 \series bold
-Output: 
+Output:
+ 
 \begin_inset Formula $q(x)=v_{\lambda}+\frac{\mu}{2}\|x-c_{\lambda}\|_{2}^{2}$
 \end_inset
 
@@ -1759,7 +1821,8 @@ The key fact we will be using from the formula is that when
 \begin_inset Formula $0<\lambda<1$
 \end_inset
 
-, we have
+,
+ we have
 \begin_inset Formula 
 \[
 v_{\lambda}=v_{A}+\frac{\mu}{8}\frac{(\|c_{A}-c_{B}\|^{2}+\frac{2}{\mu}(v_{B}-v_{A}))^{2}}{\|c_{A}-c_{B}\|^{2}}.
@@ -1776,7 +1839,8 @@ This says that the quadratic lower bound improves a lot whenever
 \end_inset
 
 .
- Using this, we can analyze the 
+ Using this,
+ we can analyze the 
 \begin_inset Formula $\mathtt{ParabolaMethod}$
 \end_inset
 
@@ -1808,7 +1872,8 @@ Assume that
 \end_inset
 
 .
- Then, we have that
+ Then,
+ we have that
 \begin_inset Formula 
 \[
 r_{k+1}^{2}\leq(1-\sqrt{\frac{\mu}{L}})\cdot r_{k}^{2}.
@@ -1816,7 +1881,8 @@ r_{k+1}^{2}\leq(1-\sqrt{\frac{\mu}{L}})\cdot r_{k}^{2}.
 
 \end_inset
 
-In particular, we have that
+In particular,
+ we have that
 \begin_inset Formula 
 \[
 f(x^{(k+1)})-f^{*}\leq\frac{1}{2\mu}(1-\sqrt{\frac{\mu}{L}})^{k}\|\nabla f(x^{(0)})\|^{2}.
@@ -1841,12 +1907,14 @@ Note that the squared radius of
 \end_inset
 
 .
- Hence, 
+ Hence,
+ 
 \begin_inset Formula $r_{k}$
 \end_inset
 
  is measuring the squared radius of our quadratic lower bound.
- To relate to the cutting plane framework, we can view the set as 
+ To relate to the cutting plane framework,
+ we can view the set as 
 \begin_inset Formula $\{y:q^{(k)}(y)\leq f(x^{(k)})\}$
 \end_inset
 
@@ -1859,7 +1927,8 @@ Note that the squared radius of
 status open
 
 \begin_layout Plain Layout
-Can we draw a picture with the epigraph? TODO
+Can we draw a picture with the epigraph?
+ TODO
 \end_layout
 
 \end_inset
@@ -1893,7 +1962,8 @@ Using the notation in
 \begin_inset Formula $\mathtt{maxParabola}$
 \end_inset
 
-, we write 
+,
+ we write 
 \begin_inset Formula $q^{(k+1)}(y)=v_{\lambda}+\frac{\mu}{2}\norm{y-c_{\lambda}}^{2}$
 \end_inset
 
@@ -1907,7 +1977,8 @@ Using the notation in
 \end_inset
 
 .
- Therefore, we have
+ Therefore,
+ we have
 \begin_inset Formula 
 \begin{equation}
 \frac{r_{k}^{2}-r_{k+1}^{2}}{r_{k}^{2}}=\frac{f(x^{(k)})-f(x^{(k+1)})+v_{\lambda}-v_{A}}{r_{k}^{2}}.\label{eq:r_ratio-1}
@@ -1915,7 +1986,8 @@ Using the notation in
 
 \end_inset
 
-To bound the right hand side, it suffices to bound 
+To bound the right hand side,
+ it suffices to bound 
 \begin_inset Formula $v_{A}$
 \end_inset
 
@@ -1928,11 +2000,13 @@ To bound the right hand side, it suffices to bound
 \begin_inset Formula $\mathtt{maxParabola}$
 \end_inset
 
-, we see that there are three cases 
+,
+ we see that there are three cases 
 \begin_inset Formula $\lambda=0$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $\lambda=1$
 \end_inset
 
@@ -1955,7 +2029,8 @@ How to handle
 \begin_inset Formula $\lambda=0,1$
 \end_inset
 
-? How does 
+?
+ How does 
 \begin_inset Formula $r_{k}$
 \end_inset
 
@@ -1964,7 +2039,8 @@ How to handle
 
 \end_inset
 
- In this case, we have that
+ In this case,
+ we have that
 \begin_inset Formula 
 \begin{align*}
 v_{\lambda} & =v_{A}+\frac{\mu}{8}\frac{(\|c_{A}-c_{B}\|^{2}+\frac{2}{\mu}(v_{B}-v_{A}))^{2}}{\|c_{A}-c_{B}\|^{2}}\\
@@ -1977,17 +2053,20 @@ Since
 \begin_inset Formula $f\geq q^{(k)}$
 \end_inset
 
-, we have 
+,
+ we have 
 \begin_inset Formula $f(x^{(k)})\geq q^{(k)}(x^{(k)})\geq\min_{x}q^{(k)}(x)=v_{A}$
 \end_inset
 
 .
- Next, we claim that 
+ Next,
+ we claim that 
 \begin_inset Formula $\|c_{A}-c_{B}\|^{2}\geq\frac{\|\nabla f(x^{(k)})\|^{2}}{\mu^{2}}$
 \end_inset
 
 .
- Using these two facts, we can prove that
+ Using these two facts,
+ we can prove that
 \begin_inset Formula 
 \[
 v_{\lambda}\geq v_{A}+\frac{\mu}{8}\frac{(\frac{2}{\mu}(f(x^{(k)})-v_{A}))^{2}}{\frac{\|\nabla f(x^{(k)})\|^{2}}{\mu^{2}}}=v_{A}+\frac{\mu\cdot r_{k}^{4}}{2\|\nabla f(x^{(k)})\|^{2}}.
@@ -2002,10 +2081,12 @@ reference "eq:r_ratio-1"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-, we have
+,
+ we have
 \begin_inset Formula 
 \begin{align}
 \frac{r_{k}^{2}-r_{k+1}^{2}}{r_{k}^{2}} & \geq\frac{f(x^{(k)})-f(x^{(k+1)})}{r_{k}^{2}}+\frac{\mu\cdot r_{k}^{2}}{2\|\nabla f(x^{(k)})\|^{2}}\nonumber \\
@@ -2024,7 +2105,8 @@ where the second inequality is due to the fact
 \begin_inset Formula $x^{(k)}$
 \end_inset
 
-, the third inequality is due to the assumption on 
+,
+ the third inequality is due to the assumption on 
 \begin_inset Formula $L$
 \end_inset
 
@@ -2032,14 +2114,17 @@ where the second inequality is due to the fact
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:gradient_progress"
+nolink "false"
 
 \end_inset
 
-), the last inequality follows from the Cauchy-Schwarz inequality.
+),
+ the last inequality follows from the Cauchy-Schwarz inequality.
 \end_layout
 
 \begin_layout Proof
-For the final conclusion, we note that
+For the final conclusion,
+ we note that
 \begin_inset Formula 
 \begin{align*}
 q^{(1)}(y) & =f(x^{(0)})+\nabla f(x^{(0)})^{\top}(y-x^{(0)})+\frac{\mu}{2}\norm{y-x^{(0)}}^{2}\\
@@ -2048,7 +2133,8 @@ q^{(1)}(y) & =f(x^{(0)})+\nabla f(x^{(0)})^{\top}(y-x^{(0)})+\frac{\mu}{2}\norm{
 
 \end_inset
 
-Hence, we have 
+Hence,
+ we have 
 \begin_inset Formula $v^{(1)}=f(x^{(0)})-\frac{1}{2\mu}\|\nabla f(x^{(0)})\|^{2}$
 \end_inset
 
@@ -2060,7 +2146,8 @@ Hence, we have
 \end_layout
 
 \begin_layout Proof
-To prove the claim, we note that 
+To prove the claim,
+ we note that 
 \begin_inset Formula $x^{(k)}$
 \end_inset
 
@@ -2073,7 +2160,8 @@ To prove the claim, we note that
 \end_inset
 
  and some point.
- Therefore, we have that 
+ Therefore,
+ we have that 
 \begin_inset Formula $\nabla f(x^{(k)})\perp(x^{(k)}-c^{(k)})$
 \end_inset
 
@@ -2096,6 +2184,7 @@ reference "eq:geometric_key-1"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -2104,8 +2193,7 @@ noprefix "false"
 \begin_inset Formula $\frac{\|\nabla f\|^{2}}{L}+\frac{\mu}{\|\nabla f\|^{2}}$
 \end_inset
 
- where the first term comes from the progress on the function value and
- the second term comes from 
+ where the first term comes from the progress on the function value and the second term comes from 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2124,10 +2212,12 @@ reference "lem:one_ball_shrink-1"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-: There exists 
+:
+ There exists 
 \begin_inset Formula $x$
 \end_inset
 
@@ -2144,19 +2234,19 @@ Discussion
 \end_layout
 
 \begin_layout Standard
-This section was about the idea of managing cutting planes, and as a byproduct
- we get an accelerated rate of convergence.
- As we will see later, standard accelerated gradient descent does not use
- line search and achieves the rate 
+This section was about the idea of managing cutting planes,
+ and as a byproduct we get an accelerated rate of convergence.
+ As we will see later,
+ standard accelerated gradient descent does not use line search and achieves the rate 
 \begin_inset Formula $1-\sqrt{\frac{\mu}{L}}$
 \end_inset
 
 .
- However, it seems that the use of line search helps in practice and that
- with a careful implementation, line search can be as cheap as gradient
- computation.
- For more difficult problems, one may want to store multiple quadratic lower
- bounds (see 
+ However,
+ it seems that the use of line search helps in practice and that with a careful implementation,
+ line search can be as cheap as gradient computation.
+ For more difficult problems,
+ one may want to store multiple quadratic lower bounds (see 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "drusvyatskiy2016optimal"

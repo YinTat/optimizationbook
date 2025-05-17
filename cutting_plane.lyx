@@ -310,7 +310,7 @@ Given
 \end_inset
 
  or conclude that 
-\begin_inset Formula $\vol K\leq\epsilon^{n}$
+\begin_inset Formula $\vol(K)\leq\epsilon^{n}$
 \end_inset
 
 .
@@ -510,7 +510,7 @@ For{
 \end_inset
 
 
-\begin_inset Formula $k=0,\cdots$
+\begin_inset Formula $k=0,1,\cdots$
 \end_inset
 
 
@@ -1461,7 +1461,7 @@ For{
 \end_inset
 
 
-\begin_inset Formula $k=0,\cdots$
+\begin_inset Formula $k=0,1,\cdots$
 \end_inset
 
 
@@ -2039,7 +2039,7 @@ Then,
 \end_layout
 
 \begin_layout Remark
-We can think 
+We can think of 
 \begin_inset Formula $\mathcal{V}(E)$
 \end_inset
 
@@ -2581,7 +2581,7 @@ in time
 \begin_inset Formula $O(n^{2}(n^{2}+\nnz(A))\log(\frac{R}{r\varepsilon})).$
 \end_inset
 
- Note that the complexity of computer a matrix-vector product 
+ Note that the complexity of computing a matrix-vector product 
 \begin_inset Formula $Ax$
 \end_inset
 
@@ -2899,7 +2899,7 @@ For{
 \end_inset
 
 
-\begin_inset Formula $k=0,\cdots$
+\begin_inset Formula $k=0,1,\cdots$
 \end_inset
 
 
@@ -3033,7 +3033,7 @@ end{algorithm2e}
 \end_layout
 
 \begin_layout Remark
-The question of how to samply (nearly) uniform random points is an important one that we will address in detail in this book.
+The question of how to sample (nearly) uniform random points is an important one that we will address in detail in this book.
  Using sampling to approximate the center of gravity leads to the reduction in the time per iteration from 
 \begin_inset Formula $n^{n}$
 \end_inset
@@ -3462,6 +3462,7 @@ Without loss of generality,
 \end_inset
 
 Therefore,
+ by Jensen's inequality,
 \begin_inset Formula 
 \[
 \E\norm y\le\sqrt{\E\left(\norm y^{2}\right)}=\sqrt{\frac{n}{N}}.
@@ -3884,7 +3885,7 @@ Show that for a cone of height
 \end_inset
 
 ,
- the distance of the center of gravity 
+ the center of gravity 
 \begin_inset Formula $z$
 \end_inset
 
