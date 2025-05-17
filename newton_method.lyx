@@ -239,8 +239,8 @@ We need
 \begin_inset Formula $h<\frac{1}{100}$
 \end_inset
 
- in order the first coordinate to converge,
- but this will make the second coordinate converges too slowly.
+ in order for the first coordinate to converge,
+ but this will make the second coordinate converge too slowly.
  In general,
  we may want to take different step sizes for different directions and Newton method gives the best step if the function is quadratic.
 \end_layout
@@ -717,19 +717,23 @@ Since the roots of
  we can write
 \begin_inset Formula 
 \[
-g(x)=a_{n}\cdot\prod_{i=1}^{n}(x-\lambda_{i})
+g(x)=b\cdot\prod_{i=1}^{n}(x-\lambda_{i})
 \]
 
 \end_inset
 
-with 
+for some 
+\begin_inset Formula $b$
+\end_inset
+
+ with 
 \begin_inset Formula $\lambda_{n}\leq\lambda_{n-1}\leq\cdots\leq\lambda_{1}$
 \end_inset
 
 .
  Then,
  we have that 
-\begin_inset Formula $g'(x)=a_{n}\cdot\sum_{i}\prod_{j\neq i}(x-\lambda_{j})$
+\begin_inset Formula $g'(x)=b\cdot\sum_{i}\prod_{j\neq i}(x-\lambda_{j})$
 \end_inset
 
  and hence
@@ -749,7 +753,7 @@ For any
 \begin_inset Formula 
 \begin{align*}
 \frac{g(x)}{g'(x)} & \leq\frac{1}{\frac{1}{x-\lambda_{1}}}=x-\lambda_{1},\\
-\frac{g(x)}{g'(x)}\geq & \frac{1}{\sum_{i}\frac{1}{x-\lambda_{1}}}=\frac{x-\lambda_{1}}{n}.
+\frac{g(x)}{g'(x)}\geq & \frac{1}{\sum_{i}\frac{1}{x-\lambda_{1}}}=\frac{x-\lambda_{1}}{n}.\tag{{1}}
 \end{align*}
 
 \end_inset
@@ -760,15 +764,23 @@ Hence,
 \begin_inset Formula $x^{(k)}\geq\lambda_{1}$
 \end_inset
 
- every step and that
+ during every step 
+\begin_inset Formula $k$
+\end_inset
+
+ and that
 \begin_inset Formula 
 \[
-x^{(k+1)}-\lambda_{1}\leq(1-\frac{1}{n})(x^{(k)}-\lambda_{1}).
+x^{(k+1)}-\lambda_{1}\leq\left(1-\frac{1}{n}\right)(x^{(k)}-\lambda_{1})
 \]
 
 \end_inset
 
+where we use 
+\begin_inset Formula $(1)$
+\end_inset
 
+ to show the inductive step above.
 \end_layout
 
 \begin_layout Exercise
@@ -845,7 +857,7 @@ Assume that
 ,
 \begin_inset Formula 
 \[
-|x^{(k)}-x^{*}|\leq\frac{\alpha}{L}\left(\frac{L}{\alpha}|x^{(k)}-x^{*}|\right)^{2^{(k)}}.
+|x^{(k)}-x^{*}|\leq\frac{\alpha}{L}\left(\frac{L}{\alpha}|x^{(0)}-x^{*}|\right)^{2^{(k)}}.
 \]
 
 \end_inset
@@ -865,7 +877,7 @@ x^{(k+1)}-x^{*}=x^{(k)}-x^{*}-\frac{f(x^{(k)})}{f'(x^{(k)})}.
 
 \begin_inset Formula 
 \begin{align*}
-f(x^{*}) & =f(x^{(k)})+\int_{x^{t}}^{x^{*}}f'(z)dz=f(x^{(k)})+f'(x^{(k)})(x^{*}-x^{(k)})+\int_{x^{t}}^{x^{*}}(f'(z)-f'(x^{(k)}))dz.
+f(x^{*}) & =f(x^{(k)})+\int_{x^{k}}^{x^{*}}f'(z)dz=f(x^{(k)})+f'(x^{(k)})(x^{*}-x^{(k)})+\int_{x^{k}}^{x^{*}}(f'(z)-f'(x^{(k)}))dz.
 \end{align*}
 
 \end_inset
@@ -874,8 +886,8 @@ Therefore,
  
 \begin_inset Formula 
 \begin{align*}
-x^{(k+1)}-x^{*} & =\frac{1}{f'(x^{(k)})}\int_{x^{t}}^{x^{*}}(f'(z)-f'(x^{(k)}))dz.\\
- & \leq\frac{L}{|f'(x^{(k)})|}\int_{x^{t}}^{x^{*}}|z-x^{(k)}|dz\\
+x^{(k+1)}-x^{*} & =\frac{1}{f'(x^{(k)})}\int_{x^{k}}^{x^{*}}(f'(z)-f'(x^{(k)}))dz.\\
+ & \leq\frac{L}{|f'(x^{(k)})|}\int_{x^{k}}^{x^{*}}|z-x^{(k)}|dz\\
  & =\frac{L|x^{*}-x^{(k)}|^{2}}{2|f'(x^{(k)})|}.
 \end{align*}
 
@@ -990,7 +1002,7 @@ where we approximated the
 \end_inset
 
 .
- For nice enough function,
+ For nice enough functions,
  the convergence rate satisfies 
 \begin_inset Formula $\varepsilon_{k+1}\leq C\cdot\varepsilon_{k}^{\frac{1+\sqrt{5}}{2}}$
 \end_inset
@@ -1000,12 +1012,16 @@ where we approximated the
 \end_layout
 
 \begin_layout Standard
-For higher dimension,
- we need to approximate the Jacobian of 
+For 
 \begin_inset Formula $g$
 \end_inset
 
-.
+that is high-dimensional (of dimension at least 
+\begin_inset Formula $2$
+\end_inset
+
+),
+ we need to approximate its Jacobian.
  Let 
 \begin_inset Formula $J^{(k)}$
 \end_inset

@@ -96,11 +96,7 @@ Norms and Local Metrics
 \end_layout
 
 \begin_layout Standard
-Any 
-\begin_inset Formula $0$
-\end_inset
-
--symmetric convex body 
+Any centrally symmetric convex body 
 \begin_inset Formula $K$
 \end_inset
 
@@ -136,13 +132,13 @@ For the usual Euclidean norm,
 
 \begin_layout Standard
 It is often useful to consider affine transformations,
- and the norms they induce,
+ and the (semi)norms they induce,
  e.g.,
  for a PSD matrix 
 \begin_inset Formula $A$
 \end_inset
 
-,
+ (would be an induced norm in the case when A is PD),
  we can define the associated norm as follows:
 \begin_inset Formula 
 \[
@@ -180,11 +176,11 @@ K^{*}=\left\{ y:\forall x\in K,\left\langle x,y\right\rangle \le1\right\} .
 
 \begin_layout Standard
 The dual norm for 
-\begin_inset Formula $\norm ._{K}$
+\begin_inset Formula $\norm._{K}$
 \end_inset
 
  is 
-\begin_inset Formula $\norm ._{K^{*}}$
+\begin_inset Formula $\norm._{K^{*}}$
 \end_inset
 
 .
@@ -232,7 +228,7 @@ local
 \begin_inset Formula $x\in{\cal M},$
 \end_inset
 
-there is a matrix 
+ there is a matrix 
 \begin_inset Formula $A(x)$
 \end_inset
 

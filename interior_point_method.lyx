@@ -347,7 +347,7 @@ The optimality condition,
 \begin_inset Formula $y$
 \end_inset
 
- for the Lagrangian of 
+(Lagrangian multipliers) for the Lagrangian of 
 \begin_inset Formula $Ax=b$
 \end_inset
 
@@ -829,6 +829,7 @@ Suppose
 
 .
  Then,
+ 
 \begin_inset Formula $x_{i}^{\new}>0$
 \end_inset
 
@@ -845,22 +846,27 @@ Suppose
 
 \begin_layout Proof
 Note that 
-\begin_inset Formula $P^{2}=P$
+\begin_inset Formula $\overline{P}^{2}=\overline{P}$
 \end_inset
 
-.
+,
+ where 
+\begin_inset Formula $\overline{P}$
+\end_inset
+
+ is as defined in the exercise above.
  However,
  in general 
-\begin_inset Formula $P\neq P^{\top},$
+\begin_inset Formula $\overline{P}\neq\overline{P}^{T},$
 \end_inset
 
-i.e.
+ i.e.,
  
-\begin_inset Formula $P$
+\begin_inset Formula $\overline{P}$
 \end_inset
 
  might not be an orthogonal projection matrix.
- It will be convienient to consider the orthogonal projection matrix 
+ It will be convenient to consider the orthogonal projection matrix 
 \begin_inset Formula $P=S^{-\frac{1}{2}}X^{\frac{1}{2}}A^{\top}(AS^{-1}XA^{\top})^{-1}AS^{-\frac{1}{2}}X^{\frac{1}{2}}$
 \end_inset
 
@@ -887,9 +893,9 @@ By the assumption for each
  we have
 \begin_inset Formula 
 \begin{align*}
-\|X^{-1}\delta_{x}\|_{2} & \leq\frac{1}{\sqrt{(1-\epsilon)t}}\|(I-P)S^{-\frac{1}{2}}X^{-\frac{1}{2}}r\|_{2}\\
- & \leq\frac{1}{\sqrt{(1-\epsilon)t}}\|S^{-\frac{1}{2}}X^{-\frac{1}{2}}r\|_{2}\\
- & \leq\frac{1}{(1-\epsilon)t}\|r\|_{2}\leq\frac{\epsilon}{1-\epsilon}.
+\|X^{-1}\delta_{x}\|_{2} & \leq\frac{1}{\sqrt{(1-\varepsilon)t}}\|(I-P)S^{-\frac{1}{2}}X^{-\frac{1}{2}}r\|_{2}\\
+ & \leq\frac{1}{\sqrt{(1-\varepsilon)t}}\|S^{-\frac{1}{2}}X^{-\frac{1}{2}}r\|_{2}\\
+ & \leq\frac{1}{(1-\varepsilon)t}\|r\|_{2}\leq\frac{\varepsilon}{1-\varepsilon}.
 \end{align*}
 
 \end_inset
@@ -902,7 +908,7 @@ Similarly,
 .
  Hence,
  we have 
-\begin_inset Formula $\|S^{-1}\delta_{s}\|_{2}\leq\frac{\epsilon}{1-\epsilon}$
+\begin_inset Formula $\|S^{-1}\delta_{s}\|_{2}\leq\frac{\varepsilon}{1-\varepsilon}$
 \end_inset
 
 .
@@ -934,6 +940,7 @@ Similarly,
 \end_inset
 
  are positive.
+ 
 \end_layout
 
 \begin_layout Proof
@@ -961,14 +968,14 @@ name "lem:IPM_progress"
 \end_inset
 
  with 
-\begin_inset Formula $\epsilon<\frac{1}{4}$
+\begin_inset Formula $\varepsilon<\frac{1}{4}$
 \end_inset
 
 ,
  we have that 
 \begin_inset Formula 
 \[
-\sum_{i}\left(x_{i}^{\new}s_{i}^{\new}-t\right)^{2}\leq\left(\epsilon^{4}+16\epsilon^{5}\right)t^{2}.
+\sum_{i}\left(x_{i}^{\new}s_{i}^{\new}-t\right)^{2}\leq\left(\varepsilon^{4}+16\varepsilon^{5}\right)t^{2}.
 \]
 
 \end_inset
@@ -1000,20 +1007,17 @@ where in the last step we used
  we have that
 \begin_inset Formula 
 \begin{align*}
-\text{LHS} & \leq\left((1+\epsilon)t\right)^{2}\cdot\|X^{-1}\delta_{x}\|_{4}^{2}\|S^{-1}\delta_{s}\|_{4}^{2}\\
- & \leq\left((1+\epsilon)t\right)^{2}\cdot\|X^{-1}\delta_{x}\|_{2}^{2}\|S^{-1}\delta_{s}\|_{2}^{2}\\
- & \leq\left((1+\epsilon)t\right)^{2}\left(\frac{\epsilon}{1-\epsilon}\right)^{4}\\
- & \leq\left(\epsilon^{4}+16\epsilon^{5}\right)t^{2}
+\text{LHS} & \leq\left((1+\varepsilon)t\right)^{2}\cdot\|X^{-1}\delta_{x}\|_{4}^{2}\|S^{-1}\delta_{s}\|_{4}^{2}\\
+ & \leq\left((1+\varepsilon)t\right)^{2}\cdot\|X^{-1}\delta_{x}\|_{2}^{2}\|S^{-1}\delta_{s}\|_{2}^{2}\\
+ & \leq\left((1+\varepsilon)t\right)^{2}\left(\frac{\varepsilon}{1-\varepsilon}\right)^{4}\\
+ & \leq\left(\varepsilon^{4}+16\varepsilon^{5}\right)t^{2}
 \end{align*}
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
 Using this,
  we have the main theorem.
+ 
 \end_layout
 
 \begin_layout Theorem
@@ -1102,7 +1106,7 @@ Therefore,
 \end_inset
 
  is decreased by a 
-\begin_inset Formula $(1-\frac{1}{10\sqrt{n}})$
+\begin_inset Formula $\left(1-\frac{1}{10\sqrt{n}}\right)$
 \end_inset
 
  factor each step,
@@ -4537,7 +4541,7 @@ Given a convex function
 \end_inset
 
  define the norm 
-\begin_inset Formula $\norm ._{x}$
+\begin_inset Formula $\norm._{x}$
 \end_inset
 
  as 
@@ -4568,7 +4572,7 @@ We call a function
  we have
 \begin_inset Formula 
 \[
-D^{3}f(x)[h,h,h]\leq2\norm h_{x}^{3}
+|D^{3}f(x)[h,h,h]|\leq2\norm h_{x}^{3}
 \]
 
 \end_inset
@@ -4611,7 +4615,7 @@ The constant
 \end_layout
 
 \begin_layout Exercise
-Show that the following property is equivalent fo self-concordance as defined above:
+Show that the following property is equivalent to self-concordance as defined above:
  restricted on any straight line 
 \begin_inset Formula $g(t)=f(x+th)$
 \end_inset
@@ -4767,7 +4771,8 @@ For
 \begin_inset Formula $\frac{d}{dt}\frac{1}{\sqrt{\alpha(t)}}\geq-1.$
 \end_inset
 
- Integrating both sides wrt 
+ Integrating both sides w.r.t.
+ 
 \begin_inset Formula $t$
 \end_inset
 
@@ -4914,7 +4919,8 @@ Any convex set has an
 
 \begin_layout Standard
 Unfortunately,
- this is an existence result and the barrier function is expensive to compute.In practice,
+ this is an existence result and the barrier function is expensive to compute.
+ In practice,
  we construct self-concordant barriers out of simpler ones:
 \end_layout
 
@@ -5249,7 +5255,7 @@ Suppose that
  then we have
 \begin_inset Formula 
 \[
-\norm{\nabla f(x')}_{\nabla^{2}f(x')^{-1}}\leq\frac{r^{2}}{(1-r)^{2}}.
+\norm{\nabla f(x')}_{\nabla^{2}f(x')^{-1}}\leq\frac{r^{2}}{(1-r)}.
 \]
 
 \end_inset
@@ -5340,7 +5346,7 @@ Therefore,
  we have
 \begin_inset Formula 
 \[
-\norm{(\nabla^{2}f(x))^{-\frac{1}{2}}\left(\nabla^{2}f(x)-\int_{0}^{1}\nabla^{2}f(x+t(x'-x))dt\right)(\nabla^{2}f(x))^{-\frac{1}{2}}}_{\text{op}}\leq\max(\frac{r}{1-r},r-\frac{1}{3}r^{2})=\frac{r}{1-r}.
+\norm{(\nabla^{2}f(x))^{-\frac{1}{2}}\left(\nabla^{2}f(x)-\int_{0}^{1}\nabla^{2}f(x+t(x'-x))dt\right)(\nabla^{2}f(x))^{-\frac{1}{2}}}_{\text{op}}\leq\max\left(\frac{r}{1-r},r-\frac{1}{3}r^{2}\right)=\frac{r}{1-r}.
 \]
 
 \end_inset
@@ -5838,14 +5844,14 @@ Let
 Note that
 \begin_inset Formula 
 \[
-\alpha(t)\leq\norm{\nabla\phi(z_{t})}_{\nabla^{2}\phi(z_{t})^{-1}}\norm{y-x}_{\nabla^{2}\phi(z_{t})}\leq\sqrt{v}\norm{y-x}_{\nabla^{2}\phi(z_{t})}.
+\alpha(t)\leq\norm{\nabla\phi(z_{t})}_{\nabla^{2}\phi(z_{t})^{-1}}\norm{y-x}_{\nabla^{2}\phi(z_{t})}\leq\sqrt{\nu}\norm{y-x}_{\nabla^{2}\phi(z_{t})}.
 \]
 
 \end_inset
 
 Hence,
  we have 
-\begin_inset Formula $\alpha'(t)\geq\frac{1}{v}\alpha(t)^{2}.$
+\begin_inset Formula $\alpha'(t)\geq\frac{1}{\nu}\alpha(t)^{2}.$
 \end_inset
 
  If 
@@ -5859,7 +5865,8 @@ Hence,
 \begin_inset Formula $\alpha$
 \end_inset
 
- is increasing and hence 
+ is increasing and hence,
+ 
 \begin_inset Formula $\alpha(1)>0$
 \end_inset
 
@@ -5871,7 +5878,7 @@ Hence,
 .
  So,
  
-\begin_inset Formula $\alpha(0)\leq v$
+\begin_inset Formula $\alpha(0)\leq\nu$
 \end_inset
 
 .
@@ -5899,9 +5906,25 @@ Suppose that
  we have that
 \begin_inset Formula 
 \[
-\left\langle c,x_{t}\right\rangle \leq\left\langle c,x^{*}\right\rangle +\frac{\nu}{t}.
+\left\langle c,x_{t}\right\rangle \leq\left\langle c,x^{*}\right\rangle +\frac{\nu}{t},
 \]
 
+\end_inset
+
+where 
+\begin_inset Formula $x_{t}$
+\end_inset
+
+ is the 
+\begin_inset Formula $t^{\text{{th}}}$
+\end_inset
+
+ iterate of 
+\begin_inset Formula $x$
+\end_inset
+
+.
+\begin_inset Newline newline
 \end_inset
 
 More generally,
