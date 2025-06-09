@@ -321,7 +321,7 @@
 
 
 \begin_inset FormulaMacro
-\newcommand{\oma}{\overline{\mathbf{A}}}
+\newcommand{\oma}{\overline{\ma}}
 \end_inset
 
 
