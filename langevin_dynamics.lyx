@@ -1018,7 +1018,7 @@ While the challenge usually is to find a good coupling,
  see Definition 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "defn:The-Wassestein--distance"
+reference "defn:The-Wasserstein--distance"
 plural "false"
 caps "false"
 noprefix "false"

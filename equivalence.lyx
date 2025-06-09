@@ -2925,13 +2925,6 @@ begin{algorithm2e}[t]
 \end_inset
 
  
-\begin_inset CommandInset label
-LatexCommand label
-name "alg:separateFunc"
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -2959,6 +2952,13 @@ status open
 
 }
 \end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:separateFunc"
 
 \end_inset
 
@@ -3967,13 +3967,6 @@ begin{algorithm2e}[h]
 \end_inset
 
 
-\begin_inset CommandInset label
-LatexCommand label
-name "alg:sep_set"
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -4001,6 +3994,13 @@ status open
 
 }
 \end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:sep_set"
 
 \end_inset
 

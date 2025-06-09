@@ -1,16 +1,16 @@
-#LyX 2.3 created this file. For more info see http://www.lyx.org/
-\lyxformat 544
+#LyX 2.4 created this file. For more info see https://www.lyx.org/
+\lyxformat 620
 \begin_document
 \begin_header
 \save_transient_properties true
 \origin unavailable
 \textclass optbook
 \use_default_options true
-\maintain_unincluded_children false
+\maintain_unincluded_children no
 \language english
 \language_package default
-\inputencoding auto
-\fontencoding global
+\inputencoding auto-legacy
+\fontencoding auto
 \font_roman "default" "default"
 \font_sans "default" "default"
 \font_typewriter "default" "default"
@@ -18,7 +18,9 @@
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
-\font_osf false
+\font_roman_osf false
+\font_sans_osf false
+\font_typewriter_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
 \use_microtype false
@@ -50,7 +52,9 @@
 \suppress_date false
 \justification true
 \use_refstyle 1
+\use_formatted_ref 0
 \use_minted 0
+\use_lineno 0
 \index Index
 \shortcut idx
 \color #008000
@@ -66,11 +70,16 @@
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
+\tablestyle default
 \tracking_changes false
 \output_changes false
+\change_bars false
+\postpone_fragile_content false
 \html_math_output 0
 \html_css_as_file 0
 \html_be_strict false
+\docbook_table_output 0
+\docbook_mathml_prefix 1
 \end_header
 
 \begin_body
@@ -85,8 +94,7 @@ Hamiltonian dynamics is an alternative way to formulate Newtonian mechanics.
 \begin_inset Formula $H$
 \end_inset
 
- captures both the potential and kinetic energy of a particle as a function
- of its position and velocity.
+ captures both the potential and kinetic energy of a particle as a function of its position and velocity.
  The dynamics can be described by the following differential equations.
  
 \begin_inset Formula 
@@ -102,7 +110,8 @@ These equations preserve the Hamiltonian function
 \end_inset
 
 .
- In the simplest Euclidean setting, it can be defined as follows.
+ In the simplest Euclidean setting,
+ it can be defined as follows.
 \begin_inset Formula 
 \[
 H(x,v)=f(x)+\frac{1}{2}\norm v^{2}
@@ -132,8 +141,8 @@ or
 \begin_layout Standard
 
 \shape up
-More generally, the Hamiltonian can depend on a function that defines a
- local metric:
+More generally,
+ the Hamiltonian can depend on a function that defines a local metric:
 \begin_inset Formula 
 \[
 H(x,v)=f(x)+\frac{1}{2}\log((2\pi)^{n}\det g(x))+\frac{1}{2}v^{T}g(x)^{-1}v
@@ -145,22 +154,26 @@ where
 \begin_inset Formula $g(x)$
 \end_inset
 
- is a matrix, and when it is PSD, it defines a local norm at 
+ is a matrix,
+ and when it is PSD,
+ it defines a local norm at 
 \begin_inset Formula $x$
 \end_inset
 
 .
- In this sense, we can view the dynamics as evolving on a manifold with
- local metric 
+ In this sense,
+ we can view the dynamics as evolving on a manifold with local metric 
 \begin_inset Formula $g(x)$
 \end_inset
 
 .
- Here in this chapter, we will focus on the case when 
+ Here in this chapter,
+ we will focus on the case when 
 \begin_inset Formula $g(x)=I$
 \end_inset
 
-, the standard Euclidean metric.
+,
+ the standard Euclidean metric.
 \end_layout
 
 \begin_layout Standard
@@ -185,7 +198,8 @@ literal "true"
 \end_inset
 
  is a Markov Chain Monte Carlo method for sampling from a desired distribution.
- Each step of the method consists of the following: At a current point 
+ Each step of the method consists of the following:
+ At a current point 
 \begin_inset Formula $x$
 \end_inset
 
@@ -201,8 +215,8 @@ Pick a random velocity
 \begin_inset Formula $x$
 \end_inset
 
- (in the simplest setting, this is the standard Gaussian distribution for
- every 
+ (in the simplest setting,
+ this is the standard Gaussian distribution for every 
 \begin_inset Formula $x$
 \end_inset
 
@@ -226,7 +240,8 @@ For the choice of
 \begin_inset Formula $H$
 \end_inset
 
- above, the marginal distribution of the current point 
+ above,
+ the marginal distribution of the current point 
 \begin_inset Formula $x$
 \end_inset
 
@@ -235,11 +250,11 @@ For the choice of
 \end_inset
 
 .
- Note that HMC does not require a Metropolis filter! Thus, unlike the walks
- we have seen so far, its step sizes are not limited by this consideration
- even in high dimension.
- Hamiltonian Monte Carlo can be used for sampling from a general distribution
- 
+ Note that HMC does not require a Metropolis filter!
+ Thus,
+ unlike the walks we have seen so far,
+ its step sizes are not limited by this consideration even in high dimension.
+ Hamiltonian Monte Carlo can be used for sampling from a general distribution 
 \begin_inset Formula $e^{-H(x,y)}$
 \end_inset
 
@@ -248,7 +263,8 @@ For the choice of
 \end_layout
 
 \begin_layout Definition
-Given a continuous, twice-differentiable function 
+Given a continuous,
+ twice-differentiable function 
 \begin_inset Formula $H:\mathcal{M}\times\Rn\subset\R^{n}\times\R^{n}\rightarrow\R$
 \end_inset
 
@@ -268,7 +284,8 @@ Hamiltonian
 \begin_inset Formula $H$
 \end_inset
 
-, we say 
+,
+ we say 
 \begin_inset Formula $(x(t),y(t))$
 \end_inset
 
@@ -313,8 +330,7 @@ Hamiltonian curve with
 \end_layout
 
 \begin_layout Standard
-Hamiltonian Monte Carlo is a Markov chain generated by a sequence of randomly
- 
+Hamiltonian Monte Carlo is a Markov chain generated by a sequence of random 
 \shape up
 Hamiltonian curves.
 \end_layout
@@ -382,6 +398,7 @@ SetAlgoLined
 
 \series bold
 Input:
+
 \series default
  some initial point 
 \begin_inset Formula $x^{(1)}\in\mathcal{M}$
@@ -442,7 +459,8 @@ With probability
 \begin_inset Formula $\frac{1}{2}$
 \end_inset
 
-, set 
+,
+ set 
 \begin_inset Formula $(x^{(k+1)},y^{(k+1)})=T_{\step}(x^{(k)},y)$
 \end_inset
 
@@ -451,7 +469,8 @@ With probability
 \end_layout
 
 \begin_layout Standard
-Otherwise, 
+Otherwise,
+ 
 \begin_inset Formula $(x^{(k+1)},y^{(k+1)})=T_{-\step}(x^{(k)},y)$
 \end_inset
 
@@ -476,6 +495,7 @@ status open
 
 \series bold
 Output:
+
 \series default
  
 \begin_inset Formula $(x^{(T+1)},y^{(T+1)})$
@@ -525,7 +545,8 @@ For any Hamiltonian curve
 \begin_inset Formula $(x(t),y(t))$
 \end_inset
 
-, we have that
+,
+ we have that
 \begin_inset Formula 
 \[
 \frac{d}{dt}H(x(t),y(t))=0.
@@ -569,7 +590,8 @@ For any
 \begin_inset Formula $t\geq0$
 \end_inset
 
-, we have that
+,
+ we have that
 \begin_inset Formula 
 \[
 \det\left(DT_{t}(x,y)\right)=1
@@ -620,6 +642,7 @@ Hamiltonian equations (
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:ham"
+nolink "false"
 
 \end_inset
 
@@ -628,7 +651,8 @@ reference "eq:ham"
 \begin_inset Formula $s$
 \end_inset
 
-, we have that
+,
+ we have that
 \shape default
 
 \begin_inset Formula 
@@ -669,12 +693,14 @@ d_{y}
 
 \end_inset
 
-Therefore, 
+Therefore,
+ 
 \begin_inset Formula $DT_{t}(x,y)=\Phi(t)$
 \end_inset
 
 .
- Next, we observe that
+ Next,
+ we observe that
 \begin_inset Formula 
 \[
 \frac{d}{dt}\log\det\Phi(t)=\tr\left(\Phi(t)^{-1}\frac{d}{dt}\Phi(t)\right)=\tr\left(\begin{array}{cc}
@@ -697,8 +723,8 @@ Hence,
 \end_layout
 
 \begin_layout Standard
-Using the previous two lemmas, we can see that Hamiltonian Monte Carlo indeed
- converges to the desired distribution.
+Using the previous two lemmas,
+ we can see that Hamiltonian Monte Carlo indeed converges to the desired distribution.
  
 \end_layout
 
@@ -724,8 +750,7 @@ Let
 \begin_inset Formula $p_{x}(x')$
 \end_inset
 
- denote the probability density of one step of the Hamiltonian Monte Carlo
- starting at 
+ denote the probability density of one step of the Hamiltonian Monte Carlo starting at 
 \begin_inset Formula $x$
 \end_inset
 
@@ -787,7 +812,8 @@ Fix
 \end_inset
 
 .
- Then, 
+ Then,
+ 
 \begin_inset Formula 
 \[
 \pi(x)p_{x}(x')=\frac{1}{2}\int_{y\in V_{+}}\frac{e^{-H(x,y)}}{\left|\det\left(DF_{\step}^{x}(y)\right)\right|}+\frac{1}{2}\int_{y\in V_{-}}\frac{e^{-H(x,y)}}{\left|\det\left(DF_{-\step}^{x}(y)\right)\right|}.
@@ -813,15 +839,18 @@ We note that this formula assumed that
 \end_inset
 
 .
- Therefore, the formula is correct except for a measure zero subset.
+ Therefore,
+ the formula is correct except for a measure zero subset.
 \end_layout
 
 \begin_layout Proof
-By reversing time for the Hamiltonian curve, we have that for the same 
+By reversing time for the Hamiltonian curve,
+ we have that for the same 
 \begin_inset Formula $V_{\pm}$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula 
 \begin{equation}
 \pi(x')p_{x'}(x)=\frac{1}{2}\int_{y\in V_{+}}\frac{e^{-H(x',y')}}{\left|\det\left(DF_{-\step}^{x'}(y')\right)\right|}+\frac{1}{2}\int_{y\in V_{-}}\frac{e^{-H(x',y')}}{\left|\det\left(DF_{\step}^{x'}(y')\right)\right|}\label{eq:ham_transit}
@@ -866,7 +895,8 @@ C & D
 \begin_inset Formula $T_{\step}(x,y)=(x',y')$
 \end_inset
 
-, the inverse function theorem shows that 
+,
+ the inverse function theorem shows that 
 \begin_inset Formula $DT_{-\step}(x',y')$
 \end_inset
 
@@ -875,7 +905,8 @@ C & D
 \end_inset
 
 .
- Hence, we have that
+ Hence,
+ we have that
 \begin_inset Formula 
 \[
 DT_{-\step}(x',y')=\left(\begin{array}{cc}
@@ -889,7 +920,8 @@ C & D
 
 \end_inset
 
-Therefore, we have that 
+Therefore,
+ we have that 
 \begin_inset Formula $F_{\step}^{x}(y)=B$
 \end_inset
 
@@ -898,7 +930,8 @@ Therefore, we have that
 \end_inset
 
 .
- Hence, we have that
+ Hence,
+ we have that
 \begin_inset Formula 
 \begin{align*}
 \left|\det\left(DF_{-\step}^{x'}(y')\right)\right| & =\left|\det A^{-1}\det B\det\left(D-CA^{-1}B\right)^{-1}\right|=\frac{\left|\det B\right|}{\left|\det\left(\begin{array}{cc}
@@ -920,10 +953,12 @@ C & D
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:ham_measure_pre"
+nolink "false"
 
 \end_inset
 
-), we have that
+),
+ we have that
 \begin_inset Formula 
 \[
 \left|\det\left(DF_{-\step}^{x'}(y')\right)\right|=\left|\det\left(DF_{\step}^{x}(y)\right)\right|.
@@ -931,7 +966,8 @@ reference "lem:ham_measure_pre"
 
 \end_inset
 
-Hence, we have that
+Hence,
+ we have that
 \begin_inset Formula 
 \begin{align*}
 \frac{1}{2}\int_{y\in V_{+}}\frac{e^{-H(x,y)}}{\left|\det\left(DF_{\step}^{x}(y)\right)\right|} & =\frac{1}{2}\int_{y\in V_{+}}\frac{e^{-H(x,y)}}{\left|\det\left(DF_{-\step}^{x'}(y')\right)\right|}\\
@@ -948,6 +984,7 @@ where we used that
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:ham_eng_pre"
+nolink "false"
 
 \end_inset
 
@@ -960,10 +997,13 @@ For the second term in
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "eq:ham_transit"
+nolink "false"
 
 \end_inset
 
-, by the same calculation, we have that
+,
+ by the same calculation,
+ we have that
 \begin_inset Formula 
 \[
 \frac{1}{2}\int_{y\in V_{-}}\frac{e^{-H(x,y)}}{\left|\det\left(DF_{-\step}^{x}(y)\right)\right|}=\frac{1}{2}\int_{y\in V_{+}}\frac{e^{-H(x',y')}}{\left|\det\left(DF_{\step}^{x'}(y')\right)\right|}
@@ -1006,9 +1046,9 @@ First we consider the convergence in the case when
 \begin_inset Formula $y$
 \end_inset
 
-, with their next step directions chosen to be identical.
- The key lemma is that with this setting the squared distance decreases
- up to a certain time that depends on the condition number.
+,
+ with their next step directions chosen to be identical.
+ The key lemma is that with this setting the squared distance decreases up to a certain time that depends on the condition number.
 \end_layout
 
 \end_body
