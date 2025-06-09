@@ -321,6 +321,11 @@
 
 
 \begin_inset FormulaMacro
+\newcommand{\oma}{\overline{\mathbf{A}}}
+\end_inset
+
+
+\begin_inset FormulaMacro
 \newcommand{\Var}{\mathrm{Var}}
 \end_inset
 
@@ -399,7 +404,7 @@ University of Washington
 \begin_inset Newline newline
 \end_inset
 
-& Microsoft Research
+& OpenAI 
 \begin_inset ERT
 status open
 
@@ -412,7 +417,7 @@ and
 
 \end_inset
 
-Santosh Vempala
+ Santosh Vempala
 \begin_inset Foot
 status collapsed
 
