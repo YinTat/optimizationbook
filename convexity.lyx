@@ -1449,7 +1449,7 @@ TODO:
 \begin_inset Formula $W_{2}$
 \end_inset
 
- distance and Markov decision process later.
+ distance and Markov decision process.
 \end_layout
 
 \end_inset
@@ -2498,7 +2498,7 @@ name "lem:second_order"
 
 \end_inset
 
-For any 
+For any real-valued and twice continuously-differentiable function 
 \begin_inset Formula $f\in\mathcal{C}^{2}(\R^{n})$
 \end_inset
 
@@ -2602,7 +2602,13 @@ Let
 \begin_inset Formula $f\in\mathcal{C}^{2}(\Rn)$
 \end_inset
 
-.
+,
+ i.e.,
+ 
+\begin_inset Formula $f$
+\end_inset
+
+ is real-valued and twice continuously-differentiable.
  
 \begin_inset Note Note
 status open
