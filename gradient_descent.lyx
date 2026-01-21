@@ -409,7 +409,7 @@ Partial Approximation:
 \begin_layout Itemize
 Taylor Approximation:
  
-\begin_inset Formula $f(y)\approx\sum_{k=0}^{K}D^{k}f(x)[y-x]^{k}$
+\begin_inset Formula $f(y)\approx\sum_{k=0}^{K}D^{k}f(x)[y-x]^{k}/k!$
 \end_inset
 
  
@@ -813,7 +813,7 @@ One can view gradient descent as a greedy method for solving
  gradient descent goes to the minimizer of 
 \begin_inset Formula 
 \[
-\min_{\|\delta\|_{2}\leq h/\norm{\nabla f(x)}_{2}}f(x)+\nabla f(x)^{\top}\delta.
+\min_{\|\delta\|_{2}\leq h\norm{\nabla f(x)}_{2}}f(x)+\nabla f(x)^{\top}\delta.
 \]
 
 \end_inset

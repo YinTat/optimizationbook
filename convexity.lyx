@@ -2413,7 +2413,11 @@ Convex functions:
 
 ,
  
-\begin_inset Formula $(\prod_{i}^{n}x_{i})^{\frac{1}{n}}$
+\begin_inset Formula $-(\prod_{i}^{n}x_{i})^{\frac{1}{n}}$
+\end_inset
+
+ for 
+\begin_inset Formula $x\ge0$
 \end_inset
 
 .

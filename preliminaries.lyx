@@ -618,7 +618,7 @@ Sherman-Morrison-Woodbury
  we have
 \begin_inset Formula 
 \[
-\left(A+uv^{\top}\right)^{-1}=A^{-1}-\frac{A^{-1}uv^{\top}A^{-1}}{1+u^{\top}Av}.
+\left(A+uv^{\top}\right)^{-1}=A^{-1}-\frac{A^{-1}uv^{\top}A^{-1}}{1+u^{\top}A^{-1}v}.
 \]
 
 \end_inset
