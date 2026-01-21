@@ -212,7 +212,8 @@ We begin with gradient-based sampling methods.
 .
  These methods will in fact be natural algorithmic versions of continuous processes on random variables,
  a particularly pleasing connection.
- Later we will see methods that only use access to 
+ Later,
+ we will see methods that only use access to 
 \begin_inset Formula $f$
 \end_inset
 
@@ -223,7 +224,7 @@ We begin with gradient-based sampling methods.
 \end_layout
 
 \begin_layout Section
-Gradient-based methods:
+Gradient-based Sampling:
  Langevin Dynamics
 \end_layout
 
@@ -239,8 +240,54 @@ Here we study a simple stochastic process for generating samples from a desired 
 in the space of measures
 \emph default
 .
- While gradient descent corresponds to an ordinary differential equation (ODE),
- stochastic gradient descent corresponds to a stochastic differential equation (SDE).
+ Gradient descent corresponds to an Ordinary Differential Equation (ODE) for Gradient Flow:
+\begin_inset Formula 
+\[
+dX_{t}=-\nabla f(X_{t})\,dt
+\]
+
+\end_inset
+
+which,
+ by the chain rule,
+ leads to 
+\begin_inset Formula 
+\[
+d(f(X_{t})-f(X_{0}))=\langle\nabla f(X_{t}),dX_{t}\rangle=-\norm{\nabla f(X_{t})}^{2}dt.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Show that if 
+\begin_inset Formula $f$
+\end_inset
+
+ is 
+\begin_inset Formula $\mu$
+\end_inset
+
+-strongly convex,
+ then under Gradient Flow,
+ we have 
+\begin_inset Formula 
+\[
+f(X_{t})-f(X^{*})\le e^{-2\mu t}(f(X_{0})-f(X^{*})).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For sampling from a given starting point,
+ we need a process that introduces randomness (since the target itself is a distribution).
+ The continuous version of such a process corresponds to a Stochastic Differential Equation (SDE).
+ It is called Langevin Diffusion and is the analog of Gradient Flow for optimization.
 \end_layout
 
 \begin_layout Standard
@@ -361,7 +408,7 @@ Here
 \begin_inset Formula $f:\R^{n}\rightarrow\R$
 \end_inset
 
- is a function,
+ is a differentiable function,
  
 \begin_inset Formula $x_{t}$
 \end_inset
@@ -375,7 +422,7 @@ Here
 \end_inset
 
  is infinitesimal Brownian motion also known as a Wiener process.
- We can view it as the continuous version of the following discrete process 
+ We can view it as the limit of the following discrete process 
 \begin_inset Formula 
 \[
 x_{t+1}=x_{t}-h\nabla f(x_{t})+\sqrt{2h}\zeta_{t}
@@ -440,7 +487,7 @@ dx_{t}=-ax_{t}dt+\sigma dW_{t}
 \end_inset
 
 This represents a particle moving in a fluid,
- the first term being the force of friction exerted on the particle and the second term being the movement caused by other particles colliding in our particle,
+ the first term being the force of friction exerted on the particle and the second term being the movement caused by other particles colliding with our particle,
  which is modeled using Brownian motion.
  
 \end_layout
@@ -558,7 +605,7 @@ By definition,
 \begin_inset Formula $(dW_{t})^{2}=dt$
 \end_inset
 
- may seem to make sene.
+ may seem to make sense.
  This can be justified rigorously through 
 \emph on
 quadratic variations

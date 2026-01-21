@@ -1878,14 +1878,14 @@ where
 \end_inset
 
  is positive and large and 
-\begin_inset Formula $f(z)=0$
+\begin_inset Formula $f(z)\rightarrow0$
 \end_inset
 
  when 
-\begin_inset Formula $z$
+\begin_inset Formula $z\rightarrow-\infty$
 \end_inset
 
- is highly negative,
+ (which is desired),
  and 
 \begin_inset Formula $\lambda\|\theta\|_{1}$
 \end_inset
@@ -1898,13 +1898,17 @@ regularization
 \begin_inset Formula $\theta$
 \end_inset
 
- is bounded.
- One popular function is 
+ is bounded (any norm can be used in place of 
+\begin_inset Formula $\norm{\cdot}_{1}$
+\end_inset
+
+).
+ One popular choice of function is 
 \begin_inset Formula $f(z)=\log(1+e^{z})$
 \end_inset
 
 ,
- and this problem is called logistic regression.
+ and then this problem is called logistic regression.
  In the section 
 \begin_inset CommandInset ref
 LatexCommand ref
