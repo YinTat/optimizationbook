@@ -1917,6 +1917,37 @@ nolink "false"
 .
 \end_layout
 
+\begin_layout Exercise
+Show for GD on convex,
+ 
+\begin_inset Formula $L$
+\end_inset
+
+-gradient Lipschitz 
+\begin_inset Formula $f\in\mathcal{C}^{2}(\R^{n})$
+\end_inset
+
+ with step size 
+\begin_inset Formula $h\leq\frac{1}{L}$
+\end_inset
+
+,
+ the sequence 
+\begin_inset Formula $x^{(k)}$
+\end_inset
+
+ satisfies 
+\begin_inset Formula $||\nabla f(x^{(k+1)})||_{2}\leq||\nabla f(x^{(k)})||_{2}$
+\end_inset
+
+ for all 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ 
+\end_layout
+
 \begin_layout Standard
 Rewriting the bound,
  Theorem 

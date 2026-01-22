@@ -2837,6 +2837,24 @@ By the assumption (3),
  This gives (1).
 \end_layout
 
+\begin_layout Exercise
+Let 
+\begin_inset Formula $f\in\mathcal{C}^{1}(\Rn)$
+\end_inset
+
+.
+ Show that 
+\begin_inset Formula $(\nabla f(x)-\nabla f(y))^{\top}(x-y)\geq0$
+\end_inset
+
+ for all 
+\begin_inset Formula $x,y\in\Rn$
+\end_inset
+
+ is yet another equivalent condition for convexity.
+ 
+\end_layout
+
 \begin_layout Standard
 Now,
  as an example,
