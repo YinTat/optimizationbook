@@ -451,9 +451,9 @@ with
 \begin_layout Standard
 A more general form of an SDE is 
 \begin_inset Formula 
-\[
-dx_{t}=\mu(x_{t},t)dt+\sigma(x_{t},t)dW_{t}
-\]
+\begin{equation}
+dx_{t}=\mu(x_{t},t)dt+\sigma(x_{t},t)dW_{t}\label{eq:sde}
+\end{equation}
 
 \end_inset
 
@@ -617,7 +617,86 @@ quadratic variations
 
 ,
  and we need to keep track of the second term in the Taylor expansion as well.
- For a detailed treatment of stochastic calculus,
+ 
+\end_layout
+
+\begin_layout Standard
+When 
+\begin_inset Formula $x_{t}$
+\end_inset
+
+ is given by the SDE 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:sde"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+,
+ its 
+\emph on
+quadratic variation
+\emph default
+ 
+\begin_inset Formula $[x]_{t}$
+\end_inset
+
+ is defined as
+\begin_inset Formula 
+\[
+[x]_{t}=\lim_{n\to\infty}\sum_{i=1}^{n}(x_{t_{i}}-x_{t_{i-1}})^{2}=\int_{0}^{t}\sigma_{s}^{2}\,ds,
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\{t_{i}\}_{0\leq i\leq n}$
+\end_inset
+
+ is a partition of 
+\begin_inset Formula $[0,t]$
+\end_inset
+
+ whose mesh size 
+\begin_inset Formula $\max_{i\in[n]}|t_{i}-t_{i-1}|$
+\end_inset
+
+ goes to zero as 
+\begin_inset Formula $n\to\infty$
+\end_inset
+
+.
+ When 
+\begin_inset Formula $x_{t}$
+\end_inset
+
+ is vector-valued,
+ the quadratic variation is 
+\begin_inset Formula 
+\[
+[x]_{t}=\int_{0}^{t}\sigma_{s}\sigma_{s}^{\T}\,ds\,
+\]
+
+\end_inset
+
+and 
+\begin_inset Formula $d[X^{i},X^{j}]_{t}=(\sigma_{t}\sigma_{t}^{\top})_{ij}dt$
+\end_inset
+
+.
+ We can check that 
+\begin_inset Formula $[W]_{t}=tI$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+For a detailed treatment of stochastic calculus,
  we refer the reader to a standard textbook such as 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -754,8 +833,8 @@ nolink "false"
  we have that
 \begin_inset Formula 
 \begin{align*}
-\int\phi(x)dp_{t}(x)dx & =\E\left(\nabla\phi(x_{t})^{\top}\mu(x_{t})dt+\nabla\phi(x_{t})^{\top}\sigma(x_{t})dW_{t}+\frac{1}{2}\tr(\sigma(x_{t})^{\top}\nabla^{2}\phi(x_{t})\sigma(x_{t}))dt\right)\\
- & =\E\left(\nabla\phi(x_{t})^{\top}\mu(x_{t})dt+\frac{1}{2}\tr(\nabla^{2}\phi(x_{t})D(x_{t}))dt\right).
+\int\phi(x)\,dp(x)dx & =\E\left(\nabla\phi(x_{t})^{\top}\mu(x_{t})\,dt+\nabla\phi(x_{t})^{\top}\sigma(x_{t})\,dW_{t}+\frac{1}{2}\tr(\sigma(x_{t})^{\top}\nabla^{2}\phi(x_{t})\sigma(x_{t}))\,dt\right)\\
+ & =\E\left(\nabla\phi(x_{t})^{\top}\mu(x_{t})dt+\frac{1}{2}\tr(\nabla^{2}\phi(x_{t})D(x_{t}))\,dt\right).
 \end{align*}
 
 \end_inset
@@ -768,7 +847,7 @@ Using
  we have that
 \begin_inset Formula 
 \[
-\int\phi(x)\frac{dp_{t}}{dt}dx=\int\nabla\phi(x)^{\top}\mu(x)p_{t}(x)+\frac{1}{2}\tr(\nabla^{2}\phi(x)D(x))p_{t}(x)dx.
+\int\phi(x)\frac{dp_{t}}{dt}dx=\int\nabla\phi(x)^{\top}\mu(x)p_{t}(x)\,dx+\frac{1}{2}\int\tr(\nabla^{2}\phi(x)D(x))p_{t}(x)\,dx.
 \]
 
 \end_inset
@@ -1563,7 +1642,7 @@ To go one way,
 
 to go the other way,
  define 
-\begin_inset Formula $\rho=\frac{g^{2}}{\E_{\nu}(g^{2})}$
+\begin_inset Formula $\rho=\frac{g^{2}\nu}{\E_{\nu}(g^{2})}$
 \end_inset
 
 .
@@ -1594,6 +1673,73 @@ We use Lemmas and to obtain
 \end_inset
 
 Integrating over time gives the theorem.
+\end_layout
+
+\begin_layout Definition
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Poincar
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+'e
+\end_layout
+
+\end_inset
+
+ constant
+\end_layout
+
+\end_inset
+
+We say that a probability measure 
+\begin_inset Formula $\nu$
+\end_inset
+
+ on 
+\begin_inset Formula $\R^{n}$
+\end_inset
+
+ satisfies a 
+\emph on
+Poincar
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+'e
+\end_layout
+
+\end_inset
+
+ inequality
+\emph default
+ (PI) with parameter 
+\begin_inset Formula $C_{PI}(\nu)$
+\end_inset
+
+ if for all smooth functions 
+\begin_inset Formula $g:\Rn\to\R$
+\end_inset
+
+,
+\begin_inset Formula 
+\[
+\Var_{\nu}(g)\leq C_{PI}(\nu)\,\E_{\nu}\left(\norm{\nabla g}^{2}\right).
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Exercise
