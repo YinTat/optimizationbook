@@ -1510,7 +1510,7 @@ We compute the time derivative of the distribution of LD at time
 \begin{align*}
 \frac{d}{dt}d_{KL}(\rho_{t},\nu) & =\frac{d}{dt}\int_{\R^{n}}\rho\log\frac{\rho}{\nu}\\
  & =\int\frac{d\rho}{dt}\left(\log\frac{\rho}{\nu}+1\right)\\
- & =-\int\nabla\cdot\left(\rho\nabla\log\frac{\rho}{\nu}\right)\\
+ & =\int\nabla\cdot\left(\rho\nabla\log\frac{\rho}{\nu}\right)\log\frac{\rho}{\nu}\\
  & =-\int\langle\rho\nabla\log\frac{\rho}{\nu},\nabla\log\frac{\rho}{\nu}\rangle\\
  & =-\int\rho\norm{\nabla\log\frac{\rho}{\nu}}_{2}^{2}\\
  & =\E_{\rho}\left(\norm{\nabla\log\frac{\rho}{\nu}}_{2}^{2}\right)=-J_{\nu}(\rho_{t}).

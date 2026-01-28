@@ -89,19 +89,7 @@
 status open
 
 \begin_layout Plain Layout
-I really don't like this section...Need to reorganize next time.
-\end_layout
-
-\begin_layout Plain Layout
-Maybe reorganize in this way:
-\end_layout
-
-\begin_layout Plain Layout
-Tips for doing calculations:
-\end_layout
-
-\begin_layout Plain Layout
-1)
+Need to reorganize.
 \end_layout
 
 \end_inset
@@ -354,7 +342,7 @@ From this,
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\int_{\Omega}\nabla f\cdot v=\int_{\Omega}\nabla\cdot(fv)-\int_{\Omega}f(\nabla\cdot v).
+\int_{\Omega}\nabla f\cdot v=\int_{\Omega}\nabla\cdot(fv)-\int_{\Omega}(\nabla\cdot v)f.
 \]
 
 \end_inset
