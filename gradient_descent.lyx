@@ -1928,7 +1928,7 @@ Show for GD on convex,
 \end_inset
 
  with step size 
-\begin_inset Formula $h\leq\frac{1}{L}$
+\begin_inset Formula $h\leq\frac{2}{L}$
 \end_inset
 
 ,

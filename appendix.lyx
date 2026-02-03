@@ -305,19 +305,48 @@ Divergence and Integration by Parts
 \end_layout
 
 \begin_layout Standard
-The divergence (operator) of a function 
-\begin_inset Formula $f:\R^{n}\rightarrow\R$
+The divergence (operator) of a differentiable vector field 
+\begin_inset Formula $v:\R^{n}\rightarrow\R^{n}$
 \end_inset
 
  is given by
 \begin_inset Formula 
 \[
-\nabla\cdot f=\sum_{i=1}^{n}\frac{\partial f}{\partial x_{i}}.
+\nabla\cdot v=\sum_{i=1}^{n}\frac{\partial v_{i}}{\partial x_{i}}.
 \]
 
 \end_inset
 
-For a vector field 
+
+\end_layout
+
+\begin_layout Example
+Consider 
+\begin_inset Formula $v(x)=(2x_{1}+x_{3}^{3},3x_{1}\sin(x_{2}),4x_{3}x_{1}^{2})$
+\end_inset
+
+.
+ Then 
+\begin_inset Formula $\nabla\cdot v=2+3x_{1}\cos(x_{2})+4x_{1}^{2}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+As a special case,
+ for twice differentiable 
+\begin_inset Formula $f:\R^{n}\rightarrow\R$
+\end_inset
+
+,
+ we have the Laplacian 
+\begin_inset Formula $\Delta f\defeq\tr(\nabla^{2}f)=\nabla\cdot\nabla f$
+\end_inset
+
+.
+ For a vector field 
 \begin_inset Formula $v:\R^{n}\rightarrow\R^{n}$
 \end_inset
 
@@ -350,7 +379,7 @@ From this,
 And using the divergence theorem,
  namely,
  
-\begin_inset Formula $\int_{\Omega}\nabla f=\int_{\partial\Omega}f\overrightarrow{n}$
+\begin_inset Formula $\int_{\Omega}\nabla\cdot f=\int_{\partial\Omega}f\overrightarrow{n}$
 \end_inset
 
 ,
@@ -1024,6 +1053,57 @@ nolink "false"
 
 ,
  we used this to compute the derivative of central path.
+\end_layout
+
+\begin_layout Subsection
+Linearity of Expectation - the continuous version
+\end_layout
+
+\begin_layout Standard
+Often times one would like to compute the differential of a quantity that is most appropriately expressed by an integral,
+ and under mild assumptions we can do so by simply swapping the integral and derivative,
+ i.e.
+ for time differentiable and (Lebesgue) integrable 
+\begin_inset Formula $f(x,t)$
+\end_inset
+
+ we want to do
+\begin_inset Formula 
+\[
+\frac{d}{dt}\int_{\Omega}f(x,t)dx=\int_{\Omega}\frac{\partial}{\partial t}f(x,t)dx
+\]
+
+\end_inset
+
+For example,
+ we use this trick in deriving the Fokker-Planck equation in gradient-based sampling.
+ Fortunately,
+ measure theory gives us the dominated convergence theorem,
+ a quick corollary of which tells us we can perform the above trick as long as there exists integrable 
+\begin_inset Formula $g:\Omega\rightarrow\R$
+\end_inset
+
+ such that 
+\begin_inset Formula $\big|\frac{\partial}{\partial t}f(x,t)\big|\leq g(x)$
+\end_inset
+
+ for all 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ If we have 
+\begin_inset Formula $\Omega=\Rn$
+\end_inset
+
+,
+ then similar in nature to integration by parts for divergence,
+ the upper bound follows from showing that the derivative of 
+\begin_inset Formula $f$
+\end_inset
+
+ decays fast enough at infinity (for absolutely continuous probability distributions with full support,
+ this is often the case).
 \end_layout
 
 \begin_layout Section
