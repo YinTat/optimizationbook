@@ -176,11 +176,11 @@ K^{*}=\left\{ y:\forall x\in K,\left\langle x,y\right\rangle \le1\right\} .
 
 \begin_layout Standard
 The dual norm for 
-\begin_inset Formula $\norm._{K}$
+\begin_inset Formula $\norm ._{K}$
 \end_inset
 
  is 
-\begin_inset Formula $\norm._{K^{*}}$
+\begin_inset Formula $\norm ._{K^{*}}$
 \end_inset
 
 .
@@ -999,7 +999,7 @@ Consider using the subgradient method above to minimize
 
 ).
  Therefore,
- we have that the Lipshitz constant is bounded by the Euclidean norm of a vector with 
+ we have that the Lipschitz constant is bounded by the Euclidean norm of a vector with 
 \begin_inset Formula $\pm1$
 \end_inset
 

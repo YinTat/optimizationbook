@@ -203,7 +203,15 @@ Therefore,
 
 .
  Roughly speaking,
- this shows that each gradient computation cuts the set of possible solutions in half.
+ this shows that each gradient computation cuts the set of possible solutions in 
+\begin_inset Quotes eld
+\end_inset
+
+half
+\begin_inset Quotes erd
+\end_inset
+
+.
  In one dimension,
  this allows us to do a binary search to minimize convex functions.
  
@@ -2391,7 +2399,7 @@ nolink "false"
 
 \end_inset
 
- only used the fact that one side of halfspace defined by the gradient has higher value.
+ only used the fact that one side of hyperplane defined by the gradient has higher value.
  Therefore,
  we can replace the gradient with the vector 
 \begin_inset Formula $g(x)$
@@ -2441,7 +2449,7 @@ This theorem can be used to solve many problems in polynomial time.
 
 \begin_layout Theorem
 Given a linear program 
-\begin_inset Formula $\min_{x\in\Omega}c^{\top}x$
+\begin_inset Formula $\min_{x\in P}c^{\top}x$
 \end_inset
 
  where 
@@ -2454,11 +2462,11 @@ Given a linear program
 \end_inset
 
  be 
-\begin_inset Formula $R\defeq\max_{x\in\Omega}\norm x_{2}$
+\begin_inset Formula $R\defeq\max_{x\in P}\norm x_{2}$
 \end_inset
 
  and its volume radius be 
-\begin_inset Formula $r=\vol(\Omega)^{\frac{1}{n}}$
+\begin_inset Formula $r=\vol(P)^{1/n}$
 \end_inset
 
 .
