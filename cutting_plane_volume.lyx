@@ -1,16 +1,16 @@
-#LyX 2.3 created this file. For more info see http://www.lyx.org/
-\lyxformat 544
+#LyX 2.4 created this file. For more info see https://www.lyx.org/
+\lyxformat 620
 \begin_document
 \begin_header
 \save_transient_properties true
 \origin unavailable
 \textclass optbook
 \use_default_options true
-\maintain_unincluded_children false
+\maintain_unincluded_children no
 \language english
 \language_package default
-\inputencoding auto
-\fontencoding global
+\inputencoding auto-legacy
+\fontencoding auto
 \font_roman "default" "default"
 \font_sans "default" "default"
 \font_typewriter "default" "default"
@@ -18,7 +18,9 @@
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
-\font_osf false
+\font_roman_osf false
+\font_sans_osf false
+\font_typewriter_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
 \use_microtype false
@@ -50,7 +52,9 @@
 \suppress_date false
 \justification true
 \use_refstyle 1
+\use_formatted_ref 0
 \use_minted 0
+\use_lineno 0
 \index Index
 \shortcut idx
 \color #008000
@@ -66,11 +70,16 @@
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
+\tablestyle default
 \tracking_changes false
 \output_changes false
+\change_bars false
+\postpone_fragile_content false
 \html_math_output 0
 \html_css_as_file 0
 \html_be_strict false
+\docbook_table_output 0
+\docbook_mathml_prefix 1
 \end_header
 
 \begin_body
@@ -80,8 +89,8 @@ Cutting Plane method for Volume Computation
 \end_layout
 
 \begin_layout Standard
-Volume computation of a given set is a fundamental problem in theoretical
- computer science, with diverse applications to other problems (see Exercise
+Volume computation of a given set is a fundamental problem in theoretical computer science,
+ with diverse applications to other problems (see Exercise
 \begin_inset ERT
 status open
 
@@ -99,16 +108,16 @@ reference "ex: linExt-volume"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
 ).
- The cutting plane method provides a simple algorithm for computing the
- volume of a bounded set or, more generally, the integral of a function.
- The algorithm relies crucially on the ability to compute the center of
- gravity (or centroid) of the original set/function restricted by halfspaces.
- For simplicity we describe it here for the case when the input object is
- a convex body.
+ The cutting plane method provides a simple algorithm for computing the volume of a bounded set or,
+ more generally,
+ the integral of a function.
+ The algorithm relies crucially on the ability to compute the center of gravity (or centroid) of the original set/function restricted by halfspaces.
+ For simplicity we describe it here for the case when the input object is a convex body.
 \end_layout
 
 \begin_layout Standard
@@ -185,20 +194,24 @@ SetAlgoLined
 
 \series bold
 Input:
+
 \series default
  A body 
 \begin_inset Formula $K\subset\R^{n}$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $r\in R$
 \end_inset
 
-, and an oracle for computing centroid.
+,
+ and an oracle for computing centroid.
 \end_layout
 
 \begin_layout Standard
-Fix an ordering on the axes: 
+Fix an ordering on the axes:
+ 
 \begin_inset Formula $e_{1},e_{2},\ldots e_{n}$
 \end_inset
 
@@ -412,9 +425,9 @@ end{algorithm2e}
 \end_layout
 
 \begin_layout Standard
-The idea behind the algorithm is simple: when we cut a set with a hyperplane
- through its centroid, the line joining the centroids of the two sides passes
- through the original centroid (see Figure
+The idea behind the algorithm is simple:
+ when we cut a set with a hyperplane through its centroid,
+ the line joining the centroids of the two sides passes through the original centroid (see Figure
 \begin_inset ERT
 status open
 
@@ -427,8 +440,10 @@ ref{fig:cutting-volume}
 
 \end_inset
 
-); moreover, the ratio of the two segments is exactly the ratio of the volumes
- of the two halfspaces (i.e., 
+);
+ moreover,
+ the ratio of the two segments is exactly the ratio of the volumes of the two halfspaces (i.e.,
+ 
 \begin_inset Formula $V_{k}=\vol(K^{(0)})/\vol(K^{(k)})$
 \end_inset
 
@@ -454,7 +469,8 @@ For any measurable bounded set S in
 \begin_inset Formula $S$
 \end_inset
 
-, we have 
+,
+ we have 
 \begin_inset Formula 
 \[
 \mbox{centroid}(S)=\frac{\vol(S\cap H)}{\vol(S)}\,\mbox{centroid}(S\cap H)+\frac{\vol(S\cap\overline{H})}{\vol(S)}\,\mbox{centroid}(S\cap\overline{H}).
@@ -485,7 +501,8 @@ Let
 \begin_inset Formula $\theta$
 \end_inset
 
-, the support of 
+,
+ the support of 
 \begin_inset Formula $K$
 \end_inset
 
@@ -498,7 +515,8 @@ Let
 \end_inset
 
 .
- Then, 
+ Then,
+ 
 \begin_inset Formula 
 \[
 |a|\ge\frac{b}{n}.
@@ -517,17 +535,20 @@ reference "lem:width"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
 .
- [Hint: Use Theorem 
+ [Hint:
+ Use Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:Brunn-Minkowski"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -535,8 +556,8 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-Using the above property, we can show that the algorithm reaches a cuboid
- in a small number of iterations.
+Using the above property,
+ we can show that the algorithm reaches a cuboid in a small number of iterations.
 \end_layout
 
 \begin_layout Theorem
@@ -580,10 +601,13 @@ reference "thm:Grunbaum"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-, at each iteration, the volume of the remaining set 
+,
+ at each iteration,
+ the volume of the remaining set 
 \begin_inset Formula $K^{(k)}$
 \end_inset
 
@@ -600,14 +624,17 @@ noprefix "false"
 \begin_inset Formula $\max_{x\in K}\left|e_{i}^{\top}x\right|\leq\frac{r}{2}$
 \end_inset
 
-), the algorithm stops cutting along that axis.
- So, just before the last cut along any axis, the width in that direction
- is at least 
+),
+ the algorithm stops cutting along that axis.
+ So,
+ just before the last cut along any axis,
+ the width in that direction is at least 
 \begin_inset Formula $r/2$
 \end_inset
 
 .
- Then, we use the center of gravity to cut.
+ Then,
+ we use the center of gravity to cut.
  By Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -615,22 +642,24 @@ reference "lem:width"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-, the directional width along every axis of the surviving set is at least
- 
+,
+ the directional width along every axis of the surviving set is at least 
 \begin_inset Formula $r/2(n+1)$
 \end_inset
 
 .
- Since the set always contains the origin, and the original set contains
- a cube of side length 
+ Since the set always contains the origin,
+ and the original set contains a cube of side length 
 \begin_inset Formula $r$
 \end_inset
 
-, when the algorithm stops, it must be an axis-parallel cuboid with each
- side of length in the range 
+,
+ when the algorithm stops,
+ it must be an axis-parallel cuboid with each side of length in the range 
 \begin_inset Formula $[r/2(n+1),r/2]$
 \end_inset
 
@@ -652,17 +681,20 @@ noprefix "false"
 
 \end_inset
 
-In each iteration, by Lemma 
+In each iteration,
+ by Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:centroid"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
-, the algorithm maintains the ratio of the volume of the original 
+,
+ the algorithm maintains the ratio of the volume of the original 
 \begin_inset Formula $K$
 \end_inset
 
@@ -707,8 +739,7 @@ begin{tikzpicture}
 
      
 \backslash
-draw[thick] plot[smooth cycle] coordinates {(-3,2) (-1,3) (2,3) (3,1) (2,-2)
- (-1,-2) (-3,0)};
+draw[thick] plot[smooth cycle] coordinates {(-3,2) (-1,3) (2,3) (3,1) (2,-2) (-1,-2) (-3,0)};
 \end_layout
 
 \begin_layout Plain Layout
@@ -720,7 +751,8 @@ draw[thick] plot[smooth cycle] coordinates {(-3,2) (-1,3) (2,3) (3,1) (2,-2)
 
 	
 \backslash
-draw[red, thick] (-1,0.2) -- (1,-0.2);
+draw[red,
+ thick] (-1,0.2) -- (1,-0.2);
 \end_layout
 
 \begin_layout Plain Layout
@@ -732,7 +764,9 @@ draw[red, thick] (-1,0.2) -- (1,-0.2);
 
 	
 \backslash
-draw[blue, thick] (0,-2) -- (0,3);          
+draw[blue,
+ thick] (0,-2) -- (0,3);
+          
 \end_layout
 
 \begin_layout Plain Layout
@@ -744,21 +778,24 @@ draw[blue, thick] (0,-2) -- (0,3);
 
 	
 \backslash
-filldraw[black] (-1,0.2) circle (2pt);  % zL (moved up)     
+filldraw[black] (-1,0.2) circle (2pt);
+  % zL (moved up)     
 \end_layout
 
 \begin_layout Plain Layout
 
 	
 \backslash
-filldraw[black] (1,-0.2) circle (2pt);  % zR (moved down)     
+filldraw[black] (1,-0.2) circle (2pt);
+  % zR (moved down)     
 \end_layout
 
 \begin_layout Plain Layout
 
 	
 \backslash
-filldraw[red] (0,0) circle (2pt);  % z (center)
+filldraw[red] (0,0) circle (2pt);
+  % z (center)
 \end_layout
 
 \begin_layout Plain Layout
@@ -772,7 +809,8 @@ filldraw[red] (0,0) circle (2pt);  % z (center)
 \backslash
 node[left] at (-1,0.3) {
 \backslash
-Large $z_L$};     
+Large $z_L$};
+     
 \end_layout
 
 \begin_layout Plain Layout
@@ -781,7 +819,8 @@ Large $z_L$};
 \backslash
 node[right] at (1,-0.3) {
 \backslash
-Large $z_R$};    
+Large $z_R$};
+    
 \end_layout
 
 \begin_layout Plain Layout
@@ -811,16 +850,15 @@ caption{
 label{fig:cutting-volume} Insights into Algorithm~
 \backslash
 ref{alg:cutting-plane-volume}.
- The blue line indicates a halfspace $H$ passing through the centroid $z$
- of the convex set $K$, while $z_L$ is that of the left convex set $K
+ The blue line indicates a halfspace $H$ passing through the centroid $z$ of the convex set $K$,
+ while $z_L$ is that of the left convex set $K
 \backslash
 cap H$ and $z_R$ is that of the right convex set $K
 \backslash
 cap 
 \backslash
 overline{H}$.
- Note that the centroid $z$ lies on  the line segment joining $z_L$ and
- $z_R$.}
+ Note that the centroid $z$ lies on  the line segment joining $z_L$ and $z_R$.}
 \end_layout
 
 \begin_layout Plain Layout
@@ -836,10 +874,9 @@ end{figure}
 \end_layout
 
 \begin_layout Standard
-The above algorithm shows that computing the volume is polytime reducible
- to computing the centroid.
- Since volume is known to be #P-hard for explicit polytopes, this means
- that centroid computation is also #P-hard for polytopes 
+The above algorithm shows that computing the volume is polytime reducible to computing the centroid.
+ Since volume is known to be #P-hard for explicit polytopes,
+ this means that centroid computation is also #P-hard for polytopes 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "rademacher2007approximating"
@@ -848,8 +885,7 @@ literal "false"
 \end_inset
 
 .
- In later chapters we will see randomized polytime algorithms for sampling
- and hence for approximating centroid and volume.
+ In later chapters we will see randomized polytime algorithms for sampling and hence for approximating centroid and volume.
  
 \end_layout
 
@@ -876,13 +912,16 @@ name "ex: linExt-volume"
 \begin_inset Formula $n$
 \end_inset
 
--element set, it is of interest to count the number of linear extensions,
- i.e., total orders on the set that are consistent with 
+-element set,
+ it is of interest to count the number of linear extensions,
+ i.e.,
+ total orders on the set that are consistent with 
 \begin_inset Formula $P$
 \end_inset
 
 .
- We can define an associated polyhedron, 
+ We can define an associated polyhedron,
+ 
 \begin_inset Formula 
 \[
 Q=\left\{ x\in[0,1]^{n}:\,x_{i}<x_{j}\mbox{ if }(i,j)\in P\right\} .
@@ -900,6 +939,257 @@ Show that the number of linear extensions of
 
 .
  
+\end_layout
+
+\begin_layout Section
+Proof of the Brunn-Minkowski Inequality
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Proof-of-BM"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Here we prove Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:Brunn-Minkowski"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $A,B\subset\R^{n}$
+\end_inset
+
+ be measurable subsets.
+ Our goal is to show that 
+\begin_inset Formula 
+\[
+\vol(\lambda A+(1-\lambda)B)^{1/n}\ge\lambda\vol(A)^{1/n}+(1-\lambda)\vol(B)^{1/n}.
+\]
+
+\end_inset
+
+By setting 
+\begin_inset Formula $A'=\lambda A$
+\end_inset
+
+ and 
+\begin_inset Formula $B'=(1-\lambda)B$
+\end_inset
+
+,
+ this is equivalent to showing that for all measurable 
+\begin_inset Formula $A,B$
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{equation}
+\vol(A+B)^{1/n}\ge\vol(A)^{1/n}+\vol(B)^{1/n}.\label{eq:BM-ineq}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We first consider the case when 
+\begin_inset Formula $A,B$
+\end_inset
+
+ are cuboids,
+ i.e.,
+ 
+\begin_inset Formula 
+\[
+A=\prod_{i=1}^{n}[0,a_{i}]\ \mbox{and \ }B=\prod_{i=1}^{n}[0,b_{i}]
+\]
+
+\end_inset
+
+for positive real numbers 
+\begin_inset Formula $a_{1},\ldots,a_{m},b_{1},\ldots,b_{m}$
+\end_inset
+
+.
+ Then,
+ we have 
+\begin_inset Formula 
+\[
+\vol(A)=\prod_{i=1}^{n}a_{i},\,\vol(B)=\prod_{i=1}^{n}b_{i}\:\vol(A+B)=\prod_{i=1}^{n}(a_{i}+b_{i}).
+\]
+
+\end_inset
+
+Now we need to verify that 
+\begin_inset Formula 
+\[
+\left(\prod_{i=1}^{n}(a_{i}+b_{i})\right)^{\frac{1}{n}}\ge\left(\prod_{i=1}^{n}a_{i}\right)^{\frac{1}{n}}+\left(\prod_{i=1}^{n}b_{i}\right)^{\frac{1}{n}}
+\]
+
+\end_inset
+
+which is equivalent to 
+\begin_inset Formula 
+\[
+\left(\prod_{i=1}^{n}\frac{a_{i}}{a_{i}+b_{i}}\right)^{\frac{1}{n}}+\left(\prod_{i=1}^{n}\frac{b_{i}}{a_{i}+b_{i}}\right)^{\frac{1}{n}}\le1.
+\]
+
+\end_inset
+
+Using the AM-GM inequality,
+ for each of the terms on the LHS,
+ we have 
+\begin_inset Formula 
+\[
+\left(\prod_{i=1}^{n}\frac{a_{i}}{a_{i}+b_{i}}\right)^{\frac{1}{n}}+\left(\prod_{i=1}^{n}\frac{b_{i}}{a_{i}+b_{i}}\right)^{\frac{1}{n}}\le\frac{1}{n}\sum_{i=1}^{n}\frac{a_{i}}{a_{i}+b_{i}}+\frac{1}{n}\sum_{i=1}^{n}\frac{b_{i}}{a_{i}+b_{i}}=1.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We will now prove the inequality to any finite union of cuboids.
+ That suffices to complete the proof because any measurable subset is the limit of a union of disjoint cubes as the cubes become smaller and smaller.
+ 
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $A$
+\end_inset
+
+ be a finite collection of disjoint axis-parallel cuboids and 
+\begin_inset Formula $B$
+\end_inset
+
+ be another such collection.
+ We will prove the inequality by induction on the total number of cuboids in 
+\begin_inset Formula $A\cup B$
+\end_inset
+
+.
+ First note that there is at least one complete cuboid of 
+\begin_inset Formula $A$
+\end_inset
+
+ separated from another complete cuboid of 
+\begin_inset Formula $A$
+\end_inset
+
+ by an axis-aligned halfspace,
+ i.e.,
+ there is a coordinate 
+\begin_inset Formula $i$
+\end_inset
+
+ so that after translating 
+\begin_inset Formula $A$
+\end_inset
+
+ along this coordinate the sets 
+\begin_inset Formula ${x:x_{i}\le0}$
+\end_inset
+
+and 
+\begin_inset Formula ${x:x_{i}>0}$
+\end_inset
+
+ both contain a complete cuboid of 
+\begin_inset Formula $A$
+\end_inset
+
+.
+ This follows from the fact that disjoint axis-parallel cuboids can be separated by an axis-parallel halfspace.
+ Now define the following sets:
+\begin_inset Formula 
+\begin{align*}
+A^{+} & =A\cap\left\{ x:x_{i}>0\right\} \ \ A^{-}=A\setminus A^{+}\\
+B^{+} & =B\cap\left\{ x:x_{i}>0\right\} \ \ B^{-}=B\setminus B^{+}.
+\end{align*}
+
+\end_inset
+
+Translate 
+\begin_inset Formula $B$
+\end_inset
+
+ so that we have 
+\begin_inset Formula 
+\begin{equation}
+\frac{\vol(A^{+})}{\vol(A)}=\frac{\vol(B^{+})}{\vol(B^{-})}.\label{eq:AB_ratio}
+\end{equation}
+
+\end_inset
+
+(Translation only translates the Minkowski sum.) Since 
+\begin_inset Formula $A^{+}\cup B^{+}$
+\end_inset
+
+ and 
+\begin_inset Formula $A^{-}\cup B^{-}$
+\end_inset
+
+ are both smaller collections of cuboids compared to 
+\begin_inset Formula $A\cup B$
+\end_inset
+
+,
+ we can apply the B-M inequality 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "thm:Brunn-Minkowski"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ to them inductively.
+ We already proved the base case when each of 
+\begin_inset Formula $A,B$
+\end_inset
+
+ is a single cuboid.
+ Using induction in the second step and the identity 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:AB_ratio"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ in the fourth step,
+ we have:
+\begin_inset Formula 
+\begin{align*}
+\vol(A+B) & \ge\vol(A^{+}+B^{+})+\vol(A^{-}+B^{-})\\
+ & \ge\left(\vol(A^{+})^{1/n}+\vol(B^{+})^{1/n}\right)^{n}+\left(\vol(A^{-})^{1/n}+\vol(B^{-})^{1/n}\right)^{n}\\
+ & =\vol(A^{+})\left(1+\frac{\vol(B^{+})^{1/n}}{\vol(A^{+})^{1/n}}\right)^{n}+\vol(A^{-})\left(1+\frac{\vol(B^{-})^{1/n}}{\vol(A^{-})^{1/n}}\right)^{n}\\
+ & =\vol(A^{+})\left(1+\frac{\vol(B)^{1/n}}{\vol(A)^{1/n}}\right)^{n}+\vol(A^{-})\left(1+\frac{\vol(B)^{1/n}}{\vol(A)^{1/n}}\right)^{n}\\
+ & =\vol(A)\left(1+\frac{\vol(B)^{1/n}}{\vol(A)^{1/n}}\right)^{n}\\
+ & =\left(\vol(A)^{1/n}+\vol(B)^{1/n}\right)^{n}
+\end{align*}
+
+\end_inset
+
+which completes the proof.
 \end_layout
 
 \end_body

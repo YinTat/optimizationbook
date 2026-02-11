@@ -3293,6 +3293,18 @@ set below,
  for any other set,
  it is the limit over increasingly finer partitions into boxes,
  of the sum of volumes of boxes that intersect the set).
+ We prove the next theorem in Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Proof-of-BM"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Theorem
