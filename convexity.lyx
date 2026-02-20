@@ -3261,7 +3261,7 @@ Fix
 \end_inset
 
  for all 
-\begin_inset Formula $x\in\R^{n}$
+\begin_inset Formula $x,y\in\R^{n}$
 \end_inset
 
 .

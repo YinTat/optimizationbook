@@ -527,32 +527,204 @@ Let
 
 \end_layout
 
-\begin_layout Exercise
-Prove Lemma 
+\begin_layout Proof
+The goal of this proof is to show that a cone attains the maximum ratio of 
+\begin_inset Formula $b/|a|$
+\end_inset
+
+ (and it equals 
+\begin_inset Formula $n$
+\end_inset
+
+ in that case).
+ As with the proof of Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "lem:width"
+reference "thm:Grunbaum"
 plural "false"
 caps "false"
 noprefix "false"
 nolink "false"
 
+\end_inset
+
+,
+ we may assume 
+\begin_inset Formula $K$
+\end_inset
+
+ is symmetric by replacing each cross section 
+\begin_inset Formula $\{x\in K\colon\theta^{\top}x=t\}$
+\end_inset
+
+ with the 
+\begin_inset Formula $(n-1)$
+\end_inset
+
+-dimensional ball of the same volume with radius 
+\begin_inset Formula $r(t)$
+\end_inset
+
+,
+ i.e.,
+ 
+\begin_inset Formula $r^{n-1}(t)C_{n-1}$
+\end_inset
+
+ is the 
+\begin_inset Formula $(n-1)$
+\end_inset
+
+-dimensional volume of 
+\begin_inset Formula $K\cap\{y\in\R^{n}:y^{\top}\theta=t\}$
+\end_inset
+
+,
+ with the center of gravity at 
+\begin_inset Formula $t=0$
 \end_inset
 
 .
- [Hint:
- Use Theorem 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "thm:Brunn-Minkowski"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
+ We will exploit the fact that 
+\begin_inset Formula $r(t)$
+\end_inset
+
+ is concave in 
+\begin_inset Formula $t$
+\end_inset
+
+,
+ and replace 
+\begin_inset Formula $r(t)$
+\end_inset
+
+ by a line going through 
+\begin_inset Formula $(b,0)$
+\end_inset
+
+ and 
+\begin_inset Formula $(0,r(0))$
+\end_inset
+
+ so that we get a cone with base at 
+\begin_inset Formula $t=a$
+\end_inset
+
+.
+ We will show that the center of gravity of the cone,
+ say 
+\begin_inset Formula $t_{0}$
+\end_inset
+
+,
+ is to the left of 
+\begin_inset Formula $0$
+\end_inset
+
+.
+ Then,
+ 
+\begin_inset Formula 
+\[
+\frac{b}{|a|}\le\frac{b-t_{0}}{t_{0}-a}=\frac{n}{n+1}\frac{n+1}{1}=n
+\]
 
 \end_inset
 
-.]
+which can be rearranged to give the result.
+ The equation for the cone is
+\begin_inset Formula 
+\[
+y(t)=-\frac{r(0)}{b}(x-b).
+\]
+
+\end_inset
+
+Notice that 
+\begin_inset Formula $y(t)\le r(t)$
+\end_inset
+
+ for all 
+\begin_inset Formula $t\in[0,b]$
+\end_inset
+
+ since it is a chord between two points of a concave function and therefore always below the concave function.
+ To see why 
+\begin_inset Formula $r(t)\le y(t)$
+\end_inset
+
+ for 
+\begin_inset Formula $t\in[-a,0]$
+\end_inset
+
+,
+ consider 
+\begin_inset Formula $g(t)=r(t)-y(t)$
+\end_inset
+
+.
+ Then 
+\begin_inset Formula $g'(t)=r'(t)-y'(t)$
+\end_inset
+
+.
+ Notice that 
+\begin_inset Formula $g'(0)=r'(0)-y'(0)\ge0$
+\end_inset
+
+,
+ and since 
+\begin_inset Formula $y'(t)$
+\end_inset
+
+ is a constant and 
+\begin_inset Formula $r'(t)$
+\end_inset
+
+ is decreasing,
+ we must have 
+\begin_inset Formula $r'(t)-y'(t)\ge0$
+\end_inset
+
+ for all 
+\begin_inset Formula $t\le0$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $g(0)=0$
+\end_inset
+
+ by construction of 
+\begin_inset Formula $y(t)$
+\end_inset
+
+,
+ we get that 
+\begin_inset Formula $g(t)\le0$
+\end_inset
+
+ for all 
+\begin_inset Formula $t\le0$
+\end_inset
+
+.
+ Then,
+ we have
+\begin_inset Formula 
+\begin{align*}
+t_{0} & =\frac{\int_{a}^{b}ty^{n-1}(t)dt}{\int_{a}^{b}y^{n-1}(t)dt}\\
+ & =\frac{1}{\int_{a}^{b}y^{n-1}(t)dt}\left(\int_{a}^{0}ty^{n-1}(t)dt+\int_{0}^{b}ty^{n-1}(t)dt\right)\\
+ & \le\frac{1}{\int_{a}^{b}y^{n-1}(t)dt}\left(\int_{a}^{0}tr^{n-1}(t)dt+\int_{0}^{b}tr^{n-1}(t)dt\right)=0.
+\end{align*}
+
+\end_inset
+
+So 
+\begin_inset Formula $t_{0}\le0$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -594,7 +766,7 @@ Let
 \end_layout
 
 \begin_layout Proof
-By Lemma 
+By Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:Grunbaum"
