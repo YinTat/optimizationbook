@@ -7,7 +7,7 @@
 \textclass optbook
 \use_default_options true
 \maintain_unincluded_children no
-\language american
+\language english
 \language_package default
 \inputencoding utf8
 \fontencoding auto
@@ -88,6 +88,11 @@
 
 \begin_body
 
+\begin_layout Paragraph*
+Integration and Volume Computation.
+ 
+\end_layout
+
 \begin_layout Standard
 In this chapter,
  we develop efficient algorithms for volume computation and integration based on a technique called 
@@ -96,59 +101,30 @@ Simulated Annealing,
  
 \emph default
 which is also provably efficient for convex optimization.
- We recall these problems.
-\end_layout
-
-\begin_layout Problem
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-Volume Estimation
-\end_layout
+ The volume problem was defined in Chapter 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "chap:Elimination-and-Reduction"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
 
 \end_inset
 
- Given a membership oracle for a convex body 
-\begin_inset Formula $K$
-\end_inset
-
- in 
-\begin_inset Formula $\R^{n}$
-\end_inset
-
-,
- 
-\begin_inset Formula $R$
-\end_inset
-
- such that 
-\begin_inset Formula $B_{n}\subseteq K\subseteq RB_{n}$
-\end_inset
-
- and 
-\begin_inset Formula $\varepsilon>0$
-\end_inset
-
-,
- output a number 
-\begin_inset Formula $A$
-\end_inset
-
- s.t.
- 
-\begin_inset Formula 
-\[
-(1-\varepsilon)\vol(K)\le A\le(1+\varepsilon)\vol(K).
-\]
+ (Problem 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "problem:volume"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-Integration is a further generalization.
+).
+ Integration is the following generalization.
 \end_layout
 
 \begin_layout Problem
@@ -259,7 +235,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="11" columns="3">
+<lyxtabular version="3" rows="12" columns="3">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="left" valignment="top">
@@ -656,7 +632,7 @@ Gaussian Cooling
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -665,7 +641,7 @@ Gaussian Cooling
 
 \end_inset
 </cell>
-<cell alignment="left" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+<cell alignment="left" valignment="top" topline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -674,11 +650,43 @@ Hamiltonian Walk
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 \begin_inset Formula $mn^{\frac{2}{3}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2021/Jia-Laddha-Lee-Vempala 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Faster rounding
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n^{3.5}$
 \end_inset
 
 
@@ -1841,17 +1849,13 @@ F\left(\frac{x+y}{2},\frac{t+s}{2}\right) & =f\left(\frac{x+y}{t+s}\right)^{\fra
 \end_layout
 
 \begin_layout Proof
-Now by the Prekopa-Leindler Theorem 
-\lang english
-(see
+Now by the Prekopa-Leindler Theorem (see
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:marginal"
 
 \end_inset
 
-
-\lang american
 ),
  the marginal of 
 \begin_inset Formula $F$
@@ -1882,9 +1886,7 @@ Note that in the simulated annealing algorithm we choose
 \begin_inset Formula $\frac{a_{\{i+1\}}}{a_{i}}=(1+\frac{1}{\sqrt{{n\}}}})$
 \end_inset
 
- since this guarantees that the distribution with density proportional to
-\lang english
- 
+ since this guarantees that the distribution with density proportional to 
 \begin_inset Formula $f_{i}$
 \end_inset
 

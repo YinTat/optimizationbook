@@ -1278,6 +1278,13 @@ literal "true"
 
 \begin_layout Chapter
 Elimination and Reduction
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:Elimination-and-Reduction"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard

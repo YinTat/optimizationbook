@@ -7,7 +7,7 @@
 \textclass optbook
 \use_default_options true
 \maintain_unincluded_children no
-\language english
+\language american
 \language_package default
 \inputencoding auto-legacy
 \fontencoding auto
@@ -151,8 +151,134 @@ nolink "false"
 
 \end_layout
 
+\begin_layout Standard
+More precisely,
+ we have the following basic problem.
+ 
+\end_layout
+
+\begin_layout Problem
+\begin_inset CommandInset label
+LatexCommand label
+name "problem:volume"
+
+\end_inset
+
+
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Volume Estimation
+\end_layout
+
+\end_inset
+
+ Given a membership oracle for a convex body 
+\begin_inset Formula $K$
+\end_inset
+
+ in 
+\begin_inset Formula $\R^{n}$
+\end_inset
+
+,
+ 
+\begin_inset Formula $R$
+\end_inset
+
+ such that 
+\begin_inset Formula $B_{n}\subseteq K\subseteq RB_{n}$
+\end_inset
+
+ and 
+\begin_inset Formula $\varepsilon>0$
+\end_inset
+
+,
+ output a number 
+\begin_inset Formula $A$
+\end_inset
+
+ s.t.
+ 
+\begin_inset Formula 
+\[
+(1-\varepsilon)\vol(K)\le A\le(1+\varepsilon)\vol(K).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Problem
+The complexity of an algorithm for volume estimation is measured by the number of oracle queries and the number of arithmetic operations.
+ 
+\end_layout
+
 \begin_layout Section
-Cutting Plane method for Volume Computation
+Hardness of Volume Estimation
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset citation
+LatexCommand cite
+key "BF87,BF88"
+literal "false"
+
+\end_inset
+
+ Suppose there is a deterministic algorithm that takes a convex body 
+\begin_inset Formula $K\subset\R^{n}$
+\end_inset
+
+ given by a membership oracle and outputs 
+\begin_inset Formula $A(K),B(K)$
+\end_inset
+
+ such that 
+\begin_inset Formula $A(K)\le\vol(K)\le B(K)$
+\end_inset
+
+ and makes at most 
+\begin_inset Formula $n^{a}$
+\end_inset
+
+ calls to the membership oracle for 
+\begin_inset Formula $K$
+\end_inset
+
+ for some 
+\begin_inset Formula $a>0$
+\end_inset
+
+.
+ Then there is some convex body 
+\begin_inset Formula $K$
+\end_inset
+
+ for which
+\end_layout
+
+\begin_layout Theorem
+\begin_inset Formula 
+\[
+\frac{B(K)}{A(K)}\ge\left(\frac{cn}{a\log n}\right)^{\frac{n}{2}}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $c>0$
+\end_inset
+
+ is an absolute constant.
+\end_layout
+
+\begin_layout Section
+Cutting Plane method for Volume Computation:
+ Reduction to Center-of-Gravity
 \end_layout
 
 \begin_layout Standard
@@ -245,11 +371,11 @@ Input:
 
 ,
  
-\begin_inset Formula $r\in R$
+\begin_inset Formula $r>0$
 \end_inset
 
 ,
- and an oracle for computing centroid.
+ and an oracle for computing the centroid.
 \end_layout
 
 \begin_layout Standard
@@ -654,7 +780,7 @@ nolink "false"
 \begin_inset Formula $K^{(k)}$
 \end_inset
 
- decreases by a factor of at most 
+ decreases by at least a factor of 
 \begin_inset Formula $(1-\frac{1}{e})$
 \end_inset
 
