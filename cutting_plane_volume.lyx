@@ -443,7 +443,7 @@ Let
 \end_inset
 
  is greater than 
-\begin_inset Formula $r/2$
+\begin_inset Formula $r$
 \end_inset
 
 .
@@ -512,11 +512,7 @@ Let
 \begin_inset Formula $H^{(k)}\defeq\left\{ x\,:\,a^{\top}x\le a^{\top}z^{(k)}\right\} $
 \end_inset
 
- contains 
-\begin_inset Formula $z^{(0)}$
-\end_inset
-
-.
+ contains the origin.
 \end_layout
 
 \begin_layout Standard
@@ -738,12 +734,8 @@ Let
 \begin_inset Formula $\R^{n}$
 \end_inset
 
- containing a cube of side length 
-\begin_inset Formula $r$
-\end_inset
-
- around its centroid and contained in a cube of side length 
-\begin_inset Formula $R$
+ such that 
+\begin_inset Formula $[-r,r]^{n}\subseteq K\subseteq[-R,R]^{n}$
 \end_inset
 
 .
@@ -786,11 +778,11 @@ nolink "false"
 
 .
  When the directional width along any axis is less than 
-\begin_inset Formula $r/2$
+\begin_inset Formula $r$
 \end_inset
 
  (namely 
-\begin_inset Formula $\max_{x\in K}\left|e_{i}^{\top}x\right|\leq\frac{r}{2}$
+\begin_inset Formula $\max_{x\in K}\left|e_{i}^{\top}x\right|\leq r$
 \end_inset
 
 ),
@@ -798,7 +790,7 @@ nolink "false"
  So,
  just before the last cut along any axis,
  the width in that direction is at least 
-\begin_inset Formula $r/2$
+\begin_inset Formula $r$
 \end_inset
 
 .
@@ -817,7 +809,7 @@ nolink "false"
 
 ,
  the directional width along every axis of the surviving set is at least 
-\begin_inset Formula $r/2(n+1)$
+\begin_inset Formula $r/(n+1)$
 \end_inset
 
 .
@@ -829,12 +821,12 @@ nolink "false"
 ,
  when the algorithm stops,
  it must be an axis-parallel cuboid with each side of length in the range 
-\begin_inset Formula $[r/2(n+1),r/2]$
+\begin_inset Formula $[r/(n+1),r]$
 \end_inset
 
 .
  So the final volume is at least 
-\begin_inset Formula $(r/2(n+1))^{n}.$
+\begin_inset Formula $(r/(n+1))^{n}.$
 \end_inset
 
  The initial volume is at most 
@@ -845,7 +837,7 @@ nolink "false"
  Therefore the number of iterations is at most 
 \begin_inset Formula 
 \[
-\log_{(1-\frac{1}{e})}\left(\frac{R^{n}}{(r/2(n+1))^{n}}\right)=O\left(n\log(nR/r)\right).
+\log_{(1-\frac{1}{e})}\left(\frac{(2R)^{n}}{(r/(n+1))^{n}}\right)=O\left(n\log(nR/r)\right).
 \]
 
 \end_inset
