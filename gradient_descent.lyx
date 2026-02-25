@@ -285,7 +285,7 @@ nolink "false"
 \begin_layout Itemize
 Second-order Approximation:
  
-\begin_inset Formula $f(y)\approx f(x)+\left\langle \nabla f(x),y-x\right\rangle +(y-x)^{\top}\nabla^{2}f(x)(y-x)$
+\begin_inset Formula $f(y)\approx f(x)+\left\langle \nabla f(x),y-x\right\rangle +\frac{1}{2}(y-x)^{\top}\nabla^{2}f(x)(y-x)$
 \end_inset
 
  (Section 
@@ -908,7 +908,30 @@ We say
 .
 \end_layout
 
-\begin_layout Definition
+\begin_layout Standard
+In many settings (including in some future chapters of this book),
+ functions with an 
+\begin_inset Formula $L$
+\end_inset
+
+-Lipschitz gradient are also referred to as 
+\begin_inset Formula $L$
+\end_inset
+
+-smooth,
+ though 
+\begin_inset Quotes eld
+\end_inset
+
+smooth
+\begin_inset Quotes erd
+\end_inset
+
+ by itself often refers to being infinitely differentiable.
+ 
+\end_layout
+
+\begin_layout Standard
 Similar to Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -918,7 +941,7 @@ nolink "false"
 \end_inset
 
 ,
- we have the following equivalence.
+ we have the following equivalence:
 \end_layout
 
 \begin_layout Theorem

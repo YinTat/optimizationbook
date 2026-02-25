@@ -562,7 +562,24 @@ df(x_{t}) & =\nabla f(x_{t})^{\top}dx_{t}+\frac{1}{2}(dx_{t})^{\top}\nabla^{2}f(
 \end_layout
 
 \begin_layout Standard
-The usual chain rule comes from using Taylor expansion and taking a limit,
+Note that in Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:itos"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+,
+ the dimension of the Brownian motion need not match that of the process 
+\begin_inset Formula $x_{t}$
+\end_inset
+
+ that it diffuses.
+ The usual chain rule comes from using Taylor expansion and taking a limit,
  i.e.,
  
 \begin_inset Formula 
@@ -1388,7 +1405,7 @@ status open
 \end_inset
 
 where 
-\begin_inset Formula $\Var_{\nu}g=\E_{\nu}\abs{g-\E_{\pi}g}^{2}$
+\begin_inset Formula $\Var_{\nu}g=\E_{\nu}\abs{g-\E_{\nu}g}^{2}$
 \end_inset
 
 .
