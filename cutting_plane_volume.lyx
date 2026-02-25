@@ -30,7 +30,10 @@
 \output_sync 0
 \bibtex_command default
 \index_command default
+\float_placement class
+\float_alignment class
 \paperfontsize default
+\spacing single
 \use_hyperref false
 \papersize default
 \use_geometry false
@@ -46,6 +49,7 @@
 \use_package undertilde 1
 \cite_engine basic
 \cite_engine_type default
+\biblio_style plain
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
@@ -84,10 +88,6 @@
 
 \begin_body
 
-\begin_layout Section
-Cutting Plane method for Volume Computation
-\end_layout
-
 \begin_layout Standard
 Volume computation of a given set is a fundamental problem in theoretical computer science,
  with diverse applications to other problems (see Exercise
@@ -113,10 +113,53 @@ nolink "false"
 \end_inset
 
 ).
- The cutting plane method provides a simple algorithm for computing the volume of a bounded set or,
+ For a convex body 
+\begin_inset Formula $K$
+\end_inset
+
+ in 
+\begin_inset Formula $\R^{n}$
+\end_inset
+
+,
+ 
+\begin_inset Formula $R$
+\end_inset
+
+ such that 
+\begin_inset Formula $B_{n}\subseteq K\subseteq RB_{n}$
+\end_inset
+
+ and 
+\begin_inset Formula $\varepsilon>0$
+\end_inset
+
+,
+ the problem is to output a number 
+\begin_inset Formula $A$
+\end_inset
+
+ s.t.
+ 
+\begin_inset Formula 
+\[
+(1-\varepsilon)\vol(K)\le A\le(1+\varepsilon)\vol(K).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Cutting Plane method for Volume Computation
+\end_layout
+
+\begin_layout Standard
+The cutting plane method provides a simple algorithm for computing the volume of a bounded set or,
  more generally,
  the integral of a function.
- The algorithm relies crucially on the ability to compute the center of gravity (or centroid) of the original set/function restricted by halfspaces.
+ The algorithm below relies crucially on the ability to compute the center of gravity (or centroid) of the original set/function restricted by halfspaces.
  For simplicity we describe it here for the case when the input object is a convex body.
 \end_layout
 
@@ -1176,7 +1219,19 @@ nolink "false"
 \end_inset
 
  in the fourth step,
- we have:
+ we have (note that the sets 
+\begin_inset Formula $A^{+}+B^{+}$
+\end_inset
+
+and 
+\begin_inset Formula $A^{-}+B^{-}$
+\end_inset
+
+ are disjoint and contained in 
+\begin_inset Formula $A+B$
+\end_inset
+
+):
 \begin_inset Formula 
 \begin{align*}
 \vol(A+B) & \ge\vol(A^{+}+B^{+})+\vol(A^{-}+B^{-})\\
