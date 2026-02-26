@@ -276,6 +276,239 @@ where
  is an absolute constant.
 \end_layout
 
+\begin_layout Standard
+We will prove the following simpler bound.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset citation
+LatexCommand cite
+key "E86"
+literal "false"
+
+\end_inset
+
+ For any deterministic algorithm that makes 
+\begin_inset Formula $m$
+\end_inset
+
+ queries to a membership oracle for a convex body 
+\begin_inset Formula $K\subseteq B^{n}$
+\end_inset
+
+ and returns 
+\begin_inset Formula $A(K),B(K)$
+\end_inset
+
+ such that 
+\begin_inset Formula $A(K)\le\vol(K)\le B(K)$
+\end_inset
+
+,
+ there is some convex body 
+\begin_inset Formula $K$
+\end_inset
+
+ for which 
+\begin_inset Formula 
+\[
+\frac{B(K)}{A(K)}\ge\frac{2^{n}}{m}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In other words,
+ even getting a simple exponential volume approximation requires an exponential number of queries.
+ 
+\end_layout
+
+\begin_layout Proof
+For all queries 
+\begin_inset Formula $x\in B^{n},$
+\end_inset
+
+the oracle answers YES and for queries outside the unit ball it answers NO.
+ After 
+\begin_inset Formula $m$
+\end_inset
+
+ queries 
+\begin_inset Formula $x_{1},\ldots,x_{m}$
+\end_inset
+
+,
+ we have that 
+\begin_inset Formula 
+\[
+\conv\left\{ x_{1},\ldots,x_{m}\right\} \subseteq K\subseteq B^{n}.
+\]
+
+\end_inset
+
+Now by Lemma ,
+ the volume of the convex hull of 
+\emph on
+any 
+\begin_inset Formula $m$
+\end_inset
+
+ 
+\emph default
+points in the unit ball is at most a 
+\begin_inset Formula $m/2^{n}$
+\end_inset
+
+ fraction of the unit ball's volume.
+ This proves the theorem.
+\end_layout
+
+\begin_layout Lemma
+Let 
+\begin_inset Formula $x_{1},\ldots,x_{m}\in B^{n}$
+\end_inset
+
+.
+ Then 
+\begin_inset Formula 
+\[
+\vol\left(\conv\left\{ x_{1},\ldots,x_{m}\right\} \right)\le\frac{m}{2^{n}}\vol(B^{n}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+For each 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+,
+ define 
+\begin_inset Formula $B_{i}=B(x_{i},\|x_{i}\|/2)$
+\end_inset
+
+,
+ a ball with diameter 
+\begin_inset Formula $\|x_{i}\|\le1/2$
+\end_inset
+
+.
+ Then 
+\begin_inset Formula 
+\[
+\vol\left(\bigcup_{i=1}^{m}B_{i}\right)\le m\cdot\vol(B(0,1/2))=\frac{m}{2^{n}}\vol(B^{n}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+We argue that 
+\begin_inset Formula $\conv{x_{1},\ldots,x_{m}}\subset\bigcup B_{i}$
+\end_inset
+
+.
+ To see this,
+ let 
+\begin_inset Formula $y$
+\end_inset
+
+ be a point not contained in 
+\begin_inset Formula $B_{i}$
+\end_inset
+
+.
+ Then,
+ the angle at 
+\begin_inset Formula $y$
+\end_inset
+
+ induced by the vectors 
+\begin_inset Formula $y$
+\end_inset
+
+ and 
+\begin_inset Formula $y-x_{i}$
+\end_inset
+
+ must be acute,
+ i.e.,
+ 
+\begin_inset Formula 
+\[
+\langle y,x_{i}-y\rangle<0
+\]
+
+\end_inset
+
+and this holds for all 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ In other words,
+ the halfspace 
+\begin_inset Formula $\langle y,x-y\rangle<0$
+\end_inset
+
+ separates 
+\begin_inset Formula $y$
+\end_inset
+
+ from all the 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+.
+ Therefore it separates it from their convex hull.
+ 
+\end_layout
+
+\begin_layout Standard
+Computing the volume is hard even for explicit simple polyhedra as the following theorem asserts.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset citation
+LatexCommand cite
+key "DF88"
+literal "false"
+
+\end_inset
+
+ Let 
+\begin_inset Formula $P={x:x\in[0,1]^{n},a^{\top}x\le b}$
+\end_inset
+
+ where 
+\begin_inset Formula $a$
+\end_inset
+
+ is an integer vector.
+ Computing the volume of 
+\begin_inset Formula $P$
+\end_inset
+
+ (specified by 
+\begin_inset Formula $a,b$
+\end_inset
+
+) is 
+\begin_inset Formula $\#$
+\end_inset
+
+P-hard.
+ 
+\end_layout
+
 \begin_layout Section
 Cutting Plane method for Volume Computation:
  Reduction to Center-of-Gravity
@@ -287,6 +520,8 @@ The cutting plane method provides a simple algorithm for computing the volume of
  the integral of a function.
  The algorithm below relies crucially on the ability to compute the center of gravity (or centroid) of the original set/function restricted by halfspaces.
  For simplicity we describe it here for the case when the input object is a convex body.
+ This reduction from volume computation to centroid computation is deterministic,
+ and hence establishes the hardness of the latter problem.
 \end_layout
 
 \begin_layout Standard

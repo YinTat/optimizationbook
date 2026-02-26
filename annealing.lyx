@@ -636,7 +636,15 @@ Gaussian Cooling
 \begin_inset Text
 
 \begin_layout Plain Layout
-2017/Lee-Vempala (polytopes)
+2017/Lee-Vempala (polytopes) 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "lee2017convergence"
+literal "false"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -669,6 +677,14 @@ Hamiltonian Walk
 
 \begin_layout Plain Layout
 2021/Jia-Laddha-Lee-Vempala 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "JLLV26"
+literal "false"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
