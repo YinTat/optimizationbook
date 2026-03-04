@@ -1400,7 +1400,7 @@ d_{TV}(Q_{t},Q)\leq\varepsilon+\sqrt{\frac{M}{\varepsilon}}\left(1-\frac{\phi^{2
 \end_layout
 
 \end_deeper
-\begin_layout Exercise
+\begin_layout Theorem
 Show that for a lazy,
  time-reversible Markov chain with stationary distribution 
 \begin_inset Formula $Q$
@@ -1416,6 +1416,81 @@ Show that for a lazy,
 \[
 \chi^{2}(Q_{t},Q)\le\left(1-\frac{\phi^{2}}{2}\right)^{t}\chi^{2}(Q_{0},Q).
 \]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+The core of this proof is Cheeger's classical inequality.
+ In fact,
+ we will prove the following more general statement.
+ Let 
+\begin_inset Formula $M$
+\end_inset
+
+ be the transition operator of the reversible Markov chain.
+\end_layout
+
+\begin_layout Proof
+For any 
+\begin_inset Formula $f:\Omega\rightarrow\R$
+\end_inset
+
+ that is square integrable with 
+\begin_inset Formula $\E_{Q}(f)=0$
+\end_inset
+
+,
+ we have 
+\begin_inset Formula 
+\[
+\int_{\Omega}f(x)Mf(x)\,dQ(x)\le\left(1-\frac{\phi^{2}}{2}\right)\int_{\Omega}f(x)^{2}\,dQ(x).
+\]
+
+\end_inset
+
+Note that by setting 
+\begin_inset Formula $f(x)=\frac{dQ_{t}(x)}{dQ(x)}-1$
+\end_inset
+
+,
+ we get 
+\begin_inset Formula 
+\[
+\chi^{2}\left(Q_{t+1},Q\right)\le\left(1-\frac{\phi^{2}}{2}\right)\chi^{2}(Q_{t},Q).
+\]
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Show that 
+\begin_inset Formula $\frac{d}{dt}\Var_{Q}(Q_{t})\le-2\Var_{Q}(Q_{t})$
+\end_inset
+
+ using 
+\begin_inset Formula $f_{t}=dQ_{t}/dQ$
+\end_inset
+
+ and 
+\begin_inset Formula $H_{t}=e^{-t}e^{tP}$
+\end_inset
+
+ for the Markov operator 
+\begin_inset Formula $P$
+\end_inset
+
+.
+ 
+\end_layout
 
 \end_inset
 
