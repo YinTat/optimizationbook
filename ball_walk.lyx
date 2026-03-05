@@ -1459,9 +1459,20 @@ the expected value of
 \end_layout
 
 \begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:transition-operator-norm"
+
+\end_inset
+
 For a lazy,
  time-reversible Markov chain with transition operator 
 \begin_inset Formula $M$
+\end_inset
+
+,
+ stationary distribution 
+\begin_inset Formula $Q$
 \end_inset
 
  and conductance 
@@ -1473,7 +1484,7 @@ For a lazy,
 \begin_inset Formula $f:\Omega\rightarrow\R$
 \end_inset
 
- that is square integrable with 
+ that is square-integrable with 
 \begin_inset Formula $\E_{Q}(f)=0$
 \end_inset
 
@@ -1518,7 +1529,7 @@ The core of this proof is Cheeger's classical inequality.
 
 \end_inset
 
-where if needed we replaced 
+where if needed we replace 
 \begin_inset Formula $f$
 \end_inset
 
@@ -1536,7 +1547,16 @@ Next,
 \begin_inset Formula $A(t)=\{x:g(x)^{2}\ge t\}$
 \end_inset
 
-.
+,
+ and using 
+\begin_inset Formula $\E_{Q}(h(x))=\int_{t=0}^{\infty}\Pr_{Q}(h(x)\ge t)\,dt$
+\end_inset
+
+ for any nonnegative function 
+\begin_inset Formula $h$
+\end_inset
+
+,
  we have 
 \begin_inset Formula 
 \begin{align*}
@@ -1626,7 +1646,7 @@ For a lazy,
  we have 
 \begin_inset Formula 
 \[
-\chi^{2}(Q_{t},Q)\le\left(1-\frac{\phi^{2}}{4}\right)^{t}\chi^{2}(Q_{0},Q).
+\chi^{2}(Q_{t},Q)\le\left(1-\frac{\phi^{2}}{4}\right)^{2t}\chi^{2}(Q_{0},Q).
 \]
 
 \end_inset
@@ -1635,15 +1655,47 @@ For a lazy,
 \end_layout
 
 \begin_layout Proof
+Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:transition-operator-norm"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ implies that the transition operator 
+\begin_inset Formula $M$
+\end_inset
+
+ satisfies 
+\begin_inset Formula 
+\[
+\norm M\le1-\frac{\phi^{2}}{4}.
+\]
+
+\end_inset
+
+As a result,
+ we have 
+\begin_inset Formula 
+\[
+\langle Mf,Mf\rangle\le\left(1-\frac{\phi^{2}}{4}\right)^{2}.
+\]
+
+\end_inset
+
 By setting 
-\begin_inset Formula $f(x)=\frac{dQ_{t}(x)}{dQ(x)}-1$
+\begin_inset Formula $f(x)=\frac{dQ_{t-1}(x)}{dQ(x)}-1$
 \end_inset
 
 ,
  we get 
 \begin_inset Formula 
 \[
-\chi^{2}\left(Q_{t+1},Q\right)\le\left(1-\frac{\phi^{2}}{4}\right)\chi^{2}(Q_{t},Q).
+\chi^{2}\left(Q_{t},Q\right)\le\left(1-\frac{\phi^{2}}{4}\right)^{2}\chi^{2}(Q_{t-1},Q).
 \]
 
 \end_inset
