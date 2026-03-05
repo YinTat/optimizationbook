@@ -1400,8 +1400,220 @@ d_{TV}(Q_{t},Q)\leq\varepsilon+\sqrt{\frac{M}{\varepsilon}}\left(1-\frac{\phi^{2
 \end_layout
 
 \end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The next theorem will allow us to provide a more uniform 
+\emph on
+contraction 
+\emph default
+bound for the 
+\begin_inset Formula $\chi^{2}$
+\end_inset
+
+-divergence of the 
+\begin_inset Formula $t$
+\end_inset
+
+-step distribution.
+ The Markov transition operator 
+\begin_inset Formula $M$
+\end_inset
+
+ for a Markov scheme given by state space 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ and next-step distributions 
+\begin_inset Formula $\left\{ P_{u}(.)\right\} $
+\end_inset
+
+ is a map from square-integrable functions to square-integrable functions over 
+\begin_inset Formula $\Omega$
+\end_inset
+
+,
+ defined as follows
+\begin_inset Formula 
+\[
+Mf(u)=\int_{\Omega}f(v)\,dP_{u}(v)
+\]
+
+\end_inset
+
+the expected value of 
+\begin_inset Formula $f(w_{i+1})$
+\end_inset
+
+ under the Markov chain given that 
+\begin_inset Formula $w_{i}=u$
+\end_inset
+
+.
+ 
+\end_layout
+
 \begin_layout Theorem
-Show that for a lazy,
+For a lazy,
+ time-reversible Markov chain with transition operator 
+\begin_inset Formula $M$
+\end_inset
+
+ and conductance 
+\begin_inset Formula $\phi$
+\end_inset
+
+,
+ and any 
+\begin_inset Formula $f:\Omega\rightarrow\R$
+\end_inset
+
+ that is square integrable with 
+\begin_inset Formula $\E_{Q}(f)=0$
+\end_inset
+
+,
+ we have 
+\begin_inset Formula 
+\[
+\left\langle f,Mf\right\rangle =\int_{\Omega}f(x)Mf(x)\,dQ(x)\le\left(1-\frac{\phi^{2}}{4}\right)\int_{\Omega}f(x)^{2}\,dQ(x)=\left(1-\frac{\phi^{2}}{4}\right)\norm f^{2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+The core of this proof is Cheeger's classical inequality.
+ Let 
+\begin_inset Formula $r$
+\end_inset
+
+ be s.t.
+ 
+\begin_inset Formula $Q(\{x:f(x)>r\})\le1/2$
+\end_inset
+
+ and 
+\begin_inset Formula $Q(\{x:f(x)<r\})\le1/2$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $g(x)=\max\{f(x)-r,0\}$
+\end_inset
+
+.
+ We then have
+\begin_inset Formula 
+\[
+\int_{\Omega}g(x)^{2}\,dQ(x)\ge\frac{1}{2}\int_{\Omega}(f(x)-r)^{2}\,dQ(x)=\frac{1}{2}\norm f^{2}+\frac{1}{2}r^{2}\ge\frac{1}{2}\norm f^{2}
+\]
+
+\end_inset
+
+where if needed we replaced 
+\begin_inset Formula $f$
+\end_inset
+
+ with 
+\begin_inset Formula $-f$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+Next,
+ defining 
+\begin_inset Formula $A(t)=\{x:g(x)^{2}\ge t\}$
+\end_inset
+
+.
+ we have 
+\begin_inset Formula 
+\begin{align*}
+\int_{\Omega}\int_{\Omega}\left|g(x)^{2}-g(y)^{2}\right|\,dP_{y}(x)\,dQ(y) & =2\int_{\Omega}\int_{A(g(y)^{2})}\left(g(x)^{2}-g(y)^{2}\right)\,dP_{y}(x)\,dQ(y)\\
+ & =2\int_{\Omega}\int_{g(y)^{2}}^{\infty}P_{y}(A(t))\,dt\,dQ(y)\\
+ & =2\int_{0}^{\infty}\int_{\Omega\setminus A(t)}P_{y}(A(t))\,dQ(y)\,dt\\
+ & \ge2\phi\int_{0}^{\infty}Q(A(t))\,dt\\
+ & =2\phi\int_{\Omega}g(x)^{2}\,dQ(x)\\
+ & =2\phi\norm g^{2}
+\end{align*}
+
+\end_inset
+
+noting that for 
+\begin_inset Formula $t\ge0$
+\end_inset
+
+,
+ we have 
+\begin_inset Formula $Q(A(t))\le1/2$
+\end_inset
+
+ by the choice of 
+\begin_inset Formula $r$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+By Cauchy-Schwarz,
+ we also have
+\begin_inset Formula 
+\begin{align*}
+\left(\int_{\Omega}\int_{\Omega}\left|g(x)^{2}-g(y)^{2}\right|\,dP_{y}(x)\,dQ(y)\right)^{2} & \le\int_{\Omega}\int_{\Omega}\left(g(x)-g(y)\right)^{2}\,dP_{y}(x)\,dQ(y)\int_{\Omega}\int_{\Omega}\left(g(x)+g(y)\right)^{2}\,dP_{y}(x)\,dQ(y).
+\end{align*}
+
+\end_inset
+
+We can bound the second term as
+\begin_inset Formula 
+\begin{align*}
+\int_{\Omega}\int_{\Omega}\left(g(x)+g(y)\right)^{2}\,dP_{y}(x)\,dQ(y) & \le2\int_{\Omega}\int_{\Omega}\left(g(x)^{2}+g(y)^{2}\right)\,dP_{y}(x)\,dQ(y)\\
+ & =4\int_{\Omega}g(x)^{2}\,dQ(x)\\
+ & =4\norm g^{2}.
+\end{align*}
+
+\end_inset
+
+Putting these together,
+ 
+\begin_inset Formula 
+\begin{align*}
+\int_{\Omega}\int_{\Omega}\left(g(x)-g(y)\right)^{2}\,dP_{y}(x)\,dQ(y) & \ge\frac{4\phi^{2}\norm g^{4}}{4\norm g^{2}}\ge\phi^{2}\norm g^{2}\ge\frac{\phi^{2}}{2}\norm f^{2}.
+\end{align*}
+
+\end_inset
+
+Hence,
+ 
+\begin_inset Formula 
+\[
+\norm f^{2}-\langle f,Mf\rangle=\frac{1}{2}\int_{\Omega}\int_{\Omega}\left(f(x)-f(y\right)^{2}\,dP_{y}(x)\,dQ(y)\ge\frac{\phi^{2}}{4}\norm f^{2}
+\]
+
+\end_inset
+
+which proves the conclusion.
+\end_layout
+
+\begin_layout Standard
+This has an immediate corollary.
+\end_layout
+
+\begin_layout Corollary
+For a lazy,
  time-reversible Markov chain with stationary distribution 
 \begin_inset Formula $Q$
 \end_inset
@@ -1414,7 +1626,7 @@ Show that for a lazy,
  we have 
 \begin_inset Formula 
 \[
-\chi^{2}(Q_{t},Q)\le\left(1-\frac{\phi^{2}}{2}\right)^{t}\chi^{2}(Q_{0},Q).
+\chi^{2}(Q_{t},Q)\le\left(1-\frac{\phi^{2}}{4}\right)^{t}\chi^{2}(Q_{0},Q).
 \]
 
 \end_inset
@@ -1423,35 +1635,7 @@ Show that for a lazy,
 \end_layout
 
 \begin_layout Proof
-The core of this proof is Cheeger's classical inequality.
- In fact,
- we will prove the following more general statement.
- Let 
-\begin_inset Formula $M$
-\end_inset
-
- be the transition operator of the reversible Markov chain.
-\end_layout
-
-\begin_layout Proof
-For any 
-\begin_inset Formula $f:\Omega\rightarrow\R$
-\end_inset
-
- that is square integrable with 
-\begin_inset Formula $\E_{Q}(f)=0$
-\end_inset
-
-,
- we have 
-\begin_inset Formula 
-\[
-\int_{\Omega}f(x)Mf(x)\,dQ(x)\le\left(1-\frac{\phi^{2}}{2}\right)\int_{\Omega}f(x)^{2}\,dQ(x).
-\]
-
-\end_inset
-
-Note that by setting 
+By setting 
 \begin_inset Formula $f(x)=\frac{dQ_{t}(x)}{dQ(x)}-1$
 \end_inset
 
@@ -1459,7 +1643,7 @@ Note that by setting
  we get 
 \begin_inset Formula 
 \[
-\chi^{2}\left(Q_{t+1},Q\right)\le\left(1-\frac{\phi^{2}}{2}\right)\chi^{2}(Q_{t},Q).
+\chi^{2}\left(Q_{t+1},Q\right)\le\left(1-\frac{\phi^{2}}{4}\right)\chi^{2}(Q_{t},Q).
 \]
 
 \end_inset
