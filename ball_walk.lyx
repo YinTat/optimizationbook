@@ -1456,6 +1456,29 @@ the expected value of
 
 .
  
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Typo in 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "top of p375"
+key "LS93"
+literal "false"
+
+\end_inset
+
+ where they miss a factor of 
+\begin_inset Formula $2$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Theorem
