@@ -3642,6 +3642,12 @@ For convex bodies,
 \end_layout
 
 \begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:isotropic-r-R"
+
+\end_inset
+
 For a convex body in isotropic position (i.e.,
  the uniform distribution over the body is isotropic),
  we have
@@ -3653,6 +3659,35 @@ For a convex body in isotropic position (i.e.,
 \end_inset
 
 
+\end_layout
+
+\begin_layout Exercise
+Show Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:isotropic-r-R"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ up to absolute constants,
+ i.e.,
+ show that for any convex body in isotropic position,
+ it contains and is contained in origin-centered balls of radii 
+\begin_inset Formula $\Omega(1)$
+\end_inset
+
+ and 
+\begin_inset Formula $O(n)$
+\end_inset
+
+,
+ respectively.
+ Moreover,
+ give an isotropic convex body where both of these bounds are tight up to absolute constants.
 \end_layout
 
 \begin_layout Standard
