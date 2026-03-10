@@ -2383,7 +2383,7 @@ nolink "false"
 \end_layout
 
 \begin_layout Standard
-A similar bound also holds for convergence to the optimal point.
+A similar bound also holds for convergence to the optimal point and for convergence of the gradient's norm.
  
 \end_layout
 
@@ -2426,6 +2426,51 @@ Let
 \begin_inset Formula 
 \[
 \|x^{(k)}-x^{*}\|_{2}^{2}\le\left(1-\frac{\mu}{L}\right)^{k}\left\Vert x^{(0)}-x^{*}\right\Vert _{2}^{2}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Let 
+\begin_inset Formula $f\in\mathcal{C}^{2}(\R^{n})$
+\end_inset
+
+ be 
+\begin_inset Formula $\mu$
+\end_inset
+
+-strongly convex with 
+\begin_inset Formula $L$
+\end_inset
+
+-Lipschitz gradient.
+ With step size 
+\begin_inset Formula $h=1/L$
+\end_inset
+
+,
+ show that the sequence 
+\begin_inset Formula $x^{(k)}$
+\end_inset
+
+ in 
+\begin_inset Formula $\mathtt{GradientDescent}$
+\end_inset
+
+ satisfies
+\begin_inset Formula 
+\[
+||\nabla f(x^{(k+1)})||_{2}\leq\left(1-\frac{\mu}{L}\right)||\nabla f(x^{(k)})||_{2}
 \]
 
 \end_inset
