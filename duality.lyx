@@ -246,6 +246,214 @@ Compactness is necessary.
 \end_layout
 
 \begin_layout Standard
+For completeness,
+ we can show a more general dual form below:
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:dual-decomp"
+
+\end_inset
+
+For convex functions 
+\begin_inset Formula $f_{1},\dots,f_{m}$
+\end_inset
+
+ with closed epigraphs,
+ we have (assuming the minimum exists)
+\begin_inset Formula 
+\[
+\min_{x}\sum_{i=1}^{m}f_{i}(x)=-\min_{\theta_{1},\ldots,\theta_{m-1}}\left(f_{1}^{*}(-\theta_{1})+\sum_{i=2}^{m-1}f_{i}^{*}(\theta_{i-1}-\theta_{i})+f_{m}^{*}(\theta_{m-1})\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+For any 
+\begin_inset Formula $\theta_{1},\ldots,\theta_{m-1}$
+\end_inset
+
+ and 
+\begin_inset Formula $x$
+\end_inset
+
+,
+ 
+\begin_inset Formula 
+\begin{align*}
+f_{1}^{*}(-\theta_{1})+\sum_{i=2}^{m-1}f_{i}^{*}(\theta_{i-1}-\theta_{i})+f_{m}^{*}(\theta_{m-1}) & \ge((-\theta_{1})^{\top}x-f_{1}(x))+\sum_{i=1}^{m-1}((\theta_{i-1}-\theta_{i})^{\top}x-f_{i}(x))\\
+ & ~+(\theta_{m-1}^{\top}x-f_{m}(x))\\
+ & =-\sum_{i=1}^{m}f_{i}(x)\\
+\sum_{i=1}^{m}f_{i}(x) & \ge-(f_{1}^{*}(-\theta_{1})+\sum_{i=2}^{m-1}f_{i}^{*}(\theta_{i-1}-\theta_{i})+f_{m}^{*}(\theta_{m-1}))
+\end{align*}
+
+\end_inset
+
+So,
+ 
+\begin_inset Formula 
+\begin{align*}
+\inf_{x}\sum_{i=1}^{m}f_{i}(x) & \ge\sup_{\theta_{1},\ldots,\theta_{m-1}}-(f_{1}^{*}(-\theta_{1})+\sum_{i=2}^{m-1}f_{i}^{*}(\theta_{i-1}-\theta_{i})+f_{m}^{*}(\theta_{m-1}))
+\end{align*}
+
+\end_inset
+
+It remains to show that there exist 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $\theta_{1},\ldots,\theta_{m-1}$
+\end_inset
+
+ such that 
+\begin_inset Formula 
+\[
+\sum_{i=1}^{m}f_{i}(x)\le-(f_{1}^{*}(-\theta_{1})+\sum_{i=2}^{m-1}f_{i}^{*}(\theta_{i-1}-\theta_{i})+f_{m}^{*}(\theta_{m-1}))
+\]
+
+\end_inset
+
+(
+\begin_inset Formula $\ge$
+\end_inset
+
+ is guaranteed by above).
+ We choose 
+\begin_inset Formula $x\in\R^{n}$
+\end_inset
+
+ to minimize the convex function 
+\begin_inset Formula $\sum_{i=1}^{m}f_{i}(x)$
+\end_inset
+
+.
+ Then,
+ 
+\begin_inset Formula $0\in\nabla(\sum_{i=1}^{m}f_{i}(x))=\sum_{i=1}^{m}\nabla f_{i}(x)$
+\end_inset
+
+ (as Minkowski sum of subgradients),
+ so there exists 
+\begin_inset Formula $\alpha_{1},\ldots,\alpha_{m}\in\R^{n}$
+\end_inset
+
+ such that 
+\begin_inset Formula $\sum_{i=1}^{m}\alpha_{i}=0$
+\end_inset
+
+ and 
+\begin_inset Formula $\alpha_{i}\in\nabla f_{i}(x)$
+\end_inset
+
+.
+ By definition of subgradient,
+ for all 
+\begin_inset Formula $y\in\R^{n}$
+\end_inset
+
+,
+ 
+\begin_inset Formula 
+\begin{align*}
+f_{i}(y) & \ge f_{i}(x)+\alpha_{i}^{\top}(y-x)\\
+\alpha_{i}^{\top}y-f_{i}(y) & \le\alpha_{i}^{\top}x-f_{i}(x)\\
+f_{i}^{*}(\alpha_{i}) & =\sup_{y}\alpha_{i}^{\top}y-f_{i}(y)\\
+ & \le\alpha_{i}^{\top}x-f_{i}(x)
+\end{align*}
+
+\end_inset
+
+Then,
+ 
+\begin_inset Formula 
+\begin{align*}
+\sum_{i=1}^{m}f_{i}^{*}(\alpha_{i}) & \le\sum_{i=1}^{m}\left(\alpha_{i}^{\top}x-f_{i}(x)\right)\\
+ & =-\sum_{i=1}^{m}f_{i}(x)
+\end{align*}
+
+\end_inset
+
+Finally,
+ we choose 
+\begin_inset Formula $\theta_{i}=-\sum_{j=1}^{i}\alpha_{j}$
+\end_inset
+
+ for 
+\begin_inset Formula $i=0,\ldots,m$
+\end_inset
+
+,
+ so that 
+\begin_inset Formula $\alpha_{i}=\theta_{i-1}-\theta_{i}$
+\end_inset
+
+,
+ and 
+\begin_inset Formula $\theta_{0}=\theta_{m}=0$
+\end_inset
+
+.
+ Then,
+ 
+\begin_inset Formula 
+\[
+\sum_{i=1}^{m}f_{i}(x)\le-\sum_{i=1}^{m}f_{i}^{*}(\theta_{i-1}-\theta_{i})
+\]
+
+\end_inset
+
+as desired.
+\end_layout
+
+\begin_layout Remark*
+The alternative form in Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:dual-decomp"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ can be used to implement a distributed version of gradient descent.
+ If server 
+\begin_inset Formula $i$
+\end_inset
+
+ only has access to 
+\begin_inset Formula $f_{i}$
+\end_inset
+
+,
+ then it suffices to communicate with only neighboring servers 
+\begin_inset Formula $i\pm1$
+\end_inset
+
+ to compute the contribution of 
+\begin_inset Formula $\theta_{i}$
+\end_inset
+
+ to the gradient,
+ as the only terms with 
+\begin_inset Formula $\theta_{i}$
+\end_inset
+
+ are 
+\begin_inset Formula $f_{i}^{*}(\theta_{i-1}-\theta_{i}),f_{i+1}^{*}(\theta_{i}-\theta_{i+1})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 We call 
 \begin_inset Quotes eld
 \end_inset
