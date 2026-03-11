@@ -4797,7 +4797,7 @@ If we take all
 \end_inset
 
 -dimensional affine subspaces defined by 
-\begin_inset Formula $\left\{ x\in\Rn:\ x_{i}=r_{1},\,x_{j}=r_{2}\right\} $
+\begin_inset Formula $\{x\in\Rn:\ x_{i}=r_{1},\,x_{j}=r_{2}\}$
 \end_inset
 
  where 
@@ -4922,7 +4922,7 @@ If
  
 \begin_inset Formula 
 \[
-\psi_{m}(t):=\left(\frac{\vol_{n-1}(K_{m}\cap Z_{t})}{\vol_{n}K_{m}}\right)^{\frac{1}{n-1}}\,.
+\psi_{m}(t):=\left(\frac{\vol_{n-1}(K_{m}\cap Z_{t})}{\vol_{n}(K_{m})}\right)^{\frac{1}{n-1}}\,.
 \]
 
 \end_inset
@@ -5023,7 +5023,7 @@ Note that for
 ,
 \begin_inset Formula 
 \[
-\frac{1}{\vol(K_{m})}\int_{\K_{m}}g(x)\,dx=\int_{\alpha_{i}}^{\beta_{i}}\frac{1}{\vol_{n-1}(K_{m}\cap Z_{t})}\int_{\K_{m}\cap Z_{t}}g(y,t)\,dy\,\psi_{m}(t)^{n-1}\,dt\,.
+\frac{1}{\vol(K_{m})}\int_{K_{m}}g(x)\,dx=\int_{\alpha_{i}}^{\beta_{i}}\frac{1}{\vol_{n-1}(K_{m}\cap Z_{t})}\int_{K_{m}\cap Z_{t}}g(y,t)\,dy\,\psi_{m}(t)^{n-1}\,dt\,.
 \]
 
 \end_inset
