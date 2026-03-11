@@ -246,8 +246,7 @@ Compactness is necessary.
 \end_layout
 
 \begin_layout Standard
-For completeness,
- we can show a more general dual form below:
+The above idea of passing to the dual extends to a sum of convex functions as below below.
 \end_layout
 
 \begin_layout Lemma
