@@ -313,6 +313,11 @@ Since hit-and-run is a symmetric Markov chain,
  
 \end_layout
 
+\begin_layout Exercise
+Show that Hit-and-Run satisfies detailed balance.
+ 
+\end_layout
+
 \begin_layout Standard
 Next we give a formula for the next step distribution from a point 
 \begin_inset Formula $u$
@@ -853,11 +858,126 @@ for some fixed
 .
 \end_layout
 
-\begin_layout Exercise
-Show that the step-size function is concave over any convex body.
+\begin_layout Lemma
+For any 
+\begin_inset Formula $\gamma\in(0,1]$
+\end_inset
+
+,
+ the step-size function 
+\begin_inset Formula $s(x)$
+\end_inset
+
+ is concave over any convex body 
+\begin_inset Formula $K$
+\end_inset
+
+.
 \end_layout
 
-\begin_layout Exercise
+\begin_layout Proof
+Let 
+\begin_inset Formula $x_{1},x_{2}\in K$
+\end_inset
+
+ with 
+\begin_inset Formula $r_{i}=s(x_{i})$
+\end_inset
+
+ and 
+\begin_inset Formula $A_{i}=K\cap(x_{i}+r_{i}B^{n})$
+\end_inset
+
+.
+ Define 
+\begin_inset Formula $x=(x_{1}+x_{2})/2$
+\end_inset
+
+ and 
+\begin_inset Formula $A=(A_{1}+A_{2})/2$
+\end_inset
+
+.
+ We will show that 
+\begin_inset Formula $s(x)\ge(s(x_{1})+s(x_{2})/2$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+Note that by convexity 
+\begin_inset Formula $A\subseteq K$
+\end_inset
+
+ and for any point 
+\begin_inset Formula $y\in A$
+\end_inset
+
+,
+ we can write 
+\begin_inset Formula 
+\[
+y=\frac{1}{2}(x_{1}+z_{1}+x_{2}+z_{2})=x+\frac{z_{1}+z_{2}}{2}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\norm{z_{i}}_{2}\le r_{i}$
+\end_inset
+
+.
+ Therefore 
+\begin_inset Formula 
+\[
+A\subseteq K\cap\left(x+\frac{r_{1}+r_{2}}{2}B^{n}\right).
+\]
+
+\end_inset
+
+By the Brunn-Minkowsky inequality (Thm.
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:Brunn-Minkowski"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+),
+ we have 
+\begin_inset Formula 
+\begin{align*}
+\vol(A)^{1/n} & \ge\frac{1}{2}\vol(A_{1})^{1/n}+\frac{1}{2}\vol(A_{2})^{1/n}\\
+ & \ge\frac{1}{2}\gamma^{1/n}\vol(B^{n})^{1/n}\left(r_{1}+r_{2}\right)\\
+ & \ge\gamma^{1/n}\vol\left(\frac{r_{1}+r_{2}}{2}B^{n}\right)^{1/n}.
+\end{align*}
+
+\end_inset
+
+Therefore,
+ 
+\begin_inset Formula 
+\[
+\vol\left(K\cap\left(x+\frac{r_{1}+r_{2}}{2}B^{n}\right)\right)\ge\vol(A)\ge\gamma\vol\left(\frac{r_{1}+r_{2}}{2}B^{n}\right)
+\]
+
+\end_inset
+
+which shows that 
+\begin_inset Formula $s(x)\ge(r_{1}+r_{2})/2$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
 We will need the following relationship between the step-size function and the median step function.
 \end_layout
 
