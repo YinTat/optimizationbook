@@ -4621,19 +4621,74 @@ The points
 
 .
  
-\end_layout
-
-\begin_layout Proof
-\begin_inset Argument 1
+\begin_inset Note Note
 status open
 
 \begin_layout Plain Layout
-Proof outline
+draw truncated cone.
 \end_layout
 
 \end_inset
 
-The main idea is the following.
+
+\end_layout
+
+\begin_layout Proof
+WLOG we can assume that the functions 
+\begin_inset Formula $g,h$
+\end_inset
+
+ are continuous.
+ This is because they are limits of monotone increasing sequences of continuous functions 
+\begin_inset Formula $g_{k},h_{k}$
+\end_inset
+
+ where 
+\begin_inset Formula 
+\[
+\lim_{k\rightarrow\infty}\int g_{k}=\int g>0\quad\text{and}\quad\lim_{k\rightarrow\infty}\int h_{k}=\int h>0\,.
+\]
+
+\end_inset
+
+Hence there exists 
+\begin_inset Formula $k_{0}$
+\end_inset
+
+ such that for all 
+\begin_inset Formula $k\ge k_{0}$
+\end_inset
+
+,
+ 
+\begin_inset Formula $\int g_{k},\int h_{k}>0$
+\end_inset
+
+.
+ We can apply the lemma to these and derive the conclusion for 
+\begin_inset Formula $g,h$
+\end_inset
+
+.
+ Moreover,
+ it suffices to prove the final conclusion with 
+\begin_inset Formula $\ge0$
+\end_inset
+
+,
+ as we can always consider 
+\begin_inset Formula $g-\gamma,h-\gamma>0$
+\end_inset
+
+ for some strictly positive continuous small enough function 
+\begin_inset Formula $\gamma$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+The main idea of the proof is ``bisection''.
  Let 
 \begin_inset Formula $H$
 \end_inset
@@ -4641,7 +4696,7 @@ The main idea is the following.
  be any halfspace such that 
 \begin_inset Formula 
 \[
-\int_{H}g(x)\,dx=\frac{1}{2}\int_{\R^{n}}g(x)\,dx.
+\int_{H}g(x)\,dx=\frac{1}{2}\int g(x)\,dx\,.
 \]
 
 \end_inset
@@ -4650,7 +4705,7 @@ Let us call this a bisecting halfspace.
  Now either 
 \begin_inset Formula 
 \[
-\int_{H}h(x)\,dx>0\quad\mbox{ or }\quad\int_{\R^{n}\setminus H}h(x)\,dx>0.
+\int_{H}h(x)\,dx>0\quad\mbox{ or }\quad\int_{\R^{n}\setminus H}h(x)\,dx>0\,.
 \]
 
 \end_inset
@@ -4660,7 +4715,7 @@ Thus,
 \begin_inset Formula $H$
 \end_inset
 
- or its complementary halfspace will have positive integrals for both 
+ or its compliment will have positive integrals for both 
 \begin_inset Formula $g$
 \end_inset
 
@@ -4779,28 +4834,721 @@ If we take all
 
  in its boundary,
  and so it properly partitions the current set.
+ Thus the limit of this bisection process is a function supported on an interval (which could be a single point).
 \end_layout
 
 \begin_layout Proof
-Thus the limit of this bisection process is a function supported on an interval (which could be a single point),
- and since the function itself is a limit of convex sets (intersections of halfspaces) containing this interval,
- it is a limit of a sequence of concave functions and is itself concave,
- with positive integrals.
- Simplifying further from concave to linear takes quite a bit of work.
- For the full proof,
- we refer the reader to 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "LS93"
-literal "true"
+In fact,
+ this gives a sequence of convex bodies,
+ where 
+\begin_inset Formula $K_{0}$
+\end_inset
 
+ can be a large enough ball,
+ and 
+\begin_inset Formula $K_{i+1}=K_{i}\cap H_{i}$
+\end_inset
+
+,
+ the bisecting halfspace found at step 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ Define 
+\begin_inset Formula $K=\cap_{i}K_{i}$
+\end_inset
+
+.
+ We have just argued that 
+\begin_inset Formula $K$
+\end_inset
+
+ is an interval 
+\begin_inset Formula $[a,b]$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $a=b$
+\end_inset
+
+,
+ then the conclusion follows by continuity with 
+\begin_inset Formula $\ell=1$
+\end_inset
+
+.
+ So assume 
+\begin_inset Formula $a\neq b$
 \end_inset
 
 .
 \end_layout
 
+\begin_layout Proof
+If 
+\begin_inset Formula $a\neq b$
+\end_inset
+
+,
+ then we may assume 
+\begin_inset Formula $a=0$
+\end_inset
+
+ and 
+\begin_inset Formula $b=e_{1}$
+\end_inset
+
+ (by scaling and translation).
+ For a slice 
+\begin_inset Formula $Z_{t}:=\{x\in\Rn:x_{1}=t\}$
+\end_inset
+
+ (here 
+\begin_inset Formula $t\in\R$
+\end_inset
+
+),
+ consider the following sequence of functions over 
+\begin_inset Formula $[0,1]$
+\end_inset
+
+ for 
+\begin_inset Formula $m\ge0$
+\end_inset
+
+:
+ 
+\begin_inset Formula 
+\[
+\psi_{m}(t):=\left(\frac{\vol_{n-1}(K_{m}\cap Z_{t})}{\vol_{n}K_{m}}\right)^{\frac{1}{n-1}}\,.
+\]
+
+\end_inset
+
+Note that 
+\begin_inset Formula $\int\psi_{m}(t)^{n-1}\,dt=1$
+\end_inset
+
+.
+ For 
+\begin_inset Formula $\alpha_{m}:=\min\{x_{1}:x\in K_{m}\}$
+\end_inset
+
+ and 
+\begin_inset Formula $\beta_{m}:=\max\{x_{1}:x\in K_{m}\}$
+\end_inset
+
+,
+ we have 
+\begin_inset Formula $\alpha_{m}\le0,\beta_{m}\ge0$
+\end_inset
+
+ and 
+\begin_inset Formula $\alpha_{m}\rightarrow0,\beta_{m}\rightarrow1$
+\end_inset
+
+.
+ Moreover,
+ by the Brunn–Minkowski inequality (Thm 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:Brunn-Minkowski"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+) 
+\begin_inset Formula $\psi_{i}$
+\end_inset
+
+ is non-negative concave on its support.
+ Then we can take a subsequence of indices 
+\begin_inset Formula $m$
+\end_inset
+
+ for which 
+\begin_inset Formula $\psi_{m}$
+\end_inset
+
+ converges to a limit.
+ To see this,
+ note that 
+\begin_inset Formula $\psi_{m}$
+\end_inset
+
+ is uniformly equicontinuous in every interval 
+\begin_inset Formula $[s,t]$
+\end_inset
+
+ with 
+\begin_inset Formula $0<s<t<1$
+\end_inset
+
+,
+ and by the Arzela–Ascoli theorem
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+add citation to some analysis book
+\end_layout
+
+\end_inset
+
+,
+ the sequence has a pointwise convergent subsequence.
+ The limit 
+\begin_inset Formula $\psi$
+\end_inset
+
+ is also non-negative concave with the same integral,
+ i.e.,
+ 
+\begin_inset Formula $\int\psi(t)^{n-1}\,dt=1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+Note that for 
+\begin_inset Formula $x=(y,t)\in\R^{n-1}\times\R$
+\end_inset
+
+,
+\begin_inset Formula 
+\[
+\frac{1}{\vol(K_{m})}\int_{\K_{m}}g(x)\,dx=\int_{\alpha_{i}}^{\beta_{i}}\frac{1}{\vol_{n-1}(K_{m}\cap Z_{t})}\int_{\K_{m}\cap Z_{t}}g(y,t)\,dy\,\psi_{m}(t)^{n-1}\,dt\,.
+\]
+
+\end_inset
+
+Since the LHS is nonnegative,
+ and the RHS approaches 
+\begin_inset Formula $\int_{0}^{1}g(0,t)\,\psi(t)^{n-1}\,dt$
+\end_inset
+
+,
+ we obtain that
+\end_layout
+
+\begin_layout Proof
+\begin_inset Formula 
+\[
+\int_{0}^{1}\psi(t)^{n-1}\,g(te_{1})\,dt\ge0\quad\text{and}\quad\int_{0}^{1}\psi(t)^{n-1}\,h(te_{1})\,dt\ge0\,.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+The last part of the proof is to argue that we can take 
+\begin_inset Formula $\psi$
+\end_inset
+
+ to be a nonnegative linear function,
+ reducing the extremal functions to a small parameter family (namely,
+ 
+\begin_inset Formula $a,b,$
+\end_inset
+
+ and the values of the function at 
+\begin_inset Formula $a$
+\end_inset
+
+ and 
+\begin_inset Formula $b$
+\end_inset
+
+).
+ To do this consider a 
+\begin_inset Formula $\psi$
+\end_inset
+
+ that has (i) minimal support 
+\begin_inset Formula $\norm{a-b}$
+\end_inset
+
+;
+ WLOG assume 
+\begin_inset Formula $a=0,b=e_{1}$
+\end_inset
+
+,
+ and (ii) is linear in the segment 
+\begin_inset Formula $[\alpha,\beta]$
+\end_inset
+
+ for 
+\begin_inset Formula $0\le\alpha\le\beta\le1$
+\end_inset
+
+ with 
+\begin_inset Formula $\beta-\alpha$
+\end_inset
+
+ is maximal.
+ It will be useful to view 
+\begin_inset Formula $\psi$
+\end_inset
+
+ as defining a convex body 
+\begin_inset Formula $K'$
+\end_inset
+
+ whose slices are simplices:
+\begin_inset Formula 
+\[
+0\le t\le1,\quad x_{1},\ldots,x_{n}\ge0,\quad x_{2}+\ldots+x_{n}\le\psi(t)\,.
+\]
+
+\end_inset
+
+In words,
+ the slice of 
+\begin_inset Formula $K'$
+\end_inset
+
+ at 
+\begin_inset Formula $x_{1}=t$
+\end_inset
+
+ is the standard simplex given by the convex hull of 
+\begin_inset Formula 
+\[
+\{te_{1},te_{1}+\psi(t)\,e_{2},\ldots,te_{1}+\psi(t)\,e_{i},\ldots,te_{1}+\psi(t)\,e_{n}\}\,.
+\]
+
+\end_inset
+
+The slice at 
+\begin_inset Formula $x_{1}=t$
+\end_inset
+
+ has volume 
+\begin_inset Formula $\psi(t)^{n-1}/(n-1)!$
+\end_inset
+
+.
+ Hence,
+ if we define 
+\begin_inset Formula $\hat{g}(x)=g(x_{1}e_{1})$
+\end_inset
+
+ and 
+\begin_inset Formula $\hat{h}(x)=h(x_{1}e_{1})$
+\end_inset
+
+,
+ then 
+\begin_inset Formula 
+\[
+\int_{\K'}\hat{g}=\frac{1}{(n-1)!}\int_{0}^{1}\psi(t)^{n-1}\,g(te_{1})\,dt\ge0
+\]
+
+\end_inset
+
+and similarly for 
+\begin_inset Formula $\int_{\K'}\hat{h}\ge0$
+\end_inset
+
+.
+ WLOG we can assume that 
+\begin_inset Formula $\int_{\K'}\hat{g}=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+\begin_inset Float figure
+placement document
+alignment document
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering{}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename ../../../../GaTech Dropbox/Santosh Vempala/2025 Localization/concave-to-affine.png
+	width 50text%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Going to an affine needle
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+The overall proof idea is to subdivide 
+\begin_inset Formula $K'$
+\end_inset
+
+ with a hyperplane in such a way that one of the resulting halfspaces satisfies the same two inequalities but violates either (i) or (ii).
+ To choose this hyperplane,
+ we first fix an 
+\begin_inset Formula $(n-2)$
+\end_inset
+
+-dimensional subspace 
+\begin_inset Formula $A=\left\{ x:x_{1}=\sigma,\,x_{2}+\ldots+x_{n}=\tau\right\} $
+\end_inset
+
+ where 
+\begin_inset Formula $0<\sigma<1$
+\end_inset
+
+ and 
+\begin_inset Formula $\tau>0$
+\end_inset
+
+.
+ The hyperplane will be chosen to contain 
+\begin_inset Formula $A$
+\end_inset
+
+ and bisect the function 
+\begin_inset Formula $\hat{g}$
+\end_inset
+
+ so that 
+\begin_inset Formula $\int_{L}\hat{g}=\int_{L'}\hat{g}=0$
+\end_inset
+
+ in both resulting convex bodies 
+\begin_inset Formula $L$
+\end_inset
+
+ and 
+\begin_inset Formula $L'$
+\end_inset
+
+.
+ Suppose 
+\begin_inset Formula $\int_{L}h\ge0$
+\end_inset
+
+.
+ Then we can infer that 
+\begin_inset Formula $L$
+\end_inset
+
+ must intersect both 
+\begin_inset Formula $Z_{0}$
+\end_inset
+
+ and 
+\begin_inset Formula $Z_{1}$
+\end_inset
+
+,
+ otherwise the function 
+\begin_inset Formula $\psi$
+\end_inset
+
+ restricted to 
+\begin_inset Formula $L$
+\end_inset
+
+ contradicts the (i),
+ the minimality of the support of 
+\begin_inset Formula $\psi$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+We now consider 3 cases:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $\psi(0)=\psi(1)=0$
+\end_inset
+
+.
+ For this case,
+ let 
+\begin_inset Formula $\sigma=1/2$
+\end_inset
+
+.
+ Then 
+\begin_inset Formula $L$
+\end_inset
+
+ must contain the segment 
+\begin_inset Formula $[0,1]\,e_{1}$
+\end_inset
+
+,
+ for any 
+\begin_inset Formula $\tau>0$
+\end_inset
+
+,
+ else it contradicts (i).
+ Then there is a linear function 
+\begin_inset Formula $\ell(t)$
+\end_inset
+
+ with 
+\begin_inset Formula $\ell(0),\ell(1)\ge0,\ell(1/2)=\tau$
+\end_inset
+
+ such that the function 
+\begin_inset Formula $\psi$
+\end_inset
+
+ restricted to 
+\begin_inset Formula $L$
+\end_inset
+
+ is 
+\begin_inset Formula $\psi_{L}(t)=\min\{\psi(t),\ell(t)\}$
+\end_inset
+
+.
+ But then as 
+\begin_inset Formula $\tau\rightarrow0$
+\end_inset
+
+,
+ 
+\begin_inset Formula $\ell(t)$
+\end_inset
+
+ tends to zero in the interval 
+\begin_inset Formula $[0,1]$
+\end_inset
+
+ and so 
+\begin_inset Formula $\psi_{L}$
+\end_inset
+
+ is linear in a larger sub-interval tending to 
+\begin_inset Formula $[0,1]$
+\end_inset
+
+ contradicting (ii).
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\psi(0)=0,\psi(1)>0$
+\end_inset
+
+.
+ For this case,
+ consider 
+\begin_inset Formula $\tau=\psi(1)\,\sigma$
+\end_inset
+
+.
+ Now if 
+\begin_inset Formula $L$
+\end_inset
+
+ does not contain 
+\begin_inset Formula $[0,1]\,e_{1}$
+\end_inset
+
+,
+ then 
+\begin_inset Formula $\psi_{L}(0)=\psi_{L}(1)=0$
+\end_inset
+
+,
+ taking us back to the first case.
+ Otherwise,
+ 
+\begin_inset Formula $\psi_{L}$
+\end_inset
+
+ is linear in the interval 
+\begin_inset Formula $[\sigma,1]$
+\end_inset
+
+ and hence for small enough 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ this again contradicts (ii).
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\psi(0),\psi(1)>0$
+\end_inset
+
+.
+ Consider the family of continuous,
+ nonnegative,
+ convex functions 
+\begin_inset Formula $\eta:[0,1]\to\R_{+}$
+\end_inset
+
+ satisfying 
+\begin_inset Formula $\eta(t)\le\psi(t)$
+\end_inset
+
+ for all 
+\begin_inset Formula $t\in[0,1]$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula 
+\[
+K_{\eta}=K'\cap\{x:x_{2}+\ldots+x_{n}\ge\eta(x_{1})\}=\{x\in\R_{+}:x_{1}\in[0,1],\,\eta(x_{1})\le x_{2}+\ldots+x_{n}\le\psi(x_{1})\}\,.
+\]
+
+\end_inset
+
+Then we choose 
+\begin_inset Formula $\eta$
+\end_inset
+
+ so that (iii) 
+\begin_inset Formula $\int_{0}^{1}\eta(t)\,dt$
+\end_inset
+
+ is maximal while still satisfying 
+\begin_inset Formula 
+\[
+\int_{\K_{\eta}}\hat{g}=0\,,\quad\int_{\K_{\eta}}\hat{h}\ge0\,.
+\]
+
+\end_inset
+
+Then,
+ we can assume that 
+\begin_inset Formula $\eta(0)<\psi(0),\eta(1)<\psi(1)$
+\end_inset
+
+.
+ If not,
+ we consider the function 
+\begin_inset Formula $\psi-\eta$
+\end_inset
+
+ and this takes us back to one of the previous cases.
+ Now let 
+\begin_inset Formula $(\sigma,\tau)$
+\end_inset
+
+ be the intersection of the segments 
+\begin_inset Formula $[(0,\eta(0)),(1,\psi(1))]$
+\end_inset
+
+ and 
+\begin_inset Formula $[(0,\psi(0)),(1,\eta(1))]$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $M,M'$
+\end_inset
+
+ be the partition of 
+\begin_inset Formula $K_{\eta}$
+\end_inset
+
+ such that 
+\begin_inset Formula $M$
+\end_inset
+
+ does not contain 
+\begin_inset Formula $[0,1]\,e_{1}$
+\end_inset
+
+ and
+\begin_inset Formula 
+\[
+\int_{M}\hat{g}=\int_{M'}\hat{g}=0\,.
+\]
+
+\end_inset
+
+Then,
+ if 
+\begin_inset Formula $\int_{M}\hat{h}\ge0$
+\end_inset
+
+,
+ this contradicts (iii),
+ the maximality of 
+\begin_inset Formula $\eta$
+\end_inset
+
+.
+ Hence,
+ 
+\begin_inset Formula $\int_{M}\hat{h}<0$
+\end_inset
+
+ and the truncated cone 
+\begin_inset Formula $K'\setminus M$
+\end_inset
+
+ satisfies 
+\begin_inset Formula 
+\[
+\int_{K'\setminus M}\hat{g}=\int_{K'}\hat{g}-\int_{M}\hat{g}=0\qquad\int_{K'\setminus M}\hat{h}=\int_{K'}\hat{h}-\int_{M}\hat{h}\ge0\,,
+\]
+
+\end_inset
+
+which contradicts (ii),
+ the maximality of the linear subinterval of 
+\begin_inset Formula $\psi$
+\end_inset
+
+.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Proof
+This completes the proof.
+ 
+\end_layout
+
 \begin_layout Standard
-Going back to the proof sketch of Theorem 
+Going back to the proof of Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "ISO2"
