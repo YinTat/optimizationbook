@@ -305,16 +305,20 @@ end{algorithm2e}
 
 \end_layout
 
-\begin_layout Exercise
-Show that the distribution with density 
+\begin_layout Lemma
+
+\emph on
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:ballwalk-stationary"
+
+\end_inset
+
+The distribution with density 
 \begin_inset Formula $Q$
 \end_inset
 
- is 
-\emph on
-stationary 
-\emph default
-for the ball walk in a connected,
+ is stationary for the ball walk in a connected,
  compact full-dimensional set,
  i.e.,
  if the distribution of the current point 
@@ -525,6 +529,82 @@ atom-free
 \end_inset
 
 .
+ We say a Markov chain is 
+\emph on
+time-reversible 
+\emph default
+if all of its stationary distributions 
+\begin_inset Formula $Q$
+\end_inset
+
+ satisfy 
+\emph on
+detailed balance
+\emph default
+:
+\begin_inset Formula 
+\[
+Q(u)P_{u}(v)=Q(v)P_{v}(u)\quad\forall u,v\in K
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $Q(u)$
+\end_inset
+
+ denotes the probability (density) of 
+\begin_inset Formula $Q$
+\end_inset
+
+ at 
+\begin_inset Formula $u$
+\end_inset
+
+ and 
+\begin_inset Formula $P_{u}(v)$
+\end_inset
+
+ denotes the probability (density) of transitioning from 
+\begin_inset Formula $u$
+\end_inset
+
+ to 
+\begin_inset Formula $v$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Exercise
+Show that if a distribution 
+\begin_inset Formula $Q$
+\end_inset
+
+ satisfies detailed balance,
+ then it is stationary.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Show Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:ballwalk-stationary"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Example*
