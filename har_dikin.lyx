@@ -846,7 +846,7 @@ For bounding the conductance,
 :
 \begin_inset Formula 
 \[
-s(x)=\sup\left\{ t:\:\frac{\vol(x+tB^{n}\cap K}{\vol(tB^{n})}\ge\gamma\right\} 
+s(x)=\sup\left\{ t:\:\frac{\vol(x+tB^{n}\cap K)}{\vol(tB^{n})}\ge\gamma\right\} 
 \]
 
 \end_inset
@@ -856,6 +856,24 @@ for some fixed
 \end_inset
 
 .
+ In the proof of Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:har-cond"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+,
+ we will set 
+\begin_inset Formula $h(x)=\frac{s(x)}{48\sqrt{n}D}$
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Lemma
@@ -964,7 +982,7 @@ Therefore,
  
 \begin_inset Formula 
 \[
-\vol\left(K\cap\left(x+\frac{r_{1}+r_{2}}{2}B^{n}\right)\right)\ge\vol(A)\ge\gamma\vol\left(\frac{r_{1}+r_{2}}{2}B^{n}\right)
+\vol\left(K\cap\left(x+\frac{r_{1}+r_{2}}{2}B^{n}\right)\right)\ge\vol(A)\ge\gamma\cdot\vol\left(\frac{r_{1}+r_{2}}{2}B^{n}\right)
 \]
 
 \end_inset
@@ -978,7 +996,52 @@ which shows that
 \end_layout
 
 \begin_layout Standard
-We will need the following relationship between the step-size function and the median step function.
+We will next establish a relationship between the step-size function and the median step function.
+ The following property 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Corollary 4.6"
+key "kannan1997random"
+literal "false"
+
+\end_inset
+
+ will be useful.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:step_out_prob"
+
+\end_inset
+
+Suppose 
+\begin_inset Formula $K$
+\end_inset
+
+ contains a ball of radius 
+\begin_inset Formula $r$
+\end_inset
+
+.
+ Then for any 
+\begin_inset Formula $t>0$
+\end_inset
+
+,
+ we have
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\int_{K}\int_{y+tB^{n}\setminus K}dy\,dx\le\frac{t\sqrt{n}}{2r}\vol(K)\vol(tB^{n}).
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Lemma
@@ -988,16 +1051,24 @@ name "lem:step-size"
 
 \end_inset
 
- We have 
-\begin_inset Formula 
-\[
-\E_{K}(s(x))\ge\frac{1-\gamma}{\sqrt{n}}.
-\]
-
+ Suppose 
+\begin_inset Formula $K$
 \end_inset
 
-Moreover,
- for 
+ contains a unit ball.
+ Then,
+ 
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\E_{K}(s(x))\ge\frac{1-\gamma}{\sqrt{n}}.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+For 
 \begin_inset Formula $\gamma\ge63/64$
 \end_inset
 
@@ -1009,11 +1080,17 @@ Moreover,
 
 \end_layout
 
-\begin_layout Standard
-In the proof of Theorem 
+\begin_layout Proof
+For the first part,
+ let 
+\begin_inset Formula $g(x,t)=\vol(x+tB^{n}\cap K)/\vol(tB^{n})$
+\end_inset
+
+.
+ From Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "thm:har-cond"
+reference "lem:step_out_prob"
 plural "false"
 caps "false"
 noprefix "false"
@@ -1022,12 +1099,151 @@ nolink "false"
 \end_inset
 
 ,
- we will set 
-\begin_inset Formula $h(x)=\frac{s(x)}{48\sqrt{n}D}$
+ we have
+\begin_inset Formula 
+\[
+\int_{K}g(x,t)\,dx\ge\left(1-\frac{t\sqrt{n}}{2}\right)\vol(K).
+\]
+
+\end_inset
+
+Moreover,
+ 
+\begin_inset Formula 
+\[
+\int_{K}g(x,t)\,dx\le\gamma\vol(\{x\in K:\:g(x,t)\le\gamma))+\vol(\{x\in K:\,g(x,t)\ge\gamma\})=\gamma\vol(K)+(1-\gamma)\vol(\{x\in K:\,g(x,t)\ge\gamma\}).
+\]
+
+\end_inset
+
+Therefore,
+ 
+\begin_inset Formula 
+\[
+\vol(\{x\in K:\,g(x,t)\ge\gamma\})\ge\left(1-\frac{t\sqrt{n}}{2(1-\gamma)}\right)\vol(K).
+\]
+
+\end_inset
+
+From this,
+ we get 
+\begin_inset Formula 
+\begin{align*}
+\E_{K}(s(x)) & =\frac{1}{\vol(K)}\int_{0}^{\infty}\vol(\{x\in K:\,g(x,t)\ge\gamma\})\,dt\\
+ & \ge\int_{0}^{\infty}\left(1-\frac{t\sqrt{n}}{2(1-\gamma)}\right)^{+}\,dt\\
+ & =\frac{1-\gamma}{\sqrt{n}}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+For the second part,
+ let 
+\begin_inset Formula $s=s(x)$
+\end_inset
+
+ and 
+\begin_inset Formula $p$
+\end_inset
+
+ be the fraction of the sphere 
+\begin_inset Formula $x+(s/2)S^{n-1}$
+\end_inset
+
+ that is not in 
+\begin_inset Formula $K$
 \end_inset
 
 .
- We are now ready for that proof.
+ Then,
+ using the definitions of 
+\begin_inset Formula $s$
+\end_inset
+
+ and 
+\begin_inset Formula $p$
+\end_inset
+
+,
+ we have
+\begin_inset Formula 
+\[
+(1-\gamma)\vol(sB^{n})\le\vol((x+sB^{n}\setminus K)\le p\vol(sB^{n})-\vol((s/2)B^{n}).
+\]
+
+\end_inset
+
+Therefore,
+\begin_inset Formula 
+\[
+p\le1-\gamma+\frac{1}{2^{n}}\le\frac{1}{32}
+\]
+
+\end_inset
+
+where we used that 
+\begin_inset Formula $n\ge6$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+Now consider a random line 
+\begin_inset Formula $\ell$
+\end_inset
+
+ through 
+\begin_inset Formula $x$
+\end_inset
+
+:
+ with probability at least 
+\begin_inset Formula $1−2p$
+\end_inset
+
+,
+ we have 
+\begin_inset Formula 
+\[
+\ell\cap(x+(s/2)B^{n})\subseteq K.
+\]
+
+\end_inset
+
+If this happens,
+ then for the point y chosen uniformly from 
+\begin_inset Formula $\ell\cap K$
+\end_inset
+
+,
+ we have 
+\begin_inset Formula 
+\[
+\Pr\left(|y-x|\le\frac{s}{32}\big|\,\ell\right)\le\frac{1}{16}.
+\]
+
+\end_inset
+
+As a consequence,
+ we have the desired conclusion:
+ 
+\begin_inset Formula 
+\[
+\Pr\left(\left|y-x\right|\le\frac{s}{32}\right)\le2p+(1-2p)\frac{1}{16}<\frac{1}{8}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We are now ready for the proof of the main theorem.
 \end_layout
 
 \begin_layout Proof
@@ -3111,6 +3327,36 @@ We can now bound the conductance of
 \end_inset
 
 
+\end_layout
+
+\begin_layout Exercise
+Show that for any logconcave distribution 
+\begin_inset Formula $\nu$
+\end_inset
+
+ supported by a compact convex body 
+\begin_inset Formula $K$
+\end_inset
+
+,
+ for any partition of 
+\begin_inset Formula $K$
+\end_inset
+
+ into measurable subsets 
+\begin_inset Formula $S_{1},S_{2},S_{3}$
+\end_inset
+
+,
+ 
+\begin_inset Formula 
+\[
+\nu(S_{3})\ge d_{K}(S_{1,}S_{2})\nu(S_{1})\nu(S_{2}).
+\]
+
+\end_inset
+
+ 
 \end_layout
 
 \end_body
