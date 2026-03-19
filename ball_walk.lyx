@@ -6228,6 +6228,81 @@ status open
 
 \begin_layout Plain Layout
 Localization:
+ exponential needles
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:localization_exp_needles"
+
+\end_inset
+
+ Let 
+\begin_inset Formula $f_{1},f_{2},f_{3},f_{4}:\R^{n}\rightarrow\R_{+}$
+\end_inset
+
+ be nonnegative,
+ continuous functions and 
+\begin_inset Formula $\alpha,\beta>0$
+\end_inset
+
+.
+ Then,
+ the following are equivalent:
+\end_layout
+
+\begin_layout Enumerate
+For every logconcave function 
+\begin_inset Formula $F:\R^{n}\rightarrow\R_{+}$
+\end_inset
+
+,
+ we have
+\begin_inset Formula 
+\[
+\left(\int_{\R^{n}}F(x)\,f_{1}(x)\,dx\right)^{\alpha}\left(\int_{\R^{n}}F(x)\,f_{2}(x)\,dx\right)^{\beta}\le\left(\int_{\R^{n}}F(x)\,f_{3}(x)\,dx\right)^{\alpha}\left(\int_{\R^{n}}F(x)\,f_{4}(x)\,dx\right)^{\beta}\,.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+For every interval 
+\begin_inset Formula $a,b\in\R^{n}$
+\end_inset
+
+ and every 
+\begin_inset Formula $\gamma\in\R$
+\end_inset
+
+,
+ we have 
+\begin_inset Formula 
+\[
+\left(\int_{0}^{1}e^{\gamma t}f_{1}(t)\,dt\right)^{\alpha}\left(\int_{0}^{1}e^{\gamma t}f_{2}(t)\,dt\right)^{\beta}\le\left(\int_{0}^{1}e^{\gamma t}f_{3}(t)\,dt\right)^{\alpha}\left(\int_{0}^{1}e^{\gamma t}f_{4}(t)\,dt\right)^{\beta}\,
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $f_{i}(t)=f_{i}((1-t)a+tb)$
+\end_inset
+
+.
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Localization:
  Exponential Needles]
 \end_layout
 
@@ -6281,6 +6356,11 @@ For every subinterval
 \[
 \int_{a'}^{b'}e^{\gamma t}f_{1}(t)\,dt\int_{a'}^{b'}e^{\gamma t}f_{2}(t)\,dt\le\int_{a'}^{b'}e^{\gamma t}f_{3}(t)\,dt\int_{a'}^{b'}e^{\gamma t}f_{4}(t)\,dt.
 \]
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 

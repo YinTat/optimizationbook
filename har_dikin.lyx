@@ -720,9 +720,187 @@ For any partition
 
 \end_layout
 
+\begin_layout Proof
+We use the exponential needle version of the localization lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:localization_exp_needles"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+.
+ Assume the conclusion of the lemma is false for some partition of 
+\begin_inset Formula $K$
+\end_inset
+
+ into subsets 
+\begin_inset Formula $S_{1},S_{2,}S_{3}$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $F$
+\end_inset
+
+ be the indicator of 
+\begin_inset Formula $K$
+\end_inset
+
+,
+ the functions 
+\begin_inset Formula $f_{i}$
+\end_inset
+
+ be the indicators of the sets 
+\begin_inset Formula $S_{i}$
+\end_inset
+
+,
+ 
+\begin_inset Formula $i=1,2,3$
+\end_inset
+
+,
+ and 
+\begin_inset Formula $f_{4}$
+\end_inset
+
+ be the constant function of value 
+\begin_inset Formula $1/d_{K}(S_{1},S_{2})$
+\end_inset
+
+,
+ with these functions replaced by continuous arbitrarily close approximations as needed.
+ By the lemma we get that there exist 
+\begin_inset Formula $a.b\in\R^{n}$
+\end_inset
+
+ and 
+\begin_inset Formula $\gamma\in\R$
+\end_inset
+
+ such that 
+\begin_inset Formula 
+\[
+\int_{0}^{1}e^{\gamma t}\,dt\int_{0}^{1}e^{\gamma t}\chi_{S_{3}}((1-t)a+tb)\,dt<d_{K}(S_{1},S_{2})\int_{0}^{1}e^{\gamma t}\chi_{S_{1}}((1-t)a+tb)\,dt\int_{0}^{1}e^{\gamma t}\chi_{S_{2}}((1-t)a+tb)\,dt.
+\]
+
+\end_inset
+
+Define 
+\begin_inset Formula $Z_{i}=\{t\in[0,1]:\,(1-t)a+tb\in S_{i}\}$
+\end_inset
+
+ for 
+\begin_inset Formula $i=1,2,3$
+\end_inset
+
+ and 
+\begin_inset Formula $\nu(I)$
+\end_inset
+
+ for any 
+\begin_inset Formula $I\subseteq[0,1]$
+\end_inset
+
+ as 
+\begin_inset Formula $\nu(I)=\int_{I}e^{\gamma t}\,dt$
+\end_inset
+
+.
+ Then,
+ this is equivalent to:
+\begin_inset Formula 
+\[
+\nu([0,1])\nu(Z_{3})<d_{K}(Z_{1},Z_{2})\nu(Z_{1})\nu(Z_{2}).
+\]
+
+\end_inset
+
+We will prove the opposite inequality to establish a contradiction.
+ Moreover,
+ WLOG,
+ we can assume as in the proof of Euclidean isoperimetry that 
+\begin_inset Formula $Z_{1}Z_{2}$
+\end_inset
+
+ are single intervals,
+ 
+\begin_inset Formula $Z_{1}=[0,u]$
+\end_inset
+
+ and 
+\begin_inset Formula $Z_{2}=[v,1].$
+\end_inset
+
+ Rewriting,
+ it suffices to show that 
+\begin_inset Formula 
+\[
+\frac{(e^{v}-e^{u})(e-1)}{(e^{u}-1)(e-e^{v})}\ge\frac{v-u}{u(1-v)}
+\]
+
+\end_inset
+
+which is the content of Exercise 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "xca:exp_needle_one_dim"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ with 
+\begin_inset Formula $w=1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Exercise
+\begin_inset CommandInset label
+LatexCommand label
+name "xca:exp_needle_one_dim"
+
+\end_inset
+
+ Show that for any 
+\begin_inset Formula $0<u<v<w$
+\end_inset
+
+,
+ we have 
+\begin_inset Formula 
+\[
+\frac{(e^{v}-e^{u})(e^{w}-1)}{(e^{u}-1)(e^{w}-e^{v})}\ge\frac{(v-u)(w-1)}{u(w-v)}
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
-However,
- this will not suffice to prove a bound on the conductance of all subsets.
+The isoperimetry for the cross-ratio distance based on the minimum distance between 
+\begin_inset Formula $S_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $S_{2}$
+\end_inset
+
+ will 
+\emph on
+not
+\emph default
+ suffice to prove a bound on the conductance of all subsets.
  The reason is that we cannot guarantee a good lower bound on the 
 \emph on
 minimum 
