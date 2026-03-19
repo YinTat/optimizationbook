@@ -773,9 +773,26 @@ nolink "false"
 \begin_inset Formula $1/d_{K}(S_{1},S_{2})$
 \end_inset
 
-,
- with these functions replaced by continuous arbitrarily close approximations as needed.
- By the lemma we get that there exist 
+.
+ To satisfy the continuity assumption,
+ we can use a sufficiently large 
+\begin_inset Formula $T>0$
+\end_inset
+
+ and set 
+\begin_inset Formula $f_{i}(x)=\max\{0,1-Td(x,S_{i})\}$
+\end_inset
+
+ for 
+\begin_inset Formula $i=1,2$
+\end_inset
+
+ and 
+\begin_inset Formula $f_{3}=1-f_{1}-f_{2}$
+\end_inset
+
+.
+ By the localization lemma there exist 
 \begin_inset Formula $a.b\in\R^{n}$
 \end_inset
 
