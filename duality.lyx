@@ -1249,6 +1249,47 @@ Taking the dual has two benefits.
 .
 \end_layout
 
+\begin_layout Proof
+\begin_inset Float figure
+placement document
+alignment document
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Figures/Lemma_4.47.png
+	width 50col%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+The oracle behaves identically on 
+\begin_inset Formula $K_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\widetilde{K_{1}}$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 The key observation is the following lemma:
 \end_layout
