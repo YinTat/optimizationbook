@@ -4462,7 +4462,7 @@ Find
 \end_inset
 
  close to 
-\begin_inset Formula $x_{1}$
+\begin_inset Formula $x_{0}$
 \end_inset
 
 .
@@ -4473,7 +4473,7 @@ While
 \begin_inset Formula $t$
 \end_inset
 
- is not tiny,
+ is not large enough,
 \end_layout
 
 \begin_deeper
@@ -4541,7 +4541,7 @@ Given a convex function
 \end_inset
 
  define the norm 
-\begin_inset Formula $\norm._{x}$
+\begin_inset Formula $\norm ._{x}$
 \end_inset
 
  as 
@@ -5255,7 +5255,7 @@ Suppose that
  then we have
 \begin_inset Formula 
 \[
-\norm{\nabla f(x')}_{\nabla^{2}f(x')^{-1}}\leq\frac{r^{2}}{(1-r)}.
+\norm{\nabla f(x')}_{\nabla^{2}f(x')^{-1}}\leq\frac{r^{2}}{(1-r)^{2}}.
 \]
 
 \end_inset
@@ -5479,7 +5479,8 @@ Using
 \begin_inset Formula $r\leq\frac{1}{4}$
 \end_inset
 
- (our lower bound above is a non-decreasing function) Using Lemma 
+ (our lower bound above is a non-decreasing function).
+ Using Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:self_con_global"
@@ -5871,13 +5872,16 @@ Hence,
 \end_inset
 
 .
- Since 
-\begin_inset Formula $\frac{1}{\alpha(1)}\leq\frac{1}{\alpha(0)}-\frac{1}{v}$
+ Therefore,
+ 
+\begin_inset Formula 
+\[
+\frac{1}{\alpha(1)}\leq\frac{1}{\alpha(0)}-\frac{1}{v}
+\]
+
 \end_inset
 
-.
- So,
- 
+and we have 
 \begin_inset Formula $\alpha(0)\leq\nu$
 \end_inset
 
@@ -5894,7 +5898,7 @@ Duality Gap
 
 \end_inset
 
-Suppose that 
+ Suppose that 
 \begin_inset Formula $\phi$
 \end_inset
 
@@ -5912,15 +5916,7 @@ Suppose that
 \end_inset
 
 where 
-\begin_inset Formula $x_{t}$
-\end_inset
-
- is the 
-\begin_inset Formula $t^{\text{{th}}}$
-\end_inset
-
- iterate of 
-\begin_inset Formula $x$
+\begin_inset Formula $x_{t}=\argmin f_{t}(x)$
 \end_inset
 
 .
@@ -5962,7 +5958,15 @@ Let
 \end_inset
 
 .
- By optimality,
+ By optimality of 
+\begin_inset Formula $x_{t}$
+\end_inset
+
+for 
+\begin_inset Formula $f_{t}$
+\end_inset
+
+,
  we have 
 \begin_inset Formula $tc+\nabla\phi(x)=0$
 \end_inset

@@ -1124,7 +1124,7 @@ literal "true"
 status open
 
 \begin_layout Plain Layout
-Should I give a continuous proof everywhere?
+Should we give a continuous proof everywhere?
 \end_layout
 
 \begin_layout Plain Layout
@@ -1149,7 +1149,7 @@ Is mirror descent is about the decomposition of online and offline parts?
 status open
 
 \begin_layout Plain Layout
-Incorporate some of the contents after I have introduced the subgradient method
+Incorporate some of the contents after the subgradient method
 \end_layout
 
 \begin_layout Plain Layout
