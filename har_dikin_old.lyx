@@ -631,14 +631,6 @@ The first ingredient shows that if two points are close geometrically,
 \end_layout
 
 \begin_layout Lemma
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Lovasz1998"
-literal "false"
-
-\end_inset
-
-
 \begin_inset CommandInset label
 LatexCommand label
 name "lem:har_one_step"
@@ -904,17 +896,12 @@ name "xca:exp_needle_one_dim"
  we have 
 \begin_inset Formula 
 \[
-\frac{(e^{v}-e^{u})(e^{w}-1)}{(e^{u}-1)(e^{w}-e^{v})}\ge\frac{(v-u)(w-1)}{u(w-v)}.
+\frac{(e^{v}-e^{u})(e^{w}-1)}{(e^{u}-1)(e^{w}-e^{v})}\ge\frac{(v-u)(w-1)}{u(w-v)}
 \]
 
 \end_inset
 
-[Hint:
- use the logconvexity of 
-\begin_inset Formula $(e^{t}-1)/t$
-\end_inset
 
-.] 
 \end_layout
 
 \begin_layout Standard
@@ -1029,96 +1016,9 @@ h(x)\le\frac{1}{3}\min\left\{ 1,d_{K}(u,v)\right\} .
 \end_inset
 
 Then,
- for any logconave measure 
-\begin_inset Formula $\pi$
-\end_inset
-
- with support 
-\begin_inset Formula $K$
-\end_inset
-
-,
- we have
 \begin_inset Formula 
 \[
-\pi(S_{3})\ge\E_{K}(h(x))\min\left\{ \pi(S_{1}),\pi(S_{2})\right\} .
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-We can assume that 
-\begin_inset Formula $\pi$
-\end_inset
-
- has logconcave density 
-\begin_inset Formula $f:K\rightarrow\R_{+}$
-\end_inset
-
- and take a partition of 
-\begin_inset Formula $K$
-\end_inset
-
- for which the conclusion of the theorem is false and assume that 
-\begin_inset Formula $\int_{S_{1}}f(x)\,dx\le\int_{S_{2}}f(x)\,dx$
-\end_inset
-
-.
- Then,
- there exists a constant 
-\begin_inset Formula $A>0$
-\end_inset
-
- such that 
-\begin_inset Formula 
-\[
-\int_{K}f(x)\,dx=\frac{1}{A}\int_{S_{1}}f(x)\,dx\quad\mbox{ and }\quad\int_{S_{3}}f(x)\,dx<A\int_{K}h(x)f(x)\,dx.
-\]
-
-\end_inset
-
-Then applying the localization lemma,
- specifically the one with one equality and one inequality and linear needles,
- we have that there must exist 
-\begin_inset Formula $a,b\in K$
-\end_inset
-
- and a linear function 
-\begin_inset Formula $\ell:[0,1]\rightarrow\R_{+}$
-\end_inset
-
- such that with 
-\begin_inset Formula 
-\[
-F(t)=f((1-t)a+tb)\ell(t)^{n-1}\quad\mbox{ and }\quad G(t)=h((1-t)a+tb)
-\]
-
-\end_inset
-
-and 
-\begin_inset Formula $Z_{i}=\{t\in[0,1]:(1-t)a+tb\in S_{i}\}$
-\end_inset
-
- for 
-\begin_inset Formula $i=1,2,3$
-\end_inset
-
-,
- we have 
-\begin_inset Formula 
-\[
-\int_{0}^{1}F(t)\,dt=\frac{1}{A}\int_{Z_{1}}F(t)\,dt\quad\mbox{ and \ensuremath{\quad}\ensuremath{\int_{Z_{3}}F(t)\,dt<A\int_{0}^{1}G(t)F(t)\,dt}}
-\]
-
-\end_inset
-
-and so 
-\begin_inset Formula 
-\[
-\int_{0}^{1}F(t)\,dt\int_{Z_{3}}F(t)\,dt<\int_{0}^{1}G(t)F(t)\,dt\int_{Z_{1}}F(t)\,dt.
+\vol(S_{3})\ge\E_{K}(h(x))\min\left\{ \vol(S_{1}),\vol(S_{2})\right\} .
 \]
 
 \end_inset
