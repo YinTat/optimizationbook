@@ -822,6 +822,41 @@ name "fig:oracles"
 Duals of Convex Sets
 \end_layout
 
+\begin_layout Proof
+\begin_inset Float figure
+placement document
+alignment document
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Figures/Section_4.1.2.png
+	width 75col%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Insights into the Dual.
+ (a) K contains the origin.
+ (b) K does not contain the origin.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 The dual or 
 \emph on

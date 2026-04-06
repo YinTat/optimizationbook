@@ -1273,167 +1273,48 @@ nolink "false"
 .
 \end_layout
 
-\begin_layout Standard
-\begin_inset ERT
+\begin_layout Proof
+
+\lang english
+\begin_inset Float figure
+placement document
+alignment document
+wide false
+sideways false
 status open
 
 \begin_layout Plain Layout
+\align center
+
+\lang english
+\begin_inset Graphics
+	filename Figures/Section_9.2.png
+	width 50col%
+
+\end_inset
 
 
-\backslash
-begin{figure}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-centering
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{tikzpicture}
-\end_layout
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
+Algorithm 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "alg:cutting-plane-volume"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
 
-    % Draw the outer boundary (arbitrary convex shape)
+\end_inset
+
+ in its second iteration.
+ 
 \end_layout
 
-\begin_layout Plain Layout
-
-     
-\backslash
-draw[thick] plot[smooth cycle] coordinates {(-3,2) (-1,3) (2,3) (3,1) (2,-2) (-1,-2) (-3,0)};
-\end_layout
-
-\begin_layout Plain Layout
-
-    % Draw the red line segment (adjusted for z_L and z_R shift)     
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\backslash
-draw[red,
- thick] (-1,0.2) -- (1,-0.2);
-\end_layout
-
-\begin_layout Plain Layout
-
-    % Draw the cutting plane (blue vertical line)
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\backslash
-draw[blue,
- thick] (0,-2) -- (0,3);
-          
-\end_layout
-
-\begin_layout Plain Layout
-
-	% Draw points     
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\backslash
-filldraw[black] (-1,0.2) circle (2pt);
-  % zL (moved up)     
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\backslash
-filldraw[black] (1,-0.2) circle (2pt);
-  % zR (moved down)     
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\backslash
-filldraw[red] (0,0) circle (2pt);
-  % z (center)
-\end_layout
-
-\begin_layout Plain Layout
-
-    % Add labels with adjusted positions     
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\backslash
-node[left] at (-1,0.3) {
-\backslash
-Large $z_L$};
-     
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\backslash
-node[right] at (1,-0.3) {
-\backslash
-Large $z_R$};
-    
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\backslash
-node[above] at (0,0) {
-\backslash
-Large 
-\backslash
-textcolor{red}{$z$}};
-\end_layout
-
-\begin_layout Plain Layout
+\end_inset
 
 
-\backslash
-end{tikzpicture}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-caption{
-\backslash
-label{fig:cutting-volume} Insights into Algorithm~
-\backslash
-ref{alg:cutting-plane-volume}.
- The blue line indicates a halfspace $H$ passing through the centroid $z$ of the convex set $K$,
- while $z_L$ is that of the left convex set $K
-\backslash
-cap H$ and $z_R$ is that of the right convex set $K
-\backslash
-cap 
-\backslash
-overline{H}$.
- Note that the centroid $z$ lies on  the line segment joining $z_L$ and $z_R$.}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{figure}
 \end_layout
 
 \end_inset
