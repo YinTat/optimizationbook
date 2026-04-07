@@ -1069,7 +1069,7 @@ We can assume that
 .
  Then,
  there exists a constant 
-\begin_inset Formula $A>0$
+\begin_inset Formula $1/2\ge A>0$
 \end_inset
 
  such that 
@@ -1123,7 +1123,156 @@ and so
 
 \end_inset
 
+Now for 
+\begin_inset Formula $a,b\in K$
+\end_inset
 
+,
+ let 
+\begin_inset Formula $M_{ab}=\max\{h(x)\,:\,x\in\ell(a,b)\}$
+\end_inset
+
+,
+ the maximum of 
+\begin_inset Formula $h$
+\end_inset
+
+ over the chord through 
+\begin_inset Formula $a$
+\end_inset
+
+ and 
+\begin_inset Formula $b$
+\end_inset
+
+.
+ Then,
+ 
+\begin_inset Formula 
+\[
+\int_{0}^{1}G(t)F(t)\,dt\le M_{ab}\int_{0}^{1}F(t)\,dt
+\]
+
+\end_inset
+
+and so,
+ from the previous inequality,
+ we have 
+\begin_inset Formula 
+\begin{equation}
+\int_{Z_{3}}F(t)\,dt<M_{ab}\int_{Z_{1}}F(t)\,dt.\label{eq:weightediso99}
+\end{equation}
+
+\end_inset
+
+Moreover,
+ since 
+\begin_inset Formula $A\le1/2$
+\end_inset
+
+,
+ we have 
+\begin_inset Formula 
+\[
+\int_{Z_{1}}F(t)\,dt\le\frac{1}{2}\int_{0}^{1}F(t)\,dt.
+\]
+
+\end_inset
+
+Next for 
+\begin_inset Formula $u\in Z_{1},v\in Z_{2}$
+\end_inset
+
+,
+ with 
+\begin_inset Formula $u<v$
+\end_inset
+
+ (say),
+ we have,
+ by assumption,
+ 
+\begin_inset Formula 
+\[
+\frac{(v-u)}{u(1-v)}\ge d_{K}(ua+(1-u)b),va+(1-v)b)\ge3M_{ab}.
+\]
+
+\end_inset
+
+Then,
+ by the one-dimensional version of Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:iso-cross-ratio"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+,
+ we have 
+\begin_inset Formula 
+\[
+\int_{0}^{1}F(t)\,dt\int_{Z_{3}}F(t)\,dt\ge3M_{ab}\int_{Z_{1}}F(t)\,dt\int_{Z_{2}}F(t)\,dt.
+\]
+
+\end_inset
+
+Applying the inequality in 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:weightediso99"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+,
+ we have 
+\begin_inset Formula 
+\[
+\int_{Z_{2}}F(t)\,dt\le\frac{1}{3}\int_{0}^{1}F(t)\,dt.
+\]
+
+\end_inset
+
+Therefore,
+ 
+\begin_inset Formula 
+\begin{align*}
+\int_{Z_{3}}F(t)\,dt & =\int_{0}^{1}F(t)\,dt-\int_{Z_{1}}F(t)\,dt-\int_{Z_{2}}F(t)\,dt\\
+ & >\int_{0}^{1}F(t)\,dt-\frac{1}{2}\int_{0}^{1}F(t)\,dt-\frac{1}{3}\int_{0}^{1}F(t)\,dt\\
+ & =\frac{1}{6}\int_{0}^{1}F(t)\,dt
+\end{align*}
+
+\end_inset
+
+which together with 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:weightediso99"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ implies that 
+\begin_inset Formula $M_{ab}>3$
+\end_inset
+
+,
+ contradicting the assumption on 
+\begin_inset Formula $h$
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -1861,6 +2010,46 @@ nolink "false"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Exercise
+Show that for any logconcave distribution 
+\begin_inset Formula $\nu$
+\end_inset
+
+ supported by a compact convex body 
+\begin_inset Formula $K$
+\end_inset
+
+,
+ for any partition of 
+\begin_inset Formula $K$
+\end_inset
+
+ into measurable subsets 
+\begin_inset Formula $S_{1},S_{2},S_{3}$
+\end_inset
+
+,
+ 
+\begin_inset Formula 
+\[
+\nu(S_{3})\ge d_{K}(S_{1,}S_{2})\nu(S_{1})\nu(S_{2}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Note
 status collapsed
 
@@ -1895,7 +2084,6 @@ roundness
 \end_inset
 
 .
- 
 \end_layout
 
 \begin_layout Plain Layout
@@ -2797,7 +2985,6 @@ For two points
 \end_inset
 
 .
- 
 \end_layout
 
 \begin_layout Proof
@@ -3622,36 +3809,6 @@ We can now bound the conductance of
 \end_inset
 
 
-\end_layout
-
-\begin_layout Exercise
-Show that for any logconcave distribution 
-\begin_inset Formula $\nu$
-\end_inset
-
- supported by a compact convex body 
-\begin_inset Formula $K$
-\end_inset
-
-,
- for any partition of 
-\begin_inset Formula $K$
-\end_inset
-
- into measurable subsets 
-\begin_inset Formula $S_{1},S_{2},S_{3}$
-\end_inset
-
-,
- 
-\begin_inset Formula 
-\[
-\nu(S_{3})\ge d_{K}(S_{1,}S_{2})\nu(S_{1})\nu(S_{2}).
-\]
-
-\end_inset
-
- 
 \end_layout
 
 \end_body

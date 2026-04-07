@@ -473,7 +473,7 @@ and this holds for all
 \end_layout
 
 \begin_layout Standard
-Computing the volume is hard even for explicit simple polyhedra as the following theorem asserts.
+Computing the volume exactly is hard even for explicit simple polyhedra as the following theorem asserts.
 \end_layout
 
 \begin_layout Theorem

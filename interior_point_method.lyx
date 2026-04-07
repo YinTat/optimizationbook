@@ -4788,7 +4788,7 @@ For
 Rearranging it gives
 \begin_inset Formula 
 \[
-\norm{y-x}_{x+t(y-x)}^{2}=\alpha(t)\leq\frac{1}{(\frac{1}{\norm{x-y}_{x}}-t)^{2}}=\frac{\norm{x-y}_{x}^{2}}{(1-t\norm{x-y}_{x})^{2}}.
+\norm{y-x}_{x+t(y-x)}^{2}\leq\frac{1}{(\frac{1}{\norm{x-y}_{x}}-t)^{2}}=\frac{\norm{x-y}_{x}^{2}}{(1-t\norm{x-y}_{x})^{2}}.
 \]
 
 \end_inset
@@ -4797,7 +4797,7 @@ Rearranging it gives
 \end_layout
 
 \begin_layout Proof
-For general 
+Going back to general 
 \begin_inset Formula $u$
 \end_inset
 

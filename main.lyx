@@ -1135,34 +1135,6 @@ The proof for mirror descent is much easier.
 Is mirror descent is about the decomposition of online and offline parts?
 \end_layout
 
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Incorporate some of the contents after the subgradient method
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset CommandInset include
-LatexCommand input
-filename "reduction.lyx"
-literal "true"
-
-\end_inset
-
-
-\end_layout
-
 \end_inset
 
 
@@ -1188,6 +1160,14 @@ literal "true"
 \begin_inset CommandInset include
 LatexCommand input
 filename "interior_point_method.lyx"
+literal "true"
+
+\end_inset
+
+
+\begin_inset CommandInset include
+LatexCommand input
+filename "reduction.lyx"
 literal "true"
 
 \end_inset

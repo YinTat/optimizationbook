@@ -1,37 +1,121 @@
-#LyX 2.3 created this file. For more info see http://www.lyx.org/
-\lyxformat 544
+#LyX 2.4 created this file. For more info see https://www.lyx.org/
+\lyxformat 620
 \begin_document
 \begin_header
+\save_transient_properties true
+\origin unavailable
 \textclass optbook
+\use_default_options true
+\maintain_unincluded_children no
+\language american
+\language_package default
+\inputencoding auto-legacy
+\fontencoding auto
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_roman_osf false
+\font_sans_osf false
+\font_typewriter_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement class
+\float_alignment class
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_formatted_ref 0
+\use_minted 0
+\use_lineno 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tablestyle default
+\tracking_changes false
+\output_changes false
+\change_bars false
+\postpone_fragile_content true
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\docbook_table_output 0
+\docbook_mathml_prefix 1
 \end_header
-\begin_body
 
-\begin_layout Standard
-In the previous two chapters, we saw various algorithms to minimize a convex
- function.They have different runtimes and seems difficult to compare.
- Before going deeper and discussing more results, in this chapter, we will
- focus on how to understand these different results and their relationships,
- via reductions between them.
- We will do this at three different levels.
- The most abstract is the level of oracles, which we will define presently;
- the second is black-box algorithms which access the function in restricted
- ways, e.g., via the gradient; and the last is with full information and under
- additional structural assumptions.
-\end_layout
+\begin_body
 
 \begin_layout Section
 State of the Art
 \end_layout
 
 \begin_layout Standard
-Here we summarize the state-of-the-art.
- We tried to keep the table short, and there are many important results
- omitted.
+We have now seen various algorithms to minimize a convex function.They have different runtimes and seem difficult to compare.
+ Before going deeper and discussing more results,
+ here we discuss how to understand these different results and their relationships,
+ via reductions between them.
+ We will do this at three different levels.
+ The most abstract is the level of oracles,
+ which we will define presently;
+ the second is black-box algorithms which access the function in restricted ways,
+ e.g.,
+ via the gradient;
+ and the last is with full information and under additional structural assumptions.
+\end_layout
+
+\begin_layout Standard
+Here we summarize the state-of-the-art in two tables.
+ We tried to keep the tables short,
+ and there are many important results omitted.
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float table
-placement h
+placement H
+alignment document
 wide false
 sideways false
 status open
@@ -87,7 +171,7 @@ Algorithm
 \begin_layout Plain Layout
 
 \size scriptsize
-Iter
+Iterations
 \end_layout
 
 \end_inset
@@ -276,7 +360,8 @@ Hybrid Center Cutting Plane
 \begin_inset Formula $\|\nabla f\|_{2}\leq G$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $\|x^{*}\|_{2}\leq R$
 \end_inset
 
@@ -353,7 +438,8 @@ Gradient Descent
 \begin_inset Formula $\|\nabla f\|_{2}\leq G$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $\nabla^{2}f\succeq\mu\cdot I$
 \end_inset
 
@@ -432,7 +518,8 @@ Gradient Descent
 \begin_inset Formula $\nabla^{2}f\preceq L\cdot I$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $\|x^{*}\|_{2}\leq R$
 \end_inset
 
@@ -511,7 +598,8 @@ Accelerated Gradient Descent
 \begin_inset Formula $\mu\cdot I\preceq\nabla^{2}f\preceq L\cdot I$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $\|x^{*}\|_{2}\leq R$
 \end_inset
 
@@ -596,7 +684,13 @@ Accelerated Gradient Descent
 \begin_inset Formula $\|\cdot\|$
 \end_inset
 
-, 
+,
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\size scriptsize
 \begin_inset Formula $\max_{x,y\in\Omega}\|x-y\|\leq R$
 \end_inset
 
@@ -673,7 +767,8 @@ Frank Wolfe
 \begin_inset Formula $\E_{\omega}\|\nabla f_{\omega}\|_{2}^{2}\leq G^{2}$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $\|x^{*}\|_{2}\leq R$
 \end_inset
 
@@ -772,7 +867,8 @@ Accelerated Stochastic Descent
 \begin_layout Plain Layout
 
 \size scriptsize
-Total Cost: 
+Total Cost:
+ 
 \begin_inset Formula $(\mathcal{T}_{\nabla f}+\sqrt{\frac{1}{\mu}\sum_{i}L_{i}}\mathcal{T}_{\nabla f_{i}})\log(\frac{1}{\epsilon})$
 \end_inset
 
@@ -841,7 +937,8 @@ Accelerated Coordinate Descent
 \begin_layout Plain Layout
 
 \size scriptsize
-Total Cost: 
+Total Cost:
+ 
 \begin_inset Formula $\sum_{i}\sqrt{\beta_{i}/\mu}\mathcal{T}_{\partial_{i}f}\log(\frac{1}{\epsilon})$
 \end_inset
 
@@ -871,7 +968,7 @@ Total Cost:
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Black Box Problems.
+Black-box Problems.
  The goal is to find 
 \begin_inset Formula $x$
 \end_inset
@@ -928,7 +1025,8 @@ Black Box Problems.
 \begin_inset Formula $\mathcal{T}_{\nabla f_{\omega}}$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $\mathcal{T}_{\nabla f_{i}}$
 \end_inset
 
@@ -940,7 +1038,8 @@ Black Box Problems.
 \begin_inset Formula $\nabla f_{\omega}$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $\nabla f_{i}$
 \end_inset
 
@@ -978,7 +1077,8 @@ name "tab:Black-Box-Problems"
 
 \begin_layout Standard
 \begin_inset Float table
-placement h
+placement H
+alignment document
 wide false
 sideways false
 status open
@@ -1628,7 +1728,8 @@ Structured Problems.
 \begin_inset Formula $\epsilon$
 \end_inset
 
-, but all algorithms depend on 
+,
+ but all algorithms have complexity depending on 
 \begin_inset Formula $\log(1/\epsilon)$
 \end_inset
 
@@ -1665,22 +1766,23 @@ Table
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:Black-Box-Problems"
+nolink "false"
 
 \end_inset
 
- shows the runtime for some convex problems assuming some restricted way
- to access the input convex function.
+ shows the runtimes for some convex problems assuming some restricted way to access the input convex function.
  We call the way to access the function an 
 \emph on
 oracle
 \emph default
 .
- For example, we say we only have a first-order oracle if we can only access
- the function using the gradient of the function.
- In this setting, we are particularly interested in how many times we need
- to use the oracle, such as how many gradients we need to compute.
- Since the function is only accessed through an oracle, we can usually bound
- how many calls are needed to 
+ For example,
+ we say we only have a first-order oracle if we can only access the function using the gradient of the function.
+ In this setting,
+ we are particularly interested in how many times we need to use the oracle,
+ such as how many gradients we need to compute.
+ Since the function is only accessed through an oracle,
+ we can usually bound how many calls are needed to effectively 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1689,10 +1791,9 @@ learn
 \end_inset
 
  the function.
- In fact, all algorithms in the table are optimal in terms of the number
- of oracle calls.
- This is in huge contrast to the structured problems where all of the results
- are open.
+ In fact,
+ all algorithms in the table are optimal in terms of the number of oracle calls.
+ This is in huge contrast to structured problems where the tightness of all known results is open.
 \end_layout
 
 \begin_layout Standard
@@ -1700,25 +1801,28 @@ Table
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:Structured-Problems"
+nolink "false"
 
 \end_inset
 
  has the runtimes for some general convex problems.
- Unlike black-box problems, these algorithms assume the full description
- of the problem.
- For this setting, we usually aim at getting a runtime that depends on the
- structure of the problem instead of the numerical values of the input.
- Usually, such algorithms converge with a rate of 
+ Unlike black-box problems,
+ these algorithms assume the full description of the problem.
+ For this setting,
+ we usually aim for a runtime that depends on the structure of the problem instead of the numerical values of the input.
+ Usually,
+ such algorithms converge with a rate of 
 \begin_inset Formula $\log(1/\epsilon)$
 \end_inset
 
 .
- For all of these problem, the best possible runtime is open.
- Finally, we note that the last two problems, linear programs and empirical
- risk minimization are complete in the sense that they can be used to approximat
-e any convex function.
- Therefore, the last results seem to suggest that general convex problems
- are as easy as general linear systems for now.
+ For all of these problem,
+ the best possible runtime is open.
+ Finally,
+ we note that the last two problems,
+ linear programs and empirical risk minimization are complete in the sense that they can be used to approximate any convex function.
+ Therefore,
+ these last results seem to suggest that general convex problems are as easy as general linear systems (for now!).
 \end_layout
 
 \begin_layout Subsection
@@ -1735,7 +1839,8 @@ units
 \end_inset
 
 .
- For instance, if the unit of the function value is 
+ For instance,
+ if the unit of the function value is 
 \begin_inset Formula $J$
 \end_inset
 
@@ -1743,11 +1848,13 @@ units
 \begin_inset Formula $m$
 \end_inset
 
-, then the units of 
+,
+ then the units of 
 \begin_inset Formula $G$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $R$
 \end_inset
 
@@ -1759,7 +1866,8 @@ units
 \begin_inset Formula $Jm^{-1}$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $m$
 \end_inset
 
@@ -1768,12 +1876,14 @@ units
 \end_inset
 
  respectively.
- Therefore, the number of iterations of gradient descent 
+ Therefore,
+ the number of iterations of gradient descent 
 \begin_inset Formula $\frac{GR}{\epsilon}$
 \end_inset
 
  is unitless.
- In the table, we ignored some entries inside the 
+ In the table,
+ we ignored some entries inside the 
 \begin_inset Formula $\log$
 \end_inset
 
@@ -1786,17 +1896,21 @@ incorrect
 \end_inset
 
  unit.
- However, when everything is written correctly, the number of iterations
- must be unitless.
- Furthermore, we can view 
+ However,
+ when everything is written correctly,
+ the number of iterations must be unitless.
+ Furthermore,
+ we can view 
 \begin_inset Formula $GR$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $LR^{2}$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $\frac{G^{2}}{\mu}$
 \end_inset
 
@@ -1805,7 +1919,8 @@ incorrect
 \end_inset
 
 .
- For example, we know that
+ For example,
+ we know that
 \begin_inset Formula 
 \[
 f(x^{(0)})-f^{*}\leq\left\langle \nabla f(x^{(0)}),x^{(0)}-x^{*}\right\rangle \leq GR
@@ -1821,11 +1936,13 @@ f(x^{(0)})-f^{*}\leq\left\langle \nabla f(x^{*}),x^{(0)}-x^{*}\right\rangle +\fr
 
 \end_inset
 
-Therefore, the terms 
+Therefore,
+ the terms 
 \begin_inset Formula $\frac{GR}{k}$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $\frac{G^{2}}{\mu k}$
 \end_inset
 
@@ -1833,15 +1950,15 @@ Therefore, the terms
 \begin_inset Formula $\frac{LR^{2}}{k}$
 \end_inset
 
- are all just measuring how much we need to decrease multiplicatively from
- the initial error.
- With this view, we can think the number of iteration required for Lipschitz
- convex functions, strongly convex functions and smooth functions are exactly
- 
+ are all just measuring how much we need to decrease multiplicatively from the initial error.
+ With this view,
+ we can think the number of iteration required for Lipschitz convex functions,
+ strongly convex functions and smooth functions are exactly 
 \begin_inset Formula $\frac{1}{\epsilon_{\mathrm{relative}}^{2}}$
 \end_inset
 
- , 
+ ,
+ 
 \begin_inset Formula $\frac{1}{\epsilon_{\mathrm{relative}}}$
 \end_inset
 
@@ -1865,12 +1982,14 @@ The ratio
 \end_inset
 
  heavily depends on the application.
- For some easy problems, it can be as small as 
+ For some easy problems,
+ it can be as small as 
 \begin_inset Formula $O(1)$
 \end_inset
 
 .
- However, it can be very large for many natural problems.
+ However,
+ it can be very large for many natural problems.
  Here we give a few examples of natural convex functions with huge 
 \begin_inset Formula $\frac{L}{\mu}$
 \end_inset
@@ -1884,9 +2003,11 @@ f(x)=\frac{1}{2}x_{1}^{2}+\frac{1}{2}\sum_{k=1}^{n-1}(x_{k}-x_{k+1})^{2}+\frac{1
 
 \end_inset
 
-This problem appears everywhere from physical systems, graph problems, signal
- denoising to statistics.
- For this problem, we have 
+This problem appears everywhere from physical systems,
+ graph problems,
+ signal denoising to statistics.
+ For this problem,
+ we have 
 \begin_inset Formula $L=\Theta(1)$
 \end_inset
 
@@ -1917,7 +2038,8 @@ where
 \end_inset
 
  matrix with independent Gaussian entries.
- For this problem, we have 
+ For this problem,
+ we have 
 \begin_inset Formula $L=\Theta(n)$
 \end_inset
 
@@ -1926,7 +2048,8 @@ where
 \end_inset
 
  with high probability.
- For an extreme example, the function 
+ For an extreme example,
+ the function 
 \begin_inset Formula $|x|$
 \end_inset
 
@@ -1947,8 +2070,8 @@ Accuracy of analysis
 \end_layout
 
 \begin_layout Standard
-For gradient descent and accelerated gradient descent, the convergence rate
- is asymptotically accurate if we take 
+For gradient descent and accelerated gradient descent,
+ the convergence rate is asymptotically accurate if we take 
 \begin_inset Formula $L\sim\lambda_{\max}(\nabla^{2}f(x^{*}))$
 \end_inset
 
@@ -1967,9 +2090,9 @@ For gradient descent and accelerated gradient descent, the convergence rate
 
  function locally looks like a quadratic around its minimum.
  We take gradient descent as an example.
- Note that gradient descent is invariant under any rotation and translation
- transformation.
- Therefore, we can assume 
+ Note that gradient descent is invariant under any rotation and translation transformation.
+ Therefore,
+ we can assume 
 \begin_inset Formula $x^{*}=0$
 \end_inset
 
@@ -1990,7 +2113,8 @@ For gradient descent and accelerated gradient descent, the convergence rate
 \begin_inset Formula $x^{*}=0$
 \end_inset
 
-, gradient descent 
+,
+ gradient descent 
 \begin_inset Formula $x^{\new}=x-h\nabla f(x)$
 \end_inset
 
@@ -2003,18 +2127,19 @@ For gradient descent and accelerated gradient descent, the convergence rate
 \end_layout
 
 \begin_layout Standard
-For more complicated algorithms, the theory of convergence rate and cost
- per iteration sometimes gives a bad estimate of the reality.
- For example, the interior point method often takes 
+For more complicated algorithms,
+ the theory of convergence rate and cost per iteration sometimes gives a bad estimate of the reality.
+ For example,
+ the interior point method often takes 
 \begin_inset Formula $O(\log n)$
 \end_inset
 
- iterations to converge despite its 
+ iterations to converge despite the 
 \begin_inset Formula $\sqrt{n}$
 \end_inset
 
- bound on convergence rate; simplex method is often the best of choice for
- solving linear programs despite its exponential complexity bound.
+ worst-case bound on its convergence rate;
+ the simplex method is often the best of choice for solving linear programs despite its exponential complexity bound.
 \end_layout
 
 \begin_layout Standard
@@ -2023,8 +2148,7 @@ The cost per iterations sometimes can be misleading also.
 \begin_inset Formula $\nnz(A)+\mathrm{rank}(A)^{2}$
 \end_inset
 
- in theory while it takes nearly linear time in practice for sparse matrices
- due to the effectiveness of Cholesky decomposition.
+ in theory while it takes nearly linear time in practice for sparse matrices due to the effectiveness of Cholesky decomposition.
  The 
 \begin_inset Formula $k^{th}$
 \end_inset
@@ -2037,8 +2161,8 @@ The cost per iterations sometimes can be misleading also.
 \end_layout
 
 \begin_layout Standard
-Finally, the error of floating point computation gradually starts to have
- an effect when the target accuracy 
+Finally,
+ the error of floating point computation gradually starts to have an effect when the target accuracy 
 \begin_inset Formula $\epsilon$
 \end_inset
 
@@ -2054,11 +2178,14 @@ In the table
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:Black-Box-Problems"
+nolink "false"
 
 \end_inset
 
-, we omitted many cases.
- For example, what is the runtime if we have a stochastic function 
+,
+ we omitted many cases.
+ For example,
+ what is the runtime if we have a stochastic function 
 \begin_inset Formula $\min_{x}\E_{\omega}f_{\omega}(x)$
 \end_inset
 
@@ -2066,17 +2193,18 @@ reference "tab:Black-Box-Problems"
 \begin_inset Formula $\E_{\omega}f_{\omega}(x)$
 \end_inset
 
- is strongly convex? What is the runtime if we have a finite sum problem
- 
+ is strongly convex?
+ What is the runtime if we have a finite sum problem 
 \begin_inset Formula $\frac{1}{n}\sum_{i}f_{i}(x)$
 \end_inset
 
- which is not strongly convex? In this section, we show that one can reduce
- runtime of one case to the another case.
- To highlight the idea, we will be informal and ignore polylogarithmic terms.
- We note that some of the reduction ideas are not just useful for proving
- theorem, but are practical tricks to speed up algorithm and to avoid the
- knowledge of parameters.
+ which is not strongly convex?
+ In this section,
+ we show that one can reduce runtimes between different cases.
+ To highlight the idea,
+ we will be informal and ignore polylogarithmic terms.
+ We note that some of the reduction ideas are not just useful for proving theorems,
+ but are practical tricks to speed up algorithms and to avoid having to know parameters.
  See 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -2135,7 +2263,8 @@ Any strongly convex function on
 \end_inset
 
 .
- Therefore, we must assume the domain is bounded in some way.
+ Therefore,
+ we must assume the domain is bounded in some way.
 \end_layout
 
 \end_inset
@@ -2157,7 +2286,8 @@ Any strongly convex function on
 \end_inset
 
 .
- Equivalently, 
+ Equivalently,
+ 
 \begin_inset Formula $f(x)\leq\min_{x}f(x)+\frac{G^{2}}{\mu k}$
 \end_inset
 
@@ -2170,7 +2300,8 @@ Any strongly convex function on
 \end_inset
 
 .
- Now, we show how to recover the result 
+ Now,
+ we show how to recover the bound 
 \begin_inset Formula $(\frac{GR}{\epsilon})^{2}$
 \end_inset
 
@@ -2190,7 +2321,8 @@ Output
 \end_layout
 
 \begin_layout Standard
-To understand the result, we let 
+To understand the result,
+ we let 
 \begin_inset Formula $f_{\sigma}(x)=f(x)+\frac{\sigma}{2}\|x\|_{2}^{2}$
 \end_inset
 
@@ -2212,11 +2344,13 @@ To understand the result, we let
 \end_inset
 
  strongly convex.
- Hence, in 
+ Hence,
+ in 
 \begin_inset Formula $k$
 \end_inset
 
- iterations, we have that
+ iterations,
+ we have that
 \begin_inset Formula 
 \[
 f_{\sigma}(x)\leq\min_{x}f_{\sigma}(x)+\frac{G^{2}}{\sigma k}\leq f_{\sigma}(x^{*})+\frac{G^{2}}{\sigma k}=f(x^{*})+\frac{\sigma}{2}R^{2}+\frac{G^{2}}{\sigma k}
@@ -2237,7 +2371,8 @@ where
 \begin_inset Formula $k$
 \end_inset
 
-, we choose 
+,
+ we choose 
 \begin_inset Formula $\sigma$
 \end_inset
 
@@ -2298,7 +2433,8 @@ Suppose we have an algorithm
 \end_inset
 
 .
- Equivalently, 
+ Equivalently,
+ 
 \begin_inset Formula $f(x)\leq\min_{x}f(x)+\frac{GR}{\sqrt{k}}$
 \end_inset
 
@@ -2311,7 +2447,8 @@ Suppose we have an algorithm
 \end_inset
 
 .
- Now, we show how to recover the result 
+ Now,
+ we show how to recover the result 
 \begin_inset Formula $\widetilde{O}(\frac{G^{2}}{\mu\epsilon})$
 \end_inset
 
@@ -2344,7 +2481,8 @@ By the guarantee of
 \begin_inset Formula $\mathcal{A}$
 \end_inset
 
-, we have that 
+,
+ we have that 
 \begin_inset Formula 
 \begin{equation}
 f(x^{(i)})\leq\min_{x}f(x)+\frac{G\|x^{(i-1)}-x^{*}\|_{2}}{\sqrt{k}}=\min_{x}f(x)+\sqrt{\mu\epsilon}\|x^{(i-1)}-x^{*}\|_{2}.\label{eq:convex2strongly}
@@ -2352,7 +2490,8 @@ f(x^{(i)})\leq\min_{x}f(x)+\frac{G\|x^{(i-1)}-x^{*}\|_{2}}{\sqrt{k}}=\min_{x}f(x
 
 \end_inset
 
-On the other hand, the strong convexity of 
+On the other hand,
+ the strong convexity of 
 \begin_inset Formula $f$
 \end_inset
 
@@ -2361,7 +2500,8 @@ On the other hand, the strong convexity of
 \end_inset
 
 .
- Therefore, we have that
+ Therefore,
+ we have that
 \begin_inset Formula 
 \[
 \|x^{(i)}-x^{*}\|_{2}^{2}\leq2\sqrt{\frac{\epsilon}{\mu}}\|x^{(i-1)}-x^{*}\|_{2}.
@@ -2369,16 +2509,19 @@ On the other hand, the strong convexity of
 
 \end_inset
 
-Therefore, if 
+Therefore,
+ if 
 \begin_inset Formula $\|x^{(i-1)}-x^{*}\|_{2}\geq8\sqrt{\frac{\epsilon}{\mu}}$
 \end_inset
 
-, then the distance to OPT decreases by at least a factor of two.
+,
+ then the distance to OPT decreases by at least a factor of two.
  After 
 \begin_inset Formula $\widetilde{O}(1)$
 \end_inset
 
- iterations, we have that 
+ iterations,
+ we have that 
 \begin_inset Formula $\|x^{(i-1)}-x^{*}\|_{2}=O\left(\sqrt{\frac{\epsilon}{\mu}}\right)$
 \end_inset
 
@@ -2389,6 +2532,7 @@ reference "eq:convex2strongly"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -2412,7 +2556,8 @@ Given an algorithm that can minimize convex
 \begin_inset Formula $\sqrt{\frac{LR^{2}}{\epsilon}}$
 \end_inset
 
- iterations, show how to use this algorithm to minimize 
+ iterations,
+ show how to use this algorithm to minimize 
 \begin_inset Formula $f$
 \end_inset
 
