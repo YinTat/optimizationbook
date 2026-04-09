@@ -2042,23 +2042,13 @@ Show that for any logconcave distribution
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
+\begin_layout Section
 Dikin walk
 \end_layout
 
-\begin_layout Plain Layout
-Both the ball walk and hit-and-run have a dependence on the 
+\begin_layout Standard
+The ball walk and hit-and-run are not affine-invariant – applying an affine transformation can change the rate of convergence.
+ Their convergence rate depends on the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2069,15 +2059,23 @@ roundness
  of the target distribution,
  e.g.,
  via its diameter or average distance to the center of gravity.
- Reducing this dependence to logarithmic by rounding is polynomial time but expensive.
+ Reducing this dependence to logarithmic by rounding is polynomial time but can be expensive.
  The current best rounding algorithm (which achieves near-isotropic position) has complexity 
-\begin_inset Formula $O^{*}(n^{3})$
+\begin_inset Formula $O^{*}(n^{3.5})$
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "JLLV26"
+literal "false"
+
 \end_inset
 
 .
  Here we describe a different approach,
  which is affine-invariant,
- but requires more knowledge of the convex body.
+ but requires more knowledge of the structure of the convex body.
  In particular,
  we will focus on the special case of sampling an explicit polytope 
 \begin_inset Formula $P=\left\{ x:\,Ax\ge b\right\} $
@@ -2086,7 +2084,7 @@ roundness
 .
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout Standard
 The general Dikin walk is defined as follows.
  For a convex set 
 \begin_inset Formula $K$
@@ -2112,7 +2110,7 @@ E_{u}(r)=\left\{ x:\,(x-u)^{\top}\mh(u)(x-u)\le r\right\} .
 
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout Standard
 \begin_inset ERT
 status open
 
@@ -2135,7 +2133,7 @@ name "algo:Dikin"
 
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout Standard
 \begin_inset ERT
 status open
 
@@ -2166,7 +2164,7 @@ status open
 
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout Standard
 \begin_inset ERT
 status open
 
@@ -2182,7 +2180,7 @@ SetAlgoLined
 
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout Standard
 
 \series bold
 Input:
@@ -2199,7 +2197,7 @@ Input:
 .
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout Standard
 Set 
 \begin_inset Formula $r=\frac{1}{8}$
 \end_inset
@@ -2207,7 +2205,7 @@ Set
 .
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout Standard
 Repeat 
 \begin_inset Formula $T$
 \end_inset
@@ -2249,7 +2247,7 @@ If
 .
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout Standard
 \begin_inset ERT
 status open
 
@@ -2269,7 +2267,7 @@ Return
 .
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout Standard
 \begin_inset ERT
 status open
 
@@ -2289,10 +2287,9 @@ end{algorithm2e}
 Strong Self-Concordance
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout Standard
 We require a family of matrices to have the following properties.
- Usually but not necessarily,
- these matrices come from the Hessian of some convex function.
+ These matrices typically arise as the Hessians of convex functions.
 \end_layout
 
 \begin_layout Definition
@@ -2300,7 +2297,7 @@ We require a family of matrices to have the following properties.
 status open
 
 \begin_layout Plain Layout
-Symmetric self-concordance
+Self-concordance
 \end_layout
 
 \end_inset
@@ -2327,34 +2324,10 @@ For any convex set
 
 \end_inset
 
-We call 
-\begin_inset Formula $\mathbf{H}$
-\end_inset
-
- is a symmetric 
-\begin_inset Formula $\bar{\nu}$
-\end_inset
-
--self-concordant barrier if 
-\begin_inset Formula $\mh$
-\end_inset
-
- is self-concordant and for any 
-\begin_inset Formula $u\in K$
-\end_inset
-
-,
-\begin_inset Formula 
-\[
-E_{u}(1)\subseteq K\cap(2u-K)\subseteq E_{u}(\sqrt{\bar{\nu}}).
-\]
-
-\end_inset
-
 
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout Standard
 The following lemma shows that self-concordant matrix functions also enjoy a similar regularity as the usual self-concordant functions.
 \end_layout
 
@@ -2521,10 +2494,10 @@ The result follows from this,
 .
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout Standard
 Many natural barriers,
  including the logarithmic barrier and the LS-barrier,
- satisfy a much stronger condition than self-concordant.
+ satisfy a much stronger condition than self-concordance.
  However,
  this is not always true,
  as one can construct counterexamples even in one-dimension.
@@ -2611,7 +2584,7 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename ../../../../Dropbox (GaTech)/ls_dikin/arxiv/ls/symmetry.png
+	filename symmetry.png
 	scale 45
 
 \end_inset
@@ -2648,7 +2621,7 @@ status open
 \noindent
 \align left
 \begin_inset Graphics
-	filename ../../../../Dropbox (GaTech)/ls_dikin/arxiv/ls/ssc.png
+	filename ssc.png
 	scale 35
 
 \end_inset
@@ -2666,7 +2639,7 @@ status open
 
 \begin_layout Plain Layout
 (a) 
-\begin_inset Formula $E_{u}(1)\subseteq K\cap(2u-K)\subseteq E_{u}(\sqrt{\bar{\nu}}).$
+\begin_inset Formula $E_{u}\subseteq K\cap(2u-K)\subseteq\alpha E_{u}.$
 \end_inset
 
  (b) Strong self-concordance measures the rate of change of Hessian of a barrier in the Frobenius norm
@@ -2682,7 +2655,7 @@ status open
 
 \end_layout
 
-\begin_layout Plain Layout
+\begin_layout Standard
 Similar to Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -2692,15 +2665,7 @@ nolink "false"
 \end_inset
 
 ,
- we have a global version of Lemma 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:global_self_concordant"
-nolink "false"
-
-\end_inset
-
-.
+ we have a longer-range version of stability of the Hessian.
 \end_layout
 
 \begin_layout Lemma
@@ -2810,40 +2775,45 @@ nolink "false"
 
 \end_layout
 
-\begin_layout Plain Layout
-We note that strong self-concordance is stronger than self-concordance since the Frobenius norm is always larger or equal to the spectral norm.
- As an example,
- we will verify that the conditions hold for the standard log barrier.
+\begin_layout Standard
+We note that strong self-concordance can be stronger than self-concordance since the Frobenius norm is always larger or equal to the spectral norm.
+ 
 \end_layout
 
-\begin_layout Plain Layout
-The Dikin walk has the following guarantee.
+\begin_layout Exercise
+Verify that the standard log barrier is strongly self-concordant.
 \end_layout
 
-\begin_layout Theorem
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:dikingeneral"
-
-\end_inset
-
-The mixing rate of the Dikin walk for a symmetric,
- strongly self-concordant matrix function with convex log determinant is 
-\begin_inset Formula $O(n\bar{\nu})$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Plain Layout
-Each step of the standard Dikin walk is fast,
- and does not need matrix multiplication.
+\begin_layout Exercise
+The main theorem of this section is the following guarantee for the Dikin walk.
 \end_layout
 
 \begin_layout Theorem
 \begin_inset CommandInset label
 LatexCommand label
 name "thm:dikin"
+
+\end_inset
+
+The mixing rate of the Dikin walk with the logarithmic barrier for a polytope 
+\begin_inset Formula $\{\mathbf{A}x\ge b\}$
+\end_inset
+
+ is 
+\begin_inset Formula $O(mn)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Each step of the standard Dikin walk can be implemented without using matrix multiplication.
+\end_layout
+
+\begin_layout Theorem
+\begin_inset CommandInset label
+LatexCommand label
+name "thm:dikin-fast"
 
 \end_inset
 
@@ -2861,6 +2831,447 @@ The Dikin walk with the logarithmic barrier for a polytope
 
 .
 \end_layout
+
+\begin_layout Standard
+A key ingredient of the proof of Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:dikin"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ is the following lemma.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:dikin-one-step-1"
+
+\end_inset
+
+For two points 
+\begin_inset Formula $x,y\in P$
+\end_inset
+
+,
+ with 
+\begin_inset Formula $\Vert x-y\Vert_{x}\le\frac{1}{8\sqrt{n}}$
+\end_inset
+
+,
+ we have 
+\begin_inset Formula $d_{TV}(P_{x},P_{y})\leq\frac{3}{4}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The proof of this lemma needs several properties that we will presently outline.
+ 
+\end_layout
+
+\begin_layout Standard
+The other key ingredient for proving the mixing rate is an isoperimetric inequality.
+ We will in fact use the one for the cross-ratio distance (Theorem 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "thm:iso-cross-ratio"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+) that came up in the analysis of Hit-and-Run.
+ We can relate the cross-ratio distance to the local norm induced by the Dikin ellipsoid.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:dikin-dist-1"
+
+\end_inset
+
+For 
+\begin_inset Formula $u,v\in K$
+\end_inset
+
+,
+ 
+\begin_inset Formula $d_{K}(u,v)\ge\frac{\Vert u-v\Vert_{u}}{\sqrt{m}}$
+\end_inset
+
+ where 
+\begin_inset Formula $\norm ._{u}$
+\end_inset
+
+ is the norm induced by the Hessian of the log barrier.
+ 
+\end_layout
+
+\begin_layout Standard
+The proof will need the following elementary fact about the log barrier.
+\end_layout
+
+\begin_layout Lemma
+\begin_inset CommandInset label
+LatexCommand label
+name "lem:dikin_sandwich"
+
+\end_inset
+
+For the Dikin ellipsoid induced by any self-concordant barrier,
+ we have 
+\begin_inset Formula $E_{u}(1)\subseteq K\cap2x-K$
+\end_inset
+
+ and for the logarithmic barrier for a polytope 
+\begin_inset Formula $K=\{\mathbf{A}x\ge b\}$
+\end_inset
+
+ defined by 
+\begin_inset Formula $m$
+\end_inset
+
+ inequalities we also have 
+\begin_inset Formula $K\cap2x-K\subseteq E_{u}(\sqrt{m})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+For the first inequality,
+ we notice that since for any 
+\begin_inset Formula $x\in K$
+\end_inset
+
+,
+ we have that the barrier function 
+\begin_inset Formula $\phi(x)$
+\end_inset
+
+ is finite with bounded first and second moments,
+ and by Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:global_self_concordant"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+,
+ the Hessian remains finite for for every point in 
+\begin_inset Formula $[x,y]$
+\end_inset
+
+ for 
+\begin_inset Formula $y$
+\end_inset
+
+ s.t.
+ 
+\begin_inset Formula $\norm{x-y}_{x}<1$
+\end_inset
+
+,
+ we have that 
+\begin_inset Formula $\phi(y)$
+\end_inset
+
+ is also finite,
+ and hence 
+\begin_inset Formula $y\in K$
+\end_inset
+
+,
+ since 
+\begin_inset Formula $\phi$
+\end_inset
+
+ is a barrier function for 
+\begin_inset Formula $K$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+For the second part,
+ for any 
+\begin_inset Formula $y\in K\cap2x-K$
+\end_inset
+
+,
+ we have that for every 
+\begin_inset Formula $i\in[m]$
+\end_inset
+
+,
+ 
+\begin_inset Formula 
+\[
+\left|a_{i}^{\top}y-a_{i}^{\top}x\right|\le a_{i}^{\top}x-b_{i}
+\]
+
+\end_inset
+
+and hence 
+\begin_inset Formula 
+\[
+\frac{\left|a_{i}^{\top}y-a_{i}^{\top}x\right|}{a_{i}^{\top}x-b_{i}}\le1.
+\]
+
+\end_inset
+
+Therefore,
+ 
+\begin_inset Formula 
+\[
+(y-x)^{\top}\nabla^{2}\phi(x)(y0x)=\sum_{i=1}^{m}\frac{\left(a_{i}^{\top}(y-x)\right)^{2}}{\left(a_{i}^{\top}x-b_{i}\right)^{2}}\le m.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We can now prove Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:dikin-dist-1"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Proof of Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:dikin-dist-1"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+ Consider the ellipsoid at 
+\begin_inset Formula $u$
+\end_inset
+
+.
+ For the chord 
+\begin_inset Formula $[p,q]$
+\end_inset
+
+ induced by 
+\begin_inset Formula $u,v$
+\end_inset
+
+ with these points in the order 
+\begin_inset Formula $p,u,v,q$
+\end_inset
+
+,
+ suppose that 
+\begin_inset Formula $\|p-u\|_{2}\le\|v-q\|_{2}$
+\end_inset
+
+.
+ Then by Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:dikin_sandwich"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+,
+ 
+\begin_inset Formula $p\in K\cap(2u-K)$
+\end_inset
+
+.
+ And hence 
+\begin_inset Formula $\|p-u\|_{u}\le\sqrt{m}.$
+\end_inset
+
+ Therefore,
+ 
+\begin_inset Formula 
+\[
+d_{K}(u,v)=\frac{\|u-v\|_{2}\|p-q\|_{2}}{\|p-u\|_{2}\|v-q\|_{2}}\geq\frac{\|u-v\|_{2}}{\|p-u\|_{2}}=\frac{\|u-v\|_{u}}{\|p-u\|_{u}}\ge\frac{\|u-v\|_{u}}{\sqrt{m}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We can now prove the main conductance bound.
+\end_layout
+
+\begin_layout Theorem
+The conductance of the Dikin walk with the log barrier applied to a polytope 
+\begin_inset Formula $\{\mathbf{A}x\ge b\}$
+\end_inset
+
+ is 
+\begin_inset Formula $\Omega(1/\sqrt{mn})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+We follow the standard high-level outline.
+ Consider any measurable subset 
+\begin_inset Formula $S_{1}\subseteq K$
+\end_inset
+
+ and let 
+\begin_inset Formula $S_{2}=K\setminus S_{1}$
+\end_inset
+
+ be its complement.
+ Define the points with low escape probability for these subsets as:
+\begin_inset Formula 
+\[
+S_{i}'=\left\{ x\in S_{i}:\,P_{x}(K\setminus S_{i})<\frac{1}{8}\right\} 
+\]
+
+\end_inset
+
+and let 
+\begin_inset Formula $S_{3}'=K\setminus S_{1}'\setminus S_{2}'$
+\end_inset
+
+.
+ Then,
+ for any 
+\begin_inset Formula $u\in S_{1}'$
+\end_inset
+
+,
+ 
+\begin_inset Formula $v\in S_{2}'$
+\end_inset
+
+,
+ we have 
+\begin_inset Formula $d_{TV}(P_{u},P_{v})>1-\frac{1}{4}$
+\end_inset
+
+.
+ Hence,
+ by Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:dikin-one-step-1"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+,
+ we have 
+\begin_inset Formula $\Vert u-v\Vert_{u}\ge\frac{1}{8\sqrt{n}}$
+\end_inset
+
+.
+ Therefore,
+ by Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:dikin-dist-1"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+,
+ 
+\begin_inset Formula 
+\[
+d_{K}(u,v)\ge\frac{1}{8\sqrt{n}\cdot\sqrt{m}}.
+\]
+
+\end_inset
+
+We can now bound the conductance of 
+\begin_inset Formula $S_{1}$
+\end_inset
+
+.
+ We may assume that 
+\begin_inset Formula $\vol(S_{i}')\ge\vol(S_{i})/2$
+\end_inset
+
+;
+ otherwise,
+ it immediately follows that the conductance of 
+\begin_inset Formula $S_{1}$
+\end_inset
+
+ is 
+\begin_inset Formula $\Omega(1)$
+\end_inset
+
+.
+ Assuming this,
+ we have
+\begin_inset Formula 
+\begin{align*}
+\int_{S_{1}}P_{x}(S_{2})\,dx & \ge\int_{S_{3}'}\frac{1}{8}dx\ge\frac{1}{8}\vol(S_{3}')\\
+\mbox{using isoperimetry (Theorem \ref{thm:dK-iso})} & \ge\frac{1}{8}d_{K}(S_{1}',S_{2}')\frac{\vol(S_{1}')\vol(S_{2}')}{\vol(P)}\\
+ & \ge\frac{1}{512\sqrt{nm}}\min\left\{ \vol(S_{1}),\vol(S_{2})\right\} .
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
 
 \begin_layout Plain Layout
 The next lemma results from studying strong self-concordance for classical barriers.
@@ -2942,49 +3353,6 @@ In fact,
 equivalent 
 \emph default
 to the KLS conjecture.
-\end_layout
-
-\begin_layout Section
-Mixing with Strong Self-Concordance
-\end_layout
-
-\begin_layout Plain Layout
-A key ingredient of the proof of Theorem 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:dikingeneral"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
-
-\end_inset
-
- is the following lemma.
-\end_layout
-
-\begin_layout Lemma
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:dikin-one-step-1"
-
-\end_inset
-
-For two points 
-\begin_inset Formula $x,y\in P$
-\end_inset
-
-,
- with 
-\begin_inset Formula $\Vert x-y\Vert_{x}\le\frac{1}{8\sqrt{n}}$
-\end_inset
-
-,
- we have 
-\begin_inset Formula $d_{TV}(P_{x},P_{y})\leq\frac{3}{4}$
-\end_inset
-
-.
 \end_layout
 
 \begin_layout Proof
@@ -3583,223 +3951,6 @@ we have
 \[
 \vol(S_{3})\ge d_{K}(S_{1},S_{2})\frac{\vol(S_{1})\vol(S_{2})}{\vol(K)}.
 \]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-We now relate the cross-ratio distance to the ellipsoidal norm.
-\end_layout
-
-\begin_layout Lemma
-\begin_inset CommandInset label
-LatexCommand label
-name "lem:dikin-dist-1"
-
-\end_inset
-
-For 
-\begin_inset Formula $u,v\in K$
-\end_inset
-
-,
- 
-\begin_inset Formula $d_{K}(u,v)\ge\frac{\Vert u-v\Vert_{u}}{\sqrt{\bar{\nu}}}.$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-Consider the ellipsoid at 
-\begin_inset Formula $u$
-\end_inset
-
-.
- For the chord 
-\begin_inset Formula $[p,q]$
-\end_inset
-
- induced by 
-\begin_inset Formula $u,v$
-\end_inset
-
- with these points in the order 
-\begin_inset Formula $p,u,v,q$
-\end_inset
-
-,
- suppose that 
-\begin_inset Formula $\|p-u\|_{2}\le\|v-q\|_{2}$
-\end_inset
-
-.
- Then by Lemma 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:dikingeneral"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
-
-\end_inset
-
-,
- 
-\begin_inset Formula $p\in K\cap(2u-K)$
-\end_inset
-
-.
- And hence 
-\begin_inset Formula $\|p-u\|_{u}\le\sqrt{\bar{\nu}}.$
-\end_inset
-
- Therefore,
- 
-\begin_inset Formula 
-\[
-d_{K}(u,v)=\frac{\|u-v\|_{2}\|p-q\|_{2}}{\|p-u\|_{2}\|v-q\|_{2}}\geq\frac{\|u-v\|_{2}}{\|p-u\|_{2}}=\frac{\|u-v\|_{u}}{\|p-u\|_{u}}\ge\frac{\|u-v\|_{u}}{\sqrt{\bar{\nu}}}.
-\]
-
-\end_inset
-
-We can now prove the main conductance bound.
-\end_layout
-
-\begin_layout Proof
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-dikingeneral*
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-We follow the standard high-level outline 
-\begin_inset CommandInset citation
-LatexCommand cite
-key "vempala2005geometric"
-literal "false"
-
-\end_inset
-
-.
- Consider any measurable subset 
-\begin_inset Formula $S_{1}\subseteq K$
-\end_inset
-
- and let 
-\begin_inset Formula $S_{2}=K\setminus S_{1}$
-\end_inset
-
- be its complement.
- Define the points with low escape probability for these subsets as
-\begin_inset Formula 
-\[
-S_{i}'=\left\{ x\in S_{i}:\,P_{x}(K\setminus S_{i})<\frac{1}{8}\right\} 
-\]
-
-\end_inset
-
-and 
-\begin_inset Formula $S_{3}'=K\setminus S_{1}'\setminus S_{2}'$
-\end_inset
-
-.
- Then,
- for any 
-\begin_inset Formula $u\in S_{1}'$
-\end_inset
-
-,
- 
-\begin_inset Formula $v\in S_{2}'$
-\end_inset
-
-,
- we have 
-\begin_inset Formula $d_{TV}(P_{u},P_{v})>1-\frac{1}{4}$
-\end_inset
-
-.
- Hence,
- by Lemma 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:dikin-one-step-1"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
-
-\end_inset
-
-,
- we have 
-\begin_inset Formula $\Vert u-v\Vert_{u}\ge\frac{1}{8\sqrt{n}}$
-\end_inset
-
-.
- Therefore,
- by Lemma 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:dikin-dist-1"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
-
-\end_inset
-
-,
- 
-\begin_inset Formula 
-\[
-d_{K}(u,v)\ge\frac{1}{8\sqrt{n}\cdot\sqrt{\bar{\nu}}}.
-\]
-
-\end_inset
-
-We can now bound the conductance of 
-\begin_inset Formula $S_{1}$
-\end_inset
-
-.
- We may assume that 
-\begin_inset Formula $\vol(S_{i}')\ge\vol(S_{i})/2$
-\end_inset
-
-;
- otherwise,
- it immediately follows that the conductance of 
-\begin_inset Formula $S_{1}$
-\end_inset
-
- is 
-\begin_inset Formula $\Omega(1)$
-\end_inset
-
-.
- Assuming this,
- we have
-\begin_inset Formula 
-\begin{align*}
-\int_{S_{1}}P_{x}(S_{2})\,dx & \ge\int_{S_{3}'}\frac{1}{8}dx\ge\frac{1}{8}\vol(S_{3}')\\
-\mbox{using isoperimetry (Theorem \ref{thm:dK-iso})} & \ge\frac{1}{8}d_{K}(S_{1}',S_{2}')\frac{\vol(S_{1}')\vol(S_{2}')}{\vol(P)}\\
- & \ge\frac{1}{512\sqrt{n\bar{\nu}}}\min\left\{ \vol(S_{1}),\vol(S_{2})\right\} .
-\end{align*}
 
 \end_inset
 

@@ -102,6 +102,10 @@ mention the relation between IPM and mirror descent?
  No algorithm box for now...
 \end_layout
 
+\begin_layout Plain Layout
+need to add analysis for initial solution
+\end_layout
+
 \end_inset
 
 
@@ -4541,7 +4545,7 @@ Given a convex function
 \end_inset
 
  define the norm 
-\begin_inset Formula $\norm ._{x}$
+\begin_inset Formula $\norm._{x}$
 \end_inset
 
  as 
@@ -5632,6 +5636,17 @@ Input:
 \end_inset
 
 .
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Need to say how to find this and analyze complexity.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -5968,7 +5983,7 @@ for
 
 ,
  we have 
-\begin_inset Formula $tc+\nabla\phi(x)=0$
+\begin_inset Formula $tc+\nabla\phi(x_{t})=0$
 \end_inset
 
 .
