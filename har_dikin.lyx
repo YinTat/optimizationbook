@@ -3260,7 +3260,7 @@ We can now bound the conductance of
 \begin_inset Formula 
 \begin{align*}
 \int_{S_{1}}P_{x}(S_{2})\,dx & \ge\int_{S_{3}'}\frac{1}{8}dx\ge\frac{1}{8}\vol(S_{3}')\\
-\mbox{using isoperimetry (Theorem \ref{thm:dK-iso})} & \ge\frac{1}{8}d_{K}(S_{1}',S_{2}')\frac{\vol(S_{1}')\vol(S_{2}')}{\vol(P)}\\
+\mbox{using isoperimetry (Theorem \ref{thm:iso-cross-ratio})} & \ge\frac{1}{8}d_{K}(S_{1}',S_{2}')\frac{\vol(S_{1}')\vol(S_{2}')}{\vol(P)}\\
  & \ge\frac{1}{512\sqrt{nm}}\min\left\{ \vol(S_{1}),\vol(S_{2})\right\} .
 \end{align*}
 

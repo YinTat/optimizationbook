@@ -706,7 +706,7 @@ The KL-divergence of a density
  is 
 \begin_inset Formula 
 \[
-\KL(\rho\|v)=\int\rho(x)\log\frac{\rho(x)}{\nu(x)}dx.
+\KL(\rho\|\nu)=\int\rho(x)\log\frac{\rho(x)}{\nu(x)}dx.
 \]
 
 \end_inset

@@ -827,16 +827,14 @@ end{algorithm2e}
 \begin_layout Standard
 The idea behind the algorithm is simple:
  when we cut a set with a hyperplane through its centroid,
- the line joining the centroids of the two sides passes through the original centroid (see Figure
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\backslash
-ref{fig:cutting-volume}
-\end_layout
+ the line joining the centroids of the two sides passes through the original centroid (see Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:cutting_plane_vol"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -1311,6 +1309,13 @@ nolink "false"
  in its second iteration.
  
 \end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:cutting_plane_vol"
 
 \end_inset
 
