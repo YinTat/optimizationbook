@@ -1,0 +1,107 @@
+
+\section{Frank--Wolfe \label{sec:FrankWolfe}}
+
+Mirror descent is not suitable for all spaces. The guarantee of mirror
+descent crucially depends on the fact that there is a $1$-strongly
+convex mirror map $\Phi$ such that $\max_{x}\Phi(x)-\min_{x}\Phi(x)$
+is small on the domain. For some domains such as $\{x:\|x\|_{\infty}\leq1\}$,
+the range $\max_{x}\Phi(x)-\min_{x}\Phi(x)$ can be large.
+\begin{lem}
+Let $\Phi$ be a $1$-strongly convex function on $\Rn$ over $\|\cdot\|_{\infty}\leq1$.
+Then, 
+\[
+\max_{\|x\|_{\infty}\leq1}\Phi(x)\geq\min_{\|x\|_{\infty}\leq1}\Phi(x)+\frac{n}{2}.
+\]
+\end{lem}
+
+\begin{proof}
+By the strong convexity of $\Phi$, we have that 
+\begin{align*}
+\E_{s_{k}\in\{\pm1\}\ \forall k\in[n]}\Phi(s_{1},\cdots,s_{n}) & \geq\E_{s_{k}\in\{\pm1\}\ \forall k\in[n-1]}\Phi(s_{1},\cdots,s_{n-1},0)+\E_{s_{n}}\left\langle \nabla\Phi(s_{1},\cdots,s_{n-1},0),s_{n}\right\rangle +\frac{1}{2}\\
+ & =\E_{s_{k}\in\{\pm1\}\ \forall k\in[n-1]}\Phi(s_{1},\cdots,s_{n-1},0)+\frac{1}{2}\\
+ & \vdots\\
+ & \geq\Phi(0)+\frac{n}{2}.
+\end{align*}
+\end{proof}
+\begin{rem*}
+This inequality is tight because $\frac{1}{2}\|x\|^{2}$ is $1$-strongly
+convex in $\|\cdot\|_{\infty}$ and its value is between $0$ and
+$\frac{n}{2}$.
+\end{rem*}
+
+\subsection{Algorithm}
+
+Now we give another geometry dependent algorithm that relies on a
+different set of assumptions. The problem we study in this section
+is of the form
+\[
+\min_{x\in\mathcal{D}}f(x)
+\]
+for $f$ such that $\nabla f$ is ``Lipschitz'' in a certain sense.
+The algorithm reduces the problem to a sequence of linear optimization
+problems.
+
+\begin{algorithm2e}[H]
+
+\caption{$\mathtt{FrankWolfe}$}
+
+\SetAlgoLined
+
+\textbf{Input:} Initial point $x^{(0)}\in\Rn$, step size $h>0$.
+
+\For{$k=0,1,\cdots,T-1$}{
+
+Compute $y^{(k)}=\arg\min_{y\in\mathcal{D}}\left\langle y,\nabla f(x^{(k)})\right\rangle $.
+
+$x^{(k+1)}\leftarrow(1-h_{k})x^{(k)}+h_{k}y^{(k)}$ with $h_{k}=\frac{2}{k+2}$.
+
+}
+
+\Return $x^{(T)}$.
+
+\end{algorithm2e}
+
+\subsection*{Analysis}
+\begin{thm}
+Let $f$ be a convex function on a convex set $\mathcal{D}$ with
+a constant $C_{f}$ such that
+\[
+f((1-h)x+hy))\leq f(x)+h\left\langle \nabla f(x),y-x\right\rangle +\frac{1}{2}C_{f}h^{2}.
+\]
+Then, for any $x,y\in\mathcal{D}$ and $h\in[0,1]$, we have
+\[
+f(x^{(k)})-f(x^{*})\leq\frac{2C_{f}}{k+2}.
+\]
+\end{thm}
+
+\begin{rem*}
+If $\nabla f$ is $L$-Lipschitz with respect to the norm $\|\cdot\|$
+over the domain $\mathcal{D}$, then $C_{f}\leq L\cdot\text{diam}_{\|\cdot\|}(\mathcal{D})^{2}.$
+\end{rem*}
+\begin{proof}
+By the definition of $C_{f}$, we have that
+\[
+f(x^{(k+1)})\leq f(x^{(k)})+h_{k}\left\langle \nabla f(x^{(k)}),y^{(k)}-x^{(k)}\right\rangle +\frac{1}{2}C_{f}h_{k}^{2}.
+\]
+Note that 
+\[
+f(x^{*})\geq f(x^{(k)})+\left\langle \nabla f(x^{(k)}),x^{*}-x^{(k)}\right\rangle \geq f(x^{(k)})+\left\langle \nabla f(x^{(k)}),y^{(k)}-x^{(k)}\right\rangle 
+\]
+where we used the fact that $y^{(k)}=\arg\min_{y\in\mathcal{D}}\left\langle y,\nabla f(x^{(k)})\right\rangle $
+and that $x^{*}\in\mathcal{D}$. Hence, we have that
+\[
+f(x^{(k+1)})\leq f(x^{(k)})-h_{k}(f(x^{(k)})-f(x^{*}))+\frac{1}{2}C_{f}h_{k}^{2}.
+\]
+Let $e_{k}=f(x^{(k)})-f(x^{*})$. Then, 
+\[
+e_{k+1}\leq(1-h_{k})e_{k}+\frac{1}{2}C_{f}h_{k}^{2}.
+\]
+Note that $e_{0}=f(x^{(0)})-f^{*}\leq\frac{1}{2}C_{f}$. By induction,
+we have that $e_{k}\leq\frac{2C_{f}}{k+2}$.
+\end{proof}
+\begin{rem*}
+Note that this proof is in fact the same as Theorem \ref{thm:gd_convex}.
+
+\end{rem*}
+
+

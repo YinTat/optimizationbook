@@ -1,0 +1,84 @@
+\selectlanguage{american}%
+
+\section{Lower Bounds\label{sec:Lower-Bounds}}
+
+In this chapter, we have discussed a few cutting plane methods. In
+particular, we showed that $O(\min(n,\sqrt{\frac{L}{\mu}})\log(\frac{1}{\epsilon}))$
+gradient computations suffice. We conclude this section by showing
+that $\min(n,\sqrt{\frac{L}{\mu}})$ is in fact optimal among ``gradient-based''
+methods. For convenience the reader may consider $\mu=1$ and $L=\kappa$.
+\begin{thm}
+Fix any $L\geq\mu>0$. Consider the function
+\begin{equation}
+f(x)=-\frac{L-\mu}{4}x_{1}+\frac{L-\mu}{8}\sum_{i=1}^{n-1}(x_{i}-x_{i+1})^{2}+\frac{L-\mu}{8}x_{1}^{2}+\frac{\mu}{2}\sum_{i=1}^{n}x_{i}^{2}+\frac{\sqrt{L\mu}-\mu}{4}x_{n}^{2}\label{eq:worst_function}
+\end{equation}
+
+which satisfies $\mu\cdot I\preceq\nabla^{2}f(x)\preceq L\cdot I$.
+Assume that our algorithm satisfies $x^{(k)}\in\mathrm{span}(x^{(0)},\nabla f(x^{(0)}),\cdots,\nabla f(x^{(k-1)}))$
+with the initial point $x^{(0)}=0$. Then, for $k<n$,
+\[
+f(x^{(k)})-\min_{x}f(x)\geq(\frac{\mu}{L})^{3/2}(\frac{\sqrt{L/\mu}-1}{\sqrt{L/\mu}+1})^{2k}(f(x^{(0)})-\min_{x}f(x)).
+\]
+\end{thm}
+
+\begin{proof}
+First, we check the strong convexity and smoothness. Note that $f(x)=-x_{1}+\frac{1}{2}x^{\top}Ax$
+for some matrix $A$. Hence, $\nabla^{2}f(x)=A$. Hence, we have
+\[
+\theta^{\top}\nabla^{2}f(x)\theta=\frac{L-\mu}{4}\sum_{i=1}^{n-1}(\theta_{i}-\theta_{i+1})^{2}+\frac{L-\mu}{4}\theta_{1}^{2}+\mu\sum_{i=1}^{n}\theta_{i}^{2}+\frac{\sqrt{L\mu}-\mu}{2}\theta_{n}^{2}
+\]
+For the upper bound $\nabla^{2}f(x)\preceq L\cdot I$, we note that
+\begin{align*}
+\theta^{\top}\nabla^{2}f(x)\theta & \leq\frac{L-\mu}{4}\sum_{i=1}^{n-1}(2\theta_{i}^{2}+2\theta_{i+1}^{2})+\frac{L-\mu}{4}\theta_{1}^{2}+\mu\sum_{i=1}^{n}\theta_{i}^{2}+(\frac{\sqrt{L\mu}-\mu}{2})\theta_{n}^{2}\\
+ & \leq(L-\mu)\sum_{i=1}^{n}\theta_{i}^{2}+\mu\sum_{i=1}^{n}\theta_{i}^{2}\\
+ & =L\sum_{i=1}^{n}\theta_{i}^{2}.
+\end{align*}
+For the lower bound $\nabla^{2}f(x)\succeq\mu\cdot I$, we note that
+\[
+\theta^{\top}\nabla^{2}f(x)\theta\geq\mu\sum_{i=1}^{n}\theta_{i}^{2}.
+\]
+
+To lower bound the error, we note that the gradient at $x^{(0)}$
+is of the form $(?,0,0,0,\cdots)$ and hence by the assumption $x^{(1)}=(?,0,0,0,\cdots)$
+and $\nabla f(x^{(1)})=(?,?,0,0,\cdots)$. By induction, only the
+first $k$ coordinates of $x^{(k)}$ are non-zero.
+
+Now, we compute the minimizer of $f(x)$. Let $x^{*}$ be the minimizer
+of $f(x)$. By the optimality condition, we have that
+\begin{align*}
+-\frac{L-\mu}{4}+\frac{L-\mu}{4}(x_{1}^{*}-x_{2}^{*})+\frac{L-\mu}{4}x_{1}^{*}+\mu x_{1}^{*} & =0,\\
+\frac{L-\mu}{4}(x_{i}^{*}-x_{i-1}^{*})+\frac{L-\mu}{4}(x_{i}^{*}-x_{i+1}^{*})+\mu x_{i}^{*} & =0,\text{ for }i\in\{2,3,\cdots,n-1\}\\
+\frac{L-\mu}{4}(x_{n}^{*}-x_{n-1}^{*})+\frac{\sqrt{L\mu}+\mu}{2}x_{n}^{*} & =0.
+\end{align*}
+By a direct substitution, we have that $x_{i}^{*}=(\frac{\sqrt{L/\mu}-1}{\sqrt{L/\mu}+1})^{i}$
+is a solution of the above equation. Now, we note that
+\begin{align*}
+\|x^{(k)}-x^{*}\|_{2}^{2} & \geq\sum_{i=k+1}^{n}(\frac{\sqrt{L/\mu}-1}{\sqrt{L/\mu}+1})^{2i}\geq(\frac{\sqrt{L/\mu}-1}{\sqrt{L/\mu}+1})^{2(k+1)}
+\end{align*}
+and that
+\[
+\|x^{(0)}-x^{*}\|_{2}^{2}\leq\sum_{i=1}^{\infty}(\frac{\sqrt{L/\mu}-1}{\sqrt{L/\mu}+1})^{2i}=(\frac{\sqrt{L/\mu}-1}{\sqrt{L/\mu}+1})^{2}\frac{\sqrt{L/\mu}+1}{2}.
+\]
+Now, by smoothness and by the strong convexity of $f$, we have
+\[
+\frac{f(x^{(k)})-f(x^{*})}{f(x^{(0)})-f(x^{*})}\geq\frac{\mu}{L}\cdot\frac{\|x^{(k)}-x^{*}\|_{2}^{2}}{\|x^{(0)}-x^{*}\|_{2}^{2}}\geq(\frac{\mu}{L})^{3/2}(\frac{\sqrt{L/\mu}-1}{\sqrt{L/\mu}+1})^{2k}.
+\]
+\end{proof}
+Note that this ``worst'' function naturally appears in many problems.
+So, it is a problem we need to address. In some sense, the proof points
+out a common issue of any algorithm which only uses gradient information.
+Given any convex function, we construct the dependence graph $G$
+on the set of variables $x_{i}$ by connecting $x_{i}$ to $x_{j}$
+if $\nabla f(x)_{i}$ depends on $x_{j}$ or $\nabla f(x)_{j}$ depends
+on $x_{i}$ (given all other variables). Note that the dependence
+graph $G$ of the worst function is simply a $n$ vertex path, whose
+diameter is $n-1$. Also, note that gradient descent can only transmit
+information from one vertex to another in each iteration. Therefore,
+it takes at least $\Omega(\mathrm{diameter})$ time to solve the problem
+unless we know the solution is sparse (when $L/\mu$ is small). However,
+we note that this is not a lower bound for all algorithms.
+
+The problem (\ref{eq:worst_function}) belongs to a general class
+of functions called Laplacian systems and it can be solved in nearly
+linear time using spectral graph theory. \selectlanguage{english}%
+

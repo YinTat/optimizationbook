@@ -1,0 +1,452 @@
+
+\section{Accelerated Gradient Descent via Plane Search}
+
+According to legend, the first proof for accelerated gradient descent
+is due to Nemirovski in the 70s. The first proof involves a $2$-dimensional
+plane search subroutine. Later on this was improved to line search
+and finally Nesterov showed how to get rid of line search in 1982.
+We change the proof slightly to get rid of all uses of parameters.
+
+\begin{algorithm2e}[H]
+
+\caption{$\mathtt{NemAGD}$}
+
+\SetAlgoLined
+
+\textbf{Input:} Initial point $x^{(1)}\in\Rn$.
+
+\For{$k=1,2,\cdots$}{
+
+$x^{(k)+}\leftarrow\text{argmin}_{x=x^{(k)}+t\nabla f(x^{(k)})}f(x).$
+
+$P^{(k)}\leftarrow x^{(1)}+\mathrm{span}(x^{(k)+}-x^{(1)},\sum_{s=1}^{k}\frac{\nabla f(x^{(s)})}{\|\nabla f(x^{(s)})\|})$.
+
+\tcp{Alternatively, one can use $P^{(k)}\leftarrow x^{(k)}+\mathrm{span}(x^{(k)}-x^{(1)},\nabla f(x^{(k)}),\sum_{s=1}^{k}\frac{\nabla f(x^{(s)})}{\|\nabla f(x^{(s)})\|})$
+without defining $x^{(k)+}$.}
+
+$x^{(k+1)}=\arg\min_{x\in P^{(k)}}f(x)$.
+
+}
+
+\end{algorithm2e}
+\begin{thm}
+Assume that $f$ is convex with $\nabla^{2}f(x)\preceq L\cdot I$
+for all $x$. Then, we have that 
+\[
+f(x^{(k)})-f(x^{*})\lesssim\frac{L\|x^{*}-x^{(1)}\|^{2}}{k^{2}}.
+\]
+\end{thm}
+
+\begin{proof}
+Let $\delta_{k}=f(x^{(k)})-f(x^{*})$. By the convexity of $f$, we
+have
+
+\begin{align*}
+\delta_{k} & \leq\nabla f(x^{(k)})^{\top}(x^{(k)}-x^{*})\\
+ & =\nabla f(x^{(k)})^{\top}(x^{(k)}-x^{(1)})+\nabla f(x^{(k)})^{\top}(x^{(1)}-x^{*}).
+\end{align*}
+Since $x^{(k)}$ is the minimizer on $P^{(k-1)}$ which contains $x^{(1)}$,
+we have $\nabla f(x^{(k)})^{\top}(x^{(k)}-x^{(1)})=0$ and hence
+\[
+\delta_{k}\leq\nabla f(x^{(k)})^{\top}(x^{(1)}-x^{*}).
+\]
+
+Let $\lambda_{t}=\frac{1}{\|\nabla f(x^{(t)})\|}$. Note that
+\[
+\sum_{k=1}^{T}\lambda_{k}\delta_{k}\leq\left\langle \sum_{k=1}^{T}\frac{\nabla f(x^{(k)})}{\|\nabla f(x^{(k)})\|},x^{(1)}-x^{*}\right\rangle \leq\|x^{*}-x^{(1)}\|_{2}\cdot\norm{\sum_{k=1}^{T}\frac{\nabla f(x^{(k)})}{\|\nabla f(x^{(k)})\|}}_{2}.
+\]
+Finally, we note that $\nabla f(x^{(k+1)})\perp P^{(k)}$ and hence
+$\nabla f(x^{(k+1)})\perp\sum_{s=1}^{k}\frac{\nabla f(x^{(s)})}{\|\nabla f(x^{(s)})\|}$.
+Therefore, we have 
+\[
+\norm{\sum_{k=1}^{T}\frac{\nabla f(x^{(k)})}{\|\nabla f(x^{(k)})\|}}_{2}^{2}=\sum_{k=1}^{T}\norm{\frac{\nabla f(x^{(k)})}{\|\nabla f(x^{(k)})\|}}_{2}^{2}=T.
+\]
+Hence, we have
+\[
+\sum_{k=1}^{T}\lambda_{k}\delta_{k}\leq\sqrt{T}\cdot\|x^{*}-x^{(1)}\|_{2}.
+\]
+Since $x^{(k)+}\in P$, we have that 
+\[
+\delta_{k+1}=f(x^{(k+1)})-f(x^{*})\leq f(x^{(k)+})-f(x^{*})\leq\delta_{k}-\frac{1}{2L}\|\nabla f(x^{(k)})\|_{2}^{2}.
+\]
+
+Hence, we have $\|\nabla f(x^{(k)})\|_{2}^{2}\leq2L(\delta_{k}-\delta_{k+1})$.
+This gives
+\[
+\sum_{k=1}^{T}\frac{\delta_{k}}{\sqrt{\delta_{k}-\delta_{k+1}}}\leq\sqrt{2LT}\cdot\|x^{*}-x^{(1)}\|_{2}
+\]
+for all $T$. Solving this recursion gives the result.
+\end{proof}
+\begin{xca}
+Solve the recursion omitted at the end of the proof.
+\end{xca}
+
+Note that the proof above used only the fact that $\{x^{(1)},x^{(k)+},\sum_{s=1}^{k}\frac{\nabla f(x^{(s)})}{\|\nabla f(x^{(s)})\|}\}\subset P$.
+Therefore, one can put extra vectors in $P$ to obtain extra features.
+For example, if we use the subspace
+\[
+P=x^{(k)}+\mathrm{span}(x^{(k)}-x^{(1)},\nabla f(x^{(k)}),\sum_{s=1}^{k}\frac{\nabla f(x^{(s)})}{\|\nabla f(x^{(s)})\|},x^{(k)}-x^{(k-1)}),
+\]
+then one can prove that this algorithm is equivalently to conjugate
+gradient when $f$ is a quadratic function.
+
+\section{Accelerated Gradient Descent\label{sec:Accelerated-Gradient-Descent}}
+
+
+\subsection{Gradient Mapping}
+
+To give a general version of acceleration, we consider problem of
+the form
+\[
+\min_{x}\phi(x)\defeq f(x)+h(x)
+\]
+where $f(x)$ is strongly convex and smooth and $h(x)$ is convex.
+We assume that we access the function $f$ and $h$ differently via:
+\begin{enumerate}
+\item Let $\mathcal{T}_{f}$ be the cost of computing $\nabla f(x)$.
+\item Let $\mathcal{T}_{h,\lambda}$ be the cost of minimizing $h(x)+\frac{\lambda}{2}\norm{x-c}_{2}^{2}$
+exactly.
+\end{enumerate}
+The idea is to move whatever we can optimize in $\phi$ to $h$ and
+hopefully this makes the remaining part of $\phi$, $f$, as smooth
+and strongly convex as possible. To make the statement general, we
+only assume $h$ is convex and hence $h$ may not be differentiable.
+To handle this issue, we need to define an approximate derivative
+of $h$ that we can compute.
+\begin{defn}
+We define the gradient step
+\[
+p_{x}=\argmin_{y}f(x)+\nabla f(x)^{\top}(y-x)+\frac{L}{2}\norm{y-x}^{2}+h(y)
+\]
+and the gradient mapping
+\[
+g_{x}=L(x-p_{x}).
+\]
+
+Note that if $h=0$, then $p_{x}=x-\frac{1}{L}\nabla f(x)$ and $g_{x}=\nabla f(x)$.
+In general, if $\phi\in\mathcal{C}^{2}$, then we have that
+\[
+p_{x}=x-\frac{1}{L}\nabla\phi(x)+O(\frac{1}{L^{2}}).
+\]
+Therefore, we have that $g_{x}=\nabla\phi(x)+O(\frac{1}{L})$. Hence,
+the gradient mapping is an approximation of the gradient of $\phi$
+that is computable in time $\mathcal{T}_{g}+\mathcal{T}_{h,L}$.
+
+The key lemma we use here is that $\phi$ satisfies a lower bound
+defining using $g_{x}$. Ideally, we would love to get a lower bound
+as follows:
+\[
+\phi(z)\geq\phi(x)+g_{x}^{\top}(z-x)+\frac{\mu}{2}\norm{z-x}_{2}^{2}.
+\]
+But it is WRONG. If that was true for all $z$, then we would have
+$g_{x}=\nabla\phi(x)$. However, if $\phi\in\mathcal{C}^{2}$ is $\mu$
+strongly convex, then we have
+\begin{align}
+\phi(z) & \geq\phi(x)+\nabla\phi(x)^{\top}(z-x)+\frac{\mu}{2}\norm{z-x}_{2}^{2}\nonumber \\
+ & \geq\phi(x-\frac{1}{L}\nabla\phi(x))+\frac{1}{2L}\norm{\nabla\phi(x)}^{2}+\nabla\phi(x)^{\top}(z-x)+\frac{\mu}{2}\norm{z-x}_{2}^{2}.\label{eq:gradient_lower_bound}
+\end{align}
+It turns out that this is true and is exactly what we need for proving
+gradient descent, mirror descent and accelerated gradient descent.
+\end{defn}
+
+\begin{thm}
+\label{thm:gradient_mapping_lower_bound}Given $\phi=f+h$. Suppose
+that $f$ is $\mu$ strongly convex with $L$-Lipschitz gradient.
+Then, for any $z$, we have that
+\[
+\phi(z)\geq\phi(p_{x})+g_{x}^{\top}(z-x)+\frac{1}{2L}\norm{g_{x}}_{2}^{2}+\frac{\mu}{2}\norm{z-x}_{2}^{2}.
+\]
+\end{thm}
+
+\begin{proof}
+Let $\overline{f}(y)=f(x)+\nabla f(x)^{\top}(y-x)+\frac{L}{2}\norm{y-x}_{2}^{2}$
+and $p_{t}=p_{x}+t(z-p_{x})$. Using that $p_{0}$ is the minimizer
+of $\overline{f}+h$, we have that 
+\[
+\overline{f}(p_{0})+h(p_{0})\leq\overline{f}(p_{t})+h(p_{t})\leq\overline{f}(p_{0})+\nabla\overline{f}(p_{0})^{\top}(p_{t}-p_{0})+\frac{L}{2}\norm{p_{t}-p_{0}}^{2}+h(p_{t}).
+\]
+Hence, we have that
+\begin{align*}
+0 & \leq\nabla\overline{f}(p_{0})^{\top}(p_{t}-p_{0})+\frac{L}{2}\norm{p_{t}-p_{0}}^{2}+h(p_{t})-h(p_{0})\\
+ & \leq t\cdot\left(\nabla\overline{f}(p_{0})^{\top}(z-p_{0})+h(z)-h(p_{0})\right)+\frac{Lt^{2}}{2}\norm{z-p_{0}}^{2}.
+\end{align*}
+Taking $t\rightarrow0^{+}$, we have 
+\[
+\nabla\overline{f}(p_{x})^{\top}(z-p_{x})+h(z)-h(p_{x})\geq0
+\]
+
+Expanding the term $\nabla\overline{f}(p_{x})$, we have
+\[
+\nabla f(x)^{\top}(z-p_{x})+L(p_{x}-x)^{\top}(z-p_{x})+h(z)-h(p_{x})\geq0.
+\]
+Equivalently,
+\begin{align*}
+h(z) & \geq h(p_{x})+\nabla f(x)^{\top}(p_{x}-z)+L(p_{x}-x)^{\top}(p_{x}-z)\\
+ & =h(p_{x})+\nabla f(x)^{\top}(p_{x}-z)+\frac{1}{L}\|g_{x}\|^{2}+L(p_{x}-x)^{\top}(x-z)\\
+ & =h(p_{x})+\nabla f(x)^{\top}(p_{x}-z)+\frac{1}{L}\|g_{x}\|^{2}+g_{x}^{\top}(z-x).
+\end{align*}
+Using that 
+\[
+f(z)\geq f(x)+\nabla f(x)^{\top}(z-x)+\frac{\mu}{2}\|z-x\|^{2}
+\]
+and that
+\[
+f(p_{x})\leq f(x)+\nabla f(x)^{\top}(p_{x}-x)+\frac{1}{2L}\|g_{x}\|^{2},
+\]
+we have the result:
+\begin{align*}
+\phi(z) & \geq h(p_{x})+f(x)+\nabla f(x)^{\top}(p_{x}-x)+\frac{1}{L}\|g_{x}\|^{2}+g_{x}^{\top}(z-x)+\frac{\mu}{2}\|z-x\|^{2}\\
+ & \geq\phi(p_{x})+\frac{1}{2L}\|g_{x}\|^{2}+g_{x}^{\top}(z-x)+\frac{\mu}{2}\|z-x\|^{2}.
+\end{align*}
+
+\end{proof}
+The next lemma shows that $\norm{g_{x}}_{2}\leq2G$ if $\phi$ is
+$G$-Lipschitz.
+\begin{lem}
+\label{lem:Lipschitz_constant_g}If $\phi$ is $G$-Lipschitz, then
+$\norm{g_{x}}_{2}\leq2G$ for all $x$.
+\end{lem}
+
+\begin{proof}
+By the definition of gradient mapping (namely, $p_{x}$ is the minimizer
+of a function), we have that
+\[
+f(x)+\nabla f(x)^{\top}(p_{x}-x)+\frac{L}{2}\norm{p_{x}-x}^{2}+h(p_{x})\leq f(x)+h(x).
+\]
+Using $h(p_{x})\geq h(x)+\nabla h(x)^{\top}(p_{x}-x)$, we have that
+\[
+0\geq\nabla\phi(x)^{\top}(p_{x}-x)+\frac{L}{2}\norm{p_{x}-x}^{2}\geq-G\norm{p_{x}-x}_{2}+\frac{L}{2}\norm{p_{x}-x}^{2}.
+\]
+Hence, we have that $\norm{p_{x}-x}_{2}\leq\frac{2}{L}G$ and hence
+$\norm{g_{x}}_{2}\leq2G$.
+\end{proof}
+
+\subsection{Gradient Descent Using Gradient Mapping}
+
+Putting $z=x$ in Theorem \ref{thm:gradient_mapping_lower_bound},
+we have the following:
+\begin{lem}[Gradient Descent Lemma]
+\label{lem:gradient_descent_lemma}We have that
+\[
+\phi(p_{x})\leq\phi(x)-\frac{1}{2L}\norm{g_{x}}_{2}^{2}.
+\]
+\end{lem}
+
+This shows that each step of the gradient step decreases the function
+value by $\frac{1}{2L}\norm{g_{x}}_{2}^{2}$. Therefore, if the gradient
+is large, then we decrease the function value by a lot. On the other
+hand, Putting $z=x^{*}$ for Theorem \ref{thm:gradient_mapping_lower_bound}
+shows that
+\[
+\phi(x^{*})\geq\phi(p_{x})+g_{x}^{\top}(x^{*}-x).
+\]
+
+If the gradient is small and domain is bounded, this shows that we
+are close to the optimal. Combining these two facts, we can get the
+gradient descent.
+
+\subsection{Mirror Descent Using Gradient Mapping}
+
+Consider the mirror descent as
+\begin{equation}
+x^{(k+1)}=x^{(k)}-\eta g_{x^{(k)}}.\label{eq:mirror_step}
+\end{equation}
+The main difference between this and gradient descent is that we will
+take a larger step size $\eta$. To analyze the mirror descent, we
+use Theorem \ref{thm:gradient_mapping_lower_bound} and the convexity
+of $\phi$ to get that
+\begin{equation}
+\phi(\frac{1}{k}\sum_{i=1}^{k}p_{x^{(i)}})-\phi(x^{*})\leq\frac{1}{k}\sum_{i=1}^{k}(\phi(p_{x^{(i)}})-\phi(x^{*}))\leq\frac{1}{k}\sum_{i=1}^{k}g_{x^{(i)}}^{\top}(x^{(i)}-x^{*}).\label{eq:mirror_lemma}
+\end{equation}
+Therefore, it suffices to upper bound $g_{x^{(i)}}^{\top}(x^{(i)}-x^{*})$.
+The following lemma shows that if $g_{x^{(i)}}^{\top}(x^{(i)}-x^{*})$
+is large, then either the gradient is large or the distance to optimum
+moves a lot. It turns out this holds for any vector $g$, not necessarily
+an approximate gradient.
+\begin{lem}[Mirror Descent Lemma]
+\label{lem:mirror_step}Let $p=x-\eta g$. Then, we have that
+\[
+g^{\top}(x-u)=\frac{\eta}{2}\norm g_{2}^{2}+\frac{1}{2\eta}\left(\norm{x-u}_{2}^{2}-\norm{p-u}_{2}^{2}\right)
+\]
+for any $u$.
+\end{lem}
+
+
+\subsection{Algorithm and Analysis}
+
+Recall Lemma \ref{lem:gradient_descent_lemma} shows that if the gradient
+is large, gradient descent makes a large progress. On the other hand,
+if the gradient is small, (\ref{eq:mirror_lemma}) shows that mirror
+descent makes a large progress. Therefore, it is natural to combine
+two approaches.
+
+\begin{algorithm2e}[H]
+
+\caption{$\mathtt{AGD}$}
+
+\SetAlgoLined
+
+\textbf{Input:} Initial point $x^{(1)}\in\Rn$.
+
+$y^{(1)}\leftarrow x^{(1)}$, $z^{(1)}\leftarrow x^{(1)}$.
+
+\For{$k=1,2,\cdots,T$}{
+
+$x^{(k+1)}\leftarrow\tau z^{(k)}+(1-\tau)y^{(k)}$.
+
+Perform a gradient step: $y^{(k+1)}=x^{(k+1)}-\frac{1}{L}g_{x^{(k+1)}}$.
+
+Perform a mirror step: $z^{(k+1)}=z^{(k)}-\eta g_{x^{(k+1)}}$.
+
+}
+
+\textbf{Return $\frac{1}{T}\sum_{k=1}^{T}p_{x^{(k+1)}}$.}
+
+\end{algorithm2e}
+
+Note that if $\tau=1$, the algorithm is simply mirror descent and
+if $\tau=0$, the algorithm is gradient descent.
+\begin{thm}
+\label{thm:AGD}Setting $\frac{1-\tau}{\tau}=\eta L$ and $\eta=\frac{1}{\sqrt{\mu L}}$,
+we have that
+\[
+\phi(\frac{1}{T}\sum_{k=1}^{T}p_{x^{(k+1)}})-\phi(x^{*})\leq\frac{2}{T}\sqrt{\frac{L}{\mu}}\left(\phi(x^{(1)})-\phi(x^{*})\right).
+\]
+In particular, if we restart the algorithm every $4\sqrt{\frac{L}{\mu}}$
+iterations, we can find $x$ such that 
+\[
+\phi(x)-\phi(x^{*})\leq2(1-\sqrt{\frac{\mu}{L}})^{\Omega(T)}\left(\phi(x^{(1)})-\phi(x^{*})\right)
+\]
+in $T$ steps. Furthermore, each step takes $\mathcal{T}_{f}+\mathcal{T}_{h,L}$
+\end{thm}
+
+\begin{proof}
+Lemma \ref{lem:mirror_step} showed that
+\begin{align}
+g_{x^{(k+1)}}^{\top}(z^{(k)}-x^{*}) & \leq\frac{\eta}{2}\norm{g_{x^{(k+1)}}}_{2}^{2}+\frac{1}{2\eta}\left(\norm{z^{(k)}-x^{*}}_{2}^{2}-\norm{z^{(k+1)}-x^{*}}_{2}^{2}\right)\label{eq:AGD_1}
+\end{align}
+
+This shows that if the mirror descent has large error $g_{x^{(k+1)}}^{\top}(z^{(k)}-x^{*})$,
+then the gradient descent makes a large progress ($\frac{\eta}{2}\norm{g_{x^{(k+1)}}}_{2}^{2}$).
+
+To make the left-hand side usable, note that $x^{(k+1)}=z^{(k)}+\frac{1-\tau}{\tau}\cdot(y^{(k)}-x^{(k+1)})$
+and hence
+\begin{align*}
+g_{x^{(k+1)}}^{\top}(x^{(k+1)}-x^{*}) & =g_{x^{(k+1)}}^{\top}(z^{(k)}-x^{*})+\frac{1-\tau}{\tau}\cdot g_{x^{(k+1)}}^{\top}(y^{(k)}-x^{(k+1)})\\
+ & \leq g_{x^{(k+1)}}^{\top}(z^{(k)}-x^{*})+\frac{1-\tau}{\tau}(\phi(y^{(k)})-\phi(y^{(k+1)})-\frac{1}{2L}\norm{g_{x^{(k+1)}}}_{2}^{2})\\
+ & \leq\frac{\eta}{2}\norm{g_{x^{(k+1)}}}_{2}^{2}+\frac{1}{2\eta}\left(\norm{z^{(k)}-x^{*}}_{2}^{2}-\norm{z^{(k+1)}-x^{*}}_{2}^{2}\right)+\frac{1-\tau}{\tau}(\phi(y^{(k)})-\phi(y^{(k+1)})-\frac{1}{2L}\norm{g_{x^{(k+1)}}}_{2}^{2}).
+\end{align*}
+where we used Theorem \ref{thm:gradient_mapping_lower_bound} in the
+middle and (\ref{eq:AGD_1}) at the end.
+
+Now, we set $\frac{1-\tau}{\tau}=\eta L$ and get
+\[
+g_{x^{(k+1)}}^{\top}(x^{(k+1)}-x^{*})\leq\eta L(\phi(y^{(k)})-\phi(y^{(k+1)}))+\frac{1}{2\eta}\left(\norm{z^{(k)}-x^{*}}_{2}^{2}-\norm{z^{(k+1)}-x^{*}}_{2}^{2}\right).
+\]
+Taking a sum on both side and let $\overline{x}=\frac{1}{T}\sum_{k=1}^{T}p_{x^{(k+1)}}$,
+we have that
+\begin{align*}
+\phi(\overline{x})-\phi(x^{*}) & \leq\frac{1}{T}\sum_{k=1}^{T}(\phi(p_{x^{(k+1)}})-\phi(x^{*}))\\
+ & \leq\frac{1}{T}\sum_{k=1}^{T}g_{x^{(k+1)}}^{\top}(x^{(k+1)}-x^{*})\\
+ & \leq\frac{\eta L}{T}\left(\phi(y^{(1)})-\phi(y^{(T+1)})\right)+\frac{1}{2\eta T}\norm{z^{(1)}-x^{*}}_{2}^{2}\\
+ & \leq\left(\frac{\eta L}{T}+\frac{1}{2\eta T\mu}\right)\left(\phi(x^{(1)})-\phi(x^{*})\right)
+\end{align*}
+The conclusion follows from our setting of $\eta$.
+\end{proof}
+
+\section{Accelerated Coordinate Descent}
+
+Recall from Theorem \ref{thm:coordinate_descent} that if $\frac{\partial^{2}}{\partial x_{i}^{2}}\ell(x)\leq L_{i}$
+for all $x$ and that $\ell$ is $\mu$ strongly convex, then we can
+find $x^{(k)}$ in $k$ coordinate steps such that 
+\[
+\E\ell(x^{(k)})-\ell(x^{*})\leq(1-\frac{\mu}{L})^{\Omega(k)}(\ell(x^{(0)})-f(x^{*}))
+\]
+where $L=\sum_{i}L_{i}$. Now, the really fun part is here. Consider
+the function 
+\[
+\phi(x)=f(x)+h(x)\quad\text{with}\quad f(x)=\frac{\mu}{2}\norm x_{2}^{2}\text{ and }h(x)=\ell(x)-\frac{\mu}{2}\norm x_{2}^{2}.
+\]
+Since $f$ is $\mu+\frac{L}{n}$ smooth (YES!, I know this is also
+$\mu$ smooth) and $\mu$ strongly convex and since $h$ is convex,
+we apply Theorem \ref{thm:AGD} and get an algorithm that takes $O^{*}(\sqrt{\frac{L}{n\mu}})$
+steps. Note that each step involves $\mathcal{T}_{f}+\mathcal{T}_{h,\mu+\frac{L}{n}}$.
+Obviously, $\mathcal{T}_{f}=0$. Next, note that $\mathcal{T}_{h,\mu+\frac{L}{n}}$
+involves solving a problem of the form
+\begin{align*}
+y_{x} & =\argmin_{y}(\frac{\mu}{2}+\frac{L}{2n})\norm{y-x}^{2}+(\ell(y)-\frac{\mu}{2}\norm x^{2})\\
+ & =\argmin_{y}\ell(y)-\mu y^{\top}x+\frac{L}{2n}\norm{y-x}^{2}.
+\end{align*}
+Now, we can apply Theorem \ref{thm:coordinate_descent} to solve this
+problem. It takes 
+\[
+O^{*}(\frac{L+(L/n)\cdot n}{L/n})=O^{*}(n)\text{ coordinate steps.}
+\]
+Therefore, in total it takes
+\[
+O^{*}(\sqrt{\frac{L}{n\mu}})\cdot O^{*}(n)=O^{*}(\sqrt{\frac{Ln}{\mu}})\text{ coordinate steps}.
+\]
+Hence, we have the following theorem
+\begin{thm}[Accelerated Coordinate Descent Convergence]
+\label{thm:coordinate_descent_linear_acc}Given an $\mu$ strongly-convex
+function $\ell$. Suppose that $\frac{\partial^{2}}{\partial x_{i}^{2}}\ell(x)\leq L_{i}$
+for all $x$ and let $L=\sum L_{i}$. We can minimize $\ell$ in \textup{$O^{*}(\sqrt{\frac{Ln}{\mu}})$
+coordinate steps.}
+\end{thm}
+
+\begin{rem}
+It is known how to do it in $O^{*}(\sum_{i}\sqrt{\frac{L_{i}}{\mu}})$
+steps \cite{allen2016even}.
+\end{rem}
+
+
+\section{Accelerated Stochastic Descent}
+
+Recall from Theorem \ref{thm:stochastic_method} that if $\nabla^{2}\ell_{i}(x)\leq L$
+for all $x$ and $i$ and that $\ell(x)=\frac{1}{n}\sum_{i=1}^{n}\ell_{i}(x)$
+is $\mu$ strongly convex, then we can find $x$ in $O((n+\frac{L}{\mu})\log(\frac{1}{\epsilon}))$
+stochastic steps such that 
+\[
+\E\ell(x)-\ell(x^{*})\leq\epsilon(\ell(x^{(0)})-\ell(x^{*})).
+\]
+
+Similar to the coordinate descent, we can accelerate it using the
+accelerated gradient descent (Theorem \ref{thm:AGD}). To apply Theorem
+\ref{thm:AGD}, we consider the function 
+\[
+\phi(x)=f(x)+h(x)\quad\text{with}\quad f(x)=\frac{\mu}{2}\norm x_{2}^{2}\text{ and }h(x)=\ell(x)-\frac{\mu}{2}\norm x_{2}^{2}.
+\]
+Since $f$ is $\mu+\frac{L}{n}$ smooth (YES!, I know this is also
+$\mu$ smooth) and $\mu$ strongly convex and since $h$ is convex,
+we apply Theorem \ref{thm:AGD} and get an algorithm that takes $O^{*}(1+\sqrt{\frac{L}{n\mu}})$
+steps. Note that each step involves $\mathcal{T}_{f}+\mathcal{T}_{h,\mu+\frac{L}{n}}$.
+Obviously, $\mathcal{T}_{f}=0$. Next, note that $\mathcal{T}_{h,\mu+\frac{L}{n}}$
+involves solving a problem of the form
+\begin{align*}
+y_{x} & =\argmin_{y}(\frac{\mu}{2}+\frac{L}{2n})\norm{y-x}^{2}+(\ell(y)-\frac{\mu}{2}\norm x^{2})\\
+ & =\argmin_{y}\ell(y)-\mu y^{\top}x+\frac{L}{2n}\norm{y-x}^{2}\\
+ & =\argmin_{y}\frac{1}{n}\sum_{i}(\ell_{i}(y)+\frac{L}{2n}\norm{y-x}^{2}-\mu y^{\top}x)
+\end{align*}
+Now, we can apply Theorem \ref{thm:stochastic_method} to solve this
+problem. It takes 
+\[
+O^{*}(n+\frac{L+\frac{L}{n}}{\mu+\frac{L}{n}})=O^{*}(n)
+\]
+Therefore, in total it takes
+\[
+O^{*}(1+\sqrt{\frac{L}{n\mu}})\cdot O^{*}(n)=O^{*}(n+\sqrt{n\frac{L}{\mu}}).
+\]
+
+\begin{thm}
+\label{thm:acc_stochastic_method}Given a convex function $\ell=\frac{1}{n}\sum\ell_{i}$.
+Suppose that $\nabla^{2}\ell_{i}(x)\leq L$ for all $i$ and $x$
+and that $\ell$ is $\mu$ strongly convex. Suppose we can compute
+$\nabla\ell_{i}$ in $O(1)$ time. We have an algorithm that outputs
+an $x$ such that 
+\[
+\E\ell(x)-\ell(x^{*})\leq\varepsilon(\ell(x^{(0)})-\ell(x^{*}))
+\]
+in $O^{*}(n+\sqrt{n\frac{L}{\mu}})$ stochastic steps.
+\end{thm}
+
+

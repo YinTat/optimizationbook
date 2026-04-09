@@ -1,0 +1,197 @@
+\selectlanguage{american}%
+
+\section{Volume Computation by Annealing}
+
+For volume computation, we can apply annealing as follows. We consider
+the following estimator that uses a random sample from the distribution
+with density proportional to $f_{i}$:
+
+\[
+Y=\frac{f_{i+1}(X)}{f_{i}(X)}.
+\]
+We see that 
+\[
+\E_{f_{i}}(Y)=\frac{\int f_{i+1}}{\int f_{i}}.
+\]
+In the DFK algorithm, this ratio is bounded by a constant (in fact
+$2$) in each phase, giving a total of roughly $n$ phases since the
+ratio of final to initial integrals is exponential. Instead of uniform
+densities, we consider 
+\[
+f_{i}(x)=\exp(-a_{i}\norm x)\chi_{K}(x)\mbox{ or }f_{i}(x)=\exp(-a_{i}\norm x^{2})\chi_{K}(x).
+\]
+The coefficient $a_{i}$ (inverse ``temperature'') will be changed
+by a factor of $(1+\frac{1}{\sqrt{n}})$ in each phase, which implies
+that $m=\widetilde{O}(\sqrt{n})$ phases suffice to reach the target
+distribution. This is perhaps surprising since the ratio of the initial
+integral to the final is typically $n^{\Omega(n)}$. Yet the algorithm
+uses only $\widetilde{O}(\sqrt{n})$ phases, and hence estimates a
+ratio of $n^{\tilde{\Omega}(\sqrt{n})}$ in one or more phases. In
+the algorithm below, we assume that $B_{n}\subseteq K\subseteq RB_{n}$
+and $f(x)=\exp(-\|x\|^{2}/2)\chi_{K}(x).$
+
+\begin{algorithm2e}[H]
+
+\caption{$\mathtt{LV\ Volume}$}
+
+\SetAlgoLined
+\begin{enumerate}
+\item For $i=0,\ldots,m=\lceil\sqrt{n}\ln(4R^{2}n/\varepsilon\rceil$, let
+$a_{i}=2n/(1+\frac{1}{\sqrt{n}})^{i}$ and $f_{i}=f(x)^{a_{i}}.$
+\item For $i=0,\ldots,m-1$, 
+\begin{enumerate}
+\item sample $X^{(1)},X^{(2)},\ldots,X^{(N)}$ from $\pi_{f_{i}}$.
+\item Set $Y_{i}=\frac{1}{N}\sum_{j=1}^{N}\frac{f_{i+1}(X^{(j)})}{f_{i}(X^{(j)})}$ 
+\end{enumerate}
+\item Let $Y=\prod_{i=1}^{m-1}Y_{i}$ and return $Y\cdot(\pi/n)^{n/2}$.
+\end{enumerate}
+\end{algorithm2e}
+
+The key insight is that even though the expected ratio might be large,
+its variance is not.
+\begin{lem}
+\label{lem:chebychev_ratio} For $X\sim f_{i}$ with $f_{i}(x)=e^{-a_{i}\norm x}\chi_{K}(x)$
+for a convex body $K$, or $f_{i}(x)=f(x)^{a_{i}}$ for an integrable
+logconcave function $f$, we have that the estimator $Y=\frac{f_{i+1}(X)}{f_{i}(X)}$
+satisfies 
+\[
+\frac{\E\left(Y^{2}\right)}{\E\left(Y\right)^{2}}\le\left(\frac{a_{i+1}^{2}}{(2a_{i+1}-a_{i})a_{i}}\right)^{n}
+\]
+which is bounded by a constant for $a_{i}=a_{i+1}\left(1+\frac{1}{\sqrt{n}}\right)$.
+\end{lem}
+
+\begin{proof}
+Let $F(a)=\int_{K}f(x)^{a}\,dx$. Then
+\[
+\E(Y)=\frac{F(a_{i+1})}{F(a_{i})}\ \mbox{ and }\ \E(Y^{2})=\int\frac{f(x)^{2a_{i+1}}}{f(x)^{2a_{i}}}\cdot\frac{f(x)^{a_{i}}}{F(a_{i})}=\frac{F(2a_{i+1}-a_{i})}{F(a_{i})}.
+\]
+\begin{align*}
+\frac{\E\left(Y^{2}\right)}{\E\left(Y\right)^{2}} & =\frac{F(2a_{i+1}-a_{i})F(a_{i})}{F(a_{i+1})^{2}}.
+\end{align*}
+
+By Lemma \ref{lem:ratio_var}, $F$ is logconcave in $a$ and hence
+\[
+\frac{F(2a_{i+1}-a_{i})F(a_{i})}{F(a_{i+1})^{2}}\le\left(\frac{a_{i+1}^{2}}{(2a_{i+1}-a_{i})a_{i}}\right)^{n}.
+\]
+For $a_{i}=a_{i+1}(1+\frac{1}{\sqrt{n}})$, we have 
+\[
+\frac{\E\left(Y^{2}\right)}{\E\left(Y\right)^{2}}\le\left(\frac{1/(1+\frac{1}{\sqrt{n}})^{2}}{(\frac{2}{1+\frac{1}{\sqrt{n}}}-1)}\right)^{n}=\left(\frac{1}{(1+\frac{1}{\sqrt{n}})(1-\frac{1}{\sqrt{n}})}\right)^{n}=\left(1+\frac{1}{n-1}\right)^{n}\le4
+\]
+ for $n\ge2.$ 
+\end{proof}
+\begin{thm}
+Let $r=\E(Y)$ in the LV algorithm. With probability at least $9/10$,
+we have $\left|Y-r\right|\le\frac{\varepsilon}{2}r$. 
+\end{thm}
+
+\begin{proof}
+By Lemmas \ref{lem:prod_var} and \ref{lem:chebychev_ratio}, for
+$N\geq100m/\varepsilon^{2}$ we have 
+\begin{align*}
+\frac{\Var(Y)}{\E(Y)^{2}} & =\prod_{i=0}^{m-1}\left(1+\frac{\Var(Y_{i})}{\E(Y_{i})^{2}}\right)-1\\
+ & \le\left(1+\frac{\varepsilon^{2}}{32m}\right)^{m}-1\\
+ & \le\frac{\varepsilon^{2}}{16}.
+\end{align*}
+Now the result follows from Chebyshev's inequality. 
+\end{proof}
+We can now state the main result of this section.
+\begin{thm}[\cite{LV2003}]
+The LV algorithm estimates the volume of a convex body in $\R^{n}$
+given by a membership oracle to relative error $\varepsilon$ with
+probability at least $3/4$ using $\widetilde{O}(n^{4}/\varepsilon^{2})$
+oracle queries and $\widetilde{O}(n^{2})$ arithmetic operations per
+query.
+\end{thm}
+
+\begin{proof}
+We first note that since $f_{0}$ corresponds to a Gaussian of variance
+$1/2n$, we have 
+\[
+\int_{B^{n}}f_{0}(x)\ge(1-2^{-n})\int_{\R^{n}}f_{0}(x)\,dx=(1-2^{-n})\left(\frac{\pi}{n}\right)^{n/2}.
+\]
+Next, $a_{m}\le\varepsilon/(4R^{2})$ and hence 
+\[
+f_{m}(x)=e^{-\frac{a_{m}}{2}\norm x^{2}}\ge e^{-\varepsilon/4}.
+\]
+Together with the previous theorem, this shows that the algorithm's
+output is a relative $\varepsilon$ approximation of the volume of
+the input convex body with probability at least $3/4$. 
+
+For the complexity, the algorithm has $m$ phases with $O(m/\varepsilon^{2})$
+samples per phase. The number of membership queries per sample is
+$\widetilde{O}(n^{2}R^{2})$ from an $L_{2}$-warm start using the
+hit-and-run algorithm for sampling. By Lemma \ref{thm:L2_warm_start},
+samples from the $i$'th phase provide an $\ell_{2}$-warm start for
+the $(i+1)$'st phase. This gives an overall complexity of $O^{*}(n^{3}R^{2})$.
+By Theorem \ref{thm:convex_body_rounding}, we can transform the body
+to near-isotropic position so that $R^{2}=O(n)$, establishing the
+theorem. 
+\end{proof}
+The LV algorithm has two parts. In the first it finds a transformation
+that puts the body in near-isotropic position. The complexity of this
+part is $\widetilde{O}(n^{4})$. In the second part, it runs the annealing
+schedule, while maintaining that the distribution being sampled is
+\emph{well-rounded}, a weaker condition than isotropy. Well-roundedness
+requires that a level set of measure $\frac{1}{8}$ contains a constant-radius
+ball and the trace of the covariance (expected squared distance of
+a random point from the mean) to be bounded by $O(n)$, so that $R/r$
+is effectively $O(\sqrt{n})$. To achieve the complexity guarantee
+for the second phase, it suffices to use the KLS bound of $\psi_{p}\gtrsim n^{-\frac{1}{2}}$.
+Connecting improvements in the Cheeger constant (which is the minimum
+isoperimetric ratio over all subsets) directly to the complexity of
+volume computation was an open question for a couple of decades. To
+apply improvements in the Cheeger constant, one would need to replace
+well-roundedness with (near-)isotropy and maintain that. However,
+maintaining isotropy appears to be much harder --- possibly requiring
+a sequence of $\Omega(n)$ distributions and $\Omega(n$) samples
+from each, providing no gain over the current complexity of $O^{*}(n^{4})$
+even if the KLS conjecture turns out to be true.
+
+A faster algorithm is known for well-rounded convex bodies (any isotropic
+logconcave density satisfies $\frac{R}{r}=O(\sqrt{n})$ and is well-rounded).
+This variant of simulated annealing, called Gaussian cooling utilizes
+the fact that the KLS conjecture holds for a Gaussian density restricted
+by any convex body, and completely avoids computing an isotropic transformation.
+\begin{thm}[\cite{CV2015}]
+The volume of a well-rounded convex body, i.e., with $R/r=O^{*}(\sqrt{n})$,
+can be computed using $O^{*}(n^{3})$ oracle calls.
+\end{thm}
+
+
+\section{Integration by Annealing}
+
+The reader will notice that the LV algorithm of the previous section
+for volume computation is naturally suited to the more general problem
+of integrating logconcave functions. In fact, we can apply it directly,
+with minimal changes. The first step of the algorithm is an affine
+transformation that we will discuss in the next section. 
+
+\begin{algorithm2e}[H]
+
+\caption{$\mathtt{LV\ Integration}$}
+
+\SetAlgoLined
+\begin{enumerate}
+\item Put $\pi_{f}$ in near-isotropic position. 
+\item Restrict $f$ to the convex body $K=B(0,4\sqrt{n})\cap L_{f}(M_{f}e^{-4n})$.
+\item Let $Y_{0}$ be an estimate of the volume of $K.$
+\item For $i=0,\ldots,m-1$, let $a_{i}=\frac{1}{B}(1+\frac{1}{\sqrt{n}})^{i},\,a_{m}=1$
+and $f_{i}=f(x)^{a_{i}}$, with $m-1$ being the largest integer s.t.
+$a_{m-1}<1$. 
+\item For $i=0,\ldots,m-1$, 
+\begin{enumerate}
+\item sample $X^{(1)},X^{(2)},\ldots,X^{(N)}$ from $\pi_{f_{i}}$.
+\item Set $Y_{i}=\frac{1}{N}\sum_{j=1}^{N}f(x)^{a_{i+1}-a_{i}}$
+\end{enumerate}
+\item Let $Y=\prod_{i=1}^{m-1}Y_{i}$ and return $Y_{o}\cdot Y$.
+\end{enumerate}
+\end{algorithm2e}
+\begin{thm}
+The LV algorithm applied to an integrable logconcave function $f:\R^{n}\rightarrow\R$,
+estimates the integral of $f$ to relative error $\varepsilon$ with
+probability at least $3/4$ using $\widetilde{O}(n^{4}/\varepsilon^{2})$
+evaluation oracle queries and $\widetilde{O}(n^{2})$ arithmetic operations
+per query.\selectlanguage{english}%
+\end{thm}
+
+

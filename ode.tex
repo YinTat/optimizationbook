@@ -1,0 +1,131 @@
+\selectlanguage{american}%
+
+\section{Ordinary Differential Equations}
+
+We consider the first-order ODE 
+\begin{align*}
+\frac{\d}{\d t}x(t)= & ~F(x(t),t),\quad\forall0\leq t\leq T,\\
+x(0)= & ~v.
+\end{align*}
+where $F:\R^{d+1}\rightarrow\R$. The basic idea to solve it comes
+from the Picard-Lindelöf theorem, a constructive existence proof for
+a large class of ODEs.
+
+\subsection{Picard-Lindelöf theorem}
+
+\label{sec:picard_lindelof} In general, we can rewrite the first-order
+ODE as an integral equation 
+\[
+x(t)=v+\int_{0}^{t}F(x(s),s)\d s\quad\text{for all }0\leq t\leq T.
+\]
+
+To simplify the notation, we use $\mathcal{C}([0,T],\R^{d})$ to denote
+$\R^{d}$-valued functions on $[0,T]$. We define the operator $\T$
+from $\mathcal{C}([0,T],\R^{d})$ to $\mathcal{C}([0,T],\R^{d})$
+by 
+\begin{equation}
+\T(x)(t)=v+\int_{0}^{t}F(x(s),s)\d s\quad\text{for all }0\leq t\leq T.\label{eq:def_T_operator}
+\end{equation}
+Therefore, the integral equation is simply $x=\T(x)$. Let $\T^{\circ j}$
+be the composition of $j$ many $\T$, i.e., 
+\begin{align*}
+\T^{\circ j}(x)=\underbrace{\T(\T(\cdots\T}_{j~\text{many}~\T}(x)\cdots)).
+\end{align*}
+
+The Banach fixed point theorem says that the integral equation $x=\T(x)$
+has a unique solution if there is a norm, and $j\in\mathbb{N}$ such
+that the map $\T^{\circ j}$ has Lipschitz constant less than 1.
+
+The Picard-Lindelöf theorem shows that if $F$ is Lipschitz in $x$,
+then the map $\T^{\circ j}$ has Lipschitz constant less than 1 for
+some positive integer $j$.
+\begin{thm}
+\label{lem:Lipschitz_T} Given any norm $\|\cdot\|$ on $\R^{d}$.
+Let $L$ be the Lipschitz constant of $F$ in $x$, i.e. 
+\[
+\|F(x,s)-F(y,s)\|\leq L\|x-y\|\quad\text{for all }x,y\in\R^{d},s\in[0,T].
+\]
+For any $x\in\mathcal{C}([0,T],\R^{d})$, we define the corresponding
+norm 
+\[
+\|x\|\defeq\max_{0\leq t\leq T}\|x(t)\|.
+\]
+Then, the Lipschitz constant of $\T^{\circ j}$ in this norm is upper
+bounded by $(LT)^{j}/j!$.
+\end{thm}
+
+\begin{proof}
+We prove this lemma with a stronger induction hypothesis
+\[
+\|(\T^{\circ j}x)(h)-(\T^{\circ j}y)(h)\|\leq\frac{L^{j}h^{j}}{j!}\|x-y\|\quad\text{for all }0\leq h\leq T.
+\]
+The base case $j=0$ is trivial. For the inductive step, 
+\begin{align*}
+~\|\T^{\circ j}x(h)-\T^{\circ j}y(h)\|= & ~\|\T\T^{\circ(j-1)}x(h)-\T\T^{\circ(j-1)}y(h)\|\\
+%=\leq
+\end{align*}
+This completes the proof.
+\end{proof}
+To make the Picard-Lindelöf theorem algorithmic, we have to decide
+how to represent a function in $\mathcal{C}([0,T],\R^{d})$. One standard
+way is to use a polynomial $p_{i}(t)$ in $t$ for each coordinate
+$i\in[d]$. More generally, suppose there is a basis $\{\varphi_{j}\}_{j=1}^{D}\subset\mathcal{C}([0,T],\R)$
+such that for all $i\in[d]$, $\frac{\d x_{i}}{\d t}$ is approximated
+by some linear combination of $\varphi_{j}(t)$. For example, if $\varphi_{j}(t)=t^{j-1}$
+for $j\in[D]$, then our assumption is simply saying $\frac{\d x_{i}}{\d t}$
+is approximated by a degree $D-1$ polynomial. Other possible basis
+are piecewise-polynomial and Fourier series. By Gram-Schmidt orthogonalization,
+we can always pick points $\{c_{i}\}_{j=1}^{D}$ such that 
+\[
+\varphi_{j}(c_{i})=\delta_{i,j}\quad\text{for }i,j\in[D].
+\]
+The benefit of such a basis is that for any $f\in\text{span}(\varphi_{j})$,
+we have that $f(t)=\sum_{j=1}^{D}f(c_{j})\varphi_{j}(t).$
+
+For polynomials, we can use the basis consisting of the Lagrange polynomials:
+\[
+\varphi_{j}(t)=\prod_{i\in[D]\backslash\{j\}}\frac{t-c_{i}}{c_{j}-c_{i}}\quad\text{for }j\in[D].
+\]
+The only assumption we make on the basis is that it is bounded in
+the following sense.
+\begin{defn}
+\label{def:basis} Given a $D$ dimensional subspace $\mathcal{V}\subset\mathcal{C}([0,T],\R)$
+and node points $\{c_{j}\}_{j=1}^{D}\subset[0,T]$. For any $\gamma_{\varphi}\geq1$,
+we say that a basis $\{\varphi_{j}\}_{j=1}^{D}\subset\mathcal{V}$
+is $\gamma_{\varphi}$-bounded if $\varphi_{j}(c_{i})=\delta_{i,j}$
+and we have 
+\[
+\sum_{j=1}^{D}\left|\int_{0}^{t}\varphi_{j}(s)\d s\right|\leq\gamma_{\varphi}T\quad\text{for }t\in[0,T].
+\]
+\end{defn}
+
+Note that if the constant function $1\in\mathcal{V}$, then we have
+\[
+1=\sum_{j=1}^{D}1(c_{j})\varphi_{j}(t)=\sum_{j=1}^{D}\varphi_{j}(t).
+\]
+Hence,
+\[
+T=\int_{0}^{T}1\d s\leq\sum_{j=1}^{D}\left|\int_{0}^{T}\varphi_{j}(s)\d s\right|\leq\gamma_{\varphi}T.
+\]
+Therefore, $\gamma_{\varphi}\geq1$ for most elements. Later we will
+see that for the space of low degree polynomials or piece-wise low-degree
+polynomials, there is a basis on the Chebyshev nodes that is $O(1)$-bounded.
+
+Assuming that $\frac{dx}{dt}$ can be approximated by some element
+in $\mathcal{V}$, we have that 
+\[
+\frac{\d x}{\d t}(t)\sim\sum_{j=1}^{D}\frac{\d x}{\d t}(c_{j})\varphi_{j}(t)=\sum_{j=1}^{D}F(x(c_{j}),c_{j})\varphi_{j}(t).
+\]
+Integrating both sides, we have 
+\begin{equation}
+x(t)\approx v+\int_{0}^{t}\sum_{j=1}^{D}F(x(c_{j}),c_{j})\varphi_{j}(s)\d s.\label{eq:approx_fix_point}
+\end{equation}
+This suggests the following operator from $\mathcal{C}([0,T],\R^{d})$
+to $\mathcal{C}([0,T],\R^{d})$: 
+\begin{equation}
+\mathcal{T}_{\varphi}(x)(t)_{i}=v_{i}+\int_{0}^{t}\sum_{j=1}^{D}F(x(c_{j}),c_{j})_{i}\varphi_{j}(s)\d s\quad\text{for }i\in[d].\label{eq:def_T_d_operator}
+\end{equation}
+Equation (\ref{eq:approx_fix_point}) can be written as $x\approx\mathcal{T}_{\varphi}(x).$
+To find $x$ that satisfies this, naturally, one can apply a fix point
+iteration and the resulting algorithm is called the collocation method.\selectlanguage{english}%
+

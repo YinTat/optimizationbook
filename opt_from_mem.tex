@@ -1,0 +1,70 @@
+
+\section{Optimization from Membership via Sampling}
+
+In this chapter, we assumed the oracle can be computed exactly. However,
+it is still open to determine the best runtime for reductions between
+\emph{noisy} oracles, where the oracle provides answers to within
+some bounded error. In particular, the question about minimizing (approximately)
+convex functions under noisy oracles is an active research area, and
+the gaps between the lower bound and upper bound for many problems
+are still quite large (\cite{belloni2015escaping,Feldman2015statistical,bubeck2016kernel}
+based on \cite{Kalai2006simulated}). We will see these methods in
+detail later. For now, to put them in the context of oracles, we just
+discuss the following theorem.
+\begin{thm}[OPT via sampling]
+\label{thm:OPTviaSampling} Let $F(x)=e^{-\alpha c^{T}x}1_{K}(x)$
+for some convex set $K$ in $\R^{n}$ and vector $c\in\R^{n}.$ Suppose
+$\min_{x\in K}c^{T}x$ is bounded. Let x be a random sample from the
+distribution with density proportional to $F(x)$. Then, 
+\[
+\E\left(c^{T}x\right)\le\min_{K}c^{T}x+\frac{n}{\alpha}.
+\]
+\end{thm}
+
+\begin{proof}
+We will show that the worst case is when the convex set $K$ is an
+infinite cone. WLOG\footnote{Without loss of generality.} assume
+that the minimum is at $x=0.$ Replace every cross-section of $K$
+along $c$ with an $(n-1)$-dimensional ball of the same volume as
+the cross-section. This does not affect the expectation. Suppose the
+expectation is $\E(c^{T}x)=a$. Next, replace the subset of $K$ with
+$c^{T}x\le a$ with a cone whose base is the cross-section at $a$
+and apex is at zero. This only makes the expectation larger. Next,
+replace the subset of $K$ on the right of $a$ with the infinite
+conical extension of the cone to the left of $a$. Again, this expectation
+can only be higher. 
+
+Now for this infinite cone, we compute, using $y=c^{T}x$, 
+\begin{align*}
+\E\left(c^{T}x\right) & =\frac{\int_{0}^{\infty}ye^{-\alpha y}y^{n-1}\,dy}{\int_{0}^{\infty}e^{-\alpha y}y^{n-1}\,dy}\\
+ & =\frac{1}{\alpha}\frac{\int_{0}^{\infty}e^{-y}y^{n}\,dy}{\int_{0}^{\infty}e^{-y}y^{n-1}\,dy}\\
+ & =\frac{1}{\alpha}\frac{n!}{(n-1)!}=\frac{n}{\alpha}\,,
+\end{align*}
+where the equality in the last line follows from properties of the
+Gamma functions.
+\end{proof}
+The theorem says that if we sample according to $e^{-\alpha c^{T}x}$
+for $\alpha=n/\varepsilon$, we will get an $\varepsilon$-approximation
+to the optimum. However, sampling from such a density is not trivial.
+Instead, we will have to go through a sequence of overlapping distributions,
+starting with one that is easy to sample and ending with a distribution
+that is focused close to the minimum. This method is known as \emph{simulated
+annealing }and is the subject of Chapter \ref{chap:Annealing}. The
+complexity of sampling is polynomial in the dimension and logarithmic
+in a suitable notion of probabilistic distance between the starting
+distribution and the target distribution. The sampling algorithm only
+uses a membership (EVAL) oracle.
+\begin{xca}
+Extend Theorem \ref{thm:OPTviaSampling} by replacing $c^{T}x$ with
+any convex function $f(x)$.
+\end{xca}
+
+\begin{problem*}
+Given an approximately convex function $F$ on unit ball such that
+$\max_{\norm x_{2}\leq1}|f(x)-F(x)|\leq\varepsilon/n$ for some convex
+function $f$, how efficiently can we find $x$ in the unit ball such
+that $F(x)\leq\min_{\norm x_{2}\leq1}F(x)+O(\varepsilon)$? The current
+fastest algorithm takes $O(n^{4}\log^{O(1)}(n/\varepsilon))$ calls
+to the noisy EVAL oracle for $F$ .
+\end{problem*}
+

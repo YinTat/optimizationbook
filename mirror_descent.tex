@@ -1,0 +1,483 @@
+In this chapter, we study techniques that further exploit the geometry
+of convex functions and associated norms. Many of these techniques
+are effective in practice for large scale problems. We recall the
+following relevant definitions.
+
+\section{Norms and Local Metrics}
+
+Any centrally symmetric convex body $K$ induces the following norm:
+\[
+\norm x_{K}=\inf\left\{ t:x\in tK\right\} .
+\]
+For the usual Euclidean norm, the convex body is the Euclidean ball,
+$B_{2}^{n}$. Similarly, for an $\ell_{p}$ norm, the convex body
+is the unit $\ell_{p}$ ball. 
+
+It is often useful to consider affine transformations, and the (semi)norms
+they induce, e.g., for a PSD matrix $A$ (would be an induced norm
+in the case when A is PD), we can define the associated norm as follows:
+\[
+\norm x_{A}=\sqrt{x^{\top}Ax}.
+\]
+The convex body (unit ball) of this norm is an ellipsoid centered
+at zero and defined by the matrix $A$. 
+
+As we have encountered previously in this book, convex sets and functions
+have duals. We recall the dual (polar) of a convex set $K$: 
+\[
+K^{*}=\left\{ y:\forall x\in K,\left\langle x,y\right\rangle \le1\right\} .
+\]
+
+The dual norm for $\norm ._{K}$ is $\norm ._{K^{*}}$. We can state
+a generalized Cauchy-Schwarz inequality.
+\begin{fact}
+For $x,y\in\R^{n}$ and any centrally symmetric convex body $K$,
+we have $\left\langle x,y\right\rangle \le\norm x_{K}\norm y_{K^{*}}.$
+\end{fact}
+
+In this chapter, an important idea will be \emph{local} norms, i.e.,
+at each point $x$ in the domain, there could be a different norm.
+Indeed, in a Riemannian metric ${\cal M}$, for every $x\in{\cal M},$
+there is a matrix $A(x)$ s.t. the norm at $x$ is defined as $\norm v_{x}=\sqrt{v^{\top}A(x)v}.$
+A special class of Riemannian metrics of particular interest for us
+will be \emph{Hessian }metrics (corresponding to Hessian manifolds).
+Here the matrix defining the local norm is the Hessian of a convex,
+twice-differentiable function, i.e., 
+\[
+A(x)=\nabla^{2}\phi(x)
+\]
+for some convex function $\phi$. 
+
+
+\section{Mirror Descent\label{sec:mirror_descent}}
+
+The cutting plane method is well-suited for minimizing non-smooth
+convex functions with high accuracy. However, its relatively large
+polynomial time complexity and quadratic space requirement are not
+favorable for large scale problems. Here we discuss a different approach
+to minimize a non-smooth function with low accuracy.
+
+\subsection{Subgradient method}
+
+In this section, we consider the constrained non-smooth minimization
+problem $\min_{x\in\mathcal{D}}f(x)$. Recall how to define gradient
+for non-smooth functions:
+\begin{defn}
+For any convex function $f$, we define $\partial f(x)$ be the set
+of vectors $g$ such that
+\[
+f(y)\geq f(x)+g^{\top}(y-x)\text{ for all }y\in\Rn.
+\]
+Such a vector $g$ is called a \emph{subgradient} of $f$ at $x$.
+\end{defn}
+
+\begin{algorithm2e}[H]
+
+\caption{$\mathtt{SubgradientMethod}$}
+
+\SetAlgoLined
+
+\textbf{Input:} Initial point $x^{(0)}\in\Rn$, step size $h>0$.
+
+\For{$k=0,1,\cdots,T-2$}{
+
+Pick any $g^{(k)}\in\partial f(x^{(k)})$.
+
+$y^{(k+1)}\leftarrow x^{(k)}-h\cdot g^{(k)}$.
+
+$x^{(k+1)}\leftarrow\pi_{\mathcal{D}}(y^{(k+1)})$ where $\pi_{\mathcal{D}}(y)=\arg\min_{x\in\mathcal{D}}\|x-y\|_{2}$
+
+}
+
+\Return $\frac{1}{T}\sum_{k=0}^{T-1}x^{(k)}$.
+
+\end{algorithm2e}
+
+Note that we return the average of all iterates, rather than the last
+iterate, as the average is better behaved in the worst case. To analyze
+the algorithm, we first need the following Pythagorean theorem. This
+shows that when we project a point to a convex set, we get closer
+to each point in the convex set, and how much closer depends on how
+much we move.
+\begin{lem}[Pythagorean Theorem]
+\label{lem:Pythagorean}Given a convex set $\mathcal{D}$ and a point
+$y$, let $\pi(y)=arg\min_{x\in\mathcal{D}}\|x-y\|_{2}$. For any
+$z\in\mathcal{D}$, we have that
+\[
+\|z-\pi(y)\|_{2}^{2}+\|\pi(y)-y\|_{2}^{2}\leq\|z-y\|_{2}^{2}.
+\]
+\end{lem}
+
+\begin{proof}
+Let $h(t)=\|(\pi(y)+t(z-\pi(y)))-y\|^{2}$. Since $\pi(y)$ is the
+closest point to $y$, $h(t)$ must be minimized at $t=0$. So, we
+have that $h'(0)\geq0$. i.e.,
+
+\[
+h'(0)=(\pi(y)-y)^{\top}(z-\pi(y))\geq0.
+\]
+
+(If $y$ is in the set, then the statement is trivial since $\pi(y)=y$.
+Otherwise, since $\pi(y)$ is the closest point in ${\cal D}$ to
+$y$, the hyperplane normal to $\pi(y)-y$ through $\pi(y)$ separates
+$y$ from $z$.). Hence,
+\begin{align*}
+\|z-y\|_{2}^{2} & =\|z-\pi(y)+\pi(y)-y\|_{2}^{2}\\
+ & =\|z-\pi(y)\|_{2}^{2}+2(z-\pi(y))^{\top}(\pi(y)-y)+\|\pi(y)-y\|_{2}^{2}\\
+ & \geq\|z-\pi(y)\|_{2}^{2}+\|\pi(y)-y\|_{2}^{2}.
+\end{align*}
+\end{proof}
+Now, we are ready to analyze the subgradient method. It basically
+involves tracking the squared distance to the optimum, $\|x^{(k+1)}-x^{*}\|_{2}^{2}$.
+\begin{thm}
+\label{thm:projected_gradient_descent}Let $f$ be a convex function
+that is $G$-Lipschitz in $\ell_{2}$ norm. After $T$ steps, the
+subgradient method outputs a point $x$ such that
+\[
+f(x)\leq f(x^{*})+\frac{\|x^{(0)}-x^{*}\|_{2}^{2}}{2hT}+\frac{h}{2}G^{2}
+\]
+where $x^{*}$ is any point that minimizes $f$ over ${\cal D}$.
+\end{thm}
+
+\begin{rem*}
+If the distance $\|x^{(0)}-x^{*}\|$ and the Lipschitz constant $G$
+are known, we can pick $h=\frac{\|x^{(0)}-x^{*}\|_{2}}{G\sqrt{T}}$
+and get
+\[
+f(x)\leq f(x^{*})+\frac{G\cdot\|x^{(0)}-x^{*}\|_{2}}{\sqrt{T}}.
+\]
+\end{rem*}
+\begin{proof}
+Let $x^{*}$ be any point that minimizes $f$. Then, we have
+\begin{align*}
+\|x^{(k+1)}-x^{*}\|_{2}^{2} & =\|\pi_{\mathcal{D}}(y^{(k+1)})-x^{*}\|_{2}^{2}\\
+ & \leq\|y^{(k+1)}-x^{*}\|_{2}^{2}\\
+ & =\|x^{(k)}-hg^{(k)}-x^{*}\|_{2}^{2}\\
+ & =\|x^{(k)}-x^{*}\|_{2}^{2}-2h\left\langle g^{(k)},x^{(k)}-x^{*}\right\rangle +h^{2}\|g^{(k)}\|_{2}^{2}.
+\end{align*}
+where we used Lemma \ref{lem:Pythagorean} in the inequality. Since
+$x^{*}$ lies on the $-g^{(k)}$ direction, we expect $x^{(k+1)}$
+is closer to $x^{*}$ than $x^{(k)}$ if the step size is small enough
+(or if we ignore the second order term $\|g^{(k)}\|_{2}^{2}$). To
+bound the distance improvement, we apply the definition of subgradient
+and get
+\[
+f(x^{*})\geq f(x^{(k)})+\left\langle g^{(k)},x^{*}-x^{(k)}\right\rangle .
+\]
+Therefore, we have that
+\begin{align*}
+\|x^{(k+1)}-x^{*}\|_{2}^{2} & \leq\|x^{(k)}-x^{*}\|_{2}^{2}-2h\cdot(f(x^{(k)})-f(x^{*}))+h^{2}\|g^{(k)}\|_{2}^{2}\\
+ & \leq\|x^{(k)}-x^{*}\|_{2}^{2}-2h\cdot(f(x^{(k)})-f(x^{*}))+h^{2}G^{2}.
+\end{align*}
+Note that this equation shows that if the error $f(x^{(k)})-f(x^{*})$
+is larger, then we move faster towards the optimum. Rearranging the
+terms, we have
+\[
+f(x^{(k)})-f(x^{*})\leq\frac{1}{2h}\left(\|x^{(k)}-x^{*}\|_{2}^{2}-\|x^{(k+1)}-x^{*}\|_{2}^{2}\right)+\frac{h}{2}G^{2}.
+\]
+We sum over all iterations, to get
+\begin{align*}
+\frac{1}{T}\sum_{k=0}^{T-1}(f(x^{(k)})-f(x^{*})) & \leq\frac{1}{T}\cdot\frac{1}{2h}(\|x^{(0)}-x^{*}\|_{2}^{2}-\|x^{(T)}-x^{*}\|_{2}^{2})+\frac{h}{2}G^{2}\\
+ & \leq\frac{\|x^{(0)}-x^{*}\|_{2}^{2}}{2hT}+\frac{h}{2}G^{2}.
+\end{align*}
+The result follows from observing that for a convex function, 
+\[
+f\left(\frac{1}{T}\sum_{k=0}^{T-1}x^{(k)}\right)-f(x^{*})\leq\frac{1}{T}\sum_{k=0}^{T-1}(f(x^{(k)})-f(x^{*})).
+\]
+\end{proof}
+
+
+\subsection{Intuition of Mirror Descent}
+
+Consider using the subgradient method above to minimize $f(x)=\sum_{i}|x_{i}|$
+over the unit ball $B(0,1)$. The subgradient of $f$ is given by
+$\text{sign}(x)$ (assuming $x_{i}\neq0$ for all $i$). Therefore,
+we have that the Lipschitz constant is bounded by the Euclidean norm
+of a vector with $\pm1$ entries, i.e., $G=\sqrt{n}$ and the set
+is contained in a ball of radius $R=1$. Hence, by the main theorem
+of the previous section, the error is bounded by $\sqrt{\frac{n}{T}}$
+after $T$ steps, which grows with the dimension. Intuitively, the
+dimension dependence comes from the fact that we must take a tiny
+step size to avoid changing the variables too much. For example, if
+we take a constant step size $h$ and start at the point $x=(1,\frac{1}{n},\frac{1}{n},\cdots,\frac{1}{n})$,
+then we will get a point with $x_{i}$ constant in all directions
+$i\neq1$, and this increases the function $f$ dramatically from
+$\Theta(1)$ to $\Theta(nh)$. Therefore, to get constant error, we
+need to take step size $h\le\frac{1}{n}$ and hence we need $\Omega(n)$
+iterations.
+
+Conceptually, the step $x=x-\eta g$ does not make sense either. Imagine
+the problem is infinitely dimensional. Note that $f(x)<+\infty$ for
+any 
+\[
+x\in\ell_{1}=\{x\in\R^{\mathbb{N}}:\sum_{i}|x_{i}|<\infty\}.
+\]
+On the other hand, its gradient $g$ lives in $\ell_{\infty}$ space;
+the dual space of $\ell_{1}$ is $\ell_{\infty}$ (in general, $\ell_{p}$
+is dual to $\ell_{q}$ where $(1/p)+(1/q)=1$). Since $x$ and $g$
+are not in the same space, the term $x-\eta g$ does not make sense.
+More precisely, we have the following tautology (directly follows
+from the definition of dual space, namely the set of all linear maps
+in the original space).
+\begin{defn}
+A \emph{Banach space }over the reals is a vector space over the reals
+together with a norm that defines a complete metric space, i.e., for
+any Cauchy sequence, $X=(x_{i})_{i=1}^{\infty}$, there is a vector
+$x$ s.t. $\lim_{n\rightarrow\infty}\norm{x_{n}-x}=0$. 
+\end{defn}
+
+\begin{fact}
+\label{lem:grad_dual}Given any Banach space $\mathcal{D}$ over the
+reals and a continuously differentiable function $f$ from $\mathcal{D}$
+to $\R$, its gradient $\nabla f(x)\in\mathcal{D}^{*}$ for any $x$.
+\end{fact}
+
+In general, if the function $f$ is on the primal space $\mathcal{D}$,
+then the gradient $g$ lives in the dual space $\mathcal{D}^{*}$.
+Therefore, we need to map $x$ from the primal space $\mathcal{D}$
+to the dual space $\mathcal{D}^{*}$, update its position, then map
+the point back to the original space $\mathcal{D}$.
+
+In fact, Lemma \ref{lem:grad_dual} gives us one such map, $\nabla f$.
+Consider the following algorithm: Starting at $x$. We use $\nabla f(x)$
+to map $x$ to the dual space $y=\nabla f(x)$. Then, we apply the
+gradient step on the dual $y^{\new}=y-\nabla f(x)$ and map it back
+to the primal space, namely finding $x^{\new}$ such that $\nabla f(x^{\new})=y^{\new}$.
+Note that $y^{\new}=0$ and hence $x^{\new}$ is exactly a minimizer
+of $f$. So, if we can map it back, this algorithm solves the problem
+in one step. Unfortunately, the task of mapping it back is exactly
+our original problem.
+
+Instead of using the same $f$, mirror descent uses some other convex
+function $\Phi$, called the \emph{mirror map}. For constrained problems,
+the mirror map may not bring the point back to a point in $\mathcal{D}$.
+Naively, one may consider the algorithm 
+\begin{align*}
+\nabla\Phi(y^{(t+1)}) & =\nabla\Phi(x^{(t)})-h\cdot\nabla f(x^{(t)}),\\
+x^{(t+1)} & =\arg\min_{x\in\mathcal{D}}\|x-y^{(t+1)}\|_{2}.
+\end{align*}
+Note that the first step of finding $y^{(t+1)}$ involves solving
+an optimization problem. We will show how to do this optimization
+later (see \ref{eq:mirror_descent}) but with a proper formulation
+of the algorithm which takes into account the distance as measured
+by the mirror map $\Phi$.
+\begin{defn}
+For any strictly convex function $\Phi$, we define the Bregman divergence
+as
+\[
+D_{\Phi}(y,x)=\Phi(y)-\Phi(x)-\left\langle \nabla\Phi(x),y-x\right\rangle .
+\]
+
+Note that $D_{\Phi}(y,x)$ is the error of the first order Taylor
+expansion of $\Phi$ at $x$. Due to the convexity of $\Phi$, we
+have that $D_{\Phi}(y,x)\geq0$. Also, we note that $D_{\Phi}(y,x)$
+is convex in $y$, but not necessarily in $x$.
+\end{defn}
+
+\begin{example}
+$D_{\Phi}(y,x)=\|y-x\|^{2}$ for $\Phi(x)=\|x\|^{2}$. $D_{\Phi}(y,x)=\sum_{i}y_{i}\log\frac{y_{i}}{x_{i}}-\sum y_{i}+\sum x_{i}$
+for $\Phi(x)=\sum x_{i}\log x_{i}$.
+\end{example}
+
+\begin{algorithm2e}[H]
+
+\caption{$\mathtt{MirrorDescent}$}
+
+\SetAlgoLined
+
+\textbf{Input:} Initial point $x^{(0)}=\arg\min_{x\in\mathcal{D}}\Phi(x)$,
+step size $h>0$.
+
+\For{$k=0,1,\cdots,T-2$}{
+
+Pick any $g^{(k)}\in\partial f(x^{(k)})$.
+
+\tcp{As shown in (\ref{eq:mirror_descent}), the next 2 steps can be implemented by an optimization over $D_{\Phi}$.}
+
+Find $y^{(k+1)}$ such that $\nabla\Phi(y^{(k+1)})=\nabla\Phi(x^{(k)})-h\cdot g^{(k)}$.
+
+$x^{(k+1)}\in\pi_{\mathcal{D}}^{\Phi}(y^{(k+1)})$ where $\pi_{\mathcal{D}}^{\Phi}(y)=\arg\min_{x\in\mathcal{D}}D_{\Phi}(x,y)$.
+
+}
+
+\Return $\frac{1}{T}\sum_{k=0}^{T-1}x^{(k)}$.
+
+\end{algorithm2e}
+
+The Mirror Descent step can be written as follows. In the second step
+below, we use the fact that the optimization is only over $x$ (and
+hence all terms in $y$ can be ignored):
+\begin{align}
+x^{(k+1)} & =\arg\min_{x\in\mathcal{D}}D_{\Phi}(x,y^{(k+1)})\nonumber \\
+ & =\arg\min_{x\in\mathcal{D}}\Phi(x)-\Phi(y^{(k+1)})-\nabla\Phi(y^{(k+1)})^{\top}(x-y^{(k+1)})\nonumber \\
+ & =\arg\min_{x\in\mathcal{D}}\Phi(x)-\nabla\Phi(y^{(k+1)})^{\top}x\nonumber \\
+ & =\arg\min_{x\in\mathcal{D}}\Phi(x)-\nabla\Phi(x^{(k)})^{\top}x+hg^{(k)\top}x\nonumber \\
+ & =\arg\min_{x\in\mathcal{D}}hg^{(k)\top}x+D_{\Phi}(x,x^{(k)}).\label{eq:mirror_descent}
+\end{align}
+Note that this is a natural generalization of $x^{(k+1)}=\arg\min_{x\in\mathcal{D}}hg^{(k)\top}x+\|x-x^{(k)}\|^{2}.$
+
+\subsection{Analysis of Mirror Descent}
+\begin{lem}[Pythagorean Theorem]
+\label{lem:Pythagorean2}Given a convex set $\mathcal{D}$ and a
+point $y$, let $\pi(y)=\arg\min D_{\Phi}(x,y)$. For any $z\in\mathcal{D}$,
+we have that
+\[
+D_{\Phi}(z,\pi(y))+D_{\Phi}(\pi(y),y)\leq D_{\Phi}(z,y).
+\]
+\end{lem}
+
+\begin{proof}
+Let $h(t)=D_{\Phi}(\pi(y)+t(z-\pi(y)),y)$. Since $h(t)$ is minimized
+at $t=0$, we have that $h'(0)\geq0$. Hence, we have
+\[
+h'(0)=(\nabla\Phi(\pi(y))-\nabla\Phi(y))^{\top}(z-\pi(y))\geq0.
+\]
+Hence,
+\begin{align*}
+D_{\Phi}(z,y) & =D_{\Phi}(z,\pi(y))+2(z-\pi(y))^{\top}(\nabla\Phi(\pi(y))-\nabla\Phi(y))+D_{\Phi}(\pi(y),y)\\
+ & \geq D_{\Phi}(z,\pi(y))+D_{\Phi}(\pi(y),y).
+\end{align*}
+\end{proof}
+\begin{thm}
+\label{thm:mirror_descent}Let $f$ be a $G$-Lipschitz convex function
+on ${\cal D}$ with respect to some norm $\|\cdot\|$. Let $\Phi$
+be a $\rho$-strongly convex function on $\mathcal{D}$ with respect
+to $\|\cdot\|$ with squared diameter $R^{2}=\sup_{x\in\mathcal{D}}\Phi(x)-\Phi(x^{(0)})$.
+Then, mirror descent outputs $x$ such that
+\[
+f(x)-\min_{x}f(x)\leq\frac{R^{2}}{hT}+\frac{h}{2\rho}G^{2}.
+\]
+\end{thm}
+
+\begin{rem}
+We say a function $f$ is $\rho$ strongly convex with respect to
+the norm $\|\cdot\|$ if for any $x,y$, we have 
+\[
+f(y)\geq f(x)+\left\langle \nabla f(x),y-x\right\rangle +\frac{\rho}{2}\|y-x\|^{2}.
+\]
+The usual strong convexity is with respect to the Euclidean norm.
+\end{rem}
+
+\begin{rem}
+Picking $h=\frac{R}{G}\sqrt{\frac{2\rho}{T}}$, we get the rate $f(x)\leq\min_{x}f(x)+GR\sqrt{\frac{2}{\rho T}}.$
+\end{rem}
+
+\begin{proof}
+This proof is a complete ``mirror'' of the proof in Theorem \ref{thm:projected_gradient_descent}.
+\begin{align*}
+D_{\Phi}(x^{*},x^{(k+1)}) & \leq D_{\Phi}(x^{*},y^{(k+1)})-D_{\Phi}(x^{(k+1)},y^{(k+1)})\\
+ & =D_{\Phi}(x^{*},x^{(k)})+(x^{*}-x^{(k)})^{\top}(\nabla\Phi(x^{(k)})-\nabla\Phi(y^{(k+1)}))+D_{\Phi}(x^{(k)},y^{(k+1)})-D_{\Phi}(x^{(k+1)},y^{(k+1)})\\
+ & =D_{\Phi}(x^{*},x^{(k)})-h\cdot\left\langle g^{(k)},x^{(k)}-x^{*}\right\rangle +D_{\Phi}(x^{(k)},y^{(k+1)})-D_{\Phi}(x^{(k+1)},y^{(k+1)})
+\end{align*}
+where we used Lemma \ref{lem:Pythagorean2} in the inequality. Using
+the definition of subgradient, we have that
+\[
+f(x^{*})\geq f(x^{(k)})+\left\langle g^{(k)},x^{*}-x^{(k)}\right\rangle .
+\]
+Therefore, we have that
+\begin{align*}
+D_{\Phi}(x^{*},x^{(k+1)}) & \leq D_{\Phi}(x^{*},x^{(k)})-h\cdot(f(x^{(k)})-f(x^{*}))+D_{\Phi}(x^{(k)},y^{(k+1)})-D_{\Phi}(x^{(k+1)},y^{(k+1)}).
+\end{align*}
+Next we note that
+\begin{align*}
+ & D_{\Phi}(x^{(k)},y^{(k+1)})-D_{\Phi}(x^{(k+1)},y^{(k+1)})\\
+= & \Phi(x^{(k)})-\Phi(x^{(k+1)})-\nabla\Phi(y^{(k+1)})^{\top}(x^{(k)}-x^{(k+1)})\\
+\leq & \left\langle \nabla\Phi(x^{(k)})-\nabla\Phi(y^{(k+1)}),x^{(k)}-x^{(k+1)}\right\rangle -\frac{\rho}{2}\|x^{(k)}-x^{(k+1)}\|^{2}\\
+= & h\cdot\left\langle g^{(k)},x^{(k)}-x^{(k+1)}\right\rangle -\frac{\rho}{2}\|x^{(k)}-x^{(k+1)}\|^{2}\\
+\leq & hG\|x^{(k)}-x^{(k+1)}\|-\frac{\rho}{2}\|x^{(k)}-x^{(k+1)}\|^{2}\\
+\leq & \frac{(hG)^{2}}{2\rho}.
+\end{align*}
+Hence, we have
+\begin{align*}
+D_{\Phi}(x^{*},x^{(k+1)}) & \leq D_{\Phi}(x^{*},x^{(k)})-h\cdot(f(x^{(k)})-f(x^{*}))+\frac{(hG)^{2}}{2\rho}.
+\end{align*}
+
+Rearranging the terms, we have
+\[
+f(x^{(k)})-f(x^{*})\leq\frac{1}{h}\left(D_{\Phi}(x^{*},x^{(k)})-D_{\Phi}(x^{*},x^{(k+1)})\right)+\frac{hG^{2}}{2\rho}.
+\]
+Summing over all iterations, we have
+\begin{align*}
+\frac{1}{T}\sum_{k=0}^{T-1}(f(x^{(k)})-f(x^{*})) & \leq\frac{1}{T}\cdot\frac{1}{h}(D_{\Phi}(x^{*},x^{(0)})-D_{\Phi}(x^{*},x^{(T)}))+\frac{h}{2\rho}G^{2}\\
+ & \leq\frac{1}{hT}D_{\Phi}(x^{*},x^{(0)})+\frac{h}{2\rho}G^{2}\\
+ & \leq\frac{R^{2}}{hT}+\frac{h}{2\rho}G^{2}.
+\end{align*}
+Using the fact that $x^{(0)}$ was chosen as a minimum of $\Phi(x)$,
+\begin{align*}
+D_{\Phi}(x^{*},x^{(0)})= & (\Phi(x^{*})-\Phi(x^{(0)})-\left\langle \nabla\Phi(x^{(0)}),x^{*}-x^{(0)}\right\rangle )\\
+= & \Phi(x^{*})-\Phi(x^{(0)})\\
+\le & R^{2}
+\end{align*}
+
+The result follows from the convexity of $f$.
+\end{proof}
+
+\subsection{Multiplicative Weight Update}
+
+In this section, we discuss mirror descent under the map $\Phi(x)=\sum x_{i}\log x_{i}$
+with the convex set being the simplex $\mathcal{D}=\{x_{i}\geq0,\sum x_{i}=1\}$.
+
+\paragraph{Step Formula}
+
+As we showed in (\ref{eq:mirror_descent}), we have that
+\[
+x^{(k+1)}=\arg\min_{x\in\mathcal{D}}hg^{(k)\top}x+D_{\Phi}(x,x^{(k)}).
+\]
+Note that
+\begin{align*}
+D_{\Phi}(x,x^{(k)}) & =\sum x_{i}\log x_{i}-\sum x_{i}^{(k)}\log x_{i}^{(k)}-\sum_{i}(1+\log x_{i}^{(k)})(x_{i}-x_{i}^{(k)})\\
+ & =\sum x_{i}\log\frac{x_{i}}{x_{i}^{(k)}}
+\end{align*}
+where we used that $\sum_{i}x_{i}=\sum_{i}x_{i}^{(k)}$. Hence, the
+step is simply 
+\[
+x^{(k+1)}=\arg\min_{\sum x_{i}=1,x_{i}\geq0}hg^{(k)\top}x+\sum x_{i}\log\frac{x_{i}}{x_{i}^{(k)}}.
+\]
+Note that the optimality condition is given by
+\[
+hg_{i}^{(k)}+\log\frac{x_{i}^{(k+1)}}{x_{i}^{(k)}}+1-\lambda=0
+\]
+for some Lagrangian multiplier $\lambda$. Rewriting, we have
+\[
+x_{i}^{(k+1)}=e^{-hg_{i}^{(k)}}x_{i}^{(k)}/Z
+\]
+for some normalization constant $Z$. Note that this algorithm multiplies
+the current $x$ with a multiplicative factor and hence it is also
+called multiplicative weight update.
+
+\paragraph{Strong Convexity}
+
+To bound the strong convexity parameter, we note that
+\[
+\Phi(y)-\Phi(x)-\left\langle \nabla\Phi(x),y-x\right\rangle =\frac{1}{2}(y-x)^{\top}\nabla^{2}\Phi(\zeta)(y-x)
+\]
+for some $\zeta$ between $x$ and $y$. Since $\nabla^{2}\Phi(\zeta)=\frac{1}{\zeta}$,
+we have
+\[
+(y-x)^{\top}\nabla^{2}\Phi(\zeta)(y-x)=\sum\frac{(y_{i}-x_{i})^{2}}{\zeta_{i}}\geq\frac{(\sum_{i}|y_{i}-x_{i}|)^{2}}{\sum_{i}\zeta_{i}}=(\sum_{i}|y_{i}-x_{i}|)^{2}
+\]
+where we used that $\sum_{i}x_{i}=\sum_{i}y_{i}=1$ and so $\sum_{i}\zeta_{i}=1$.
+Hence, 
+\[
+\Phi(y)-\Phi(x)-\left\langle \nabla\Phi(x),y-x\right\rangle \geq\frac{1}{2}\|y-x\|_{1}^{2}.
+\]
+Therefore, $\Phi$ is $1$-strongly convex in $\|\cdot\|_{1}$. Hence,
+$\rho=1$.
+
+\paragraph{Diameter}
+
+Direct calculation shows that $-\log n\leq\Phi(x)\leq0$. We start
+at $x^{(0)}=\frac{1}{n}(1,\ldots,1)^{T}$. Hence, $R^{2}=\log n$.
+
+\paragraph{Result}
+\begin{thm}
+Let $f$ be a $1$-Lipschitz function on $\|\cdot\|_{1}$. Then, mirror
+descent with the mirror map $\Phi(x)=\sum_{i}x_{i}\log x_{i}$.
+\[
+f(x^{T})-\min_{x}f(x)\leq\sqrt{\frac{2\log n}{T}}.
+\]
+\end{thm}
+
+In comparison, projected gradient descent had the bound of $\sqrt{\frac{n}{T}}$.
+
+

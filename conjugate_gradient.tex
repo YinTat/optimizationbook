@@ -1,0 +1,194 @@
+\selectlanguage{american}%
+
+\section{Conjugate Gradient}
+
+Consider any algorithm that starts with $x^{(0)}=0$ and satisfies
+the invariant
+\[
+x^{(k+1)}\in x^{(0)}+\spn\{\nabla f(x^{(0)}),\nabla f(x^{(1)}),\cdots,\nabla f(x^{(k)})\}.
+\]
+For $f(x)=\frac{1}{2}x^{\top}Ax-b^{\top}x$, it is easy to see that
+$x^{(k)}\in\mathcal{K}_{k}$ defined as follows:
+\begin{defn}
+Define the Krylov subspaces $\K_{0}=\{0\}$, $\K_{k}=\spn\{b,Ab,\cdots,A^{k-1}b\}$.
+
+Therefore, the best such an algorithm can do is to solve $\min_{x\in\K_{k}}f(x)$.
+For the quadratic function $f(x)\defeq\frac{1}{2}x^{\top}Ax-b^{\top}x$,
+one can compute $\min_{x\in\K_{k}}f(x)$ efficiently using the conjugate
+gradient method. Note that 
+\[
+\arg\min_{x\in\K_{k}}f(x)=\arg\min_{x\in\K_{k}}\norm{x-x^{*}}_{A}^{2}
+\]
+where $Ax^{*}=b$.
+
+Throughout this section, we assume $A$ is positive definite. For
+a given linear system $Ax=b$, we can always go to $A^{T}Ax=A^{T}b$
+to satisfy the assumption.
+\end{defn}
+
+\begin{lem}
+Let $x^{(k)}=\argmin_{x\in\K_{k}}f(x)$ be the Krylov sequence. .
+Then, the steps $v^{(k)}=x^{(k)}-x^{(k-1)}$ are ``conjugate'',
+namely,
+\[
+v^{(i)\top}Av^{(j)}=0\text{ for all }i\neq j.
+\]
+\end{lem}
+
+\begin{proof}
+Assume that $i<j$. The optimality of $x^{(j)}$ shows that $\nabla f(x^{(j)})\in\K_{j}^{\perp}\subset\K_{j-1}^{\perp}$
+and that $\nabla f(x^{(j-1)})\in\K_{j-1}^{\perp}$. Hence, we have
+\[
+Av^{(j)}=\nabla f(x^{(j)})-\nabla f(x^{(j-1)})\in\K_{j-1}^{\perp}.
+\]
+Next, we note that $v^{(i)}=x^{(i)}-x^{(i-1)}\in\mathcal{K}_{i}\subset\mathcal{K}_{j-1}$.
+Hence, we have $v^{(i)\top}Av^{(j)}=0$.
+\end{proof}
+Since the steps are conjugate, $v^{(i)}$ forms a conjugate basis
+for the Krylov subspaces:
+\[
+\K_{k}=\spn\{v^{(1)},v^{(2)},\cdots,v^{(k)}\}.
+\]
+
+Note that $x^{(k)}=x^{(k-1)}+v^{(k)}$. Hence, it suffices to find
+a formula for $v^{(k)}$.
+\begin{lem}
+\label{lem:CG_v}We have 
+\[
+v^{(k)}=\frac{v^{(k)\top}r^{(k-1)}}{\|r^{(k-1)}\|^{2}}\left(r^{(k-1)}-\frac{r^{(k-1)\top}Av^{(k-1)}}{v^{(k-1)}Av^{(k-1)}}v^{(k-1)}\right).
+\]
+\end{lem}
+
+\begin{proof}
+Again, the optimality condition shows that $\nabla f(x^{(k-1)})\in\K_{k-1}^{\perp}$
+and that $\nabla f(x^{(k-1)})\in\K_{k}$ by the definition of $\K$.
+Hence, we have
+\[
+\K_{k}=\spn\{v^{(1)},\cdots,v^{(k-1)},r^{(k-1)}\}
+\]
+where $r^{(k-1)}=b-Ax^{(k-1)}$. Therefore, we have
+\[
+v^{(k)}=c_{0}r^{(k-1)}+\sum_{i=1}^{k-1}c_{i}v^{(i)}
+\]
+for some $c_{0}$. 
+
+For $c_{0}$, we use that $r^{(k-1)}\in\K_{k-1}^{\perp}$. This gives
+$v^{(k)\top}r^{(k-1)}=c_{0}\|r^{(k-1)}\|^{2}$.
+
+For $c_{k-1}$, since $v^{(i)\top}Av^{(k-1)}=0$ for any $i\neq k-1$,
+we have
+\[
+0=v^{(k)\top}Av^{(k-1)}=c_{0}r^{(k-1)\top}Av^{(k-1)}+c_{k-1}v^{(k-1)}Av^{(k-1)}
+\]
+
+and $c_{k-1}=-c_{0}\cdot\frac{r^{(k-1)\top}Av^{(k-1)}}{v^{(k-1)}Av^{(k-1)}}$. 
+
+For other $c_{i}$, we note that $Av^{(j)}\in\K_{j+1}$ and $r^{(k-1)}\in\K_{k-1}^{\perp}$.
+Hence, $c_{i}=0$ for all $i\notin\{0,k-1\}$. 
+
+Substitute the $c_{i}$, we get
+\[
+v^{(k)}=\frac{v^{(k)\top}r^{(k-1)}}{\|r^{(k-1)}\|^{2}}\left(r^{(k-1)}-\frac{r^{(k-1)\top}Av^{(k-1)}}{v^{(k-1)}Av^{(k-1)}}v^{(k-1)}\right).
+\]
+\end{proof}
+To make the formula simpler, we define $p^{(k)}=\frac{\|r^{(k-1)}\|_{2}^{2}}{v^{(k)\top}r^{(k-1)}}v^{(k)}$.
+\begin{lem}
+We have that $x^{(k)}=x^{(k-1)}+\frac{\|r^{(k-1)}\|_{2}^{2}}{p^{(k)\top}Ap^{(k)}}p^{(k)}$
+and $p^{(k)}=r^{(k-1)}-\frac{\|r^{(k-1)}\|^{2}}{\|r^{(k-2)}\|_{2}^{2}}p^{(k-1)}.$
+\end{lem}
+
+\begin{proof}
+For the first formula, note that
+\[
+x^{(k)}=x^{(k-1)}+v^{(k)}=x^{(k-1)}+\frac{v^{(k)\top}r^{(k-1)}}{\|r^{(k-1)}\|_{2}^{2}}p^{(k)}.
+\]
+For the quantity $v^{(k)\top}r^{(k-1)}$, we note that $f(x^{(k-1)}+tv^{(k)})$
+is minimized at $t=1$ and hence
+\begin{align*}
+v^{(k)\top}r^{(k-1)} & =v^{(k)\top}Av^{(k)}\\
+ & =\frac{v^{(k)\top}r^{(k-1)}}{\|r^{(k-1)}\|_{2}^{2}}\frac{v^{(k)\top}r^{(k-1)}}{\|r^{(k-1)}\|_{2}^{2}}p^{(k)\top}Ap^{(k)}
+\end{align*}
+where we used the definition of $p^{(k)}$. Simplifying gives
+\[
+\frac{v^{(k)\top}r^{(k-1)}}{\|r^{(k-1)}\|_{2}^{2}}=\frac{\|r^{(k-1)}\|_{2}^{2}}{p^{(k)\top}Ap^{(k)}}
+\]
+and hence the first formula.
+
+For the second formula, we use Lemma \ref{lem:CG_v} and substitute
+$p^{(k)}=\frac{\|r^{(k-1)}\|_{2}^{2}}{v^{(k)\top}r^{(k-1)}}v^{(k)}$.
+This gives
+\begin{equation}
+p^{(k)}=r^{(k-1)}-\frac{r^{(k-1)\top}Av^{(k-1)}}{\|r^{(k-2)}\|_{2}^{2}}p^{(k-1)}.\label{eq:CG_p_temp}
+\end{equation}
+Note that
+\[
+r^{(k-1)}=b-Ax^{(k-1)}=r^{(k-2)}-Av^{(k-1)}.
+\]
+Taking inner product with $r^{(k-1)}$ and using $r^{(k-1)}\perp r^{(k-2)}$
+gives $\|r^{(k-1)}\|^{2}=r^{(k-1)\top}Av^{(k-1)}$. Put this into
+(\ref{eq:CG_p_temp}) gives the result.
+\end{proof}
+\begin{algorithm2e}[H]
+
+\caption{$\mathtt{ConjugateGradient}$ (CG)}
+
+\SetAlgoLined
+
+$r^{(0)}=b-Ax^{(0)}$. $p^{(0)}=r^{(0)}$.
+
+\For{$k=1,2,\cdots$}{
+
+$\alpha=\frac{\|r^{(k-1)}\|_{2}^{2}}{p^{(k)\top}Ap^{(k)}}$.
+
+$x^{(k)}\leftarrow x^{(k-1)}+\alpha p^{(k)}$.
+
+$r^{(k)}\leftarrow r^{(k-1)}+\alpha Ap^{(k)}$.
+
+\lIf{$\|r^{(k)}\|_{2}\leq\epsilon$}{\Return$x^{(k)}$}
+
+$p^{(k+1)}=r^{(k)}-\frac{\|r^{(k)}\|^{2}}{\|r^{(k-1)}\|^{2}}p^{(k)}.$
+
+}
+
+\end{algorithm2e}
+\begin{thm}
+\label{thm:CG}Let $f(x)=\frac{1}{2}x^{\top}Ax-b^{\top}x$ for some
+positive definite matrix $A$ and some vector $b$. Let $x^{(k)}$
+be the sequence produced by $\mathtt{ConjugateGradient}$. Then, we
+have
+\[
+f(x^{(k)})-f(x^{*})\leq\frac{1}{2}\inf_{q(0)=1}\max_{i}q(\lambda_{i})^{2}\cdot\|b\|_{A^{-1}}^{2}
+\]
+where $q$ searches over polynomials of degree at most $k$ and $\lambda_{i}$
+are eigenvalues of $A$.
+\end{thm}
+
+\begin{proof}
+Note that $\K_{k}=\{p(A):\deg p<k\}$. Hence, we have
+\begin{align*}
+2(f(x^{(k)})-f(x^{*})) & =\min_{x\in\K_{k}}\|x-x^{*}\|_{A}^{2}\\
+ & =\inf_{\deg p<k}\|(p(A)-A^{-1})b\|_{A}^{2}\\
+ & =\inf_{\deg p<k}\|A^{-\frac{1}{2}}(Ap(A)-I)A^{-\frac{1}{2}}b\|_{A}^{2}\\
+ & =\inf_{\deg p<k}\|(Ap(A)-I)A^{-\frac{1}{2}}b\|_{2}^{2}
+\end{align*}
+Let $q(x)=1-xp(x)$. Note that $q(0)=1$ and $\deg q\leq k$ and any
+such $q$ is of the form $1-xp$. Hence, we have
+\begin{align*}
+2(f(x^{(k)})-f(x^{*})) & =\inf_{\deg q\leq k,q(0)=1}\|q(A)A^{-\frac{1}{2}}b\|_{2}^{2}\\
+ & \leq\inf_{q(0)=1}\|q(A)\|_{\op}^{2}\cdot\|b\|_{A^{-1}}^{2}.
+\end{align*}
+The result follows from the fact that $\|q(A)\|_{\op}^{2}=\max_{i}q(\lambda_{i})^{2}$.
+\end{proof}
+It is known that for any $0<\mu\leq L$, there is a degree $k$ polynomial
+$q$ with $q(0)=1$ such that
+\[
+\max_{i}q(\lambda_{i})^{2}\leq2\left(1-\frac{2}{\sqrt{\frac{L}{\mu}}+1}\right)^{k}
+\]
+Therefore, it takes $O(\sqrt{\frac{L}{\mu}}\log(\frac{1}{\epsilon}))$
+iterations to find $x$ such that $f(x)-f(x^{*})\leq\epsilon\cdot\|b\|_{A^{-1}}^{2}$.
+
+Also, we note that if there are only $s$ distinct eigenvalues in
+$A$, then conjugate gradient finds the exact solution in $s$ iterations.
+
+\selectlanguage{english}%
+

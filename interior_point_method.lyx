@@ -4545,7 +4545,7 @@ Given a convex function
 \end_inset
 
  define the norm 
-\begin_inset Formula $\norm._{x}$
+\begin_inset Formula $\norm ._{x}$
 \end_inset
 
  as 
@@ -5644,6 +5644,24 @@ status open
 Need to say how to find this and analyze complexity.
 \end_layout
 
+\begin_layout Plain Layout
+Start with any 
+\begin_inset Formula $x_{0}\in K$
+\end_inset
+
+.
+ Run IPM with cost vector 
+\begin_inset Formula $\nabla\phi$
+\end_inset
+
+ and initial t according 
+\begin_inset Formula $x_{0}$
+\end_inset
+
+.
+ (maybe exercise)
+\end_layout
+
 \end_inset
 
 
@@ -6110,7 +6128,7 @@ nolink "false"
  we have
 \begin_inset Formula 
 \[
-\|\nabla f_{t}(x)\|_{\nabla^{2}f_{t}(x)^{-1}}\leq(\frac{1/6}{1-1/6})^{2}=\frac{1}{25}.
+\|\nabla f_{t}(x)\|_{\nabla^{2}f_{t}(x)^{-1}}\leq\left(\frac{1/6}{1-1/6}\right){}^{2}=\frac{1}{25}.
 \]
 
 \end_inset

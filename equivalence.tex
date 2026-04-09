@@ -1,0 +1,1157 @@
+Reduction is a powerful paradigm in both algorithms and complexity.
+In algorithms, a dual view of a problem can sometimes provide a window
+to a more efficient algorithm. With this as the main motivation, we
+discuss the problem of convex optimization given different types of
+access to the instance at hand. Despite appearing to be rather different,
+all these perspectives will turn out to be equivalent, i.e., reducible
+to each other, with only polynomial overhead. The main tool is duality.
+This chapter elaborates on these ideas. For the classical treatment
+of oracle models, the reader is referred to \cite{grotschel2012geometric}.
+For the most efficient known reductions, which are conjectured to
+be optimal up to logarithmic factors, see \cite{lee2020efficient}. 
+
+\section{Equivalences between Oracles}
+
+\subsection{Oracles for Convex Sets}
+
+Grötschel, Lov\'asz and Schrijver \cite{grotschel2012geometric}
+defined five different oracles to access convex sets, showed they
+are equivalent and used them to get polynomial-time algorithms for
+a variety of combinatorial problems (including the first ones in many
+cases). 
+
+Here are four basic oracles\footnote{We also omit the fifth oracle VIOL defined by \cite{grotschel2012geometric},
+which checks whether the convex set satisfies a given inequality or
+gives a violating point in the convex set, since this is equivalent
+to the OPT oracle below up to a logarithmic factor.} for a convex set $K\subseteq\R^{n}$. Later we will allow for error
+parameters in each oracle, i.e., approximate versions of all the oracles
+below. We begin with exact oracles for simplicity.
+\begin{defn}[Membership Oracle (MEM)]
+\label{def:MEM}Queried with a vector $y\in\Rn$, the oracle either
+
+\begin{itemize}
+\item asserts that $y\in K$, or
+\item asserts that $y\notin K$.
+\end{itemize}
+\end{defn}
+
+\begin{defn}[Separation Oracle (SEP)]
+\label{def:SEP}Queried with a vector $y\in\Rn$, the oracle either
+
+\begin{itemize}
+\item asserts that $y\in K$, or
+\item finds a unit vector $c\in\Rn$ such that $c^{T}x\leq c^{T}y$ for
+all $x\in K$.
+\end{itemize}
+\end{defn}
+
+\begin{defn}[Validity Oracle (VAL)]
+\label{def:VAL}Queried with a unit vector $c\in\Rn$, the oracle
+either\footnote{We use a slightly different definition than \cite{grotschel2012geometric}
+for clarity. }
+
+\begin{itemize}
+\item outputs $\max_{x\in K}c^{\top}x$, or
+\item asserts that $K$ is empty.
+\end{itemize}
+\end{defn}
+
+\begin{defn}[Optimization Oracle (OPT)]
+\label{def:OPT}Queried with a unit vector $c\in\Rn$, the oracle
+either
+
+\begin{itemize}
+\item finds a vector $y\in K$ and $c^{T}x\leq c^{T}y$ for all $x\in K$,
+or
+\item asserts that $K$ is empty.
+\end{itemize}
+\end{defn}
+
+According to the definitions, the separation oracle gives more information
+than the membership oracle and the optimization oracle gives more
+information than the validity oracle. Depending on the problem, usually
+one of the oracles will be the preferred or more natural way to access
+the convex set. For example, for the polytope given by $\{Ax\geq b\}$,
+the separation oracle is the preferred way because the membership
+oracle takes as much time as the separation oracle, and both validity
+and optimization involve solving a linear program. On the contrary,
+the preferred oracle for the convex set $\conv(\{a_{i}\})$ is the
+optimization oracle because $\max_{x\in\conv(\{a_{i}\})}\theta^{\top}x$
+can be solved by only checking $x=a_{i}$ for each $i$. In combinatorial
+optimization, many polytopes have exponentially many vertices and
+constraints but one can use combinatorial structure to solve the optimization
+problem efficiently.
+\begin{example}[Zonotope]
+ Imagine you have $n$ machines. Each machine uses resources $(r_{1},r_{2},\cdots,r_{k})\in\R_{+}^{k}$
+and produces goods $(g_{1},g_{2},\cdots,g_{\ell})\in\R_{+}^{\ell}$.
+We represent a machine simply by the vector $a=(r_{1},r_{2},\cdots,r_{k},g_{1},g_{2},\cdots,g_{\ell})$.
+Say we have vectors $a_{1},a_{2},\cdots,a_{n}\in\R^{k+\ell}$, then
+the polytope
+\[
+K=\left\{ \sum_{i=1}^{n}\lambda_{i}a_{i}\in\R^{k+\ell}|0\leq\lambda_{i}\leq1\text{ for all }i\right\} 
+\]
+represents the set of feasible (input, output) pairs. Many production
+problems can then be written as
+\[
+\min_{z\in K}f(z).
+\]
+\end{example}
+
+\begin{xca}
+Evaluate the complexity of each of the basic oracles for the Zonotope
+problem above.
+\end{xca}
+
+\begin{example}
+The spanning tree polytope of an undirected graph $G=(V,E)$ is given
+by
+\[
+P=\{x\in\R_{+}^{\left|E\right|}|\sum_{e\in E}x_{e}=|V|-1,\sum_{(u,v)\in E\cap(S\times S)}x_{(u,v)}\leq|S|-1\quad\forall S\subseteq V,\left|S\right|\ge1\}.
+\]
+The extreme points of this polytope can be shown to exactly correspond
+to the indicator vectors of spanning trees of $G$. Thus, the optimization
+oracle in this case is to simply find a maximum cost spanning tree.
+\end{example}
+
+\begin{xca}
+Design a membership oracle for the spanning tree polytope.
+\end{xca}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[node distance = 1.8cm]
+\tikzstyle{block} = [rectangle, draw, text width=6.5em, text centered, rounded corners, minimum height=4em]
+\tikzstyle{line} = [draw, -tonew,arrowhead=0.085cm]
+\tikzstyle{dot_line} = [draw, -tonew,dashed,arrowhead=0.085cm]
+% Place nodes
+   \node [block] (opt) {\scriptsize $OPT(K) = \partial {\delta_K^*}$};
+   \node [block, below of=opt, node distance=1.8cm] (val) {\scriptsize $VAL(K) = {\delta_K^*}$};
+   \node [block, right of=opt, node distance=3cm] (sepp) {\scriptsize $SEP(K) = \partial{\delta_K}$};
+   \node [block, below of=sepp, node distance=1.8cm] (mem) {\scriptsize $MEM(K) = {\delta_K}$};
+   \node [left of=opt, node distance=3cm] (viol) {};
+   \node [below of=viol, node distance=1.5cm] {$\xrightarrow{\quad\quad} \mbox{ is } \tilde{O}(1)$};
+   \node [below of=viol, node distance=2.1cm] {$\xdashrightarrow{\quad\quad} \mbox{ is } \tilde{O}(n)$}; 
+   % Draw edges
+%   \path [line] (opt) -- (viol);
+%   \path [line] (viol) -- (opt);
+   \path [line,transform canvas={xshift=-0.25cm}] (sepp) -- (mem);
+   \path [line,transform canvas={xshift=-0.25cm}] (opt) -- (val);
+   \path [dot_line,transform canvas={xshift=0.25cm}] (mem) -- (sepp);
+   \path [dot_line,transform canvas={xshift=0.25cm}] (val) -- (opt);
+   \path [dot_line,transform canvas={yshift=-0.25cm}] (opt) -- (sepp);
+   \path [dot_line,transform canvas={yshift=0.25cm}] (sepp) -- (opt);  
+\end{tikzpicture}
+
+\caption{The relationships among the four oracles for convex sets. The arrows
+are implications. \label{fig:oracles}}
+\end{figure}
+
+
+\subsection{Duals of Convex Sets}
+\begin{proof}
+\begin{figure}[h]
+\centering{}\includegraphics[width=0.75\columnwidth]{Figures/Section_4\lyxdot 1\lyxdot 2}\caption{Insights into the Dual. (a) K contains the origin. (b) K does not
+contain the origin.}
+\end{figure}
+\end{proof}
+The dual or \emph{polar} of a convex set $K$ is defined as the following
+convex set:
+\[
+K^{*}=\left\{ y:\forall x\in K,\left\langle x,y\right\rangle \le1\right\} .
+\]
+One might imagine that the polar operator is an involution, i.e.,
+the dual of the dual is the original set. Although this is not always
+true, the set $(K^{*})^{*}$ still has a simple description and under
+mild conditions we have $(K^{*})^{*}=K$.
+\begin{prop}
+\label{prop:K**} Let $K\subseteq$$\,\R^{n}$ be a convex set. Then
+\[
+(K^{*})^{*}=\mathrm{cl(conv(\mathit{K}\cup\left\{ 0\right\} ))}.
+\]
+\end{prop}
+
+\begin{proof}
+We first prove that $K^{**}\supseteq\mathrm{cl(conv(\mathit{K}\cup\left\{ 0\right\} ))}$.
+The polar of any convex set is closed and convex since it is the intersection
+of halfspaces, which are closed and convex. Thus, to prove this part,
+it is sufficient to prove that $K\subseteq K^{**}$ and $0\in K^{**}$.
+Let $x\in K$. Then, for every $y\in K^{*}$, it holds that $\langle x,y\rangle\leq1$,
+by the definition of the polar. Note that these inequalities are precisely
+the constraints of $K^{**}$, thus $x\in K^{**}$ . Moreover, $\langle0,y\rangle=0\leq1$,
+for every $y\in K^{*}$, and so $0\in K^{**}$.
+
+We now prove the other direction. Suppose there is a vector $x\in K^{**}\setminus\mathrm{cl(conv(\mathit{K}\cup\left\{ 0\right\} ))}$.
+By Theorem \ref{thm:sep}, there is $\theta$ such that
+\[
+\theta^{\top}y>\max_{x\in cl(conv(\mathit{K}\cup\left\{ 0\right\} ))}\theta^{\top}x.
+\]
+Since $0$ is feasible, the RHS is at least $0$. Thus, $\theta^{\top}y>0$.
+Scale $\theta$ so that 
+\[
+\theta^{\top}y>1\geq\max_{x\in cl(conv(\mathit{K}\cup\left\{ 0\right\} ))}\theta^{\top}x.
+\]
+Hence, $\theta\in K^{*}$ since $\theta^{\top}x\leq1$ for every $x\in K$.
+However, since $\theta^{\top}y>1$, we have $y\not\in K^{**}$, a
+contradiction.
+\end{proof}
+\begin{cor}
+Let $K\subseteq$$\,\R^{n}$ be a closed convex set . Then $(K^{*})^{*}=K$
+if and only if $0\in K$.
+\end{cor}
+
+
+\subsection{Oracles for Convex Functions}
+
+Now, we generalize the oracles for convex sets to convex functions.
+The membership oracle and separation oracle can be generalized as
+follows
+\begin{defn}[Evaluation Oracle (EVAL)]
+\label{def:EVAL}Queried with a vector $y$, the oracle outputs $f(y)$.
+\end{defn}
+
+The next oracle generalizes gradients to subgradients so that they
+can be computed for general convex functions. Any vector output by
+the oracle is a subgradient of the function at the query point.
+\begin{defn}[Subgradient Oracle (GRAD)]
+\label{def:GRAD}Queried with a vector $y$, the oracle outputs $f(y)$
+and a vector $g\in\Rn$ such that
+\begin{equation}
+f(x)\geq f(y)+g^{\top}(x-y)\text{ for all }x\in\Rn\label{eq:grad_guarantee}
+\end{equation}
+or outputs ``$f(y)$ undefined.''
+\end{defn}
+
+To generalize the validity oracle, we define the convex (Fenchel)
+conjugate of $f$:
+\begin{defn}[Convex Conjugate]
+For any function $f$, we define the convex conjugate 
+\[
+f^{*}(\theta)\defeq\sup_{x\in\R^{n}}\theta^{\top}x-f(x).
+\]
+\end{defn}
+
+Note that $f^{*}$ is convex because it is the supremum of linear
+functions. Also, we have $f^{*}(0)=-\inf_{x\in\R^{n}}f(x)$. Note
+that\footnote{Recall that $\delta_{C}(x)=0$ if $x\in C$ and $+\infty$ otherwise.}
+$\delta_{K}^{*}(c)=\sup_{x\in K}c^{\top}x$. Therefore, the validity
+oracle for $\delta_{K}$ is simply the evaluation oracle for $\delta_{K}^{*}$.
+The following lemma shows that the optimization oracle is simply the
+(sub)gradient oracle for $\delta_{K}^{*}$. We use $\nabla f$ to
+represent subgradient. 
+\begin{lem}
+\label{lem:gradient_conjugate}For any continuous function $f$ with
+differentiable $f^{*}$, we have that $\nabla f^{*}(\theta)=\arg\max_{x}\theta^{\top}x-f(x)$.
+\end{lem}
+
+\begin{proof}
+First we observe that the supremum is achieved. Fix $\theta$. Let
+$g_{\theta}(x)=\theta^{\top}x-f(x)$. We assume $\sup_{x}g_{\theta}(x)=f^{*}(\theta)$
+is finite. Let $\epsilon>0$. Then, $g_{\theta}(x)$ is a continuous
+function, so $S=g_{\theta}^{-1}([f^{*}(\theta)-\epsilon,\infty))$
+is a closed set. The set $S$ is not empty because there is some $x$
+for which $g_{\theta}(x)\ge\sup_{z}g_{\theta}(z)-\epsilon$. Now suppose
+for a contradiction that $S$ is not bounded. Then, there exists a
+sequence $x_{i}\in\R^{n}$ such that $\norm{x_{i}}\ge i$ and $g_{\theta}(x_{i})\ge f^{*}(\theta)-\epsilon$
+for all $i$. By the compactness of the unit sphere, we may assume
+by taking a subsequence that $x_{i}/\lVert x_{i}\rVert\to u$ for
+some unit vector $u\in\R^{n}$. Then, $u^{\top}x_{i}/\lVert x_{i}\rVert\to u^{\top}u=1$,
+and since $\lVert x_{i}\rVert\to\infty$, we have $u^{\top}x_{i}\to\infty$.
+Since $g_{\theta+u}(x_{i})=g_{\theta}(x_{i})+u^{\top}x_{i}\ge f^{*}(\theta)-\epsilon+u^{\top}x_{i}$,
+this means that $g_{\theta+u}(x_{i})\to\infty$, contradicting $f^{*}(\theta+u)$
+being finite. Hence, $S$ is bounded and thus compact, so $g_{\theta}(x)$
+attains its maximum in $S$, and thus in $\R^{n}$.
+
+Let $x_{\theta}\in\arg\sup_{x}\theta^{\top}x-f(x)$. By definition,
+we have that $f^{*}(\theta)=\theta^{\top}x_{\theta}-f(x_{\theta})$
+and that $f^{*}(\eta)\geq\eta^{\top}x_{\theta}-f(x_{\theta})$ for
+all $\eta$. Therefore, 
+\[
+f^{*}(\eta)\geq f^{*}(\theta)+x_{\theta}^{\top}(\eta-\theta)\text{ for all }\eta.
+\]
+Therefore, $x_{\theta}\in\nabla f^{*}(\theta)$.
+\end{proof}
+Note that this lemma shows that $\nabla\delta_{K}^{*}(\theta)=\arg\max_{x\in K}\theta^{\top}x$.
+So, the gradient oracle for $\delta_{K}^{*}$ is exactly the optimization
+oracle for $K$.
+
+Figure \ref{fig:rel} shows the current best reduction between these
+four function oracles. Note that according to our definition of the
+GRAD oracle, it also outputs the function value (EVAL). It is not
+hard to show that you can use $n+1$ calls to evaluation oracle to
+compute one gradient approximately (using finite difference) and that
+you can use $\tilde{O}(n)$ calls to gradient oracle of $f$ to compute
+one gradient of $f^{*}$ (using the cutting plane method). In the
+next section (Sec. \ref{sec:From-EVAL-to}), we will see the remaining
+reductions. However, it is still an open question if all of these
+reductions are the best possible. 
+\begin{problem*}
+Prove that it takes $\Omega(n^{2})$ calls to the evaluation oracle
+of $f$ to compute the gradient of $f^{*}$.
+\end{problem*}
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[node distance = 1.8cm]
+\tikzstyle{block} = [rectangle, draw, text width=6.5em, text centered, rounded corners, minimum height=4em]
+\tikzstyle{line} = [draw, -tonew,arrowhead=0.085cm]
+\tikzstyle{dot_line} = [draw, -tonew,dashed,arrowhead=0.085cm]
+% Place nodes
+   \node [block] (opt) {\scriptsize $GRAD(f^*)$};
+   \node [block, below of=opt, node distance=1.8cm] (val) {\scriptsize $EVAL(f^*)$};
+   \node [block, right of=opt, node distance=3cm] (sepp) {\scriptsize $GRAD(f)$};
+   \node [block, below of=sepp, node distance=1.8cm] (mem) {\scriptsize $EVAL(f)$};
+   \node [left of=opt, node distance=3cm] (viol) {};
+   \node [below of=viol, node distance=1.5cm] {$\xrightarrow{\quad\quad} \mbox{ is } \tilde{O}(1)$};
+   \node [below of=viol, node distance=2.1cm] {$\xdashrightarrow{\quad\quad} \mbox{ is } \tilde{O}(n)$}; 
+   %\node [below of=viol, node distance=1.5cm] {$\tilde{O}(1) \xrightarrow{\quad\quad}$};
+   %\node [below of=viol, node distance=2.1cm] {$\tilde{O}(n) \xdashrightarrow{\quad\quad}$}; 
+   % Draw edges
+   \path [line,transform canvas={xshift=-0.25cm}] (sepp) -- (mem);
+   \path [line,transform canvas={xshift=-0.25cm}] (opt) -- (val);
+   \path [dot_line,transform canvas={xshift=0.25cm}] (mem) -- (sepp);
+   \path [dot_line,transform canvas={xshift=0.25cm}] (val) -- (opt);
+   \path [dot_line,transform canvas={yshift=-0.25cm}] (opt) -- (sepp);
+   \path [dot_line,transform canvas={yshift=0.25cm}] (sepp) -- (opt);  
+\end{tikzpicture}
+
+\caption{This illustrates the relationships of oracles for a convex function
+$f$ and its convex conjugate $f^{*}$. \label{fig:rel}}
+\end{figure}
+
+
+\subsection{Convex Conjugate and Equivalences}
+
+Here are some examples of conjugates.
+\begin{xca}
+Show that
+\end{xca}
+
+\begin{itemize}
+\item The conjugate of $f(x)=\frac{1}{p}\|x\|_{p}^{p}$ is $f^{*}(\theta)=\frac{1}{q}\|\theta\|_{q}^{q}$
+where $\frac{1}{p}+\frac{1}{q}=1$ (with $p,q\ge1)$.
+\item The conjugate of $f(x)=\left\langle a,x\right\rangle -b$ is $f^{*}(\theta)=\begin{cases}
+b, & \theta=a\\
++\infty & \mbox{otherwise}
+\end{cases}$.
+\item The conjugate of $f(x)=\sum_{i}e^{x_{i}}$ is $f^{*}(\theta)=\begin{cases}
+\sum_{i}\theta_{i}\log\theta_{i}-\theta_{i} & \text{if }\theta_{i}\geq0\text{ for all }i\\
++\infty & \mbox{otherwise}
+\end{cases}.$
+\end{itemize}
+%
+\begin{xca}
+For any $x,\theta$, we have $\theta^{\top}x\leq f(x)+f^{*}(\theta)$.
+\end{xca}
+
+\begin{xca}
+Prove that the gradient of $f$ is $L$-Lipschitz if and only if $f^{*}$
+is $\frac{1}{L}$ strongly convex.
+\end{xca}
+
+The following lemma shows that one can recover $f$ from $f^{*}$.
+\begin{lem}[Involution property]
+\label{lem:involution}For any convex function $f$ with a closed
+epigraph, we have that $f^{**}=f$.
+\end{lem}
+
+\begin{proof}
+Since $\epi f$ is a closed, convex set, Corollary \ref{cor:convex_function_intersection}
+shows that it must be an intersection of halfspaces, i.e., a set ${\cal H}$
+s.t. 
+\[
+f(x)=\sup_{(\theta,b)\in\mathcal{H}}\theta^{\top}x-b
+\]
+where $\mathcal{H}$ is the set of supporting planes of $\epi f$
+and contains all affine lower bounds on $f$, namely, $f(x)\geq\theta^{\top}x-b$
+for all $x$. Alternatively, we can write
+\[
+\epi(f)=\bigcap_{{\cal H}=\left\{ (\theta,b):\,\forall x,\,f(x)\ge\theta^{\top}x-b\right\} }\left\{ (x,t):t\ge\theta^{\top}x-b\right\} .
+\]
+For a fixed $\theta$, any feasible $b$ satisfies $b\geq\theta^{\top}x-f(x)$
+for all $x$. So, the smallest feasible value satisfies 
+\[
+b^{*}=\sup_{x}\theta^{\top}x-f(x)=f^{*}(\theta).
+\]
+Hence, 
+\[
+f(x)=\sup_{(\theta,b)\in\mathcal{H}}\theta^{\top}x-b^{*}=\sup_{\theta}\theta^{\top}x-f^{*}(\theta)=f^{**}(x).
+\]
+\end{proof}
+\begin{xca}
+Let $f$ be a convex function with closed epigraph. Show that $f=f^{*}$
+iff $f(x)=\frac{\norm x^{2}}{2}$.
+\end{xca}
+
+Since we can use the gradient, $\nabla f$, to compute the gradient
+of the dual, $\nabla f^{*}$ (via cutting plane method), the involution
+property shows that we can do the reverse -- use $\nabla f^{*}$
+to compute $\nabla f$. Going back to the example about $\conv(\{a_{i}\})$,
+since we know how to compute $\max_{x\in\conv(\{a_{i}\})}\theta^{\top}x=\delta_{\conv(\{a_{i}\})}^{*}(\theta)$,
+this reduction gives us a way to separate $\conv(\{a_{i}\})$, or
+equivalently, to compute the (sub)gradient of $\delta_{\conv(\{a_{i}\})}^{*}$.
+This is formalized in the next exercise.
+\begin{xca}
+Show how to implement the separation oracle SEP for a convex set $K$
+given access to an optimization oracle OPT for $K$.
+\end{xca}
+
+Recall that for any linear space $X$, $X^{*}$ denotes the dual space,
+i.e., the set of all linear functions on $X$ and that under mild
+assumptions\footnote{The dual of the dual of a vector space $X$ is isomorphic to $X$
+if and only if $X$ is a finite-dimensional vector space.}, we have $X^{**}=X$. Therefore, there are two natural ``coordinate
+systems'' to record a convex function, the primal space $X$ and
+the dual space $X^{*}$. Under these ``coordinate systems'', we
+have the dual functions $f$ and $f^{*}$.
+\begin{xca}[Order reversal]
+ Show that $f\geq g\iff f^{*}\leq g^{*}$ (both for all $x\in\R^{n})$.
+
+Interestingly, the convex conjugate is the \emph{unique} transformation
+on convex functions that satisfies both involution and order reversal. 
+\end{xca}
+
+\begin{thm}[\cite{artstein2009concept}]
+Given a transformation $\mathcal{T}$ that maps the set of lower
+semi-continuous\footnote{See Def.\ref{def:lower-semi}.} convex functions
+onto itself such that $\mathcal{T}\mathcal{T}\phi=\phi$ and $\phi\leq\psi\implies\mathcal{T}\phi\geq\mathcal{T}\psi$
+for all lower-semi-continuous convex functions $\phi$ and $\psi$.
+Then, $\mathcal{T}$ is essentially the convex conjugate, namely,
+there is an invertible symmetric linear transformation $B$, a vector
+$v_{0}$ and a constant $C_{0}$ such that 
+\[
+(\mathcal{T}\phi)(x)=\phi^{*}(Bx+v_{0})+v_{0}^{\top}x+C_{0}.
+\]
+\end{thm}
+
+In combinatorial optimization, many convex sets are given by the convex
+hull for some discrete objects. In many cases, the only known way
+to do the separation is via such reductions. In this chapter, we will
+study the following general theorem showing that optimization can
+be reduced to membership/evaluation with a quadratic overhead in dimension
+for the number of oracle queries. 
+\begin{thm}
+Let $K$ be a convex set specified by a membership oracle, a point
+$x_{0}\in\R^{n}$, and numbers $0<r<R$ such that $B(x_{0},r)\subseteq K\subseteq B(x_{0},R)$.
+For any convex function $f$ given by an evaluation oracle and any
+$\epsilon>0$, there is a randomized algorithm that computes a point
+$z\in B(K,\epsilon)$ such that. 
+\[
+f(z)\le\min_{x\in K}f(x)+\epsilon\left(\max_{x\in K}f(x)-\min_{x\in K}f(x)\right)
+\]
+with constant probability using $O\left(n^{2}\log^{2}\left(\frac{nR}{\epsilon r}\right)\right)$
+calls to the membership oracle and evaluation oracle and $O(n^{3}\log^{O(1)}\left(\frac{nR}{\epsilon r}\right))$
+total arithmetic operations. 
+\end{thm}
+
+
+\section{Gradient from Evaluation via Finite Difference\label{sec:From-EVAL-to}}
+
+When the function $f$ is in $\mathcal{C}^{1}$, we can approximate
+the gradient of a function by calculating a finite difference for
+sufficiently small $h$:
+\[
+\frac{\partial f}{\partial x_{i}}=\frac{f(x+he_{i})-f(x)}{h}+O(h)
+\]
+which only takes $n+1$ calls to the evaluation oracle (for computing
+$f(x),f(x+he_{1}),\cdots,f(x+he_{n})$). The only issue is that the
+convex function may not be differentiable. However, any convex Lipschitz
+function is twice differentiable almost everywhere (see the proof
+below). Therefore, we can simply perturb $x$ with random noise, then
+apply a finite difference. To see the idea more precisely, we first
+observe that the norm of the Hessian can be bounded in expectation
+for a Lipschitz function. Note that this is Lipschitzness of the function,
+not its gradient. The proof below uses the basic fact that the gradient
+is defined almost everywhere for Lipschitz functions. 
+\begin{lem}
+For any $L$-Lipschitz convex function $f$ defined in a unit ball,
+we have $\nabla^{2}f(x)$ exists almost everywhere and that $\E_{x\in B(0,1)}\|\nabla^{2}f(x)\|_{F}\leq nL$.
+\end{lem}
+
+\begin{proof}
+The existence almost everywhere is classical (Alexandrov Theorem,
+see e.g., \cite{constantin2018convex}; see also Rademacher's theorem
+about the existence of the derivative almost everywhere for Lipschitz
+functions). We will only prove the part $\E_{x\in B(0,1)}\|\nabla^{2}f(x)\|_{F}\leq nL$.
+Since $\nabla^{2}f\succeq0$ (where defined), we have $\|\nabla^{2}f(x)\|_{F}\leq\tr\nabla^{2}f(x)$.
+Therefore, 
+\[
+\int_{B(0,1)}\|\nabla^{2}f(x)\|_{F}dx\leq\int_{B(0,1)}\tr\nabla^{2}f(x)dx=\int_{B(0,1)}\Delta f(x)dx.
+\]
+Using Stokes' Theorem, and letting $\nu(x)$ be the normal vector
+at $x$, we have 
+\[
+\int_{B(0,1)}\Delta f(x)dx=\int_{\partial B(0,1)}\left\langle \nabla f(x),\nu(x)\right\rangle dx\leq|\partial B(0,1)|\cdot L.
+\]
+Hence, we have
+\[
+\E_{x\in B(0,1)}\|\nabla^{2}f(x)\|_{F}\leq\frac{|\partial B(0,1)|}{|B(0,1)|}L=nL.
+\]
+\end{proof}
+To turn this into an algorithm, we need to develop it a bit further.
+\begin{lem}[\cite{lee2017efficient}]
+\label{lem:convex_almost_flat}Let $B_{\infty}(x,r)=\{y:\ \norm{x-y}_{\infty}\leq r\}$.
+For any $0<r_{2}\leq r_{1}$ and any convex function $f$ defined
+on $B_{\infty}(x,r_{1}+r_{2})$ with $\norm{\nabla f(z)}_{\infty}\leq L$
+for any $z\in B_{\infty}(x,r_{1}+r_{2})$ we have 
+\[
+\E_{y\in B_{\infty}(x,r_{1})}\E_{z\in B_{\infty}(y,r_{2})}\norm{\nabla f(z)-g(y)}_{1}\leq n^{3/2}\frac{r_{2}}{r_{1}}L
+\]
+where $g(y)$ is the average of $\nabla f$ over $B_{\infty}(y,r_{2})$.
+
+\begin{figure}[h]
+
+\centering{}\includegraphics[width=0.6\columnwidth]{Figures/Lemma_4\lyxdot 21}
+\end{figure}
+\end{lem}
+
+\begin{proof}
+Let $\omega_{i}(z)=\left\langle \nabla f(z)-g(y),e_{i}\right\rangle $
+for all $i\in[n]$. Then, we have that
+\[
+\int_{B_{\infty}(y,r_{2})}\norm{\nabla f(z)-g(y)}_{1}dz=\sum_{i}\int_{B_{\infty}(y,r_{2})}\left|\omega_{i}(z)\right|dz.
+\]
+Since $\int_{B_{\infty}(y,r_{2})}\omega_{i}(z)dz=0$, the Poincar\'e
+inequality for a box (Theorem \ref{thm:box-poincare} below) shows
+that
+\begin{align*}
+\int_{B_{\infty}(y,r_{2})}\left|\omega_{i}(z)\right|dz & \leq r_{2}\int_{B_{\infty}(y,r_{2})}\norm{\nabla\omega_{i}(z)}_{2}dz\\
+ & =r_{2}\int_{B_{\infty}(y,r_{2})}\norm{\nabla^{2}f(z)e_{i}}_{2}dz\\
+\sum_{i}\int_{B_{\infty}(y,r_{2})}\left|\omega_{i}(z)\right|dz & \le\sqrt{n}r_{2}\int_{B_{\infty}(y,r_{2})}\norm{\nabla^{2}f(z)}_{F}dz
+\end{align*}
+
+Since $f$ is convex, eigenvalues of the Hessian are nonnegative and
+so we have 
+\[
+\norm{\nabla^{2}f(z)}_{F}=\sqrt{\sum_{i}\lambda_{i}^{2}}\le\sum_{i}\lambda_{i}=\tr\nabla^{2}f(z)=\Delta f(z).
+\]
+Therefore, we have
+\begin{align*}
+\E_{z\in B_{\infty}(y,r_{2})}\norm{\nabla f(z)-g(y)}_{1} & \leq\sqrt{n}r_{2}\E_{z\in B_{\infty}(y,r_{2})}\Delta f(z)\\
+ & =\sqrt{n}r_{2}\Delta h(y)
+\end{align*}
+where $h=\frac{1}{(2r_{2})^{n}}f\ast\chi_{B_{\infty}(0,r_{2})}$ where
+$\chi_{B_{\infty}(0,r_{2})}$ is $1$ on the set $B_{\infty}(0,r_{2})$
+and $0$ on outside.
+
+Integrating by parts, we have that
+\[
+\int_{B_{\infty}(x,r_{1})}\Delta h(y)dy=\int_{\partial B_{\infty}(x,r_{1})}\left\langle \nabla h(y),n(y)\right\rangle dy
+\]
+where $\Delta h(y)=\sum_{i}\frac{d^{2}h}{dx_{i}^{2}}(y)$ and $n(y)$
+is the normal vector on $\partial B_{\infty}(x,r_{1})$ the boundary
+of the box $B_{\infty}(x,r_{1})$, i.e. standard basis vectors. Since
+$f$ is $L$-Lipschitz with respect to $\norm{\cdot}_{\infty}$ so
+is $h$, i.e. $\norm{\nabla h(z)}_{\infty}\leq L$. Hence, we have
+that
+\[
+\E_{y\in B_{\infty}(x,r_{1})}\Delta h(y)\leq\frac{1}{(2r_{1})^{n}}\int_{\partial B_{\infty}(x,r_{1})}\norm{\nabla h(y)}_{\infty}\norm{n(y)}_{1}dy\leq\frac{1}{(2r_{1})^{n}}\cdot2n(2r_{1})^{n-1}\cdot L=\frac{nL}{r_{1}}.
+\]
+Therefore, we have that
+\[
+\E_{y\in B_{\infty}(x,r_{1})}\E_{z\in B_{\infty}(y,r_{2})}\norm{\nabla f(z)-g(y)}_{1}\leq n^{3/2}\frac{r_{2}}{r_{1}}L.
+\]
+\end{proof}
+\begin{xca}
+For an $L$-gradient-Lipschitz function $f:\R^{n}\rightarrow\R,$and
+$h=f*\chi_{B_{\infty}(0,1/2)}$, prove that $h$ is also $L$-gradient-Lipschitz
+and $\Delta h(y)=\E_{z\sim B_{\infty(y,1/2)}}(\Delta f(z))$.
+\end{xca}
+
+This lemma shows that we can implement an approximate gradient oracle
+(GRAD) using an evaluation oracle (EVAL) even for non-differentiable
+functions. By the involution property again, this completes all the
+reductions in Figure \ref{fig:rel}. With the above fact asserting
+that, on average, the gradient is approximated by its average in a
+small ball, we now proceed to construct an approximate subgradient,
+using only an approximate evaluation oracle. The parameter $r_{2}$
+in the algorithm is chosen to optimize the final error of the output.
+By making the ratio $r_{2}/r_{1}$ sufficiently small, we can get
+a desired error for the subgradient. 
+
+\begin{algorithm2e}[t] 
+
+\caption{$\mathtt{SubgradConvexFunc}(f,x,r_{1},\varepsilon)$}\label{alg:separateFunc}
+
+\SetAlgoLined
+
+\textbf{Require:} $r_{1}>0$, $\norm{\partial f(z)}_{\infty}\leq L$
+for any $z\in B_{\infty}(x,2r_{1})$.
+
+Set $r_{2}=\sqrt{\frac{\varepsilon r_{1}}{\sqrt{n}L}}$.
+
+Sample $y\in B_{\infty}(x,r_{1})$ and $z\in B_{\infty}(y,r_{2})$
+independently and uniformly at random.
+
+\For{$i=1,2,\cdots,n$ }{
+
+Let $\alpha_{i}$ and $\beta_{i}$ denote the end points of the interval
+$B_{\infty}(y,r_{2})\cap\{z+se_{i}:s\in\R\}$.
+
+Set $\tilde{g}_{i}=\frac{f(\beta_{i})-f(\alpha_{i})}{2r_{2}}$ where
+we compute $f$ to within $\varepsilon$ additive error.
+
+}
+
+\textbf{Output} $\tilde{g}$ as the approximate subgradient of $f$
+at $x$.
+
+\end{algorithm2e}
+\begin{lem}
+\label{lem:separate_conv_func} Let $r_{1}>0$ and $f$ be a convex
+function. Suppose that $\norm{\nabla f(z)}_{\infty}\leq L$ for any
+$z\in B_{\infty}(x,2r_{1})$ and suppose that we can evaluate f to
+within $\varepsilon$ additive error for $\varepsilon\leq r_{1}\sqrt{n}L$.
+Let $\tilde{g}=\mathtt{SubgradConvexFunc}(f,x,r_{1},\varepsilon)$.
+Then, there is random variable $\zeta\geq0$ with $\E\zeta\leq2\sqrt{\frac{L\varepsilon}{r_{1}}}n^{5/4}$
+such that for any $y$
+\[
+f(y)\geq f(x)+\left\langle \tilde{g},y-x\right\rangle -\zeta\norm{y-x}_{\infty}-4nr_{1}L.
+\]
+\end{lem}
+
+\begin{proof}
+We assume that $f$ is twice differentiable. For general $f$, we
+can reduce to this case by viewing it as a limit of twice-differentiable
+functions.
+
+\begin{figure}[h]
+
+\begin{centering}
+\includegraphics[width=0.6\columnwidth]{Figures/Lemma_4\lyxdot 23}
+\par\end{centering}
+\end{figure}
+
+First, we assume that we can compute $f$ exactly, namely $\varepsilon=0$.
+Fix $i\in[n]$. Let $g(y)$ be the average of $\nabla f$ over $B_{\infty}(y,r_{2})$.
+Then, for the function $\tilde{g}$ computed by the algorithm, we
+have that
+\begin{align*}
+\E_{z}\left|\tilde{g}_{i}-g(y)_{i}\right| & =\E_{z}\left|\frac{f(\beta_{i})-f(\alpha_{i})}{2r_{2}}-g(y)_{i}\right|\\
+ & \leq\E_{z}\frac{1}{2r_{2}}\int\left|\frac{df}{dx_{i}}(z+se_{i})-g(y)_{i}\right|ds\\
+ & =\E_{z}\left|\frac{df}{dx_{i}}(z)-g(y)_{i}\right|
+\end{align*}
+where we used that both $z+se_{i}$ and $z$ are uniform distribution
+on $B_{\infty}(y,r_{2})$ in the last line. Hence, we have
+\[
+\E_{z}\norm{\tilde{g}-\nabla f(z)}_{1}\leq\E_{z}\norm{\nabla f(z)-g(y)}_{1}+\E_{z}\norm{\tilde{g}-g(y)}_{1}\leq2\E_{z}\norm{\nabla f(z)-g(y)}_{1}.
+\]
+Now, applying the convexity of $f$ yields that
+\begin{align*}
+f(q) & \geq f(z)+\left\langle \nabla f(z),q-z\right\rangle \\
+ & =f(z)+\left\langle \tilde{g},q-x\right\rangle +\left\langle \nabla f(z)-\tilde{g},q-x\right\rangle +\left\langle \nabla f(z),x-z\right\rangle \\
+ & \geq f(z)+\left\langle \tilde{g},q-x\right\rangle -\norm{\nabla f(z)-\tilde{g}}_{1}\norm{q-x}_{\infty}-\norm{\nabla f(z)}_{\infty}\norm{x-z}_{1}.
+\end{align*}
+Now, using $f$ is $L$-Lipschitz between $x$ and $z$, we have that
+$f(z)\geq f(x)-L\cdot\norm{x-z}_{1}$. Hence, we have
+\[
+f(q)\geq f(x)+\left\langle \tilde{g},q-x\right\rangle -\norm{\nabla f(z)-\tilde{g}}_{1}\norm{q-x}_{\infty}-2L\norm{x-z}_{1}.
+\]
+Note that $\norm{x-z}_{1}\leq n\cdot\norm{x-z}_{\infty}\leq n(r_{1}+r_{2})$
+by assumption. Moreover, we can apply Lemma~\ref{lem:convex_almost_flat}
+to bound $\norm{\nabla f(z)-\tilde{g}}_{1}$ and use $r_{2}=\sqrt{\frac{\varepsilon r_{1}}{\sqrt{n}L}}\leq r_{1}$
+to get
+\[
+f(q)\geq f(x)+\left\langle \tilde{g},q-x\right\rangle -\zeta\norm{q-x}_{\infty}-4nr_{1}L
+\]
+with $\E\zeta\leq2n^{3/2}\frac{r_{2}}{r_{1}}L$.
+
+Since we only compute $f$ up to $\varepsilon$ additive error, it
+introduces $\frac{\varepsilon}{r_{2}}$ additive error in $\tilde{g}_{i}$.
+Hence, we instead have that
+\[
+\E\zeta\leq2n^{3/2}\frac{r_{2}}{r_{1}}L+\frac{\varepsilon n}{2r_{2}}.
+\]
+Setting $r_{2}=\frac{1}{2}\sqrt{\frac{\varepsilon r_{1}}{\sqrt{n}L}}$
+completes the proof.
+\end{proof}
+Note that if we happened to have an exact oracle for $f$, then we
+can make $r_{2}$ arbitrarily small.
+\begin{xca}
+Suppose in Algorithm \ref{alg:separateFunc} we apply the idea of
+a linear approximation directly to a small box around the query point
+$x$, i.e., we pick a random point $z$, avoiding the intermediate
+point $y$ entirely, and use $z$ to find endpoints of chords through
+$z$ and compute an estimate of the gradient. Why is this not accurate
+in general?
+\end{xca}
+
+\begin{xca}
+What is the best possible bound in Lemma \ref{lem:convex_almost_flat},
+in particular, is the dependence on the dimension tight?
+\end{xca}
+
+In the proof of Lemma \ref{lem:convex_almost_flat}, we used the following
+fact applied to the case when $\Omega$ is a cube. In this case, the
+coefficient on the RHS is given by the Cheeger or KLS constant of
+the cube and is $1$. This is an example of an isoperimetric inequality.
+Such inequalities will play an important role later in this book.
+\begin{thm}[$L^{1}$-Poincar\'e inequality]
+\label{thm:box-poincare} Let $\Omega$ be connected, bounded and
+open. Then the following (best-possible) inequality holds for any
+smooth function $f:\Omega\rightarrow\R$:
+\[
+\norm{f-\frac{1}{\left|\Omega\right|}\int_{\Omega}f(x)\,dx}_{L^{1}(\Omega)}\le\left(\sup_{S\subset\Omega}\frac{2|S||\Omega\setminus S|}{|\partial S||\Omega|}\right)\norm{\nabla f}_{L^{1}(\Omega)}
+\]
+ where the supremum is over all subsets $S$ s.t. $S$ and $\Omega\setminus S$
+are both connected.
+\end{thm}
+
+\begin{xca}
+Prove the inequality in Theorem \ref{thm:box-poincare} using the
+classical co-area formula.
+\end{xca}
+
+
+\section{Separation via Membership \label{sec:From-Membership-to}}
+
+In this section, we show how to implement a separation oracle for
+a convex set using a nearly linear number of queries to a membership
+oracle. We divide this into two steps. In the first step (Algorithm~\ref{alg:separateFunc}),
+we compute an approximate subgradient of a given Lipschitz convex
+function. Using this, in the second step (Algorithm~\ref{alg:sep_set}),
+we compute an approximate separating hyperplane. 
+\begin{thm}
+Let $K$ be a convex body s.t. $B(0,1)\subseteq K\subseteq B(0,R)$.
+Then, for any $0<\eta\leq1/2$, we can compute an $\eta$-approximate
+separation oracle for K using $O(n\log(nR/\eta))$ queries to a membership
+oracle for $K$.
+\end{thm}
+
+Throughout this section, let $K\subseteq\R^{n}$ be a convex set that
+contains $B_{2}(0,r)$ and is contained in $B_{2}(0,R)$. Recall that
+$B_{p}(x,r)$ is the $p$-norm ball of radius $r$ centered at $x$.
+By an approximate separation oracle we mean that either the queried
+point $x$ lies within distance $\eta$ of $K$, or the oracle provides
+a halfspace $c^{T}y\le c^{T}x+\eta$ for all points $y\in K$ at distance
+at least $\eta$ from the boundary of $K$. We also define 
+\[
+B_{p}(K,-\delta)\defeq\{x\in\R^{n}:B_{p}(x,\delta)\subseteq K\}.
+\]
+Given some point $x\notin K$, we wish to separate $x$ from $K$
+using a halfspace. To do this, we reduce this problem to computing
+an approximate subgradient of a Lipschitz convex function $h_{x}(d)$
+defined for points in $K.$ Roughly speaking, it is the ``height''
+(or distance from the boundary) of a point $d$ in the direction of
+$x$. Let 
+\[
+\alpha_{x}(d)=\max_{d+\alpha x\in K}\alpha\mbox{ \quad and \quad}h_{x}(d)=-\alpha_{x}(d)\norm x_{2}.
+\]
+ Note that $d+\alpha_{x}(d)x$ is the last point in $K$ on the line
+through $d\in K$ in the direction of $x$, and $-h_{x}(d)$ is the
+$\ell_{2}$ distance from this boundary point to $d$ (see Fig.\ref{fig:height-function}).
+
+\begin{figure}[h]
+\begin{centering}
+\includegraphics[width=0.6\columnwidth]{Figures/Thrm_4\lyxdot 27}
+\par\end{centering}
+\centering{}\caption{The convex height function $h_{x}$}
+\label{fig:height-function}
+\end{figure}
+
+\begin{algorithm2e}[h]
+
+\caption{$\mathtt{Separate}_{\varepsilon,\rho}(K,x)$}\label{alg:sep_set}
+
+\SetAlgoLined
+
+\textbf{Require:} $B_{2}(0,r)\subset K\subset B_{2}(0,R)$.
+
+\uIf{$\text{MEM}_{\varepsilon}(K)$ asserts that $x\in B(K,\epsilon)$}{
+
+\textbf{Output:} ``$x\in B(K,\varepsilon)$''.
+
+}\ElseIf{$x\notin B_{2}(0,R)$}{
+
+\textbf{Output:} the halfspace $\{y:0\geq\left\langle y-x,x\right\rangle \}$.
+
+}
+
+Let $\kappa=R/r$, $\alpha_{x}(d)=\max_{d+\alpha x\in K}\alpha$ and
+$h_{x}(d)=-\alpha_{x}(d)\norm x_{2}$. 
+
+The evaluation oracle of $\alpha_{x}(d)$ can be implemented via binary
+search and $\text{MEM}_{\varepsilon}(K)$. 
+
+Compute $\tilde{g}=\mathtt{SubgradConvexFunc}(h_{x},0,r_{1},4\varepsilon)$
+with $r_{1}=n^{1/6}\varepsilon^{1/3}R^{2/3}\kappa^{-1}$ and the evaluation
+oracle of $\alpha_{x}(d)$.
+
+\textbf{Output:} the halfspace
+\[
+\left\{ y:\frac{31}{\rho}n^{7/6}R^{2/3}\kappa\varepsilon^{1/3}\geq\left\langle \tilde{g},y-x\right\rangle \right\} 
+\]
+
+\end{algorithm2e}
+
+The output of the algorithm for separation is a halfspace that approximately
+contains $K$, and the input point $x$ is close to its bounding hyperplane.
+It uses a call to the subgradient function above. 
+
+We now proceed to analyze the height function.
+\begin{lem}
+\label{lem:h_convex} $h_{x}(d)$ is convex on $K$.
+\end{lem}
+
+\begin{proof}
+Let $d_{1},d_{2}\in K$ and $\lambda\in[0,1]$. Now $d_{1}+\alpha_{x}(d_{1})x\in K$
+and $d_{2}+\alpha_{x}(d_{2})x\in K$. Consequently,
+\[
+\left[\lambda d_{1}+(1-\lambda)d_{2}\right]+\left[\lambda\cdot\alpha_{x}(d_{1})+(1-\lambda)\cdot\alpha_{x}(d_{2})\right]x\in K\,.
+\]
+Therefore, if we let $d\defeq\lambda d_{1}+(1-\lambda)d_{2}$ we see
+that $\alpha_{x}(d)\geq\lambda\cdot\alpha_{x}(d_{1})+(1-\lambda)\cdot\alpha_{x}(d_{2})$
+and $h_{x}(\lambda d_{1}+(1-\lambda d_{2})\leq\lambda h_{x}(d_{1})+\lambda h_{x}(d_{2})$
+as claimed.
+\end{proof}
+\begin{lem}
+\label{lem:h_Lip} $h_{x}$ is $\left(\frac{R+\delta}{r-\delta}\right)$-Lipschitz
+over points in $B_{2}(0,\delta)$ for any $\delta<r$. 
+
+\begin{figure}[h]
+
+\begin{centering}
+\includegraphics[width=0.4\columnwidth]{Figures/Lemma_4\lyxdot 29}
+\par\end{centering}
+\end{figure}
+\end{lem}
+
+\begin{proof}
+Let $d_{1},d_{2}$ be arbitrary points in $B(0,\delta)$. We wish
+to upper bound $\left|h_{x}(d_{1})-h_{x}(d_{2})\right|$ in terms
+of $\norm{d_{1}-d_{2}}_{2}$. We assume without loss of generality
+that $\alpha_{x}(d_{1})\geq\alpha_{x}(d_{2})$ and therefore
+\[
+\left|h_{x}(d_{1})-h_{x}(d_{2})\right|=\left|\alpha_{x}(d_{1})\norm x_{2}-\alpha_{x}(d_{2})\norm x_{2}\right|=\left(\alpha_{x}(d_{1})-\alpha_{x}(d_{2})\right)\norm x_{2}\,.
+\]
+Consequently, it suffices to lower bound $\alpha_{x}(d_{2})$. We
+split the analysis into two cases.
+
+Case 1: $\norm{d_{2}-d_{1}}_{2}\geq r-\delta$. Since $0\geq h_{x}(d_{1}),h_{x}(d_{2})\geq-R-\delta$,
+we have that 
+\[
+\left|h_{x}(d_{1})-h_{x}(d_{2})\right|\leq R+\delta\leq\frac{R+\delta}{r-\delta}\norm{d_{2}-d_{1}}_{2}.
+\]
+
+Case 2: $\norm{d_{2}-d_{1}}_{2}\leq r-\delta$. We consider the point
+$d_{3}=d_{1}+\frac{d_{2}-d_{1}}{\lambda}$ with $\lambda=\norm{d_{2}-d_{1}}_{2}/(r-\delta)$.
+Note that 
+\[
+\norm{d_{3}}_{2}\leq\norm{d_{1}}_{2}+\frac{1}{\lambda}\norm{d_{2}-d_{1}}_{2}\leq\delta+\frac{1}{\lambda}\norm{d_{2}-d_{1}}_{2}\leq r.
+\]
+Hence, $d_{3}\in K$. Since $\lambda\in[0,1]$ and $K$ is convex,
+we have that $\lambda\cdot d_{3}+(1-\lambda)\cdot\left[d_{1}+\alpha_{x}(d_{1})x\right]\in K$.
+Now, we note that
+\[
+\lambda\cdot d_{3}+(1-\lambda)\cdot\left[d_{1}+\alpha_{x}(d_{1})x\right]=d_{2}+(1-\lambda)\cdot\alpha_{x}(d_{1})x
+\]
+and this shows that 
+\[
+\alpha_{x}(d_{2})\geq(1-\lambda)\cdot\alpha_{x}(d_{1})=\left(1-\frac{\norm{d_{2}-d_{1}}_{2}}{r-\delta}\right)\cdot\alpha_{x}(d_{1}).
+\]
+Since $d_{1}+\alpha_{x}(d_{1})x\in K\subset B_{2}(0,R)$, we have
+that $\alpha_{x}(d_{1})\cdot\norm x_{2}\leq R+\delta$ and hence
+\[
+\left|h_{x}(d_{1})-h_{x}(d_{2})\right|=(\alpha_{x}(d_{1})-\alpha_{x}(d_{2}))\cdot\norm x_{2}\leq\alpha_{x}(d_{1})\cdot\norm x_{2}\frac{\norm{d_{2}-d_{1}}_{2}}{r-\delta}\leq\frac{R+\delta}{r-\delta}\norm{d_{2}-d_{1}}_{2}.
+\]
+ In either case, as claimed we have
+\[
+\left|h_{x}(d_{1})-h_{x}(d_{2})\right|\leq\frac{R+\delta}{r-\delta}\norm{d_{2}-d_{1}}_{2}.
+\]
+\end{proof}
+The next lemma shows that $h_{x}$ gives us a way to implement an
+approximation separation oracle and only needs access to an approximation
+evaluation oracle for $h_{x}$ which in turn only needs an approximate
+membership oracle for $K$. To be precise, we define approximate oracles.
+\begin{defn}[Separation Oracle (SEP)]
+\label{def:SEP-1} Queried with a vector $y\in\Rn$ and real numbers
+$\delta,\delta'>0$, with probability at least $1-\delta'$, the oracle
+either
+
+\begin{itemize}
+\item assert that $y\in B(K,\delta)$, or
+\item find a unit vector $c\in\Rn$ such that $c^{T}x\leq c^{T}y+\delta$
+for all $x\in B(K,-\delta)$.
+\end{itemize}
+We let $\text{SEP}_{\delta,\delta'}(K)$ be the time complexity of
+this oracle.
+\end{defn}
+
+\begin{defn}[Membership Oracle (MEM)]
+\label{def:MEM-1} Queried with a vector $y\in\Rn$ and real numbers
+$\delta,\delta'>0$, with probability at least $1-\delta'$, either
+
+\begin{itemize}
+\item assert that $y\in B(K,\delta)$, or
+\item assert that $y\notin B(K,-\delta)$.
+\end{itemize}
+We let $\text{MEM}_{\delta,\delta'}(K)$ be the time complexity of
+this oracle.
+\end{defn}
+
+We can now state the main lemma for the separation oracle. Since the
+algorithm is randomized, we have a parameter $\rho\in(0,1)$ to denote
+the probability of failure.
+\begin{lem}
+\label{lem:separate_set} Let $K$ be a convex set satisfying $B_{2}(0,r)\subset K\subset B_{2}(0,R)$.
+Let $0<\rho<1$ and $\varepsilon>0$ be sufficiently small so that
+$r_{1}\le r/4$. Then, with probability $1-\rho$, $\mathtt{Separate}_{\varepsilon,\rho}(K,x)$
+outputs a halfspace that contains $K$. 
+\end{lem}
+
+\begin{proof}
+When $x\notin B_{2}(0,R)$, the algorithm outputs a valid separation
+for $B_{2}(0,R)$. For the rest of the proof, we assume $x\notin B(K,-\varepsilon)$
+(due to the membership oracle) and $x\in B_{2}(0,R)$.
+
+By Lemma \ref{lem:h_convex} and Lemma \ref{lem:h_Lip}, $h_{x}$
+is convex with Lipschitz constant $3\kappa$ on $B_{2}(0,\frac{r}{2})$.
+By our assumption on $\varepsilon$ and our choice of $r_{1}$, we
+have that $B_{\infty}(0,2r_{1})\subset B_{2}(0,\frac{r}{2})$. Hence,
+we can apply Lemma \ref{lem:separate_conv_func} to get that
+\begin{align}
+h_{x}(y) & \geq h_{x}(0)+\left\langle \tilde{g},y\right\rangle -\zeta\norm y_{\infty}-12nr_{1}\kappa\label{eq:hxy-1}
+\end{align}
+for any $y\in K$. Note that $-\frac{x}{\kappa}\in K$ and $h_{x}(-\frac{x}{\kappa})=h_{x}(0)-\frac{1}{\kappa}\norm x_{2}$.
+Hence, we have
+\[
+h_{x}(0)-\frac{1}{\kappa}\norm x_{2}=h_{x}(-\frac{1}{\kappa}x)\geq h_{x}(0)+\left\langle \tilde{g},-\frac{1}{\kappa}x\right\rangle -\frac{1}{\kappa}\zeta\norm x_{\infty}-12nr_{1}\kappa.
+\]
+Therefore, we have
+\begin{equation}
+\left\langle \tilde{g},x\right\rangle \geq\norm x_{2}-\zeta\norm x_{\infty}-12nr_{1}\kappa^{2}.\label{eq:lowerbound_g}
+\end{equation}
+Now, we note that $x\notin B(K,-\varepsilon)$. Using that $B(0,r)\subset K$,
+we have $(1-\frac{\varepsilon}{r})K\subset B(K,-\varepsilon)$. Hence,
+\[
+h_{x}(0)\geq-\frac{\norm x_{2}}{\left(1-\frac{\varepsilon}{r}\right)}\geq-\norm x_{2}-\varepsilon\kappa.
+\]
+Therefore, we have
+\[
+h_{x}(0)+\left\langle \tilde{g},x\right\rangle \geq-\zeta\norm x_{\infty}-12nr_{1}\kappa^{2}-\varepsilon\kappa
+\]
+Combining this with (\ref{eq:hxy-1}), we have that 
+\begin{align*}
+h_{x}(y) & \geq\left\langle \tilde{g},y-x\right\rangle -\zeta\norm y_{\infty}-\zeta\norm x_{\infty}-12nr_{1}\kappa-12nr_{1}\kappa^{2}-\varepsilon\kappa\\
+ & \geq\left\langle \tilde{g},y-x\right\rangle -2\zeta R-24nr_{1}\kappa^{2}-\varepsilon\kappa
+\end{align*}
+for any $y\in K$. Recall from Lemma \ref{lem:separate_conv_func}
+that $\zeta$ is a positive random scalar independent of $y$ satisfying
+$\E\zeta\leq2\sqrt{\frac{3\kappa\varepsilon}{r_{1}}}n^{5/4}$. For
+any $y\in K$, we have that $h_{x}(y)\leq0$ and hence $\tilde{\zeta}\geq\left\langle \tilde{g},y-x\right\rangle $
+where $\tilde{\zeta}$ is a random scalar independent of $y$ satisfying
+\begin{align*}
+\E\tilde{\zeta} & \le4\sqrt{\frac{3\kappa\varepsilon}{r_{1}}}n^{5/4}R+24nr_{1}\kappa^{2}+\varepsilon\kappa\\
+ & \leq31n^{7/6}R^{2/3}\varepsilon^{1/3}\kappa.
+\end{align*}
+where we used $r_{1}=n^{1/6}\varepsilon^{1/3}R^{2/3}/\kappa$ and
+$0\leq\varepsilon\leq r$. The result then follows using Markov's
+inequality. 
+\end{proof}
+\begin{xca}
+Suppose we can evaluate the subgradient of $h_{x}$ exactly for a
+convex set $K$ containing the origin. Give a short proof that for
+any $x\not\in K$, we have $\langle\nabla h_{x}(0),y-x\rangle\le0$
+for all $y\in K$. 
+\end{xca}
+
+\begin{thm}
+\label{thm:separate_set} Let $K$ be a convex set satisfying $B_{2}(0,1/\kappa)\subset K\subset B_{2}(0,1)$.
+For any $0\leq\eta<\frac{1}{2}$, we have that
+\[
+\text{SEP}_{\eta}(K)\leq O\left(n\log\left(\frac{n\kappa}{\eta}\right)\right)\text{MEM}_{(\eta/n\kappa)^{O(1)}}(K).
+\]
+\end{thm}
+
+\begin{proof}
+First, we bound the running time. Note that the bottleneck is to compute
+$h_{x}$ with $\delta$ additive error. Since $-O(1)\leq h_{x}(y)\leq0$
+for all $y\in B_{2}(0,O(1))$, one can compute $h_{x}(y)$ by binary
+search with $O(\log(1/\delta))$ calls to the membership oracle.
+
+Next, we check that $\mathtt{Separate}_{\delta,\rho}(K,x)$ is indeed
+a separation oracle. Note that $\tilde{g}$ may not be an unit vector
+and we need to re-normalize the $\tilde{g}$ by $1/\norm{\tilde{g}}_{2}$.
+So, we need to a lower bound $\norm{\tilde{g}}_{2}$. 
+
+From (\ref{eq:lowerbound_g}) and our choice of $r_{1}$, if we set
+$\varepsilon=\delta$, where $\delta$ is the error and $\rho$ is
+the failure probability of the subgradient oracle, then we have that
+\begin{align*}
+\left\langle \tilde{g},x\right\rangle  & \geq\norm x_{2}-\zeta\norm x_{\infty}-12nr_{1}\kappa^{2}\geq\frac{r}{4}.
+\end{align*}
+Hence, we have that $\norm{\tilde{g}}_{2}\geq\frac{1}{4\kappa}$.
+Therefore, this algorithm is a separation oracle with error $\frac{400}{\rho}n^{7/6}\kappa^{2}\delta^{1/3}$
+and by the union bound over all calls to the membership oracle, with
+failure probability $O(\rho+n\log(1/\delta)\delta)$. Therefore,
+\[
+\text{SEP}_{\Omega(\max(n^{7/6}\kappa^{2}\delta^{1/3}/\rho+\rho+n\log(1/\delta)\delta)}(K)\leq O(\log(1/\delta))\text{MEM}_{\delta}(K).
+\]
+Setting $\rho=\sqrt{n^{7/6}\kappa^{2}\delta^{1/3}}$ and $\delta=\Theta\left(\frac{\eta^{6}}{n^{7/2}\kappa^{6}}\right)$,
+we have that 
+\[
+\text{SEP}_{\eta}(K)\leq O(\log(\frac{n\kappa}{\eta}))\text{MEM}_{\eta^{6}/(n^{7/2}\kappa^{6})}(K).
+\]
+\end{proof}
+
+\subsection{Gradient from Evaluation via Auto Differentiation }
+
+In this section, we give yet another way to compute gradients using
+evaluations.
+\begin{thm}
+\label{thm:auto_diff} Given a function $f:\R^{n}\rightarrow\R$ represented
+by an circuit whose gates compute differentiable functions of a finite
+number of variables. Suppose that $f(x)$ can be computed in time
+$\mathcal{T}$ (namely, the circuit has $\mathcal{T}$ edges). Then
+we can compute $\nabla f(x)$ in $O(\mathcal{T})$ time.
+\end{thm}
+
+\begin{rem*}
+In practice, the runtime is roughly $2\mathcal{T}$ assuming we have
+enough memory. Check out google/jax for a modern implementation.
+
+Before proving it formally, we first go through an example. Consider
+the function $f(x_{1},x_{2})=\sin(x_{1}/x_{2})+x_{1}x_{2}$. We use
+$x_{i}$ to denote both the input and all intermediate variables.
+Then, we can write the program in $\mathcal{T}=6$ steps:
+\end{rem*}
+\begin{itemize}
+\item $x_{1}=x_{1}$, $x_{2}=x_{2}$, $x_{3}=x_{1}/x_{2}$, $x_{4}=\sin(x_{3})$,
+$x_{5}=x_{1}x_{2}$, Output $x_{6}=x_{4}+x_{5}$.
+\end{itemize}
+Note that each step involves computing
+\[
+x_{i}=f_{i}(\overset{\text{only few }x_{j}}{\overbrace{x_{1},\cdots,x_{i-1}}})
+\]
+with simple functions $f_{i}$ whose derivatives we know how to compute.
+The key idea is compute $\frac{\partial f}{\partial x_{1}}$ not just
+for the inputs $x_{1}$ and $x_{2}$, but also for all intermediate
+variables. Here, we use $\frac{\partial f}{\partial x_{i}}$ to denote
+the derivative of $f$ with respect to $x_{i}$ while fixing $x_{1},x_{2},\cdots,x_{i-1}$
+(and other inputs if $x_{i}$ is an input). For the example above,
+suppose we want to compute $\nabla f(\pi,2)$, we can simply compute
+first compute all $x_{i}$ from $i=1,2,\cdots,6$, then $\frac{\partial f}{\partial x_{i}}$
+in the reverse order from $i=6,5,\cdots,1$:
+\begin{itemize}
+\item $x_{1}=\pi$, $x_{2}=2$, $x_{3}=\pi/2$, $x_{4}=\sin(x_{3})=1$,
+$x_{5}=x_{1}x_{2}=2\pi$, $x_{6}=x_{4}+x_{5}=2\pi+1$.
+\item $\frac{\partial f}{\partial x_{6}}=1$, $\frac{\partial f}{\partial x_{5}}=\frac{\partial\left(x_{4}+x_{5}\right)}{\partial x_{5}}=1$,
+$\frac{\partial f}{\partial x_{4}}=\frac{\partial\left(x_{4}+x_{5}\right)}{\partial x_{4}}=1$,
+\item $\frac{\partial f}{\partial x_{3}}=\frac{\partial f}{\partial x_{4}}\frac{\partial x_{4}}{\partial x_{3}}=1\cdot\cos(x_{3})=0$,
+\item $\frac{\partial f}{\partial x_{2}}=\frac{\partial f}{\partial x_{3}}\frac{\partial x_{3}}{\partial x_{2}}+\frac{\partial f}{\partial x_{5}}\frac{\partial x_{5}}{\partial x_{2}}=0\cdot(-\frac{x_{1}}{x_{2}^{2}})+1\cdot x_{1}=\pi$,
+\item $\frac{\partial f}{\partial x_{1}}=\frac{\partial f}{\partial x_{3}}\frac{\partial x_{3}}{\partial x_{1}}+\frac{\partial f}{\partial x_{5}}\frac{\partial x_{5}}{\partial x_{1}}=0\cdot(\frac{1}{x_{2}})+1\cdot x_{2}=2$.
+\end{itemize}
+The general case is similar. See $\mathtt{AutoDifferentiation}$ for
+the algorithm.
+
+\begin{algorithm2e}[H]
+
+\caption{$\mathtt{AutoDifferentiation}$}
+
+\SetAlgoLined
+
+\textbf{Input:} a function $f(x_{1},x_{2},\cdots,x_{n})$ given by
+$f(x_{1},x_{2},\cdots,x_{n})=x_{m}$ and
+\[
+x_{i}=f_{i}(x_{1},\cdots,x_{i-1})\text{ for }i=n+1,n+2,\cdots,m
+\]
+
+\For{$i=n+1,n+2,\cdots,m$}{
+
+Compute $x_{i}=f_{i}(x_{1},\cdots,x_{i-1})$.
+
+}
+
+Let $\frac{\partial f}{\partial x_{m}}=1$.
+
+\For{$i=m-1,\cdots,1$}{
+
+Let $L_{i}$ be the set of $j$ such that $f_{j}$ depends on $x_{i}$
+(i.e. $x_{j}$ directly depends on $x_{i}$).
+
+Compute $\frac{\partial f}{\partial x_{i}}=\sum_{j\in L_{i}}\frac{\partial f}{\partial x_{j}}\frac{\partial x_{j}}{\partial x_{i}}$.
+
+}
+
+\end{algorithm2e}
+\begin{proof}[Proof of Theorem \ref{thm:auto_diff}]
+We prove by induction that the formula $\frac{\partial f}{\partial x_{i}}=\sum_{j\in L_{i}}\frac{\partial f}{\partial x_{j}}\frac{\partial x_{j}}{\partial x_{i}}$
+is correct. For the base case $i=m$, we have $f=x_{m}$ and hence
+$\frac{\partial f}{\partial x_{m}}=1$. For the induction, we let
+$L_{i}=\{x_{j_{1}},x_{j_{2}},\cdots,x_{j_{k}}\}$. If we fix variables
+$x_{1},x_{2},\cdots,x_{i-1}$, then $f$ is a function of $x_{i}$
+(and of other inputs if $x_{i}$ is an input). Since only $x_{j_{1}},x_{j_{2}},\cdots,x_{j_{k}}$
+depend on $x_{i}$, we can also view $f$ as a function of $x_{j_{1}},x_{j_{2}},\cdots,x_{j_{k}}$.
+More precisely, we have
+\[
+f(x_{i})=f(x_{j_{1}}(x_{i},x_{j_{-1}}),x_{j_{2}}(x_{i},x_{j_{-2}}),\cdots,x_{j_{k}}(x_{i},x_{j_{-k}}))
+\]
+where we use $x_{j_{-1}}$ to denote the variables $x_{j_{2}},x_{j_{3}},\cdots,x_{j_{k}}$.
+By chain rule, we have
+\[
+\frac{\partial f}{\partial x_{i}}=\sum_{j\in L_{i}}\frac{\partial f}{\partial x_{j}}\frac{\partial x_{j}}{\partial x_{i}}.
+\]
+
+To bound the runtime, we define the computation graph $G$ be a graph
+on $x_{1},x_{2},\cdots,x_{m}$ such that $i\rightarrow j$ if $f_{j}$
+depends on $x_{i}$. Note that each edge is examined $O(1)$ times
+whether evaluating $f$ or its gradient. Hence, the cost of computing
+$f$ and the cost of our algorithm are both $\Theta(m)$ where $m$
+is the number of edges in $G$. This completes the proof. 
+\end{proof}
+We note that an efficient implementation of the chain rule is the
+heart of the backpropagation algorithm fo neural networks. To conclude
+this section, we see that Theorem \ref{thm:auto_diff} can be surprisingly
+useful even for some simple explicit functions.
+\begin{cor}
+If we can compute $f(A)=\det A$ exactly in time $\mathcal{T}$, then
+we can compute $A^{-1}$ exactly in $O(\mathcal{T})$.
+\end{cor}
+
+\begin{proof}
+Note that $\frac{\partial}{\partial A_{ij}}\det A=\text{adj}(A)_{ji}=\det A\cdot(A^{-1})_{ji}$.
+Hence, $\nabla\log\det A=A^{-\top}$. Theorem \ref{thm:auto_diff}
+shows that computing $A^{-\top}$ can be done as fast as $\det A$.
+\end{proof}
+
+\subsection{Gradient from Evaluation via Complex Step Differentiation}
+
+Auto differentiation is great if the function can be computed exactly.
+However, it does not work well if $f$ can be only approximated or
+the computation of $f$ involves too many variables. For example,
+if $f$ is the energy usage of some aircraft design, then $f$ can
+only be computed approximately via simulation and such computation
+is memory expensive (if we need to store all intermediate variables)
+and not exact, so the method in the previous subsection is not practical.
+
+To introduce complex step differentiation, we recall the formula of
+finite difference:
+\begin{itemize}
+\item Forward/Backward difference: $\frac{f(x\pm h)-f(x)}{\pm h}=f'(x)+hf''(\zeta)$.
+\item Central difference: $\frac{f(x+h)-f(x-h)}{2h}=f'(x)+O(h^{2})f'''(\zeta)$.
+\end{itemize}
+Note that the error analysis above assumes no numerical error involved.
+The formula involves subtracting two close numbers and dividing by
+a small number and this step creates lots of error. If we are computing
+$f$ as floating point, we have
+\[
+\frac{(1\pm\epsilon)f(x\pm h)-(1\pm\epsilon)f(x)}{\pm h}=f'(x)+O(\frac{\epsilon}{h})f(\zeta_{1})+O(h)f''(\zeta_{2})
+\]
+\[
+\frac{(1\pm\epsilon)f(x+h)-(1\pm\epsilon)f(x-h)}{2h}=f'(x)+O(\frac{\epsilon}{h})f(\zeta_{1})+O(h^{2})f'''(\zeta_{2})
+\]
+where $\epsilon$ is the floating point precision. Suppose that $f,f',f'',f'''$
+are all bounded by constants and suppose $\epsilon=(10)^{-8}$ (single
+precision floating point), then we should pick $h=\sqrt{\epsilon}$
+for the first case and $h=\epsilon^{1/3}$ in the second case. Hence,
+forward/backward difference gives only accuracy $\epsilon^{1/2}\approx(10)^{-4}$
+and the central difference gives only accuracy $\epsilon^{2/3}\approx(10)^{-5}$.
+In reality, the error will be larger because $f''$ and $f'''$ usually
+are large.
+
+The complex step differentiation uses the step
+\[
+\frac{\mathrm{Im}f(x+ih)}{h}\approx f'(x)+O(h^{2})f''(\zeta).
+\]
+This formula works only for complex analytic functions, but it avoids
+subtracting numbers. In practice, this really allows us to compute
+$f'(x)$ close to machine accuracy. In general, ensuring algorithms
+give close to machine accuracy is important because algorithms often
+stack on top of each other.

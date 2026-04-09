@@ -1,0 +1,191 @@
+
+\section*{Notation}
+
+We use $B(x,r)$ to denote the Euclidean (or $\ell_{2}$) ball centered
+at $x$ with radius $r$: $\left\{ y:\norm{y-x}_{2}\le r\right\} $.
+We use $\conv(X)$ to denote the convex hull of $X$, namely $\conv(X)=\{\sum\alpha_{i}x_{i}:\ \alpha_{i}\geq0,\sum\alpha_{i}=1,x_{i}\in X\}$.
+We use $\left\langle x,y\right\rangle $ to denote the $\ell_{2}$
+inner product $x^{T}y$ of $x$ and $y$. For any two points $x,y\in\Rn$,
+we view them as column vectors, and use $[x,y]$ to denote $\conv(\{x,y\})$,
+namely, the line segment between $x$ and $y$. 
+
+We use $e_{i}$ to denote the coordinate vector whose $i$-th coordinate
+is 1 and all other coordinates are $0$.
+
+
+\section*{Functions}
+\begin{defn}
+For any $L\geq0$, a function $f:V\rightarrow W$ is $L$-Lipschitz
+if $\norm{f(x)-f(y)}_{W}\leq L\norm{x-y}_{V}$ where the norms $\norm{\cdot}_{V}$
+and $\norm{\cdot}_{W}$ are $\ell_{2}$ norms if unspecified.
+\end{defn}
+
+\begin{defn}
+A function $f\in\mathcal{C}^{k}(\Rn)$ if $f$ is a $k$-differentiable
+function and its $k^{\mathrm{th}}$ derivative is continuous.
+\end{defn}
+
+\begin{defn}
+\label{def:lower-semi}A function ${\displaystyle f:X\subseteq\R^{n}\to\R}$
+is called lower semi-continuous at a point $x_{0}\in X$ if for every
+real $y<f(x_{0})$ there exists a neighborhood $U$ of $x_{0}$ such
+that $f(x)>y$ for all $x\in U$. Equivalently, $f$ is lower semi-continuous
+at $x_{0}$ iff 
+
+\[
+{\displaystyle \liminf_{x\to x_{0}}f(x)\geq f(x_{0})}.
+\]
+The function is lower semi-continuous if is it so at every point in
+its domain. The definition of upper semi-continuous is analogous with
+the inequalities reversed and $\liminf$ replaced by $\limsup$. 
+\end{defn}
+
+\begin{thm}[Taylor's Remainder Theorem]
+\label{thm:taylor_expansion}For any $g\in\mathcal{C}^{k+1}(\R)$,
+and any $x$ and $y$, there is a $\zeta\in[x,y]$ such that
+\[
+g(y)=\sum_{j=0}^{k}g^{(j)}(x)\frac{(y-x)^{j}}{j!}+g^{(k+1)}(\zeta)\frac{(y-x)^{k+1}}{(k+1)!}.
+\]
+\end{thm}
+
+\begin{defn}
+The $convolution$ of two functions $f,g:\R^{n}\rightarrow\R$ is
+defined as $h(x)=\int_{\R^{n}}f(z)g(x-z)\,dz.$
+\end{defn}
+
+
+\section*{Linear Algebra}
+\begin{defn}
+\label{def:PSD}A real symmetric matrix $A$ is positive semi-definite
+(PSD) if $x^{\top}Ax\geq0$ for all $x\in\Rn$. Equivalently, a real
+symmetric matrix with all nonnegative eigenvalues is PSD. We write
+$A\succeq0$ if $A$ is PSD and $A\succeq B$ if $A-B$ is PSD.
+\end{defn}
+
+\begin{defn}
+For any matrix $A$, we define its trace, $\tr A=\sum A_{ii}$, Frobenius
+norm, $\,\|A\|_{F}^{2}=\tr(A^{\top}A)=\sum_{i,j}A_{ij}^{2}$, and
+operator norm, $\,\|A\|_{\op}=\sup_{\|x\|_{2}=1}\|Ax\|_{2}$. Note
+that $x^{\top}Ax=\tr(Axx^{\top})$ and in general, $\tr(AB)=\tr(BA)$.
+\end{defn}
+
+For symmetric $A$, we have $\tr A=\sum_{i}\lambda_{i}$, $\|A\|_{F}^{2}=\sum_{i}\lambda_{i}^{2}$
+and $\|A\|_{\op}=\max_{i}|\lambda_{i}|$ where $\lambda_{i}$ are
+the eigenvalues of $A$.
+
+For a vector $x$, $\norm x_{A}=\sqrt{x^{T}Ax}$; for a matrix $B$,
+\[
+\norm B_{A}=\sup_{x}\frac{\norm{Bx}_{A}}{\norm x_{A}}.
+\]
+
+\begin{lem}[Sherman-Morrison-Woodbury]
+ For matrix $A\in\R^{n\times n}$ and vectors $u,v\in\R^{n}$, we
+have
+\[
+\left(A+uv^{\top}\right)^{-1}=A^{-1}-\frac{A^{-1}uv^{\top}A^{-1}}{1+u^{\top}A^{-1}v}.
+\]
+For matrices $U,V\in\R^{n\times k},$we have
+\[
+\left(A+UV^{\top}\right)^{-1}=A^{-1}-A^{-1}U\left(I+V^{\top}A^{-1}U\right)^{-1}V^{\top}A^{-1}.
+\]
+\end{lem}
+
+
+\section*{Probability}
+\begin{defn}
+The Total Variation (TV) or $\ell_{1}$-distance between two distributions
+with measures $\rho,\nu$ with support $\Omega$ is 
+\[
+d_{TV}(\rho,\nu)=\frac{1}{2}\int_{\Omega}\left|\rho(x)-\nu(x)\right|\,dx=\sup_{S\subset\Omega}\left|\rho(S)-\nu(S)\right|=\sup_{S\subset\Omega}\rho(S)-\nu(S).
+\]
+\end{defn}
+
+The following ``distances'' are not symmetric.
+\begin{defn}
+\label{defn:KL-divergence}The KL-divergence of a density $\rho$
+with respect to another density $\nu$, also known as relative entropy
+of $\rho$ with respect to $\nu$, is 
+\[
+\KL(\rho\|v)=\int\rho(x)\log\frac{\rho(x)}{\nu(x)}dx.
+\]
+\end{defn}
+
+\begin{defn}
+The $\chi$-squared distance of a densities $\rho$ with respect to
+another density $\nu$ is defined as  
+\[
+\chi^{2}(\rho,\nu)=\E_{\nu}\left(\left(\frac{\rho(x)}{\nu(x)}-1\right)^{2}\right)=\E_{\rho}\left(\frac{\rho(x)}{\nu(x)}\right)-1.
+\]
+\end{defn}
+
+\begin{defn}
+\label{defn:The-Wasserstein--distance}The Wasserstein $p$-distance
+between two probability measures $\rho,\nu$ over a metric space $M$
+is defined as 
+\[
+W_{p}(\rho,\nu)=\left(\inf_{\gamma\in\Gamma(\rho,\nu)}\E_{x,y\sim\gamma}\left(d(x,y)^{p}\right)\right)^{1/p}
+\]
+where $\Gamma(\rho,\nu)$ is the set of all couplings of $\rho$ and
+$\nu$ (joint probability measures with support $M\times M$ whose
+marginals are $\rho$ and $\nu$).
+\end{defn}
+
+\begin{defn}
+\label{def:p-dist} For $\mu,\nu$ probability measures in $\R^{n}$,
+the \emph{$f$-divergence} of $\mu$ towards $\nu$ with $\mu\ll\nu$
+is defined as, for a convex function $f:\R_{+}\to\R$ with $f(1)=0$
+and $f'(\infty)=\infty$, 
+\[
+D_{f}(\mu\|\nu):=\int f\left(\frac{d\mu}{d\nu}\right)\,d\nu\,.
+\]
+For $q\in(1,\infty)$, the \emph{$\KL$-divergence and $\chi^{q}$-divergence}
+correspond to $f(x)=x\log x$ and $x^{q}-1$, respectively. The \emph{$q$-R\'enyi
+divergence} is defined as 
+\[
+\RR_{q}(\mu\|\nu):=\tfrac{1}{q-1}\log\left(\chi^{q}(\mu\|\nu)+1\right).
+\]
+The \emph{R\'enyi-infinity divergence} is defined as
+\[
+\RR_{\infty}(\mu\|\nu):=\log\esssup_{\mu}\frac{d\mu}{d\nu}\,.
+\]
+\end{defn}
+
+\begin{fact}
+$\KL=\lim_{q\downarrow1}\RR_{q}\leq\RR_{q}\leq\RR_{q'}\leq\RR_{\infty}$
+for $1\leq q\leq q'$ and $2\,\norm{\cdot}_{\tv}^{2}\leq\KL\leq\RR_{2}=\log(\chi^{2}+1)\leq\chi^{2}$. 
+\end{fact}
+
+We refer readers to \cite{van2014renyi} for other basic properties
+of  R\'enyi-divergence.
+
+\begin{defn}
+The \emph{marginal} of a distribution in $\R^{n}$ with density $\nu$
+in the span of a $k$-dimensional subspace $V$ is defined as 
+\[
+g(x)=\int_{y\in V^{\perp}}\nu(x,y)\,dy
+\]
+for any $x\in V$.
+
+Note that the marginal is a convolution of the density with the indicator
+function of the subspace. 
+\end{defn}
+
+\begin{defn}
+A distribution $D$ with support contained in $\R^{n}$ is said to
+be \textbf{isotropic} if $\E_{D}(x)=0$ and $\E_{D}(xx^{\top})=I$. 
+\end{defn}
+
+
+\section*{Geometry}
+\begin{defn}
+We denote the unit Euclidean ball as $B^{n}=\left\{ x:\norm x_{2}\le1\right\} .$
+More generally, we define the $\ell_{p}$-norm ball of radius $r$
+centered at $z$ as $B_{p}^{n}(z,r)=\left\{ x:\norm{x-z}_{p}\le r\right\} $.
+\end{defn}
+
+\begin{defn}
+The \emph{Minkowski sum }of two sets $A,B\subset\R^{n}$ is defined
+as $A+B=\left\{ x+y:x\in A,y\in B\right\} $.
+\end{defn}
+
+

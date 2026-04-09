@@ -1,0 +1,716 @@
+The goal of this chapter is to present some polynomial-time algorithms
+for convex optimization. These algorithms use knowledge of the function
+in a minimal way, essentially by querying the function value along
+with weak bounds on its support and range. Historically, the ideas
+in this chapter originated in the work of \cite{Grunbaum1960,yudin1976evaluation},
+developed into polynomial-time algorithms by \cite{khachiyan1980polynomial,grotschel1981ellipsoid,bertsimas2004solving}.
+For a comprehensive presentation of related problems and ellipsoid-based
+algorithms, the reader is referred to the classic book \cite{grotschel2012geometric}. 
+
+\section{Cutting Plane Methods\label{sec:Cutting-Plane-Methods}}
+
+Given a continuously differentiable convex function $f$, Theorem
+\ref{thm:first_order} shows that
+\begin{equation}
+f(y)\geq f(x)+\left\langle \nabla f(x),y-x\right\rangle \text{ for all }y.\label{eq:sub_grad_def}
+\end{equation}
+Let $x^{*}$ be any minimizer of $f$. Replacing $y$ with $x^{*}$,
+we have that 
+\[
+f(x)\geq f(x^{*})\geq f(x)+\left\langle \nabla f(x),x^{*}-x\right\rangle .
+\]
+Therefore, we know that $\left\langle \nabla f(x),x^{*}-x\right\rangle \leq0$.
+Namely, $x^{*}$ lies in a halfspace $H$ with normal vector $-\nabla f(x)$.
+Roughly speaking, this shows that each gradient computation cuts the
+set of possible solutions in ``half''. In one dimension, this allows
+us to do a binary search to minimize convex functions. 
+
+It turns out that in $\Rn$, binary search still works. In this chapter,
+we will cover several ways to do this binary search. All of them follow
+the same framework, called the \emph{cutting plane method}. In this
+method, the convex set or function of interest is given by an oracle,
+typically a \emph{separation oracle} (for definitions in a broader
+context, see Defs. \ref{def:SEP} and \ref{def:GRAD} in the next
+chapter): for any $x\notin K\subseteq\R^{n}$, the oracle finds a
+vector $g(x)\in\R^{n}$ such that
+\[
+g(x)^{\top}(y-x)\leq0\text{ for all }y\in K.
+\]
+
+Cutting plane methods address the following class of problems.
+\begin{problem}[Finding a point in a convex set]
+\label{prob:abstract_convex_problem}Given $\epsilon>0,R>0,$ and
+a convex set $K\subseteq R\cdot B^{n}$ specified by a separation
+oracle, find a point $y\in K$ or conclude that $\vol(K)\leq\epsilon^{n}$.
+The complexity of an algorithm is measured by the number of calls
+to the oracle and the number of arithmetic operations.
+\end{problem}
+
+\begin{rem*}
+To minimize a convex function, we set $g(x)=\nabla f(x)$ and $K$
+to be the set of (approximate) minimizers of $f$. In Section \ref{sec:vol2val},
+we relate the problem of proving that $\vol(K)$ is small to the problem
+of finding an approximate minimizer of $f$.
+\end{rem*}
+In this framework, we maintain a convex set $E^{(k)}$ that contains
+the set $K$. In each iteration, we choose some $x^{(k)}$ based on
+$E^{(k)}$ and query the oracle for $g(x^{(k)})$ . The guarantee
+for $g(.)$ implies that $K$ lies in the halfspace 
+\[
+H^{(k)}=\{y:g(x^{(k)})^{\top}(y-x^{(k)})\leq0\}
+\]
+ and hence $K\subset H^{(k)}\cap E^{(k)}.$ The algorithm continues
+by choosing $E^{(k+1)}$ to be a convex set that contains $H^{(k)}\cap E^{(k)}$. 
+
+\begin{algorithm2e}[H]
+
+\caption{$\mathtt{CuttingPlaneFramework}$}\label{alg:cutting_plane}
+
+\SetAlgoLined
+
+\textbf{Input:} Initial set $E^{(0)}\subseteq\Rn$ containing $K$.
+
+\For{$k=0,1,\cdots$}{
+
+Choose a point $x^{(k)}\in E^{(k)}$.
+
+\lIf{$E^{(k)}$ is ``small enough''}{\Return$x^{(k)}$}
+
+Find $E^{(k+1)}\supset E^{(k)}\cap H^{(k)}$ where
+\begin{equation}
+H^{(k)}\defeq\{x\in\Rn\text{ such that }g(x^{(k)})^{\top}(x-x^{(k)})\leq0\}.\label{eq:Hk}
+\end{equation}
+
+}
+
+\end{algorithm2e}
+
+To analyze the algorithm, the main questions we need to answer are:
+\begin{enumerate}
+\item How do we choose $x^{(k)}$ and $E^{(k+1)}$?
+\item How do we measure progress?
+\item How quickly does the method converge?
+\item How expensive is each step?
+\end{enumerate}
+Progress on the cutting plane method is shown in the next table.
+
+\begin{table}[h]
+\begin{centering}
+{\footnotesize{}%
+\begin{tabular}{|c|c|c|c|}
+\hline 
+{\footnotesize Year} & {\footnotesize$E^{(k)}$ and $x^{(k)}$} & {\footnotesize Iter} & {\footnotesize Cost/Iter}\tabularnewline
+\hline 
+\hline 
+{\footnotesize 1965 \cite{levin1965algorithm,newman1965location}} & {\footnotesize Center of gravity} & {\footnotesize$n$} & {\footnotesize$n^{n}$}\tabularnewline
+\hline 
+{\footnotesize 1979 \cite{yudin1976evaluation,shor1977cut,khachiyan1980polynomial}} & {\footnotesize Center of ellipsoid} & {\footnotesize$n^{2}$} & {\footnotesize$n^{2}$}\tabularnewline
+\hline 
+{\footnotesize 1988 \cite{khachiyan1988inscribed}} & {\footnotesize Center of John ellipsoid} & {\footnotesize$n$} & {\footnotesize$n^{2.878}$}\tabularnewline
+\hline 
+{\footnotesize 1989 \cite{DBLP:conf/focs/Vaidya89b}} & {\footnotesize Volumetric center} & {\footnotesize$n$} & {\footnotesize$n^{2.378}$}\tabularnewline
+\hline 
+{\footnotesize 1995 \cite{atkinson1995cutting}} & {\footnotesize Analytic center} & {\footnotesize$n$} & {\footnotesize$n^{2.378}$}\tabularnewline
+\hline 
+{\footnotesize 2004 \cite{bertsimas2004solving}} & {\footnotesize Center of gravity} & {\footnotesize$n$} & {\footnotesize$n^{4}$}\tabularnewline
+\hline 
+{\footnotesize 2015 \cite{lee2015faster}} & {\footnotesize Hybrid center} & {\footnotesize$n$} & {\footnotesize$n^{2}$ (amortized)}\tabularnewline
+\hline 
+{\footnotesize 2020 \cite{jiang2020improved}} & {\footnotesize Volumetric center} & {\footnotesize$n$} & {\footnotesize$n^{2}$ (amortized)}\tabularnewline
+\hline 
+\end{tabular}}{\footnotesize\par}
+\par\end{centering}
+\centering{}{\footnotesize\caption{{\footnotesize\label{table:cpm}Different Cutting Plane Methods. Omitted
+polylogarithmic terms. The number of iterations follows from the rate.}}
+}{\footnotesize\par}
+\end{table}
+
+
+\section{Ellipsoid Method}
+
+\begin{figure}[h]
+\begin{centering}
+\includegraphics[width=0.75\columnwidth]{Figures/Section_3\lyxdot 2}
+\par\end{centering}
+\caption{Ellipsoid Method}
+
+\end{figure}
+
+We start by explaining the Ellipsoid method. The algorithm maintains
+an ellipsoid
+\[
+E^{(k)}\defeq\{y\in\Rn:\ (y-x^{(k)})^{\top}\left(A^{(k)}\right)^{-1}(y-x^{(k)})\leq1\}
+\]
+that contains $K$ and becomes smaller in volume in each step. Note
+that for this to be an ellipsoid the matrix $A^{(k)}$ must be symmetric
+PSD. After we compute $g(x^{(k)})$ and $H^{(k)}$ via (\ref{eq:Hk}),
+we define $E^{(k+1)}$ to be the smallest volume ellipsoid containing
+$E^{(k)}\cap H^{(k)}$. The key observation is that the volume of
+the ellipsoid $E^{(k)}$ decreases by a factor of $1-\Theta(\frac{1}{n})$
+every iteration. This volume property holds for any halfspace through
+the center of the current ellipsoid (not only for the one whose normal
+is the gradient), a property we will exploit in the next chapter.
+
+\begin{algorithm2e}[H]
+
+\caption{$\mathtt{Ellipsoid}$}\label{alg:ellipsoid_method}
+
+\SetAlgoLined
+
+\textbf{Input:} Initial ellipsoid $E^{(0)}=\{y\in\Rn:\ (y-x^{(0)})^{\top}\left(A^{(0)}\right)^{-1}(y-x^{(0)})\leq1\}$.
+
+\For{$k=0,1,\cdots$}{
+
+\lIf{$E^{(k)}$ is ``small enough'' or Oracle says YES}{\Return$x^{(k)}$}
+
+$x^{(k+1)}=x^{(k)}-\frac{1}{n+1}\frac{A^{(k)}g(x^{(k)})}{\sqrt{g(x^{(k)})^{\top}A^{(k)}g(x^{(k)})}}$.
+
+$A^{(k+1)}=\frac{n^{2}}{n^{2}-1}\left(A^{(k)}-\frac{2}{n+1}\frac{A^{(k)}g(x^{(k)})g(x^{(k)})^{\top}A^{(k)}}{g(x^{(k)})^{\top}A^{(k)}g(x^{(k)})}\right)$.
+
+}
+
+\end{algorithm2e}
+\begin{rem}
+We usually obtain $g(x)$ from a \emph{separation oracle}.
+\end{rem}
+
+\begin{lem}
+\label{lem:ellipsoid_vol_decrease}For the Ellipsoid method (Algorithm
+\ref{alg:ellipsoid_method}), we have 
+\[
+\vol E^{(k+1)}<e^{-\frac{1}{2n+2}}\vol E^{(k)}\quad\mbox{and}\quad E^{(k)}\cap H^{(k)}\subset E^{(k+1)}.
+\]
+\end{lem}
+
+\begin{rem}
+Note that the proof below also shows that $\vol E^{(k+1)}=e^{-\Theta(\frac{1}{n})}\vol E^{(k)}$.
+Therefore, the ellipsoid method does not run faster even for any function,
+e.g., a linear function, making it provably ``slow'' in practice.
+\end{rem}
+
+\begin{proof}
+Note that the ratio of $\vol E^{(k+1)}/\vol E^{(k)}$ does not change
+under any affine transformation, and neither does set containment.
+Therefore, we can do a transformation so that $A^{(k)}=I$, $x^{(k)}=0$
+and $v(x^{(k)})=e_{1}$. Therefore $H^{(k)}$ is simply the halfspace
+$\{x:x_{1}\le0\}$. This simplifies our calculation. We need to prove
+two statements: $\vol E^{(k+1)}<e^{-\frac{1}{2n+2}}\vol E^{(k)}$
+and that $E^{(k)}\cap H^{(k)}\subset E^{(k+1)}$.
+
+Claim 1: $\vol E^{(k+1)}<e^{-\frac{1}{2(n+1)}}\vol E^{(k)}$.
+
+Note that since $v(x^{(k)})=e_{1},$we have $A^{(k+1)}=\frac{n^{2}}{n^{2}-1}\left(I-\frac{2}{n+1}e_{1}e_{1}^{\top}\right)$.
+Therefore, we have that
+\begin{align*}
+\left(\frac{\vol E^{(k+1)}}{\vol E^{(k)}}\right)^{2}=\left|\frac{\det A^{(k+1)}}{\det A^{(k)}}\right| & =\left(\frac{n^{2}}{n^{2}-1}\right)^{n}\det\left(I-\frac{2}{n+1}e_{1}e_{1}^{\top}\right)\\
+ & =\left(\frac{n^{2}}{n^{2}-1}\right)^{n-1}\frac{n^{2}}{n^{2}-1}\left(\frac{n-1}{n+1}\right)\\
+ & =\left(1+\frac{1}{n^{2}-1}\right)^{n-1}\left(1-\frac{1}{n+1}\right)^{2}\\
+ & <\exp(\frac{n-1}{n^{2}-1}-\frac{2}{n+1})=\exp(-\frac{1}{n+1})
+\end{align*}
+where we used $1+x\leq e^{x}$ for all $x$.
+
+Claim 2. $E^{(k)}\cap H^{(k)}\subset E^{(k+1)}$.
+
+By the definition of $E^{(k)}$and the assumption $A^{(k)}=I$, we
+have 
+\[
+x^{(k+1)}=-\frac{e_{1}}{n+1}
+\]
+and, for any $x\in E^{(k)}\cap H^{(k)}$, we have that $\|x\|_{2}\leq1$
+and $x_{1}\leq0$. By direct computation, using the fact that 
+\[
+\left(I-\frac{2}{n+1}e_{1}e_{1}^{\top}\right)^{-1}=\left(I+\frac{2}{n-1}e_{1}e_{1}^{\top}\right)
+\]
+we have
+\begin{align*}
+ & (x+\frac{e_{1}}{n+1})^{\top}\left(1-\frac{1}{n^{2}}\right)\left(I+\frac{2}{n-1}e_{1}e_{1}^{\top}\right)(x+\frac{e_{1}}{n+1})\\
+= & \left(1-\frac{1}{n^{2}}\right)\left(\|x\|^{2}+\frac{2x_{1}(1+x_{1})}{n-1}+\frac{1}{n^{2}-1}\right)\\
+\leq & \left(1-\frac{1}{n^{2}}\right)\left(1+0+\frac{1}{n^{2}-1}\right)=1
+\end{align*}
+where we used that $\|x\|_{2}\leq1$ and $x_{1}(1+x_{1})\leq0$ (since
+$-1\leq x_{1}\leq0$) at the end. This shows that $x\in E^{(k+1)}$.
+\end{proof}
+\begin{xca}
+Show that the ellipsoid $E^{(k+1)}$ computed above is the minimum
+volume ellipsoid containing $E^{(k)}\cap H^{(k)}$.
+\end{xca}
+
+\begin{xca}
+Suppose that we used a box instead of an ellipsoid. Could we ensure
+progress in each iteration? What about a simplex?
+\end{xca}
+
+
+\section{From Volume to Function Value\label{sec:vol2val}}
+
+Lemma \ref{lem:ellipsoid_vol_decrease} shows that the volume of a
+set containing all minimizers decreases by a constant factor every
+$n$ steps. In general, knowing that the optimal $x^{*}$ lies in
+a small volume set does not provide enough information to find a point
+with small function value. For example, if we only knew that $x^{*}$
+lies in the plane $\{x:x_{1}=0\}$, we would still need to search
+for $x^{*}$ over an $n-1$ dimensional space. However, if the set
+is constructed by the cutting plane framework (Algorithm \ref{alg:cutting_plane}),
+then we can guarantee that small volume implies that any point in
+the set has close to optimal function value.
+
+This implies that we can minimize any convex function with $\varepsilon$
+additive error in $O(n^{2}\log(1/\varepsilon))$ iterations. To make
+the statement more general, we note that the Ellipsoid method can
+be used for non-differentiable functions. In the next theorem, we
+allow for a general ``progress'' function and an arbitrary support
+$\Omega$. The convergence argument works for any monotonic, scale-and-shift-invariant
+progress measure. To allow for non-differentiable convex functions,
+in place of gradient, we use the subgradient (see Sec. \ref{sec:Subgradients}). 
+\begin{thm}
+\label{thm:conv_opt}Let $x^{(k)}$ be the sequence of points produced
+by the cutting plane framework (Algorithm \ref{alg:cutting_plane})
+for a convex function $f$. Let $\mathcal{V}$ be a mapping from subsets
+of $\Rn$ to non-negative real numbers satisfying
+\begin{enumerate}
+\item (Linearity) For any set $S\subseteq\R^{n}$, any vector $y$ and any
+scalar $\alpha\geq0$, we have $\mathcal{V}(\alpha S+y)=\alpha\mathcal{V}(S)$
+where $\alpha S+y=\{\alpha x+y:x\in S\}$.
+\item (Monotonicity) For any set $T\subset S$, we have that $\mathcal{V}(T)\leq\mathcal{V}(S)$.
+\end{enumerate}
+Then, for any set $\Omega\subseteq E^{(0)}$, with $\mathcal{V}(\Omega)>0$,
+and $k$ large enough so that $\mathcal{V}(E^{(k)})\le\mathcal{V}(\Omega)$,
+we have
+\[
+\min_{i=1,2,\cdots k}f(x^{(i)})-\min_{y\in\Omega}f(y)\leq\frac{\mathcal{V}(E^{(k)})}{\mathcal{V}(\Omega)}\cdot\left(\max_{z\in\Omega}f(z)-\min_{x\in\Omega}f(x)\right)\enspace.
+\]
+\end{thm}
+
+\begin{rem}
+We can think of $\mathcal{V}(E)$ as some way to measure the size
+of $E$. It can be radius, mean-width or any other way to measure
+``size''. For the ellipsoid method, we use $\mathcal{V}(E)=\vol(E)^{\frac{1}{n}}$
+for which we have proved volume decrease in Lemma \ref{lem:ellipsoid_vol_decrease}.
+We raise the volume to power $1/n$ to satisfy linearity. Also note
+that we only guarantee that one of the previous query points has a
+small function value; of course we can simply use the point with minimum
+function value.
+\end{rem}
+
+\begin{proof}
+Let $x^{*}$ be any minimizer of $f$ over $\Omega$. For any $1\ge\alpha>\frac{\mathcal{V}(E^{(k)})}{\mathcal{V}(\Omega)}$
+and $S=(1-\alpha)x^{*}+\alpha\Omega$, by the linearity of $\mathcal{V}$,
+we have that 
+\[
+\mathcal{V}(S)=\alpha\mathcal{V}(\Omega)>\mathcal{V}(E^{(k)})
+\]
+Therefore, $S$ is not a subset of $E^{(k)}$ and hence there is a
+point $y\in S\backslash E^{(k)}$. $y$ is not in $E^{(k)}$. This
+means it is eliminated by the subgradient halfspace at some step $i\leq k$,
+namely for some $i\le k$, we have (denoting the subgradient by $\nabla f$),
+\[
+\nabla f(x^{(i)})^{\top}(y-x^{(i)})>0.
+\]
+By the convexity of $f$, it follows that $f(x^{(i)})\leq f(y).$
+Since $y\in S$, we have $y=(1-\alpha)x^{*}+\alpha z$ for some $z\in\Omega$.
+Thus, the convexity of $f$ implies that
+\[
+f(x^{(i)})\leq f(y)\leq(1-\alpha)f(x^{*})+\alpha f(z).
+\]
+Therefore, we have
+\[
+\min_{i=1,2,\cdots k}f(x^{(i)})-\min_{x\in\Omega}f(x)\leq\alpha\left(\max_{z\in\Omega}f(z)-\min_{x\in\Omega}f(x)\right).
+\]
+Since this holds for any $\alpha>\frac{\mathcal{V}(E^{(k)})}{\mathcal{V}(\Omega)}$,
+we have the result.
+\end{proof}
+Combining Lemma \ref{lem:ellipsoid_vol_decrease} and Theorem \ref{thm:conv_opt},
+we have the following rate of convergence.
+\begin{thm}
+\label{thm:ellipsoid}Let $f$ be a convex function on $\Rn$, $E^{(0)}$
+be any initial ellipsoid and $\Omega\subset E^{(0)}$ be any convex
+set. Suppose that for any $x\in E^{(0)}$, we can find, in time $\mathcal{T}$,
+a nonzero vector $g(x)$ such that 
+\[
+f(y)\geq f(x)\text{ for any }y\text{ such that }g(x)^{\top}(y-x)\geq0.
+\]
+
+Then, we have
+\[
+\min_{i=1,2,\cdots k}f(x^{(i)})-\min_{y\in\Omega}f(y)\leq\left(\frac{\vol(E^{(0)})}{\vol(\Omega)}\right)^{\frac{1}{n}}\exp\left(-\frac{k}{2n(n+1)}\right)\left(\max_{z\in\Omega}f(z)-\min_{x\in\Omega}f(x)\right)\enspace.
+\]
+Moreover, each iteration takes $O(n^{2}+\mathcal{T})$ time.
+\end{thm}
+
+\begin{rem}
+We note that for this rate of convergence (and hence the entire algorithm)
+to be polynomial, we need some bound on the range of the function
+value. This often follows from a bound on the diameter of the support.
+\end{rem}
+
+\begin{proof}
+Lemma \ref{lem:ellipsoid_vol_decrease} shows that the volume of the
+ellipsoid maintained decreases by a factor of $\exp(-\frac{1}{2n+2})$
+in every iteration. Hence, $\vol^{\frac{1}{n}}$ decreases by $\exp(-\frac{1}{2n(n+1)})$
+every iteration. The bound follows by applying Theorem \ref{thm:conv_opt}
+with $\mathcal{V}(E)\defeq\vol(E)^{\frac{1}{n}}$. Using Theorem \ref{thm:conv_opt},
+we have 
+\begin{align*}
+\min_{i=1,2,\cdots k}f(x^{(i)})-\min_{y\in\Omega}f(y) & \le\left(\frac{\vol(E^{(k)})}{\vol(\Omega)}\right)^{\frac{1}{n}}\left(\max_{z\in\Omega}f(z)-\min_{x\in\Omega}f(x)\right)\\
+ & \le\left(\frac{\vol(E^{(0)})}{\vol(\Omega)}\right)^{\frac{1}{n}}\exp\left(-\frac{k}{2n(n+1)}\right)\left(\max_{z\in\Omega}f(z)-\min_{x\in\Omega}f(x)\right).
+\end{align*}
+
+Next, we note the proof of Theorem \ref{thm:conv_opt} only used the
+fact that one side of hyperplane defined by the gradient has higher
+value. Therefore, we can replace the gradient with the vector $g(x)$. 
+
+To bound the time per iteration, note that we make one query to the
+separation oracle per iteration, and then compute the next Ellipsoid
+using the formulas in Algorithm \ref{alg:ellipsoid_method}. The most
+time-consuming operation is multiplying an $n\times n$ matrix by
+an $n$-vector, which has complexity $O(n^{2})$.
+\end{proof}
+This theorem can be used to solve many problems in polynomial time.
+As an illustration, we show how to solve linear programs to desired
+approximation in polynomial time here. 
+\begin{thm}
+Given a linear program $\min_{x\in P}c^{\top}x$ where $P=\{x\text{: }Ax\geq b\}$.
+Let the diameter of $P$ be $R\defeq\max_{x\in P}\norm x_{2}$ and
+its volume radius be $r=\vol(P)^{1/n}$. Then, we can find $x\in P$
+for which 
+\[
+c^{\top}x-\min_{y\in P}c^{\top}y\leq\varepsilon\cdot(\max_{y\in P}c^{\top}y-\min_{y\in P}c^{\top}y)
+\]
+in $O(n^{2}(n^{2}+\nnz(A))\log(\frac{R}{r\varepsilon}))$ time where
+$\nnz(A)$ is the number of non-zero elements in $A$.
+\end{thm}
+
+\begin{rem}
+If the dimension $n$ is constant, this algorithm is nearly linear
+time (linear in the number of constraints)!
+\end{rem}
+
+\begin{proof}
+For the linear program $\min_{Ax\geq b}c^{\top}x$, the function we
+want to minimize is
+\begin{equation}
+L(x)=c^{\top}x+\delta_{Ax\geq b}(x)\quad\text{where}\quad\delta_{Ax\geq b}(x)=\begin{cases}
+0 & \text{if }a_{i}^{\top}x\geq b_{i}\text{ for all }i\\
++\infty & \text{otherwise.}
+\end{cases}.\label{eq:LP_func}
+\end{equation}
+
+For this function $L$, we can use the separation oracle $v(x)=c$
+if $Ax\geq b$ and $v(x)=-a_{i}$ if $a_{i}^{\top}x<b_{i}$. If there
+are many violated constraints, any one of them will do.
+
+In this case, we can set $\Omega=P$. We can simply pick $E^{(0)}$
+be the unit ball centered at $0$ with radius $R$. We apply Theorem
+\ref{thm:ellipsoid} to find $x$ such that
+\[
+c^{\top}x-\min_{y\in P}c^{\top}y\leq\varepsilon\cdot(\max_{y\in P}c^{\top}y-\min_{y\in P}c^{\top}y)
+\]
+in time $O(n^{2}(n^{2}+\nnz(A))\log(\frac{R}{r\varepsilon})).$ Note
+that the complexity of computing a matrix-vector product $Ax$ is
+$O(\nnz(A))$. 
+\end{proof}
+\begin{xca}
+Give a bound on $R$ as a polynomial in $n,\langle A\rangle,\langle b\rangle$,
+where $\langle A\rangle,\langle b\rangle$ are the numbers of bits
+needed to represent $A,b$ whose entries are rationals.
+\end{xca}
+
+To get the solution exactly, i.e., $\varepsilon=0$, we need to assume
+the linear program has integral (or rational) coefficients and then
+the running time will depend on the sizes of the numbers in the matrix
+$A$ and in the vectors $b$ and $c$. It is still open how to solve
+linear programs in time bounded by a polynomial in only the number
+of variables and constraints (and not the bit sizes of the coefficients).
+Such a running time is called \emph{strongly polynomial. }
+\begin{problem*}
+Can we solve linear programs in strongly polynomial time?
+\end{problem*}
+
+\section{Center of Gravity Method}
+
+In the Ellipsoid method, we used an ellipsoid as the current set,
+and its center as the next query point.
+
+In the center of gravity method, we start with any bounded convex
+set containing a minimizer, e.g., a large enough cube, and the set
+maintained is simply the intersection of all halfspaces used so far
+with the original set. The query point will be the center of gravity
+(or barycenter) of the current set. Recall that the center of gravity
+of a bounded set is the average of points in the set, i.e., 
+\[
+z_{K}=\frac{1}{\vol(K)}\int_{K}x\:dx.
+\]
+The measure of progress will once again be the volume (or more precisely,
+volume radius) of the current set.
+
+It is clear that the volume can only decrease in each iteration. But
+at what rate? The following classical theorem shows that the volume
+of the convex body decreases by a constant factor (no more than $1-\frac{1}{e}$)
+when using the exact center of gravity.
+\begin{thm}
+\label{thm:Grunbaum}\cite{Grunbaum1960}Let $K$ be a convex body
+in $\R^{n}$ with center of gravity $z$. Let $H$ be any halfspace
+containing $z$. Then, 
+\[
+\vol(K\cap H)\ge\left(\frac{n}{n+1}\right)^{n}\vol(K).
+\]
+\end{thm}
+
+Note that the constant on the RHS is at least $1/e$. We prove the
+theorem later in this chapter. Unfortunately, computing the center
+of gravity even of a polytope is \#P-hard \cite{rademacher2007approximating}.
+For the purpose of efficient approximations, it is important to establish
+a stable version of the theorem that does not require an exact center
+of gravity.
+
+Recall that a nonnegative function is logconcave if its logarithm
+is concave, i.e., for any $x,y\in\R^{n}$ and any $\lambda\in[0,1]$,
+\[
+f(\lambda x+(1-\lambda)y)\ge f(x)^{\lambda}f(y)^{1-\lambda}.
+\]
+We refer to Section \ref{sec:Logconcave-functions} for some background
+on logconcave functions. A distribution $p$ is \emph{isotropic} if
+the mean of a random variable drawn from the distribution is zero
+and the covariance is the identity matrix.
+
+The randomized center of gravity method defined as follows: 
+
+\begin{algorithm2e}[H]
+
+\caption{$\mathtt{RandomizedCenterOfGravity}$}\label{alg:randomized_cog}
+
+\SetAlgoLined
+
+\textbf{Input:} Initial convex set $E^{(0)}$.
+
+\For{$k=0,1,\cdots$}{
+
+\lIf{$E^{(k)}$ is ``small enough''}{\Return$x^{(k)}$}
+
+Let $y^{(1)},\ldots,y^{(N)}$ be uniform random points from $E^{(k)}$
+and set
+\begin{align*}
+x^{(k)} & =\frac{1}{N}\sum_{i=1}^{N}y^{(i)}\\
+E^{(k+1)} & =E^{(k)}\cap H^{(k)}
+\end{align*}
+
+where $H^{(k)}\defeq\{x\in\Rn:g(x^{(k)})^{\top}(x-x^{(k)})\leq0\}$
+obtained by querying $g(x^{(k)}).$ }
+
+\end{algorithm2e}
+\begin{rem}
+The question of how to sample (nearly) uniform random points is an
+important one that we will address in detail in this book. Using sampling
+to approximate the center of gravity leads to the reduction in the
+time per iteration from $n^{n}$ to $n^{4}$ (Table \ref{table:cpm}).
+\end{rem}
+
+To prove the convergence of the method, we will use a robust version
+of Theorem \ref{thm:Grunbaum}, which will give a similar result despite
+using only an approximate center of gravity.
+\begin{thm}[Robust Gr\"unbaum]
+\label{thm:grun-1}Let $p$ be an isotropic logconcave distribution,
+namely $\E_{x\sim p}x=0$ and $\E_{x\sim p}x^{2}=1$. For any unit
+vector $\theta\in\R^{n}$, $t\in\R$ we have
+\[
+\P_{x\sim p}(x^{\top}\theta\geq t)\geq\frac{1}{e}-\left|t\right|.
+\]
+\end{thm}
+
+\begin{proof}
+By taking the marginal with respect to the direction $\theta$, we
+can assume the distribution is one-dimensional. Let $P(t)=\P_{x\sim p}(x^{\top}\theta\le t)$.
+Note that $P(t)$ is the convolution of $p$ and $1_{(-\infty,0]}$.
+Hence, it is logconcave (Lemma \ref{lem:marginal}). By some limit
+arguments, we can assume $P(-M)=0$ and $P(M)=1$ for some large enough
+$M$ (to be rigorous, we do the proof below for finite $M$ and a
+RHS $\epsilon(M)$ instead of zero, then take the limit $M\rightarrow\infty$).
+Since $\E_{x\sim p}x=0$, we have that
+\[
+\int_{-M}^{M}t\frac{dP(t)}{dt}\,dt=0
+\]
+Integration by parts gives that $\int_{-M}^{M}P(t)dt=M$. Note that
+$P(t)$ is increasing logconcave, if $P(0)$ is too small, it would
+make $\int_{-M}^{M}P(t)dt$ too small. To be precise, since $P$ is
+logconcave, i.e., $-\log P(t)$ is convex, and so we have,
+\[
+-\log P(t)\geq-\log P(0)-\frac{\frac{d}{dt}P(0)}{P(0)}t.
+\]
+Or we simply write $P(t)\leq P(0)e^{\alpha t}$ for some $\alpha$.
+Hence,
+\[
+M=\int_{-M}^{M}P(t)dt\leq\int_{-\infty}^{\frac{1}{\alpha}}P(0)e^{\alpha t}dt+\int_{1/\alpha}^{M}1dt=\frac{eP(0)}{\alpha}+M-\frac{1}{\alpha}.
+\]
+This shows that $P(0)\geq\frac{1}{e}$.
+
+Next, Lemma \ref{lem:logcon_max-1} shows that $\max_{x}p(x)\le1$.
+Therefore, the cumulative distribution $P$ is $1$-Lipschitz and
+we have
+\[
+\P_{x\sim p}(x^{\top}\theta\geq t)\ge\P_{x\sim p}(x^{\top}\theta\geq0)-t\geq\frac{1}{e}-t.
+\]
+\end{proof}
+\begin{lem}
+\label{lem:logcon_max-1}Let $p$ be a one-dimensional isotropic logconcave
+density$.$ Then $\max p(x)\le1$.
+\end{lem}
+
+For a proof of this (and for other properties of logconcave functions),
+we refer the reader to \cite{lovasz2007geometry}.
+\begin{xca}
+Give a short proof that $\max_{x}p(x)=O(1)$ for any one-dimensional
+isotropic logconcave density.
+\end{xca}
+
+Using the robust Gr\"unbaum theorem \ref{thm:grun-1}, we get the
+following algorithm, which uses uniform random points from the current
+set. Obtaining such a random sample algorithmically is an interesting
+problem that we will study in the second part of this book.
+\begin{lem}
+Suppose $y^{(1)},\ldots,y^{(N)}$ are i.i.d. uniform random points
+from a convex body $K$ and $y=\frac{1}{N}\sum_{i=1}^{N}y^{(i)}$.
+Then for any halfspace $H$ not containing $y$, 
+\[
+\E(\vol(K\cap H))\le\left(1-\frac{1}{e}+\sqrt{\frac{n}{N}}\right)\vol(K).
+\]
+\end{lem}
+
+\begin{proof}
+Without loss of generality, we assume that $K$ is in isotropic position,
+i.e., $\E_{K}(y^{(i)})=0$ and $\E_{K}(y^{(i)}(y^{(i)})^{\top})=I$.
+Then we have $\E(y)=0$ and
+\begin{align*}
+\E\norm y^{2} & =\frac{1}{N^{2}}\E\sum_{i=1}^{N}\norm{y^{(i)}}^{2}=\frac{1}{N}\E\norm{y^{(1)}}^{2}=\frac{n}{N}.
+\end{align*}
+Therefore, by Jensen's inequality,
+\[
+\E\norm y\le\sqrt{\E\left(\norm y^{2}\right)}=\sqrt{\frac{n}{N}}.
+\]
+Thus, we can apply Theorem \ref{thm:grun-1} with $t=\sqrt{\frac{n}{N}}$
+to bound $\E(\vol(K\cap H))/\vol(K)$. 
+\end{proof}
+Theorem \ref{thm:conv_opt} readily gives the following guarantee
+for convex optimization, again using volume radius as the measure
+of progress.
+\begin{thm}
+Let $f$ be a convex function on $\Rn$, $E^{(0)}$ be any initial
+set and $\Omega\subset E^{(0)}$ be any convex set. Suppose that for
+any $x\in E^{(0)}$, we can find a nonzero vector $g(x)$ such that
+\[
+f(y)\geq f(x)\text{ for any }y\text{ such that }g(x)^{\top}(y-x)\geq0.
+\]
+
+Then, for the center of gravity method with $N=10n$, we have
+\[
+\E\left(\min_{i=1,2,\cdots k}f(x^{(i)})\right)-\min_{y\in\Omega}f(y)\leq\left(\frac{\vol(E^{(0)})}{\vol(\Omega)}\right)^{\frac{1}{n}}\left(0.95\right)^{\frac{k}{n}}\left(\max_{z\in\Omega}f(z)-\min_{x\in\Omega}f(x)\right)\enspace.
+\]
+\end{thm}
+
+Now we give a geometric proof of Theorem \ref{thm:Grunbaum}. Note
+that one can modify the proof of Theorem \ref{thm:grun-1} to get
+another proof.
+\begin{proof}
+Since affine transformations do not affect ratios of volumes, without
+loss of generality, assume that the center of gravity of $K$ is the
+origin and $H$ is the halfspace $\left\{ x:\:x_{1}\le0\right\} $.
+For each point $t\in\R$, let $A(t)=K\cap\left\{ x:\ x_{1}=t\right\} $
+be the $(n-1)$-dimensional slice of $K$ with $x_{1}=t$. Define
+$r(t)$ as the radius of the $(n-1)$-dimensional ball with the same
+$(n-1)$-dimensional volume as $A(t)$.
+
+\begin{figure}[h]
+
+\centering{}\includegraphics[width=0.85\columnwidth]{Figures/Thrm_3\lyxdot 20}\caption{Affine transformations for Centre of Gravity method}
+\end{figure}
+
+The goal of the proof is to show that the smallest possible halfspace
+volume is achieved for a cone by a cut perpendicular to its axis.
+In the first step, we will symmetrize $K$ as follows: replace each
+cross-section $A(t)$ by a ball of the same volume, centered at $(t,0,\ldots,0)^{T}$.
+We claim that the resulting rotationally symmetric body is convex.
+To see this, note that all we have to show is that the radius function
+$r(t)$ is concave. For any $s,t\in\R,$ and any $\lambda\in[0,1]$,
+we have by convexity of $K$ that
+\[
+\lambda A(s)+(1-\lambda)A(t)\subseteq A(\lambda s+(1-\lambda)t)
+\]
+and by the Brunn-Minkowski theorem (Theorem \ref{thm:Brunn-Minkowski})
+applied to $A(s),A(t)$, the function $\vol_{n-1}(A(s))^{1/(n-1)}$
+is a concave function and so we have
+\[
+\vol_{n-1}(A(\lambda s+(1-\lambda)t))^{\frac{1}{n-1}}\ge\lambda\vol_{n-1}(A(s))^{\frac{1}{n-1}}+(1-\lambda)\vol_{n-1}(A(t))^{\frac{1}{n-1}}.
+\]
+From this and the definition of $r(t)$, it follows that
+\[
+r(\lambda s+(1-\lambda)t)\ge\lambda r(s)+(1-\lambda)r(t)
+\]
+as desired.
+
+Next consider the subset $K_{1}=K\cap\left\{ x:\:x_{1}\le0\right\} $.
+We replace this subset with a cone $C$ having the same base $A(0)$
+and apex at some point along the $e_{1}$ axis so that the volume
+of the cone is the same as $\vol(K_{1}).$ Using the concavity of
+the radial function, this transformation can only decrease the center
+of gravity along $e_{1}$. Therefore, proving a lower bound on the
+transformed body $K_{1}$ will give a lower bound for $K$. So assume
+we do this and the center of gravity is the origin. Next, extend the
+cone to the right, so that it remains a rotational cone, and the volume
+in the positive halfspace along $e_{1}$ is the same as $\vol(K\setminus K_{1})$.
+Once again, the center of gravity can only move to the left, and so
+the volume of $K_{1}$ can only decrease by this transformation. At
+the end we have shown that the lower bound for any convex body follows
+by proving for a rotational cone with axis along the normal to the
+halfspace. The intersection of this cone with the halfspace is the
+original cone scaled down by the ratio of the distance from the apex
+to the center of gravity, to the height of the cone. So all that remains
+to be done is to compute the relative distance of the center of gravity
+from the apex, which is exactly $n/(n+1)$. Now we compute the volume
+ratio:
+\[
+\frac{\vol(K_{1})}{\vol(K)}=\left(\frac{n}{n+1}\right)^{n}.
+\]
+\end{proof}
+\begin{xca}
+Show that for a cone of height $h$ in $\R^{n}$, i.e., the convex
+hull of a convex body $K\subset\R^{n-1}$ with a single point $a\in\R^{n}$
+at distance $h$ from the hyperplane $H$ containing $K$, the center
+of gravity $z$ of the cone is at distance $h/(n+1)$ from $H$.
+\end{xca}
+
+To conclude this section, we note that the number of separation oracle
+queries made by the center-of-gravity cutting plane method is asymptotically
+the best possible.
+\begin{thm}
+Any algorithm that solves Problem \ref{prob:abstract_convex_problem}
+using a separation oracle needs to make $\Omega(n\log(R/\epsilon))$
+queries to the oracle.
+\end{thm}
+
+\begin{proof}
+Suppose $K$ is a cube of side length $\epsilon$ contained in the
+cube $[0,R]^{n}$. Imagine a tiling of the big cube by cubes of side
+length $\epsilon$. Consider the oracle that always returns an axis
+parallel halfspace that does not cut any little cube and contains
+at least half of the volume of the ``remaining'' region, i.e., the
+set given by the original cube intersected with all halfspaces given
+by the oracle so far. This is always possible since for any halfspace
+either the halfspace or its complement will contain at least half
+the volume of any set. Thus each query at best halves the remaining
+volume. To solve the problem, the algorithm needs to cut down to a
+set of volume $\epsilon^{n}$ starting from a set of volume $R^{n}.$
+Thus it needs at least $n\log_{2}(R/\epsilon)$ queries.
+\end{proof}
+\begin{figure}[h]
+\centering{}\includegraphics[width=0.75\columnwidth]{Figures/Thrm_3\lyxdot 22}\caption{Complexity using a separation oracle}
+\end{figure}
+
+
+\section*{Discussion}
+
+In later chapters we will see how to implement each iteration of the
+center of gravity method in polynomial time. Computing the exact center
+of gravity is \#P-hard even for a polytope \cite{rademacher2007approximating},
+but we can find an arbitrarily close approximation in randomized polynomial
+time via sampling. The method generalizes to certain noisy computation
+models, e.g., when the oracle reports a function value that is within
+a bounded additive error, i.e., a noisy function oracle.
