@@ -1049,6 +1049,51 @@ First we consider the convergence in the case when
 ,
  with their next step directions chosen to be identical.
  The key lemma is that with this setting the squared distance decreases up to a certain time that depends on the condition number.
+ For a tight analysis,
+ showing a mixing rate of 
+\begin_inset Formula $O(\kappa)$
+\end_inset
+
+ where the condition number 
+\begin_inset Formula $\kappa$
+\end_inset
+
+ is the ratio of the Lipschitz constant of the gradient of 
+\begin_inset Formula $f$
+\end_inset
+
+ to its strong convexity parameter,
+ we refer the reader to 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "chen2022optimal"
+literal "false"
+
+\end_inset
+
+.
+ The general Riemannian setting,
+ which gives an affine-invariant sampling algorithm,
+ was analyzed in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "LV2022geodesic,LV18riemannian"
+literal "false"
+
+\end_inset
+
+,
+ showing that when applied to polytopes with the Lewis weights barrier,
+ the resulting process converges with a mixing rate of 
+\begin_inset Formula $\tilde{O}(mn^{2/3})$
+\end_inset
+
+ and each iteration has time complexity 
+\begin_inset Formula $O(mn^{\omega-1})$
+\end_inset
+
+.
+ 
 \end_layout
 
 \end_body
