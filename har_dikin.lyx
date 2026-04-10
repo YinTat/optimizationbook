@@ -2781,7 +2781,7 @@ We note that strong self-concordance can be stronger than self-concordance since
 \end_layout
 
 \begin_layout Exercise
-Verify that the standard log barrier is strongly self-concordant.
+Verify that the Hessian of the standard log barrier is strongly self-concordant.
 \end_layout
 
 \begin_layout Exercise
@@ -2860,7 +2860,12 @@ For two points
 
 ,
  with 
-\begin_inset Formula $\Vert x-y\Vert_{x}\le\frac{1}{8\sqrt{n}}$
+\begin_inset Formula $\Vert x-y\Vert_{x}\le\frac{r}{10\sqrt{n}}$
+\end_inset
+
+,
+ for 
+\begin_inset Formula $r<0.01$
 \end_inset
 
 ,
@@ -2872,8 +2877,583 @@ For two points
 \end_layout
 
 \begin_layout Standard
-The proof of this lemma needs several properties that we will presently outline.
+The proof of this lemma needs several properties captured in the next exercise.
+\end_layout
+
+\begin_layout Exercise
+Prove the following for the log barrier in the polytope 
+\begin_inset Formula $\{\mathbf{A}x\ge b\}$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\ln\det\mh(x)$
+\end_inset
+
+ is a convex function.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Pr_{w\sim E_{x}(r)}\left(\norm{w-x}_{x}\le r^{2}\left(1-\frac{1}{n}\right)\right)\ge1-c_{0}r$
+\end_inset
+
+ for some constant 
+\begin_inset Formula $c_{0}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Pr_{w\sim E_{x}(r)}\left(\norm{w-x}_{w}+\norm{w-x}_{2x-w}\le2r^{2}\left(1-\frac{1}{n}\right)\vert\norm{w-x}_{x}\le r^{2}\left(1-\frac{1}{n}\right)\right)\ge1-c_{1}r$
+\end_inset
+
+ for some constant 
+\begin_inset Formula $c_{1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Pr_{w\sim E_{x}(r)}\left(x\in E_{w}(r)\right)\ge1-c_{2}r$
+\end_inset
+
+ for some constant 
+\begin_inset Formula $c_{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+\begin_inset Argument 1
+status open
+
+\begin_layout Plain Layout
+Proof of Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:dikin-one-step-1"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+We have to prove two things:
+ first,
+ the rejection probability is small,
+ second the ellipsoids used by the Dikin walk at 
+\begin_inset Formula $x,y$
+\end_inset
+
+ have large overlap.
+ More precisely,
+ we have
+\begin_inset Formula 
+\begin{align}
+d_{\mathrm{TV}}(P_{x},P_{y}) & \leq\frac{1}{2}\text{rej}_{x}+\frac{1}{2}\text{rej}_{y}+\frac{1}{2}\frac{\vol(P_{x}\backslash P_{y})}{\vol(P_{x})}+\frac{1}{2}\frac{\vol(P_{y}\backslash P_{x})}{\vol(P_{y})}\nonumber \\
+ & =\frac{1}{2}\text{rej}_{x}+\frac{1}{2}\text{rej}_{y}+1-\frac{1}{2}\frac{\vol(P_{x}\cap P_{y})}{\vol(P_{x})}-\frac{1}{2}\frac{\vol(P_{x}\cap P_{y})}{\vol(P_{y})}\label{eq:dikin_formula}
+\end{align}
+
+\end_inset
+
+where 
+\begin_inset Formula $\text{rej}_{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $\text{rej}_{y}$
+\end_inset
+
+ are the rejection probabilities at 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $y$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+For the rejection probability at 
+\begin_inset Formula $x$
+\end_inset
+
+,
+ we consider the algorithm pick 
+\begin_inset Formula $z$
+\end_inset
+
+ from 
+\begin_inset Formula $E_{x}(r)$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $f(z)=\ln\det\mathbf{H}(z)$
+\end_inset
+
+.
+ The acceptance probability of the sample 
+\begin_inset Formula $z$
+\end_inset
+
+ is
+\begin_inset Formula 
+\begin{equation}
+\min\left\{ 1,\frac{\vol(E_{x}(r))}{\vol(E_{z}(r))}\right\} =\min\left\{ 1,\sqrt{\frac{\det(\mathbf{H}(z))}{\det(\mathbf{H}(x))}}\right\} .\label{eq:reject_prob_z}
+\end{equation}
+
+\end_inset
+
+By the assumption that 
+\begin_inset Formula $f$
+\end_inset
+
+ is a convex function,
+ we have that
+\begin_inset Formula 
+\begin{equation}
+\ln\frac{\det(\mathbf{H}(z))}{\det(\mathbf{H}(x))}=f(z)-f(x)\geq\langle\nabla f(x),z-x\rangle.\label{eq:log_det_Hzx}
+\end{equation}
+
+\end_inset
+
+To simplify the notation,
+ we assume 
+\begin_inset Formula $\mh(x)=\mi$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $z$
+\end_inset
+
+ is sampled from unit ball of radius 
+\begin_inset Formula $r$
+\end_inset
+
+ centered at 
+\begin_inset Formula $x$
+\end_inset
+
+,
+ we know that 
+\begin_inset Formula 
+\[
+\P(v^{\top}(z-x)\geq-\epsilon r\|v\|_{2})\geq1-e^{-n\epsilon^{2}/2}.
+\]
+
+\end_inset
+
+In particular,
+ with probability at least 
+\begin_inset Formula $0.99$
+\end_inset
+
+ in 
+\begin_inset Formula $z$
+\end_inset
+
+,
+ we have
+\begin_inset Formula 
+\begin{equation}
+\langle\nabla f(x),z-x\rangle\geq-\frac{4r}{\sqrt{n}}\|\nabla f(x)\|_{2}.\label{eq:grad_prob}
+\end{equation}
+
+\end_inset
+
+To compute 
+\begin_inset Formula $\|\nabla f(x)\|_{2}^{2}$
+\end_inset
+
+,
+ it is easier to compute directional derivative of 
+\begin_inset Formula $\nabla f$
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula 
+\begin{align}
+\|\nabla f(x)\|_{2} & =\max_{\|v\|_{2}=1}\nabla f(x)^{\top}v\nonumber \\
+ & =\max_{\|v\|_{2}=1}\tr(\mh(x)^{-1}D\mh(x)[v])\nonumber \\
+ & =\max_{\|v\|_{2}=1}\tr\left(\mh(x)^{-\frac{1}{2}}D\mh(x)[v]\mh(x)^{-\frac{1}{2}}\right)\nonumber \\
+ & \leq\max_{\|v\|_{2}=1}\sqrt{n}\|\mh(x)^{-\frac{1}{2}}D\mh(x)[v]\mh(x)^{-\frac{1}{2}}\|_{F}\nonumber \\
+ & \leq\sqrt{n}\label{eq:grad_log_H}
+\end{align}
+
+\end_inset
+
+where the first inequality follows from 
+\begin_inset Formula $\left|\sum_{i=1}^{n}\lambda_{i}\right|\leq\sqrt{n}\sqrt{\sum_{i=1}^{n}\lambda_{i}^{2}}$
+\end_inset
+
+ and the second inequality follows from the definition of strong self-concordance.
+\end_layout
+
+\begin_layout Proof
+Combining 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:reject_prob_z"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+,
  
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:log_det_Hzx"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+,
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:grad_prob"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:grad_log_H"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+,
+ we see that with probability at least 
+\begin_inset Formula $0.99$
+\end_inset
+
+ in 
+\begin_inset Formula $z$
+\end_inset
+
+,
+ acceptance probability of the sample 
+\begin_inset Formula $z$
+\end_inset
+
+,
+ assuming that 
+\begin_inset Formula $x\in E_{z}(r)$
+\end_inset
+
+ is 
+\begin_inset Formula 
+\begin{equation}
+\min\left\{ 1,\frac{\vol(E_{x}(r))}{\vol(E_{z}(r))}\right\} \geq e^{-2r}\geq0.9\label{eq:rejection}
+\end{equation}
+
+\end_inset
+
+where we used that 
+\begin_inset Formula $r\le\frac{1}{20}$
+\end_inset
+
+.
+ Hence the rejection probability 
+\begin_inset Formula $\mathrm{rej}_{x}$
+\end_inset
+
+ (and similarly 
+\begin_inset Formula $\mathrm{rej}_{y}$
+\end_inset
+
+) including the event 
+\begin_inset Formula $x\in E_{z}(r)$
+\end_inset
+
+ which happens with probability at least 
+\begin_inset Formula $0.4$
+\end_inset
+
+ from the previous exercise,
+ satisfies
+\begin_inset Formula 
+\begin{equation}
+\mathrm{rej}_{x}\leq0.7\qquad\text{and}\qquad\mathrm{rej}_{y}\leq0.7.\label{eq:rej_xy}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Now,
+ we bound the fraction of volume in the intersection of the ellipsoids at 
+\begin_inset Formula $x,y$
+\end_inset
+
+.
+ Again,
+ we can assume that 
+\begin_inset Formula $\mh(x)=\mi$
+\end_inset
+
+.
+ Then,
+ the strongly self-concordance and Lemma 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "lem:global_strongly_self_concordant"
+nolink "false"
+
+\end_inset
+
+ shows that
+\begin_inset Formula 
+\begin{equation}
+\|\mh(y)-\mi\|_{F}\leq2\|x-y\|_{x}\leq\frac{1}{10\sqrt{n}}.\label{eq:H_minus_I_F}
+\end{equation}
+
+\end_inset
+
+In particular,
+ we have that 
+\begin_inset Formula 
+\begin{equation}
+0.9\mi\preceq\mh(y)\preceq1.1\mi.\label{eq:H_I_op}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+We partition the eigenvalues 
+\begin_inset Formula $\lambda_{i}$
+\end_inset
+
+ of 
+\begin_inset Formula $\mh(y)$
+\end_inset
+
+ into those of value at least 
+\begin_inset Formula $1$
+\end_inset
+
+ and the rest.
+ Then consider the ellipsoid 
+\begin_inset Formula $E$
+\end_inset
+
+ whose eigenvalues are 
+\begin_inset Formula $\min\left\{ 1,\lambda_{i}\right\} $
+\end_inset
+
+.
+ This is contained in both 
+\begin_inset Formula $E_{x}(1)$
+\end_inset
+
+ and 
+\begin_inset Formula $E_{y}(1)$
+\end_inset
+
+.
+ We will see that 
+\begin_inset Formula $\vol(E)$
+\end_inset
+
+ is a constant fraction of the volume of both 
+\begin_inset Formula $E_{x}(1)$
+\end_inset
+
+ and 
+\begin_inset Formula $E_{y}(1)$
+\end_inset
+
+.
+ First,
+ we compare 
+\begin_inset Formula $E$
+\end_inset
+
+ and 
+\begin_inset Formula $E_{x}(1)$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+\frac{\vol(E)}{\vol(E_{x}(1))}=\prod_{i:\lambda_{i}<1}\lambda_{i}=\prod_{i:\lambda_{i}<1}\left(1-(1-\lambda_{i})\right)\geq\exp\left(-2\sum_{i:\lambda_{i}<1}\left(1-\lambda_{i}\right)\right)\label{eq:vol_E_x}
+\end{equation}
+
+\end_inset
+
+where we used that 
+\begin_inset Formula $1-x\geq\exp(-2x)$
+\end_inset
+
+ for 
+\begin_inset Formula $0\leq x\leq\frac{1}{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $\lambda_{i}\geq\frac{1}{2}$
+\end_inset
+
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:H_I_op"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+.
+ From the inequality 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:H_minus_I_F"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+,
+ it follows that
+\begin_inset Formula 
+\[
+\sqrt{\sum_{i}(\lambda_{i}-1)^{2}}\le\frac{1}{10\sqrt{n}}.
+\]
+
+\end_inset
+
+Therefore,
+ 
+\begin_inset Formula $\sum_{i:\lambda_{i}<1}|\lambda_{i}-1|\leq0.1$
+\end_inset
+
+.
+ Putting it into 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:vol_E_x"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+,
+ we have
+\begin_inset Formula 
+\begin{equation}
+\frac{\vol(P_{x}\cap P_{y})}{\vol(P_{x})}=\frac{\vol(E)}{\vol(E_{x}(1))}\geq e^{-0.2}.\label{eq:volPxyPx}
+\end{equation}
+
+\end_inset
+
+Similarly,
+ we have
+\begin_inset Formula 
+\begin{equation}
+\frac{\vol(P_{x}\cap P_{y})}{\vol(P_{y})}=\frac{\prod_{i:\lambda_{i}<1}\lambda_{i}}{\prod_{i:\lambda_{i}}\lambda_{i}}=\frac{1}{\prod_{i:\lambda_{i}>1}\lambda_{i}}\geq\frac{1}{\exp(\sum_{i:\lambda_{i}>1}(\lambda_{i}-1))}\geq e^{-0.1}.\label{eq:volPxyPy}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Proof
+Putting 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:rej_xy"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+,
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:volPxyPx"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:volPxyPy"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+ into 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:dikin_formula"
+plural "false"
+caps "false"
+noprefix "false"
+nolink "false"
+
+\end_inset
+
+,
+ we have
+\begin_inset Formula 
+\[
+d_{\mathrm{TV}}(P_{x},P_{y})\leq\frac{0.7}{2}+\frac{0.7}{2}+1-\frac{e^{-0.2}}{2}-\frac{e^{-0.1}}{2}\leq\frac{3}{4}.
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3149,8 +3729,12 @@ The conductance of the Dikin walk with the log barrier applied to a polytope
 \begin_inset Formula $\{\mathbf{A}x\ge b\}$
 \end_inset
 
+ with any 
+\begin_inset Formula $r<0.01$
+\end_inset
+
  is 
-\begin_inset Formula $\Omega(1/\sqrt{mn})$
+\begin_inset Formula $\Omega(r/\sqrt{mn})$
 \end_inset
 
 .
@@ -3210,7 +3794,7 @@ nolink "false"
 
 ,
  we have 
-\begin_inset Formula $\Vert u-v\Vert_{u}\ge\frac{1}{8\sqrt{n}}$
+\begin_inset Formula $\Vert u-v\Vert_{u}\ge\frac{r}{10\sqrt{n}}$
 \end_inset
 
 .
@@ -3230,7 +3814,7 @@ nolink "false"
  
 \begin_inset Formula 
 \[
-d_{K}(u,v)\ge\frac{1}{8\sqrt{n}\cdot\sqrt{m}}.
+d_{K}(u,v)\ge\frac{r}{10\sqrt{n}\cdot\sqrt{m}}.
 \]
 
 \end_inset
@@ -3259,9 +3843,9 @@ We can now bound the conductance of
  we have
 \begin_inset Formula 
 \begin{align*}
-\int_{S_{1}}P_{x}(S_{2})\,dx & \ge\int_{S_{3}'}\frac{1}{8}dx\ge\frac{1}{8}\vol(S_{3}')\\
-\mbox{using isoperimetry (Theorem \ref{thm:iso-cross-ratio})} & \ge\frac{1}{8}d_{K}(S_{1}',S_{2}')\frac{\vol(S_{1}')\vol(S_{2}')}{\vol(P)}\\
- & \ge\frac{1}{512\sqrt{nm}}\min\left\{ \vol(S_{1}),\vol(S_{2})\right\} .
+\int_{S_{1}}P_{x}(S_{2})\,dx & \ge\frac{1}{2}\int_{S_{3}'}\frac{1}{8}dx\ge\frac{1}{16}\vol(S_{3}')\\
+\mbox{using isoperimetry (Theorem \ref{thm:iso-cross-ratio})} & \ge\frac{1}{16}d_{K}(S_{1}',S_{2}')\frac{\vol(S_{1}')\vol(S_{2}')}{\vol(P)}\\
+ & \ge\frac{r}{1000\sqrt{nm}}\min\left\{ \vol(S_{1}),\vol(S_{2})\right\} .
 \end{align*}
 
 \end_inset
@@ -3271,7 +3855,7 @@ We can now bound the conductance of
 
 \begin_layout Standard
 \begin_inset Note Note
-status collapsed
+status open
 
 \begin_layout Plain Layout
 The next lemma results from studying strong self-concordance for classical barriers.
@@ -3353,608 +3937,6 @@ In fact,
 equivalent 
 \emph default
 to the KLS conjecture.
-\end_layout
-
-\begin_layout Proof
-We have to prove two things:
- first,
- the rejection probability is small,
- second the ellipsoids used by the Dikin walk at 
-\begin_inset Formula $x,y$
-\end_inset
-
- have large overlap.
- More precisely,
- we have
-\begin_inset Formula 
-\begin{align}
-d_{\mathrm{TV}}(P_{x},P_{y}) & \leq\frac{1}{2}\text{rej}_{x}+\frac{1}{2}\text{rej}_{y}+\frac{1}{2}\frac{\vol(P_{x}\backslash P_{y})}{\vol(P_{x})}+\frac{1}{2}\frac{\vol(P_{y}\backslash P_{x})}{\vol(P_{y})}\nonumber \\
- & =\frac{1}{2}\text{rej}_{x}+\frac{1}{2}\text{rej}_{y}+1-\frac{1}{2}\frac{\vol(P_{x}\cap P_{y})}{\vol(P_{x})}-\frac{1}{2}\frac{\vol(P_{x}\cap P_{y})}{\vol(P_{y})}\label{eq:dikin_formula}
-\end{align}
-
-\end_inset
-
-where 
-\begin_inset Formula $\text{rej}_{x}$
-\end_inset
-
- and 
-\begin_inset Formula $\text{rej}_{y}$
-\end_inset
-
- are the rejection probabilities at 
-\begin_inset Formula $x$
-\end_inset
-
- and 
-\begin_inset Formula $y$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Proof
-For the rejection probability at 
-\begin_inset Formula $x$
-\end_inset
-
-,
- we consider the algorithm pick 
-\begin_inset Formula $z$
-\end_inset
-
- from 
-\begin_inset Formula $E_{x}(r)$
-\end_inset
-
-.
- Let 
-\begin_inset Formula $f(z)=\ln\det\mathbf{H}(z)$
-\end_inset
-
-.
- The acceptance probability of the sample 
-\begin_inset Formula $z$
-\end_inset
-
- is
-\begin_inset Formula 
-\begin{equation}
-\min\left\{ 1,\frac{\vol(E_{x}(r))}{\vol(E_{z}(r))}\right\} =\min\left\{ 1,\sqrt{\frac{\det(\mathbf{H}(z))}{\det(\mathbf{H}(x))}}\right\} .\label{eq:reject_prob_z}
-\end{equation}
-
-\end_inset
-
-By the assumption that 
-\begin_inset Formula $f$
-\end_inset
-
- is a convex function,
- we have that
-\begin_inset Formula 
-\begin{equation}
-\ln\frac{\det(\mathbf{H}(z))}{\det(\mathbf{H}(x))}=f(z)-f(x)\geq\langle\nabla f(x),z-x\rangle.\label{eq:log_det_Hzx}
-\end{equation}
-
-\end_inset
-
-To simplify the notation,
- we assume 
-\begin_inset Formula $\mh(x)=\mi$
-\end_inset
-
-.
- Since 
-\begin_inset Formula $z$
-\end_inset
-
- is sampled from unit ball of radius 
-\begin_inset Formula $r$
-\end_inset
-
- centered at 
-\begin_inset Formula $x$
-\end_inset
-
-,
- we know that 
-\begin_inset Formula 
-\[
-\P(v^{\top}(z-x)\geq-\epsilon r\|v\|_{2})\geq1-e^{-n\epsilon^{2}/2}.
-\]
-
-\end_inset
-
-In particular,
- with probability at least 
-\begin_inset Formula $0.99$
-\end_inset
-
- in 
-\begin_inset Formula $z$
-\end_inset
-
-,
- we have
-\begin_inset Formula 
-\begin{equation}
-\langle\nabla f(x),z-x\rangle\geq-\frac{4r}{\sqrt{n}}\|\nabla f(x)\|_{2}.\label{eq:grad_prob}
-\end{equation}
-
-\end_inset
-
-To compute 
-\begin_inset Formula $\|\nabla f(x)\|_{2}^{2}$
-\end_inset
-
-,
- it is easier to compute directional derivative of 
-\begin_inset Formula $\nabla f$
-\end_inset
-
-.
- Note that 
-\begin_inset Formula 
-\begin{align}
-\|\nabla f(x)\|_{2} & =\max_{\|v\|_{2}=1}\nabla f(x)^{\top}v\nonumber \\
- & =\max_{\|v\|_{2}=1}\tr(\mh(x)^{-1}D\mh(x)[v])\nonumber \\
- & =\max_{\|v\|_{2}=1}\tr\left(\mh(x)^{-\frac{1}{2}}D\mh(x)[v]\mh(x)^{-\frac{1}{2}}\right)\nonumber \\
- & \leq\max_{\|v\|_{2}=1}\sqrt{n}\|\mh(x)^{-\frac{1}{2}}D\mh(x)[v]\mh(x)^{-\frac{1}{2}}\|_{F}\nonumber \\
- & \leq\sqrt{n}\label{eq:grad_log_H}
-\end{align}
-
-\end_inset
-
-where the first inequality follows from 
-\begin_inset Formula $\left|\sum_{i=1}^{n}\lambda_{i}\right|\leq\sqrt{n}\sqrt{\sum_{i=1}^{n}\lambda_{i}^{2}}$
-\end_inset
-
- and the second inequality follows from the definition of strong self-concordance.
-\end_layout
-
-\begin_layout Proof
-Combining 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:reject_prob_z"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
-
-\end_inset
-
-,
- 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:log_det_Hzx"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
-
-\end_inset
-
-,
- 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:grad_prob"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
-
-\end_inset
-
- and 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:grad_log_H"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
-
-\end_inset
-
-,
- we see that with probability at least 
-\begin_inset Formula $0.99$
-\end_inset
-
- in 
-\begin_inset Formula $z$
-\end_inset
-
-,
- acceptance probability of the sample 
-\begin_inset Formula $z$
-\end_inset
-
- is 
-\begin_inset Formula 
-\begin{equation}
-\min\left\{ 1,\frac{\vol(E_{x}(r))}{\vol(E_{z}(r))}\right\} \geq e^{-2r}\geq0.77\label{eq:rejection}
-\end{equation}
-
-\end_inset
-
-where we used that 
-\begin_inset Formula $r=\frac{1}{8}$
-\end_inset
-
-.
- Hence,
- the overall rejection probability 
-\begin_inset Formula $\mathrm{rej}_{x}$
-\end_inset
-
- (and similarly 
-\begin_inset Formula $\mathrm{rej}_{y}$
-\end_inset
-
-) satisfies
-\begin_inset Formula 
-\begin{equation}
-\mathrm{rej}_{x}\leq0.24\qquad\text{and}\qquad\mathrm{rej}_{y}\leq0.24.\label{eq:rej_xy}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-Now,
- we bound the fraction of volume in the intersection of the ellipsoids at 
-\begin_inset Formula $x,y$
-\end_inset
-
-.
- Again,
- we can assume that 
-\begin_inset Formula $\mh(x)=\mi$
-\end_inset
-
-.
- Then,
- the strongly self-concordance and Lemma 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "lem:global_strongly_self_concordant"
-nolink "false"
-
-\end_inset
-
- shows that
-\begin_inset Formula 
-\begin{equation}
-\|\mh(y)-\mi\|_{F}\leq2\|x-y\|_{x}\leq\frac{1}{4\sqrt{n}}.\label{eq:H_minus_I_F}
-\end{equation}
-
-\end_inset
-
-In particular,
- we have that 
-\begin_inset Formula 
-\begin{equation}
-\frac{1}{2}\mi\preceq\mh(y)\preceq\frac{3}{2}\mi.\label{eq:H_I_op}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-We partition the eigenvalues 
-\begin_inset Formula $\lambda_{i}$
-\end_inset
-
- of 
-\begin_inset Formula $\mh(y)$
-\end_inset
-
- into those of value at least 
-\begin_inset Formula $1$
-\end_inset
-
- and the rest.
- Then consider the ellipsoid 
-\begin_inset Formula $E$
-\end_inset
-
- whose eigenvalues are 
-\begin_inset Formula $\min\left\{ 1,\lambda_{i}\right\} $
-\end_inset
-
-.
- This is contained in both 
-\begin_inset Formula $E_{x}(1)$
-\end_inset
-
- and 
-\begin_inset Formula $E_{y}(1)$
-\end_inset
-
-.
- We will see that 
-\begin_inset Formula $\vol(E)$
-\end_inset
-
- is a constant fraction of the volume of both 
-\begin_inset Formula $E_{x}(1)$
-\end_inset
-
- and 
-\begin_inset Formula $E_{y}(1)$
-\end_inset
-
-.
- First,
- we compare 
-\begin_inset Formula $E$
-\end_inset
-
- and 
-\begin_inset Formula $E_{x}(1)$
-\end_inset
-
-
-\begin_inset Formula 
-\begin{equation}
-\frac{\vol(E)}{\vol(E_{x}(1))}=\prod_{i:\lambda_{i}<1}\lambda_{i}=\prod_{i:\lambda_{i}<1}\left(1-(1-\lambda_{i})\right)\geq\exp\left(-2\sum_{i:\lambda_{i}<1}\left(1-\lambda_{i}\right)\right)\label{eq:vol_E_x}
-\end{equation}
-
-\end_inset
-
-where we used that 
-\begin_inset Formula $1-x\geq\exp(-2x)$
-\end_inset
-
- for 
-\begin_inset Formula $0\leq x\leq\frac{1}{2}$
-\end_inset
-
- and 
-\begin_inset Formula $\lambda_{i}\geq\frac{1}{2}$
-\end_inset
-
- 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:H_I_op"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
-
-\end_inset
-
-.
- From the inequality 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:H_minus_I_F"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
-
-\end_inset
-
-,
- it follows that
-\begin_inset Formula 
-\[
-\sqrt{\sum_{i}(\lambda_{i}-1)^{2}}\le\frac{1}{4\sqrt{n}}.
-\]
-
-\end_inset
-
-Therefore,
- 
-\begin_inset Formula $\sum_{i:\lambda_{i}<1}|\lambda_{i}-1|\leq\frac{1}{4}$
-\end_inset
-
-.
- Putting it into 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:vol_E_x"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
-
-\end_inset
-
-,
- we have
-\begin_inset Formula 
-\begin{equation}
-\frac{\vol(P_{x}\cap P_{y})}{\vol(P_{x})}=\frac{\vol(E)}{\vol(E_{x}(1))}\geq e^{-\frac{1}{2}}.\label{eq:volPxyPx}
-\end{equation}
-
-\end_inset
-
-Similarly,
- we have
-\begin_inset Formula 
-\begin{equation}
-\frac{\vol(P_{x}\cap P_{y})}{\vol(P_{y})}=\frac{\prod_{i:\lambda_{i}<1}\lambda_{i}}{\prod_{i:\lambda_{i}}\lambda_{i}}=\frac{1}{\prod_{i:\lambda_{i}>1}\lambda_{i}}\geq\frac{1}{\exp(\sum_{i:\lambda_{i}>1}(\lambda_{i}-1))}\geq e^{-\frac{1}{4}}.\label{eq:volPxyPy}
-\end{equation}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Proof
-Putting 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:rej_xy"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
-
-\end_inset
-
-,
- 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:volPxyPx"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
-
-\end_inset
-
- and 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:volPxyPy"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
-
-\end_inset
-
- into 
-\begin_inset CommandInset ref
-LatexCommand eqref
-reference "eq:dikin_formula"
-plural "false"
-caps "false"
-noprefix "false"
-nolink "false"
-
-\end_inset
-
-,
- we have
-\begin_inset Formula 
-\[
-d_{\mathrm{TV}}(P_{x},P_{y})\leq\frac{0.24}{2}+\frac{0.24}{2}+1-\frac{e^{-\frac{1}{2}}}{2}+\frac{e^{-\frac{1}{4}}}{2}\leq\frac{3}{4}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-The next lemma establishes isoperimetry.
- This only needs the symmetric containment assumption.
- The isoperimetry is for the cross-ratio distance.
- For a convex body 
-\begin_inset Formula $K$
-\end_inset
-
-,
- and any two points 
-\begin_inset Formula $u,v\in K,$
-\end_inset
-
-suppose that 
-\begin_inset Formula $p,q$
-\end_inset
-
- are the endpoints of the chord through 
-\begin_inset Formula $u,v$
-\end_inset
-
- in 
-\begin_inset Formula $K$
-\end_inset
-
-,
- so that these points occur in the order 
-\begin_inset Formula $p,u,v,q.$
-\end_inset
-
- Then,
- the 
-\emph on
-cross-ratio
-\emph default
- distance between 
-\begin_inset Formula $u$
-\end_inset
-
- and 
-\begin_inset Formula $v$
-\end_inset
-
- is defined as 
-\begin_inset Formula 
-\[
-d_{K}(u,v)=\frac{\|u-v\|_{2}\|p-q\|_{2}}{\|p-u\|_{2}\|v-q\|_{2}}.
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-Tbis distance enjoyes the following isoperimetric inequality.
-\end_layout
-
-\begin_layout Theorem
-\begin_inset Argument 1
-status open
-
-\begin_layout Plain Layout
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Lovasz1998"
-literal "false"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset CommandInset label
-LatexCommand label
-name "thm:dK-iso"
-
-\end_inset
-
-For any convex body 
-\begin_inset Formula $K$
-\end_inset
-
-,
- and disjoint subsets 
-\begin_inset Formula $S_{1},S_{2}$
-\end_inset
-
- of it,
- and 
-\begin_inset Formula $S_{3}=K\setminus S_{1}\setminus S_{2},$
-\end_inset
-
-we have
-\begin_inset Formula 
-\[
-\vol(S_{3})\ge d_{K}(S_{1},S_{2})\frac{\vol(S_{1})\vol(S_{2})}{\vol(K)}.
-\]
-
-\end_inset
-
-
 \end_layout
 
 \end_inset
