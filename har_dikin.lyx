@@ -2918,7 +2918,7 @@ Prove the following for the log barrier in the polytope
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $\Pr_{w\sim E_{x}(r)}\left(x\in E_{w}(r)\right)\ge1-c_{2}r$
+\begin_inset Formula $\Pr_{w\sim E_{x}(r)}\left(x\in E_{w}(r)\right)\ge0.5-c_{2}r$
 \end_inset
 
  for some constant 
@@ -3855,7 +3855,7 @@ We can now bound the conductance of
 
 \begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 The next lemma results from studying strong self-concordance for classical barriers.
