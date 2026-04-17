@@ -484,7 +484,7 @@ A Markov chain is defined using a
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Definition
 A distribution 
 \begin_inset Formula $Q$
 \end_inset
@@ -512,6 +512,17 @@ stationary
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
 A distribution 
 \begin_inset Formula $Q$
 \end_inset
@@ -529,7 +540,18 @@ atom-free
 \end_inset
 
 .
- We say a Markov chain is 
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+We say a Markov chain is 
 \emph on
 time-reversible 
 \emph default
@@ -653,7 +675,7 @@ The uniform distribution is stationary,
 .
 \end_layout
 
-\begin_layout Standard
+\begin_layout Definition
 The 
 \emph on
 ergodic flow
@@ -848,7 +870,7 @@ The following relationships hold when
 We have 
 \begin_inset Formula 
 \[
-d_{TV}(P,Q)^{2}\le2d_{KL}(P,Q)\le2\chi^{2}(P,Q).
+2d_{TV}(P,Q)^{2}\le d_{KL}(P,Q)\le\chi^{2}(P,Q).
 \]
 
 \end_inset
@@ -1723,7 +1745,7 @@ Hence,
  
 \begin_inset Formula 
 \[
-\norm f^{2}-\langle f,Mf\rangle=\frac{1}{2}\int_{\Omega}\int_{\Omega}\left(f(x)-f(y\right)^{2}\,dP_{y}(x)\,dQ(y)\ge\frac{\phi^{2}}{4}\norm f^{2}
+\norm f^{2}-\langle f,Mf\rangle=\frac{1}{2}\int_{\Omega}\int_{\Omega}\left(f(x)-f(y)\right)^{2}\,dP_{y}(x)\,dQ(y)\ge\frac{\phi^{2}}{4}\norm f^{2}
 \]
 
 \end_inset
@@ -2005,7 +2027,7 @@ Let
 
  containing the unit ball.
  Show that (a) 
-\begin_inset Formula $\vol(K+\alpha B^{n})\le(1+\alpha)^{n}K$
+\begin_inset Formula $\vol(K+\alpha B^{n})\leq(1+\alpha)^{n}\vol(K)$
 \end_inset
 
  and (b) with 
@@ -2316,6 +2338,68 @@ Setting
  a purely geometric property.
 \end_layout
 
+\begin_layout Definition
+For two sets 
+\begin_inset Formula $A,B\subseteq\Rn$
+\end_inset
+
+,
+ let 
+\begin_inset Formula $d(A,B)=\inf_{x\in A,y\in B}||x-y||_{2}$
+\end_inset
+
+.
+ The 
+\emph on
+isoperimetric ratio 
+\emph default
+of a convex body 
+\begin_inset Formula $K$
+\end_inset
+
+ is defined to be 
+\begin_inset Formula 
+\[
+\inf_{(S_{1},S_{2},S_{3})\in P}\frac{\text{\vol}(S_{3})}{d(S_{1},S_{2})\min\left\{ \text{\vol}(S_{1}),\vol(S_{2})\right\} }
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $P$
+\end_inset
+
+ is the set of all partitions of 
+\begin_inset Formula $K$
+\end_inset
+
+ into three measurable sets,
+ each of nonzero volume.
+ We can generalize this definition for a logconcave measure 
+\begin_inset Formula $\mu$
+\end_inset
+
+ by replacing 
+\begin_inset Formula $\vol(S_{1}),\vol(S_{2}),\vol(S_{3})$
+\end_inset
+
+ with 
+\begin_inset Formula $\mu(S_{1}),\mu(S_{2}),\mu(S_{3})$
+\end_inset
+
+,
+ respectively,
+ and instead letting 
+\begin_inset Formula $P$
+\end_inset
+
+ be the set of partitions of the support of 
+\begin_inset Formula $\mu$
+\end_inset
+
+ into three sets.
+\end_layout
+
 \begin_layout Theorem
 \begin_inset CommandInset label
 LatexCommand label
@@ -2333,7 +2417,13 @@ Isoperimetry
 
 \end_inset
 
- Let 
+ The isoperimetric ratio of any convex body is at least 
+\begin_inset Formula $\frac{2}{D}$
+\end_inset
+
+.
+ That is,
+ let 
 \begin_inset Formula $S_{1},S_{2},S_{3}$
 \end_inset
 
@@ -2358,7 +2448,17 @@ Isoperimetry
 \end_layout
 
 \begin_layout Standard
-This can be generalized to any logconcave measure.
+In fact,
+ the isoperimetric ratio of any logconcave measure is also 
+\begin_inset Formula $\frac{2}{D}$
+\end_inset
+
+,
+ where 
+\begin_inset Formula $D$
+\end_inset
+
+ is the diameter of the measure's support.
  We will discuss this and other extensions in detail later.
  But first we bound the conductance.
 \end_layout
@@ -3199,7 +3299,7 @@ nolink "false"
 \begin{eqnarray*}
 \int_{S_{1}}P_{x}(S_{2})\,dx & = & \frac{1}{2}\int_{S_{1}}P_{x}(S_{2})\,dx+\frac{1}{2}\int_{S_{2}}P_{x}(S_{1})\,dx\\
  & \ge & \frac{1}{2}\vol(S_{3}'')\cdot\frac{1}{8}\\
- & \ge & \frac{3\delta\psi}{256\sqrt{n}}\min\{\vol(S_{1}),\vol(S_{2})\}
+ & \ge & \frac{3\delta\psi}{256\sqrt{n}}\min\{\vol(S_{1})-\frac{s}{2},\vol(S_{2})-\frac{s}{2}\}
 \end{eqnarray*}
 
 \end_inset
@@ -3767,7 +3867,7 @@ nolink "false"
 ,
  respectively.
  Moreover,
- give an isotropic convex body where both of these bounds are tight up to absolute constants.
+ give an isotropic convex body where both of these bounds are tight.
 \end_layout
 
 \begin_layout Standard

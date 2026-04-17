@@ -4857,7 +4857,30 @@ To analyze the algorithm above,
 \end_inset
 
  by 
-\begin_inset Formula $\|\nabla\phi\|_{\nabla^{2}\phi(x)^{-1}}$
+\begin_inset Formula $\|\nabla\phi\|_{\nabla^{2}\phi(x)^{+}}$
+\end_inset
+
+,
+ where 
+\begin_inset Formula $A^{+}$
+\end_inset
+
+ denotes the 
+\emph on
+pseudo inverse
+\emph default
+ of 
+\begin_inset Formula $A$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $A$
+\end_inset
+
+ is invertible,
+ then 
+\begin_inset Formula $A^{+}=A^{-1}$
 \end_inset
 
 .
@@ -4896,11 +4919,64 @@ We call
 \end_inset
 
  and that 
-\begin_inset Formula $\|\nabla\phi(x)\|_{\nabla^{2}\phi(x)^{-1}}^{2}\leq\nu$
+\begin_inset Formula $\|\nabla\phi(x)\|_{\nabla^{2}\phi(x)^{+}}^{2}\leq\nu$
 \end_inset
 
  for all 
 \begin_inset Formula $x$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Remark*
+The reason we utilize the pseudo-inverse is that we only care about the inverse in the direction of the gradient - the above definition only makes sense if for any 
+\begin_inset Formula $x\in K$
+\end_inset
+
+,
+ there is a vector 
+\begin_inset Formula $v_{x}$
+\end_inset
+
+ such that 
+\begin_inset Formula $\nabla^{2}\phi(x)v_{x}=\nabla\phi(x)$
+\end_inset
+
+,
+ so we can define 
+\begin_inset Formula $\nabla^{2}\phi(x)^{-1}\nabla\phi(x):=v_{x}$
+\end_inset
+
+.
+ In the analysis to come,
+ this is will be the semantics of the vector 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\nospellcheck off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\nabla^{2}\phi(x)^{-1}\nabla\phi(x)$
+\end_inset
+
+,
+ and the norm induced by the inverse Hessian should be computed with this in mind,
+ i.e.
+ 
+\begin_inset Formula $\nabla^{2}f(x)^{-1}$
+\end_inset
+
+ should be viewed as 
+\begin_inset Formula $\nabla^{2}f(x)^{+}$
 \end_inset
 
 .
@@ -5712,7 +5788,7 @@ status open
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $x\leftarrow x-\nabla^{2}f_{t}(x)^{-1}\nabla f_{t}(x)$
+\begin_inset Formula $x\leftarrow x-\nabla^{2}f_{t}(x)^{+}\nabla f_{t}(x)$
 \end_inset
 
 .
