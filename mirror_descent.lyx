@@ -87,7 +87,7 @@
 \begin_layout Standard
 In this chapter,
  we study techniques that further exploit the geometry of convex functions and associated norms.
- Many of these techniques are effective in practice for large scale problems.
+ Many of these techniques are effective in practice for large-scale problems.
  We recall the following relevant definitions.
 \end_layout
 
@@ -1203,16 +1203,6 @@ Given any Banach space
 \end_inset
 
 .
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Need to define Banach space somewhere...
- prelims?
-\end_layout
-
-\end_inset
-
  
 \begin_inset Note Note
 status open

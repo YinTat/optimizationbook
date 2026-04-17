@@ -712,7 +712,12 @@ well-rounded
  Connecting improvements in the Cheeger constant (which is the minimum isoperimetric ratio over all subsets) directly to the complexity of volume computation was an open question for a couple of decades.
  To apply improvements in the Cheeger constant,
  one would need to replace well-roundedness with (near-)isotropy and maintain that.
- However,
+ 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+However,
  maintaining isotropy appears to be much harder —
  possibly requiring a sequence of 
 \begin_inset Formula $\Omega(n)$
@@ -730,8 +735,23 @@ well-rounded
  even if the KLS conjecture turns out to be true.
 \end_layout
 
+\end_inset
+
+Recent work shows that a well-rounded convex body can be turned into a near-isotropic one with complexity 
+\begin_inset Formula $\tilde{O}(n^{3})$
+\end_inset
+
+.
+ This results in an algorithm to find a near-isotropic transformation with complexity 
+\begin_inset Formula $O(n^{3.5}\poly\log(nR/r))$
+\end_inset
+
+.
+ 
+\end_layout
+
 \begin_layout Standard
-A faster algorithm is known for well-rounded convex bodies (any isotropic logconcave density satisfies 
+A faster volume algorithm is known for well-rounded convex bodies (any isotropic logconcave density satisfies 
 \begin_inset Formula $\frac{R}{r}=O(\sqrt{n})$
 \end_inset
 
@@ -782,7 +802,23 @@ The reader will notice that the LV algorithm of the previous section for volume 
  we can apply it directly,
  with minimal changes.
  The first step of the algorithm is an affine transformation that we will discuss in the next section.
- 
+ Recall that 
+\begin_inset Formula $L_{f}(t)$
+\end_inset
+
+ for a logconcave function 
+\begin_inset Formula $f:\R^{n}\rightarrow\R_{+}$
+\end_inset
+
+ is the convex level set 
+\begin_inset Formula 
+\[
+L_{f}(t)=\{x\in\R^{n}:\,f(x)\ge t\}.
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -878,7 +914,7 @@ Let
 \begin_inset Formula $K.$
 \end_inset
 
-
+ 
 \end_layout
 
 \begin_layout Enumerate
@@ -888,7 +924,7 @@ For
 
 ,
  let 
-\begin_inset Formula $a_{i}=\frac{1}{B}(1+\frac{1}{\sqrt{n}})^{i},\,a_{m}=1$
+\begin_inset Formula $a_{i}=\frac{1}{4n}(1+\frac{1}{\sqrt{n}})^{i},\,a_{m}=1$
 \end_inset
 
  and 
@@ -968,12 +1004,24 @@ end{algorithm2e}
 
 \end_layout
 
+\begin_layout Standard
+In words,
+ the algorithm starts with the indicator function over a convex body containing most of the measure of 
+\begin_inset Formula $f$
+\end_inset
+
+ and anneals through a sequence of distributions to reach 
+\begin_inset Formula $f$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Theorem
 The LV algorithm applied to an integrable logconcave function 
 \begin_inset Formula $f:\R^{n}\rightarrow\R$
 \end_inset
 
-,
  estimates the integral of 
 \begin_inset Formula $f$
 \end_inset
