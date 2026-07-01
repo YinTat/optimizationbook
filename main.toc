@@ -1,0 +1,146 @@
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{\numberline {1}Introduction}{6}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Why non-convex functions can be difficult to optimize}{7}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Why is convexity useful? Linear Separability!}{7}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Convex problems are everywhere!}{11}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}Minimum Cost Flow Problem (Computer Science)}{11}{subsection.1.3.1}%
+\contentsline {subsection}{\numberline {1.3.2}Linear Programs (Operation Research/Economics)}{12}{subsection.1.3.2}%
+\contentsline {subsection}{\numberline {1.3.3}Logistic regression (from Machine Learning)}{12}{subsection.1.3.3}%
+\contentsline {subsection}{\numberline {1.3.4}Minimal Surface (Physics)}{12}{subsection.1.3.4}%
+\contentsline {section}{\numberline {1.4}Examples of convex sets and functions}{13}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Checking convexity}{14}{section.1.5}%
+\contentsline {section}{\numberline {1.6}Subgradients}{15}{section.1.6}%
+\contentsline {section}{\numberline {1.7}Logconcave functions}{16}{section.1.7}%
+\contentsline {part}{I\hspace {1em}Optimization}{18}{part.1}%
+\contentsline {chapter}{\numberline {2}Gradient Descent}{19}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Philosophy}{19}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Basic Algorithm}{19}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Analysis for general functions}{21}{subsection.2.2.1}%
+\contentsline {section}{\numberline {2.3}Analysis for convex functions}{22}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Strongly Convex Functions}{24}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Line Search}{25}{section.2.5}%
+\contentsline {section}{\numberline {2.6}Generalizing Gradient Descent{*}}{26}{section.2.6}%
+\contentsline {section}{\numberline {2.7}Gradient Flow}{28}{section.2.7}%
+\contentsline {section}{\numberline {2.8}Discussion}{28}{section.2.8}%
+\contentsline {chapter}{\numberline {3}Elimination}{29}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Cutting Plane Methods}{29}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Ellipsoid Method}{30}{section.3.2}%
+\contentsline {section}{\numberline {3.3}From Volume to Function Value}{32}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Center of Gravity Method}{34}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Sphere and Parabola Methods}{38}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Sphere Method}{39}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Parabola Method Via Epigraph}{41}{subsection.3.5.2}%
+\contentsline {subsection}{\numberline {3.5.3}Discussion}{43}{subsection.3.5.3}%
+\babel@toc {american}{}\relax 
+\contentsline {section}{\numberline {3.6}Lower Bounds}{43}{section.3.6}%
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{\numberline {4}Reduction}{45}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Equivalences between Oracles}{45}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Oracles for Convex Sets}{45}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Duals of Convex Sets}{46}{subsection.4.1.2}%
+\contentsline {subsection}{\numberline {4.1.3}Oracles for Convex Functions}{47}{subsection.4.1.3}%
+\contentsline {subsection}{\numberline {4.1.4}Convex Conjugate and Equivalences}{48}{subsection.4.1.4}%
+\contentsline {section}{\numberline {4.2}Gradient from Evaluation via Finite Difference}{50}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Separation via Membership }{54}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Gradient from Evaluation via Auto Differentiation }{58}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Gradient from Evaluation via Complex Step Differentiation}{59}{subsection.4.3.2}%
+\contentsline {section}{\numberline {4.4}Composite Problem via Duality}{60}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Motivation}{60}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Example: Semidefinite Programming}{62}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}Duality and Convex Hull}{63}{subsection.4.4.3}%
+\contentsline {chapter}{\numberline {5}Geometrization}{66}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Frank--Wolfe }{66}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Algorithm}{66}{subsection.5.1.1}%
+\contentsline {section}{\numberline {5.2}The Newton Method}{67}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Interior Point Method for Linear Programs}{72}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Basic Properties}{72}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Following the central path}{74}{subsection.5.3.2}%
+\contentsline {subsection}{\numberline {5.3.3}Finding the initial point}{75}{subsection.5.3.3}%
+\contentsline {subsection}{\numberline {5.3.4}Finding a feasible solution close to the Central Path}{78}{subsection.5.3.4}%
+\contentsline {subsection}{\numberline {5.3.5}Why $\sqrt {n}$?}{82}{subsection.5.3.5}%
+\contentsline {section}{\numberline {5.4}Interior Point Method for Convex Programs}{83}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1}Self-concordance}{83}{subsection.5.4.1}%
+\contentsline {subsection}{\numberline {5.4.2}Self-concordant barrier functions}{84}{subsection.5.4.2}%
+\contentsline {subsection}{\numberline {5.4.3}Convergence of Newton method for self-concordant functions}{85}{subsection.5.4.3}%
+\contentsline {subsection}{\numberline {5.4.4}Main Algorithm and Analysis}{87}{subsection.5.4.4}%
+\babel@toc {american}{}\relax 
+\contentsline {section}{\numberline {5.5}State of the Art}{89}{section.5.5}%
+\contentsline {section}{\numberline {5.6}Remarks on the Runtime}{91}{section.5.6}%
+\contentsline {subsection}{\numberline {5.6.1}Structured vs black-box problems}{91}{subsection.5.6.1}%
+\contentsline {subsection}{\numberline {5.6.2}Understanding the bounds}{91}{subsection.5.6.2}%
+\contentsline {subsection}{\numberline {5.6.3}$L/\mu $ can be dimension dependent}{92}{subsection.5.6.3}%
+\contentsline {subsection}{\numberline {5.6.4}Accuracy of analysis}{92}{subsection.5.6.4}%
+\contentsline {section}{\numberline {5.7}Relations Between Different First-order Methods}{92}{section.5.7}%
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{\numberline {6}Sparsification}{94}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Subspace embedding}{94}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}Oblivious Subspace Embedding via Johnson-Lindenstrauss}{95}{subsection.6.1.1}%
+\contentsline {subsection}{\numberline {6.1.2}Sparse Johnson-Lindenstrauss}{97}{subsection.6.1.2}%
+\contentsline {subsection}{\numberline {6.1.3}Back to Regression}{99}{subsection.6.1.3}%
+\contentsline {section}{\numberline {6.2}Leverage Score Sampling}{99}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}Leverage scores}{99}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}Uniform Sampling}{101}{subsection.6.2.2}%
+\contentsline {section}{\numberline {6.3}Stochastic Gradient Descent}{101}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}Stochastic Problem}{102}{subsection.6.3.1}%
+\contentsline {subsection}{\numberline {6.3.2}Finite Sum Problem}{104}{subsection.6.3.2}%
+\contentsline {section}{\numberline {6.4}Coordinate Descent}{105}{section.6.4}%
+\contentsline {chapter}{\numberline {7}Acceleration}{107}{chapter.7}%
+\babel@toc {american}{}\relax 
+\contentsline {section}{\numberline {7.1}Chebyshev Polynomials}{107}{section.7.1}%
+\babel@toc {english}{}\relax 
+\babel@toc {american}{}\relax 
+\babel@toc {american}{}\relax 
+\contentsline {section}{\numberline {7.2}Conjugate Gradient}{108}{section.7.2}%
+\babel@toc {english}{}\relax 
+\contentsline {section}{\numberline {7.3}Accelerated Gradient Descent via Plane Search}{111}{section.7.3}%
+\contentsline {section}{\numberline {7.4}Accelerated Gradient Descent}{112}{section.7.4}%
+\contentsline {subsection}{\numberline {7.4.1}Gradient Mapping}{112}{subsection.7.4.1}%
+\contentsline {subsection}{\numberline {7.4.2}Gradient Descent Using Gradient Mapping}{114}{subsection.7.4.2}%
+\contentsline {subsection}{\numberline {7.4.3}Mirror Descent Using Gradient Mapping}{114}{subsection.7.4.3}%
+\contentsline {subsection}{\numberline {7.4.4}Algorithm and Analysis}{115}{subsection.7.4.4}%
+\contentsline {section}{\numberline {7.5}Accelerated Coordinate Descent}{116}{section.7.5}%
+\contentsline {section}{\numberline {7.6}Accelerated Stochastic Descent}{117}{section.7.6}%
+\contentsline {part}{II\hspace {1em}Sampling}{118}{part.2}%
+\contentsline {chapter}{\numberline {8}Gradient-based Sampling}{119}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Gradient-based Sampling: Langevin Dynamics}{119}{section.8.1}%
+\contentsline {subsection}{\numberline {8.1.1}Convergence via Coupling in Wasserstein distance}{122}{subsection.8.1.1}%
+\contentsline {subsection}{\numberline {8.1.2}Convergence in $\chi ^{2}$ and KL divergences}{123}{subsection.8.1.2}%
+\contentsline {section}{\numberline {8.2}Langevin Dynamics is Gradient Descent in Density Space*\FN@sf@gobble@opt {Sections marked with * are more mathematical and can be skipped.}}{125}{section.8.2}%
+\contentsline {subsection}{\numberline {8.2.1}Discussion}{127}{subsection.8.2.1}%
+\contentsline {chapter}{\numberline {9}Elimination and Reduction}{128}{chapter.9}%
+\babel@toc {american}{}\relax 
+\contentsline {section}{\numberline {9.1}Hardness of Volume Estimation}{128}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Cutting Plane method for Volume Computation: Reduction to Center-of-Gravity}{129}{section.9.2}%
+\babel@toc {english}{}\relax 
+\babel@toc {american}{}\relax 
+\contentsline {section}{\numberline {9.3}Proof of the Brunn-Minkowski Inequality}{131}{section.9.3}%
+\babel@toc {english}{}\relax 
+\contentsline {section}{\numberline {9.4}Optimization from Membership via Sampling}{132}{section.9.4}%
+\contentsline {chapter}{\numberline {10}Geometrization }{134}{chapter.10}%
+\contentsline {section}{\numberline {10.1}Basics of Markov chains}{134}{section.10.1}%
+\contentsline {section}{\numberline {10.2}Conductance of the Ball Walk}{140}{section.10.2}%
+\contentsline {section}{\numberline {10.3}Generating a warm start}{147}{section.10.3}%
+\contentsline {section}{\numberline {10.4}Isotropic Transformation}{147}{section.10.4}%
+\contentsline {section}{\numberline {10.5}Isoperimetry via localization}{148}{section.10.5}%
+\contentsline {subsection}{\numberline {10.5.1}Localization}{149}{subsection.10.5.1}%
+\contentsline {subsection}{\numberline {10.5.2}Alternative formulations of Localization}{153}{subsection.10.5.2}%
+\contentsline {section}{\numberline {10.6}Hit-and-Run}{155}{section.10.6}%
+\contentsline {section}{\numberline {10.7}Dikin walk}{162}{section.10.7}%
+\contentsline {subsection}{\numberline {10.7.1}Strong Self-Concordance}{163}{subsection.10.7.1}%
+\contentsline {section}{\numberline {10.8}Hamiltonian Monte Carlo}{168}{section.10.8}%
+\contentsline {chapter}{\numberline {11}Annealing }{172}{chapter.11}%
+\contentsline {section}{\numberline {11.1}Volume Computation: the DFK Algorithm}{172}{section.11.1}%
+\contentsline {section}{\numberline {11.2}Simulated Annealing}{174}{section.11.2}%
+\babel@toc {american}{}\relax 
+\contentsline {section}{\numberline {11.3}Volume Computation by Annealing}{176}{section.11.3}%
+\contentsline {section}{\numberline {11.4}Integration by Annealing}{178}{section.11.4}%
+\babel@toc {english}{}\relax 
+\babel@toc {american}{}\relax 
+\contentsline {chapter}{\numberline {A}Calculus - Review}{184}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Divergence and Integration by Parts}{184}{section.A.1}%
+\contentsline {section}{\numberline {A.2}Tips for Computing Gradients}{184}{section.A.2}%
+\contentsline {subsection}{\numberline {A.2.1}Computing gradients via directional derivatives}{184}{subsection.A.2.1}%
+\contentsline {subsection}{\numberline {A.2.2}Taking derivatives on both sides}{187}{subsection.A.2.2}%
+\contentsline {subsection}{\numberline {A.2.3}Linearity of Expectation - the continuous version}{187}{subsection.A.2.3}%
+\contentsline {section}{\numberline {A.3}Solving optimization problems by hand}{187}{section.A.3}%
+\contentsline {chapter}{\numberline {B}Notation }{189}{appendix.B}%

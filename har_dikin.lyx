@@ -2584,7 +2584,7 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename symmetry.png
+	filename Figures/symmetry.png
 	scale 45
 
 \end_inset
@@ -2621,7 +2621,7 @@ status open
 \noindent
 \align left
 \begin_inset Graphics
-	filename ssc.png
+	filename Figures/ssc.png
 	scale 35
 
 \end_inset
