@@ -1615,7 +1615,7 @@ For the second part,
  we have
 \begin_inset Formula 
 \[
-(1-\gamma)\vol(sB^{n})\le\vol((x+sB^{n}\setminus K)\le p\vol(sB^{n})-\vol((s/2)B^{n}).
+(1-\gamma)\vol(sB^{n})\ge\vol((x+sB^{n})\setminus K)\ge p\vol(sB^{n})-\vol((s/2)B^{n}).
 \]
 
 \end_inset

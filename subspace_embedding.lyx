@@ -868,7 +868,7 @@ Suppose that
 
 \begin_layout Proof
 Let 
-\begin_inset Formula $N=\{x_{i}\}_{i=1}$
+\begin_inset Formula $\mathcal{N}=\{x_i\}_{i=1}^{N}$
 \end_inset
 
  be a 
@@ -879,92 +879,97 @@ Let
 \begin_inset Formula $S^{d-1}$
 \end_inset
 
-.
- Then, for any 
-\begin_inset Formula $x$
-\end_inset
-
-, we have 
-\begin_inset Formula $x_{1}\in N$
-\end_inset
-
- such that 
-\begin_inset Formula $\|x-x_{1}\|_{2}\leq\frac{1}{2}$
-\end_inset
-
-.
- Using the 
-\begin_inset Formula $\frac{1}{2}$
-\end_inset
-
--net guarantee on the vector 
-\begin_inset Formula $x-x_{1}$
-\end_inset
-
-, we can find 
-\begin_inset Formula $x_{2}\in N$
-\end_inset
-
- and 
-\begin_inset Formula $0\leq t_{2}\leq\frac{1}{2}$
-\end_inset
-
- such that
-\begin_inset Formula 
-\[
-\|x-x_{1}-t_{2}x_{2}\|\leq\frac{1}{4}.
-\]
-
-\end_inset
-
-Continuing similarly, we have 
-\begin_inset Formula $x=\sum_{i=1}^{\infty}t_{i}x_{i}$
-\end_inset
-
+,
  with 
-\begin_inset Formula $0\leq t_{i}\leq\frac{1}{2^{i-1}}$
+\begin_inset Formula $N\leq5^d$
 \end_inset
 
 .
- Hence, we have that
-\begin_inset Formula 
-\begin{align*}
-x^{\top}(U^{\top}\Pi^{\top}\Pi U-I_{d})x & =\sum_{i,j}t_{i}t_{j}x_{i}^{\top}(U^{\top}\Pi^{\top}\Pi U-I_{d})x_{j}\\
- & \leq\sum_{i,j}t_{i}t_{j}\cdot\max_{x\in N}\left|x^{\top}\left|U^{\top}\Pi^{\top}\Pi U-I_{d}\right|x\right|\\
- & \le4\max_{x\in N}\left|x^{\top}\left|U^{\top}\Pi^{\top}\Pi U-I_{d}\right|x\right|\\
- & =4\max_{x\in UN}\left|\|\Pi x\|^{2}-1\right|
-\end{align*}
-
+ Put 
+\begin_inset Formula $\Delta=U^\top\Pi^\top\Pi U-I_d$
 \end_inset
 
-
-\end_layout
-
-\begin_layout Proof
-Now, using that 
-\begin_inset Formula $\Pi$
-\end_inset
-
- is 
+.
+ By the 
 \begin_inset Formula $(1,\epsilon,\delta)$
 \end_inset
 
- OSE, we have that
+ guarantee for 
+\begin_inset Formula $\Pi$
+\end_inset
+
+ and a union bound over 
+\begin_inset Formula $U\mathcal{N}$
+\end_inset
+
+,
+ with probability at least 
+\begin_inset Formula $1-5^d\delta$
+\end_inset
+
+,
+ 
 \begin_inset Formula 
 \[
-\P(\left|\|\Pi x\|^{2}-1\right|\leq\epsilon)\geq1-\delta.
+|y^\top\Delta y|=\left|\|\Pi Uy\|^2-1\right|\leq\epsilon\quad\text{for all }y\in\mathcal{N}.
 \]
 
 \end_inset
 
-Taking a union bound over all 
-\begin_inset Formula $x\in UN$
+On this event,
+ let 
+\begin_inset Formula $x$
 \end_inset
 
-, we have
+ be a unit eigenvector of 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ with 
+\begin_inset Formula $|x^\top\Delta x|=\|\Delta\|_{\op}$
+\end_inset
+
+,
+ and choose 
+\begin_inset Formula $y\in\mathcal{N}$
+\end_inset
+
+ with 
+\begin_inset Formula $\|x-y\|_2\leq\frac{1}{2}$
+\end_inset
+
+.
+ Write 
+\begin_inset Formula $y=\alpha x+z$
+\end_inset
+
+ with 
+\begin_inset Formula $z\perp x$
+\end_inset
+
+.
+ Then 
+\begin_inset Formula $\alpha\geq\frac{7}{8}$
+\end_inset
+
+,
+ so
 \begin_inset Formula 
 \[
-\P(x^{\top}(U^{\top}\Pi^{\top}\Pi U-I_{d})x\leq4\epsilon)\geq1-5^{d}\delta.
+|y^\top\Delta y|\geq(2\alpha^2-1)\|\Delta\|_{\op}\geq\frac{17}{32}\|\Delta\|_{\op}.
+\]
+
+\end_inset
+
+Thus 
+\begin_inset Formula $\|\Delta\|_{\op}\leq\frac{32}{17}\epsilon\leq4\epsilon$
+\end_inset
+
+,
+ and hence
+\begin_inset Formula 
+\[
+\P\left(\|U^\top\Pi^\top\Pi U-I_d\|_{\op}\leq4\epsilon\right)\geq1-5^d\delta.
 \]
 
 \end_inset

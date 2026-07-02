@@ -5849,25 +5849,7 @@ We prove by induction that the formula
 \end_inset
 
 .
- More precisely,
- we have
-\begin_inset Formula 
-\[
-f(x_{i})=f(x_{j_{1}}(x_{i},x_{j_{-1}}),x_{j_{2}}(x_{i},x_{j_{-2}}),\cdots,x_{j_{k}}(x_{i},x_{j_{-k}}))
-\]
-
-\end_inset
-
-where we use 
-\begin_inset Formula $x_{j_{-1}}$
-\end_inset
-
- to denote the variables 
-\begin_inset Formula $x_{j_{2}},x_{j_{3}},\cdots,x_{j_{k}}$
-\end_inset
-
-.
- By chain rule,
+ Applying the chain rule to these direct dependencies,
  we have
 \begin_inset Formula 
 \[

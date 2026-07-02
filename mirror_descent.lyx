@@ -1038,7 +1038,7 @@ Consider using the subgradient method above to minimize
 \end_inset
 
  and start at the point 
-\begin_inset Formula $x=(1,\frac{1}{n},\frac{1}{n},\cdots,\frac{1}{n})$
+\begin_inset Formula $x=(\frac{1}{2},\frac{1}{2n},\frac{1}{2n},\cdots,\frac{1}{2n})$
 \end_inset
 
 ,
@@ -1067,7 +1067,7 @@ Consider using the subgradient method above to minimize
  Therefore,
  to get constant error,
  we need to take step size 
-\begin_inset Formula $h\le\frac{1}{n}$
+\begin_inset Formula $h\le\frac{1}{2n}$
 \end_inset
 
  and hence we need 

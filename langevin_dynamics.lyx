@@ -2430,17 +2430,7 @@ literal "true"
 
 \end_inset
 
- for a tight estimate of log-Sobolev constant for logconcave measures.
- In particular for a logconcave measure with support of diameter 
-\begin_inset Formula $D$
-\end_inset
-
-,
- the log-Sobolev constant is 
-\begin_inset Formula $\Omega(1/D)$
-\end_inset
-
-.
+ for tight log-Sobolev estimates for isotropic logconcave measures in terms of the support diameter.
 \end_layout
 
 \end_body

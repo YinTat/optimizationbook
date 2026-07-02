@@ -1265,7 +1265,12 @@ Assume first that
 \end_inset
 
 .
- By symmetries,
+ By symmetry,
+ we may assume 
+\begin_inset Formula $y_i\ge0$
+\end_inset
+
+ and take a nonnegative maximizer;
  it suffices to compute
 \begin_inset Formula 
 \[
@@ -1303,7 +1308,7 @@ for non-zero
  we have that
 \begin_inset Formula 
 \begin{align*}
--\nabla f(x)+u\nabla h(x) & =0,\\
+\nabla f(x)+u\nabla h(x) & =0,\\
 uh(x) & =0,\\
 h(x)\leq0, & u\geq0.
 \end{align*}
@@ -1311,11 +1316,11 @@ h(x)\leq0, & u\geq0.
 \end_inset
 
 Note that 
-\begin_inset Formula $\nabla f(x)=y$
+\begin_inset Formula $\nabla f(x)=-y$
 \end_inset
 
  and 
-\begin_inset Formula $(\nabla h(x))_{i}=\frac{1}{p}\|x\|_{p}^{1-p}\cdot px_{i}^{p-1}=\|x\|_{p}^{1-p}\cdot x^{p-1}$
+\begin_inset Formula $(\nabla h(x))_{i}=\|x\|_{p}^{1-p}x_i^{p-1}$
 \end_inset
 
 .

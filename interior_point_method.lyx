@@ -1608,7 +1608,7 @@ Given a feasible
  we have 
 \begin_inset Formula 
 \begin{align}
-\frac{\delta}{L}\cdot c^{\top}\overline{x}_{1:n}+\theta\leq\overline{\text{OPT}}+\delta^{2}\leq\frac{\delta}{LR}\cdot\overline{\text{OPT}}+\delta^{2},\label{eq:eq1_in_appendix}
+\frac{\delta}{L}\cdot c^{\top}\overline{x}_{1:n}+\theta\leq\overline{\text{OPT}}+\delta^{2}\leq\frac{\delta}{LR}\cdot\text{OPT}+\delta^{2},\label{eq:eq1_in_appendix}
 \end{align}
 
 \end_inset
@@ -1666,22 +1666,18 @@ nolink "false"
 Note that 
 \begin_inset Formula 
 \begin{align}
-\frac{\delta}{L}c^{\top}\overline{x}_{1:n}\geq-\frac{\delta}{L}\|c\|_{\infty}\|\overline{x}_{1:n}\|_{1}=-\frac{\delta}{L}\|c\|_{\infty}\|\frac{1}{R}x\|_{1}\geq-\frac{\delta}{L}\|c\|_{\infty}\frac{n}{R}\|x\|_{\infty}\geq-\delta n,\label{eq:lower_bound_on_delta_L_c_ovx}
+\frac{\delta}{L}c^{\top}\overline{x}_{1:n}\geq-\frac{\delta}{L}\|c\|_{\infty}\|\overline{x}_{1:n}\|_{1}\geq-\frac{\delta}{L}\|c\|_{\infty}(n+1)\geq-\delta(n+1),\label{eq:lower_bound_on_delta_L_c_ovx}
 \end{align}
 
 \end_inset
 
-where the second step follows from definition 
-\begin_inset Formula $\overline{x}\in\R^{n+2}$
+where the second step follows from the transformed constraint 
+\begin_inset Formula $1_n^\top\overline{x}_{1:n}+\tau=n+1$
 \end_inset
 
-,
+ and nonnegativity,
  and the last step follows from 
 \begin_inset Formula $\|c\|_{\infty}\leq L$
-\end_inset
-
- and 
-\begin_inset Formula $\|x\|_{\infty}\leq R$
 \end_inset
 
 .
@@ -1696,7 +1692,7 @@ We can upper bound the
  
 \begin_inset Formula 
 \begin{align}
-\theta\leq\frac{\delta}{LR}\cdot\overline{\text{OPT}}+\delta^{2}+\delta n\leq2n\delta+\delta^{2}\leq4n\delta\label{eq:theta_is_at_most_4n_delta}
+\theta\leq\frac{\delta}{LR}\cdot\text{OPT}+\delta^{2}+\delta(n+1)\leq(2n+1)\delta+\delta^{2}\leq4n\delta\label{eq:theta_is_at_most_4n_delta}
 \end{align}
 
 \end_inset
