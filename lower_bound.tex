@@ -39,9 +39,10 @@ For the lower bound $\nabla^{2}f(x)\succeq\mu\cdot I$, we note that
 \]
 
 To lower bound the error, we note that the gradient at $x^{(0)}$
-is of the form $(?,0,0,0,\cdots)$ and hence by the assumption $x^{(1)}=(?,0,0,0,\cdots)$
-and $\nabla f(x^{(1)})=(?,?,0,0,\cdots)$. By induction, only the
-first $k$ coordinates of $x^{(k)}$ are non-zero.
+is supported only on the first coordinate. Hence, by the assumption,
+$x^{(1)}$ is supported only on the first coordinate and $\nabla f(x^{(1)})$
+is supported only on the first two coordinates. By induction, only
+the first $k$ coordinates of $x^{(k)}$ are non-zero.
 
 Now, we compute the minimizer of $f(x)$. Let $x^{*}$ be the minimizer
 of $f(x)$. By the optimality condition, we have that

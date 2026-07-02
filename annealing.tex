@@ -4,12 +4,12 @@
 In this chapter, we develop efficient algorithms for volume computation
 and integration based on a technique called \emph{Simulated Annealing,
 }which is also provably efficient for convex optimization. The volume
-problem was defined in Chapter (\ref{chap:Elimination-and-Reduction})
-(Problem (\ref{problem:volume})). Integration is the following generalization.
+problem was defined in Chapter \ref{chap:Elimination-and-Reduction}
+(Problem \ref{problem:volume}). Integration is the following generalization.
 \begin{problem}[Integration]
  Given an evaluation oracle for an integrable logconcave function
 $f:\R^{n}\rightarrow\R_{+}$, a point $x_{0}$ such that $f(x_{0})\ge\beta,$
-numbers $r,R>0$ such that (i) $\E(\norm{x-x_{0}}^{2})\le R^{2}$
+numbers $r,R>0$ such that (i) $\E(\norm{x-x_{0}}^{2})\le R^{2},$
 (ii) the level set of $\pi_{f}$ of measure $1/8$ contains a ball
 of radius $r$, and $\varepsilon>0$, output a number $A$ such that
 \[
@@ -201,8 +201,9 @@ The quadratic sample complexity might appear to be nearly optimal
 -- the final ratio being estimated could be as large as $R^{n}$
 or $n^{n}$, which means that any sequence that uses at most $m$
 phases estimates a ratio as large as $n^{n/m}$ needing as many samples,
-and this means that $m=\Omega(n)$ is needed to get polynomial complexity
-even. We will soon see that this intuitive reasoning is not valid. 
+and this means that $m=\Omega(n)$ is needed even to get polynomial
+complexity. We will soon see that this intuitive reasoning is not
+valid. 
 
 \section{Simulated Annealing}
 
@@ -294,16 +295,16 @@ $f_{i}$ defined as in the annealing algorithm for some logconcave
 function $f:\R^{n}\rightarrow\R_{+}$. Then a random sample $X\sim p_{i}$
 satisfies
 \[
-\E_{p_{i}}\left(\frac{p_{i}(x)}{p_{i+1}(x)}\right)=O(1).
+\E_{X\sim p_{i}}\left(\frac{p_{i}(X)}{p_{i+1}(X)}\right)=O(1).
 \]
 \end{lem}
 
 The underlying mathematical property behind this lemma is the following.
 \begin{lem}
 \label{lem:ratio_var} Let $f$ be a logconcave function in $\R^{n}.$
-Then $Z(a)=a^{n}\int_{\R^{n}}f(x)^{a}$ is logconcave for $a>0$.
-If $f$ has support $K$, then $Z(a)=a^{n}\int_{K}f(ax)$ is logconcave
-for $a>0$.
+Then $Z(a)=a^{n}\int_{\R^{n}}f(x)^{a}\,dx$ is logconcave for $a>0$.
+If $f$ has support $K$, then $Z(a)=a^{n}\int_{K}f(x)^{a}\,dx$ is
+logconcave for $a>0$.
 \end{lem}
 
 \begin{proof}

@@ -84,12 +84,13 @@ Throughout this section, we assume
 \end_inset
 
  is positive definite.
- For a full-column-rank linear system 
+ For a consistent full-column-rank linear system 
 \begin_inset Formula $Ax=b$
 \end_inset
 
-, we can always pass to 
-\begin_inset Formula $A^{T}Ax=A^{T}b$
+ (or for the associated least-squares problem),
+ we can pass to 
+\begin_inset Formula $A^{\top}Ax=A^{\top}b$
 \end_inset
 
  to satisfy the assumption.

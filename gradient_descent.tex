@@ -51,8 +51,7 @@ that blows up on the boundary (Section \ref{sec:IPM}).
 \ref{sec:Chebyshev-Polynomials}).
 \item Partial Approximation: Split the problem into two parts and approximate
 only one part.
-\item Taylor Approximation: $f(y)\approx\sum^{K}_{k=0}D^{k}f(x)[y-x]^{k}/k!$
-.
+\item Taylor Approximation: $f(y)\approx\sum^{K}_{k=0}D^{k}f(x)[y-x]^{k}/k!.$
 \item Mixed $\ell^{2}$-$\ell^{p}$ Approximation: $f(y)\approx f(x)+\left\langle \nabla f(x),y-x\right\rangle +\sum^{n}_{i=1}(\alpha_{i}(y_{i}-x_{i})^{2}+\beta_{i}(y_{i}-x_{i})^{p})$
 \end{itemize}
 Here are other approximations not covered:
@@ -286,7 +285,7 @@ all $x,y$.
 \end{lem}
 
 \begin{proof}
-Theorem \ref{thm:first_order} and Cauchy-Schwarz inequality shows
+Theorem \ref{thm:first_order} and the Cauchy-Schwarz inequality show
 that 
 \[
 f(x)-f(y)\leq\left\langle \nabla f(x),x-y\right\rangle \leq\|\nabla f(x)\|_{2}\cdot\|x-y\|_{2}.
@@ -294,7 +293,7 @@ f(x)-f(y)\leq\left\langle \nabla f(x),x-y\right\rangle \leq\|\nabla f(x)\|_{2}\c
 \end{proof}
 This in turn gives a better bound on the number of iterations because
 the bound in Theorem \ref{thm:gd_general} is affected by $f(x)-f(x^{*})$
-rather than $\norm{x-x^{*}}_{2}$
+rather than $\norm{x-x^{*}}_{2}.$
 \begin{thm}
 \label{thm:gd_convex}Let $f\in\mathcal{C}^{2}(\R^{n})$ be convex
 with $L$-Lipschitz gradient and $x^{*}$ be any minimizer of $f$.
@@ -663,7 +662,7 @@ many well-known theorems. Here we list some of them.
 Show that the third condition in the definition of $\alpha$-approximation
 can be replaced by 
 \[
-g(y)+\alpha h(y/\alpha)\leq f(y)\leq g(y)+h(y)
+g(y)+\alpha h\left(x+\frac{y-x}{\alpha}\right)\leq f(y)\leq g(y)+h(y)
 \]
  while maintaining the guarantee for the convergence of generalized
 GD.

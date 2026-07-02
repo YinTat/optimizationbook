@@ -410,12 +410,12 @@ To give another interpretation of the central path,
 
 \end_inset
 
-Note that for any feasible 
+Note that for any primal-feasible 
 \begin_inset Formula $x$
 \end_inset
 
- and 
-\begin_inset Formula $y$
+ and dual-feasible 
+\begin_inset Formula $(y,s)$
 \end_inset
 
 ,
@@ -457,11 +457,12 @@ Hence,
 \end_inset
 
  is a good approximation of the primal solution.
- In fact 
-\begin_inset Formula $t$
+ In fact,
+ 
+\begin_inset Formula $nt$
 \end_inset
 
- itself is a bound on the error of the current solution.
+ itself is a bound on the duality gap of the current solution.
 \end_layout
 
 \begin_layout Lemma
@@ -952,7 +953,7 @@ Similarly,
  
 \end_layout
 
-\begin_layout Proof
+\begin_layout Standard
 Next,
  we show that 
 \begin_inset Formula $xs$
@@ -1828,7 +1829,7 @@ Inner radius
 \end_inset
 
 :
- There exists a 
+ There exists a point 
 \begin_inset Formula $x\in\PriR$
 \end_inset
 
@@ -3134,7 +3135,7 @@ nolink "false"
 
 Similarly,
  we have 
-\begin_inset Formula $\widetilde{b}=\sum_{i}x_{i}^{+}+\overline{R}\geq\frac{3}{4}n\overline{R}$
+\begin_inset Formula $\widetilde{b}=\sum_{i}x_{c,i}^{+}+\overline{R}\geq\frac{3}{4}n\overline{R}$
 \end_inset
 
 .
@@ -3535,7 +3536,7 @@ nolink "false"
 \begin{align*}
 0 & \leq\frac{\mu^{\theta}}{x^{\theta}}(x^{\theta}-v_{\theta})+\sum_{i=1}^{n}(c_{i}-\frac{\mu_{i}^{+}}{x_{i}^{+}})(v^{+}-x^{+})_{i}+\sum_{i=1}^{n}(\widetilde{c}_{i}-\frac{\mu_{i}^{-}}{x_{i}^{-}})(v^{-}-x^{-})_{i}\\
  & \leq2LR+4nL\overline{R}-\frac{LRr}{2\min_{i}x_{i}^{+}}+2LR-\frac{t}{4\overline{R}}\max_{i}x_{i}^{-}\\
- & =5nL\overline{R}-\frac{LRr}{2\min_{i}x_{i}^{+}}-\frac{t}{4\overline{R}}\max_{i}x_{i}^{-}.
+ & \leq5nL\overline{R}-\frac{LRr}{2\min_{i}x_{i}^{+}}-\frac{t}{4\overline{R}}\max_{i}x_{i}^{-}.
 \end{align*}
 
 \end_inset
@@ -3839,7 +3840,7 @@ and that
 Note that 
 \begin_inset Formula 
 \[
-\norm{P_{t}1}_{\infty}\leq\norm{P_{t}1}_{2}=\sqrt{n}.
+\norm{P_{t}1}_{\infty}\leq\norm{P_{t}1}_{2}\leq\sqrt{n}.
 \]
 
 \end_inset
@@ -4352,8 +4353,8 @@ Interior Point Method for Convex Programs
 
 \begin_layout Standard
 The interior point method can be used to optimize any convex function.
- For more in-depth treatment,
- please see the structural programming section in 
+ For a more in-depth treatment,
+ please see 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "nesterov1998introductory"
@@ -4690,7 +4691,7 @@ Given a self-concordant function
  we have 
 \begin_inset Formula 
 \[
-D^{3}f(x)[h_{1},h_{2},h_{3}]\leq2\norm{h_{1}}_{x}\norm{h_{2}}_{x}\norm{h_{3}}_{x}.
+\left|D^{3}f(x)[h_{1},h_{2},h_{3}]\right|\leq2\norm{h_{1}}_{x}\norm{h_{2}}_{x}\norm{h_{3}}_{x}.
 \]
 
 \end_inset

@@ -129,9 +129,15 @@ Given
 \end_inset
 
  be the cost of solving 
-\begin_inset Formula $B^{\top}Bx=b$
+\begin_inset Formula $B^{\top}Bx=c$
 \end_inset
 
+,
+ for arbitrary 
+\begin_inset Formula $c\in\R^{d}$
+\end_inset
+
+,
  over all submatrices 
 \begin_inset Formula $B$
 \end_inset

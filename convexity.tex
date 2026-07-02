@@ -134,7 +134,8 @@ is the one-dimensional interval from $x$ to $y$.
 %
 \begin{defn}
 \label{def:convex_func}A function $f:\R^{n}\rightarrow\R\cup\{+\infty\}$
-is \emph{convex} if for every $t\in[0,1]$, we have 
+is \emph{convex} if for every $x,y\in\R^{n}$ and $t\in[0,1]$, we
+have 
 \[
 f(tx+(1-t)y)\le tf(x)+(1-t)f(y).
 \]
@@ -167,7 +168,8 @@ search algorithms in Chapter \ref{chap:Elimination}. The following
 notions will be used routinely. A \emph{halfspace} in $\R^{n}$ is
 defined as the set $\left\{ x:\langle a,x\rangle\ge b\right\} $ for
 some $a\in\R^{n},b\in\R$. A \emph{polyhedron} is a finite intersection
-of halfspaces. A \emph{polytope} is the convex hull of a set of points. 
+of halfspaces. A \emph{polytope} is the convex hull of a finite set
+of points. 
 
 \begin{figure}[h]
 \centering{}\includegraphics[width=0.75\columnwidth]{Figures/polyhedron_polytope}\caption{Polyhedron; Polytope}
@@ -344,15 +346,15 @@ flow from a source vertex $s\in V$ to a sink vertex $t\in V$. To
 imagine this less abstractly, imagine we want to match every person
 to the best flight for them. Then we can have a source node $s$ connected
 to a node for each person with $u_{e}=1$ for all such $e$. Further,
-we take $t$ to be connected to a node for each flight, with $u_{e}$
-being the number of people that can fit on that flight. Then, all
-the remaining edges will be from people nodes to flight nodes. For
-any such $e,u_{e}=1$ and $c_{e}$ is proportional to how undesirable
-that flight is for that person (does it fail to get them where they
-need to go at the time they need to go?) with $0$ representing a
-perfect flight and $\infty$ representing a flight they would not
-take even if given the option for free. Then we can calculate the
-min-cost flow to find the best allocation of people to flights.
+we connect each flight node to $t$, with $u_{e}$ being the number
+of people that can fit on that flight. Then, all the remaining edges
+will be from people nodes to flight nodes. For any such $e,u_{e}=1$
+and $c_{e}$ is proportional to how undesirable that flight is for
+that person (does it fail to get them where they need to go at the
+time they need to go?) with $0$ representing a perfect flight and
+$\infty$ representing a flight they would not take even if given
+the option for free. Then we can calculate the min-cost flow to find
+the best allocation of people to flights.
 
 Formally, the problem can be written as an optimization problem $\min_{f\in\R^{|E|}}\sum_{e\in E}c_{e}\cdot f_{e}$
 subject to the constraints:
@@ -409,11 +411,11 @@ Consider the problem of predicting the likelihood of getting diabetes
 in the future. Suppose we have collected many examples $\{(x_{i},y_{i})\}^{n}_{i=1}$
 where $x_{i}\in\R^{d}$ represents the features of a person and $y_{i}\in\{\pm1\}$
 represents whether that person gets diabetes. For example, the feature
-vector can be (age, weight, height, BMI, fasting glucose level, ...).
-The features in the vector may be redundant and the purpose of extra
-variables is to make linear functions expressive enough to be able
-to classify. In particular, we assume that there is a vector $\theta$
-such that for most $i$, we have $\langle x_{i},\theta\rangle<0$
+vector can include age, weight, height, BMI, fasting glucose level,
+etc. The features in the vector may be redundant and the purpose of
+extra variables is to make linear functions expressive enough to be
+able to classify. In particular, we assume that there is a vector
+$\theta$ such that for most $i$, we have $\langle x_{i},\theta\rangle<0$
 if $y_{i}=1$ and $\langle x_{i},\theta\rangle>0$ if $y_{i}=-1$.
 The error of the vector $\theta$ is
 \[
@@ -469,8 +471,8 @@ and convex optimization.
 \section{Examples of convex sets and functions}
 
 There are many important convex sets and here we only list some that
-appear in this course. One of the most important classes of convex
-functions comes from convex sets.
+appear in this book. One of the most important classes of convex functions
+comes from convex sets.
 \begin{defn}
 For a convex set $K$, we define the indicator function of $K$ by
 \[
@@ -763,8 +765,8 @@ recovery is $\theta=y$. With a prior, one can apply Bayes' theorem:
 \P(\theta|y)=\frac{\P(y|\theta)\P(\theta)}{\P(y)}.
 \]
 
-The Bayesian choice is to find $\theta$ with maximum likelihood,
-namely $\theta=\argmax_{\theta}\log\P(\theta|y)=\argmin_{\theta}-\log\P(\theta|y)$.
+The Bayesian choice is to find $\theta$ with maximum posterior density
+(the MAP estimate), namely $\theta=\argmax_{\theta}\log\P(\theta|y)=\argmin_{\theta}-\log\P(\theta|y)$.
 
 Using the noise assumption, we have that 
 \[

@@ -87,16 +87,17 @@ name "sec:Stochastic-Gradient-Descent"
 \end_layout
 
 \begin_layout Standard
-In this section, we study problems with objective 
-\begin_inset Formula $F(x)=\sum_i f_i(x)$
+In this section, we study stochastic objectives,
+ including expectations 
+\begin_inset Formula $F(x)=\E_{f\sim\mathcal{D}}f(x)$
+\end_inset
+
+ and finite sums 
+\begin_inset Formula $F(x)=\frac{1}{n}\sum_{i=1}^{n}f_{i}(x)$
 \end_inset
 
 ,
- where each 
-\begin_inset Formula $f_{i}$
-\end_inset
-
- is convex and the sum may be finite or infinite.
+ where each sampled or component function is convex.
 \end_layout
 
 \begin_layout Subsection
@@ -142,7 +143,7 @@ where
  by the empirical risk minimizer
 \begin_inset Formula 
 \[
-x_{\mathrm{ERM}}^{(T)}=\arg\min_{x}F_{T}(x)\defeq\frac{1}{T}\sum_{i=1}^{T}f_{i}(x).
+F_{T}(x)\defeq\frac{1}{T}\sum_{i=1}^{T}f_{i}(x),\qquad x_{\mathrm{ERM}}^{(T)}=\arg\min_{x}F_{T}(x).
 \]
 
 \end_inset
@@ -200,7 +201,7 @@ In general, the following lemma shows that
 
 \end_inset
 
-Here,
+Here, 
 \begin_inset Formula $\frac{\sigma^{2}}{T}$
 \end_inset
 
@@ -1324,7 +1325,7 @@ Suppose each
 \end_inset
 
  and 
-\begin_inset Formula $m=\frac{256L}{\mu}$
+\begin_inset Formula $m=\frac{512L}{\mu}$
 \end_inset
 
 , the sequence 
@@ -1414,7 +1415,7 @@ reference "thm:sgd_convex_strongly"
  shows that
 \begin_inset Formula 
 \begin{align*}
-\frac{1}{m}\sum_{k=0}^{m-1}\E F(x^{(k)})-F(x^{*}) & \leq16hL\cdot(F(x^{(0)})-F(x^{*}))+\frac{F(x^{(0)})-F(x^{*})}{\mu hm}\\
+\frac{1}{m}\sum_{k=0}^{m-1}\E F(x^{(k)})-F(x^{*}) & \leq16hL\cdot(F(x^{(0)})-F(x^{*}))+\frac{2(F(x^{(0)})-F(x^{*}))}{\mu hm}\\
  & \leq\frac{1}{2}(F(x^{(0)})-F(x^{*})).
 \end{align*}
 
@@ -1598,8 +1599,8 @@ Input:
 \begin_inset Formula $x^{(0)}\in\R^{d}$
 \end_inset
 
-, step size 
-\begin_inset Formula $h>0$
+, coordinate smoothness constants 
+\begin_inset Formula $L_{i}>0$
 \end_inset
 
 .
@@ -1719,7 +1720,15 @@ Given a convex function
 \end_inset
 
 .
- Consider the algorithm 
+ Consider the algorithm that at each iteration samples 
+\begin_inset Formula $i$
+\end_inset
+
+ with probability 
+\begin_inset Formula $L_{i}/L$
+\end_inset
+
+ and sets 
 \begin_inset Formula $x^{(k+1)}\leftarrow x^{(k)}-\frac{1}{L_{i}}\frac{\partial}{\partial x_{i}}f(x^{(k)})e_{i}$
 \end_inset
 

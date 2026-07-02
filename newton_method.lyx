@@ -260,7 +260,7 @@ f(x_{1},x_{2})=\frac{100}{2}x_{1}^{2}+\frac{1}{2}x_{2}^{2}.
 
 \end_inset
 
-The gradient descent for this function is
+Gradient descent for this function is
 \begin_inset Formula 
 \[
 (x_{1},x_{2})\leftarrow(x_{1},x_{2})-h\nabla f(x_{1},x_{2})=((1-100h)x_{1},(1-h)x_{2}).
@@ -651,7 +651,7 @@ The result follows.
 \end_layout
 
 \begin_layout Standard
-This argument above uses only that 
+The argument above uses only that 
 \begin_inset Formula $g\in\mathcal{C}^{2}$
 \end_inset
 
@@ -742,7 +742,7 @@ Let
  such that
 \begin_inset Formula 
 \[
-\lambda_{1}\leq x^{(k)}\leq\lambda_{1}+\varepsilon\cdot(x^{(0)}-\lambda_{1}).
+\lambda_{1}\leq x^{(k)}\leq\lambda_{1}+\epsilon\cdot(x^{(0)}-\lambda_{1}).
 \]
 
 \end_inset
@@ -830,7 +830,7 @@ Consider the following iteration:
  
 \begin_inset Formula 
 \[
-x^{t+1}=x^{t}-\frac{1}{n^{1/k}}\frac{g^{(k-1)}(x)}{g^{(k)}(x)}
+x^{(t+1)}=x^{(t)}-\frac{1}{n^{1/k}}\frac{g^{(k-1)}(x^{(t)})}{g^{(k)}(x^{(t)})}
 \]
 
 \end_inset
@@ -879,13 +879,15 @@ Such a dependence of
 
 \begin_layout Theorem
 Assume that 
-\begin_inset Formula $|f'(x^{*})|\geq\alpha$
-\end_inset
-
- at 
 \begin_inset Formula $f(x^{*})=0$
 \end_inset
 
+,
+ 
+\begin_inset Formula $|f'(x^{*})|\geq\alpha$
+\end_inset
+
+,
  and 
 \begin_inset Formula $f'$
 \end_inset
@@ -971,7 +973,12 @@ and
 
 \end_inset
 
-After 
+Writing 
+\begin_inset Formula $\epsilon_{0}=|x^{(0)}-x^{*}|$
+\end_inset
+
+,
+ after 
 \begin_inset Formula $k$
 \end_inset
 
@@ -983,15 +990,19 @@ After
 
 \end_inset
 
-implying 
+This implies 
 \begin_inset Formula $|x^{(k)}-x^{*}|<\epsilon$
 \end_inset
 
  after 
-\begin_inset Formula $\log\log(\frac{L\epsilon_{0}}{\alpha\epsilon})$
+\begin_inset Formula $O(\log\log(\frac{\alpha}{L\epsilon}))$
 \end_inset
 
- steps.
+ steps for fixed 
+\begin_inset Formula $\epsilon_{0}$
+\end_inset
+
+.
  Note that 
 \begin_inset Formula $f$
 \end_inset
@@ -1071,7 +1082,7 @@ x^{(k+1)}=x^{(k)}-g(x^{(k)})\frac{x^{(k)}-x^{(k-1)}}{g(x^{(k)})-g(x^{(k-1)})}
 
 \end_inset
 
-where we approximated the 
+where we approximate 
 \begin_inset Formula $g'(x^{(k)})$
 \end_inset
 
@@ -1104,7 +1115,7 @@ For
 \begin_inset Formula $J^{(k)}$
 \end_inset
 
- be the approximate Jacobian we maintained in the 
+ be the approximate Jacobian we maintain in the 
 \begin_inset Formula $k^{\mathrm{th}}$
 \end_inset
 

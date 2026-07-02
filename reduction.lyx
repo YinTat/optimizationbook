@@ -939,7 +939,7 @@ Accelerated Coordinate Descent
 \size scriptsize
 Total Cost:
  
-\begin_inset Formula $\sum_{i}\sqrt{\beta_{i}/\mu}\mathcal{T}_{\partial_{i}f}\log(\frac{1}{\epsilon})$
+\begin_inset Formula $\sum_{i}\sqrt{L_{i}/\mu}\mathcal{T}_{\partial_{i}f}\log(\frac{1}{\epsilon})$
 \end_inset
 
 
@@ -1882,12 +1882,12 @@ units
 \end_inset
 
  is unitless.
- In the table,
- we ignored some entries inside the 
+ In the tables,
+ we have ignored some entries inside the 
 \begin_inset Formula $\log$
 \end_inset
 
- which leads to an 
+ which leads to 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1895,7 +1895,7 @@ incorrect
 \begin_inset Quotes erd
 \end_inset
 
- unit.
+ units.
  However,
  when everything is written correctly,
  the number of iterations must be unitless.
@@ -2126,7 +2126,7 @@ For gradient descent and accelerated gradient descent,
 
 \begin_layout Standard
 For more complicated algorithms,
- the theory of convergence rate and cost per iteration sometimes gives a bad estimate of the reality.
+ the theory of convergence rates and per-iteration costs sometimes gives a poor estimate of practical performance.
  For example,
  the interior point method often takes 
 \begin_inset Formula $O(\log n)$
@@ -2172,7 +2172,7 @@ Relations Between Different First-order Methods
 \end_layout
 
 \begin_layout Standard
-In the table 
+In Table 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:Black-Box-Problems"
@@ -2513,7 +2513,7 @@ Therefore,
 \end_inset
 
 ,
- then the distance to OPT decreases by at least a factor of two.
+ then the distance to the optimum decreases by at least a factor of two.
  After 
 \begin_inset Formula $\widetilde{O}(1)$
 \end_inset

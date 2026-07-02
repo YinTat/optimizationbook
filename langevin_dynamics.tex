@@ -166,10 +166,9 @@ Langevin SDE in continuous time. The proof relies on the following
 general theorem about the distribution induced by an SDE.
 \begin{thm}[Fokker--Planck equation]
 \label{thm:fokker_planck}For any process $x_{t}\in\Rn$ satisfying
-$dx_{t}=\mu(x_{t})dt+\sigma(x_{t})dW_{t}$ where $\mu(x_{t})\in\Rn$
-and $\sigma(x_{t})\in\R^{n\times m}$ with the initial point $x_{0}$
-drawn from $p_{0}$. Then the density $p_{t}$ of $x_{t}$ satisfies
-the equation
+$dx_{t}=\mu(x_{t})dt+\sigma(x_{t})dW_{t}$ where $\mu(x_{t})\in\Rn$,
+$\sigma(x_{t})\in\R^{n\times m}$, and $x_{0}$ is drawn from $p_{0}$.
+Then the density $p_{t}$ of $x_{t}$ satisfies the equation
 \[
 \frac{dp_{t}}{dt}=-\sum_{i}\frac{\partial}{\partial x_{i}}(\mu(x)_{i}p_{t}(x))+\frac{1}{2}\sum_{i,j}\frac{\partial^{2}}{\partial x_{i}\partial x_{j}}\left[(D(x))_{ij}p_{t}(x)\right]
 \]
@@ -249,11 +248,11 @@ Consider the SDE with $X_{t}\in\R^{n}$:
 \[
 dX_{t}=-X_{t}dt+\sqrt{2}dW_{t}.
 \]
-Use the Fokker-Planck equation to derive a corresponding stationary
+Use the Fokker-{}-Planck equation to derive a corresponding stationary
 density. Use It\^{o}'s lemma to derive $\E(\norm{X_{t}}^{4}_{4})$.
 (Hint: take expectations on both sides of It\^{o}'s lemma for appropriate
-$f(X_{t})$, and use $\E df(X_{t})=d\E f(X_{t})$ for continuous $f$
-and $df$). 
+$f(X_{t})$, and use $\E df(X_{t})=d\E f(X_{t})$ when $f$ is sufficiently
+smooth). 
 \end{xca}
 
 
@@ -495,7 +494,7 @@ movement in Wasserstein distance, we consider the optimization problem
 \[
 \min_{-\nabla\cdot(pc)=v}\frac{1}{2}\int p(x)\|c(x)\|^{2}dx
 \]
-where we can think $v$ is the change of $p_{t}$. Let $\lambda(x)$
+where we can think of $v$ as the change in $p_{t}$. Let $\lambda(x)$
 be the Lagrange multiplier of the constraint $-\nabla\cdot(pc)=v$.
 Then, the problem becomes
 \begin{align*}
@@ -511,8 +510,8 @@ This proves that any vector field that generates minimal movement
 in Wasserstein distance is a gradient field. Also, we have that $v(x)=\nabla\cdot(p(x)\nabla\lambda(x)).$
 Note that the right-hand side is an elliptic differential equation
 and hence for any $v$ with $\int v(x)dx=0$, there is a unique solution
-$\lambda(x)$. Therefore, we can write $v(x)=\nabla\cdot(p(x)\nabla\lambda(x))$
-for some $\lambda(x)$.
+$\lambda(x)$ up to an additive constant. Therefore, we can write
+$v(x)=\nabla\cdot(p(x)\nabla\lambda(x))$ for some $\lambda(x)$.
 
 Next, we note that the movement is given by
 \[

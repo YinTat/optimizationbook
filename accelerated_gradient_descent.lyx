@@ -80,16 +80,17 @@ Accelerated Gradient Descent via Plane Search
 \end_layout
 
 \begin_layout Standard
-According to legend, the first proof for accelerated gradient descent is
- due to Nemirovski in the 70s.
- The first proof involves a 
+According to legend,
+ Nemirovski gave the first proof of accelerated gradient descent in the 1970s;
+ it used a 
 \begin_inset Formula $2$
 \end_inset
 
 -dimensional plane search subroutine.
- Later on this was improved to line search and finally Nesterov showed how
- to get rid of line search in 1982.
- We change the proof slightly to get rid of all uses of parameters.
+ Later,
+ this was improved to line search,
+ and in 1982 Nesterov showed how to remove line search.
+ We modify the proof slightly to avoid tuning parameters.
 \end_layout
 
 \begin_layout Standard
@@ -602,7 +603,7 @@ g_{x}=L(x-p_{x}).
 
 \end_layout
 
-\begin_layout Definition
+\begin_layout Standard
 Note that if 
 \begin_inset Formula $h=0$
 \end_inset
@@ -644,7 +645,7 @@ Therefore, we have that
 .
 \end_layout
 
-\begin_layout Definition
+\begin_layout Standard
 The key lemma we use here is that 
 \begin_inset Formula $\phi$
 \end_inset
@@ -1660,14 +1661,15 @@ Since
 \end_inset
 
  is 
-\begin_inset Formula $\mu+\frac{L}{n}$
-\end_inset
-
- smooth under this valid upper bound and 
 \begin_inset Formula $\mu$
 \end_inset
 
- strongly convex and since 
+-smooth and 
+\begin_inset Formula $\mu$
+\end_inset
+
+-strongly convex,
+ and since 
 \begin_inset Formula $h$
 \end_inset
 
@@ -1676,6 +1678,10 @@ Since
 LatexCommand ref
 reference "thm:AGD"
 
+\end_inset
+
+ using the valid smoothness upper bound 
+\begin_inset Formula $\mu+\frac{L}{n}$
 \end_inset
 
  and get an algorithm that takes 
@@ -1892,14 +1898,15 @@ Since
 \end_inset
 
  is 
-\begin_inset Formula $\mu+\frac{L}{n}$
-\end_inset
-
- smooth under this valid upper bound and 
 \begin_inset Formula $\mu$
 \end_inset
 
- strongly convex and since 
+-smooth and 
+\begin_inset Formula $\mu$
+\end_inset
+
+-strongly convex,
+ and since 
 \begin_inset Formula $h$
 \end_inset
 
@@ -1908,6 +1915,10 @@ Since
 LatexCommand ref
 reference "thm:AGD"
 
+\end_inset
+
+ using the valid smoothness upper bound 
+\begin_inset Formula $\mu+\frac{L}{n}$
 \end_inset
 
  and get an algorithm that takes 

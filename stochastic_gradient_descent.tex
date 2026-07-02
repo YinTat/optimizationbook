@@ -1,8 +1,8 @@
 
 \section{Stochastic Gradient Descent\label{sec:Stochastic-Gradient-Descent}}
 
-In this section, we study problems of the form $\sum f_{i}$ where
-each $f_{i}$ is convex and the sum can be either infinite or finite.
+In this section, we study problems with objective $F(x)=\sum_{i}f_{i}(x)$,
+where each $f_{i}$ is convex and the sum may be finite or infinite.
 
 \subsection{Stochastic Problem}
 
@@ -171,7 +171,7 @@ we have
 \E[\|x^{(k+1)}-x^{*}\|^{2}\mid x^{(k)}] & =\|x^{(k)}-x^{*}\|^{2}-2h\left\langle x^{(k)}-x^{*},\nabla F(x^{(k)})\right\rangle +4h^{2}\sigma^{2}+4Lh^{2}\cdot(F(x^{(k)})-F(x^{*}))\nonumber \\
  & \leq\|x^{(k)}-x^{*}\|^{2}-(2h-4Lh^{2})(F(x^{(k)})-F(x^{*}))+4h^{2}\sigma^{2}.\label{eq:SGD_distance}
 \end{align}
-Using $h\leq\frac{1}{4L}$ and$F(x^{(k)})-F(x^{*})\geq\frac{\mu}{2}\|x^{(k)}-x^{*}\|^{2}_{2}$,
+Using $h\leq\frac{1}{4L}$ and $F(x^{(k)})-F(x^{*})\geq\frac{\mu}{2}\|x^{(k)}-x^{*}\|^{2}_{2}$,
 we have
 \[
 \E[\|x^{(k+1)}-x^{*}\|^{2}\mid x^{(k)}]\leq4h^{2}\sigma^{2}+(1-\frac{h\mu}{2})\cdot\|x^{(k)}-x^{*}\|^{2}.
@@ -259,8 +259,8 @@ $x^{(k+1)}\leftarrow x^{(k)}-h\cdot(\nabla f_{i}(x^{(k)})-\nabla f_{i}(\widetild
 
 \end{algorithm2e}
 \begin{thm}
-\label{thm:stochastic_method}Suppose each$f_{i}$ has $L$-Lipschitz
-gradient and$F$ is $\mu$ strongly convex. Let $x^{*}$ be the minimizer
+\label{thm:stochastic_method}Suppose each $f_{i}$ has $L$-Lipschitz
+gradient and $F$ is $\mu$ strongly convex. Let $x^{*}$ be the minimizer
 of $F$. Here $F=\frac{1}{n}\sum^{n}_{i=1}f_{i}$, and the index $i$
 in each inner step is sampled uniformly from $[n]$. For step size
 $h=\frac{1}{64L}$ and $m=\frac{256L}{\mu}$, the sequence $x^{(km)}$

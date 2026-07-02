@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.10.28)  2 JUL 2026 12:04
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.10.28)  2 JUL 2026 13:19
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1027,13 +1027,13 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 <Figures/Def_1.2.png, id=499, 230.5413pt x 83.8332pt>
 File: Figures/Def_1.2.png Graphic file (type png)
 <use Figures/Def_1.2.png>
-Package pdftex.def Info: Figures/Def_1.2.png  used on input line 153.
+Package pdftex.def Info: Figures/Def_1.2.png  used on input line 154.
 (pdftex.def)             Requested size: 352.31625pt x 128.1198pt.
 <Figures/polyhedron_polytope.png, id=502, 590.205pt x 227.2125pt>
 File: Figures/polyhedron_polytope.png Graphic file (type png)
 <use Figures/polyhedron_polytope.png>
 Package pdftex.def Info: Figures/polyhedron_polytope.png  used on input line 17
-3.
+5.
 (pdftex.def)             Requested size: 352.31625pt x 135.63513pt.
 
 
@@ -1043,7 +1043,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 <Figures/Thrm_1.6.png, id=516, 160.25873pt x 153.75443pt>
 File: Figures/Thrm_1.6.png Graphic file (type png)
 <use Figures/Thrm_1.6.png>
-Package pdftex.def Info: Figures/Thrm_1.6.png  used on input line 222.
+Package pdftex.def Info: Figures/Thrm_1.6.png  used on input line 224.
 (pdftex.def)             Requested size: 234.8775pt x 225.35468pt.
 
 
@@ -1053,19 +1053,19 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 <Figures/Thrm_1.20.png, id=528, 122.31697pt x 91.60222pt>
 File: Figures/Thrm_1.20.png Graphic file (type png)
 <use Figures/Thrm_1.20.png>
-Package pdftex.def Info: Figures/Thrm_1.20.png  used on input line 270.
+Package pdftex.def Info: Figures/Thrm_1.20.png  used on input line 272.
 (pdftex.def)             Requested size: 234.8775pt x 175.9036pt.
  [10 <./Figures/Thrm_1.6.png> <./Figures/Thrm_1.20.png>] [11] [12]
 <Figures/Def_1.14.png, id=566, 216.0873pt x 51.13103pt>
 File: Figures/Def_1.14.png Graphic file (type png)
 <use Figures/Def_1.14.png>
-Package pdftex.def Info: Figures/Def_1.14.png  used on input line 498.
+Package pdftex.def Info: Figures/Def_1.14.png  used on input line 500.
 (pdftex.def)             Requested size: 352.31625pt x 83.37477pt.
  [13 <./Figures/Def_1.14.png>] [14]
 <Figures/Section_1.6.png, id=600, 135.8676pt x 117.25807pt>
 File: Figures/Section_1.6.png Graphic file (type png)
 <use Figures/Section_1.6.png>
-Package pdftex.def Info: Figures/Section_1.6.png  used on input line 679.
+Package pdftex.def Info: Figures/Section_1.6.png  used on input line 681.
 (pdftex.def)             Requested size: 234.8775pt x 202.71765pt.
 
 
@@ -1078,7 +1078,7 @@ Chapter 2.
 (./gradient_descent.tex [19
 
 ] [20]
-Overfull \hbox (12.55833pt too wide) in paragraph at lines 227--232
+Overfull \hbox (12.55833pt too wide) in paragraph at lines 226--231
 [][]\T1/cmr/bx/n/10 Theorem 2.6. []\T1/cmr/m/it/10 Let $\OML/cmm/m/it/10 f \OMS
 /cmsy/m/n/10 2 C[]\OT1/cmr/m/n/10 (\U/msb/m/n/10 R[]\OT1/cmr/m/n/10 )$ \T1/cmr/
 m/it/10 with $\OML/cmm/m/it/10 L$\T1/cmr/m/it/10 -Lipschitz gra-di-ent and $\OM
@@ -1087,7 +1087,7 @@ L/cmm/m/it/10 x[]$ \T1/cmr/m/it/10 be any min-i-mizer of $\OML/cmm/m/it/10 f$\T
  []
 
 [21] [22] [23] [24] [25]
-Overfull \hbox (13.7611pt too wide) in paragraph at lines 626--630
+Overfull \hbox (13.7611pt too wide) in paragraph at lines 625--629
 \T1/cmr/m/it/10 approximation at any $\OML/cmm/m/it/10 x$\T1/cmr/m/it/10 . Let 
 $\OML/cmm/m/it/10 x[]$ \T1/cmr/m/it/10 be any min-i-mizer of $\OML/cmm/m/it/10 
 f$\T1/cmr/m/it/10 . Then the se-quence $\OML/cmm/m/it/10 x[]$ \T1/cmr/m/it/10 i
@@ -1305,7 +1305,7 @@ Package pdftex.def Info: Figures/Section_5.3(1).png  used on input line 243.
 (pdftex.def)             Requested size: 234.8775pt x 135.24272pt.
  [72 <./Figures/Section_5.3(1).png>])
 (./interior_point_method.tex [73] [74]
-Overfull \hbox (9.49545pt too wide) in paragraph at lines 171--173
+Overfull \hbox (9.49545pt too wide) in paragraph at lines 172--174
 [][]\T1/cmr/bx/n/10 Exercise 5.12. []\T1/cmr/m/n/10 Let $\OML/cmm/m/it/10 r \OT
 1/cmr/m/n/10 = \OML/cmm/m/it/10 t \OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 xs$\T1/
 cmr/m/n/10 . Prove that $\OML/cmm/m/it/10 S^^N[] \OT1/cmr/m/n/10 = (\OML/cmm/m/
@@ -1317,7 +1317,7 @@ r/m/n/10 where $[] \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 XA[]\OT1/cmr/m/n/10 (\OML
  []
 
 [75]
-Overfull \hbox (38.134pt too wide) detected at line 221
+Overfull \hbox (38.134pt too wide) detected at line 222
 [] \OT1/cmr/m/n/10 = [] [][] = [](\OML/cmm/m/it/10 x[]s[] \OT1/cmr/m/n/10 + \OM
 L/cmm/m/it/10 x[]^^N[] \OT1/cmr/m/n/10 + \OML/cmm/m/it/10 s[]^^N[] \OT1/cmr/m/n
 /10 + \OML/cmm/m/it/10 ^^N[]^^N[] \OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 t\OT1/c
@@ -1326,7 +1326,7 @@ mr/m/n/10 )[] = [] \OML/cmm/m/it/10 ^^N[]^^N[] \OMS/cmsy/m/n/10 ^^T [][] ^^A []
  []
 
 [76] [77] [78] [79] [80] [81] [82]
-Overfull \hbox (24.57077pt too wide) in paragraph at lines 841--845
+Overfull \hbox (24.57077pt too wide) in paragraph at lines 842--846
 \T1/cmr/m/n/10 Solving this lin-ear sys-tem, we have that $\OML/cmm/m/it/10 S[]
 [] \OT1/cmr/m/n/10 = (\OML/cmm/m/it/10 I \OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 
 P[]\OT1/cmr/m/n/10 )1$ \T1/cmr/m/n/10 and $\OML/cmm/m/it/10 X[][] \OT1/cmr/m/n/
@@ -1336,7 +1336,7 @@ P[]\OT1/cmr/m/n/10 )1$ \T1/cmr/m/n/10 and $\OML/cmm/m/it/10 X[][] \OT1/cmr/m/n/
  []
 
 [83] [84] [85] [86]
-Overfull \hbox (12.8605pt too wide) detected at line 1132
+Overfull \hbox (12.8605pt too wide) detected at line 1133
 []
  []
 
@@ -1387,7 +1387,7 @@ Chapter 8.
 ] [121] [122] [123] [124] [125]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@ifnextchar' on input line 449.
+(hyperref)                removing `\@ifnextchar' on input line 448.
 
 [126] [127]) [128]
 Chapter 9.
@@ -1418,12 +1418,12 @@ Overfull \hbox (15.0pt too wide) detected at line 36
 [135
 
 ] [136]
-Overfull \hbox (8.4503pt too wide) in paragraph at lines 207--210
+Overfull \hbox (6.22862pt too wide) in paragraph at lines 207--210
 [][]\T1/cmr/bx/n/10 Exercise 10.11. []\T1/cmr/m/n/10 Show that the func-tion $\
 OML/cmm/m/it/10 h[]$ \T1/cmr/m/n/10 is con-cave, and if $\OML/cmm/m/it/10 Q$ \T
-1/cmr/m/n/10 is atom-free , then $\OML/cmm/m/it/10 h[]\OT1/cmr/m/n/10 (\OML/cmm
-/m/it/10 x\OT1/cmr/m/n/10 ) = [][] \OML/cmm/m/it/10 Q[]\OT1/cmr/m/n/10 (\OML/cm
-m/m/it/10 A\OT1/cmr/m/n/10 ) \OMS/cmsy/m/n/10 ^^@
+1/cmr/m/n/10 is atom-free, then $\OML/cmm/m/it/10 h[]\OT1/cmr/m/n/10 (\OML/cmm/
+m/it/10 x\OT1/cmr/m/n/10 ) = [][] \OML/cmm/m/it/10 Q[]\OT1/cmr/m/n/10 (\OML/cmm
+/m/it/10 A\OT1/cmr/m/n/10 ) \OMS/cmsy/m/n/10 ^^@
  []
 
 <Figures/Exercise_10.3.png, id=2014, 150.86363pt x 89.79547pt>
@@ -1602,7 +1602,7 @@ Overfull \hbox (15.0pt too wide) detected at line 128
  []
 
 [174] [175]
-Overfull \hbox (15.0pt too wide) detected at line 269
+Overfull \hbox (15.0pt too wide) detected at line 270
 [][] 
  []
 
@@ -1641,9 +1641,6 @@ Appendix B.
 (./notation.tex) [190
 
 ] (./main.aux)
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: E306D152D13C1540499D0C2600D9A9A4;14824.
  ) 
@@ -1700,7 +1697,7 @@ fonts/type1/public/cm-super/sfsx1000.pfb><c:/texlive/2022/texmf-dist/fonts/type
 1/public/cm-super/sfti0800.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/c
 m-super/sfti1000.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sf
 tt1000.pfb>
-Output written on main.pdf (191 pages, 3256889 bytes).
+Output written on main.pdf (191 pages, 3257148 bytes).
 PDF statistics:
  3109 PDF objects out of 3580 (max. 8388607)
  2710 compressed objects within 28 object streams

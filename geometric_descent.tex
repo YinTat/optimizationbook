@@ -1,9 +1,9 @@
 
 \section{Sphere and Parabola Methods}
 
-In Section \ref{sec:Gradient-Descent}, we proved that gradient descent
-converges at the rate $(1-\frac{\mu}{L})^{k}$ in function value assuming
-the function satisfies $\mu\cdot I\preceq\nabla^{2}f(x)\preceq L\cdot I$
+By Theorem \ref{thm:gd_convex_strongly}, gradient descent converges
+at the rate $(1-\frac{\mu}{L})^{k}$ in function value assuming the
+function satisfies $\mu\cdot I\preceq\nabla^{2}f(x)\preceq L\cdot I$
 for all $x$. Hence, if $\frac{L}{\mu}$ is not too large, this rate
 of decrease of the function value can be much better than the $\left(1-\frac{1}{n^{2}}\right)^{k}$
 rate of the ellipsoid method or the $\left(1-\frac{1}{n}\right)^{k}$

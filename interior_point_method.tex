@@ -3,8 +3,9 @@
 
 In this section, we study interior point methods. In practice, this
 method reduces the problem of optimizing a convex function to solving
-a small number (``typically less than $30$'') linear systems. In
-theory, it reduces the problem to $\tilde{O}(\sqrt{n})$ linear systems.
+a small number of linear systems (``typically less than $30$'').
+In theory, it reduces the problem to $\tilde{O}(\sqrt{n})$ linear
+systems. 
 
 We start by describing interior point method for linear programs.
 We establish a polynomial bound and then later discuss implementation
@@ -21,7 +22,7 @@ the constraint $x\geq0$. Without this constraint, we can simply solve
 it as a linear system. One natural idea to solve linear programs is
 to replace the hard constraint $x\geq0$ by some smooth function.
 So, let us consider the following ``regularized'' version of the
-linear program for some $t\ge0$:
+linear program for some $t>0$:
 \[
 (\mathrm{P}_{t}):\quad\quad\min_{x}c^{\top}x-t\sum^{n}_{i=1}\ln x_{i}\text{ subject to }Ax=b.
 \]
@@ -39,9 +40,9 @@ of $(\mathrm{P})$.
 
 First, we give a formula for the minimizer of $(\mathrm{P}_{t})$.
 \begin{lem}[Existence and Uniqueness of central path]
-If the polytope $\{Ax=b,x\geq0\}$ has an interior, then the optimum
-of $(\mathrm{P}_{t})$ is unique and is given by the solution of the
-following system:
+For $t>0$, if the polytope $\{Ax=b,x\geq0\}$ has an interior, then
+the optimum of $(\mathrm{P}_{t})$ is unique and is given by the solution
+of the following system:
 \begin{align*}
 xs & =t,\\
 Ax & =b,\\
@@ -109,9 +110,9 @@ enough $\varepsilon$ and round it off to the closest integral point.
 To see why there is a pair $(x,s)\in\PriR^{\circ}\times\DualR^{\circ}$
 satisfying the invariant $xs=t$, we prove the following generalization.
 \begin{lem}[Quadrant Representation of Primal-Dual]
-\label{lem:primal_dual_representation}Suppose $\PriR$ is non-empty
-and bounded. For any positive vector $\mu\in\R^{n}_{>0}$, there is
-a unique pair $(x_{\mu},s_{\mu})\in\PriR^{\circ}\times\DualR^{\circ}$
+\label{lem:primal_dual_representation}Suppose $\PriR$ has non-empty
+interior and is bounded. For any positive vector $\mu\in\R^{n}_{>0}$,
+there is a unique pair $(x_{\mu},s_{\mu})\in\PriR^{\circ}\times\DualR^{\circ}$
 such that $x_{\mu}s_{\mu}=\mu$. Furthermore, $x_{\mu}=\arg\min_{x\in\PriR}f_{\mu}(x)$
 where
 \[
@@ -122,9 +123,9 @@ f_{\mu}(x)=c^{\top}x-\sum^{n}_{i=1}\mu_{i}\ln x_{i}.
 \begin{proof}
 Fix $\mu\in\R^{n}_{>0}$. We define $x_{\mu}=\arg\min_{x\in\PriR}f_{\mu}(x)$
 and prove that $(x_{\mu},s_{\mu})\in\PriR^{\circ}\times\DualR^{\circ}$
-with $x_{\mu}s_{\mu}=\mu$ for some $s_{\mu}$. Since $\PriR$ is
-non-empty and bounded and since $f_{\mu}$ is strictly convex, such
-an $x_{\mu}$ exists. Furthermore, since $f_{\mu}(x)\rightarrow+\infty$
+with $x_{\mu}s_{\mu}=\mu$ for some $s_{\mu}$. Since $\PriR$ has
+non-empty interior and is bounded and since $f_{\mu}$ is strictly
+convex, such an $x_{\mu}$ exists. Furthermore, since $f_{\mu}(x)\rightarrow+\infty$
 as $x_{i}\rightarrow0$ for any $i$, we have that $x_{\mu}\in\PriR^{\circ}$.
 
 By the KKT optimality condition for $f_{\mu}$, there is a vector
@@ -257,7 +258,7 @@ The first question is to find $\mathcal{C}_{1}$. This can be handled
 by extending the problem to slightly higher dimension. To the reader
 familiar with the Simplex method, this might be reminiscent of the
 two phases of the simplex method, where the purpose of the first phase
-is to find a feasible initial solution.The idea of the construction
+is to find a feasible initial solution. The idea of the construction
 is simple: if we simply solve $Ax=b$, the solution could have negative
 components. So we will allow negative components but penalize them
 heavily in the objective.
@@ -502,7 +503,7 @@ The main result about the modified program is the following.
 \begin{thm}
 \label{thm:IPM_interior}Given a linear program $\min_{\ma x=b,x\in\R^{n}_{\geq0}}c^{\top}x$
 with inner radius $r$, outer radius $R$ and Lipschitz constant $L$.
-For any $0\leq\epsilon\leq\frac{1}{2}$, the modified linear program
+For any $0<\epsilon\leq\frac{1}{2}$, the modified linear program
 (Definition \ref{def:IPM_interior_modified}) with $\overline{R}=\frac{5}{\epsilon}R,t=2^{16}\epsilon^{-3}n^{2}\frac{R}{r}\cdot LR$
 has the following properties:
 \begin{itemize}
@@ -1068,7 +1069,7 @@ is a $\nu_{1}+\nu_{2}$ self-concordant barrier for $K_{1}\cap K_{2}$.
 
 \begin{lem}
 If $\phi$ is a $\nu$-self-concordant barrier for $K$, then $\phi(Ax+b)$
-is $\nu$-self-concordant barrier for $\{x:Ax+b\in K\}$.
+is a $\nu$-self-concordant barrier for $\{x:Ax+b\in K\}$.
 \end{lem}
 
 \begin{xca}
