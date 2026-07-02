@@ -8,10 +8,10 @@ problem was defined in Chapter (\ref{chap:Elimination-and-Reduction})
 (Problem (\ref{problem:volume})). Integration is the following generalization.
 \begin{problem}[Integration]
  Given an evaluation oracle for an integrable logconcave function
-$f:\R^{n}\rightarrow\R_{+}$, a point $x_{0}$ s.t. $f(x_{0})\ge\beta,$
-numbers $r,R>0$ s.t. (i) $\E(\norm{x-x_{0}}^{2})\le R^{2}$ (ii)
-the level set of $\pi_{f}$ of measure $1/8$ contains a ball of radius
-$r$, and $\varepsilon>0$, output a number $A$ s.t. 
+$f:\R^{n}\rightarrow\R_{+}$, a point $x_{0}$ such that $f(x_{0})\ge\beta,$
+numbers $r,R>0$ such that (i) $\E(\norm{x-x_{0}}^{2})\le R^{2}$
+(ii) the level set of $\pi_{f}$ of measure $1/8$ contains a ball
+of radius $r$, and $\varepsilon>0$, output a number $A$ such that
 \[
 (1-\varepsilon)\int f\le A\le(1+\varepsilon)\int f.
 \]
@@ -55,7 +55,7 @@ Year/Authors & New ingredients & Steps\tabularnewline
 \hline 
 2021/Jia-Laddha-Lee-Vempala \cite{JLLV26} & Faster rounding & $n^{3.5}$\tabularnewline
 \hline 
-\end{tabular}\caption{\label{tab:volume} The complexity of volume estimation, each step
+\end{tabular}\caption{\label{tab:volume} Complexities for volume estimation; each step
 uses $\widetilde{O}(n)$ bits of randomness. The last algorithm needs
 $\widetilde{O}\left(mn^{\omega-1}\right)$ steps per iteration while
 the rest need $O(n^{2})$ per oracle query.}
@@ -65,8 +65,8 @@ the volume of a convex body in high dimension.
 
 \section{Volume Computation: the DFK Algorithm}
 \begin{thm}
-There exists a randomized algorithm that given any $\varepsilon,\delta>0$,
-and any convex body $K$ with probability at least $1-\delta$ solves
+There exists a randomized algorithm that, given any $\varepsilon,\delta>0$
+and any convex body $K$, with probability at least $1-\delta$, solves
 the Volume Estimation problem for $K$ using $\mbox{poly}(n,1/\varepsilon,\ln(1/\delta),\ln R)$
 oracle queries and arithmetic operations. 
 \end{thm}
@@ -80,6 +80,7 @@ of a real number with failure probability at most $1/4$ can be converted
 to one that outputs an acceptable estimate with failure probability
 at most $\delta$ by repeating the algorithm independently $O(\ln(1/\delta))$
 times and taking the median of the outputs of the independent trials.
+\end{xca}
 
 Going forward, we ignore the parameter $\delta$, and focus on algorithms
 with constant failure probability. We will now show an algorithm for
@@ -88,7 +89,7 @@ bound on the sample complexity.
 
 The polynomial-time algorithm of Dyer, Frieze and Kannan \cite{DyerFK89}
 is based on the following idea. We consider a sequence of convex bodies
-$K_{0}=B_{n}\subset K_{1}\subseteq\ldots\subseteq K_{m}=K$, starting
+$K_{0}=B^{n}\subset K_{1}\subseteq\ldots\subseteq K_{m}=K$, starting
 with the ball contained inside the input body $K$ and ending with
 $K$ itself. Then the following telescoping formula suggests an algorithm:
 \[
@@ -104,12 +105,11 @@ body $K$:
 \[
 K_{i}=2^{\frac{i}{n}}B\cap K.
 \]
- The length the sequence is $m=\lceil n\log R\rceil$ so that the
-final body is just $K$. We can now state the algorithm. In each iteration
-the algorithm estimates the ratio $\vol(K_{i})/\vol(K_{i+1})$ by
-sampling uniformly from $K_{i+1}$ and using the fraction of the sample
-that lies in $K_{i}$ as the estimator.
-\end{xca}
+ The length of the sequence is $m=\lceil n\log_{2}R\rceil$ so that
+the final body is just $K$. We can now state the algorithm. In each
+iteration the algorithm estimates the ratio $\vol(K_{i})/\vol(K_{i+1})$
+by sampling uniformly from $K_{i+1}$ and using the fraction of the
+sample that lies in $K_{i}$ as the estimator.
 
 \begin{algorithm2e}[H]
 
@@ -123,7 +123,7 @@ that lies in $K_{i}$ as the estimator.
 \item uniformly sample $X^{(1)},X^{(2)},\ldots,X^{(N)}$ from $K_{i+1}$.
 \item Set $Y_{i}=|{\{j:X^{(j)}\in K_{i}\}}|/N$. 
 \end{enumerate}
-\item Let $Y=\prod^{m-1}_{i=0}Y_{i}$ and return $\vol(B_{n})/Y$.
+\item Let $Y=\prod^{m-1}_{i=0}Y_{i}$ and return $\vol(B^{n})/Y$.
 \end{enumerate}
 \end{algorithm2e}
 
@@ -144,7 +144,7 @@ this.
 \begin{proof}
 We have 
 \[
-K_{i+1}=2^{(i+1)/n}B_{n}\cap K\subseteq2^{1/n}(2^{i/n}B_{n}\cap K)=2^{1/n}K_{i}.
+K_{i+1}=2^{(i+1)/n}B^{n}\cap K\subseteq2^{1/n}(2^{i/n}B^{n}\cap K)=2^{1/n}K_{i}.
 \]
 The lemma follows.
 \end{proof}
@@ -164,7 +164,7 @@ are independent real-valued random variables. Then,
 We can now prove the main theorem about the sample complexity of the
 DFK volume algorithm.
 \begin{thm}
-For any input convex body $K$ satisfying $B_{n}\subseteq K\subseteq RB_{n}$
+For any input convex body $K$ satisfying $B^{n}\subseteq K\subseteq RB^{n}$
 given by a membership oracle and any $\varepsilon>0$, with $N=O(\varepsilon^{-2}n\log R)$
 samples per phase, with probability at least $3/4$, the DFK volume
 algorithm outputs a multiplicative $(1+\varepsilon)$ approximation
@@ -191,7 +191,7 @@ for the entire algorithm. To make this rigorous, besides establishing
 the amortized complexity of uniform sampling, we have to deal with
 some nontrivial technical issues: (1) the distribution from which
 samples are produced is close to the target uniform distribution but
-not exactly uniform (2) samples are nearly independent but not perfectly
+not exactly uniform; (2) samples are nearly independent but not perfectly
 independent. Another important problem that will arise in establishing
 the complexity of (approximate) uniform sampling is ``rounding''
 which allows us to reduce the dependence of the sampling complexity
@@ -301,7 +301,7 @@ satisfies
 The underlying mathematical property behind this lemma is the following.
 \begin{lem}
 \label{lem:ratio_var} Let $f$ be a logconcave function in $\R^{n}.$
-Then $Z(a)=a^{n}\int_{\R^{n}}f(x)^{a}$ is logconcave for $a\ge0$.
+Then $Z(a)=a^{n}\int_{\R^{n}}f(x)^{a}$ is logconcave for $a>0$.
 If $f$ has support $K$, then $Z(a)=a^{n}\int_{K}f(ax)$ is logconcave
 for $a>0$.
 \end{lem}
@@ -320,17 +320,17 @@ F\left(\frac{x+y}{2},\frac{t+s}{2}\right) & =f\left(\frac{x+y}{t+s}\right)^{\fra
  & \ge f\left(\frac{x}{t}\right)^{\frac{t}{2}}f\left(\frac{y}{s}\right)^{\frac{s}{2}}=\sqrt{F(x,t)F(y,s)}.
 \end{align*}
 
-Now by the Prekopa-Leindler Theorem (see\ref{lem:marginal}), the
-marginal of $F$ in $t$ is also logconcave. This marginal is 
+Now by the Prekopa-Leindler Theorem (see Lemma \ref{lem:marginal}),
+the marginal of $F$ in $t$ is also logconcave. This marginal is
 \[
 \int_{\R^{n}}F(x,t)\,dx=\int_{\R^{n}}f\left(\frac{x}{t}\right)^{t}\,dx=t^{n}\int_{\R^{n}}f(y)^{t}\,dy
 \]
 where we made the substitution $y=x/t$.
 \end{proof}
-Note that in the simulated annealing algorithm we choose $\frac{a_{\{i+1\}}}{a_{i}}=(1+\frac{1}{\sqrt{{n\}}}})$
+Note that in the simulated annealing algorithm we choose $\frac{a_{i+1}}{a_{i}}=1+\frac{1}{\sqrt{n}}$
 since this guarantees that the distribution with density proportional
 to $f_{i}$ has $\chi^{2}$-distance $O(1)$ to the distribution with
 density proportional to $f_{i+1}$. This will be useful later in bounding
-$\text{{var}(Y)/\ensuremath{\mathbb{E}[Y]^{2}}}$ of the random variable
-given by $Y=f_{i+1}(X)/f_{i}(X)$ for a random sample $X$ drawn from
-the distribution with density proportional to $f_{i}$.
+$\mathrm{var}(Y)/\mathbb{E}[Y]^{2}$ of the random variable given
+by $Y=f_{i+1}(X)/f_{i}(X)$ for a random sample $X$ drawn from the
+distribution with density proportional to $f_{i}$.

@@ -4,8 +4,8 @@
 Here we give a way to reduce solving a tall linear regression system
 into a sequence of submatrices:
 \begin{thm}[\cite{cohen2015uniform}]
-Given a matrix $A\in\R^{n\times d}$. Let $T(m)$ be the cost of
-solving $B^{\top}Bx=b$ among all $m$ distinct subrows $B$ of $A$.
+Given $A\in\R^{n\times d}$, let $T(m)$ be the cost of solving $B^{\top}Bx=b$
+over all submatrices $B$ consisting of $m$ distinct rows of $A$.
 Then, we have that
 \[
 T(n)=O^{*}(\nnz(A)+T(O(d\log d))).
@@ -22,7 +22,7 @@ solution.
 
 \subsection{Leverage scores}
 
-The key concept in this reduction is leverage score.
+The key concept in this reduction is the leverage score.
 \begin{defn}
 Given a matrix $A\in\R^{n\times d}$, let $a^{\top}_{i}$ be the $i^{th}$
 row of $A$. The leverage score of the $i^{th}$ row of $A$ is
@@ -67,7 +67,7 @@ a_{i}a^{\top}_{i}\preceq t\cdot A^{\top}A.\label{eq:leverage_score_spectral_uppe
 
 Sampling rows from $A$ according to their exact leverage scores gives
 a spectral approximation for $A$ with high probability. Sampling
-using leverage-score overestimates also suffices.
+with leverage-score overestimates also suffices.
 \begin{lem}
 \label{lem:leveragescoresampling}Given a vector $u$ of leverage-score
 overestimates, i.e., $\sigma_{i}(A)\le u_{i}$ for all $i$, define
@@ -94,13 +94,13 @@ and $R=\norm u_{1}$.
 Combining Lemma \ref{lem:leveragescoresampling} and Lemma \ref{lem:Richardson},
 we have that
 \begin{equation}
-T(n)=\text{cost of computing }\sigma_{i}+O^{*}(\nnz(A)+T(d\log d))\label{eq:TmnS1}
+T(n)=\text{cost of computing all leverage scores }\sigma+O^{*}(\nnz(A)+T(d\log d))\label{eq:TmnS1}
 \end{equation}
 where we used that $\norm{\sigma}_{1}=O(d)$. However, computing $\sigma$
 exactly is too expensive for many purposes. In \cite{spielman2011graph},
-they showed that we can compute leverage scores approximately by solving
-only polylogarithmically many regression problems. This result uses
-the fact that 
+the authors showed that we can compute leverage scores approximately
+by solving only polylogarithmically many regression problems. This
+result uses the fact that 
 \[
 \sigma_{i}(A)=\norm{A(A^{\top}A)^{+}A^{\top}e_{i}}^{2}_{2}
 \]
@@ -120,14 +120,14 @@ Putting it into (\ref{eq:TmnS1}), we have this non-informative recurrence
 \[
 T(n)=O^{*}(\nnz(A)+T(n)+T(d\log d)).
 \]
-This is a chicken and egg problem. To solve an overdetermined system
-faster, we want to use leverage score to sample the rows. And to approximate
-the leverage score, we need to solve the original overdetermined system.
-(Even worse, we need to solve it a few times.)
+This is a chicken-and-egg problem. To solve an overdetermined system
+faster, we want to use leverage scores to sample the rows. To approximate
+the leverage scores, we need to solve the original overdetermined
+system. (Even worse, we need to solve it a few times.)
 
 \subsection{Uniform Sampling}
 
-The key idea to break this chicken and egg problem is to use uniform
+The key idea to break this chicken-and-egg problem is to use uniform
 sampling of the rows of $A$. We define
 \[
 \sigma_{i,S}=a^{\top}_{i}(A^{\top}_{S}A_{S})^{-1}a_{i}
@@ -135,7 +135,7 @@ sampling of the rows of $A$. We define
 where $A_{S}$ is $A$ restricted to rows in $S$. The set $S$ will
 be a random sample of $k$ rows of $A$. Note that since $A^{\top}_{S}A_{S}\preceq A^{\top}A$,
 the quantity $\sigma_{i,S}$ is an overestimate of $\sigma_{i}(A)$.
-Hence, it suffices to bound $\norm{\sigma_{i,S}}_{1}$. The key lemma
+Hence, it suffices to bound $\sum_{i}\sigma_{i,S}$. The key lemma
 is the following:
 \begin{lem}
 \label{lem:sigmaSi}We have that
@@ -165,7 +165,7 @@ Hence, we have that
 \E_{|S|=k}\sum^{n}_{i=1}\sigma_{i,S\cup\{i\}}\leq\frac{d}{k+1}(n-k)+d=d\cdot\frac{n+1}{k+1}.
 \]
 \end{proof}
-Next, using Sherman-Morrison formula, we have that
+Next, using the Sherman-Morrison formula, we have that
 \[
 \sigma_{i,S\cup\{i\}}=\begin{cases}
 \sigma_{i,S} & \text{if }i\in S\\

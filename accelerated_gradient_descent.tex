@@ -65,7 +65,7 @@ Hence, we have
 \[
 \sum^{T}_{k=1}\lambda_{k}\delta_{k}\leq\sqrt{T}\cdot\|x^{*}-x^{(1)}\|_{2}.
 \]
-Since $x^{(k)+}\in P$, we have that 
+Since $x^{(k)+}\in P^{(k)}$, we have that 
 \[
 \delta_{k+1}=f(x^{(k+1)})-f(x^{*})\leq f(x^{(k)+})-f(x^{*})\leq\delta_{k}-\frac{1}{2L}\|\nabla f(x^{(k)})\|^{2}_{2}.
 \]
@@ -95,7 +95,7 @@ gradient when $f$ is a quadratic function.
 
 \subsection{Gradient Mapping}
 
-To give a general version of acceleration, we consider problem of
+To give a general version of acceleration, we consider a problem of
 the form
 \[
 \min_{x}\phi(x)\defeq f(x)+h(x)
@@ -133,7 +133,7 @@ the gradient mapping is an approximation of the gradient of $\phi$
 that is computable in time $\mathcal{T}_{f}+\mathcal{T}_{h,L}$.
 
 The key lemma we use here is that $\phi$ satisfies a lower bound
-defining using $g_{x}$. Ideally, we would love to get a lower bound
+defined using $g_{x}$. Ideally, we would love to get a lower bound
 as follows:
 \[
 \phi(z)\geq\phi(x)+g^{\top}_{x}(z-x)+\frac{\mu}{2}\norm{z-x}^{2}_{2}.
@@ -213,9 +213,10 @@ of a function), we have that
 \[
 f(x)+\nabla f(x)^{\top}(p_{x}-x)+\frac{L}{2}\norm{p_{x}-x}^{2}+h(p_{x})\leq f(x)+h(x).
 \]
-Using $h(p_{x})\geq h(x)+\nabla h(x)^{\top}(p_{x}-x)$, we have that
+Let $s\in\partial h(x)$. Using $h(p_{x})\geq h(x)+s^{\top}(p_{x}-x)$
+and $\nabla f(x)+s\in\partial\phi(x)$, we have that
 \[
-0\geq\nabla\phi(x)^{\top}(p_{x}-x)+\frac{L}{2}\norm{p_{x}-x}^{2}\geq-G\norm{p_{x}-x}_{2}+\frac{L}{2}\norm{p_{x}-x}^{2}.
+0\geq(\nabla f(x)+s)^{\top}(p_{x}-x)+\frac{L}{2}\norm{p_{x}-x}^{2}\geq-G\norm{p_{x}-x}_{2}+\frac{L}{2}\norm{p_{x}-x}^{2}.
 \]
 Hence, we have that $\norm{p_{x}-x}_{2}\leq\frac{2}{L}G$ and hence
 $\norm{g_{x}}_{2}\leq2G$.
@@ -234,20 +235,23 @@ we have the following:
 
 This shows that each step of the gradient step decreases the function
 value by $\frac{1}{2L}\norm{g_{x}}^{2}_{2}$. Therefore, if the gradient
-is large, then we decrease the function value by a lot. On the other
-hand, Putting $z=x^{*}$ for Theorem \ref{thm:gradient_mapping_lower_bound}
+is large, then the function value decreases substantially. On the
+other hand, putting $z=x^{*}$ for Theorem \ref{thm:gradient_mapping_lower_bound}
 shows that
 \[
 \phi(x^{*})\geq\phi(p_{x})+g^{\top}_{x}(x^{*}-x).
 \]
 
-If the gradient is small and domain is bounded, this shows that we
-are close to the optimal. Combining these two facts, we can get the
-gradient descent.
+If the gradient is small and the domain is bounded, this shows that
+we are close to the optimum. Combining these two facts, we can get
+the gradient descent.
 
 \subsection{Mirror Descent Using Gradient Mapping}
 
-Consider the mirror descent as
+In this subsection, the mirror map is the Euclidean quadratic, so
+the mirror descent update has the same form as a gradient step with
+the gradient mapping in place of the gradient. Consider the mirror
+descent as
 \begin{equation}
 x^{(k+1)}=x^{(k)}-\eta g_{x^{(k)}}.\label{eq:mirror_step}
 \end{equation}
@@ -260,9 +264,9 @@ of $\phi$ to get that
 \end{equation}
 Therefore, it suffices to upper bound $g^{\top}_{x^{(i)}}(x^{(i)}-x^{*})$.
 The following lemma shows that if $g^{\top}_{x^{(i)}}(x^{(i)}-x^{*})$
-is large, then either the gradient is large or the distance to optimum
-moves a lot. It turns out this holds for any vector $g$, not necessarily
-an approximate gradient.
+is large, then either the gradient is large or the distance to the
+optimum changes substantially. It turns out this holds for any vector
+$g$, not necessarily an approximate gradient.
 \begin{lem}[Mirror Descent Lemma]
 \label{lem:mirror_step}Let $p=x-\eta g$. Then, we have that
 \[
@@ -275,9 +279,9 @@ for any $u$.
 \subsection{Algorithm and Analysis}
 
 Recall Lemma \ref{lem:gradient_descent_lemma} shows that if the gradient
-is large, gradient descent makes a large progress. On the other hand,
+is large, gradient descent makes large progress. On the other hand,
 if the gradient is small, (\ref{eq:mirror_lemma}) shows that mirror
-descent makes a large progress. Therefore, it is natural to combine
+descent makes large progress. Therefore, it is natural to combine
 two approaches.
 
 \begin{algorithm2e}[H]
@@ -317,7 +321,7 @@ iterations, we can find $x$ such that
 \[
 \phi(x)-\phi(x^{*})\leq2(1-\sqrt{\frac{\mu}{L}})^{\Omega(T)}\left(\phi(x^{(1)})-\phi(x^{*})\right)
 \]
-in $T$ steps. Furthermore, each step takes $\mathcal{T}_{f}+\mathcal{T}_{h,L}$
+in $T$ steps. Furthermore, each step takes $\mathcal{T}_{f}+\mathcal{T}_{h,L}$.
 \end{thm}
 
 \begin{proof}
@@ -327,7 +331,7 @@ g^{\top}_{x^{(k+1)}}(z^{(k)}-x^{*}) & \leq\frac{\eta}{2}\norm{g_{x^{(k+1)}}}^{2}
 \end{align}
 
 This shows that if the mirror descent has large error $g^{\top}_{x^{(k+1)}}(z^{(k)}-x^{*})$,
-then the gradient descent makes a large progress ($\frac{\eta}{2}\norm{g_{x^{(k+1)}}}^{2}_{2}$).
+then the gradient descent makes large progress ($\frac{\eta}{2}\norm{g_{x^{(k+1)}}}^{2}_{2}$).
 
 To make the left-hand side usable, note that $x^{(k+1)}=z^{(k)}+\frac{1-\tau}{\tau}\cdot(y^{(k)}-x^{(k+1)})$
 and hence
@@ -367,10 +371,10 @@ the function
 \[
 \phi(x)=f(x)+h(x)\quad\text{with}\quad f(x)=\frac{\mu}{2}\norm x^{2}_{2}\text{ and }h(x)=\ell(x)-\frac{\mu}{2}\norm x^{2}_{2}.
 \]
-Since $f$ is $\mu+\frac{L}{n}$ smooth and $\mu$ strongly convex
-and since $h$ is convex, we apply Theorem \ref{thm:AGD} and get
-an algorithm that takes $O^{*}(\sqrt{\frac{L}{n\mu}})$ steps. Note
-that each step involves $\mathcal{T}_{f}+\mathcal{T}_{h,\mu+\frac{L}{n}}$.
+Since $f$ is $\mu+\frac{L}{n}$ smooth under this valid upper bound
+and $\mu$ strongly convex and since $h$ is convex, we apply Theorem
+\ref{thm:AGD} and get an algorithm that takes $O^{*}(\sqrt{\frac{L}{n\mu}})$
+steps. Note that each step involves $\mathcal{T}_{f}+\mathcal{T}_{h,\mu+\frac{L}{n}}$.
 Obviously, $\mathcal{T}_{f}=0$. Next, note that $\mathcal{T}_{h,\mu+\frac{L}{n}}$
 involves solving a problem of the form
 \begin{align*}
@@ -388,8 +392,8 @@ O^{*}(\sqrt{\frac{L}{n\mu}})\cdot O^{*}(n)=O^{*}(\sqrt{\frac{Ln}{\mu}})\text{ co
 \]
 Hence, we have the following theorem
 \begin{thm}[Accelerated Coordinate Descent Convergence]
-\label{thm:coordinate_descent_linear_acc}Given an $\mu$ strongly-convex
-function $\ell$. Suppose that $\frac{\partial^{2}}{\partial x^{2}_{i}}\ell(x)\leq L_{i}$
+\label{thm:coordinate_descent_linear_acc}Let $\ell$ be a $\mu$-strongly
+convex function. Suppose that $\frac{\partial^{2}}{\partial x^{2}_{i}}\ell(x)\leq L_{i}$
 for all $x$ and let $L=\sum L_{i}$. We can minimize $\ell$ in \textup{$O^{*}(\sqrt{\frac{Ln}{\mu}})$
 coordinate steps.}
 \end{thm}
@@ -416,10 +420,10 @@ accelerated gradient descent (Theorem \ref{thm:AGD}). To apply Theorem
 \[
 \phi(x)=f(x)+h(x)\quad\text{with}\quad f(x)=\frac{\mu}{2}\norm x^{2}_{2}\text{ and }h(x)=\ell(x)-\frac{\mu}{2}\norm x^{2}_{2}.
 \]
-Since $f$ is $\mu+\frac{L}{n}$ smooth and $\mu$ strongly convex
-and since $h$ is convex, we apply Theorem \ref{thm:AGD} and get
-an algorithm that takes $O^{*}(1+\sqrt{\frac{L}{n\mu}})$ steps. Note
-that each step involves $\mathcal{T}_{f}+\mathcal{T}_{h,\mu+\frac{L}{n}}$.
+Since $f$ is $\mu+\frac{L}{n}$ smooth under this valid upper bound
+and $\mu$ strongly convex and since $h$ is convex, we apply Theorem
+\ref{thm:AGD} and get an algorithm that takes $O^{*}(1+\sqrt{\frac{L}{n\mu}})$
+steps. Note that each step involves $\mathcal{T}_{f}+\mathcal{T}_{h,\mu+\frac{L}{n}}$.
 Obviously, $\mathcal{T}_{f}=0$. Next, note that $\mathcal{T}_{h,\mu+\frac{L}{n}}$
 involves solving a problem of the form
 \begin{align*}

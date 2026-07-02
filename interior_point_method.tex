@@ -25,14 +25,14 @@ linear program for some $t\ge0$:
 \[
 (\mathrm{P}_{t}):\quad\quad\min_{x}c^{\top}x-t\sum^{n}_{i=1}\ln x_{i}\text{ subject to }Ax=b.
 \]
-We will explain the reason of choosing $\ln x$ in more detail later.
-For now, we can think it as a nice function that blows up to $\infty$
+We will explain the reason for choosing $\ln x$ in more detail later.
+For now, we can think of it as a nice function that blows up to $\infty$
 as $x$ approaches zero.
 
-One can think that $-\ln x$ gives a force from every constraint $x\geq0$
-to make sure $x\geq0$ is true. Since the gradient of $-\ln x$ blows
-up when $x=0$, when $x$ is close enough, the force is large enough
-to counter the cost $c$. When $t\rightarrow0$, then the problem
+One can think of $-\ln x$ as giving a force from every constraint
+$x\geq0$ to make sure $x\geq0$ is true. Since the gradient of $-\ln x$
+blows up when $x=0$, when $x$ is close enough, the force is large
+enough to counter the cost $c$. When $t\rightarrow0$, then the problem
 $(\mathrm{P}_{t})$ is closer to the original problem $(\mathrm{P})$
 and hence the minimizer of $(\mathrm{P}_{t})$ is closer to a minimizer
 of $(\mathrm{P})$.
@@ -53,7 +53,7 @@ and $xs=t$ is shorthand of $x_{i}s_{i}=t$ for all $i$.
 \end{lem}
 
 \begin{proof}
-The optimality condition, using dual variables $y$(Lagrange multipliers)
+The optimality condition, using dual variables $y$ (Lagrange multipliers)
 for the constraint $Ax=b$, is given by
 \[
 c-\frac{t}{x}=A^{\top}y.
@@ -172,7 +172,7 @@ This is a linear system and hence we can solve it exactly.
 and $X\delta_{s}=\overline{P}r$ where $\overline{P}=XA^{\top}(AS^{-1}XA^{\top})^{-1}AS^{-1}$.
 \end{xca}
 
-First,we show that $x^{\new}=x+\delta_{x}$ and $s^{\new}=s+\delta_{s}$
+First, we show that $x^{\new}=x+\delta_{x}$ and $s^{\new}=s+\delta_{s}$
 are feasible.
 \begin{lem}
 Suppose $\sum_{i}\left(x_{i}s{}_{i}-t\right)^{2}\leq\varepsilon^{2}t^{2}$
@@ -199,7 +199,7 @@ Therefore, we have
 \end{align*}
 Similarly, we have $S^{-1}\delta_{s}=S^{-\frac{1}{2}}X^{-\frac{1}{2}}PS^{-\frac{1}{2}}X^{-\frac{1}{2}}r$.
 Hence, we have $\|S^{-1}\delta_{s}\|_{2}\leq\frac{\varepsilon}{1-\varepsilon}$.
-Therefore, when $\epsilon<\frac{1}{2}$, we have both $\|X^{-1}\delta_{x}\|_{\infty}$
+Therefore, when $\varepsilon<\frac{1}{2}$, we have both $\|X^{-1}\delta_{x}\|_{\infty}$
 and $\|S^{-1}\delta_{s}\|_{\infty}$ less than $1$, which shows that
 both $x^{\new}$ and $s^{\new}$ are positive. 
 
@@ -217,7 +217,7 @@ with $\varepsilon<\frac{1}{4}$, we have that
 We have that $x_{i}\delta_{s,i}+s_{i}\delta_{x,i}=t-x_{i}s_{i}$.
 Using this, 
 \[
-\text{LHS}=\sum_{i}\left(x^{\new}_{i}s^{\new}_{i}-t\right)^{2}=\sum_{i}(x_{i}s_{i}+x_{i}\delta_{s,i}+s_{i}\delta_{x,i}+\delta_{x,i}\delta_{s,i}-t)^{2}=\sum_{i}\delta^{2}_{x,i}\delta^{2}_{s,i}\leq\left((1+\epsilon)t\right)^{2}\cdot\sum_{i}\left(\frac{\delta_{x,i}}{x_{i}}\right)^{2}\left(\frac{\delta_{s,i}}{s_{i}}\right)^{2}
+\text{LHS}=\sum_{i}\left(x^{\new}_{i}s^{\new}_{i}-t\right)^{2}=\sum_{i}(x_{i}s_{i}+x_{i}\delta_{s,i}+s_{i}\delta_{x,i}+\delta_{x,i}\delta_{s,i}-t)^{2}=\sum_{i}\delta^{2}_{x,i}\delta^{2}_{s,i}\leq\left((1+\varepsilon)t\right)^{2}\cdot\sum_{i}\left(\frac{\delta_{x,i}}{x_{i}}\right)^{2}\left(\frac{\delta_{s,i}}{s_{i}}\right)^{2}
 \]
 where in the last step we used $x^{2}_{i}s^{2}_{i}\leq(1+\varepsilon)^{2}t^{2}$.
 Using the previous lemma, we have that
@@ -392,11 +392,12 @@ n+1-\frac{1}{R}\sum^{n}_{i=1}x_{i}\\
 0
 \end{bmatrix}=\frac{\delta}{LR}\cdot c^{\top}x=\frac{\delta}{LR}\cdot\text{OPT}.\label{eq:bounding_ov_OPT_by_OPT}
 \end{align}
-where the first step follows from modified program is solving a minimization
-problem, the second step follows from definition of $\overline{x}\in\R^{n+2}$
-(\ref{eq:another_ov_x_in_appendix}) and $\overline{c}\in\R^{n+2}$
-(\ref{eq:another_ov_c_in_appendix}), the last step follows from $x\in\R^{n}$
-is an optimal solution in the original linear program.
+where the first step follows from the fact that the modified program
+solves a minimization problem, the second step follows from the definition
+of $\overline{x}\in\R^{n+2}$ (\ref{eq:another_ov_x_in_appendix})
+and $\overline{c}\in\R^{n+2}$ (\ref{eq:another_ov_c_in_appendix}),
+the last step follows from $x\in\R^{n}$ is an optimal solution in
+the original linear program.
 
 Given a feasible $(\overline{x},\overline{y},\overline{s})\in\R^{(n+2)\times(d+1)\times(n+2)}$
 with duality gap $\delta^{2}$, we can write $\overline{x}=\begin{bmatrix}\overline{x}_{1:n}\\
@@ -406,7 +407,7 @@ with duality gap $\delta^{2}$, we can write $\overline{x}=\begin{bmatrix}\overli
 which is $\frac{\delta}{L}\cdot c^{\top}\overline{x}_{1:n}+\theta$.
 Then, we have 
 \begin{align}
-\frac{\delta}{L}\cdot c^{\top}\overline{x}_{1:n}+\theta\leq\overline{\text{OPT}}+\delta^{2}\leq\frac{\delta}{LR}\cdot\overline{\text{OPT}}+\delta^{2},\label{eq:eq1_in_appendix}
+\frac{\delta}{L}\cdot c^{\top}\overline{x}_{1:n}+\theta\leq\overline{\text{OPT}}+\delta^{2}\leq\frac{\delta}{LR}\cdot\text{OPT}+\delta^{2},\label{eq:eq1_in_appendix}
 \end{align}
 where the first step follows from definition of duality gap, the last
 step follows from (\ref{eq:bounding_ov_OPT_by_OPT}).
@@ -421,14 +422,14 @@ the third step follows by (\ref{eq:eq1_in_appendix}).
 
 Note that 
 \begin{align}
-\frac{\delta}{L}c^{\top}\overline{x}_{1:n}\geq-\frac{\delta}{L}\|c\|_{\infty}\|\overline{x}_{1:n}\|_{1}=-\frac{\delta}{L}\|c\|_{\infty}\|\frac{1}{R}x\|_{1}\geq-\frac{\delta}{L}\|c\|_{\infty}\frac{n}{R}\|x\|_{\infty}\geq-\delta n,\label{eq:lower_bound_on_delta_L_c_ovx}
+\frac{\delta}{L}c^{\top}\overline{x}_{1:n}\geq-\frac{\delta}{L}\|c\|_{\infty}\|\overline{x}_{1:n}\|_{1}\geq-\frac{\delta}{L}\|c\|_{\infty}(n+1)\geq-\delta(n+1),\label{eq:lower_bound_on_delta_L_c_ovx}
 \end{align}
-where the second step follows from definition $\overline{x}\in\R^{n+2}$,
-and the last step follows from $\|c\|_{\infty}\leq L$ and $\|x\|_{\infty}\leq R$.
+where the second step follows from the transformed constraint $1^{\top}_{n}\overline{x}_{1:n}+\tau=n+1$
+and nonnegativity, and the last step follows from $\|c\|_{\infty}\leq L$.
 
 We can upper bound the $\theta$ in the following sense, 
 \begin{align}
-\theta\leq\frac{\delta}{LR}\cdot\overline{\text{OPT}}+\delta^{2}+\delta n\leq2n\delta+\delta^{2}\leq4n\delta\label{eq:theta_is_at_most_4n_delta}
+\theta\leq\frac{\delta}{LR}\cdot\text{OPT}+\delta^{2}+\delta(n+1)\leq(2n+1)\delta+\delta^{2}\leq4n\delta\label{eq:theta_is_at_most_4n_delta}
 \end{align}
 where the first step follows from (\ref{eq:eq1_in_appendix}) and
 (\ref{eq:lower_bound_on_delta_L_c_ovx}), the second step follows
@@ -439,7 +440,7 @@ The constraint in the new polytope shows that
 \begin{align*}
 A\overline{x}_{1:n}+(\frac{1}{R}b-A1_{n})\theta=\frac{1}{R}b.
 \end{align*}
-Using $\hat{x}=Rx_{1:n}\in\R^{n}$, we have 
+Using $\hat{x}=R\overline{x}_{1:n}\in\R^{n}$, we have 
 \begin{align*}
 A\frac{1}{R}\hat{x}+(\frac{1}{R}b-A1_{n})\theta=\frac{1}{R}b.
 \end{align*}
@@ -467,7 +468,7 @@ $\|x\|_{2}\leq R$.
 
 Since $\mathtt{L2Step}$ requires a feasible point near the central
 path, we modify the linear program to make it happen. To satisfy the
-constraint $\ma x=b$, we start the algorithm by taking a least square
+constraint $\ma x=b$, we start the algorithm by taking a least-squares
 solution of the constraint $\ma x=b$. Since it can be negative, we
 write the variable $x=x^{+}-x^{-}$ with both $x^{+},x^{-}\geq0$.
 We put a large cost vector on $x^{-}$ to ensure the solution is roughly
@@ -541,13 +542,14 @@ and $t$.}
 Let $\oma=\left[\begin{array}{ccc}
 \ma & -\ma & 0\\
 1 & 0 & 1
-\end{array}\right]$, $\overline{c}=(c,\widetilde{c})$, $\overline{b}=(b,\widetilde{b})$
+\end{array}\right]$, $\overline{c}=(c,\widetilde{c},0)$, $\overline{b}=(b,\widetilde{b})$
 where $\widetilde{c}$ and $\widetilde{b}$ are defined in Definition
 \ref{def:IPM_interior_modified}.
 
 \tcp{Write down the central path at $t$ for modified linear program.}
 
-$\overline{x}=(x^{+}_{c},x^{-}_{c},\overline{R})$. $\overline{s}=x/t$.
+$\overline{x}=(x^{+}_{c},x^{-}_{c},\overline{R})$. $\overline{s}=t/\overline{x}$
+componentwise. 
 
 $(\overline{x},\overline{s})=\mathtt{L2Step}(\oma,\overline{x},\overline{s},t,LR)$.
 
@@ -909,11 +911,11 @@ In this section, we give a general analysis for the Newton method.
 In the next section, we will use this to show that interior point
 method can be generalized to convex optimization. A key property of
 the Newton method is that it is invariant under linear transformation.
-In general, whenever a method uses $k^{th}$ order information, we
-need to assume the $k^{th}$ derivative is continuous. Otherwise,
-the $k^{th}$ derivative is not useful for algorithmic purposes. For
-the Newton method, it is convenient to assume that the Hessian is
-Lipschitz. Since the method is invariant under linear transformation,
+In general, whenever a method uses $k^{\mathrm{th}}$ order information,
+we need to assume the $k^{\mathrm{th}}$ derivative is continuous.
+Otherwise, the $k^{\mathrm{th}}$ derivative is not useful for algorithmic
+purposes. For the Newton method, it is convenient to assume that the
+Hessian is Lipschitz. Since the method is invariant under linear transformation,
 it only makes sense to impose an assumption that is invariant under
 linear transformation.
 \begin{defn}
@@ -927,7 +929,7 @@ any $x$ in $\dom f$, we have
 \[
 |D^{3}f(x)[h,h,h]|\leq2\norm h^{3}_{x}
 \]
-where $D^{k}f(x)[h_{1},h_{2},\cdots,h_{k}]$ is the directional $k^{th}$
+where $D^{k}f(x)[h_{1},h_{2},\cdots,h_{k}]$ is the directional $k^{\mathrm{th}}$
 derivative of $f$ along the directions $h_{1},h_{2},\cdots,h_{k}$.
 \end{defn}
 
@@ -1007,8 +1009,8 @@ Integrating both from $t=0$ to $1$ gives the result.
 To analyze the algorithm above, we need to assume that $\phi$ is
 well-behaved. We measure the quality of $\phi$ by $\|\nabla\phi\|_{\nabla^{2}\phi(x)^{+}}$,
 where $A^{+}$ denotes the \emph{pseudo inverse} of $A$. If $A$
-is invertible, then $A^{+}=A^{-1}$. One can think this as the Lipschitz
-constant of $\phi$ but measured in the local norm. 
+is invertible, then $A^{+}=A^{-1}$. One can think of this as the
+Lipschitz constant of $\phi$ but measured in the local norm. 
 \begin{defn}
 We call $\phi$ a $\nu$-self-concordant barrier for $K$ if $\phi$
 is self-concordant, $\phi(x)\rightarrow+\infty$ as $x\rightarrow\partial K$
@@ -1017,12 +1019,11 @@ all $x$.
 \end{defn}
 
 \begin{rem*}
-The reason we utilize the pseudo-inverse is that we only care about
-the inverse in the direction of the gradient - the above definition
-only makes sense if for any $x\in K$, there is a vector $v_{x}$
-such that $\nabla^{2}\phi(x)v_{x}=\nabla\phi(x)$, so we can define
-$\nabla^{2}\phi(x)^{-1}\nabla\phi(x):=v_{x}$. In the analysis to
-come, this will be the semantics of the vector $\nabla^{2}\phi(x)^{-1}\nabla\phi(x)$,
+We use the pseudo-inverse because we only care about the inverse in
+the direction of the gradient: the above definition only makes sense
+if, for any $x\in K$, there is a vector $v_{x}$ such that $\nabla^{2}\phi(x)v_{x}=\nabla\phi(x)$,
+so we can define $\nabla^{2}\phi(x)^{-1}\nabla\phi(x):=v_{x}$. In
+the analysis to come, this will be the semantics of the vector $\nabla^{2}\phi(x)^{-1}\nabla\phi(x)$,
 and the norm induced by the inverse Hessian should be computed with
 this in mind, i.e. $\nabla^{2}f(x)^{-1}$ should be viewed as $\nabla^{2}f(x)^{+}$.
 \end{rem*}
@@ -1030,7 +1031,7 @@ Not all convex functions are self-concordant. However, for our purpose,
 it suffices to show that we can construct a self-concordant barrier
 for any convex set.
 \begin{thm}
-Any convex set has an $n$-self concordant barrier.
+Any convex set has an $n$-self-concordant barrier.
 \end{thm}
 
 Unfortunately, this is an existence result and the barrier function
@@ -1060,19 +1061,19 @@ $p\geq1$.
 
 The following lemma shows how we can combine barriers.
 \begin{lem}
-If $\phi_{1}$ and $\phi_{2}$ are $\nu_{1}$ and $\nu_{2}$-self
-concordant barriers for $K_{1}$ and $K_{2}$ respectively, then $\phi_{1}+\phi_{2}$
-is a $\nu_{1}+\nu_{2}$ self concordant barrier for $K_{1}\cap K_{2}$.
+If $\phi_{1}$ and $\phi_{2}$ are $\nu_{1}$ and $\nu_{2}$-self-concordant
+barriers for $K_{1}$ and $K_{2}$ respectively, then $\phi_{1}+\phi_{2}$
+is a $\nu_{1}+\nu_{2}$ self-concordant barrier for $K_{1}\cap K_{2}$.
 \end{lem}
 
 \begin{lem}
-If $\phi$ is a $\nu$-self concordant barrier for $K$, then $\phi(Ax+b)$
-is $\nu$-self concordant for $\{x:Ax+b\in K\}$.
+If $\phi$ is a $\nu$-self-concordant barrier for $K$, then $\phi(Ax+b)$
+is $\nu$-self-concordant for $\{x:Ax+b\in K\}$.
 \end{lem}
 
 \begin{xca}
 Using the lemmas above, prove that $-\sum^{m}_{i=1}\ln(a^{\top}_{i}x-b_{i})$
-is an $m$-self concordant barrier for the convex set $\{Ax\geq b\}$. 
+is an $m$-self-concordant barrier for the convex set $\{Ax\geq b\}$. 
 \end{xca}
 
 
@@ -1211,7 +1212,7 @@ For the termination, intuitively, we can see that $\min f_{t}(x_{t})$
 tends to optimality as $t\rightarrow\infty$. We first need a lemma
 showing that the gradient of $\phi$ is small.
 \begin{lem}[Duality Gap]
-Suppose that $\phi$ is a $\nu$-self concordant barrier. For any
+Suppose that $\phi$ is a $\nu$-self-concordant barrier. For any
 $x,y\in K$, we have that
 \[
 \left\langle \nabla\phi(x),y-x\right\rangle \leq\nu.
@@ -1232,12 +1233,12 @@ Hence, we have $\alpha'(t)\geq\frac{1}{\nu}\alpha(t)^{2}.$ If $\alpha(0)\leq0$,
 then we are done. Otherwise, $\alpha$ is increasing and hence, $\alpha(1)>0$.
 Therefore, 
 \[
-\frac{1}{\alpha(1)}\leq\frac{1}{\alpha(0)}-\frac{1}{v}
+\frac{1}{\alpha(1)}\leq\frac{1}{\alpha(0)}-\frac{1}{\nu}
 \]
 and we have $\alpha(0)\leq\nu$.
 \end{proof}
 \begin{lem}[Duality Gap]
- Suppose that $\phi$ is a $\nu$-self concordant barrier, we have
+ Suppose that $\phi$ is a $\nu$-self-concordant barrier, we have
 that
 \[
 \left\langle c,x_{t}\right\rangle \leq\left\langle c,x^{*}\right\rangle +\frac{\nu}{t},
@@ -1252,7 +1253,7 @@ we have that
 
 \begin{proof}
 Let $x^{*}$ be a minimizer of $c^{\top}x$ on $K$. By optimality
-of $x_{t}$for $f_{t}$, we have $tc+\nabla\phi(x_{t})=0$. Therefore,
+of $x_{t}$ for $f_{t}$, we have $tc+\nabla\phi(x_{t})=0$. Therefore,
 we have 
 \[
 \left\langle c,x_{t}\right\rangle -\left\langle c,x^{*}\right\rangle =\frac{1}{t}\left\langle \nabla\phi(x_{t}),x^{*}-x_{t}\right\rangle \leq\frac{\nu}{t}.
@@ -1276,9 +1277,9 @@ have
 This gives the result.
 \end{proof}
 Hence, it suffices to end with $t=(\nu+\sqrt{\nu})/\varepsilon$,
-which is exactly same as the previous lecture.
+which is exactly the same as in the linear-programming case above.
 \begin{thm}
-Given a $\nu$-self concordant barrier $\phi$ and its minimizer.
+Given a $\nu$-self-concordant barrier $\phi$ and its minimizer.
 We can find $x\in K$ such that $c^{\top}x\leq c^{\top}x^{*}+\epsilon$
 in 
 \[

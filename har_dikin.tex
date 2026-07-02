@@ -4,7 +4,7 @@
 The ball walk does not mix rapidly from all starting points in arbitrary
 convex bodies. While this hurdle can be overcome by starting with
 a deep point and carefully maintaining a warm start, it is natural
-to ask if there is a simple process that does truly mix rapidly from
+to ask if there is a simple process that truly does mix rapidly from
 any starting point. Hit-and-Run satisfies this requirement.
 
 \begin{figure}[h]
@@ -22,7 +22,8 @@ Input: starting point $x_{0}$ in a convex body $K$.
 Repeat $T$ times: at current point $x$,
 \begin{enumerate}
 \item Pick a uniform random direction $\ell$ through $x$.
-\item Go to uniform random point $y$ on the chord of $K$ induced by $\ell$.
+\item Go to a uniformly random point $y$ on the chord of $K$ induced by
+$\ell$.
 \end{enumerate}
 \Return $x$.
 
@@ -70,7 +71,7 @@ The main theorem of this section is the following \cite{LV3}.
 \begin{thm}
 \cite{LV3}\label{thm:har-cond}The conductance of Hit-and-Run in
 a convex body $K$ containing the unit ball and of diameter $D$ is
-$\Omega(1/nD)$.
+$\Omega(1/(nD))$.
 \end{thm}
 
 This implies a mixing time of $O\left(n^{2}D^{2}\log(M/\varepsilon)\right)$
@@ -86,8 +87,8 @@ of the ball walk, needing two major ingredients, namely, one-step
 coupling and isoperimetry. Notably, the isoperimetry is for a non-Euclidean
 notion of distance. We begin with some suitable definitions. 
 
-Define the ``median'' step-size function $F$ as the $F(x)$ such
-that
+Define the ``median'' step-size function $F$ by setting $F(x)$
+to satisfy
 \[
 \Pr(\norm{x-y}\le F(x))=\frac{1}{8}
 \]
@@ -156,10 +157,10 @@ Then, this is equivalent to:
 \[
 \nu([0,1])\nu(Z_{3})<d_{K}(Z_{1},Z_{2})\nu(Z_{1})\nu(Z_{2}).
 \]
-We will prove the opposite inequality to establish a contradiction.
-Moreover, WLOG, we can assume as in the proof of Euclidean isoperimetry
-that $Z_{1}Z_{2}$ are single intervals, $Z_{1}=[0,u]$ and $Z_{2}=[v,1].$
-Rewriting, it suffices to show that 
+We will prove the opposite inequality to establish a contradiction.Moreover,
+without loss of generality, we can assume as in the proof of Euclidean
+isoperimetry that $Z_{1},Z_{2}$are single intervals, $Z_{1}=[0,u]$
+and $Z_{2}=[v,1].$ Rewriting, it suffices to show that 
 \[
 \frac{(e^{v}-e^{u})(e-1)}{(e^{u}-1)(e-e^{v})}\ge\frac{v-u}{u(1-v)}
 \]
@@ -190,9 +191,9 @@ inequality, which uses an average distance.
 
 \begin{thm}
 \label{thm:har_weighted_iso} Let $S_{1},S_{2},S_{3}$be a partition
-of a convex body $K$. Let $h:K\rightarrow\R_{+}$ be a function s.t.
-for any $u\in S_{1},$$v\in S_{2}$, and any $x$ on the chord through
-$u$ and $v$, we have 
+of a convex body $K$. Let $h:K\rightarrow\R_{+}$ be a function such
+that for any $u\in S_{1},$$v\in S_{2}$, and any $x$ on the chord
+through $u$ and $v$, we have 
 \[
 h(x)\le\frac{1}{3}\min\left\{ 1,d_{K}(u,v)\right\} .
 \]
@@ -287,7 +288,7 @@ where $\norm{z_{i}}_{2}\le r_{i}$. Therefore
 \[
 A\subseteq K\cap\left(x+\frac{r_{1}+r_{2}}{2}B^{n}\right).
 \]
-By the Brunn-Minkowsky inequality (Thm. \ref{thm:Brunn-Minkowski}),
+By the Brunn-Minkowski inequality (Thm. \ref{thm:Brunn-Minkowski}),
 we have 
 \begin{align*}
 \vol(A)^{1/n} & \ge\frac{1}{2}\vol(A_{1})^{1/n}+\frac{1}{2}\vol(A_{2})^{1/n}\\
@@ -345,7 +346,7 @@ For the second part, let $s=s(x)$ and $p$ be the fraction of the
 sphere $x+(s/2)S^{n-1}$ that is not in $K$. Then, using the definitions
 of $s$ and $p$, we have
 \[
-(1-\gamma)\vol(sB^{n})\le\vol((x+sB^{n}\setminus K)\le p\vol(sB^{n})-\vol((s/2)B^{n}).
+(1-\gamma)\vol(sB^{n})\ge\vol((x+sB^{n})\setminus K)\ge p\vol(sB^{n})-\vol((s/2)B^{n}).
 \]
 Therefore,
 \[
@@ -369,7 +370,7 @@ As a consequence, we have the desired conclusion:
 \]
 \end{proof}
 We are now ready for the proof of the main theorem.
-\begin{proof}[Proof of Thm. \ref{thm:har-cond}.]
+\begin{proof}[Proof of Theorem \ref{thm:har-cond}.]
  Let $K=S_{1}\cup S_{2}$ be a partition of $K$ into measurable
 sets. We will prove that
 
@@ -400,19 +401,20 @@ $v\in S_{2}'$,
 \[
 d_{TV}(P_{u},P_{v})\geq1-P_{u}(S_{2})-P_{v}(S_{1})>1-\frac{1}{500}.
 \]
-Applying Lemma \ref{lem:har_one_step}, we get that that one of the
-following holds:
+Applying Lemma \ref{lem:har_one_step}, we get that one of the following
+holds:
 \[
 d_{K}(u,v)\ge\frac{1}{8}\mbox{ or }\norm{u-v}\ge\frac{2}{\sqrt{n}}\max\left\{ F(u),F(v)\right\} 
 \]
-We will now apply Thm. \ref{thm:har_weighted_iso} using $h(x)=\frac{s(x)}{48\sqrt{n}D}$
+We now apply Theorem \ref{thm:har_weighted_iso} using $h(x)=\frac{s(x)}{48\sqrt{n}D}$
 where $s(x)$ is defined with $\gamma=63/64.$ To see that this is
 a valid choice, first note that if $d_{K}(u,v)\ge\frac{1}{8},$then
 we have $h(x)\le d_{K}(u,v)/3$, as needed. So we can assume the second
 condition above holds. Next, noting that $x$ is some point on the
-chord through $u,v$, let the endpoints of the chord be $p,q.$ Suppose
-WLOG that $x\in[u,q]$. Then, by the concavity of $s(x)$, and using
-the second part of Lemma \ref{lem:step-size}, we have,
+chord through $u,v$, let the endpoints of the chord be $p,q.$ Without
+loss of generality, suppose that $x\in[u,q]$. Then, by the concavity
+of $s(x)$, and using the second part of Lemma \ref{lem:step-size},
+we have,
 
 \begin{align*}
 s(x) & \le\frac{|x-p|}{|u-p|}s(u)\\
@@ -462,11 +464,12 @@ particular, we will focus on the special case of sampling an explicit
 polytope $P=\left\{ x:\,Ax\ge b\right\} $.
 
 The general Dikin walk is defined as follows. For a convex set $K$
-with a positive definite matrix $\mh(u)$ for each point $u\in K$
-, let
+with a positive definite matrix $\mh(u)$ for each point $u\in K$,
+let
 \[
-E_{u}(r)=\left\{ x:\,(x-u)^{\top}\mh(u)(x-u)\le r\right\} .
+E_{u}(r)=\left\{ x:\,(x-u)^{\top}\mh(u)(x-u)\le r^{2}\right\} .
 \]
+Thus $r$ denotes radius in the local norm. 
 
 \begin{algorithm2e}[H]\label{algo:Dikin}
 
@@ -541,7 +544,7 @@ and $\phi(0)=\|x-y\|^{2}_{x}$.
 Many natural barriers, including the logarithmic barrier and the LS-barrier,
 satisfy a much stronger condition than self-concordance. However,
 this is not always true, as one can construct counterexamples even
-in one-dimension. 
+in one dimension. 
 \begin{defn}
 For any convex set $K\subset\Rn$, we say a matrix function $\mathbf{H}:K\rightarrow\R^{n\times n}$
 is strongly self-concordant if for any $u\in K$, we have
@@ -563,7 +566,7 @@ at $x$ in the direction $h$.
 \end{minipage}
 
 \caption{(a) $E_{u}\subseteq K\cap(2u-K)\subseteq\alpha E_{u}.$ (b) Strong
-self-concordance measures the rate of change of Hessian of a barrier
+self-concordance measures the rate of change of the Hessian of a barrier
 in the Frobenius norm}
 \end{figure}
 \end{defn}
@@ -572,7 +575,7 @@ Similar to Lemma \ref{lem:global_self_concordant}, we have a longer-range
 version of stability of the Hessian.
 \begin{lem}
 \label{lem:global_strongly_self_concordant}Given any strongly self-concordant
-matrix function $\mh$ on $K\subset\Rn$. For any $x,y\in K$ with
+matrix function $\mh$ on $K\subset\Rn$, for any $x,y\in K$ with
 $\Vert x-y\Vert_{x}<1$, we have
 \[
 \|\mh(x)^{-\frac{1}{2}}(\mh(y)-\mh(x))\mh(x)^{-\frac{1}{2}}\|_{F}\leq\frac{\|x-y\|_{x}}{(1-\|x-y\|_{x})^{2}}.
@@ -603,7 +606,7 @@ again for the last inequality. Hence,
 \end{align*}
 \end{proof}
 We note that strong self-concordance can be stronger than self-concordance
-since the Frobenius norm is always larger or equal to the spectral
+since the Frobenius norm is always greater than or equal to the spectral
 norm. 
 \begin{xca}
 Verify that the Hessian of the standard log barrier is strongly self-concordant.
@@ -640,9 +643,9 @@ Prove the following for the log barrier in the polytope $\{\mathbf{A}x\ge b\}$:
 
 \begin{itemize}
 \item $\ln\det\mh(x)$ is a convex function.
-\item $\Pr_{w\sim E_{x}(r)}\left(\norm{w-x}_{x}\le r^{2}\left(1-\frac{1}{n}\right)\right)\ge1-c_{0}r$
+\item $\Pr_{w\sim E_{x}(r)}\left(\norm{w-x}_{x}\le r\left(1-\frac{1}{n}\right)\right)\ge1-c_{0}r$
 for some constant $c_{0}$.
-\item $\Pr_{w\sim E_{x}(r)}\left(\norm{w-x}_{w}+\norm{w-x}_{2x-w}\le2r^{2}\left(1-\frac{1}{n}\right)\vert\norm{w-x}_{x}\le r^{2}\left(1-\frac{1}{n}\right)\right)\ge1-c_{1}r$
+\item $\Pr_{w\sim E_{x}(r)}\left(\norm{w-x}_{w}+\norm{w-x}_{2x-w}\le2r\left(1-\frac{1}{n}\right)\vert\norm{w-x}_{x}\le r\left(1-\frac{1}{n}\right)\right)\ge1-c_{1}r$
 for some constant $c_{1}$.
 \item $\Pr_{w\sim E_{x}(r)}\left(x\in E_{w}(r)\right)\ge0.5-c_{2}r$ for
 some constant $c_{2}$.
@@ -658,9 +661,9 @@ d_{\mathrm{TV}}(P_{x},P_{y}) & \leq\frac{1}{2}\text{rej}_{x}+\frac{1}{2}\text{re
 where $\text{rej}_{x}$ and $\text{rej}_{y}$ are the rejection probabilities
 at $x$ and $y$.
 
-For the rejection probability at $x$, we consider the algorithm pick
-$z$ from $E_{x}(r)$. Let $f(z)=\ln\det\mathbf{H}(z)$. The acceptance
-probability of the sample $z$ is
+For the rejection probability at $x$, we consider the algorithm that
+picks $z$ from $E_{x}(r)$. Let $f(z)=\ln\det\mathbf{H}(z)$. The
+acceptance probability of the sample $z$ is
 \begin{equation}
 \min\left\{ 1,\frac{\vol(E_{x}(r))}{\vol(E_{z}(r))}\right\} =\min\left\{ 1,\sqrt{\frac{\det(\mathbf{H}(z))}{\det(\mathbf{H}(x))}}\right\} .\label{eq:reject_prob_z}
 \end{equation}
@@ -677,8 +680,8 @@ In particular, with probability at least $0.99$ in $z$, we have
 \begin{equation}
 \langle\nabla f(x),z-x\rangle\geq-\frac{4r}{\sqrt{n}}\|\nabla f(x)\|_{2}.\label{eq:grad_prob}
 \end{equation}
-To compute $\|\nabla f(x)\|^{2}_{2}$, it is easier to compute directional
-derivative of $\nabla f$. Note that 
+To compute $\|\nabla f(x)\|^{2}_{2}$, it is easier to compute the
+directional derivative of $\nabla f$. Note that 
 \begin{align}
 \|\nabla f(x)\|_{2} & =\max_{\|v\|_{2}=1}\nabla f(x)^{\top}v\nonumber \\
  & =\max_{\|v\|_{2}=1}\tr(\mh(x)^{-1}D\mh(x)[v])\nonumber \\
@@ -705,9 +708,8 @@ $0.4$ from the previous exercise, satisfies
 \end{equation}
 
 Now, we bound the fraction of volume in the intersection of the ellipsoids
-at $x,y$. Again, we can assume that $\mh(x)=\mi$. Then, the strongly
-self-concordance and Lemma \ref{lem:global_strongly_self_concordant}
-shows that
+at $x,y$. Again, we can assume that $\mh(x)=\mi$. Then, strong self-concordance
+and Lemma \ref{lem:global_strongly_self_concordant} shows that
 \begin{equation}
 \|\mh(y)-\mi\|_{F}\leq2\|x-y\|_{x}\leq\frac{1}{10\sqrt{n}}.\label{eq:H_minus_I_F}
 \end{equation}
@@ -768,11 +770,11 @@ defined by $m$ inequalities we also have $K\cap(2x-K)\subseteq E_{x}(\sqrt{m})$.
 
 \begin{proof}
 For the first inequality, we notice that since for any $x\in K$,
-we have that the barrier function $\phi(x)$ is finite with bounded
-first and second moments, and by Lemma \ref{lem:global_self_concordant},
-the Hessian remains finite for every point in $[x,y]$ for $y$ s.t.
-$\norm{x-y}_{x}<1$, we have that $\phi(y)$ is also finite, and hence
-$y\in K$, since $\phi$ is a barrier function for $K$. 
+we have that the barrier function $\phi$ is finite with bounded first
+and second derivatives, and by Lemma \ref{lem:global_self_concordant},
+the Hessian remains finite for every point in $[x,y]$ for $y$ such
+that $\norm{x-y}_{x}<1$, we have that $\phi(y)$ is also finite,
+and hence $y\in K$, since $\phi$ is a barrier function for $K$. 
 
 For the second part, for any $y\in K\cap(2x-K)$, we have that for
 every $i\in[m]$, 
@@ -824,7 +826,7 @@ otherwise, it immediately follows that the conductance of $S_{1}$
 is $\Omega(1)$. Assuming this, we have
 \begin{align*}
 \int_{S_{1}}P_{x}(S_{2})\,dx & \ge\frac{1}{2}\int_{S_{3}'}\frac{1}{8}dx\ge\frac{1}{16}\vol(S_{3}')\\
-\mbox{using isoperimetry (Theorem \ref{thm:iso-cross-ratio})} & \ge\frac{1}{16}d_{K}(S_{1}',S_{2}')\frac{\vol(S_{1}')\vol(S_{2}')}{\vol(P)}\\
+ & \ge\frac{1}{16}d_{K}(S_{1}',S_{2}')\frac{\vol(S_{1}')\vol(S_{2}')}{\vol(P)}\qquad\text{(Theorem \ref{thm:iso-cross-ratio})}\\
  & \ge\frac{r}{1000\sqrt{nm}}\min\left\{ \vol(S_{1}),\vol(S_{2})\right\} .
 \end{align*}
 \end{proof}

@@ -3,7 +3,7 @@ for convex optimization. These algorithms use knowledge of the function
 in a minimal way, essentially by querying the function value along
 with weak bounds on its support and range. Historically, the ideas
 in this chapter originated in the work of \cite{Grunbaum1960,yudin1976evaluation},
-developed into polynomial-time algorithms by \cite{khachiyan1980polynomial,grotschel1981ellipsoid,bertsimas2004solving}.
+and were developed into polynomial-time algorithms by \cite{khachiyan1980polynomial,grotschel1981ellipsoid,bertsimas2004solving}.
 For a comprehensive presentation of related problems and ellipsoid-based
 algorithms, the reader is referred to the classic book \cite{grotschel2012geometric}. 
 
@@ -54,8 +54,8 @@ of finding an approximate minimizer of $f$.
 \end{rem*}
 In this framework, we maintain a convex set $E^{(k)}$ that contains
 the set $K$. In each iteration, we choose some $x^{(k)}$ based on
-$E^{(k)}$ and query the oracle for $g(x^{(k)})$ . The guarantee
-for $g(.)$ implies that $K$ lies in the halfspace 
+$E^{(k)}$ and query the oracle for $g(x^{(k)})$. The guarantee for
+$g(.)$ implies that $K$ lies in the halfspace 
 \[
 H^{(k)}=\{y:g(x^{(k)})^{\top}(y-x^{(k)})\leq0\}
 \]
@@ -143,10 +143,10 @@ E^{(k)}\defeq\{y\in\Rn:\ (y-x^{(k)})^{\top}\left(A^{(k)}\right)^{-1}(y-x^{(k)})\
 \]
 that contains $K$ and becomes smaller in volume in each step. Note
 that for this to be an ellipsoid the matrix $A^{(k)}$ must be symmetric
-PSD. After we compute $g(x^{(k)})$ and $H^{(k)}$ via (\ref{eq:Hk}),
-we define $E^{(k+1)}$ to be the smallest volume ellipsoid containing
-$E^{(k)}\cap H^{(k)}$. The key observation is that the volume of
-the ellipsoid $E^{(k)}$ decreases by a factor of $1-\Theta(\frac{1}{n})$
+positive definite. After we compute $g(x^{(k)})$ and $H^{(k)}$ via
+(\ref{eq:Hk}), we define $E^{(k+1)}$ to be the smallest volume ellipsoid
+containing $E^{(k)}\cap H^{(k)}$. The key observation is that the
+volume of the ellipsoid $E^{(k)}$ decreases by a factor of $1-\Theta(\frac{1}{n})$
 every iteration. This volume property holds for any halfspace through
 the center of the current ellipsoid (not only for the one whose normal
 is the gradient), a property we will exploit in the next chapter.
@@ -184,8 +184,9 @@ We usually obtain $g(x)$ from a \emph{separation oracle}.
 
 \begin{rem}
 Note that the proof below also shows that $\vol E^{(k+1)}=e^{-\Theta(\frac{1}{n})}\vol E^{(k)}$.
-Therefore, the ellipsoid method does not run faster even for any function,
-e.g., a linear function, making it provably ``slow'' in practice.
+Therefore, the ellipsoid method does not run faster even for simple
+functions, e.g., linear functions, making it provably ``slow'' in
+practice.
 \end{rem}
 
 \begin{proof}
@@ -400,7 +401,7 @@ if $Ax\geq b$ and $v(x)=-a_{i}$ if $a^{\top}_{i}x<b_{i}$. If there
 are many violated constraints, any one of them will do.
 
 In this case, we can set $\Omega=P$. We can simply pick $E^{(0)}$
-be the Euclidean ball centered at $0$ with radius $R$. We apply
+to be the Euclidean ball centered at $0$ with radius $R$. We apply
 Theorem \ref{thm:ellipsoid} to find $x$ such that
 \[
 c^{\top}x-\min_{y\in P}c^{\top}y\leq\varepsilon\cdot(\max_{y\in P}c^{\top}y-\min_{y\in P}c^{\top}y)
@@ -586,7 +587,8 @@ Therefore, by Jensen's inequality,
 \[
 \E\norm y\le\sqrt{\E\left(\norm y^{2}\right)}=\sqrt{\frac{n}{N}}.
 \]
-Thus, we can apply Theorem \ref{thm:grun-1} with $t=\sqrt{\frac{n}{N}}$
+Thus, we can apply Theorem \ref{thm:grun-1} with $t=|\theta^{\top}y|$
+and then use $\E|\theta^{\top}y|\le\E\norm y\le\sqrt{\frac{n}{N}}$
 to bound $\E(\vol(K\cap H))/\vol(K)$. 
 \end{proof}
 Theorem \ref{thm:conv_opt} readily gives the following guarantee
@@ -620,7 +622,7 @@ $(n-1)$-dimensional volume as $A(t)$.
 
 \begin{figure}[h]
 
-\centering{}\includegraphics[width=0.85\columnwidth]{Figures/Thrm_3\lyxdot 20}\caption{Affine transformations for Centre of Gravity method}
+\centering{}\includegraphics[width=0.85\columnwidth]{Figures/Thrm_3\lyxdot 20}\caption{Affine transformations for Center of Gravity method}
 \end{figure}
 
 The goal of the proof is to show that the smallest possible halfspace
@@ -689,16 +691,16 @@ queries to the oracle.
 \begin{proof}
 Suppose $K$ is a cube of side length $\epsilon$ contained in the
 cube $[0,R]^{n}$. Imagine a tiling of the big cube by cubes of side
-length $\epsilon$. Consider the oracle that always returns an axis
-parallel halfspace that does not cut any little cube and contains
-at least half of the volume of the ``remaining'' region, i.e., the
-set given by the original cube intersected with all halfspaces given
-by the oracle so far. This is always possible since for any halfspace
-either the halfspace or its complement will contain at least half
-the volume of any set. Thus each query at best halves the remaining
-volume. To solve the problem, the algorithm needs to cut down to a
-set of volume $\epsilon^{n}$ starting from a set of volume $R^{n}.$
-Thus it needs at least $n\log_{2}(R/\epsilon)$ queries.
+length $\epsilon$. Consider the oracle that always returns an axis-parallel
+halfspace that does not cut any little cube and contains at least
+half of the volume of the ``remaining'' region, i.e., the set given
+by the original cube intersected with all halfspaces given by the
+oracle so far. This is always possible since for any halfspace either
+the halfspace or its complement will contain at least half the volume
+of any set. Thus each query at best halves the remaining volume. To
+solve the problem, the algorithm needs to cut down to a set of volume
+$\epsilon^{n}$ starting from a set of volume $R^{n}.$ Thus it needs
+at least $n\log_{2}(R/\epsilon)$ queries.
 \end{proof}
 \begin{figure}[h]
 \centering{}\includegraphics[width=0.75\columnwidth]{Figures/Thrm_3\lyxdot 22}\caption{Complexity using a separation oracle}

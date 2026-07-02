@@ -24,7 +24,7 @@ From this, over a domain $\Omega$, we have
 \int_{\Omega}\nabla f\cdot v=\int_{\Omega}\nabla\cdot(fv)-\int_{\Omega}(\nabla\cdot v)f.
 \]
 And using the divergence theorem, namely, $\int_{\Omega}\nabla\cdot w=\int_{\partial\Omega}w\cdot\overrightarrow{n}$,
-where $\overrightarrow{n}$is the outward normal vector at a point
+where $\overrightarrow{n}$ is the outward normal vector at a point
 in $\partial\Omega$, we have:
 \[
 \int_{\Omega}\nabla f\cdot v=\int_{\partial\Omega}fv\cdot\overrightarrow{n}-\int_{\Omega}f(\nabla\cdot v).
@@ -43,8 +43,9 @@ Usually, computing gradients coordinate-by-coordinate is not the best
 way and we should avoid using summation notation as much as possible
 as it creates too many subscripts and is prone to mistakes. Instead,
 it is usually better to compute the gradient via directional derivatives.
-Here, we give a few examples for this. We define $Df(x)[h]$ be the
-directional derivative of $f$ at $x$ along the direction $h$. Namely,
+Here, we give a few examples for this. We define $Df(x)[h]$ to be
+the directional derivative of $f$ at $x$ along the direction $h$.
+Namely, 
 \[
 Df(x)[h]\defeq\left.\frac{d}{dt}\right|_{t=0}f(x+th).
 \]
@@ -52,7 +53,7 @@ Similarly, we use $D^{k}f(x)[h_{1},h_{2},\cdots,h_{k}]$ to denote
 the directional $k$-th derivative of $f$ at $x$ along directions
 $h_{1},\cdots,h_{k}$.
 \begin{lem}
-Given $A\in\R^{n\times d}$. Let $\Phi(x)=\sum^{n}_{i=1}f(a^{\top}_{i}x)$
+Given $A\in\R^{n\times d}$, let $\Phi(x)=\sum^{n}_{i=1}f(a^{\top}_{i}x)$
 where $a_{i}$ is the $i$-th row of $A$. Then, we have $\nabla\Phi(x)=A^{\top}f'(Ax)$
 and $\nabla^{2}\Phi(x)=A^{\top}\diag(f''(Ax))A$ where $f'(Ax)$ is
 the vector defined by $(f'(Ax))_{i}=f'(a^{\top}_{i}x)$.
@@ -87,9 +88,9 @@ Here is a more complicated example.
 \begin{lem}[Brachistochrone Problem]
 Let $(x,u(x))$ be the curve from $(0,0)$ to $(1,-1)$ where the
 first coordinate is the $x$ axis and the second coordinate is the
-$y$ axis. Suppose that this is the curve that takes the shortest
-time for a bead to slide along the curve frictionlessly from $(0,0)$
-to $(1,-1)$ under uniform gravity. Then, we have that
+$y$ axis. Suppose that this is the time-minimizing curve for a bead
+to slide frictionlessly from $(0,0)$ to $(1,-1)$ under uniform gravity.
+Then, we have that
 \[
 2uu''+(u')^{2}+1=0.
 \]
@@ -136,7 +137,7 @@ not $t$!):
 \int^{1}_{0}\frac{u'(x)h'(x)}{\sqrt{-2gu(x)}\sqrt{1+(u'(x))^{2}}}dx=\left[\frac{u'(x)h(x)}{\sqrt{-2gu(x)}\sqrt{1+(u'(x))^{2}}}\right]^{1}_{0}-\int^{1}_{0}\frac{d}{dx}\left(\frac{u'(x)}{\sqrt{-2gu(x)}\sqrt{1+(u'(x))^{2}}}\right)h(x)dx.
 \]
 Since the endpoints of the curve are fixed, we have $h(1)=h(0)=0$.
-Hence, the first term on the right hand side is $0$. Continuing,
+Hence, the first term on the right-hand side is $0$. Continuing,
 \begin{align*}
 DT(u)[h]= & \int^{1}_{0}-\frac{1}{2}\frac{\sqrt{1+u'(x)^{2}}}{\sqrt{-2gu(x)}u(x)}h(x)dx-\int^{1}_{0}\frac{d}{dx}\left(\frac{u'(x)}{\sqrt{-2gu(x)}\sqrt{1+u'(x)^{2}}}\right)h(x)dx\\
 = & \int^{1}_{0}-\frac{1}{2}\frac{\sqrt{1+(u'(x))^{2}}}{\sqrt{-2gu(x)}u(x)}h(x)dx-\int^{1}_{0}\frac{u''(x)}{\sqrt{-2gu(x)}\sqrt{1+u'(x)^{2}}}h(x)dx\\
@@ -165,14 +166,15 @@ The implicit function theorem shows that
 \[
 D_{x}f(x,g(x))+D_{y}f(x,g(x))Dg(x)=0
 \]
-where $D_{x}f$ is the Jacobian of $f$ with respect to $x$ variables
+where $D_{x}f$ is the Jacobian of $f$ with respect to the $x$-variables
 and $Dg(x)$ is the Jacobian of $g$. We note that the formula can
 be obtained by taking derivatives on both sides with respect to $x$.
 Sometimes, taking derivatives on both sides can greatly simplify calculations.
 Here are some examples.
 \begin{lem}
 Consider $x_{t}=\argmin_{x\in\Rn}f_{t}(x)$ where $f_{t}$ are strictly
-convex. Then, we have
+convex and $\nabla^{2}f_{t}(x_{t})$ is positive definite. Then, we
+have
 \[
 \frac{dx_{t}}{dt}=-(\nabla^{2}f_{t}(x_{t}))^{-1}\nabla\frac{df_{t}}{dt}(x_{t}).
 \]
@@ -184,26 +186,26 @@ derivatives on both sides, we have
 \[
 \nabla^{2}f_{t}(x_{t})\frac{dx_{t}}{dt}+\nabla\frac{df_{t}}{dt}(x_{t})=0.
 \]
-Since $f_{t}$ are strictly convex, $\nabla^{2}f_{t}(x_{t})$ is positive
-definite and is invertible. Hence, we have the desired result.
+Since $\nabla^{2}f_{t}(x_{t})$ is positive definite and is invertible.
+Hence, we have the desired result.
 \end{proof}
 In section \ref{sec:IPM}, we used this to compute the derivative
-of central path.
+of the central path.
 
-\subsection{Linearity of Expectation - the continuous version}
+\subsection{Linearity of Expectation: the Continuous Version}
 
-Often times one would like to compute the differential of a quantity
-that is most appropriately expressed by an integral, and under mild
-assumptions we can do so by simply swapping the integral and derivative,
-i.e. for time differentiable and (Lebesgue) integrable $f(x,t)$ we
-want to do
+Often, one would like to compute the differential of a quantity that
+is most appropriately expressed by an integral, and under mild assumptions
+we can do so by simply swapping the integral and derivative, i.e.
+for time-differentiable and (Lebesgue) integrable $f(x,t)$ we want
+to justify
 \[
 \frac{d}{dt}\int_{\Omega}f(x,t)dx=\int_{\Omega}\frac{\partial}{\partial t}f(x,t)dx
 \]
 For example, we use this trick in deriving the Fokker-Planck equation
 in gradient-based sampling. Fortunately, measure theory gives us the
 dominated convergence theorem, a quick corollary of which tells us
-we can perform the above trick as long as there exists integrable
+we can perform the above trick as long as there exists an integrable
 $g:\Omega\rightarrow\R$ such that $\big|\frac{\partial}{\partial t}f(x,t)\big|\leq g(x)$
 for all $x$. If we have $\Omega=\Rn$, then similar in nature to
 integration by parts for divergence, the upper bound follows from
@@ -213,16 +215,18 @@ this is often the case).
 
 \section{Solving optimization problems by hand}
 
-In this section, we introduce the KKT condition and show how to use
-it to solve optimization problem by hand.
+In this section, we introduce the KKT conditions and show how to use
+them to solve optimization problems by hand.
 \begin{thm}[Karush--Kuhn--Tucker theorem]
 Consider the following optimization problem
 \[
 \min_{x\in\Omega}f(x)\text{ subject to }h_{i}(x)\leq0\text{ and }\ell_{j}(x)=0\text{ for all }i,j
 \]
 for some open set $\Omega$ and continuously differentiable functions
-$f$, $h_{i}$ and $\ell_{j}$. If $x$ is a local minimum, $x$ satisfies
-the KKT conditions:
+$f$, $h_{i}$ and $\ell_{j}$. If $x$ is a local minimum and the
+gradients of the active inequalities together with the equality gradients
+are linearly independent at $x$, then there exist multipliers $u_{i}$
+and $v_{j}$ such that $x$ satisfies the KKT conditions:
 \begin{itemize}
 \item Stationary: $\nabla f(x)+\sum_{i}u_{i}\nabla h_{i}(x)+\sum_{j}v_{j}\nabla\ell_{j}(x)=0$
 \item Complementary Slackness: $u_{i}h_{i}(x)=0$ for all $i$
@@ -230,16 +234,17 @@ the KKT conditions:
 $i,j$
 \item Dual Feasibility: $u_{i}\geq0$ for all $i$
 \end{itemize}
-We prove Holder's inequality as an example:
 \end{thm}
 
+We prove Hölder's inequality as an example:
 \begin{fact}
 For any vector $x,y\in\R^{n}$, we have $\|xy\|_{1}\leq\|x\|_{p}\|y\|_{q}$
 for any $1\leq p\leq\infty$ and $1\leq q\leq\infty$ with $\frac{1}{p}+\frac{1}{q}=1$.
 \end{fact}
 
 \begin{proof}
-By symmetries, it suffices to compute
+Assume first that $1<p,q<\infty$. By symmetry, we may assume $y_{i}\ge0$
+and take a nonnegative maximizer; it suffices to compute
 \[
 \max_{\|x\|_{p}\leq1}\sum_{i}x_{i}y_{i}
 \]
@@ -247,11 +252,11 @@ for non-zero $y$. Now, we use the KKT theorem with $f(x)=-\sum_{i}x_{i}y_{i}$,
 $h(x)=\|x\|_{p}-1$ and $\Omega=\R^{n}$. By the KKT conditions, for
 any maximizer $x$, we have that
 \begin{align*}
--\nabla f(x)+u\nabla h(x) & =0,\\
+\nabla f(x)+u\nabla h(x) & =0,\\
 uh(x) & =0,\\
 h(x)\leq0, & u\geq0.
 \end{align*}
-Note that $\nabla f(x)=y$ and $(\nabla h(x))_{i}=\frac{1}{p}\|x\|^{1-p}_{p}\cdot px^{p-1}_{i}=\|x\|^{1-p}_{p}\cdot x^{p-1}$.
+Note that $\nabla f(x)=-y$ and $(\nabla h(x))_{i}=\|x\|^{1-p}_{p}x^{p-1}_{i}$.
 From the stationary condition, we have
 \[
 y=u\|x\|^{1-p}_{p}\cdot x^{p-1}.
@@ -270,5 +275,7 @@ Now, we can compute $\sum_{i}x_{i}y_{i}$ as follows
 \[
 \sum_{i}x_{i}y_{i}=\sum_{i}(\frac{y_{i}}{u})^{\frac{1}{p-1}}y_{i}=\frac{1}{u^{1/(p-1)}}\sum_{i}y^{p/(p-1)}_{i}=\|y\|_{q}.
 \]
+The endpoint cases are direct: if $p=1,q=\infty$, then $\sum_{i}|x_{i}y_{i}|\leq\|y\|_{\infty}\|x\|_{1}$,
+and the case $p=\infty,q=1$ is symmetric.
 \end{proof}
 

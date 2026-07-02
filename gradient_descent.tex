@@ -74,10 +74,10 @@ approximation (such as Section \ref{sec:Accelerated-Gradient-Descent}).
 Perhaps the most natural algorithm for optimization is gradient descent.
 In fact, it has many variants with different guarantees. Assume that
 the function $f$ to be optimized is continuously differentiable.
-By basic calculus, either the minimum (or point achieving the minimum)
-is unbounded or the gradient is zero at a minimum. So we try to find
-a point with gradient close to zero (which, of course, does not guarantee
-global optimality). The basic algorithm is the following. 
+By basic calculus, either the objective is unbounded below or the
+gradient is zero at any attained unconstrained minimum. So we try
+to find a point with gradient close to zero (which, of course, does
+not guarantee global optimality). The basic algorithm is the following. 
 
 \begin{algorithm2e}[H]
 
@@ -136,7 +136,7 @@ Similar to Theorem \ref{thm:equ_convex}, we have the following equivalence:
 the following are equivalent:
 \begin{enumerate}
 \item $\|\nabla f(x)-\nabla f(y)\|_{2}\leq L\|x-y\|_{2}$ for all $x,y\in\Rn$.
-\item $-LI\preceq\nabla^{2}f(x)\preceq L$I for all $x\in\Rn$.
+\item $-LI\preceq\nabla^{2}f(x)\preceq LI$ for all $x\in\Rn$.
 \item $\left|f(y)-f(x)-\nabla f(x)^{\top}(y-x)\right|\le\frac{L}{2}\|y-x\|^{2}_{2}$
 for all $x,y\in\Rn$.
 \end{enumerate}
@@ -147,7 +147,7 @@ Suppose (1) holds. By the definition of $\nabla^{2}f$, we have
 \[
 \nabla^{2}f(x)v=\lim_{h\rightarrow0}\frac{\nabla f(x+hv)-\nabla f(x)}{h}.
 \]
-Since $\|\frac{\nabla f(x+hv)-\nabla f(x)}{h}\|_{2}\leq\frac{L}{h}\|hv\|_{2}=L\|v\|_{2}$,
+Since $\|\frac{\nabla f(x+hv)-\nabla f(x)}{h}\|_{2}\leq\frac{L}{|h|}\|hv\|_{2}=L\|v\|_{2}$,
 we have $\|\nabla^{2}f(x)v\|_{2}\leq L\|v\|_{2}$, which means all
 eigenvalues of $\nabla^{2}f$ are at most $L$ in magnitude. This
 proves (2).
@@ -221,7 +221,7 @@ subset of its domain.
 \subsection{Analysis for general functions}
 
 Gradient descent works for both convex and non-convex functions. For
-non-convex function, we can only find a point with small gradient
+non-convex functions, we can only find a point with small gradient
 (called an \emph{approximate stationary} point).
 \begin{thm}
 \label{thm:gd_general}Let $f\in\mathcal{C}^{2}(\R^{n})$ with $L$-Lipschitz
@@ -337,15 +337,15 @@ This style of proof is typical in optimization. It shows that when
 the gradient is large, we make large progress and when the gradient
 is small, we are close to optimal. 
 
-This proof above does not make essential use of any property of $\ell_{2}$
+The proof above does not make essential use of any property of $\ell_{2}$
 or inner product space. It can be extended to work for general norms
 if the gradient descent step is defined using that norm. For the case
 of $\ell_{2}$, one can prove that $\|x^{(k)}-x^{*}\|_{2}$ is in
 fact decreasing. 
 \begin{lem}
 For $h\leq\frac{2}{L}$, we have that $\|x^{(k+1)}-x^{*}\|_{2}\leq\|x^{(k)}-x^{*}\|_{2}$.
-Therefore, for an $L$-gradient Lipschitz convex function $f$, for
-GD with $h=\frac{1}{L}$, we have
+Therefore, for a convex function $f$ with $L$-Lipschitz gradient,
+for GD with $h=\frac{1}{L}$, we have
 \[
 f(x^{(k)})-f(x^{*})\leq\frac{2L\|x^{(0)}-x^{*}\|^{2}_{2}}{k+4}.
 \]
@@ -379,10 +379,10 @@ The error estimate follows from $\|x^{(k)}-x^{*}\|^{2}_{2}\leq\|x^{(0)}-x^{*}\|^
 for all $k$ and the proof in Theorem \ref{thm:gd_convex}.
 \end{proof}
 \begin{xca}
-Show for GD on convex, $L$-gradient Lipschitz $f\in\mathcal{C}^{2}(\R^{n})$
-with step size $h\leq\frac{2}{L}$, the sequence $x^{(k)}$ satisfies
-$||\nabla f(x^{(k+1)})||_{2}\leq||\nabla f(x^{(k)})||_{2}$ for all
-$k$. 
+Show that, for GD on a convex $f\in\mathcal{C}^{2}(\R^{n})$ with
+$L$-Lipschitz gradient and step size $h\leq\frac{2}{L}$, the sequence
+$x^{(k)}$ satisfies $||\nabla f(x^{(k+1)})||_{2}\leq||\nabla f(x^{(k)})||_{2}$
+for all $k$. 
 \end{xca}
 
 Rewriting the bound, Theorem \ref{thm:gd_convex} shows it takes $\frac{2L\|x^{(0)}-x^{*}\|^{2}_{2}}{\epsilon}$
@@ -427,7 +427,7 @@ are equivalent:
 for all $x,y\in\Rn$ and $t\in[0,1]$.
 \item $f(y)\geq f(x)+\nabla f(x)^{\top}(y-x)+\frac{\mu}{2}\|y-x\|^{2}_{2}$
 for all $x,y\in\Rn$.
-\item $\nabla^{2}f(x)\succeq\mu$I for all $x\in\Rn$
+\item $\nabla^{2}f(x)\succeq\mu I$ for all $x\in\Rn$
 \end{itemize}
 \end{thm}
 
@@ -474,8 +474,8 @@ term with $\sqrt{\frac{\mu}{L}}$.
 Lemma \ref{lem:gradient_progress} shows that
 \begin{align}
 f(x^{(k+1)})-f(x^{*}) & \leq f(x^{(k)})-f(x^{*})-\frac{1}{2L}\|\nabla f(x^{(k)})\|^{2}_{2}\label{eq:strong_convex_progress}\\
- & \le f(x^{(k)})-f(x^{*})-\frac{\mu}{L}\left(f(x^{(k)})-f^{*}\right)\\
- & =\left(1-\frac{\mu}{L}\right)\left(f(x^{(k)})-f^{*}\right)
+ & \le f(x^{(k)})-f(x^{*})-\frac{\mu}{L}\left(f(x^{(k)})-f(x^{*})\right)\\
+ & =\left(1-\frac{\mu}{L}\right)\left(f(x^{(k)})-f(x^{*})\right)
 \end{align}
 where we used Lemma \ref{lem:strongly_convex}. The conclusion follows.
 \end{proof}
@@ -540,10 +540,10 @@ with $0<c_{1}<c_{2}<1$.
 Let the objective for progress be $\phi(h)=f(x)-f(x+hp)$. The first
 condition requires the algorithm makes sufficient progress ($\phi(h)\geq c_{1}h\cdot\phi'(0)$).
 The second condition requires the slope to reduce significantly ($\phi'(h)\leq c_{2}\phi'(0)$).
-One can think the first condition gives an upper bound on $h$ while
-the second condition gives a lower bound on $h$. In general, a step
-size satisfying the Wolfe conditions can be larger than the step size
-$h=\frac{1}{L}$. In particular, one can show the following.
+One can think of the first condition as giving an upper bound on $h$
+while the second condition gives a lower bound on $h$. In general,
+a step size satisfying the Wolfe conditions can be larger than the
+step size $h=\frac{1}{L}$. In particular, one can show the following.
 \begin{xca}
 Suppose $f$ is $\mu$-strongly convex and has $L$-Lipschitz gradient.
 If a step size $h$ satisfies the Wolfe condition with respect to
@@ -555,21 +555,21 @@ the direction $p=-\nabla f(x)$, then show that
 
 As a corollary, we have that the function value progress given by
 such step is $\Omega(\|\nabla f(x)\|^{2}/L)$. Therefore, this gives
-the same guarantee Theorem \ref{thm:gd_convex} and Theorem \ref{thm:gd_convex_strongly}.
+the same guarantee as Theorem \ref{thm:gd_convex} and Theorem \ref{thm:gd_convex_strongly}.
 A common way to implement this is via a backtracking line search.
 The algorithm starts with a large step size and decreases it by a
 constant factor if the Wolfe conditions are violated. For gradient
 descent, the next step involves exactly computing $\nabla f(x+hp)$
 and hence if our line search accepts the step size immediately, the
 line search almost costs nothing extra. Therefore, if we maintain
-a step size throughout the algorithm and decreases it only when it
+a step size throughout the algorithm and decrease it only when it
 violates the condition, the total cost of the line search will be
 only an additive logarithmic number of gradient calls throughout the
 algorithm and is negligible.
 
 Finally, we note that for problems of the form $f(x)=\sum_{i}f_{i}(a^{\top}_{i}x)$,
 the bottleneck is often in computing $Ax$. In this case, exact line
-search is almost free because we can store the vectors $Ax$ and $Ah$.
+search is almost free because we can store the vectors $Ax$ and $Ap$.
 
 \section{Generalizing Gradient Descent{*}}
 
@@ -585,8 +585,7 @@ we consider the following
 We say $g+h$ is an $\alpha$-approximation to $f$ at the point $x$
 if
 \begin{itemize}
-\item $g$ is convex, with the same value as $f$ at $x$, i.e., $g(x)=f(x)$
-,
+\item $g$ is convex, with the same value as $f$ at $x$, i.e., $g(x)=f(x)$,
 \item $h(x)=0$ and $h((1-\alpha)x+\alpha\widehat{x})\leq\alpha^{2}h(\widehat{x})$
 for all $\widehat{x}$,
 \item $g(y)+\alpha h(y)\leq f(y)\leq g(y)+h(y)\text{ for all }y.$ 
@@ -749,7 +748,7 @@ Equation (ODE)
 \frac{dx_{t}}{dt}=-\nabla f(x_{t}).
 \]
 This can be viewed as the canonical continuous algorithm. Finding
-the right discretization has lead to many fruitful research directions.
+the right discretization has led to many fruitful research directions.
 One benefit of the continuous view is to simplify some calculations.
 For example, for strongly convex $f$, Theorem \ref{thm:gd_convex_strongly}
 now becomes

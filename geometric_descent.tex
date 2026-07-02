@@ -213,11 +213,11 @@ As the algorithm proceeds, we find a new point $x^{\new}$ such that
 $f(x^{\new})<f(x)$. Therefore, the original inequality can be strengthened
 to 
 \[
-f(x^{(new)})>f(x)+\left\langle \nabla f(x),x^{*}-x\right\rangle 
+f(x^{\new})>f(x)+\left\langle \nabla f(x),x^{*}-x\right\rangle 
 \]
 or 
 \[
-\left\langle \nabla f(x),x^{*}-x\right\rangle <-(f(x)-f(x^{(new)})).
+\left\langle \nabla f(x),x^{*}-x\right\rangle <-(f(x)-f(x^{\new})).
 \]
 This suggests we should move earlier halfspaces and thereby reduce
 the measure of the next set. We expect merely updating the halfspaces
@@ -296,9 +296,9 @@ we have
 \[
 v_{\lambda}=v_{A}+\frac{\mu}{8}\frac{(\|c_{A}-c_{B}\|^{2}+\frac{2}{\mu}(v_{B}-v_{A}))^{2}}{\|c_{A}-c_{B}\|^{2}}.
 \]
-This says that the quadratic lower bound improves a lot whenever $\frac{\mu}{2}\|c_{A}-c_{B}\|^{2}\gg v_{B}-v_{A}$
-or $\frac{\mu}{2}\|c_{A}-c_{B}\|^{2}\ll v_{B}-v_{A}$. Using this,
-we can analyze the $\mathtt{ParabolaMethod}$.
+This says that the quadratic lower bound improves significantly whenever
+$\frac{\mu}{2}\|c_{A}-c_{B}\|^{2}\gg v_{B}-v_{A}$ or $\frac{\mu}{2}\|c_{A}-c_{B}\|^{2}\ll v_{B}-v_{A}$.
+Using this, we can analyze the $\mathtt{ParabolaMethod}$.
 \begin{thm}
 \label{lem:geometric_convergence_rate-1}Assume that $f$ is $\mu$-strongly
 convex with $L$-Lipschitz gradient. Let $r^{2}_{k}=f(x^{(k)})-\min_{y}q^{(k)}(y)$.
@@ -333,7 +333,7 @@ Therefore, we have
 \begin{equation}
 \frac{r^{2}_{k}-r^{2}_{k+1}}{r^{2}_{k}}=\frac{f(x^{(k)})-f(x^{(k+1)})+v_{\lambda}-v_{A}}{r^{2}_{k}}.\label{eq:r_ratio-1}
 \end{equation}
-To bound the right hand side, it suffices to bound $v_{A}$ and $v_{\lambda}$.
+To bound the right-hand side, it suffices to bound $v_{A}$ and $v_{\lambda}$.
 From the description of the algorithm $\mathtt{maxParabola}$, we
 see that there are three cases $\lambda=0$, $\lambda=1$ and $0<\lambda<1$.
 We only focus on proving the nontrivial case $\lambda\in(0,1)$. 
@@ -351,14 +351,15 @@ v_{\lambda}\geq v_{A}+\frac{\mu}{8}\frac{(\frac{2}{\mu}(f(x^{(k)})-v_{A}))^{2}}{
 Putting this into (\ref{eq:r_ratio-1}), we have
 \begin{align}
 \frac{r^{2}_{k}-r^{2}_{k+1}}{r^{2}_{k}} & \geq\frac{f(x^{(k)})-f(x^{(k+1)})}{r^{2}_{k}}+\frac{\mu\cdot r^{2}_{k}}{2\|\nabla f(x^{(k)})\|^{2}}\nonumber \\
- & \geq\frac{f(x^{(k+\frac{1}{2})})-f(x^{(k+1)})}{r^{2}_{k}}+\frac{\mu\cdot r^{2}_{k}}{2\|\nabla f(x^{(k)})\|^{2}}\nonumber \\
+ & \geq\frac{f(x^{(k)})-f(x^{(k+\frac{1}{2})})}{r^{2}_{k}}+\frac{\mu\cdot r^{2}_{k}}{2\|\nabla f(x^{(k)})\|^{2}}\nonumber \\
  & \geq\frac{\|\nabla f(x^{(k)})\|^{2}}{2Lr^{2}_{k}}+\frac{\mu\cdot r^{2}_{k}}{2\|\nabla f(x^{(k)})\|^{2}}\label{eq:geometric_key-1}\\
  & \geq\sqrt{\frac{\mu}{L}}\nonumber 
 \end{align}
-where the second inequality is due to the fact $x^{(k+\frac{1}{2})}$
-is a line search from $x^{(k)}$, the third inequality is due to the
-assumption on $L$ (Lemma \ref{lem:gradient_progress}), the last
-inequality follows from the Cauchy-Schwarz inequality.
+where the second inequality uses $f(x^{(k+1)})\leq f(x^{(k+\frac{1}{2})})$,
+and the third inequality follows from the fact that $x^{(k+\frac{1}{2})}$
+is a line search from $x^{(k)}$, together with the assumption on
+$L$ (Lemma \ref{lem:gradient_progress}), the last inequality follows
+from the Cauchy-Schwarz inequality.
 
 For the final conclusion, we note that
 \begin{align*}
@@ -366,7 +367,7 @@ q^{(1)}(y) & =f(x^{(0)})+\nabla f(x^{(0)})^{\top}(y-x^{(0)})+\frac{\mu}{2}\norm{
  & =f(x^{(0)})-\frac{1}{2\mu}\|\nabla f(x^{(0)})\|^{2}+\frac{\mu}{2}\norm{y-(x^{(0)}-\frac{1}{\mu}\nabla f(x^{(0)}))}^{2}.
 \end{align*}
 Hence, we have $v^{(1)}=f(x^{(0)})-\frac{1}{2\mu}\|\nabla f(x^{(0)})\|^{2}$
-and hence $r_{1}\leq f(x^{(1)})-v^{(1)}\leq\frac{1}{2\mu}\|\nabla f(x^{(0)})\|^{2}$.
+and hence $r^{2}_{1}=f(x^{(1)})-v^{(1)}\leq\frac{1}{2\mu}\|\nabla f(x^{(0)})\|^{2}$.
 
 To prove the claim, we note that $x^{(k)}$ is the result of a line
 search of $f$ between $c^{(k)}$ and some point. Therefore, we have
@@ -377,7 +378,7 @@ that $\nabla f(x^{(k)})\perp(x^{(k)}-c^{(k)})$ and hence
 \end{proof}
 \begin{rem}
 We can view (\ref{eq:geometric_key-1}) as the key equation of the
-proof above. It shows that the progress is roughly $\frac{\|\nabla f\|^{2}}{L}+\frac{\mu}{\|\nabla f\|^{2}}$
+proof above. It shows that the progress is roughly $\frac{\|\nabla f\|^{2}}{Lr^{2}_{k}}+\frac{\mu r^{2}_{k}}{\|\nabla f\|^{2}}$
 where the first term comes from the progress on the function value
 and the second term comes from ``the curvature'' of the cutting
 sphere.
@@ -385,7 +386,7 @@ sphere.
 
 \begin{xca}
 Prove the following extension of Lemma \ref{lem:one_ball_shrink-1}:
-There exists $x$ s.t. $B(0,\sqrt{1-\epsilon|g|^{2}})\cap B(g,|g|\sqrt{1-\epsilon})\subset B(x,\sqrt{1-\sqrt{\epsilon}})$.
+There exists $x$ such that $B(0,\sqrt{1-\epsilon|g|^{2}})\cap B(g,|g|\sqrt{1-\epsilon})\subset B(x,\sqrt{1-\sqrt{\epsilon}})$.
 \end{xca}
 
 
@@ -396,6 +397,6 @@ a byproduct we get an accelerated rate of convergence. As we will
 see later, standard accelerated gradient descent does not use line
 search and achieves the rate $1-\sqrt{\frac{\mu}{L}}$. However, it
 seems that the use of line search helps in practice and that with
-a careful implementation, line search can be as cheap as gradient
+a careful implementation, line search can be as cheap as a gradient
 computation. For more difficult problems, one may want to store multiple
 quadratic lower bounds (see \cite{drusvyatskiy2016optimal}).

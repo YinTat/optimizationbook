@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.10.28)  1 JUL 2026 14:20
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.10.28)  2 JUL 2026 01:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1012,12 +1012,12 @@ Chapter 1.
 <Figures/Exercise_1.1.png, id=481, 220.78485pt x 70.64392pt>
 File: Figures/Exercise_1.1.png Graphic file (type png)
 <use Figures/Exercise_1.1.png>
-Package pdftex.def Info: Figures/Exercise_1.1.png  used on input line 96.
+Package pdftex.def Info: Figures/Exercise_1.1.png  used on input line 95.
 (pdftex.def)             Requested size: 352.31625pt x 112.73074pt.
 <Figures/Def_1.3.png, id=485, 214.82257pt x 73.89607pt>
 File: Figures/Def_1.3.png Graphic file (type png)
 <use Figures/Def_1.3.png>
-Package pdftex.def Info: Figures/Def_1.3.png  used on input line 130.
+Package pdftex.def Info: Figures/Def_1.3.png  used on input line 129.
 (pdftex.def)             Requested size: 328.82707pt x 113.11697pt.
 
 
@@ -1027,13 +1027,13 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 <Figures/Def_1.2.png, id=499, 230.5413pt x 83.8332pt>
 File: Figures/Def_1.2.png Graphic file (type png)
 <use Figures/Def_1.2.png>
-Package pdftex.def Info: Figures/Def_1.2.png  used on input line 154.
+Package pdftex.def Info: Figures/Def_1.2.png  used on input line 153.
 (pdftex.def)             Requested size: 352.31625pt x 128.1198pt.
 <Figures/polyhedron_polytope.png, id=502, 590.205pt x 227.2125pt>
 File: Figures/polyhedron_polytope.png Graphic file (type png)
 <use Figures/polyhedron_polytope.png>
 Package pdftex.def Info: Figures/polyhedron_polytope.png  used on input line 17
-4.
+3.
 (pdftex.def)             Requested size: 352.31625pt x 135.63513pt.
 
 
@@ -1043,22 +1043,19 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 <Figures/Thrm_1.6.png, id=516, 160.25873pt x 153.75443pt>
 File: Figures/Thrm_1.6.png Graphic file (type png)
 <use Figures/Thrm_1.6.png>
-Package pdftex.def Info: Figures/Thrm_1.6.png  used on input line 223.
+Package pdftex.def Info: Figures/Thrm_1.6.png  used on input line 222.
 (pdftex.def)             Requested size: 234.8775pt x 225.35468pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<Figures/Thrm_1.20.png, id=520, 122.31697pt x 91.60222pt>
+[9 <./Figures/polyhedron_polytope.png>]
+<Figures/Thrm_1.20.png, id=528, 122.31697pt x 91.60222pt>
 File: Figures/Thrm_1.20.png Graphic file (type png)
 <use Figures/Thrm_1.20.png>
-Package pdftex.def Info: Figures/Thrm_1.20.png  used on input line 269.
+Package pdftex.def Info: Figures/Thrm_1.20.png  used on input line 270.
 (pdftex.def)             Requested size: 234.8775pt x 175.9036pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[9 <./Figures/polyhedron_polytope.png>] [10 <./Figures/Thrm_1.6.png>] [11 <./Fi
-gures/Thrm_1.20.png>] [12]
+ [10 <./Figures/Thrm_1.6.png> <./Figures/Thrm_1.20.png>] [11] [12]
 <Figures/Def_1.14.png, id=566, 216.0873pt x 51.13103pt>
 File: Figures/Def_1.14.png Graphic file (type png)
 <use Figures/Def_1.14.png>
@@ -1081,7 +1078,7 @@ Chapter 2.
 (./gradient_descent.tex [19
 
 ] [20]
-Overfull \hbox (12.55833pt too wide) in paragraph at lines 226--231
+Overfull \hbox (12.55833pt too wide) in paragraph at lines 227--232
 [][]\T1/cmr/bx/n/10 Theorem 2.6. []\T1/cmr/m/it/10 Let $\OML/cmm/m/it/10 f \OMS
 /cmsy/m/n/10 2 C[]\OT1/cmr/m/n/10 (\U/msb/m/n/10 R[]\OT1/cmr/m/n/10 )$ \T1/cmr/
 m/it/10 with $\OML/cmm/m/it/10 L$\T1/cmr/m/it/10 -Lipschitz gra-di-ent and $\OM
@@ -1101,7 +1098,7 @@ Package pdftex.def Info: Figures/Section_3.2.png  used on input line 133.
 (pdftex.def)             Requested size: 352.31625pt x 97.5785pt.
  [30 <./Figures/Section_3.2.png>] [31] [32] [33]
 [34]
-Overfull \hbox (26.67146pt too wide) in paragraph at lines 579--582
+Overfull \hbox (26.67146pt too wide) in paragraph at lines 580--583
 []\T1/cmr/m/n/10 Without loss of gen-er-al-ity, we as-sume that $\OML/cmm/m/it/
 10 K$ \T1/cmr/m/n/10 is in isotropic po-si-tion, i.e., $\OT1/cmr/bx/n/10 E[]\OT
 1/cmr/m/n/10 (\OML/cmm/m/it/10 y[]\OT1/cmr/m/n/10 ) = 0$ \T1/cmr/m/n/10 and $\O
@@ -1113,14 +1110,14 @@ m/m/it/10 y[]\OT1/cmr/m/n/10 )[]) =
 <Figures/Thrm_3.20.png, id=916, 400.3758pt x 271.37386pt>
 File: Figures/Thrm_3.20.png Graphic file (type png)
 <use Figures/Thrm_3.20.png>
-Package pdftex.def Info: Figures/Thrm_3.20.png  used on input line 623.
+Package pdftex.def Info: Figures/Thrm_3.20.png  used on input line 625.
 (pdftex.def)             Requested size: 399.29463pt x 270.66095pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [36]
-Overfull \hbox (0.11588pt too wide) in paragraph at lines 684--687
+Overfull \hbox (0.11588pt too wide) in paragraph at lines 686--689
 [][]\T1/cmr/bx/n/10 Theorem 3.22. []\T1/cmr/m/it/10 Any al-go-rithm that solves
  Prob-lem [][]3.1[][] us-ing a sep-a-ra-tion or-a-cle needs to make $\OT1/cmr/m
 /n/10 
@@ -1131,7 +1128,7 @@ $
 <Figures/Thrm_3.22.png, id=925, 200.72992pt x 189.3474pt>
 File: Figures/Thrm_3.22.png Graphic file (type png)
 <use Figures/Thrm_3.22.png>
-Package pdftex.def Info: Figures/Thrm_3.22.png  used on input line 704.
+Package pdftex.def Info: Figures/Thrm_3.22.png  used on input line 706.
 (pdftex.def)             Requested size: 352.31625pt x 332.35388pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -1176,7 +1173,7 @@ m/m/it/10 x[]\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 ; []  ; \OMS/cmsy/m/n/10 r\OML/c
 mm/m/it/10 f\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x[]\OT1/cmr/m/n/10 ))$
  []
 
-[43]) [44]
+[43] [44]) [45]
 Chapter 4.
 (./equivalence.tex
 Overfull \hbox (49.85689pt too wide) in paragraph at lines 85--90
@@ -1187,7 +1184,7 @@ r/m/n/10 = (\OML/cmm/m/it/10 r[]; r[]; []  ; r[]; g[]; g[]; []  ; g[]\OT1/cmr/m
 /n/10 )$\T1/cmr/m/n/10 .
  []
 
-[45
+[46
 
 ]
 Missing character: There is no , in font nullfont!
@@ -1196,7 +1193,7 @@ Missing character: There is no , in font nullfont!
 Missing character: There is no , in font nullfont!
 Missing character: There is no , in font nullfont!
 Missing character: There is no , in font nullfont!
-<Figures/Section_4.1.2.png, id=1029, 867.24pt x 542.025pt>
+<Figures/Section_4.1.2.png, id=1033, 867.24pt x 542.025pt>
 File: Figures/Section_4.1.2.png Graphic file (type png)
 <use Figures/Section_4.1.2.png>
 Package pdftex.def Info: Figures/Section_4.1.2.png  used on input line 153.
@@ -1204,7 +1201,7 @@ Package pdftex.def Info: Figures/Section_4.1.2.png  used on input line 153.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[46]
+[47]
 Overfull \hbox (5.77646pt too wide) in paragraph at lines 233--241
 []\T1/cmr/m/n/10 Note that $\OML/cmm/m/it/10 f[]$ \T1/cmr/m/n/10 is con-vex be-
 cause it is the supre-mum of lin-ear func-tions. Also, we have $\OML/cmm/m/it/1
@@ -1212,42 +1209,51 @@ cause it is the supre-mum of lin-ear func-tions. Also, we have $\OML/cmm/m/it/1
 /m/n/10 (\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 )$\T1/cmr/m/n/10 .
  []
 
-[47 <./Figures/Section_4.1.2.png>]
+
+Overfull \hbox (9.971pt too wide) in paragraph at lines 242--244
+[][]\T1/cmr/bx/n/10 Lemma 4.14. []\T1/cmr/m/it/10 For any con-tin-u-ous func-ti
+on $\OML/cmm/m/it/10 f$ \T1/cmr/m/it/10 with $\OML/cmm/m/it/10 f[]$ \T1/cmr/m/i
+t/10 dif-fer-en-tiable at $\OML/cmm/m/it/10 ^^R$\T1/cmr/m/it/10 , we have that 
+$\OMS/cmsy/m/n/10 r\OML/cmm/m/it/10 f[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 ^^R\OT
+1/cmr/m/n/10 ) = [] [][] \OML/cmm/m/it/10 ^^R[]x \OMS/cmsy/m/n/10 ^^@
+ []
+
+[48 <./Figures/Section_4.1.2.png>]
 Missing character: There is no , in font nullfont!
 Missing character: There is no , in font nullfont!
 Missing character: There is no , in font nullfont!
 Missing character: There is no , in font nullfont!
 Missing character: There is no , in font nullfont!
 Missing character: There is no , in font nullfont!
-[48] [49]
-Overfull \hbox (1.66808pt too wide) in paragraph at lines 469--475
+[49] [50]
+Overfull \hbox (1.66808pt too wide) in paragraph at lines 471--477
 []\T1/cmr/m/n/10 The ex-is-tence al-most ev-ery-where is clas-si-cal (Alexan-dr
 ov The-o-rem, see e.g., [[]]; see also Rademacher's
  []
 
-<Figures/Lemma_4.21.png, id=1092, 128.6406pt x 139.66177pt>
+<Figures/Lemma_4.21.png, id=1096, 128.6406pt x 139.66177pt>
 File: Figures/Lemma_4.21.png Graphic file (type png)
 <use Figures/Lemma_4.21.png>
-Package pdftex.def Info: Figures/Lemma_4.21.png  used on input line 501.
+Package pdftex.def Info: Figures/Lemma_4.21.png  used on input line 503.
 (pdftex.def)             Requested size: 281.85587pt x 306.03783pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[50] [51 <./Figures/Lemma_4.21.png>]
-<Figures/Lemma_4.23.png, id=1112, 103.88812pt x 103.88812pt>
+[51] [52 <./Figures/Lemma_4.21.png>]
+<Figures/Lemma_4.23.png, id=1116, 103.88812pt x 103.88812pt>
 File: Figures/Lemma_4.23.png Graphic file (type png)
 <use Figures/Lemma_4.23.png>
-Package pdftex.def Info: Figures/Lemma_4.23.png  used on input line 618.
+Package pdftex.def Info: Figures/Lemma_4.23.png  used on input line 620.
 (pdftex.def)             Requested size: 281.85587pt x 281.8903pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[52] [53 <./Figures/Lemma_4.23.png>]
-<Figures/Thrm_4.27.png, id=1138, 182.66243pt x 130.62802pt>
+[53] [54 <./Figures/Lemma_4.23.png>]
+<Figures/Thrm_4.27.png, id=1143, 182.66243pt x 130.62802pt>
 File: Figures/Thrm_4.27.png Graphic file (type png)
 <use Figures/Thrm_4.27.png>
-Package pdftex.def Info: Figures/Thrm_4.27.png  used on input line 743.
+Package pdftex.def Info: Figures/Thrm_4.27.png  used on input line 745.
 (pdftex.def)             Requested size: 281.85587pt x 201.5704pt.
 
 
@@ -1256,41 +1262,41 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<Figures/Lemma_4.29.png, id=1139, 89.25345pt x 97.74518pt>
+<Figures/Lemma_4.29.png, id=1144, 89.25345pt x 97.74518pt>
 File: Figures/Lemma_4.29.png Graphic file (type png)
 <use Figures/Lemma_4.29.png>
-Package pdftex.def Info: Figures/Lemma_4.29.png  used on input line 811.
+Package pdftex.def Info: Figures/Lemma_4.29.png  used on input line 813.
 (pdftex.def)             Requested size: 187.89914pt x 205.78249pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[54] [55 <./Figures/Thrm_4.27.png>] [56 <./Figures/Lemma_4.29.png>] [57]
-[58]) (./duality.tex [59] [60] [61] [62] [63]
-<Figures/Lemma_4.47.png, id=1234, 442.0515pt x 336.8585pt>
+[55] [56 <./Figures/Thrm_4.27.png>] [57 <./Figures/Lemma_4.29.png>] [58]
+[59]) (./duality.tex [60] [61] [62] [63] [64]
+<Figures/Lemma_4.47.png, id=1238, 442.0515pt x 336.8585pt>
 File: Figures/Lemma_4.47.png Graphic file (type png)
 <use Figures/Lemma_4.47.png>
-Package pdftex.def Info: Figures/Lemma_4.47.png  used on input line 300.
+Package pdftex.def Info: Figures/Lemma_4.47.png  used on input line 301.
 (pdftex.def)             Requested size: 234.8775pt x 178.98132pt.
- [64 <./Figures/Lemma_4.47.png>])
-[65]
+ [65 <./Figures/Lemma_4.47.png>])
+[66]
 Chapter 5.
-(./frank_wolfe.tex [66
+(./frank_wolfe.tex [67
 
 ]) (./newton_method.tex
-<Figures/Section_5.3.png, id=1258, 559.2895pt x 385.8415pt>
+<Figures/Section_5.3.png, id=1262, 559.2895pt x 385.8415pt>
 File: Figures/Section_5.3.png Graphic file (type png)
 <use Figures/Section_5.3.png>
 Package pdftex.def Info: Figures/Section_5.3.png  used on input line 5.
 (pdftex.def)             Requested size: 234.8775pt x 162.03465pt.
- [67 <./Figures/Section_5.3.png>]
-[68] [69] [70]
-<Figures/Section_5.3(1).png, id=1288, 617.1055pt x 355.3275pt>
+ [68 <./Figures/Section_5.3.png>]
+[69] [70] [71]
+<Figures/Section_5.3(1).png, id=1292, 617.1055pt x 355.3275pt>
 File: Figures/Section_5.3(1).png Graphic file (type png)
 <use Figures/Section_5.3(1).png>
 Package pdftex.def Info: Figures/Section_5.3(1).png  used on input line 243.
 (pdftex.def)             Requested size: 234.8775pt x 135.24272pt.
- [71 <./Figures/Section_5.3(1).png>])
-(./interior_point_method.tex [72] [73]
+ [72 <./Figures/Section_5.3(1).png>])
+(./interior_point_method.tex [73] [74]
 Overfull \hbox (9.49545pt too wide) in paragraph at lines 171--173
 [][]\T1/cmr/bx/n/10 Exercise 5.12. []\T1/cmr/m/n/10 Let $\OML/cmm/m/it/10 r \OT
 1/cmr/m/n/10 = \OML/cmm/m/it/10 t \OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 xs$\T1/
@@ -1302,8 +1308,8 @@ r/m/n/10 where $[] \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 XA[]\OT1/cmr/m/n/10 (\OML
 
  []
 
-[74]
-Overfull \hbox (37.52986pt too wide) detected at line 222
+[75]
+Overfull \hbox (38.134pt too wide) detected at line 221
 [] \OT1/cmr/m/n/10 = [] [][] = [](\OML/cmm/m/it/10 x[]s[] \OT1/cmr/m/n/10 + \OM
 L/cmm/m/it/10 x[]^^N[] \OT1/cmr/m/n/10 + \OML/cmm/m/it/10 s[]^^N[] \OT1/cmr/m/n
 /10 + \OML/cmm/m/it/10 ^^N[]^^N[] \OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 t\OT1/c
@@ -1311,8 +1317,8 @@ mr/m/n/10 )[] = [] \OML/cmm/m/it/10 ^^N[]^^N[] \OMS/cmsy/m/n/10 ^^T [][] ^^A []
  [][] [][]
  []
 
-[75] [76] [77] [78] [79] [80] [81]
-Overfull \hbox (24.57077pt too wide) in paragraph at lines 840--844
+[76] [77] [78] [79] [80] [81] [82]
+Overfull \hbox (24.57077pt too wide) in paragraph at lines 841--845
 \T1/cmr/m/n/10 Solving this lin-ear sys-tem, we have that $\OML/cmm/m/it/10 S[]
 [] \OT1/cmr/m/n/10 = (\OML/cmm/m/it/10 I \OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 
 P[]\OT1/cmr/m/n/10 )1$ \T1/cmr/m/n/10 and $\OML/cmm/m/it/10 X[][] \OT1/cmr/m/n/
@@ -1321,17 +1327,17 @@ P[]\OT1/cmr/m/n/10 )1$ \T1/cmr/m/n/10 and $\OML/cmm/m/it/10 X[][] \OT1/cmr/m/n/
 /10 AS[]X[]A[]\OT1/cmr/m/n/10 )[]\OML/cmm/m/it/10 AS[]$\T1/cmr/m/n/10 .
  []
 
-[82] [83] [84] [85]
+[83] [84] [85] [86]
 Overfull \hbox (12.8605pt too wide) detected at line 1132
 []
  []
 
-[86] [87]) (./reduction.tex [88]
+[87] [88]) (./reduction.tex [89]
 Overfull \hbox (22.64014pt too wide) in paragraph at lines 20--89
  [][] 
  []
 
-[89]
+[90]
 Overfull \vbox (7.46114pt too high) detected at line 111
  []
 
@@ -1348,57 +1354,39 @@ Overfull \hbox (26.79225pt too wide) in paragraph at lines 102--140
  [][] 
  []
 
-[90] [91] [92]) [93]
+[91] [92] [93]) [94]
 Chapter 6.
-(./subspace_embedding.tex [94
+(./subspace_embedding.tex [95
 
-] [95] [96] [97] [98])
-(./leverage_score_sampling.tex [99] [100]) (./stochastic_gradient_descent.tex
-[101] [102]
-Overfull \hbox (18.03134pt too wide) in paragraph at lines 143--148
-\T1/cmr/m/it/10 min-i-mizer of $\OML/cmm/m/it/10 F$ \T1/cmr/m/it/10 and $\OML/c
-mm/m/it/10 ^^[[] \OT1/cmr/m/n/10 = []\OT1/cmr/bx/n/10 E\OMS/cmsy/m/n/10 kr\OML/
-cmm/m/it/10 f\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x[]\OT1/cmr/m/n/10 )\OMS/cmsy/m/
-n/10 k[]$\T1/cmr/m/it/10 . For step size $\OML/cmm/m/it/10 h \OMS/cmsy/m/n/10 ^
-^T []$\T1/cmr/m/it/10 , the se-quence $\OML/cmm/m/it/10 x[]$ \T1/cmr/m/it/10 in
- $[]$
- []
-
-[103] [104]
-Overfull \hbox (8.42667pt too wide) in paragraph at lines 259--264
-\T1/cmr/m/it/10 mizer of $\OML/cmm/m/it/10 F$\T1/cmr/m/it/10 . For step size $\
-OML/cmm/m/it/10 h \OT1/cmr/m/n/10 = []$ \T1/cmr/m/it/10 and $\OML/cmm/m/it/10 m
- \OT1/cmr/m/n/10 = []$\T1/cmr/m/it/10 , the se-quence $\OML/cmm/m/it/10 x[]$ \T
-1/cmr/m/it/10 in $[]$
- []
-
-[105]) [106]
+] [96] [97] [98] [99])
+(./leverage_score_sampling.tex [100] [101]) (./stochastic_gradient_descent.tex
+[102] [103] [104] [105] [106]) [107]
 Chapter 7.
-(./chebyshev.tex [107
+(./chebyshev.tex [108
 
-]) (./conjugate_gradient.tex [108] [109] [110])
-(./accelerated_gradient_descent.tex [111] [112] [113] [114]
-Overfull \hbox (54.8156pt too wide) detected at line 338
+]) (./conjugate_gradient.tex [109] [110] [111])
+(./accelerated_gradient_descent.tex [112] [113] [114] [115]
+Overfull \hbox (54.8156pt too wide) detected at line 342
 []
  []
 
-[115] [116]) [117] [118
+[116] [117]) [118] [119
 
 ]
 Chapter 8.
-(./langevin_dynamics.tex [119
+(./langevin_dynamics.tex [120
 
-] [120] [121] [122] [123] [124]
+] [121] [122] [123] [124] [125]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `\@ifnextchar' on input line 449.
 
-[125] [126]) [127]
+[126] [127]) [128]
 Chapter 9.
-(./cutting_plane_volume.tex [128
+(./cutting_plane_volume.tex [129
 
-] [129]
-Overfull \hbox (20.97641pt too wide) in paragraph at lines 208--211
+] [130]
+Overfull \hbox (20.97641pt too wide) in paragraph at lines 210--213
 [][]\T1/cmr/bx/n/10 Theorem 9.8. []\T1/cmr/m/it/10 Let $\OML/cmm/m/it/10 K$ \T1
 /cmr/m/it/10 be a con-vex body in $\U/msb/m/n/10 R[]$ \T1/cmr/m/it/10 such that
  $\OT1/cmr/m/n/10 [\OMS/cmsy/m/n/10 ^^@\OML/cmm/m/it/10 r; r\OT1/cmr/m/n/10 ][]
@@ -1407,22 +1395,22 @@ Overfull \hbox (20.97641pt too wide) in paragraph at lines 208--211
 Al-go-rithm $[]$
  []
 
-<Figures/Section_9.2.png, id=1937, 507.8975pt x 437.2335pt>
+<Figures/Section_9.2.png, id=1941, 507.8975pt x 437.2335pt>
 File: Figures/Section_9.2.png Graphic file (type png)
 <use Figures/Section_9.2.png>
-Package pdftex.def Info: Figures/Section_9.2.png  used on input line 235.
+Package pdftex.def Info: Figures/Section_9.2.png  used on input line 237.
 (pdftex.def)             Requested size: 234.8775pt x 202.19731pt.
-[130] [131 <./Figures/Section_9.2.png>]) (./opt_from_mem.tex [132]) [133]
+[131] [132 <./Figures/Section_9.2.png>]) (./opt_from_mem.tex [133]) [134]
 Chapter 10.
 (./ball_walk.tex
-Overfull \hbox (15.0pt too wide) detected at line 35
+Overfull \hbox (15.0pt too wide) detected at line 36
 [][] 
  []
 
-[134
+[135
 
-] [135]
-Overfull \hbox (8.4503pt too wide) in paragraph at lines 205--208
+] [136]
+Overfull \hbox (8.4503pt too wide) in paragraph at lines 207--210
 [][]\T1/cmr/bx/n/10 Exercise 10.11. []\T1/cmr/m/n/10 Show that the func-tion $\
 OML/cmm/m/it/10 h[]$ \T1/cmr/m/n/10 is con-cave, and if $\OML/cmm/m/it/10 Q$ \T
 1/cmr/m/n/10 is atom-free , then $\OML/cmm/m/it/10 h[]\OT1/cmr/m/n/10 (\OML/cmm
@@ -1430,76 +1418,76 @@ OML/cmm/m/it/10 h[]$ \T1/cmr/m/n/10 is con-cave, and if $\OML/cmm/m/it/10 Q$ \T
 m/m/it/10 A\OT1/cmr/m/n/10 ) \OMS/cmsy/m/n/10 ^^@
  []
 
-<Figures/Exercise_10.3.png, id=2011, 150.86363pt x 89.79547pt>
+<Figures/Exercise_10.3.png, id=2014, 150.86363pt x 89.79547pt>
 File: Figures/Exercise_10.3.png Graphic file (type png)
 <use Figures/Exercise_10.3.png>
-Package pdftex.def Info: Figures/Exercise_10.3.png  used on input line 210.
+Package pdftex.def Info: Figures/Exercise_10.3.png  used on input line 212.
 (pdftex.def)             Requested size: 328.82707pt x 195.74611pt.
-[136 <./Figures/Exercise_10.3.png>] [137] [138]
-Overfull \hbox (18.23929pt too wide) detected at line 380
+[137 <./Figures/Exercise_10.3.png>] [138] [139]
+Overfull \hbox (18.23929pt too wide) detected at line 383
 []
  []
 
-[139]
-<Figures/Exercise_10.9.png, id=2043, 135.1449pt x 112.19917pt>
+[140]
+<Figures/Exercise_10.9.png, id=2046, 135.1449pt x 112.19917pt>
 File: Figures/Exercise_10.9.png Graphic file (type png)
 <use Figures/Exercise_10.9.png>
-Package pdftex.def Info: Figures/Exercise_10.9.png  used on input line 471.
+Package pdftex.def Info: Figures/Exercise_10.9.png  used on input line 474.
 (pdftex.def)             Requested size: 352.31625pt x 292.53954pt.
- [140]
-<Figures/Thrm_10.12.png, id=2050, 93.951pt x 65.94638pt>
+ [141]
+<Figures/Thrm_10.12.png, id=2053, 93.951pt x 65.94638pt>
 File: Figures/Thrm_10.12.png Graphic file (type png)
 <use Figures/Thrm_10.12.png>
-Package pdftex.def Info: Figures/Thrm_10.12.png  used on input line 505.
+Package pdftex.def Info: Figures/Thrm_10.12.png  used on input line 508.
 (pdftex.def)             Requested size: 234.8775pt x 164.88867pt.
- [141 <./Figures/Exercise_10.9.png>]
-<Figures/Thrm_10.12(1).png, id=2060, 86.0013pt x 67.2111pt>
+ [142 <./Figures/Exercise_10.9.png>]
+<Figures/Thrm_10.12(1).png, id=2063, 86.0013pt x 67.2111pt>
 File: Figures/Thrm_10.12(1).png Graphic file (type png)
 <use Figures/Thrm_10.12(1).png>
-Package pdftex.def Info: Figures/Thrm_10.12(1).png  used on input line 525.
+Package pdftex.def Info: Figures/Thrm_10.12(1).png  used on input line 528.
 (pdftex.def)             Requested size: 234.8775pt x 183.56146pt.
- [142 <./Figures/Thrm_10.12.png> <./Figures/Thrm_10.12(1).png>]
-<Figures/Partitions.png, id=2070, 117.25807pt x 83.29117pt>
+ [143 <./Figures/Thrm_10.12.png> <./Figures/Thrm_10.12(1).png>]
+<Figures/Partitions.png, id=2073, 117.25807pt x 83.29117pt>
 File: Figures/Partitions.png Graphic file (type png)
 <use Figures/Partitions.png>
-Package pdftex.def Info: Figures/Partitions.png  used on input line 567.
+Package pdftex.def Info: Figures/Partitions.png  used on input line 570.
 (pdftex.def)             Requested size: 258.36668pt x 183.53596pt.
- [143 <./Figures/Partitions.png>]
-<Figures/Lemma_10.10.png, id=2084, 212.83514pt x 85.2786pt>
+ [144 <./Figures/Partitions.png>]
+<Figures/Lemma_10.10.png, id=2088, 212.83514pt x 85.2786pt>
 File: Figures/Lemma_10.10.png Graphic file (type png)
 <use Figures/Lemma_10.10.png>
-Package pdftex.def Info: Figures/Lemma_10.10.png  used on input line 630.
+Package pdftex.def Info: Figures/Lemma_10.10.png  used on input line 633.
 (pdftex.def)             Requested size: 352.31625pt x 141.17982pt.
-<Figures/Lemma_10.10(1).png, id=2085, 130.44736pt x 81.30376pt>
+<Figures/Lemma_10.10(1).png, id=2089, 130.44736pt x 81.30376pt>
 File: Figures/Lemma_10.10(1).png Graphic file (type png)
 <use Figures/Lemma_10.10(1).png>
-Package pdftex.def Info: Figures/Lemma_10.10(1).png  used on input line 636.
+Package pdftex.def Info: Figures/Lemma_10.10(1).png  used on input line 639.
 (pdftex.def)             Requested size: 140.92793pt x 87.84146pt.
- [144 <./Figures/Lemma_10.10.png> <./Figures/Lemma_10.10(1).png>] [145] [146]
-Overfull \hbox (30.39633pt too wide) detected at line 839
+ [145 <./Figures/Lemma_10.10.png> <./Figures/Lemma_10.10(1).png>] [146] [147]
+Overfull \hbox (30.39633pt too wide) detected at line 842
 [][] 
  []
 
-[147]
-Overfull \hbox (30.39633pt too wide) detected at line 928
+[148]
+Overfull \hbox (30.39633pt too wide) detected at line 931
 [][] 
  []
 
-[148] [149] [150]
-<Figures/concave-to-affine.png, id=2192, 1431.3475pt x 360.34625pt>
+[149] [150] [151]
+<Figures/concave-to-affine.png, id=2195, 1431.3475pt x 360.34625pt>
 File: Figures/concave-to-affine.png Graphic file (type png)
 <use Figures/concave-to-affine.png>
-Package pdftex.def Info: Figures/concave-to-affine.png  used on input line 1194
+Package pdftex.def Info: Figures/concave-to-affine.png  used on input line 1198
 .
 (pdftex.def)             Requested size: 234.8775pt x 59.13016pt.
- [151 <./Figures/concave-to-affine.png (PNG copy)>]
-<Figures/Lemma_10.30.png, id=2202, 257.64255pt x 64.86232pt>
+ [152 <./Figures/concave-to-affine.png (PNG copy)>]
+<Figures/Lemma_10.30.png, id=2205, 257.64255pt x 64.86232pt>
 File: Figures/Lemma_10.30.png Graphic file (type png)
 <use Figures/Lemma_10.30.png>
-Package pdftex.def Info: Figures/Lemma_10.30.png  used on input line 1269.
+Package pdftex.def Info: Figures/Lemma_10.30.png  used on input line 1273.
 (pdftex.def)             Requested size: 352.31625pt x 88.70245pt.
- [152 <./Figures/Lemma_10.30.png>] [153]) (./har_dikin.tex
-<Figures/Section_10.1.png, id=2239, 122.49765pt x 76.42552pt>
+ [153 <./Figures/Lemma_10.30.png>] [154]) (./har_dikin.tex
+<Figures/Section_10.1.png, id=2242, 122.49765pt x 76.42552pt>
 File: Figures/Section_10.1.png Graphic file (type png)
 <use Figures/Section_10.1.png>
 Package pdftex.def Info: Figures/Section_10.1.png  used on input line 11.
@@ -1509,47 +1497,47 @@ Package pdftex.def Info: Figures/Section_10.1.png  used on input line 11.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-Overfull \hbox (15.0pt too wide) detected at line 29
+Overfull \hbox (15.0pt too wide) detected at line 30
 [][] 
  []
 
-[154]
-<Figures/Lemma_10.35.png, id=2258, 163.3302pt x 132.9768pt>
+[155]
+<Figures/Lemma_10.35.png, id=2261, 163.3302pt x 132.9768pt>
 File: Figures/Lemma_10.35.png Graphic file (type png)
 <use Figures/Lemma_10.35.png>
-Package pdftex.def Info: Figures/Lemma_10.35.png  used on input line 52.
+Package pdftex.def Info: Figures/Lemma_10.35.png  used on input line 53.
 (pdftex.def)             Requested size: 328.82707pt x 267.7446pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<Figures/Thrm_10.37.png, id=2261, 123.22035pt x 74.07675pt>
+<Figures/Thrm_10.37.png, id=2264, 123.22035pt x 74.07675pt>
 File: Figures/Thrm_10.37.png Graphic file (type png)
 <use Figures/Thrm_10.37.png>
-Package pdftex.def Info: Figures/Thrm_10.37.png  used on input line 64.
+Package pdftex.def Info: Figures/Thrm_10.37.png  used on input line 66.
 (pdftex.def)             Requested size: 281.85587pt x 169.44495pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[155 <./Figures/Section_10.1.png>]
-<Figures/Thrm_10.39.png, id=2279, 143.0946pt x 74.61877pt>
+[156 <./Figures/Section_10.1.png>]
+<Figures/Thrm_10.39.png, id=2284, 143.0946pt x 74.61877pt>
 File: Figures/Thrm_10.39.png Graphic file (type png)
 <use Figures/Thrm_10.39.png>
-Package pdftex.def Info: Figures/Thrm_10.39.png  used on input line 127.
+Package pdftex.def Info: Figures/Thrm_10.39.png  used on input line 129.
 (pdftex.def)             Requested size: 281.85587pt x 146.97818pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[156 <./Figures/Lemma_10.35.png>] [157 <./Figures/Thrm_10.37.png> <./Figures/Th
+[157 <./Figures/Lemma_10.35.png>] [158 <./Figures/Thrm_10.37.png> <./Figures/Th
 rm_10.39.png>]
-<Figures/Thrm_10.40.png, id=2302, 134.96422pt x 82.56848pt>
+<Figures/Thrm_10.40.png, id=2305, 134.96422pt x 82.56848pt>
 File: Figures/Thrm_10.40.png Graphic file (type png)
 <use Figures/Thrm_10.40.png>
-Package pdftex.def Info: Figures/Thrm_10.40.png  used on input line 186.
+Package pdftex.def Info: Figures/Thrm_10.40.png  used on input line 188.
 (pdftex.def)             Requested size: 281.85587pt x 172.46658pt.
- [158 <./Figures/Thrm_10.40.png>] [159]
-Overfull \hbox (34.51393pt too wide) detected at line 331
+ [159 <./Figures/Thrm_10.40.png>] [160]
+Overfull \hbox (34.51393pt too wide) detected at line 333
 [][] \OML/cmm/m/it/10 g\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x; t\OT1/cmr/m/n/10 ) 
 \OML/cmm/m/it/10 dx \OMS/cmsy/m/n/10 ^^T \OML/cmm/m/it/10 ^^M[]\OT1/cmr/m/n/10 
 (\OMS/cmsy/m/n/10 f\OML/cmm/m/it/10 x \OMS/cmsy/m/n/10 2 \OML/cmm/m/it/10 K \OT
@@ -1566,93 +1554,102 @@ m/n/10 f\OML/cmm/m/it/10 x \OMS/cmsy/m/n/10 2 \OML/cmm/m/it/10 K \OT1/cmr/m/n/1
 L/cmm/m/it/10 :
  []
 
-[160] [161]
-Overfull \hbox (15.0pt too wide) detected at line 487
+[161] [162]
+Overfull \hbox (15.0pt too wide) detected at line 491
 [][] 
  []
 
-[162]
-<Figures/symmetry.png, id=2358, 674.52pt x 361.35pt>
+[163]
+<Figures/symmetry.png, id=2362, 674.52pt x 361.35pt>
 File: Figures/symmetry.png Graphic file (type png)
 <use Figures/symmetry.png>
-Package pdftex.def Info: Figures/symmetry.png  used on input line 554.
+Package pdftex.def Info: Figures/symmetry.png  used on input line 559.
 (pdftex.def)             Requested size: 303.53119pt x 162.60599pt.
 
-Overfull \hbox (92.14287pt too wide) in paragraph at lines 554--555
+Overfull \hbox (92.14287pt too wide) in paragraph at lines 559--560
  [] 
  []
 
-<Figures/ssc.png, id=2359, 654.445pt x 390.45876pt>
+<Figures/ssc.png, id=2363, 654.445pt x 390.45876pt>
 File: Figures/ssc.png Graphic file (type png)
 <use Figures/ssc.png>
-Package pdftex.def Info: Figures/ssc.png  used on input line 559.
+Package pdftex.def Info: Figures/ssc.png  used on input line 564.
 (pdftex.def)             Requested size: 229.05917pt x 136.6626pt.
 
-Overfull \hbox (17.67085pt too wide) in paragraph at lines 559--560
+Overfull \hbox (17.67085pt too wide) in paragraph at lines 564--565
 []  
  []
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[163] [164 <./Figures/symmetry.png> <./Figures/ssc.png>] [165] [166])
-(./RHMC.tex [167] [168] [169]) [170] [171]
+[164] [165 <./Figures/symmetry.png> <./Figures/ssc.png>] [166] [167] [168])
+(./RHMC.tex [169] [170] [171]) [172]
 Chapter 11.
-(./annealing.tex [172
+(./annealing.tex [173
 
 ]
 Overfull \hbox (15.0pt too wide) detected at line 128
 [][] 
  []
 
-[173] [174]
+[174] [175]
 Overfull \hbox (15.0pt too wide) detected at line 269
 [][] 
  []
 
-) (./annealing_volume.tex [175]
-Overfull \hbox (15.0pt too wide) detected at line 48
+) (./annealing_volume.tex [176]
+Overfull \hbox (15.0pt too wide) detected at line 52
 [][] 
  []
 
-[176] [177]
-Overfull \hbox (15.0pt too wide) detected at line 193
+[177] [178]
+Overfull \hbox (15.0pt too wide) detected at line 197
 [][] 
  []
 
-) [178] (./main.bbl [179
+) [179] (./main.bbl [180
 
 
-] [180] [181] [182]) [183]
+] [181] [182] [183]) [184]
 Appendix A.
-(./appendix.tex [184
+(./appendix.tex [185
 
 ]
-<Figures/fig3.png, id=2627, 963.6pt x 542.025pt>
+<Figures/fig3.png, id=2637, 963.6pt x 542.025pt>
 File: Figures/fig3.png Graphic file (type png)
 <use Figures/fig3.png>
-Package pdftex.def Info: Figures/fig3.png  used on input line 102.
+Package pdftex.def Info: Figures/fig3.png  used on input line 103.
 (pdftex.def)             Requested size: 289.07999pt x 162.60048pt.
- [185 <./Figures/fig3.png>]
-Overfull \hbox (9.2736pt too wide) detected at line 137
+ [186 <./Figures/fig3.png>]
+Overfull \hbox (9.2736pt too wide) detected at line 138
 [][] []\OML/cmm/m/it/10 dx \OT1/cmr/m/n/10 = [][] \OMS/cmsy/m/n/10 ^^@ [][] [] 
 [] \OML/cmm/m/it/10 h\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 )\OML/c
 mm/m/it/10 dx:
  []
 
-[186] [187]) [188]
+[187] [188]) [189]
 Appendix B.
-(./notation.tex) [189
+(./notation.tex) [190
 
 ] (./main.aux)
-Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 03D843261180219A61498A42440FDCD2;14840.
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+
+Package rerunfilecheck Warning: File `main.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `main.out':
+(rerunfilecheck)             Before: 03D843261180219A61498A42440FDCD2;14840
+(rerunfilecheck)             After:  E306D152D13C1540499D0C2600D9A9A4;14824.
  ) 
 Here is how much of TeX's memory you used:
- 30051 strings out of 475066
- 558119 string characters out of 5782772
- 902245 words of memory out of 5000000
- 49633 multiletter control sequences out of 15000+600000
+ 30069 strings out of 475066
+ 558517 string characters out of 5782772
+ 902244 words of memory out of 5000000
+ 49649 multiletter control sequences out of 15000+600000
  508207 words of font info for 128 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  94i,17n,117p,792b,852s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -1701,10 +1698,10 @@ fonts/type1/public/cm-super/sfsx1000.pfb><c:/texlive/2022/texmf-dist/fonts/type
 1/public/cm-super/sfti0800.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/c
 m-super/sfti1000.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sf
 tt1000.pfb>
-Output written on main.pdf (190 pages, 3250269 bytes).
+Output written on main.pdf (191 pages, 3255681 bytes).
 PDF statistics:
- 3100 PDF objects out of 3580 (max. 8388607)
- 2708 compressed objects within 28 object streams
- 1112 named destinations out of 1200 (max. 500000)
+ 3110 PDF objects out of 3580 (max. 8388607)
+ 2711 compressed objects within 28 object streams
+ 1114 named destinations out of 1200 (max. 500000)
  822 words of extra memory for PDF output out of 10000 (max. 10000000)
 

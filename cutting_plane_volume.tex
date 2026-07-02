@@ -2,8 +2,8 @@
 Volume computation of a given set is a fundamental problem in theoretical
 computer science, with diverse applications to other problems (see
 Exercise~\ref{ex: linExt-volume}). For a convex body $K$ in $\R^{n}$,
-$R$ such that $B_{n}\subseteq K\subseteq RB_{n}$ and $\varepsilon>0$,
-the problem is to output a number $A$ s.t. 
+a number $R$ such that $B_{n}\subseteq K\subseteq RB_{n}$ and $\varepsilon>0$,
+the problem is to output a number $A$ such that 
 \[
 (1-\varepsilon)\vol(K)\le A\le(1+\varepsilon)\vol(K).
 \]
@@ -12,7 +12,7 @@ More precisely, we have the following basic problem.
 \begin{problem}[Volume Estimation]
 \label{problem:volume} Given a membership oracle for a convex body
 $K$ in $\R^{n}$, $R$ such that $B_{n}\subseteq K\subseteq RB_{n}$
-and $\varepsilon>0$, output a number $A$ s.t. 
+and $\varepsilon>0$, output a number $A$ such that 
 \[
 (1-\varepsilon)\vol(K)\le A\le(1+\varepsilon)\vol(K).
 \]
@@ -50,11 +50,11 @@ body $K$ for which
 In other words, even getting a simple exponential volume approximation
 requires an exponential number of queries. 
 \begin{proof}
-For all queries $x\in B^{n},$the oracle answers YES and for queries
+For all queries $x\in B^{n}$, the oracle answers YES, and for queries
 outside the unit ball it answers NO. After $m$ queries $x_{1},\ldots,x_{m}$,
 we have that 
 \[
-\conv\left\{ x_{1},\ldots,x_{m}\right\} \subseteq K\subseteq B^{n}.
+\conv(x_{1},\ldots,x_{m})\subseteq K\subseteq B^{n}.
 \]
 By the following lemma, the volume of the convex hull of \emph{any
 $m$ }points in the unit ball is at most a $m/2^{n}$ fraction of
@@ -63,7 +63,7 @@ the unit ball's volume. This proves the theorem.
 \begin{lem}
 Let $x_{1},\ldots,x_{m}\in B^{n}$. Then 
 \[
-\vol\left(\conv\left\{ x_{1},\ldots,x_{m}\right\} \right)\le\frac{m}{2^{n}}\vol(B^{n}).
+\vol\left(\conv(x_{1},\ldots,x_{m})\right)\le\frac{m}{2^{n}}\vol(B^{n}).
 \]
 \end{lem}
 
@@ -73,7 +73,7 @@ For each $x_{i}$, define $B_{i}=B(x_{i}/2,\|x_{i}\|/2)$. Then
 \vol\left(\bigcup^{m}_{i=1}B_{i}\right)\le m\cdot\vol(B(0,1/2))=\frac{m}{2^{n}}\vol(B^{n}).
 \]
 
-We argue that $\conv{x_{1},\ldots,x_{m}}\subset\bigcup B_{i}$. To
+We argue that $\conv(x_{1},\ldots,x_{m})\subset\bigcup B_{i}$. To
 see this, let $y$ be a point not contained in any $B_{i}$. Then,
 for every $i$, 
 \[
@@ -81,11 +81,11 @@ for every $i$,
 \]
 which is equivalent to
 \[
-\langle y,x_{i}-y\rangle<0
+\langle y,x_{i}-y\rangle<0.
 \]
-. In other words, all the $x_{i}$ lie in the open halfspace $\{x:\langle y,x-y\rangle<0\}$,
+In other words, all the $x_{i}$ lie in the open halfspace $\{x:\langle y,x-y\rangle<0\}$,
 while $y$ lies on its boundary. Therefore the hyperplane $\{x:\langle y,x-y\rangle=0\}$
-separates $y$ from $\conv\{x_{1},\ldots,x_{m}\}$. 
+separates $y$ from $\conv(x_{1},\ldots,x_{m})$. 
 \end{proof}
 Computing the volume exactly is hard even for explicit simple polyhedra
 as the following theorem asserts.
@@ -172,15 +172,15 @@ of $K$ along $\theta$ is $[a,b]$. Then,
 \begin{proof}
 The goal of this proof is to show that a cone attains the maximum
 ratio of $b/|a|$ (and it equals $n$ in that case). As with the proof
-of Theorem \ref{thm:Grunbaum}, we may assume $K$ is symmetric by
-replacing each cross section $\{x\in K\colon\theta^{\top}x=t\}$ with
-the $(n-1)$-dimensional ball of the same volume with radius $r(t)$,
-i.e., $r^{n-1}(t)C_{n-1}$ is the $(n-1)$-dimensional volume of $K\cap\{y\in\R^{n}:y^{\top}\theta=t\}$,
-with the center of gravity at $t=0$. We will exploit the fact that
-$r(t)$ is concave in $t$, and replace $r(t)$ by a line going through
-$(b,0)$ and $(0,r(0))$ so that we get a cone with base at $t=a$.
-We will show that the center of gravity of the cone, say $t_{0}$,
-is to the left of $0$. Then, 
+of Theorem \ref{thm:Grunbaum}, we may assume $K$ has rotationally
+symmetric cross sections by replacing each cross section $\{x\in K\colon\theta^{\top}x=t\}$
+with the $(n-1)$-dimensional ball of the same volume with radius
+$r(t)$, i.e., $r^{n-1}(t)C_{n-1}$ is the $(n-1)$-dimensional volume
+of $K\cap\{y\in\R^{n}:y^{\top}\theta=t\}$, with the center of gravity
+at $t=0$. We will exploit the fact that $r(t)$ is concave in $t$,
+and replace $r(t)$ by a line going through $(b,0)$ and $(0,r(0))$
+so that we get a cone with base at $t=a$. We will show that the center
+of gravity of the cone, say $t_{0}$, is to the left of $0$. Then,
 \[
 \frac{b}{|a|}\le\frac{b-t_{0}}{t_{0}-a}=\frac{n}{n+1}\frac{n+1}{1}=n
 \]
@@ -189,9 +189,9 @@ is
 \[
 y(t)=-\frac{r(0)}{b}(t-b).
 \]
-Notice that $y(t)\le r(t)$ for all $t\in[0,b]$ since it is a chord
-between two points of a concave function and therefore always below
-the concave function. To see why $r(t)\le y(t)$ for $t\in[a,0]$,
+Notice that $y(t)\le r(t)$ for all $t\in[0,b]$ because it is the
+chord between two points of a concave function and therefore lies
+below the concave function. To see why $r(t)\le y(t)$ for $t\in[a,0]$,
 consider $g(t)=r(t)-y(t)$. Then $g'(t)=r'(t)-y'(t)$. Notice that
 $g'(0)=r'(0)-y'(0)\ge0$, and since $y'(t)$ is a constant and $r'(t)$
 is decreasing, we must have $r'(t)-y'(t)\ge0$ for all $t\le0$. Since
@@ -225,7 +225,7 @@ the set always contains the origin, and the original set contains
 a cube of side length $r$, when the algorithm stops, it must be an
 axis-parallel cuboid with each side of length in the range $[r/(n+1),r]$.
 So the final volume is at least $(r/(n+1))^{n}.$ The initial volume
-is at most $R^{n}$. Therefore the number of iterations is at most
+is at most $(2R)^{n}$. Therefore the number of iterations is at most
 \[
 \log_{1/(1-\frac{1}{e})}\left(\frac{(2R)^{n}}{(r/(n+1))^{n}}\right)=O\left(n\log(nR/r)\right).
 \]
@@ -276,7 +276,7 @@ A=\prod^{n}_{i=1}[0,a_{i}]\ \mbox{and \ }B=\prod^{n}_{i=1}[0,b_{i}]
 for positive real numbers $a_{1},\ldots,a_{n},b_{1},\ldots,b_{n}$.
 Then, we have 
 \[
-\vol(A)=\prod^{n}_{i=1}a_{i},\,\vol(B)=\prod^{n}_{i=1}b_{i}\:\vol(A+B)=\prod^{n}_{i=1}(a_{i}+b_{i}).
+\vol(A)=\prod^{n}_{i=1}a_{i},\,\vol(B)=\prod^{n}_{i=1}b_{i},\quad\vol(A+B)=\prod^{n}_{i=1}(a_{i}+b_{i}).
 \]
 Now we need to verify that 
 \[
@@ -302,7 +302,7 @@ by induction on the total number of cuboids in $A\cup B$. First note
 that there is at least one complete cuboid of $A$ separated from
 another complete cuboid of $A$ by an axis-aligned halfspace, i.e.,
 there is a coordinate $i$ so that after translating $A$ along this
-coordinate the sets ${x:x_{i}\le0}$and ${x:x_{i}>0}$ both contain
+coordinate the sets $\{x:x_{i}\le0\}$and $\{x:x_{i}>0\}$ both contain
 a complete cuboid of $A$. This follows from the fact that disjoint
 axis-parallel cuboids can be separated by an axis-parallel halfspace.
 Now define the following sets:
@@ -312,7 +312,7 @@ B^{+} & =B\cap\left\{ x:x_{i}>0\right\} \ \ B^{-}=B\setminus B^{+}.
 \end{align*}
 Translate $B$ so that we have 
 \begin{equation}
-\frac{\vol(A^{+})}{\vol(A)}=\frac{\vol(B^{+})}{\vol(B^{-})}.\label{eq:AB_ratio}
+\frac{\vol(A^{+})}{\vol(A)}=\frac{\vol(B^{+})}{\vol(B)}.\label{eq:AB_ratio}
 \end{equation}
 (Translation only translates the Minkowski sum.) Since $A^{+}\cup B^{+}$
 and $A^{-}\cup B^{-}$ are both smaller collections of cuboids compared

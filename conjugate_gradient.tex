@@ -11,8 +11,9 @@ For $f(x)=\frac{1}{2}x^{\top}Ax-b^{\top}x$, it is easy to see that
 $x^{(k)}\in\mathcal{K}_{k}$ defined as follows:
 \begin{defn}
 Define the Krylov subspaces $\K_{0}=\{0\}$, $\K_{k}=\spn\{b,Ab,\cdots,A^{k-1}b\}$.
+\end{defn}
 
-Therefore, the best such an algorithm can do is to solve $\min_{x\in\K_{k}}f(x)$.
+Therefore, the best such algorithm can do is to solve $\min_{x\in\K_{k}}f(x)$.
 For the quadratic function $f(x)\defeq\frac{1}{2}x^{\top}Ax-b^{\top}x$,
 one can compute $\min_{x\in\K_{k}}f(x)$ efficiently using the conjugate
 gradient method. Note that 
@@ -22,14 +23,13 @@ gradient method. Note that
 where $Ax^{*}=b$.
 
 Throughout this section, we assume $A$ is positive definite. For
-a given linear system $Ax=b$, we can always go to $A^{T}Ax=A^{T}b$
-to satisfy the assumption.
-\end{defn}
-
+a full-column-rank linear system $Ax=b$, we can always pass to $A^{T}Ax=A^{T}b$
+to satisfy the assumption. This transformation may square the condition
+number, so it is mainly a reduction to the positive definite setting
+rather than a numerically preferable method.
 \begin{lem}
-Let $x^{(k)}=\argmin_{x\in\K_{k}}f(x)$ be the Krylov sequence. .
-Then, the steps $v^{(k)}=x^{(k)}-x^{(k-1)}$ are ``conjugate'',
-namely,
+Let $x^{(k)}=\argmin_{x\in\K_{k}}f(x)$ be the Krylov sequence. Then,
+the steps $v^{(k)}=x^{(k)}-x^{(k-1)}$ are ``conjugate'', namely,
 \[
 v^{(i)\top}Av^{(j)}=0\text{ for all }i\neq j.
 \]
@@ -44,8 +44,8 @@ Av^{(j)}=\nabla f(x^{(j)})-\nabla f(x^{(j-1)})\in\K^{\perp}_{j-1}.
 Next, we note that $v^{(i)}=x^{(i)}-x^{(i-1)}\in\mathcal{K}_{i}\subset\mathcal{K}_{j-1}$.
 Hence, we have $v^{(i)\top}Av^{(j)}=0$.
 \end{proof}
-Since the steps are conjugate, $v^{(i)}$ forms a conjugate basis
-for the Krylov subspaces:
+Since the steps are conjugate, the vectors $v^{(i)}$ form a conjugate
+basis for the Krylov subspaces:
 \[
 \K_{k}=\spn\{v^{(1)},v^{(2)},\cdots,v^{(k)}\}.
 \]
@@ -53,7 +53,7 @@ for the Krylov subspaces:
 Note that $x^{(k)}=x^{(k-1)}+v^{(k)}$. Hence, it suffices to find
 a formula for $v^{(k)}$.
 \begin{lem}
-\label{lem:CG_v}We have 
+\label{lem:CG_v}For $k\ge2$, we have 
 \[
 v^{(k)}=\frac{v^{(k)\top}r^{(k-1)}}{\|r^{(k-1)}\|^{2}}\left(r^{(k-1)}-\frac{r^{(k-1)\top}Av^{(k-1)}}{v^{(k-1)\top}Av^{(k-1)}}v^{(k-1)}\right).
 \]
@@ -86,67 +86,74 @@ and $c_{k-1}=-c_{0}\cdot\frac{r^{(k-1)\top}Av^{(k-1)}}{v^{(k-1)\top}Av^{(k-1)}}$
 For other $c_{i}$, we note that $Av^{(j)}\in\K_{j+1}$ and $r^{(k-1)}\in\K^{\perp}_{k-1}$.
 Hence, $c_{i}=0$ for all $i\notin\{0,k-1\}$. 
 
-Substitute the $c_{i}$, we get
+Substituting the $c_{i}$, we get
 \[
 v^{(k)}=\frac{v^{(k)\top}r^{(k-1)}}{\|r^{(k-1)}\|^{2}}\left(r^{(k-1)}-\frac{r^{(k-1)\top}Av^{(k-1)}}{v^{(k-1)\top}Av^{(k-1)}}v^{(k-1)}\right).
 \]
 \end{proof}
-To make the formula simpler, we define $p^{(k)}=\frac{\|r^{(k-1)}\|^{2}_{2}}{v^{(k)\top}r^{(k-1)}}v^{(k)}$.
+To make the formula simpler, we define $p^{(k-1)}=\frac{\|r^{(k-1)}\|^{2}_{2}}{v^{(k)\top}r^{(k-1)}}v^{(k)}$
+for $k\ge1$.
 \begin{lem}
-We have that $x^{(k)}=x^{(k-1)}+\frac{\|r^{(k-1)}\|^{2}_{2}}{p^{(k)\top}Ap^{(k)}}p^{(k)}$
-and $p^{(k)}=r^{(k-1)}+\frac{\|r^{(k-1)}\|^{2}}{\|r^{(k-2)}\|^{2}_{2}}p^{(k-1)}.$
+We have that $x^{(k)}=x^{(k-1)}+\frac{\|r^{(k-1)}\|^{2}_{2}}{p^{(k-1)\top}Ap^{(k-1)}}p^{(k-1)}$
+and, for $k\ge2$, $p^{(k-1)}=r^{(k-1)}+\frac{\|r^{(k-1)}\|^{2}}{\|r^{(k-2)}\|^{2}_{2}}p^{(k-2)}.$
 \end{lem}
 
 \begin{proof}
 For the first formula, note that
 \[
-x^{(k)}=x^{(k-1)}+v^{(k)}=x^{(k-1)}+\frac{v^{(k)\top}r^{(k-1)}}{\|r^{(k-1)}\|^{2}_{2}}p^{(k)}.
+x^{(k)}=x^{(k-1)}+v^{(k)}=x^{(k-1)}+\frac{v^{(k)\top}r^{(k-1)}}{\|r^{(k-1)}\|^{2}_{2}}p^{(k-1)}.
 \]
 For the quantity $v^{(k)\top}r^{(k-1)}$, we note that $f(x^{(k-1)}+tv^{(k)})$
 is minimized at $t=1$ and hence
 \begin{align*}
 v^{(k)\top}r^{(k-1)} & =v^{(k)\top}Av^{(k)}\\
- & =\frac{v^{(k)\top}r^{(k-1)}}{\|r^{(k-1)}\|^{2}_{2}}\frac{v^{(k)\top}r^{(k-1)}}{\|r^{(k-1)}\|^{2}_{2}}p^{(k)\top}Ap^{(k)}
+ & =\frac{v^{(k)\top}r^{(k-1)}}{\|r^{(k-1)}\|^{2}_{2}}\frac{v^{(k)\top}r^{(k-1)}}{\|r^{(k-1)}\|^{2}_{2}}p^{(k-1)\top}Ap^{(k-1)}
 \end{align*}
-where we used the definition of $p^{(k)}$. Simplifying gives
+where we used the definition of $p^{(k-1)}$. Simplifying gives
 \[
-\frac{v^{(k)\top}r^{(k-1)}}{\|r^{(k-1)}\|^{2}_{2}}=\frac{\|r^{(k-1)}\|^{2}_{2}}{p^{(k)\top}Ap^{(k)}}
+\frac{v^{(k)\top}r^{(k-1)}}{\|r^{(k-1)}\|^{2}_{2}}=\frac{\|r^{(k-1)}\|^{2}_{2}}{p^{(k-1)\top}Ap^{(k-1)}}
 \]
 and hence the first formula.
 
 For the second formula, we use Lemma \ref{lem:CG_v} and substitute
-$p^{(k)}=\frac{\|r^{(k-1)}\|^{2}_{2}}{v^{(k)\top}r^{(k-1)}}v^{(k)}$.
+$p^{(k-1)}=\frac{\|r^{(k-1)}\|^{2}_{2}}{v^{(k)\top}r^{(k-1)}}v^{(k)}$.
 This gives
 \begin{equation}
-p^{(k)}=r^{(k-1)}-\frac{r^{(k-1)\top}Av^{(k-1)}}{\|r^{(k-2)}\|^{2}_{2}}p^{(k-1)}.\label{eq:CG_p_temp}
+p^{(k-1)}=r^{(k-1)}-\frac{r^{(k-1)\top}Av^{(k-1)}}{\|r^{(k-2)}\|^{2}_{2}}p^{(k-2)}.\label{eq:CG_p_temp}
 \end{equation}
 Note that
 \[
 r^{(k-1)}=b-Ax^{(k-1)}=r^{(k-2)}-Av^{(k-1)}.
 \]
 Taking inner product with $r^{(k-1)}$ and using $r^{(k-1)}\perp r^{(k-2)}$
-gives $\|r^{(k-1)}\|^{2}=-r^{(k-1)\top}Av^{(k-1)}$. Put this into
-(\ref{eq:CG_p_temp}) gives the result.
+gives $\|r^{(k-1)}\|^{2}=-r^{(k-1)\top}Av^{(k-1)}$. Putting this
+into (\ref{eq:CG_p_temp}) gives the result.
 \end{proof}
+We use the standard zero-indexed search directions: $r^{(0)}=b-Ax^{(0)}$,
+$p^{(0)}=r^{(0)}$, and iteration $k$ produces $x^{(k+1)}$, $r^{(k+1)}$,
+and $p^{(k+1)}$.
+
 \begin{algorithm2e}[H]
 
 \caption{$\mathtt{ConjugateGradient}$ (CG)}
 
 \SetAlgoLined
 
-$r^{(0)}=b-Ax^{(0)}$. $p^{(1)}=r^{(0)}$.
+$r^{(0)}=b-Ax^{(0)}$. $p^{(0)}=r^{(0)}$.
 
-\For{$k=1,2,\cdots$}{
+\For{$k=0,1,2,\cdots$}{
 
-$\alpha=\frac{\|r^{(k-1)}\|^{2}_{2}}{p^{(k)\top}Ap^{(k)}}$.
+$\alpha_{k}=\frac{\|r^{(k)}\|^{2}_{2}}{p^{(k)\top}Ap^{(k)}}$.
 
-$x^{(k)}\leftarrow x^{(k-1)}+\alpha p^{(k)}$.
+$x^{(k+1)}\leftarrow x^{(k)}+\alpha_{k}p^{(k)}$.
 
-$r^{(k)}\leftarrow r^{(k-1)}-\alpha Ap^{(k)}$.
+$r^{(k+1)}\leftarrow r^{(k)}-\alpha_{k}Ap^{(k)}$.
 
-\lIf{$\|r^{(k)}\|_{2}\leq\epsilon$}{\Return$x^{(k)}$}
+\lIf{$\|r^{(k+1)}\|_{2}\leq\epsilon$}{\Return$x^{(k+1)}$}
 
-$p^{(k+1)}=r^{(k)}+\frac{\|r^{(k)}\|^{2}}{\|r^{(k-1)}\|^{2}}p^{(k)}.$
+$\beta_{k}=\frac{\|r^{(k+1)}\|^{2}}{\|r^{(k)}\|^{2}}$.
+
+$p^{(k+1)}=r^{(k+1)}+\beta_{k}p^{(k)}.$
 
 }
 
@@ -157,14 +164,14 @@ positive definite matrix $A$ and some vector $b$. Let $x^{(k)}$
 be the sequence produced by $\mathtt{ConjugateGradient}$. Then, we
 have
 \[
-f(x^{(k)})-f(x^{*})\leq\frac{1}{2}\inf_{q(0)=1}\max_{i}q(\lambda_{i})^{2}\cdot\|b\|^{2}_{A^{-1}}
+f(x^{(k)})-f(x^{*})\leq\frac{1}{2}\inf_{\deg q\leq k,\,q(0)=1}\max_{i}q(\lambda_{i})^{2}\cdot\|b\|^{2}_{A^{-1}}
 \]
-where $q$ searches over polynomials of degree at most $k$ and $\lambda_{i}$
+where $q$ ranges over polynomials of degree at most $k$ and $\lambda_{i}$
 are eigenvalues of $A$.
 \end{thm}
 
 \begin{proof}
-Note that $\K_{k}=\{p(A):\deg p<k\}$. Hence, we have
+Note that $\K_{k}=\{p(A)b:\deg p<k\}$. Hence, we have
 \begin{align*}
 2(f(x^{(k)})-f(x^{*})) & =\min_{x\in\K_{k}}\|x-x^{*}\|^{2}_{A}\\
  & =\inf_{\deg p<k}\|(p(A)-A^{-1})b\|^{2}_{A}\\
@@ -175,12 +182,13 @@ Let $q(x)=1-xp(x)$. Note that $q(0)=1$ and $\deg q\leq k$ and any
 such $q$ is of the form $1-xp$. Hence, we have
 \begin{align*}
 2(f(x^{(k)})-f(x^{*})) & =\inf_{\deg q\leq k,q(0)=1}\|q(A)A^{-\frac{1}{2}}b\|^{2}_{2}\\
- & \leq\inf_{q(0)=1}\|q(A)\|^{2}_{\op}\cdot\|b\|^{2}_{A^{-1}}.
+ & \leq\inf_{\deg q\leq k,q(0)=1}\|q(A)\|^{2}_{\op}\cdot\|b\|^{2}_{A^{-1}}.
 \end{align*}
 The result follows from the fact that $\|q(A)\|^{2}_{\op}=\max_{i}q(\lambda_{i})^{2}$.
 \end{proof}
-It is known that for any $0<\mu\leq L$, there is a degree $k$ polynomial
-$q$ with $q(0)=1$ such that
+Assume that $0<\mu$ and $\mu I\preceq A\preceq LI$. It is known
+that there is a polynomial $q$ of degree $k$ with $q(0)=1$ such
+that
 \[
 \max_{i}q(\lambda_{i})^{2}\leq2\left(1-\frac{2}{\sqrt{\frac{L}{\mu}}+1}\right)^{k}
 \]

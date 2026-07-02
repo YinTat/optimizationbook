@@ -9,7 +9,7 @@ motion with the SDE $dx_{t}=dW_{t}$. To turn this into a sampling
 algorithm, for a convex function $f$, we saw an extension using the
 gradient of $f$, namely 
 \[
-dx_{t}=-\nabla f(x_{t})+\sqrt{2}dW_{t}
+dx_{t}=-\nabla f(x_{t})dt+\sqrt{2}dW_{t}
 \]
 which can be used to sample according to the density proportional
 to $e^{-f}$. In this chapter we will begin with an even simpler method,
@@ -124,8 +124,8 @@ The existence and uniqueness of the stationary distribution $Q$ for
 general Markov chains is a subject on its own. One way to ensure uniqueness
 of a stationary distribution is to use \emph{lazy} Markov chains.
 In a lazy version of a given Markov chain, at each step, with probability
-$1/2$, we do nothing; with the rest we take a step according to the
-Markov chain. The next theorem is folklore.
+$1/2$, we do nothing; with the remaining probability we take a step
+according to the Markov chain. The next theorem is folklore.
 \end{defn}
 
 \begin{xca}
@@ -169,7 +169,7 @@ We have
 \subsection*{Convergence via Conductance}
 
 Now we introduce an important tool to bound the rate of convergence
-of $Q_{t},$the distribution after $t$ steps to $Q$. Assume that
+of $Q_{t}$, the distribution after $t$ steps to $Q$. Assume that
 $Q$ is the unique stationary distribution. The \emph{conductance}
 of a subset $A$ is defined as 
 \[
@@ -243,8 +243,9 @@ which means that
 \[
 \frac{1}{2}\int_{u\in K}g_{1}(u)\ dQ_{t-1}(u)+\frac{1}{2}\int_{u\in K}g_{2}(u)\,dQ_{t-1}(u)=\int_{u\in K}P_{u}(A)\,dQ_{t-1}(u)=Q_{t}(A).
 \]
-Since the walk is lazy, $P_{u}(A)\geq\frac{1}{2}$ iff $u\in A$,
-the range of the functions $g_{1},g_{2}$ is $[0,1]$. We let 
+Since the walk is lazy, $P_{u}(A)\geq\frac{1}{2}$ if and only if
+$u\in A$. Hence, the range of the functions $g_{1},g_{2}$ is $[0,1]$.
+We let 
 \[
 x_{1}=\int_{u\in K}g_{1}(u)\ dQ(u)\quad\text{ and }\quad x_{2}=\int_{u\in K}g_{2}(u)\ dQ(u),
 \]
@@ -356,8 +357,8 @@ square-integrable with $\E_{Q}(f)=0$, we have
 
 \begin{proof}
 The core of this proof is Cheeger's classical inequality. Let $r$
-be s.t. $Q(\{x:f(x)>r\})\le1/2$ and $Q(\{x:f(x)<r\})\le1/2$. Let
-$g(x)=\max\{f(x)-r,0\}$. We then have
+be such that $Q(\{x:f(x)>r\})\le1/2$ and $Q(\{x:f(x)<r\})\le1/2$.
+Let $g(x)=\max\{f(x)-r,0\}$. We then have
 \[
 \int_{\Omega}g(x)^{2}\,dQ(x)\ge\frac{1}{2}\int_{\Omega}(f(x)-r)^{2}\,dQ(x)=\frac{1}{2}\norm f^{2}+\frac{1}{2}r^{2}\ge\frac{1}{2}\norm f^{2}
 \]
@@ -413,7 +414,7 @@ operator $M$ satisfies
 \]
 As a result, we have 
 \[
-\langle Mf,Mf\rangle\le\left(1-\frac{\phi^{2}}{4}\right)^{2}.
+\langle Mf,Mf\rangle\le\left(1-\frac{\phi^{2}}{4}\right)^{2}\langle f,f\rangle.
 \]
 By setting $f(x)=\frac{dQ_{t-1}(x)}{dQ(x)}-1$, we get 
 \[
@@ -427,9 +428,9 @@ By setting $f(x)=\frac{dQ_{t-1}(x)}{dQ(x)}-1$, we get
 
 For a warm start, the convergence rate established by conductance
 is asymptotically optimal in many cases of interest, including the
-ball walk for convex body. However, when the starting distribution
+ball walk for a convex body. However, when the starting distribution
 is more focused, e.g., a single point, then there is a significant
-starting penalty usually a factor of the dimension or larger. One
+starting penalty, usually a factor of the dimension or larger. One
 way to avoid this is to observe that the conductance of smaller subsets
 is in fact even higher and that one does not need to pay this large
 starting penalty. A classical technique in this regard is the log-Sobolev
@@ -458,13 +459,13 @@ H_{Q}(Q_{t})\le e^{-2\rho t}H_{Q}(Q_{0}).
 
 \section{Conductance of the Ball Walk}
 
-In the section we bound the conductance of the ball walk when applied
+In this section we bound the conductance of the ball walk when applied
 to the indicator function of a convex body. At first glance, the ball
 walk is not an efficient algorithm, even for uniformly sampling a
 convex body. The reason is simply that the local conductance could
 be exponentially small (consider a point close to the vertex of a
 polyhedron). We can get around this in two ways. The first, which
-is simpler, but less efficient is to ``smoothen'' the convex body
+is simpler, but less efficient is to ``smooth'' the convex body
 by taking the Minkowski sum with a small Euclidean ball, i.e., replace
 $K$ with $K+\alpha B^{n}$.
 
@@ -479,6 +480,7 @@ Let $K$ be a convex body in $\R^{n}$ containing the unit ball. Show
 that (a) $\vol(K+\alpha B^{n})\leq(1+\alpha)^{n}\vol(K)$ and (b)
 with $\delta=\alpha/\sqrt{n}$ the local conductance of every point
 in $K+\alpha B^{n}$ is at least an absolute constant.
+\end{xca}
 
 Using the exercise, it suffices to set $\alpha=1/n$, so that a sample
 from $K+\alpha B^{n}$ has a large probability of being in $K$ and
@@ -489,16 +491,15 @@ large almost everywhere, and if the starting distribution is ``warm''
 then these points can effectively be ignored. This will allow us to
 make $\delta$ much larger, namely $\delta=1/\sqrt{n}.$ Larger step
 sizes should allow us to prove faster mixing.
-\end{xca}
 
 To convey the main ideas of the analysis, we focus on the first approach
 here. The goal is to show that the conductance of any subset is large,
 i.e., the probability of crossing over in one step is at least proportional
 to the measure of the set or its complement, whichever is smaller.
 First, we argue that the one-step distributions of two points will
-have a significant overlap if the points are sufficient close.
+have a significant overlap if the points are sufficiently close.
 \begin{lem}[One-step overlap]
-\label{lem:ONESTEP} Let $u,v\in K$ s.t. $\ell(u),\ell(v)\ge\ell$
+\label{lem:ONESTEP} Let $u,v\in K$ such that $\ell(u),\ell(v)\ge\ell$
 and $\norm{u-v}\le\frac{t\delta}{\sqrt{n}}$. Then the one-step distributions
 from them satisfy $d_{TV}(P_{u},P_{v})\le1+t-\ell$.
 
@@ -614,8 +615,8 @@ Applying Lemma \ref{lem:ONESTEP} with $t=\ell/2$, we get that
 \[
 |u-v|\geq\frac{\ell\delta}{2\sqrt{n}}.
 \]
-Thus $d(S_{1},S_{2})\geq\ell\delta/2\sqrt{n}$. Applying Theorem \ref{thm:isoD}
-to the partition $S_{1}',S_{2}',S_{3}'$, we have 
+Thus $d(S_{1}',S_{2}')\geq\ell\delta/(2\sqrt{n})$. Applying Theorem
+\ref{thm:isoD} to the partition $S_{1}',S_{2}',S_{3}'$, we have
 \begin{eqnarray*}
 \vol(S_{3}') & \geq & \frac{\ell\delta}{\sqrt{n}D}\min\{\vol(S_{1}'),\vol(S_{2}')\}\\
  & \geq & \frac{\ell\delta}{2\sqrt{n}D}\min\{\vol(S_{1}),\vol(S_{2})\}.
@@ -708,7 +709,7 @@ and containing the unit ball satisfies
 This proof is similar to that of Theorem \ref{thm:ball_walk_cond},
 with one important extension. Rather than applying the argument to
 a partition of the original convex body $K$, we restrict the argument
-to $K_{\delta},$the points in $K$ that have high local conductance.
+to $K_{\delta}$, the set of points in $K$ that have high local conductance.
 Since this subset takes up most of $K$, and is convex, we will be
 able to use its isoperimetry to lower bound the conductance. 
 \begin{proof}
@@ -806,7 +807,7 @@ is proportional to the local conductance.
 \end{xca}
 
 \begin{thm}
-The conductance of the speedy walk is $\Omega(1/nD)$.
+The conductance of the speedy walk is $\Omega(1/(nD))$.
 \end{thm}
 
 To analyze the ball walk, we then need to show that the number of
@@ -825,7 +826,7 @@ of the target density.
 
 \SetAlgoLined
 
-Input: membership oracle for $K$ s.t. $B^{n}\subseteq K\subseteq DB^{n}$.
+Input: membership oracle for $K$ such that $B^{n}\subseteq K\subseteq DB^{n}$.
 
 Let $x$ be a random point in $B^{n}.$ Define $K_{i}=2^{i/n}B^{n}\cap K$.
 
@@ -912,7 +913,7 @@ for isotropy. The solution is simply to bootstrap them.
 
 \SetAlgoLined
 
-Input: membership oracle for $K$ s.t. $B^{n}\subseteq K\subseteq RB^{n}$.
+Input: membership oracle for $K$ such that $B^{n}\subseteq K\subseteq RB^{n}$.
 
 Let $x$ be a random point in $B^{n}$, $A=I$ and $K_{i}=2^{i/n}B^{n}\cap K$.
 
@@ -941,8 +942,8 @@ A tight bound on the sample complexity was established by \cite{adamczak2010quan
 \end{xca}
 
 \begin{thm}
-For an isotropic logconcave distribution $Q$ in $\R^{n}$, the covariance
-matrix from $N=O(n)$ random samples satisfies $\norm{A-I}_{\op}\le0.5$.
+For an isotropic logconcave distribution $Q$ in $\R^{n}$, the empirical
+covariance matrix from $N=O(n)$ random samples satisfies $\norm{A-I}_{\op}\le0.5$.
 \end{thm}
 
 \begin{lem}
@@ -1032,7 +1033,7 @@ we have that
 For the case of convex bodies in $\Rn$, this result is equivalent
 to Theorem \ref{ISO2} up to a constant. One benefit of localization
 is that it does not require a carefully crafted potential. Localization
-has been extended to Riemannian setting \cite{klartag2017needle}.
+has been extended to the Riemannian setting \cite{klartag2017needle}.
 The origins of this method were in a paper by Payne and Weinberger
 \cite{payne1960optimal}. 
 
@@ -1085,9 +1086,9 @@ and $h$.  An equivalent alternative version of the lemma has equality
 for one function and inequality for the other i.e., $\int g=0,\int h>0$
 for both the assumption and the conclusion \cite[Corollary 2.4]{Kannan1995}. 
 \begin{proof}
-WLOG we can assume that the functions $g,h$ are continuous. This
-is because they are limits of monotone increasing sequences of continuous
-functions $g_{k},h_{k}$ where 
+Without loss of generality, we can assume that the functions $g,h$
+are continuous. This is because they are limits of monotone increasing
+sequences of continuous functions $g_{k},h_{k}$ where 
 \[
 \lim_{k\rightarrow\infty}\int g_{k}=\int g>0\quad\text{and}\quad\lim_{k\rightarrow\infty}\int h_{k}=\int h>0\,.
 \]
@@ -1171,10 +1172,11 @@ The last part of the proof is to argue that we can take $\psi$ to
 be a nonnegative linear function, reducing the extremal functions
 to a small parameter family (namely, $a,b,$ and the values of the
 function at $a$ and $b$). To do this consider a $\psi$ that has
-(i) minimal support $\norm{a-b}$; WLOG assume $a=0,b=e_{1}$, and
-(ii) is linear in the segment $[\alpha,\beta]$ for $0\le\alpha\le\beta\le1$
-with $\beta-\alpha$ is maximal. It will be useful to view $\psi$
-as defining a convex body $K'$ whose slices are simplices:
+(i) minimal support $\norm{a-b}$; without loss of generality, assume
+$a=0,b=e_{1}$, and (ii) is linear in the segment $[\alpha,\beta]$
+for $0\le\alpha\le\beta\le1$ such that $\beta-\alpha$ is maximal.
+It will be useful to view $\psi$ as defining a convex body $K'$
+whose slices are simplices:
 \[
 0\le t\le1,\quad x_{1},\ldots,x_{n}\ge0,\quad x_{2}+\ldots+x_{n}\le\psi(t)\,.
 \]
@@ -1189,8 +1191,8 @@ then
 \[
 \int_{\K'}\hat{g}=\frac{1}{(n-1)!}\int^{1}_{0}\psi(t)^{n-1}\,g(te_{1})\,dt\ge0
 \]
-and similarly for $\int_{\K'}\hat{h}\ge0$. WLOG we can assume that
-$\int_{\K'}\hat{g}=0$.
+and similarly for $\int_{\K'}\hat{h}\ge0$. Without loss of generality,
+we can assume that $\int_{\K'}\hat{g}=0$.
 
 \begin{figure}[H]
 \centering{}\includegraphics[width=0.5\textwidth]{Figures/concave-to-affine}\caption{Going to an affine needle}
@@ -1298,8 +1300,8 @@ over the interval $[0,1]$ and the partition $Z_{1},Z_{2},Z_{3}$:
 \end{equation}
 We have substituted $1$ for the diameter of the interval $[0,1]$.
 Also, $2d(Z_{1},Z_{2})\geq2d(S_{1},S_{2})/D=C$. Thus, Theorem \ref{ISO2}
-applied to the function $F(t)$ contradicts (\ref{FEQ}) and to prove
-the theorem in general, and it suffices to prove it in the one-dimensional
+applied to the function $F(t)$ contradicts (\ref{FEQ}). To prove
+the theorem in general, it suffices to prove it in the one-dimensional
 case. A combinatorial argument reduces this to the case when each
 $Z_{i}$ is a single interval. Proving the resulting inequality up
 to a factor of $2$ is a simple exercise and uses only the unimodality
@@ -1344,7 +1346,7 @@ This is a corollary of a more general result by Carbery and Wright.
 \begin{thm}[\cite{carbery2001distributional}]
 Let $q$ be a degree $d$ polynomial in $\R^{n}$. Then for a convex
 body $K\subset\R^{n}$ of volume $1$, any $\epsilon>0$, and $x$
-drawn uniform from $K$, 
+drawn uniformly from $K$, 
 \[
 \Pr_{x\sim K}\left(|q(x)|\le\epsilon\max_{K}|q(x)|\right)\lesssim\epsilon^{\frac{1}{d}}d
 \]
@@ -1353,7 +1355,7 @@ drawn uniform from $K$,
 
 \subsection{Alternative formulations of Localization}
 
-Here we give some alternative equivalent version of Lemma \ref{lem:LOCALIZATION}
+Here we give some alternative equivalent versions of Lemma \ref{lem:LOCALIZATION}
 which are sometimes more convenient in applications.
 
 The first is in terms of single inequality on products of integrals.
@@ -1406,8 +1408,8 @@ every logconcave $\ensuremath{F:\R\rightarrow\R_{+}}$
 \[
 \int^{b}_{a}Ff_{1}=0,\ \int^{b}_{a}Ff_{2}>0
 \]
-iff for every subinterval $\ensuremath{[a',b']\subseteq[a,b]}$, and
-every $\gamma\in\R$, 
+if and only if for every subinterval $\ensuremath{[a',b']\subseteq[a,b]}$,
+and every $\gamma\in\R$, 
 \[
 \int^{b'}_{a'}e^{\gamma t}f_{1}=0,\ \int^{b'}_{a'}e^{\gamma t}f_{2}>0.
 \]
@@ -1424,10 +1426,10 @@ supported by $K$ satisfying $\int fd\mu\geq0$. The set of extreme
 points of $\text{conv}\,P_{f}$ is exactly:
 \begin{enumerate}
 \item the Dirac measure at points $x$ such that $f(x)\geq0$, or
-\item the distributions $v$ satisfies
+\item the distributions $v$ that satisfy
 \begin{enumerate}
 \item density function is of the form $e^{\ell}$ with linear $\ell$,
-\item support equals to a segment $[a,b]\subset K$,
+\item support is a segment $[a,b]\subset K$,
 \item $\int fdv=0$,
 \item $\int^{x}_{a}fdv>0$ for $x\in(a,b)$ or $\int^{b}_{x}fdv>0$ for
 $x\in(a,b)$.

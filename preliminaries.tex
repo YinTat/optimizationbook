@@ -22,7 +22,7 @@ and $\norm{\cdot}_{W}$ are $\ell_{2}$ norms if unspecified.
 
 \begin{defn}
 A function $f$ is in $\mathcal{C}^{k}(\Rn)$ if $f$ is $k$-times
-differentiable and its $k^{\mathrm{th}}$derivative is continuous.
+differentiable and its $k^{\mathrm{th}}$ derivative is continuous.
 \end{defn}
 
 \begin{defn}
@@ -30,7 +30,7 @@ differentiable and its $k^{\mathrm{th}}$derivative is continuous.
 is called lower semi-continuous at a point $x_{0}\in X$ if for every
 real $y<f(x_{0})$ there exists a neighborhood $U$ of $x_{0}$ such
 that $f(x)>y$ for all $x\in U$. Equivalently, $f$ is lower semi-continuous
-at $x_{0}$ iff 
+at $x_{0}$ if and only if 
 
 \[
 {\displaystyle \liminf_{x\to x_{0}}f(x)\geq f(x_{0})}.
@@ -73,7 +73,8 @@ For symmetric $A$, we have $\tr A=\sum_{i}\lambda_{i}$, $\|A\|^{2}_{F}=\sum_{i}\
 and $\|A\|_{\op}=\max_{i}|\lambda_{i}|$ where $\lambda_{i}$ are
 the eigenvalues of $A$.
 
-For a vector $x$, $\norm x_{A}=\sqrt{x^{T}Ax}$; for a matrix $B$,
+For a vector $x$ and a positive definite matrix $A$, $\norm x_{A}=\sqrt{x^{T}Ax}$;
+for a matrix $B$, 
 \[
 \norm B_{A}=\sup_{x}\frac{\norm{Bx}_{A}}{\norm x_{A}}.
 \]
@@ -100,6 +101,9 @@ with densities $\rho,\nu$ on $\Omega$ is
 \[
 d_{TV}(\rho,\nu)=\frac{1}{2}\int_{\Omega}\left|\rho(x)-\nu(x)\right|\,dx=\sup_{S\subset\Omega}\left|\rho(S)-\nu(S)\right|=\sup_{S\subset\Omega}\rho(S)-\nu(S).
 \]
+Here, $\rho(S)$ denotes the measure induced by the density $\rho$,
+i.e., $\rho(S)=\int_{S}\rho(x)\,dx$, and similarly for $\nu$. The
+last equality follows because $\rho-\nu$ has total mass zero.
 \end{defn}
 
 The following ``distances'' are not symmetric.
@@ -135,8 +139,8 @@ marginals are $\rho$ and $\nu$).
 \begin{defn}
 \label{def:p-dist} For $\mu,\nu$ probability measures in $\R^{n}$,
 the \emph{$f$-divergence} of $\mu$ towards $\nu$ with $\mu\ll\nu$
-is defined as, for a convex function $f:\R_{+}\to\R$ with $f(1)=0$
-and $f'(\infty)=\infty$, 
+is defined as follows: for a convex function $f:\R_{+}\to\R$ with
+$f(1)=0$ and $f'(\infty)=\infty$, 
 \[
 D_{f}(\mu\|\nu):=\int f\left(\frac{d\mu}{d\nu}\right)\,d\nu\,.
 \]
@@ -158,11 +162,11 @@ for $1\leq q\leq q'$ and $2\,\norm{\cdot}^{2}_{\tv}\leq\KL\leq\RR_{2}=\log(\chi^
 \end{fact}
 
 We refer readers to \cite{van2014renyi} for other basic properties
-of  R\'enyi-divergence.
+of R\'enyi divergence.
 
 \begin{defn}
 The \emph{marginal} of a distribution in $\R^{n}$ with density $\nu$
-in the span of a $k$-dimensional subspace $V$ is defined as 
+onto a $k$-dimensional subspace $V$ is defined as 
 \[
 g(x)=\int_{y\in V^{\perp}}\nu(x,y)\,dy
 \]
@@ -180,13 +184,13 @@ be \textbf{isotropic} if $\E_{D}(x)=0$ and $\E_{D}(xx^{\top})=I$.
 
 \section*{Geometry}
 \begin{defn}
-We denote the unit Euclidean ball as $B^{n}=\left\{ x:\norm x_{2}\le1\right\} .$
+We denote the unit Euclidean ball by $B^{n}=\left\{ x:\norm x_{2}\le1\right\} .$
 More generally, we define the $\ell_{p}$-norm ball of radius $r$
 centered at $z$ as $B^{n}_{p}(z,r)=\left\{ x:\norm{x-z}_{p}\le r\right\} $.
 \end{defn}
 
 \begin{defn}
-The \emph{Minkowski sum}of two sets $A,B\subset\R^{n}$ is defined
+The \emph{Minkowski sum} of two sets $A,B\subset\R^{n}$ is defined
 as $A+B=\left\{ x+y:x\in A,y\in B\right\} $.
 \end{defn}
 

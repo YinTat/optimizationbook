@@ -37,7 +37,7 @@ In general, the following lemma shows that
 \[
 \E F(x^{(T)}_{\mathrm{ERM}})-F(x^{*})\rightarrow\frac{\sigma^{2}}{T}\quad\text{where }\sigma^{2}=\frac{1}{2}\E\|\nabla f(x^{*})\|^{2}_{(\nabla^{2}F(x^{*}))^{-1}}.
 \]
-where $\frac{\sigma^{2}}{T}$ is called the Cramer-Rao bound. 
+Here,$\frac{\sigma^{2}}{T}$ is called the Cramer-Rao bound. 
 
 \begin{lem}
 Suppose that $f$ is $\mu$-strongly convex with Lipschitz Hessian
@@ -91,10 +91,9 @@ Hence, we have
 \end{align*}
 \end{proof}
 Now, we discuss how to achieve a bound similar to $\sigma^{2}/T$
-using stochastic gradient descent. Since gradient descent is a first
-order method, we can only achieve a bound related to the $\ell_{2}$
-norm, $\E\|\nabla f(x^{*})\|^{2}_{2}$, instead of the inverse Hessian
-norm. 
+using stochastic gradient descent. Since gradient descent is a first-order
+method, we can only achieve a bound related to the $\ell_{2}$ norm,
+$\E\|\nabla f(x^{*})\|^{2}_{2}$, instead of the inverse Hessian norm. 
 \begin{lem}
 \label{lem:change_variance}Suppose $f$ has $L$-Lipschitz gradient
 for all $f\in\mathcal{D}$. Let $x^{*}$ be the minimizer of $F$.
@@ -143,7 +142,9 @@ $x^{(k+1)}\leftarrow x^{(k)}-h\cdot\nabla f(x^{(k)})$.
 \label{thm:sgd_convex_strongly}Suppose $f$ has $L$-Lipschitz gradient
 for all $f\in\mathcal{D}$ and $F$ is $\mu$ strongly convex. Let
 $x^{*}$ be the minimizer of $F$ and $\sigma^{2}=\frac{1}{2}\E\|\nabla f(x^{*})\|^{2}$.
-For step size $h\leq\frac{1}{4L}$, the sequence $x^{(k)}$ in $\mathtt{StochasticGradientDescent}$
+Assume $\sigma^{2}<\infty$ and that each sampled gradient is independent
+of the past, so $\E[\nabla f(x)\mid x]=\nabla F(x)$. For step size
+$h\leq\frac{1}{4L}$, the sequence $x^{(k)}$ in $\mathtt{StochasticGradientDescent}$
 satisfies
 \[
 \E\|x^{(k)}-x^{*}\|^{2}\leq\frac{8h\sigma^{2}}{\mu}+(1-\frac{h\mu}{2})^{k}\cdot\|x^{(0)}-x^{*}\|^{2}
@@ -159,21 +160,24 @@ Note that
 \[
 \|x^{(k+1)}-x^{*}\|^{2}=\|x^{(k)}-x^{*}\|^{2}-2h\left\langle x^{(k)}-x^{*},\nabla f(x^{(k)})\right\rangle +h^{2}\|\nabla f(x^{(k)})\|^{2}.
 \]
-Taking expectation on $f$ and using that 
+Conditioning on $x^{(k)}$ and taking expectation over the randomness
+in $f$ and using that 
 \begin{align*}
-\E\|\nabla f(x^{(k)})\|^{2} & \leq2\E\|\nabla f(x^{(k)})-\nabla f(x^{*})\|^{2}+2\E\|\nabla f(x^{*})\|^{2}\\
+\E[\|\nabla f(x^{(k)})\|^{2}\mid x^{(k)}] & \leq2\E[\|\nabla f(x^{(k)})-\nabla f(x^{*})\|^{2}\mid x^{(k)}]+2\E\|\nabla f(x^{*})\|^{2}\\
  & \leq4L\cdot(F(x^{(k)})-F(x^{*}))+4\sigma^{2},
 \end{align*}
 we have
 \begin{align}
-\E\|x^{(k+1)}-x^{*}\|^{2} & =\|x^{(k)}-x^{*}\|^{2}-2h\left\langle x^{(k)}-x^{*},\nabla F(x^{(k)})\right\rangle +4h^{2}\sigma^{2}+4Lh^{2}\cdot(F(x^{(k)})-F(x^{*}))\nonumber \\
+\E[\|x^{(k+1)}-x^{*}\|^{2}\mid x^{(k)}] & =\|x^{(k)}-x^{*}\|^{2}-2h\left\langle x^{(k)}-x^{*},\nabla F(x^{(k)})\right\rangle +4h^{2}\sigma^{2}+4Lh^{2}\cdot(F(x^{(k)})-F(x^{*}))\nonumber \\
  & \leq\|x^{(k)}-x^{*}\|^{2}-(2h-4Lh^{2})(F(x^{(k)})-F(x^{*}))+4h^{2}\sigma^{2}.\label{eq:SGD_distance}
 \end{align}
-Using $h\leq\frac{1}{4L}$and $F(x^{(k)})-F(x^{*})\geq\frac{\mu}{2}\|x^{(k)}-x^{*}\|^{2}_{2}$,
+Using $h\leq\frac{1}{4L}$ and$F(x^{(k)})-F(x^{*})\geq\frac{\mu}{2}\|x^{(k)}-x^{*}\|^{2}_{2}$,
 we have
 \[
-\E\|x^{(k+1)}-x^{*}\|^{2}\leq4h^{2}\sigma^{2}+(1-\frac{h\mu}{2})\cdot\|x^{(k)}-x^{*}\|^{2}.
+\E[\|x^{(k+1)}-x^{*}\|^{2}\mid x^{(k)}]\leq4h^{2}\sigma^{2}+(1-\frac{h\mu}{2})\cdot\|x^{(k)}-x^{*}\|^{2}.
 \]
+Taking total expectation gives the same inequality with unconditional
+expectations. 
 
 The first conclusion follows.
 
@@ -187,9 +191,8 @@ Hence, we have
 \end{align*}
 \end{proof}
 \begin{xca}
-Applying the theorem above twice, show that one can achieve error
-$\tilde{O}(\frac{\sigma^{2}}{\mu T})$, which is roughly same as the
-Cramer-Rao bound. 
+Apply the theorem above twice to show that one can achieve error $\tilde{O}(\frac{\sigma^{2}}{\mu T})$,
+which is roughly the same as the Cramer-Rao bound. 
 \end{xca}
 
 We note that for many algorithms in this book, such as mirror descent,
@@ -222,7 +225,7 @@ for some fixed $x^{(0)}$. Then, we have
 Note that
 \begin{align*}
 \E\|\nabla\widetilde{f}(x^{*})\|^{2} & \leq2\E\|\nabla f(x^{*})-\nabla f(x^{(0)})\|^{2}+2\|\nabla F(x^{(0)})-\nabla F(x^{*})\|^{2}\\
- & =2\E\|\nabla f(x^{*})-\nabla f(x^{(0)})\|^{2}+2\E\|\nabla f(x^{(0)})-\nabla f(x^{*})\|^{2}\\
+ & \leq2\E\|\nabla f(x^{*})-\nabla f(x^{(0)})\|^{2}+2\E\|\nabla f(x^{(0)})-\nabla f(x^{*})\|^{2}\\
  & \leq4L(F(x^{(0)})-F(x^{*}))+4L(F(x^{(0)})-F(x^{*}))
 \end{align*}
 where we used Lemma \ref{lem:change_variance} at the end.
@@ -256,11 +259,12 @@ $x^{(k+1)}\leftarrow x^{(k)}-h\cdot(\nabla f_{i}(x^{(k)})-\nabla f_{i}(\widetild
 
 \end{algorithm2e}
 \begin{thm}
-\label{thm:stochastic_method}Suppose each $f_{i}$ has $L$-Lipschitz
-gradient and $F$ is $\mu$ strongly convex. Let $x^{*}$ be the minimizer
-of $F$. For step size $h=\frac{1}{64L}$ and $m=\frac{256L}{\mu}$,
-the sequence $x^{(km)}$ in $\mathtt{StochasticVarianceReducedGradient}$
-satisfies
+\label{thm:stochastic_method}Suppose each$f_{i}$ has $L$-Lipschitz
+gradient and$F$ is $\mu$ strongly convex. Let $x^{*}$ be the minimizer
+of $F$. Here $F=\frac{1}{n}\sum^{n}_{i=1}f_{i}$, and the index $i$
+in each inner step is sampled uniformly from $[n]$. For step size
+$h=\frac{1}{64L}$ and $m=\frac{256L}{\mu}$, the sequence $x^{(km)}$
+in $\mathtt{StochasticVarianceReducedGradient}$ satisfies
 \[
 \E F(x^{(km)})-F(x^{*})\leq\frac{1}{2^{k}}\cdot(F(x^{(0)})-F(x^{*})).
 \]
@@ -351,7 +355,7 @@ then we also have
 \end{thm}
 
 \begin{rem*}
-Note that $\frac{L}{d}\leq\Lip(\nabla f)\leq L$. Therefore gradient
+Note that $\frac{L}{d}\leq\Lip(\nabla f)\leq L$. Therefore, gradient
 descent takes at least $\frac{1}{d}$ times as many steps as coordinate
 descent while each step takes $d$ times longer (usually).
 \end{rem*}

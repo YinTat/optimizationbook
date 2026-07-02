@@ -27,7 +27,7 @@ Without the restriction to the nonnegative orthant, the target density
 is the Gaussian $N(0,A^{-1})$, and can be sampled by first sampling
 the standard Gaussian $N(0,I)$ and applying the linear transformation
 $A^{-1/2}$. To sample from the standard Gaussian in $\R^{n}$, we
-can sample each coordinate independently from $N(0,1)$), a problem
+can sample each coordinate independently from $N(0,1)$, a problem
 which has many (efficient) numerical recipes. But how can we handle
 the restriction? In the course of forthcoming chapters, we will see
 that this problem and its generalization to sampling logconcave densities,
@@ -39,7 +39,7 @@ We begin with gradient-based sampling methods. These rely on access
 to $\nabla f$. These methods will in fact be natural algorithmic
 versions of continuous processes on random variables, a particularly
 pleasing connection. Later, we will see methods that only use access
-to $f$, and others that utilize higher derivatives, notably the Hessian.
+to $f$, and others that use higher derivatives, notably the Hessian.
 The parallels to optimization will be pervasive and striking.
 
 \section{Gradient-based Sampling: Langevin Dynamics}
@@ -68,8 +68,8 @@ f(X_{t})-f(X^{*})\le e^{-2\mu t}(f(X_{0})-f(X^{*})).
 For sampling from a given starting point, we need a process that introduces
 randomness (since the target itself is a distribution). The continuous
 version of such a process corresponds to a Stochastic Differential
-Equation (SDE). It is called Langevin Diffusion and is the analog
-of Gradient Flow for optimization.
+Equation (SDE). It is called Langevin diffusion and is the analog
+of gradient flow for optimization.
 
 \begin{algorithm2e}[H]
 
@@ -185,8 +185,8 @@ Taking derivatives on both sides with respect to $t$, using It\^{o}'s
 lemma (Lemma \ref{lem:itos}), and noting that $\E dW_{t}=0$, we
 have that
 \begin{align*}
-\int\phi(x)\frac{dp_{t}}{dt}dx & =\E\left(\nabla\phi(x_{t})^{\top}\mu(x_{t})\,dt+\nabla\phi(x_{t})^{\top}\sigma(x_{t})\,dW_{t}+\frac{1}{2}\tr(\sigma(x_{t})^{\top}\nabla^{2}\phi(x_{t})\sigma(x_{t}))\,dt\right)\\
- & =\E\left(\nabla\phi(x_{t})^{\top}\mu(x_{t})dt+\frac{1}{2}\tr(\nabla^{2}\phi(x_{t})D(x_{t}))\,dt\right).
+\int\phi(x)\frac{dp_{t}}{dt}dx & =\E\left(\nabla\phi(x_{t})^{\top}\mu(x_{t})+\frac{1}{2}\tr(\sigma(x_{t})^{\top}\nabla^{2}\phi(x_{t})\sigma(x_{t}))\right)\\
+ & =\E\left(\nabla\phi(x_{t})^{\top}\mu(x_{t})+\frac{1}{2}\tr(\nabla^{2}\phi(x_{t})D(x_{t}))\right).
 \end{align*}
 Using $x_{t}\sim p_{t}$, we have that
 \[
@@ -212,8 +212,7 @@ We apply the Fokker--Planck equation to the Langevin dynamics.
 \end{proof}
 \begin{thm}
 \label{thm:langevin_stationary}For any smooth function $f$, the
-density proportional to $F=e^{-f}$ is stationary for the Langevin
-dynamics.
+density proportional to $e^{-f}$ is stationary for the Langevin dynamics.
 \end{thm}
 
 \begin{proof}
@@ -294,7 +293,7 @@ their Wasserstein distance reduces to a bipartite matching problem.
 \begin{lem}
 Let $x_{t},y_{t}$ evolve according to the Langevin diffusion for
 a $\mu$-strongly convex function $f:\R^{n}\rightarrow\R$. Then,
-there is a coupling $\gamma$ between $x_{t}$ and $y_{t}$ s.t.
+there is a coupling $\gamma$ between $x_{t}$ and $y_{t}$ such that
 \[
 \E_{x_{t},y_{t}\sim\gamma}\norm{x_{t}-y_{t}}^{2}\le e^{-2\mu t}\norm{x_{0}-y_{0}}^{2}.
 \]
@@ -351,10 +350,10 @@ of $x^{(0)}$ is Gaussian.
 
 Next we analyze the convergence of Langevin dynamics in the two most
 commonly used divergence metrics. The rate of mixing will depend on
-a fundamental functional constants of the target density, which we
-define next. These constants will play an important role in later
-algorithms and analysis, and we will also see equivalent geometric
-formulations of them.
+fundamental functional constants of the target density, which we define
+next. These constants will play an important role in later algorithms
+and analysis, and we will also see equivalent geometric formulations
+of them.
 \begin{defn}
 We say that a probability measure $\nu$ on $\R^{n}$ satisfies a
 \emph{Poincar\'e inequality} (PI) with parameter $C_{PI}(\nu)$ if
@@ -401,7 +400,7 @@ we have
 \frac{d}{dt}d_{KL}(\rho_{t},\nu)=-J_{\nu}(\rho_{t})
 \]
 where $J_{\nu}(\rho)$ is the relative Fisher information of $\rho$
-wrt $\nu$, defined as $\E_{\rho}(\norm{\nabla\log(\rho/\nu)}^{2})$.
+with respect to $\nu$, defined as $\E_{\rho}(\norm{\nabla\log(\rho/\nu)}^{2})$.
 \end{lem}
 
 \begin{proof}
@@ -419,7 +418,7 @@ with $\rho=\rho_{t}$:
 The next lemma shows that the log-Sobolev constant can be equivalently
 formulated in terms of distributions in place of smooth functions.
 \begin{lem}
-The log-Sobolev constant of a distribution $\nu$ on $\R^{n}$can
+The log-Sobolev constant of a distribution $\nu$ on $\R^{n}$ can
 be equivalently defined as follows: for any distribution $\rho$ on
 $\R^{n}$, we have
 \[
@@ -428,7 +427,7 @@ d_{KL}(\rho,\nu)\le\frac{C_{LSI}}{2}J_{\nu}(\rho).
 \end{lem}
 
 \begin{proof}
-To go one way, we use $g=\sqrt{\frac{\rho}{\nu}};$to go the other
+To go one way, we use $g=\sqrt{\frac{\rho}{\nu}}$; to go the other
 way, define $\rho=\frac{g^{2}\nu}{\E_{\nu}(g^{2})}$.
 \end{proof}
 We are now ready to prove Theorem \ref{thm:LDinKL}.
@@ -440,8 +439,8 @@ We use the previous two lemmas to obtain
 Integrating over time gives the theorem.
 \end{proof}
 \begin{xca}
-Show that for Langevin Dynamics applied to a target density $\nu$
-with Poincar\'e constant $C_{PI}$ satisfies 
+Show that Langevin dynamics applied to a target density $\nu$ with
+Poincar\'e constant $C_{PI}$ satisfies 
 \[
 \chi^{2}(\rho_{t},\nu)\le e^{-\frac{2}{C_{PI}}t}\chi^{2}(\rho_{0},\nu).
 \]
@@ -479,7 +478,7 @@ Let $p\in P_{2}(\Rn)$ and $v\in T_{p}P_{2}(\Rn)$. We will show that
 any change of density $v$ can be represented by a vector field $c$
 on $\Rn$ as follows: Consider the process $x_{0}\sim p$ and $\frac{d}{dt}x_{t}=c(x_{t})$.
 Let $p_{t}$ be the density of the distribution of $x_{t}$. To compute
-$\frac{d}{dt}p_{t}$, we follow the same idea as in the proof as Theorem
+$\frac{d}{dt}p_{t}$, we follow the same idea as in the proof of Theorem
 \ref{thm:fokker_planck}. For any smooth function $\phi$, we have
 that $\E_{x\sim p_{t}}\phi(x)=\E\phi(x_{t}).$ Taking derivatives
 on both sides with respect to $t$, we have that
@@ -491,7 +490,7 @@ all $\phi$, we have that
 \[
 \frac{dp_{t}(x)}{dt}=-\nabla\cdot(p_{t}(x)c(x)).
 \]
-Since we are interested only in vector fields that generate the minimum
+Since we are interested only in vector fields that generate minimal
 movement in Wasserstein distance, we consider the optimization problem
 \[
 \min_{-\nabla\cdot(pc)=v}\frac{1}{2}\int p(x)\|c(x)\|^{2}dx
@@ -508,7 +507,7 @@ whose minimizer is given by
 \[
 c(x)=-\nabla\lambda(x).
 \]
-This proves that any vector field that generates minimum movement
+This proves that any vector field that generates minimal movement
 in Wasserstein distance is a gradient field. Also, we have that $v(x)=\nabla\cdot(p(x)\nabla\lambda(x)).$
 Note that the right-hand side is an elliptic differential equation
 and hence for any $v$ with $\int v(x)dx=0$, there is a unique solution
@@ -540,7 +539,7 @@ For any function $c$, the optimization problem of interest satisfies
 \[
 \min_{\delta=\nabla\cdot(\rho\nabla\lambda)}\left\langle c,\delta\right\rangle +\frac{1}{2}\int\rho(x)\|\nabla\lambda(x)\|^{2}dx=\min_{\nabla\lambda}-\int\rho(x)\cdot\nabla c(x)^{\top}\nabla\lambda(x)dx+\frac{1}{2}\int\rho(x)\|\nabla\lambda(x)\|^{2}dx.
 \]
-Solving the right hand side, we have $\nabla c=\nabla\lambda$ and
+Solving the right-hand side, we have $\nabla c=\nabla\lambda$ and
 hence $\delta=\nabla\cdot(\rho\nabla c)$. Now, we note that $\nabla F(\rho)=\log\frac{\rho}{\nu}-1$.
 Therefore, 
 \begin{align*}
@@ -577,7 +576,7 @@ can be re-stated as the condition (\ref{eq:LD_strong_convexity}).
 \label{lem:log_sob_LD}Fix a density $\nu$. Then the log-Sobolev
 inequality, namely, for every smooth function $g$, 
 \[
-\frac{C_{LSI}}{2}\int\norm{\nabla g}^{2}\,d\nu\ge\int g(x)^{2}\log g(x)^{2}\ d\nu
+\Ent_{\nu}(g^{2})\leq2C_{LSI}\int\norm{\nabla g}^{2}\,d\nu
 \]
  implies the condition (\ref{eq:LD_strong_convexity}) with $\alpha=2/C_{LSI}$.
 \end{lem}
@@ -603,14 +602,13 @@ we obtain another proof of Theorem \ref{thm:LDinKL}.
 
 Langevin dynamics converges quickly in continuous time for isoperimetric
 distributions. Turning this into an efficient algorithm typically
-needs more assumptions and there is much room for choosing discretizations.
-This is similar to the situation with gradient descent for optimization.
-As we saw in Section \ref{sec:LD_GD}, it turns out that Langevin
-dynamics is in fact gradient descent in the space of probability measures
-under the Wasserstein metric, where the function being minimized is
-the KL-divergence of the current density from the target stationary
-density. For more on this view of sampling as optimization over measures,
-see \cite{wibisono2018sampling}. See \cite{lee2024eldan} for a tight
-estimate of log-Sobolev constant for logconcave measures. In particular
-for a logconcave measure with support of diameter $D$, the log-Sobolev
-constant is $\Omega(1/D)$.
+needs more assumptions, and there is considerable flexibility in choosing
+discretizations. This is similar to the situation with gradient descent
+for optimization. As we saw in Section \ref{sec:LD_GD}, it turns
+out that Langevin dynamics is in fact gradient descent in the space
+of probability measures under the Wasserstein metric, where the function
+being minimized is the KL-divergence of the current density from the
+target stationary density. For more on this view of sampling as optimization
+over measures, see \cite{wibisono2018sampling}. See \cite{lee2024eldan}
+for tight log-Sobolev estimates for isotropic logconcave measures
+in terms of the support diameter.

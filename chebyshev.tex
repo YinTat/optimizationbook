@@ -15,10 +15,10 @@ we have that
 I-Ap(A)=0
 \]
 and hence $A^{-1}=p(A).$ Therefore, we could compute $A^{-1}b$ by
-calculating $p(A)b$ which takes $\text{deg}(p)\cdot\nnz(A)$ time.
+computing $p(A)b$ which takes $\text{deg}(p)\cdot\nnz(A)$ time.
 Unfortunately, there is no such polynomial $q$. In this section,
-we will discuss whether there is such a polynomial that satisfies
-the condition above approximately. 
+we will discuss whether there is a polynomial that approximately satisfies
+the condition above. 
 
 We will bound $\inf_{q(0)=1}\left(\max_{i}\left|q(\lambda_{i})\right|\right)$
 for matrices $A$ satisfying $\mu\cdot I\preceq A\preceq L\cdot I$.
@@ -28,14 +28,14 @@ and get
 \inf_{q(0)=1}\max_{\mu\leq x\leq L}\left|q(x)\right|\leq\left(1-\frac{\mu}{L}\right)^{k}.
 \]
 This corresponds to the Richardson iteration, and the above bound
-shows that it takes $O(\frac{L}{\mu}\log(\frac{1}{\epsilon}))$ degree
-to make the error bounded by $\epsilon$. The key fact we will use
-is that we can in general approximate a polynomial of degree $k$
-by a polynomial of degree $\tilde{O}(\sqrt{k})$. The construction
+shows that it requires degree $O(\frac{L}{\mu}\log(\frac{1}{\epsilon}))$
+to bound the error by $\epsilon$. The key fact we will use is that
+we can approximate the Richardson polynomial above, which has degree
+$k$, by a polynomial of degree $\tilde{O}(\sqrt{k})$. The construction
 uses Chebyshev polynomials. This will imply an $\tilde{O}(\sqrt{\frac{L}{\mu}})$
 iteration bound for the conjugate gradient method of the next section.
 \begin{defn}
-For any integer $d$, the $d$'th Chebyshev polynomial is defined
+For any integer $d$, the degree $d$ Chebyshev polynomial is defined
 as the unique polynomial that satisfies 
 \[
 T_{d}(\cos\theta)=\cos(d\theta).
@@ -59,7 +59,7 @@ we have
 \end{thm}
 
 Now we are ready to show that there is a degree $\tilde{O}(\sqrt{s})$
-polynomial that estimates $x^{s}$.
+polynomial that approximates $x^{s}$.
 \begin{thm}
 \label{thm:approximate_mono}For any positive integers $s$ and $d$,
 there is a polynomial $p$ of degree $d$ such that
@@ -89,7 +89,7 @@ The error of the polynomial can be bounded as follows
  & \leq2\exp(-\frac{d^{2}}{2s})
 \end{align*}
 where we used (\ref{eq:E_z_x_s}) on the first line, $|T_{z}(x)|\leq1$
-for all $x\in[-1,1]$ on the third line and Chernoff bound (Theorem
+for all $x\in[-1,1]$ on the third line and the Chernoff bound (Theorem
 \ref{thm:chernoff}) on the last line.
 \end{proof}
 \begin{rem*}
@@ -99,7 +99,7 @@ for the approximation of other functions.
 By scaling and translating Theorem \ref{thm:approximate_mono}, we
 have the following guarantee.
 \begin{thm}
-For any $0<\mu\leq L$ and any $0\leq\epsilon\leq1$, there is a polynomial
+For any $0<\mu\leq L$ and any $0<\epsilon\leq1$, there is a polynomial
 $q$ of degree $O(\sqrt{\frac{L}{\mu}}\log(\frac{1}{\epsilon}))$
 such that 
 \[
@@ -120,6 +120,9 @@ and that
 \]
 To make both $|q(0)-1|\leq\frac{\epsilon}{3}$ and $\max_{x\in[\mu,L]}\left|q(x)\right|\leq\frac{\epsilon}{3}$,
 we set $d=O(\sqrt{s\log\frac{1}{\epsilon}})$ and $s=O(\frac{L}{\mu}\log(\frac{1}{\epsilon}))$.
-By rescaling $q$, we have $q(0)=1$.\selectlanguage{english}%
+Since $|q(0)-1|\leq\epsilon/3\leq1/3$, rescaling by $1/q(0)$ changes
+the bound on $[\mu,L]$ by only a constant factor, which can be absorbed
+by adjusting the constants above. After this rescaling,$q$ satisfies
+$q(0)=1$.\selectlanguage{english}%
 \end{proof}
 

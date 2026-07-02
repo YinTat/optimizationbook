@@ -6,7 +6,7 @@ In this chapter, we have discussed a few cutting plane methods. In
 particular, we showed that $O(\min(n,\sqrt{\frac{L}{\mu}})\log(\frac{1}{\epsilon}))$
 gradient computations suffice. We conclude this section by showing
 that $\min(n,\sqrt{\frac{L}{\mu}})$ is in fact optimal among ``gradient-based''
-methods. For convenience the reader may consider $\mu=1$ and $L=\kappa$.
+methods. For convenience, the reader may consider $\mu=1$ and $L=\kappa$.
 \begin{thm}
 Fix any $L\geq\mu>0$. Consider the function
 \begin{equation}
@@ -22,7 +22,7 @@ f(x^{(k)})-\min_{x}f(x)\geq(\frac{\mu}{L})^{3/2}(\frac{\sqrt{L/\mu}-1}{\sqrt{L/\
 \end{thm}
 
 \begin{proof}
-First, we check the strong convexity and smoothness. Note that $f(x)=-x_{1}+\frac{1}{2}x^{\top}Ax$
+First, we check the strong convexity and smoothness. Note that $f(x)=-\frac{L-\mu}{4}x_{1}+\frac{1}{2}x^{\top}Ax$
 for some matrix $A$. Hence, $\nabla^{2}f(x)=A$. Hence, we have
 \[
 \theta^{\top}\nabla^{2}f(x)\theta=\frac{L-\mu}{4}\sum^{n-1}_{i=1}(\theta_{i}-\theta_{i+1})^{2}+\frac{L-\mu}{4}\theta^{2}_{1}+\mu\sum^{n}_{i=1}\theta^{2}_{i}+\frac{\sqrt{L\mu}-\mu}{2}\theta^{2}_{n}
@@ -57,7 +57,7 @@ is a solution of the above equation. Now, we note that
 \end{align*}
 and that
 \[
-\|x^{(0)}-x^{*}\|^{2}_{2}\leq\sum^{\infty}_{i=1}(\frac{\sqrt{L/\mu}-1}{\sqrt{L/\mu}+1})^{2i}=(\frac{\sqrt{L/\mu}-1}{\sqrt{L/\mu}+1})^{2}\frac{\sqrt{L/\mu}+1}{2}.
+\|x^{(0)}-x^{*}\|^{2}_{2}\leq\sum^{\infty}_{i=1}q^{2i}=\frac{q^{2}}{1-q^{2}}=q^{2}\frac{(\sqrt{L/\mu}+1)^{2}}{4\sqrt{L/\mu}}\leq q^{2}\frac{\sqrt{L/\mu}+1}{2},\quad q=\frac{\sqrt{L/\mu}-1}{\sqrt{L/\mu}+1}.
 \]
 Now, by smoothness and by the strong convexity of $f$, we have
 \[
@@ -65,18 +65,17 @@ Now, by smoothness and by the strong convexity of $f$, we have
 \]
 \end{proof}
 Note that this ``worst'' function naturally appears in many problems.
-So, it is a problem we need to address. In some sense, the proof points
-out a common issue of any algorithm which only uses gradient information.
-Given any convex function, we construct the dependence graph $G$
-on the set of variables $x_{i}$ by connecting $x_{i}$ to $x_{j}$
-if $\nabla f(x)_{i}$ depends on $x_{j}$ or $\nabla f(x)_{j}$ depends
-on $x_{i}$ (given all other variables). Note that the dependence
+Thus, it is a problem we need to address. In some sense, the proof
+points out a common issue of any algorithm that only uses gradient
+information. Given any convex function, we construct the dependence
+graph $G$ on the set of variables $x_{i}$ by connecting $x_{i}$
+to $x_{j}$ if $\nabla f(x)_{i}$ depends on $x_{j}$ or $\nabla f(x)_{j}$
+depends on $x_{i}$ (given all other variables). Note that the dependence
 graph $G$ of the worst function is simply an $n$-vertex path, whose
 diameter is $n-1$. Also, note that gradient descent can only transmit
-information from one vertex to another in each iteration. Therefore,
-it takes at least $\Omega(\mathrm{diameter})$ time to solve the problem
-unless we know the solution is sparse (when $L/\mu$ is small). However,
-we note that this is not a lower bound for all algorithms.
+information from one vertex to another in each iteration.Therefore,
+it takes at least $\Omega(\mathrm{diameter})$ time to solve the problem.
+However, we note that this is not a lower bound for all algorithms.
 
 The problem (\ref{eq:worst_function}) is a quadratic whose optimality
 conditions form a Laplacian linear system, and it can be solved in

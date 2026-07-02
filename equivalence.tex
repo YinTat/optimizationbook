@@ -177,7 +177,7 @@ of halfspaces, which are closed and convex. Thus, to prove this part,
 it is sufficient to prove that $K\subseteq K^{**}$ and $0\in K^{**}$.
 Let $x\in K$. Then, for every $y\in K^{*}$, it holds that $\langle x,y\rangle\leq1$,
 by the definition of the polar. Note that these inequalities are precisely
-the constraints of $K^{**}$, thus $x\in K^{**}$ . Moreover, $\langle0,y\rangle=0\leq1$,
+the constraints of $K^{**}$, thus $x\in K^{**}$. Moreover, $\langle0,y\rangle=0\leq1$,
 for every $y\in K^{*}$, and so $0\in K^{**}$.
 
 We now prove the other direction. Suppose there is a vector $y\in K^{**}\setminus\mathrm{cl(conv(\mathit{K}\cup\left\{ 0\right\} ))}$.
@@ -195,7 +195,7 @@ However, since $\theta^{\top}y>1$, we have $y\not\in K^{**}$, a
 contradiction.
 \end{proof}
 \begin{cor}
-Let $K\subseteq$$\,\R^{n}$ be a closed convex set . Then $(K^{*})^{*}=K$
+Let $K\subseteq$$\,\R^{n}$ be a closed convex set. Then $(K^{*})^{*}=K$
 if and only if $0\in K$.
 \end{cor}
 
@@ -240,7 +240,7 @@ The following lemma shows that the optimization oracle is simply the
 represent subgradient. 
 \begin{lem}
 \label{lem:gradient_conjugate}For any continuous function $f$ with
-differentiable $f^{*}$, we have that $\nabla f^{*}(\theta)=\arg\max_{x}\theta^{\top}x-f(x)$.
+$f^{*}$ differentiable at $\theta$, we have that $\nabla f^{*}(\theta)=\arg\max_{x}\theta^{\top}x-f(x)$.
 \end{lem}
 
 \begin{proof}
@@ -256,8 +256,9 @@ for all $i$. By the compactness of the unit sphere, we may assume
 by taking a subsequence that $x_{i}/\lVert x_{i}\rVert\to u$ for
 some unit vector $u\in\R^{n}$. Then, $u^{\top}x_{i}/\lVert x_{i}\rVert\to u^{\top}u=1$,
 and since $\lVert x_{i}\rVert\to\infty$, we have $u^{\top}x_{i}\to\infty$.
-Since $g_{\theta+u}(x_{i})=g_{\theta}(x_{i})+u^{\top}x_{i}\ge f^{*}(\theta)-\epsilon+u^{\top}x_{i}$,
-this means that $g_{\theta+u}(x_{i})\to\infty$, contradicting $f^{*}(\theta+u)$
+Choose $t>0$ small enough that $f^{*}(\theta+tu)<\infty$. Since
+$g_{\theta+tu}(x_{i})=g_{\theta}(x_{i})+tu^{\top}x_{i}\ge f^{*}(\theta)-\epsilon+tu^{\top}x_{i}$,
+this means that $g_{\theta+tu}(x_{i})\to\infty$, contradicting $f^{*}(\theta+tu)$
 being finite. Hence, $S$ is bounded and thus compact, so $g_{\theta}(x)$
 attains its maximum in $S$, and thus in $\R^{n}$.
 
@@ -356,7 +357,7 @@ epigraph, we have that $f^{**}=f$.
 \begin{proof}
 Since $\epi f$ is a closed, convex set, Corollary \ref{cor:convex_function_intersection}
 shows that it must be an intersection of halfspaces, i.e., a set ${\cal H}$
-s.t. 
+such that 
 \[
 f(x)=\sup_{(\theta,b)\in\mathcal{H}}\theta^{\top}x-b
 \]
@@ -364,7 +365,7 @@ where $\mathcal{H}$ is the set of supporting planes of $\epi f$
 and contains all affine lower bounds on $f$, namely, $f(x)\geq\theta^{\top}x-b$
 for all $x$. Alternatively, we can write
 \[
-\epi(f)=\bigcap_{{\cal H}=\left\{ (\theta,b):\,\forall x,\,f(x)\ge\theta^{\top}x-b\right\} }\left\{ (x,t):t\ge\theta^{\top}x-b\right\} .
+\mathcal{H}=\left\{ (\theta,b):\,\forall x,\,f(x)\ge\theta^{\top}x-b\right\} ,\qquad\epi(f)=\bigcap_{(\theta,b)\in\mathcal{H}}\left\{ (x,t):t\ge\theta^{\top}x-b\right\} .
 \]
 For a fixed $\theta$, any feasible $b$ satisfies $b\geq\theta^{\top}x-f(x)$
 for all $x$. So, the smallest feasible value satisfies 
@@ -378,7 +379,7 @@ f(x)=\sup_{(\theta,b)\in\mathcal{H}}\theta^{\top}x-b^{*}=\sup_{\theta}\theta^{\t
 \end{proof}
 \begin{xca}
 Let $f$ be a convex function with closed epigraph. Show that $f=f^{*}$
-iff $f(x)=\frac{\norm x^{2}}{2}$.
+if and only if $f(x)=\frac{\norm x^{2}}{2}$.
 \end{xca}
 
 Since we can use the gradient, $\nabla f$, to compute the gradient
@@ -402,12 +403,13 @@ systems'' to record a convex function, the primal space $X$ and
 the dual space $X^{*}$. Under these ``coordinate systems'', we
 have the dual functions $f$ and $f^{*}$.
 \begin{xca}[Order reversal]
- Show that $f\geq g\iff f^{*}\leq g^{*}$ (both for all $x\in\R^{n})$.
-
-Interestingly, the convex conjugate is the \emph{unique} transformation
-on convex functions that satisfies both involution and order reversal. 
+ Show that $f\geq g\iff f^{*}\leq g^{*}$ (both for all $x\in\R^{n}$).
 \end{xca}
 
+\begin{rem*}
+Interestingly, the convex conjugate is the \emph{unique} transformation
+on convex functions that satisfies both involution and order reversal. 
+\end{rem*}
 \begin{thm}[\cite{artstein2009concept}]
 Given a transformation $\mathcal{T}$ that maps the set of lower
 semi-continuous\footnote{See Def.\ref{def:lower-semi}.} convex functions
@@ -529,7 +531,7 @@ Therefore, we have
 \end{align*}
 where $h=\frac{1}{(2r_{2})^{n}}f\ast\chi_{B_{\infty}(0,r_{2})}$ where
 $\chi_{B_{\infty}(0,r_{2})}$ is $1$ on the set $B_{\infty}(0,r_{2})$
-and $0$ on outside.
+and $0$ outside the set.
 
 Integrating by parts, we have that
 \[
@@ -552,7 +554,7 @@ Therefore, we have that
 \begin{xca}
 For an $L$-gradient-Lipschitz function $f:\R^{n}\rightarrow\R,$and
 $h=f*\chi_{B_{\infty}(0,1/2)}$, prove that $h$ is also $L$-gradient-Lipschitz
-and $\Delta h(y)=\E_{z\sim B_{\infty(y,1/2)}}(\Delta f(z))$.
+and $\Delta h(y)=\E_{z\sim B_{\infty}(y,1/2)}(\Delta f(z))$.
 \end{xca}
 
 This lemma shows that we can implement an approximate gradient oracle
@@ -597,10 +599,10 @@ at $x$.
 \begin{lem}
 \label{lem:separate_conv_func} Let $r_{1}>0$ and $f$ be a convex
 function. Suppose that $\norm{\nabla f(z)}_{\infty}\leq L$ for any
-$z\in B_{\infty}(x,2r_{1})$ and suppose that we can evaluate f to
-within $\varepsilon$ additive error for $\varepsilon\leq r_{1}\sqrt{n}L$.
+$z\in B_{\infty}(x,2r_{1})$ and suppose that we can evaluate the
+function to within $\varepsilon$ additive error for $\varepsilon\leq r_{1}\sqrt{n}L$.
 Let $\tilde{g}=\mathtt{SubgradConvexFunc}(f,x,r_{1},\varepsilon)$.
-Then, there is random variable $\zeta\geq0$ with $\E\zeta\leq2\sqrt{\frac{L\varepsilon}{r_{1}}}n^{5/4}$
+Then, there is a random variable $\zeta\geq0$ with $\E\zeta\leq2\sqrt{\frac{L\varepsilon}{r_{1}}}n^{5/4}$
 such that for any $y$
 \[
 f(y)\geq f(x)+\left\langle \tilde{g},y-x\right\rangle -\zeta\norm{y-x}_{\infty}-4nr_{1}L.
@@ -628,7 +630,7 @@ have that
  & \leq\E_{z}\frac{1}{2r_{2}}\int\left|\frac{df}{dx_{i}}(z+se_{i})-g(y)_{i}\right|ds\\
  & =\E_{z}\left|\frac{df}{dx_{i}}(z)-g(y)_{i}\right|
 \end{align*}
-where we used that both $z+se_{i}$ and $z$ are uniform distribution
+where we used that both $z+se_{i}$ and $z$ are uniformly distributed
 on $B_{\infty}(y,r_{2})$ in the last line. Hence, we have
 \[
 \E_{z}\norm{\tilde{g}-\nabla f(z)}_{1}\leq\E_{z}\norm{\nabla f(z)-g(y)}_{1}+\E_{z}\norm{\tilde{g}-g(y)}_{1}\leq2\E_{z}\norm{\nabla f(z)-g(y)}_{1}.
@@ -646,7 +648,7 @@ f(q)\geq f(x)+\left\langle \tilde{g},q-x\right\rangle -\norm{\nabla f(z)-\tilde{
 \]
 Note that $\norm{x-z}_{1}\leq n\cdot\norm{x-z}_{\infty}\leq n(r_{1}+r_{2})$
 by assumption. Moreover, we can apply Lemma~\ref{lem:convex_almost_flat}
-to bound $\norm{\nabla f(z)-\tilde{g}}_{1}$ and use $r_{2}=\sqrt{\frac{\varepsilon r_{1}}{\sqrt{n}L}}\leq r_{1}$
+to bound $\norm{\nabla f(z)-\tilde{g}}_{1}$ and use $r_{2}=\frac{1}{2}\sqrt{\frac{\varepsilon r_{1}}{\sqrt{n}L}}\leq r_{1}$
 to get
 \[
 f(q)\geq f(x)+\left\langle \tilde{g},q-x\right\rangle -\zeta\norm{q-x}_{\infty}-4nr_{1}L
@@ -690,7 +692,7 @@ smooth function $f:\Omega\rightarrow\R$:
 \[
 \norm{f-\frac{1}{\left|\Omega\right|}\int_{\Omega}f(x)\,dx}_{L^{1}(\Omega)}\le\left(\sup_{S\subset\Omega}\frac{2|S||\Omega\setminus S|}{|\partial S||\Omega|}\right)\norm{\nabla f}_{L^{1}(\Omega)}
 \]
- where the supremum is over all subsets $S$ s.t. $S$ and $\Omega\setminus S$
+ where the supremum is over all subsets $S$ such that $S$ and $\Omega\setminus S$
 are both connected.
 \end{thm}
 
@@ -709,7 +711,7 @@ we compute an approximate subgradient of a given Lipschitz convex
 function. Using this, in the second step (Algorithm~\ref{alg:sep_set}),
 we compute an approximate separating hyperplane. 
 \begin{thm}
-Let $K$ be a convex body s.t. $B(0,1)\subseteq K\subseteq B(0,R)$.
+Let $K$ be a convex body such that $B(0,1)\subseteq K\subseteq B(0,R)$.
 Then, for any $0<\eta\leq1/2$, we can compute an $\eta$-approximate
 separation oracle for K using $O(n\log(nR/\eta))$ queries to a membership
 oracle for $K$.
@@ -830,9 +832,9 @@ we have that
 \left|h_{x}(d_{1})-h_{x}(d_{2})\right|\leq R+\delta\leq\frac{R+\delta}{r-\delta}\norm{d_{2}-d_{1}}_{2}.
 \]
 
-Case 2: $\norm{d_{2}-d_{1}}_{2}\leq r-\delta$. We consider the point
-$d_{3}=d_{1}+\frac{d_{2}-d_{1}}{\lambda}$ with $\lambda=\norm{d_{2}-d_{1}}_{2}/(r-\delta)$.
-Note that 
+Case 2: $\norm{d_{2}-d_{1}}_{2}\leq r-\delta$. If $d_{1}=d_{2}$,
+the claim is trivial. Otherwise, we consider the point $d_{3}=d_{1}+\frac{d_{2}-d_{1}}{\lambda}$
+with $\lambda=\norm{d_{2}-d_{1}}_{2}/(r-\delta)$. Note that 
 \[
 \norm{d_{3}}_{2}\leq\norm{d_{1}}_{2}+\frac{1}{\lambda}\norm{d_{2}-d_{1}}_{2}\leq\delta+\frac{1}{\lambda}\norm{d_{2}-d_{1}}_{2}\leq r.
 \]
@@ -857,7 +859,7 @@ that $\alpha_{x}(d_{1})\cdot\norm x_{2}\leq R+\delta$ and hence
 \]
 \end{proof}
 The next lemma shows that $h_{x}$ gives us a way to implement an
-approximation separation oracle and only needs access to an approximation
+approximate separation oracle and only needs access to an approximate
 evaluation oracle for $h_{x}$ which in turn only needs an approximate
 membership oracle for $K$. To be precise, we define approximate oracles.
 \begin{defn}[Separation Oracle (SEP)]
@@ -967,9 +969,9 @@ for all $y\in B_{2}(0,O(1))$, one can compute $h_{x}(y)$ by binary
 search with $O(\log(1/\delta))$ calls to the membership oracle.
 
 Next, we check that $\mathtt{Separate}_{\delta,\rho}(K,x)$ is indeed
-a separation oracle. Note that $\tilde{g}$ may not be an unit vector
-and we need to re-normalize the $\tilde{g}$ by $1/\norm{\tilde{g}}_{2}$.
-So, we need to a lower bound $\norm{\tilde{g}}_{2}$. 
+a separation oracle. Note that $\tilde{g}$ may not be a unit vector
+and we need to re-normalize $\tilde{g}$ by $1/\norm{\tilde{g}}_{2}$.
+So, we need a lower bound $\norm{\tilde{g}}_{2}$. 
 
 From (\ref{eq:lowerbound_g}) and our choice of $r_{1}$, if we set
 $\varepsilon=\delta$, where $\delta$ is the error and $\rho$ is
@@ -982,7 +984,7 @@ Therefore, this algorithm is a separation oracle with error $\frac{400}{\rho}n^{
 and by the union bound over all calls to the membership oracle, with
 failure probability $O(\rho+n\log(1/\delta)\delta)$. Therefore,
 \[
-\text{SEP}_{\Omega(\max(n^{7/6}\kappa^{2}\delta^{1/3}/\rho+\rho+n\log(1/\delta)\delta)}(K)\leq O(\log(1/\delta))\text{MEM}_{\delta}(K).
+\text{SEP}_{O(\max\{n^{7/6}\kappa^{2}\delta^{1/3}/\rho,\rho,n\log(1/\delta)\delta\})}(K)\leq O(\log(1/\delta))\text{MEM}_{\delta}(K).
 \]
 Setting $\rho=\sqrt{n^{7/6}\kappa^{2}\delta^{1/3}}$ and $\delta=\Theta\left(\frac{\eta^{6}}{n^{7/2}\kappa^{6}}\right)$,
 we have that 
@@ -1005,7 +1007,7 @@ we can compute $\nabla f(x)$ in $O(\mathcal{T})$ time.
 
 \begin{rem*}
 In practice, the runtime is roughly $2\mathcal{T}$ assuming we have
-enough memory. Check out google/jax for a modern implementation.
+enough memory. Check out JAX for a modern implementation.
 
 Before proving it formally, we first go through an example. Consider
 the function $f(x_{1},x_{2})=\sin(x_{1}/x_{2})+x_{1}x_{2}$. We use
@@ -1018,11 +1020,11 @@ $x_{5}=x_{1}x_{2}$, Output $x_{6}=x_{4}+x_{5}$.
 \end{itemize}
 Note that each step involves computing
 \[
-x_{i}=f_{i}(\overset{\text{only few }x_{j}}{\overbrace{x_{1},\cdots,x_{i-1}}})
+x_{i}=f_{i}(\overset{\text{only a few }x_{j}}{\overbrace{x_{1},\cdots,x_{i-1}}})
 \]
 with simple functions $f_{i}$ whose derivatives we know how to compute.
-The key idea is compute $\frac{\partial f}{\partial x_{1}}$ not just
-for the inputs $x_{1}$ and $x_{2}$, but also for all intermediate
+The key idea is to compute $\frac{\partial f}{\partial x_{1}}$ not
+just for the inputs $x_{1}$ and $x_{2}$, but also for all intermediate
 variables. Here, we use $\frac{\partial f}{\partial x_{i}}$ to denote
 the derivative of $f$ with respect to $x_{i}$ while fixing $x_{1},x_{2},\cdots,x_{i-1}$
 (and other inputs if $x_{i}$ is an input). For the example above,
@@ -1075,26 +1077,21 @@ Compute $\frac{\partial f}{\partial x_{i}}=\sum_{j\in L_{i}}\frac{\partial f}{\p
 We prove by induction that the formula $\frac{\partial f}{\partial x_{i}}=\sum_{j\in L_{i}}\frac{\partial f}{\partial x_{j}}\frac{\partial x_{j}}{\partial x_{i}}$
 is correct. For the base case $i=m$, we have $f=x_{m}$ and hence
 $\frac{\partial f}{\partial x_{m}}=1$. For the induction, we let
-$L_{i}=\{x_{j_{1}},x_{j_{2}},\cdots,x_{j_{k}}\}$. If we fix variables
-$x_{1},x_{2},\cdots,x_{i-1}$, then $f$ is a function of $x_{i}$
-(and of other inputs if $x_{i}$ is an input). Since only $x_{j_{1}},x_{j_{2}},\cdots,x_{j_{k}}$
-depend on $x_{i}$, we can also view $f$ as a function of $x_{j_{1}},x_{j_{2}},\cdots,x_{j_{k}}$.
-More precisely, we have
-\[
-f(x_{i})=f(x_{j_{1}}(x_{i},x_{j_{-1}}),x_{j_{2}}(x_{i},x_{j_{-2}}),\cdots,x_{j_{k}}(x_{i},x_{j_{-k}}))
-\]
-where we use $x_{j_{-1}}$ to denote the variables $x_{j_{2}},x_{j_{3}},\cdots,x_{j_{k}}$.
-By chain rule, we have
+$L_{i}=\{j_{1},j_{2},\cdots,j_{k}\}$. If we fix variables $x_{1},x_{2},\cdots,x_{i-1}$,
+then $f$ is a function of $x_{i}$ (and of other inputs if $x_{i}$
+is an input). Since only $x_{j_{1}},x_{j_{2}},\cdots,x_{j_{k}}$ depend
+on $x_{i}$, we can also view $f$ as a function of $x_{j_{1}},x_{j_{2}},\cdots,x_{j_{k}}$.
+Applying the chain rule to these direct dependencies, we have
 \[
 \frac{\partial f}{\partial x_{i}}=\sum_{j\in L_{i}}\frac{\partial f}{\partial x_{j}}\frac{\partial x_{j}}{\partial x_{i}}.
 \]
 
-To bound the runtime, we define the computation graph $G$ be a graph
-on $x_{1},x_{2},\cdots,x_{m}$ such that $i\rightarrow j$ if $f_{j}$
-depends on $x_{i}$. Note that each edge is examined $O(1)$ times
-whether evaluating $f$ or its gradient. Hence, the cost of computing
-$f$ and the cost of our algorithm are both $\Theta(m)$ where $m$
-is the number of edges in $G$. This completes the proof. 
+To bound the runtime, we define the computation graph $G$ to be a
+graph on $x_{1},x_{2},\cdots,x_{m}$ such that $i\rightarrow j$ if
+$f_{j}$ depends on $x_{i}$. Note that each edge is examined $O(1)$
+times whether evaluating $f$ or its gradient. Hence, the cost of
+computing $f$ and the cost of our algorithm are both $\Theta(m)$
+where $m$ is the number of edges in $G$. This completes the proof. 
 \end{proof}
 We note that an efficient implementation of the chain rule is the
 heart of the backpropagation algorithm for neural networks. To conclude
@@ -1114,7 +1111,7 @@ shows that computing $A^{-\top}$ can be done as fast as $\det A$.
 \subsection{Gradient from Evaluation via Complex Step Differentiation}
 
 Auto differentiation is great if the function can be computed exactly.
-However, it does not work well if $f$ can be only approximated or
+However, it does not work well if $f$ can only be approximated or
 the computation of $f$ involves too many variables. For example,
 if $f$ is the energy usage of some aircraft design, then $f$ can
 only be computed approximately via simulation and such computation

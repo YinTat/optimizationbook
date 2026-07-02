@@ -8,15 +8,15 @@
 We begin with the Newton-Raphson method for finding the zeros of a
 function $g$, i.e. finding $x$ such that $g(x)=0$. In optimization,
 the goal is to find a root of the gradient, $\nabla f(x)=0$. The
-Newton-Raphson iteration approximates a function by its gradient/Jacobian,
-then guesses where the gradient intersects the zero line as a likely
-zero, repeating this process until a sufficient approximation has
-been found. In one dimension, we approximate the function $g$ by
-its gradient 
+Newton-Raphson iteration approximates a function by its linearization/Jacobian,
+then guesses where the linear approximation intersects the zero line
+as a likely zero, repeating this process until a sufficient approximation
+has been found. In one dimension, we approximate the function $g$
+by its gradient 
 \[
 g(x)\sim g(x^{(k)})+g'(x^{(k)})(x-x^{(k)}).
 \]
-Finding the zeros of the right hand side, we have the Newton step
+Finding the zeros of the right-hand side, we have the Newton step
 \[
 x^{(k+1)}=x^{(k)}-\frac{g(x^{(k)})}{g'(x^{(k)})}.
 \]
@@ -26,7 +26,7 @@ $g(x)\sim g(x^{(k)})+Dg(x^{(k)})(x-x^{(k)})$ and this gives the step
 x^{(k+1)}=x^{(k)}-\left(Dg(x^{(k)})\right)^{-1}g(x^{(k)}).
 \]
 
-When the function $g(x)=\nabla f(x)$, then the Newton step becomes
+When $g(x)=\nabla f(x)$, then the Newton step becomes
 \[
 x^{(k+1)}=x^{(k)}-\left(\nabla^{2}f(x^{(k)})\right)^{-1}\nabla f(x^{(k)}).
 \]
@@ -73,7 +73,8 @@ converge if the starting point is far away.
 
 \SetAlgoLined
 
-\textbf{Input:} Initial point $x^{(0)}\in\Rn$
+\textbf{Input:} Function $g:\Rn\to\Rn$, initial point $x^{(0)}\in\Rn$,
+and iteration count $T$
 
 \For{$k=0,1,\cdots,T-1$}{
 
@@ -141,8 +142,8 @@ computing $\sqrt{x}$.
 In general, the Newton method does not converge globally. Here, we
 give an application that does converge ``globally''.
 \begin{thm}
-Given a polynomial $g(x)=\sum^{n}_{i=0}a_{i}x^{i}$ with only real
-roots. Let $\lambda_{1}$ be its largest root. Suppose that $\lambda_{1}\leq x^{(0)}$.
+Let $g(x)=\sum^{n}_{i=0}a_{i}x^{i}$ be a polynomial with only real
+roots, and let $\lambda_{1}$ be its largest root. Suppose that $\lambda_{1}\leq x^{(0)}$.
 Then, after $O(n\log(\frac{1}{\epsilon}))$ iterations, the Newton
 method finds $x^{(k)}$ such that
 \[
@@ -161,7 +162,7 @@ and hence
 \[
 \frac{g(x)}{g'(x)}=\frac{1}{\sum_{i}\frac{1}{x-\lambda_{i}}}.
 \]
-For any $x\geq\lambda_{1}$, we have 
+For any $x>\lambda_{1}$, we have 
 \begin{align*}
 \frac{g(x)}{g'(x)} & \leq\frac{1}{\frac{1}{x-\lambda_{1}}}=x-\lambda_{1},\\
 \frac{g(x)}{g'(x)}\geq & \frac{1}{\sum_{i}\frac{1}{x-\lambda_{1}}}=\frac{x-\lambda_{1}}{n}.\tag{{1}}
@@ -192,7 +193,7 @@ enough to a root.
 Assume that $|f'(x^{*})|\geq\alpha$ at $f(x^{*})=0$ and $f'$ is
 $L$-Lipschitz. Then, if $|x^{0}-x^{*}|\le\frac{\alpha}{2L}$,
 \[
-|x^{(k)}-x^{*}|\leq\frac{\alpha}{L}\left(\frac{L}{\alpha}|x^{(0)}-x^{*}|\right)^{2^{(k)}}.
+|x^{(k)}-x^{*}|\leq\frac{\alpha}{L}\left(\frac{L}{\alpha}|x^{(0)}-x^{*}|\right)^{2^{k}}.
 \]
 \end{thm}
 
@@ -206,9 +207,8 @@ f(x^{*}) & =f(x^{(k)})+\int^{x^{*}}_{x^{(k)}}f'(z)dz=f(x^{(k)})+f'(x^{(k)})(x^{*
 \end{align*}
 Therefore, 
 \begin{align*}
-x^{(k+1)}-x^{*} & =\frac{1}{f'(x^{(k)})}\int^{x^{*}}_{x^{(k)}}(f'(z)-f'(x^{(k)}))dz.\\
- & \leq\frac{L}{|f'(x^{(k)})|}\int^{x^{*}}_{x^{(k)}}|z-x^{(k)}|dz\\
- & =\frac{L|x^{*}-x^{(k)}|^{2}}{2|f'(x^{(k)})|}.
+\left|x^{(k+1)}-x^{*}\right| & =\frac{1}{|f'(x^{(k)})|}\left|\int^{x^{*}}_{x^{(k)}}(f'(z)-f'(x^{(k)}))dz\right|\\
+ & \leq\frac{L|x^{*}-x^{(k)}|^{2}}{2|f'(x^{(k)})|}.
 \end{align*}
 Since $|f'(x^{(k)})|\geq|f'(x^{*})|-L|x^{(k)}-x^{*}|$
 \[
@@ -222,9 +222,9 @@ and
 \[
 \frac{L}{\alpha}|x^{(k+1)}-x^{*}|\leq\left(\frac{L}{\alpha}|x^{(k)}-x^{*}|\right)^{2}.
 \]
-After $t$ steps,
+After $k$steps,
 \[
-\frac{L}{\alpha}|x^{(k)}-x^{*}|\leq\left(\frac{L}{\alpha}\epsilon_{0}\right)^{2^{(k)}}
+\frac{L}{\alpha}|x^{(k)}-x^{*}|\leq\left(\frac{L}{\alpha}\epsilon_{0}\right)^{2^{k}}
 \]
 implying $|x^{(k)}-x^{*}|<\epsilon$ after $\log\log(\frac{L\epsilon_{0}}{\alpha\epsilon})$
 steps. Note that $f$ has not been assumed to be convex or polynomial.
@@ -235,7 +235,7 @@ of $\nabla f(x)=0$. Newton's iteration is the update
 x^{(k+1)}=x^{(k)}-(\nabla^{2}f(x^{(k)}))^{-1}\nabla f(x^{(k)}).
 \]
 By the above proof, Newton's iteration has quadratic convergence from
-points close enough to the optimal.
+points close enough to the optimum.
 
 \subsection*{Quasi-Newton Method}
 
@@ -244,19 +244,19 @@ points close enough to the optimal.
 \end{figure}
 
 When the Jacobian of $g$ is not available, we can approximate it
-using the function itself. For one dimension, we can approximate the
+using the function itself. In one dimension, we can approximate the
 Newton method and get the following secant method 
 \[
 x^{(k+1)}=x^{(k)}-g(x^{(k)})\frac{x^{(k)}-x^{(k-1)}}{g(x^{(k)})-g(x^{(k-1)})}
 \]
 where we approximated the $g'(x^{(k)})$ by $\frac{g(x^{(k)})-g(x^{(k-1)})}{x^{(k)}-x^{(k-1)}}$.
 For nice enough functions, the convergence rate satisfies $\varepsilon_{k+1}\leq C\cdot\varepsilon^{\frac{1+\sqrt{5}}{2}}_{k}$,
-which is super linearly but not quadratic.
+which is superlinear but not quadratic.
 
-For $g$that is high-dimensional (of dimension at least $2$), we
+For $g$ that is high-dimensional (of dimension at least $2$), we
 need to approximate its Jacobian. Let $J^{(k)}$ be the approximate
-Jacobian we maintained in the $k^{th}$ iteration. Similar to the
-secant method, we want to enforce
+Jacobian we maintained in the $k^{\mathrm{th}}$ iteration. Similar
+to the secant method, we want to enforce
 \[
 J^{(k+1)}\cdot(x^{(k)}-x^{(k-1)})=g(x^{(k)})-g(x^{(k-1)}).
 \]
@@ -315,8 +315,8 @@ Therefore, we can directly use the recursive formula (\ref{eq:recursive})
 to compute $\left(J^{(k)}\right)^{-1}\nabla f(x^{(k)})$ instead of
 maintaining $J^{(k)}$ or $\left(J^{(k)}\right)^{-1}$ explicitly.
 
-In practice, the recursive formula $J^{(k)}$ becomes too expensive
-and hence one can stop the recursive formula after constant steps,
-which gives the limited-memory BFGS algorithm.
+In practice, the recursive formula for $\left(J^{(k)}\right)^{-1}$
+becomes too expensive, and hence one can truncate the recursion after
+a constant number of steps, which gives the limited-memory BFGS algorithm.
 
 \subsection*{}

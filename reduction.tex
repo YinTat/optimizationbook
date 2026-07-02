@@ -193,10 +193,10 @@ f(x^{(0)})-f^{*}\leq\left\langle \nabla f(x^{*}),x^{(0)}-x^{*}\right\rangle +\fr
 \]
 Therefore, the terms $\frac{GR}{k}$, $\frac{G^{2}}{\mu k}$ and $\frac{LR^{2}}{k}$
 are all just measuring how much we need to decrease multiplicatively
-from the initial error. With this view, we can think the numbers of
-iterations required for Lipschitz convex functions, strongly convex
-functions and smooth functions are exactly $\frac{1}{\epsilon^{2}_{\mathrm{relative}}}$
-, $\frac{1}{\epsilon_{\mathrm{relative}}}$ and $\frac{1}{\sqrt{\epsilon_{\mathrm{relative}}}}$.
+from the initial error. With this view, we can think of the required
+numbers of iterations for Lipschitz convex functions, strongly convex
+functions and smooth functions as exactly $\frac{1}{\epsilon^{2}_{\mathrm{relative}}}$,
+$\frac{1}{\epsilon_{\mathrm{relative}}}$ and $\frac{1}{\sqrt{\epsilon_{\mathrm{relative}}}}$.
 
 \subsection{$L/\mu$ can be dimension dependent}
 
@@ -208,8 +208,8 @@ is
 \[
 f(x)=\frac{1}{2}x^{2}_{1}+\frac{1}{2}\sum^{n-1}_{k=1}(x_{k}-x_{k+1})^{2}+\frac{1}{2}x^{2}_{n}
 \]
-This problem appears everywhere from physical systems, graph problems,
-signal denoising to statistics. For this problem, we have $L=\Theta(1)$
+This problem appears everywhere from physical systems and graph problems
+to signal denoising and statistics. For this problem, we have $L=\Theta(1)$
 and $\mu=\Theta(\frac{1}{n^{2}})$. This example shows that you can
 have large $\frac{L}{\mu}$ even with small description coefficients
 in the problem. Here is another example:
@@ -231,7 +231,7 @@ a quadratic around its minimum. We take gradient descent as an example.
 Note that gradient descent is invariant under any rotation and translation
 transformation. Therefore, we can assume $x^{*}=0$ and that $\nabla^{2}f(x^{*})$
 is a diagonal matrix with diagonals $\lambda_{1},\lambda_{2},\cdots,\lambda_{n}$.
-When $x$ is close to the optimal $x^{*}=0$, gradient descent $x^{\new}=x-h\nabla f(x)$
+When $x$ is close to the optimum $x^{*}=0$, gradient descent $x^{\new}=x-h\nabla f(x)$
 is similar to a coordinate-wise iteration $x^{\new}_{i}=(1-h\lambda_{i})x_{i}$.
 This gives a precise description of the convergence rate.
 
@@ -242,10 +242,10 @@ to converge despite the $\sqrt{n}$ worst-case bound on its convergence
 rate; the simplex method is often the method of choice for solving
 linear programs despite its exponential complexity bound.
 
-The cost per iteration sometimes can be misleading also. Each iteration
-of interior point methods takes $\nnz(A)+\mathrm{rank}(A)^{2}$ in
-theory while it takes nearly linear time in practice for sparse matrices
-due to the effectiveness of Cholesky decomposition. The $k^{th}$
+The cost per iteration can also be misleading. Each iteration of interior
+point methods takes $\nnz(A)+\mathrm{rank}(A)^{2}$ in theory while
+it takes nearly linear time in practice for sparse matrices due to
+the effectiveness of Cholesky decomposition. The $k^{\mathrm{th}}$
 iteration of cutting plane methods often takes $nk+k^{O(1)}$ if implemented
 correctly despite its super-linear bound.
 
@@ -288,7 +288,7 @@ we have that
 f_{\sigma}(x)\leq\min_{x}f_{\sigma}(x)+\frac{G^{2}}{\sigma k}\leq f_{\sigma}(x^{*})+\frac{G^{2}}{\sigma k}=f(x^{*})+\frac{\sigma}{2}R^{2}+\frac{G^{2}}{\sigma k}
 \]
 where $x^{*}$ is the minimum of $f(x)$. To get the best runtime
-for the fix $k$, we choose $\sigma$ such that 
+for a fixed $k$, we choose $\sigma$ such that 
 \[
 \frac{\sigma}{2}R^{2}=\frac{G^{2}}{\sigma k}
 \]
