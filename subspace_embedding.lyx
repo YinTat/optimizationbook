@@ -605,17 +605,17 @@ for all unit vectors
 \end_inset
 
 .
- An OSE for 
-\begin_inset Formula $d=1$
-\end_inset
-
- is given by the Johnson-Lindenstrauss Lemma.
- The original version was for a uniform random subspace of dimension 
+ The classical Johnson-Lindenstrauss lemma is usually stated for finite
+ point sets under random projection.
+ The OSE formulation asks instead for simultaneous preservation of every
+ vector in a fixed 
 \begin_inset Formula $d$
 \end_inset
 
-, but later versions extended this to Gaussian, Bernoulli and more general
- random matrices 
+-dimensional subspace;
+ Gaussian,
+ Bernoulli,
+ and more general random matrices can achieve this 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Vempala04"

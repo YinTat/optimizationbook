@@ -578,6 +578,10 @@ For a vector
 \begin_inset Formula $x$
 \end_inset
 
+ and a positive definite matrix 
+\begin_inset Formula $A$
+\end_inset
+
 ,
  
 \begin_inset Formula $\norm x_{A}=\sqrt{x^{T}Ax}$
@@ -681,6 +685,32 @@ d_{TV}(\rho,\nu)=\frac{1}{2}\int_{\Omega}\left|\rho(x)-\nu(x)\right|\,dx=\sup_{S
 
 \end_inset
 
+Here,
+ 
+\begin_inset Formula $\rho(S)$
+\end_inset
+
+ denotes the measure induced by the density 
+\begin_inset Formula $\rho$
+\end_inset
+
+,
+ i.e.,
+ 
+\begin_inset Formula $\rho(S)=\int_{S}\rho(x)\,dx$
+\end_inset
+
+,
+ and similarly for 
+\begin_inset Formula $\nu$
+\end_inset
+
+.
+ The last equality follows because 
+\begin_inset Formula $\rho-\nu$
+\end_inset
+
+ has total mass zero.
 
 \end_layout
 

@@ -229,6 +229,28 @@ We will show that the worst case is when the convex set
 
 .
  Again, this expectation can only be higher.
+ The reason is that after conditioning on 
+\begin_inset Formula $y=c^{T}x$
+\end_inset
+
+,
+ both the objective and the density depend only on 
+\begin_inset Formula $y$
+\end_inset
+
+,
+ while each cross-section contributes only its 
+\begin_inset Formula $(n-1)$
+\end_inset
+
+-dimensional volume.
+ Thus the first replacement preserves the one-dimensional marginal of 
+\begin_inset Formula $y$
+\end_inset
+
+,
+ and the two conical replacements shift this marginal to larger values
+ in the stochastic order.
  
 \begin_inset Note Note
 status open
@@ -297,7 +319,7 @@ noprefix "false"
  The complexity of sampling is polynomial in the dimension and logarithmic
  in a suitable notion of probabilistic distance between the starting distributio
 n and the target distribution.
- The sampling algorithm only uses a membership (EVAL) oracle.
+ The sampling algorithm only uses a membership (MEM) oracle.
 \end_layout
 
 \begin_layout Exercise

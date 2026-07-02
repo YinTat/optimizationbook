@@ -972,7 +972,7 @@ To be concrete,
 \end_inset
 
  be the happiness of a school/student if the student is assigned to that school.
- Suppose that every student can only be assigned to one school and school 
+ Suppose that every student can be assigned to at most one school and school 
 \begin_inset Formula $b$
 \end_inset
 

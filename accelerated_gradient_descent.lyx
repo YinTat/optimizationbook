@@ -987,14 +987,24 @@ f(x)+\nabla f(x)^{\top}(p_{x}-x)+\frac{L}{2}\norm{p_{x}-x}^{2}+h(p_{x})\leq f(x)
 
 \end_inset
 
-Using 
-\begin_inset Formula $h(p_{x})\geq h(x)+\nabla h(x)^{\top}(p_{x}-x)$
+Let 
+\begin_inset Formula $s\in\partial h(x)$
 \end_inset
 
-, we have that
+.
+ Using 
+\begin_inset Formula $h(p_{x})\geq h(x)+s^{\top}(p_{x}-x)$
+\end_inset
+
+ and 
+\begin_inset Formula $\nabla f(x)+s\in\partial\phi(x)$
+\end_inset
+
+,
+ we have that
 \begin_inset Formula 
 \[
-0\geq\nabla\phi(x)^{\top}(p_{x}-x)+\frac{L}{2}\norm{p_{x}-x}^{2}\geq-G\norm{p_{x}-x}_{2}+\frac{L}{2}\norm{p_{x}-x}^{2}.
+0\geq(\nabla f(x)+s)^{\top}(p_{x}-x)+\frac{L}{2}\norm{p_{x}-x}^{2}\geq-G\norm{p_{x}-x}_{2}+\frac{L}{2}\norm{p_{x}-x}^{2}.
 \]
 
 \end_inset
@@ -1101,6 +1111,11 @@ Mirror Descent Using Gradient Mapping
 \end_layout
 
 \begin_layout Standard
+In this subsection,
+ the mirror map is the Euclidean quadratic,
+ so the mirror descent update has the same form as a gradient step with
+ the gradient mapping in place of the gradient.
+ 
 Consider the mirror descent as
 \begin_inset Formula 
 \begin{equation}

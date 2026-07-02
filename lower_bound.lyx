@@ -373,15 +373,11 @@ worst
 .
  Also, note that gradient descent can only transmit information from one
  vertex to another in each iteration.
- Therefore, it takes at least 
+Therefore, it takes at least 
 \begin_inset Formula $\Omega(\mathrm{diameter})$
 \end_inset
 
- time to solve the problem unless we know the solution is sparse (when 
-\begin_inset Formula $L/\mu$
-\end_inset
-
- is small).
+ time to solve the problem.
  However, we note that this is not a lower bound for all algorithms.
 \end_layout
 

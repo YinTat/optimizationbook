@@ -492,11 +492,26 @@ To make both
 \end_inset
 
 .
- By rescaling 
+ Since 
+\begin_inset Formula $|q(0)-1|\leq\epsilon/3\leq1/3$
+\end_inset
+
+,
+ rescaling by 
+\begin_inset Formula $1/q(0)$
+\end_inset
+
+ changes the bound on 
+\begin_inset Formula $[\mu,L]$
+\end_inset
+
+ by only a constant factor,
+ which can be absorbed by adjusting the constants above.
+ After this rescaling,
 \begin_inset Formula $q$
 \end_inset
 
-, we have 
+ satisfies 
 \begin_inset Formula $q(0)=1$
 \end_inset
 

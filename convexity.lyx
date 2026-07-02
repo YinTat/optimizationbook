@@ -2058,7 +2058,7 @@ where we say
 Show that surface area is convex by using the definition.
 \end_layout
 
-\begin_layout Exercise
+\begin_layout Standard
 Calculus of variations is an area of mathematics that studies optimization in function spaces,
  and there are many common theorems between this and convex optimization.
 \end_layout

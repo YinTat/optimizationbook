@@ -93,6 +93,9 @@ Throughout this section, we assume
 \end_inset
 
  to satisfy the assumption.
+ This transformation may square the condition number,
+ so it is mainly a reduction to the positive definite setting rather than
+ a numerically preferable method.
 \end_layout
 
 \begin_layout Lemma
@@ -843,11 +846,12 @@ The result follows from the fact that
 \end_layout
 
 \begin_layout Standard
-It is known that for any 
-\begin_inset Formula $0<\mu\leq L$
+Assume that 
+\begin_inset Formula $0\preceq\mu I\preceq A\preceq LI$
 \end_inset
 
-, there is a polynomial 
+.
+ It is known that there is a polynomial 
 \begin_inset Formula $q$
 \end_inset
 

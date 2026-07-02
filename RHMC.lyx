@@ -265,11 +265,14 @@ For the choice of
 
 ,
  no Metropolis correction is needed.
- In numerical HMC,
+In numerical HMC,
  an inexact reversible volume-preserving integrator is usually paired with a Metropolis filter to correct discretization error.
- Thus,
- unlike the walks we have seen so far,
- its step sizes are not limited by this consideration even in high dimension.
+ For exact flow,
+ there is no discretization step size to tune.
+ For numerical integrators,
+ the integrator step size is still constrained by accuracy and acceptance
+ probability,
+ even though the Metropolis filter corrects the stationary distribution.
  Hamiltonian Monte Carlo can be used for sampling from a general distribution 
 \begin_inset Formula $e^{-H(x,y)}$
 \end_inset

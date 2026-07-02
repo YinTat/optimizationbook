@@ -783,14 +783,18 @@ Note that
 
 \end_inset
 
-Taking expectation over the randomness in 
+Conditioning on 
+\begin_inset Formula $x^{(k)}$
+\end_inset
+
+ and taking expectation over the randomness in 
 \begin_inset Formula $f$
 \end_inset
 
  and using that 
 \begin_inset Formula 
 \begin{align*}
-\E\|\nabla f(x^{(k)})\|^{2} & \leq2\E\|\nabla f(x^{(k)})-\nabla f(x^{*})\|^{2}+2\E\|\nabla f(x^{*})\|^{2}\\
+\E[\|\nabla f(x^{(k)})\|^{2}\mid x^{(k)}] & \leq2\E[\|\nabla f(x^{(k)})-\nabla f(x^{*})\|^{2}\mid x^{(k)}]+2\E\|\nabla f(x^{*})\|^{2}\\
  & \leq4L\cdot(F(x^{(k)})-F(x^{*}))+4\sigma^{2},
 \end{align*}
 
@@ -799,7 +803,7 @@ Taking expectation over the randomness in
 we have
 \begin_inset Formula 
 \begin{align}
-\E\|x^{(k+1)}-x^{*}\|^{2} & =\|x^{(k)}-x^{*}\|^{2}-2h\left\langle x^{(k)}-x^{*},\nabla F(x^{(k)})\right\rangle +4h^{2}\sigma^{2}+4Lh^{2}\cdot(F(x^{(k)})-F(x^{*}))\nonumber \\
+\E[\|x^{(k+1)}-x^{*}\|^{2}\mid x^{(k)}] & =\|x^{(k)}-x^{*}\|^{2}-2h\left\langle x^{(k)}-x^{*},\nabla F(x^{(k)})\right\rangle +4h^{2}\sigma^{2}+4Lh^{2}\cdot(F(x^{(k)})-F(x^{*}))\nonumber \\
  & \leq\|x^{(k)}-x^{*}\|^{2}-(2h-4Lh^{2})(F(x^{(k)})-F(x^{*}))+4h^{2}\sigma^{2}.\label{eq:SGD_distance}
 \end{align}
 
@@ -826,11 +830,13 @@ fixed some terms here.
 
 \begin_inset Formula 
 \[
-\E\|x^{(k+1)}-x^{*}\|^{2}\leq4h^{2}\sigma^{2}+(1-\frac{h\mu}{2})\cdot\|x^{(k)}-x^{*}\|^{2}.
+\E[\|x^{(k+1)}-x^{*}\|^{2}\mid x^{(k)}]\leq4h^{2}\sigma^{2}+(1-\frac{h\mu}{2})\cdot\|x^{(k)}-x^{*}\|^{2}.
 \]
 
 \end_inset
 
+Taking total expectation gives the same inequality with unconditional expectations.
+ 
 
 \end_layout
 

@@ -138,6 +138,16 @@ f_{i}(x)=\exp(-a_{i}\norm x)\chi_{K}(x)\mbox{ or }f_{i}(x)=\exp(-a_{i}\norm x^{2
 
 \end_inset
 
+The first form is a useful radial model,
+ while the second is the Gaussian cooling schedule used below for volume.
+ The variance calculation below is stated in the more general logconcave-power
+ form,
+ which includes the Gaussian schedule by taking 
+\begin_inset Formula $f(x)=e^{-\norm{x}^{2}/2}\chi_{K}(x)$
+\end_inset
+
+.
+ 
 The coefficient 
 \begin_inset Formula $a_{i}$
 \end_inset
