@@ -2274,7 +2274,7 @@ Let
 
 ,
  
-\begin_inset Formula $\overline{c}=(c,\widetilde{c})$
+\begin_inset Formula $\overline{c}=(c,\widetilde{c},0)$
 \end_inset
 
 ,
@@ -2338,10 +2338,11 @@ status open
 
 .
  
-\begin_inset Formula $\overline{s}=x/t$
+\begin_inset Formula $\overline{s}=t/\overline{x}$
 \end_inset
 
-.
+ componentwise.
+ 
 \end_layout
 
 \begin_layout Standard
