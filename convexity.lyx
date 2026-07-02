@@ -1540,11 +1540,11 @@ The min cost flow problem has lots of applications such as route planning,
 \end_inset
 
 .
- The problem is to minimize the total cost of sending 
+ The problem is to minimize the total cost of sending an amount 
 \begin_inset Formula $d$
 \end_inset
 
- amount of flow from a source vertex 
+ of flow from a source vertex 
 \begin_inset Formula $s\in V$
 \end_inset
 
@@ -1720,7 +1720,7 @@ Consider the diet problem:
 
 .
  Then,
- the problem is simply find an assignment 
+ the problem is simply to find an assignment 
 \begin_inset Formula $x$
 \end_inset
 
@@ -1745,7 +1745,7 @@ where
 \begin_inset Formula $A\in\R^{m\times n}$
 \end_inset
 
- is the matrix of nutrients contents of each food
+ is the matrix of nutrient contents of each food
 \begin_inset Foot
 status open
 
@@ -1949,7 +1949,7 @@ regularization
 
 ,
  and then this problem is called logistic regression.
- In the section 
+ In Section 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:Checking-Convexity"
@@ -2059,7 +2059,8 @@ Show that surface area is convex by using the definition.
 \end_layout
 
 \begin_layout Exercise
-Calculus of variations is an area of mathematics that studies optimization in function spaces and there are many common theorems between this and convex optimization.
+Calculus of variations is an area of mathematics that studies optimization in function spaces,
+ and there are many common theorems between this and convex optimization.
 \end_layout
 
 \begin_layout Section
@@ -2211,7 +2212,7 @@ This characterization shows that
 \end_layout
 
 \begin_layout Fact
-Any level set 
+Any sublevel set 
 \begin_inset Formula $\{x\in\Rn:\ f(x)\leq t\}$
 \end_inset
 
@@ -2546,7 +2547,7 @@ name "lem:second_order"
 
 \end_inset
 
-For any real-valued and twice continuously-differentiable function 
+For any real-valued and twice continuously differentiable function 
 \begin_inset Formula $f\in\mathcal{C}^{2}(\R^{n})$
 \end_inset
 
@@ -2560,7 +2561,7 @@ For any real-valued and twice continuously-differentiable function
 \begin_inset Formula $z\in[x,y]$
 \end_inset
 
- s.t.
+ such that
  
 \begin_inset Formula 
 \[
@@ -2656,7 +2657,7 @@ Let
 \begin_inset Formula $f$
 \end_inset
 
- is real-valued and twice continuously-differentiable.
+ is real-valued and twice continuously differentiable.
  
 \begin_inset Note Note
 status open
@@ -3147,7 +3148,7 @@ Show that for any
 \end_inset
 
 ,
- the level set 
+ the superlevel set 
 \begin_inset Formula $L(t)=\left\{ x:f(x)\ge t\right\} $
 \end_inset
 

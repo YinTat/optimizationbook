@@ -199,7 +199,7 @@ In general, the following lemma shows that
 
 \end_inset
 
-where 
+Here,
 \begin_inset Formula $\frac{\sigma^{2}}{T}$
 \end_inset
 
@@ -422,7 +422,8 @@ Now, we discuss how to achieve a bound similar to
 \end_inset
 
  using stochastic gradient descent.
- Since gradient descent is a first order method, we can only achieve a bound
+ Since gradient descent is a first-order method,
+ we can only achieve a bound
  related to the 
 \begin_inset Formula $\ell_{2}$
 \end_inset
@@ -782,7 +783,7 @@ Note that
 
 \end_inset
 
-Taking expectation on 
+Taking expectation over the randomness in 
 \begin_inset Formula $f$
 \end_inset
 
@@ -865,11 +866,11 @@ Hence, we have
 \end_layout
 
 \begin_layout Exercise
-Applying the theorem above twice, show that one can achieve error 
+Apply the theorem above twice to show that one can achieve error 
 \begin_inset Formula $\tilde{O}(\frac{\sigma^{2}}{\mu T})$
 \end_inset
 
-, which is roughly same as the Cramer-Rao bound.
+, which is roughly the same as the Cramer-Rao bound.
  
 \begin_inset Note Note
 status open
@@ -1758,7 +1759,8 @@ Note that
 \end_inset
 
 .
- Therefore gradient descent takes at least 
+ Therefore,
+ gradient descent takes at least 
 \begin_inset Formula $\frac{1}{d}$
 \end_inset
 
@@ -1806,9 +1808,10 @@ Given a graph
 
 \end_inset
 
-For now, we can think this as a generalization of the worst-case function.
+For now,
+ we can think of this as a generalization of the worst-case function.
  Directly applying accelerated gradient descent, accelerated coordinate
- descent or accelerated stochastic descent all gives 
+ descent or accelerated stochastic descent all give 
 \begin_inset Formula $O^{*}(mn)$
 \end_inset
 
@@ -1887,7 +1890,7 @@ We call any
 \begin_inset Formula $c(e)$
 \end_inset
 
- be an unit cycle on 
+ to be a unit cycle on 
 \begin_inset Formula $\{e\}\cup T$
 \end_inset
 

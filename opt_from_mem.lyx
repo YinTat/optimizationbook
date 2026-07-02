@@ -80,7 +80,8 @@ Optimization from Membership via Sampling
 \end_layout
 
 \begin_layout Standard
-In this chapter, we assumed the oracle can be computed exactly.
+So far in this chapter,
+ we have assumed the oracle can be computed exactly.
  However, it is still open to determine the best runtime for reductions
  between 
 \emph on
@@ -89,7 +90,7 @@ noisy
  oracles, where the oracle provides answers to within some bounded error.
  In particular, the question about minimizing (approximately) convex functions
  under noisy oracles is an active research area, and the gaps between the
- lower bound and upper bound for many problems are still quite large (
+ lower and upper bounds for many problems are still quite large (
 \begin_inset CommandInset citation
 LatexCommand cite
 key "belloni2015escaping,Feldman2015statistical,bubeck2016kernel"
@@ -176,16 +177,7 @@ We will show that the worst case is when the convex set
 \end_inset
 
  is an infinite cone.
- WLOG
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-Without loss of generality.
-\end_layout
-
-\end_inset
-
+ Without loss of generality,
  assume that the minimum is at 
 \begin_inset Formula $x=0.$
 \end_inset
@@ -335,7 +327,7 @@ Given an approximately convex function
 \begin_inset Formula $F$
 \end_inset
 
- on unit ball such that 
+ on the unit ball such that 
 \begin_inset Formula $\max_{\norm{x}_{2}\leq1}|f(x)-F(x)|\leq\varepsilon/n$
 \end_inset
 

@@ -206,7 +206,7 @@ literal "true"
 
 \end_inset
 
- is a Markov Chain Monte Carlo method for sampling from a desired distribution.
+ is a Markov chain Monte Carlo method for sampling from a desired distribution.
  Each step of the method consists of the following:
  At a current point 
 \begin_inset Formula $x$
@@ -1058,7 +1058,8 @@ Convergence
 \end_layout
 
 \begin_layout Standard
-First we consider the convergence in the case when 
+First,
+ we consider convergence when 
 \begin_inset Formula $H(x,v)=f(x)+\frac{1}{2}\norm v^{2}$
 \end_inset
 
@@ -1087,7 +1088,7 @@ First we consider the convergence in the case when
 
 ,
  with their next step directions chosen to be identical.
- The key lemma is that with this setting the squared distance decreases up to a certain time that depends on the condition number.
+ The key lemma is that under this coupling the squared distance decreases up to a certain time that depends on the condition number.
  For a tight analysis,
  showing a mixing rate of 
 \begin_inset Formula $O(\kappa)$

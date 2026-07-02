@@ -190,7 +190,7 @@ Algorithm
 \end_layout
 
 \begin_layout Standard
-Now we give another geometry dependent algorithm that relies on a different
+Now we give another geometry-dependent algorithm that relies on a different
  set of assumptions.
  The problem we study in this section is of the form
 \begin_inset Formula 
@@ -583,7 +583,8 @@ When the domain
 \end_inset
 
 .
- So, we can think that the convergence result of Frank Wolfe proves that
+ Therefore,
+ we can view the convergence result of Frank Wolfe as proving that
  there is an approximate sparse solution of the optimization problem.
  In particular, this shows that Frank Wolfe is optimal in the following
  sense.
@@ -655,7 +656,7 @@ Let polytope
 \begin_inset Formula $P=\conv(v_{i})$
 \end_inset
 
- be a polytope that lies inside an unit ball.
+ be a polytope that lies inside a unit ball.
  For any 
 \begin_inset Formula $u\in P$
 \end_inset
@@ -1001,7 +1002,8 @@ Do we have an oblivious routing that can be computed in
 \end_layout
 
 \begin_layout Plain Layout
-First, we note that the maximum flow problem is same as finding a unit flow
+First,
+ we note that the maximum flow problem is the same as finding a unit flow
  from 
 \begin_inset Formula $s$
 \end_inset
@@ -1224,7 +1226,7 @@ literal "true"
 
 \end_inset
 
- designed a specified first-order method for 
+ designed a specific first-order method for 
 \begin_inset Formula $\norm{\cdot}_{\infty}$
 \end_inset
 
@@ -1236,7 +1238,7 @@ literal "true"
 \end_layout
 
 \begin_layout Proof
-To smoothen 
+To smooth 
 \begin_inset Formula $\norm{\cdot}_{\infty}$
 \end_inset
 

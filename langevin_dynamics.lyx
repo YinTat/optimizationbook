@@ -218,7 +218,7 @@ We begin with gradient-based sampling methods.
 \end_inset
 
 ,
- and others that utilize higher derivatives,
+ and others that use higher derivatives,
  notably the Hessian.
  The parallels to optimization will be pervasive and striking.
 \end_layout
@@ -287,7 +287,7 @@ f(X_{t})-f(X^{*})\le e^{-2\mu t}(f(X_{0})-f(X^{*})).
 For sampling from a given starting point,
  we need a process that introduces randomness (since the target itself is a distribution).
  The continuous version of such a process corresponds to a Stochastic Differential Equation (SDE).
- It is called Langevin Diffusion and is the analog of Gradient Flow for optimization.
+ It is called Langevin diffusion and is the analog of gradient flow for optimization.
 \end_layout
 
 \begin_layout Standard
@@ -1210,7 +1210,7 @@ Let
 \begin_inset Formula $y_{t}$
 \end_inset
 
- s.t.
+ such that
 \begin_inset Formula 
 \[
 \E_{x_{t},y_{t}\sim\gamma}\norm{x_{t}-y_{t}}^{2}\le e^{-2\mu t}\norm{x_{0}-y_{0}}^{2}.
@@ -1360,7 +1360,7 @@ Convergence in
 
 \begin_layout Standard
 Next we analyze the convergence of Langevin dynamics in the two most commonly used divergence metrics.
- The rate of mixing will depend on a fundamental functional constants of the target density,
+ The rate of mixing will depend on fundamental functional constants of the target density,
  which we define next.
  These constants will play an important role in later algorithms and analysis,
  and we will also see equivalent geometric formulations of them.
@@ -1931,7 +1931,7 @@ Let
 \end_inset
 
 ,
- we follow the same idea as in the proof as Theorem 
+ we follow the same idea as in the proof of Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:fokker_planck"
@@ -1976,7 +1976,7 @@ where we used integration by parts at the end.
 
 \end_inset
 
-Since we are interested only in vector fields that generate the minimum movement in Wasserstein distance,
+Since we are interested only in vector fields that generate minimal movement in Wasserstein distance,
  we consider the optimization problem
 \begin_inset Formula 
 \[
@@ -2022,7 +2022,7 @@ c(x)=-\nabla\lambda(x).
 
 \end_inset
 
-This proves that any vector field that generates minimum movement in Wasserstein distance is a gradient field.
+This proves that any vector field that generates minimal movement in Wasserstein distance is a gradient field.
  Also,
  we have that 
 \begin_inset Formula $v(x)=\nabla\cdot(p(x)\nabla\lambda(x)).$
@@ -2140,7 +2140,7 @@ For any function
 
 \end_inset
 
-Solving the right hand side,
+Solving the right-hand side,
  we have 
 \begin_inset Formula $\nabla c=\nabla\lambda$
 \end_inset
@@ -2398,7 +2398,8 @@ Discussion
 
 \begin_layout Standard
 Langevin dynamics converges quickly in continuous time for isoperimetric distributions.
- Turning this into an efficient algorithm typically needs more assumptions and there is much room for choosing discretizations.
+ Turning this into an efficient algorithm typically needs more assumptions,
+ and there is considerable flexibility in choosing discretizations.
  This is similar to the situation with gradient descent for optimization.
  As we saw in Section 
 \begin_inset CommandInset ref

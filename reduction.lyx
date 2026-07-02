@@ -1952,7 +1952,7 @@ Therefore,
 
  are all just measuring how much we need to decrease multiplicatively from the initial error.
  With this view,
- we can think the numbers of iterations required for Lipschitz convex functions,
+ we can think of the numbers of iterations required for Lipschitz convex functions,
  strongly convex functions and smooth functions are exactly 
 \begin_inset Formula $\frac{1}{\epsilon_{\mathrm{relative}}^{2}}$
 \end_inset
@@ -2109,7 +2109,7 @@ For gradient descent and accelerated gradient descent,
 \begin_inset Formula $x$
 \end_inset
 
- is close to the optimal 
+ is close to the optimum 
 \begin_inset Formula $x^{*}=0$
 \end_inset
 
@@ -2143,14 +2143,14 @@ For more complicated algorithms,
 \end_layout
 
 \begin_layout Standard
-The cost per iteration sometimes can be misleading also.
+The cost per iteration can also be misleading.
  Each iteration of interior point methods takes 
 \begin_inset Formula $\nnz(A)+\mathrm{rank}(A)^{2}$
 \end_inset
 
  in theory while it takes nearly linear time in practice for sparse matrices due to the effectiveness of Cholesky decomposition.
  The 
-\begin_inset Formula $k^{th}$
+\begin_inset Formula $k^{\mathrm{th}}$
 \end_inset
 
  iteration of cutting plane methods often takes 
@@ -2367,7 +2367,7 @@ where
 \end_inset
 
 .
- To get the best runtime for the fix 
+ To get the best runtime for a fixed 
 \begin_inset Formula $k$
 \end_inset
 

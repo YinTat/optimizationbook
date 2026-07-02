@@ -1317,7 +1317,7 @@ Analysis for general functions
 
 \begin_layout Standard
 Gradient descent works for both convex and non-convex functions.
- For non-convex function,
+ For non-convex functions,
  we can only find a point with small gradient (called an 
 \emph on
 approximate stationary
@@ -1797,7 +1797,7 @@ This style of proof is typical in optimization.
 \end_layout
 
 \begin_layout Standard
-This proof above does not make essential use of any property of 
+The proof above does not make essential use of any property of 
 \begin_inset Formula $\ell_{2}$
 \end_inset
 
@@ -1828,15 +1828,15 @@ For
 
 .
  Therefore,
- for an 
-\begin_inset Formula $L$
-\end_inset
-
--gradient Lipschitz convex function 
+ for a convex function 
 \begin_inset Formula $f$
 \end_inset
 
-,
+ with 
+\begin_inset Formula $L$
+\end_inset
+
+-Lipschitz gradient,
  for GD with 
 \begin_inset Formula $h=\frac{1}{L}$
 \end_inset
@@ -1936,16 +1936,16 @@ nolink "false"
 \end_layout
 
 \begin_layout Exercise
-Show for GD on convex,
- 
-\begin_inset Formula $L$
-\end_inset
-
--gradient Lipschitz 
+Show that,
+ for GD on a convex 
 \begin_inset Formula $f\in\mathcal{C}^{2}(\R^{n})$
 \end_inset
 
- with step size 
+ with 
+\begin_inset Formula $L$
+\end_inset
+
+-Lipschitz gradient and step size 
 \begin_inset Formula $h\leq\frac{2}{L}$
 \end_inset
 
@@ -2617,7 +2617,7 @@ Let the objective for progress be
 \end_inset
 
 ).
- One can think the first condition gives an upper bound on 
+ One can think of the first condition as giving an upper bound on 
 \begin_inset Formula $h$
 \end_inset
 
@@ -2705,7 +2705,7 @@ nolink "false"
  and hence if our line search accepts the step size immediately,
  the line search almost costs nothing extra.
  Therefore,
- if we maintain a step size throughout the algorithm and decreases it only when it violates the condition,
+ if we maintain a step size throughout the algorithm and decrease it only when it violates the condition,
  the total cost of the line search will be only an additive logarithmic number of gradient calls throughout the algorithm and is negligible.
 \end_layout
 
@@ -3510,7 +3510,7 @@ In continuous time,
 \end_inset
 
 This can be viewed as the canonical continuous algorithm.
- Finding the right discretization has lead to many fruitful research directions.
+ Finding the right discretization has led to many fruitful research directions.
  One benefit of the continuous view is to simplify some calculations.
  For example,
  for strongly convex 

@@ -1,0 +1,167 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{enumitem}
+\setlist{leftmargin=*,itemsep=0.75em}
+
+\title{Larger Suggested Changes for the Optimization Book}
+\date{}
+
+\begin{document}
+\maketitle
+
+This document records larger mathematical, structural, or expository issues that I did not silently rewrite in the LyX source. The local LyX edits already made are grammar, terminology, notation, and small mathematical-typo fixes. The items below are intended for author review because fixing them well may require changing statements, proof structure, or the surrounding explanation.
+
+\section*{Preliminaries}
+
+\begin{enumerate}
+\item \textbf{Matrix norm versus seminorm.}
+
+In \texttt{preliminaries.lyx}, the text defines
+\[
+  \|x\|_A=\sqrt{x^T A x}
+\]
+near the discussion of trace and matrix notation. This is a genuine norm only when $A$ is positive definite. If $A$ is merely positive semidefinite, it is only a seminorm, because nonzero vectors in $\ker(A)$ have zero ``length.'' The subsequent induced quantity
+\[
+  \|B\|_A=\sup_x \frac{\|Bx\|_A}{\|x\|_A}
+\]
+also needs a convention when $\|x\|_A=0$.
+
+Suggested change: state explicitly that $A\succ 0$ for this definition, or write ``For a positive semidefinite matrix $A$, define the seminorm $\|x\|_A=\sqrt{x^T A x}$; when $A\succ0$ this is a norm.'' If the operator quantity is used for singular $A$, add the intended convention, e.g. restrict the supremum to $\|x\|_A>0$ and ensure $B$ respects the nullspace if needed.
+
+\item \textbf{Total variation notation for densities and measures.}
+
+In \texttt{preliminaries.lyx}, total variation is introduced for distributions with densities $\rho$ and $\nu$, but the formula later writes $\rho(S)$ and $\nu(S)$:
+\[
+  d_{TV}(\rho,\nu)=\frac12\int_\Omega |\rho(x)-\nu(x)|\,dx
+  =\sup_{S\subset\Omega}|\rho(S)-\nu(S)|
+  =\sup_{S\subset\Omega}\rho(S)-\nu(S).
+\]
+This is mathematically standard only if the reader understands that $\rho(S)=\int_S\rho(x)\,dx$ and $\nu(S)=\int_S\nu(x)\,dx$. The final equality is also less immediate than the absolute-value version; it uses the fact that $\rho-\nu$ has total mass zero.
+
+Suggested change: add one sentence after the formula: ``Here $\rho(S)$ denotes the measure of $S$ induced by the density $\rho$, i.e. $\rho(S)=\int_S\rho(x)\,dx$; the last equality follows because $\rho-\nu$ has total mass zero.''
+\end{enumerate}
+
+\section*{Accelerated Gradient Descent}
+
+\begin{enumerate}
+\item \textbf{Nonsmooth $h$ in the gradient-mapping Lipschitz lemma.}
+
+In \texttt{accelerated\_gradient\_descent.lyx}, Lemma \texttt{lem:Lipschitz\_constant\_g} assumes the composite objective $\phi=f+h$ is $G$-Lipschitz. The surrounding setup allows $h$ to be nonsmooth, but the proof uses
+\[
+  h(p_x)\ge h(x)+\nabla h(x)^T(p_x-x).
+\]
+This requires $h$ to be differentiable at $x$, or at least requires choosing a subgradient. It also uses $\nabla \phi(x)$ immediately afterward, which is not defined for a general nonsmooth composite objective.
+
+Suggested change: rewrite this proof using subgradients and the optimality condition for $p_x$. For example, from the minimizing definition of $p_x$ one can use
+\[
+  0 \in \nabla f(x)+L(p_x-x)+\partial h(p_x)
+\]
+and then bound the displacement using Lipschitz/subgradient information for $\phi$ or for $f+h$ in the correct point. If the intended result really assumes differentiability of $h$, state that assumption explicitly before the lemma.
+
+\item \textbf{``Mirror Descent Using Gradient Mapping'' may need a bridge sentence.}
+
+The subsection titled ``Mirror Descent Using Gradient Mapping'' presents updates involving the gradient mapping. Some displayed updates are Euclidean-looking, and a reader may not immediately see what the mirror map or Bregman geometry is in that section.
+
+Suggested change: add a short explanatory sentence at the beginning of the subsection saying whether this is mirror descent with Euclidean mirror map, a mirror-descent-style potential argument, or a later generalization of the Euclidean gradient-mapping update. If the section is actually Euclidean, consider renaming it to avoid suggesting a general mirror descent method.
+\end{enumerate}
+
+\section*{Duality and Examples}
+
+\begin{enumerate}
+\item \textbf{School/student assignment wording versus constraint.}
+
+In \texttt{duality.lyx}, the prose says every student ``can only be assigned to one school,'' and the displayed constraint is
+\[
+  \sum_{(a,b)\in E} x_{(a,b)}\le 1 \quad \forall a\in V_1.
+\]
+This is consistent if the intended model is ``at most one school,'' but it would not force every student to be assigned. A reader might interpret ``every student can only be assigned'' as an exact assignment requirement.
+
+Suggested change: write ``each student can be assigned to at most one school'' if the inequality is intended. If every student must be assigned, change the constraint to equality or explain slack/dummy schools.
+
+\item \textbf{Calculus of variations item is not an exercise yet.}
+
+In \texttt{convexity.lyx}, the ``Exercise'' environment currently contains only a descriptive sentence about calculus of variations. It does not ask the reader to prove or compute anything.
+
+Suggested change: either convert it to prose outside the exercise environment, or turn it into an actual exercise. For example: ``Give an example of a convex functional on a function space and verify convexity from the definition,'' or ``Show that the surface-area functional is convex under the assumptions stated above.''
+\end{enumerate}
+
+\section*{Stochastic Gradient Descent}
+
+\begin{enumerate}
+\item \textbf{Conditional versus unconditional expectations in the SGD proof.}
+
+In \texttt{stochastic\_gradient\_descent.lyx}, the proof takes expectation over the sampled function $f$, but the displayed recurrence mixes expected and non-expected quantities:
+\[
+\mathbb E\|x^{(k+1)}-x^*\|^2
+  = \|x^{(k)}-x^*\|^2 - 2h\langle x^{(k)}-x^*,\nabla F(x^{(k)})\rangle+\cdots.
+\]
+This is correct only if the expectation is conditional on the current iterate $x^{(k)}$; otherwise the right-hand side should also be under expectation.
+
+Suggested change: state explicitly ``Conditioning on $x^{(k)}$ and taking expectation over the fresh sample $f$'' before the display. Then, after deriving the one-step bound, take total expectation to obtain the unconditional recurrence.
+\end{enumerate}
+
+\section*{Linear Systems, Chebyshev Polynomials, and Lower Bounds}
+
+\begin{enumerate}
+\item \textbf{Normal equations in conjugate gradient square the condition number.}
+
+In \texttt{conjugate\_gradient.lyx}, the text says that for a system $Ax=b$ one can pass to $A^T A x=A^T b$ to satisfy the positive-definite assumption. This is true algebraically under suitable rank assumptions, but it can badly affect conditioning: $\kappa(A^T A)=\kappa(A)^2$.
+
+Suggested change: add a warning sentence immediately after the normal-equations remark: ``This transformation may square the condition number, so it is primarily a reduction to the positive-definite setting rather than a numerically preferred method.'' If the section's runtime bound is meant in terms of the original $\kappa(A)$, the statement needs adjustment.
+
+\item \textbf{Eigenvalue interval for the Chebyshev convergence bound.}
+
+In \texttt{conjugate\_gradient.lyx}, the Chebyshev convergence paragraph introduces $0<\mu\le L$ and a degree-$k$ polynomial bound, but it should explicitly state that the eigenvalues $\lambda_i$ of $A$ lie in $[\mu,L]$.
+
+Suggested change: before applying the polynomial bound, write ``Take $\mu=\lambda_{\min}(A)$ and $L=\lambda_{\max}(A)$, so every eigenvalue $\lambda_i$ lies in $[\mu,L]$.'' This makes the transition from the polynomial approximation statement to the CG error bound fully explicit.
+
+\item \textbf{Chebyshev rescaling step needs one explanatory line.}
+
+In \texttt{chebyshev.lyx}, near the end of the polynomial approximation argument, the text says ``By rescaling $q$, we have $q(0)=1$.'' The reader needs to know why this rescaling does not destroy the stated uniform error bound.
+
+Suggested change: add a line estimating $q(0)$ before the rescaling. For instance, if the constructed polynomial satisfies $|q(0)-1|\le c\epsilon$ and the target interval error is already $O(\epsilon)$, then after replacing $q$ by $q/q(0)$ the error remains $O(\epsilon)$, possibly after adjusting constants.
+
+\item \textbf{Lower-bound discussion: sparsity and Laplacian wording.}
+
+In \texttt{lower\_bound.lyx}, the discussion says the problem is hard ``unless we know the solution is sparse (when $L/\mu$ is small).'' Small condition number does not literally imply sparsity of the solution. The same paragraph says the optimality conditions form a Laplacian linear system; the displayed quadratic looks more like a tridiagonal path/regularized SDD system than a plain graph Laplacian.
+
+Suggested change: separate these ideas. If the intended point is locality of the worst-case construction, say that small $L/\mu$ shortens the effective chain length or improves conditioning, not that it makes the solution sparse. For the linear-system sentence, say ``a tridiagonal symmetric diagonally dominant system closely related to a path-graph Laplacian'' unless it is exactly a Laplacian after a transformation.
+\end{enumerate}
+
+\section*{Sampling and Oracle Reductions}
+
+\begin{enumerate}
+\item \textbf{Membership versus evaluation oracle in optimization from membership.}
+
+In \texttt{opt\_from\_mem.lyx}, the sentence ``The sampling algorithm only uses a membership (EVAL) oracle'' conflates two different oracle models. A membership oracle answers whether $x\in K$; an evaluation oracle returns a function value.
+
+Suggested change: decide which oracle the theorem uses and name it consistently. If the algorithm samples from a convex body, write ``membership oracle.'' If it samples from a density proportional to $e^{-F}$ or needs noisy values of $F$, write ``evaluation oracle.'' If both are involved, explicitly state which part of the reduction uses which oracle.
+
+\item \textbf{Cone worst-case proof sketch needs a justification.}
+
+In \texttt{opt\_from\_mem.lyx}, the proof that the worst case is an infinite cone uses geometric transformations of cross-sections and says, in effect, that these transformations do not hurt the desired expectation. This is plausible but currently terse; a reader may not see why each transformation preserves or increases the objective.
+
+Suggested change: add a short paragraph or figure explaining the monotonicity argument: identify the cross-section transformation, state which quantity is preserved, and show why the expectation can only move in the claimed direction. If this is a standard rearrangement argument, name it.
+
+\item \textbf{Johnson--Lindenstrauss historical statement may be ambiguous.}
+
+In \texttt{subspace\_embedding.lyx}, the text says that the original version of Johnson--Lindenstrauss ``was for a uniform random subspace of dimension $d$.'' The most familiar JL statement concerns preserving distances among a finite point set under random projection, while the OSE version concerns all vectors in a fixed subspace.
+
+Suggested change: clarify whether this sentence is referring to random projections, finite point sets, or the $d=1$ subspace-embedding case. A possible rewrite is: ``The classical Johnson--Lindenstrauss lemma is usually stated for finite point sets; the oblivious subspace embedding formulation asks for simultaneous preservation over every vector in a fixed $d$-dimensional subspace.''
+
+\item \textbf{Exact Hamiltonian flow versus numerical HMC.}
+
+In \texttt{RHMC.lyx}, the text correctly notes that exact Hamiltonian flow needs no Metropolis correction and then contrasts this with numerical HMC. The final sentence about step sizes could still be misread as saying implemented HMC step sizes have no discretization limitation.
+
+Suggested change: make the distinction completely explicit: ``For exact flow, there is no discretization step size to tune; for numerical integrators, the integrator step size is still constrained by accuracy and acceptance probability, even though the Metropolis filter corrects the stationary distribution.''
+
+\item \textbf{Gaussian cooling and the ratio lemma should be connected.}
+
+In \texttt{annealing\_volume.lyx}, the discussion introduces Gaussian cooling, but a later ratio lemma appears to use densities of the form $e^{-a_i\|x\|}$ or otherwise a nonsquared norm schedule. If the lemma is meant to support Gaussian cooling, the relationship between the schedules should be made explicit.
+
+Suggested change: add a sentence before the lemma saying whether it applies to Gaussian cooling directly, to a simplified radial schedule, or to a separate annealing scheme. If it is a simplified scheme, say so explicitly so the reader does not expect the Gaussian squared-norm density in the display.
+\end{enumerate}
+
+\end{document}

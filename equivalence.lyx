@@ -2032,7 +2032,7 @@ nolink "false"
 \begin_inset Formula ${\cal H}$
 \end_inset
 
- s.t.
+ such that
  
 \begin_inset Formula 
 \[
@@ -2122,7 +2122,7 @@ Let
 \begin_inset Formula $f=f^{*}$
 \end_inset
 
- iff 
+ if and only if 
 \begin_inset Formula $f(x)=\frac{\norm x^{2}}{2}$
 \end_inset
 
@@ -2295,10 +2295,10 @@ Order reversal
 \end_inset
 
  (both for all 
-\begin_inset Formula $x\in\R^{n})$
+\begin_inset Formula $x\in\R^{n}$
 \end_inset
 
-.
+).
 \end_layout
 
 \begin_layout Exercise
@@ -2823,7 +2823,7 @@ where
 \begin_inset Formula $0$
 \end_inset
 
- on outside.
+ outside the set.
 \end_layout
 
 \begin_layout Proof
@@ -3234,7 +3234,7 @@ on
 \begin_inset Formula $z\in B_{\infty}(x,2r_{1})$
 \end_inset
 
- and suppose that we can evaluate f to within 
+ and suppose that we can evaluate the function to within 
 \begin_inset Formula $\varepsilon$
 \end_inset
 
@@ -3249,7 +3249,7 @@ on
 
 .
  Then,
- there is random variable 
+ there is a random variable 
 \begin_inset Formula $\zeta\geq0$
 \end_inset
 
@@ -3372,7 +3372,7 @@ where we used that both
 \begin_inset Formula $z$
 \end_inset
 
- are uniform distribution on 
+ are uniformly distributed on 
 \begin_inset Formula $B_{\infty}(y,r_{2})$
 \end_inset
 
@@ -3669,7 +3669,7 @@ status open
 \begin_inset Formula $S$
 \end_inset
 
- s.t.
+ such that
  
 \begin_inset Formula $S$
 \end_inset
@@ -3764,7 +3764,7 @@ Let
 \begin_inset Formula $K$
 \end_inset
 
- be a convex body s.t.
+ be a convex body such that
  
 \begin_inset Formula $B(0,1)\subseteq K\subseteq B(0,R)$
 \end_inset
@@ -4590,7 +4590,7 @@ The next lemma shows that
 \begin_inset Formula $h_{x}$
 \end_inset
 
- gives us a way to implement an approximation separation oracle and only needs access to an approximation evaluation oracle for 
+ gives us a way to implement an approximate separation oracle and only needs access to an approximate evaluation oracle for 
 \begin_inset Formula $h_{x}$
 \end_inset
 
@@ -5152,7 +5152,7 @@ Next,
 \begin_inset Formula $\tilde{g}$
 \end_inset
 
- may not be an unit vector and we need to re-normalize the 
+ may not be a unit vector and we need to re-normalize 
 \begin_inset Formula $\tilde{g}$
 \end_inset
 
@@ -5162,7 +5162,7 @@ Next,
 
 .
  So,
- we need to a lower bound 
+ we need a lower bound 
 \begin_inset Formula $\norm{\tilde{g}}_{2}$
 \end_inset
 
@@ -5877,7 +5877,7 @@ To bound the runtime,
 \begin_inset Formula $G$
 \end_inset
 
- be a graph on 
+ to be a graph on 
 \begin_inset Formula $x_{1},x_{2},\cdots,x_{m}$
 \end_inset
 

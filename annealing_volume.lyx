@@ -630,19 +630,19 @@ nolink "false"
 \end_inset
 
 ,
- samples from the 
+ samples from phase 
 \begin_inset Formula $i$
 \end_inset
 
-'th phase provide an 
+ provide an 
 \begin_inset Formula $\ell_{2}$
 \end_inset
 
--warm start for the 
+-warm start for phase 
 \begin_inset Formula $(i+1)$
 \end_inset
 
-'st phase.
+.
  This gives an overall complexity of 
 \begin_inset Formula $O^{*}(n^{3}R^{2})$
 \end_inset
@@ -757,7 +757,8 @@ A faster volume algorithm is known for well-rounded convex bodies (any isotropic
 
  and is well-rounded).
  This variant of simulated annealing,
- called Gaussian cooling utilizes the fact that the KLS conjecture holds for a Gaussian density restricted by any convex body,
+ called Gaussian cooling,
+ utilizes the fact that the KLS conjecture holds for a Gaussian density restricted by any convex body,
  and completely avoids computing an isotropic transformation.
 \end_layout
 
@@ -936,7 +937,7 @@ For
 \begin_inset Formula $m-1$
 \end_inset
 
- being the largest integer s.t.
+ being the largest integer such that
  
 \begin_inset Formula $a_{m-1}<1$
 \end_inset

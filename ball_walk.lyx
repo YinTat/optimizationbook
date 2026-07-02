@@ -1195,11 +1195,12 @@ Since the walk is lazy,
 \begin_inset Formula $P_{u}(A)\geq\frac{1}{2}$
 \end_inset
 
- iff 
+ if and only if 
 \begin_inset Formula $u\in A$
 \end_inset
 
-,
+.
+ Hence,
  the range of the functions 
 \begin_inset Formula $g_{1},g_{2}$
 \end_inset
@@ -1639,7 +1640,7 @@ The core of this proof is Cheeger's classical inequality.
 \begin_inset Formula $r$
 \end_inset
 
- be s.t.
+ be such that
  
 \begin_inset Formula $Q(\{x:f(x)>r\})\le1/2$
 \end_inset
@@ -1873,12 +1874,13 @@ Convergence via Log-Sobolev
 \begin_layout Standard
 For a warm start,
  the convergence rate established by conductance is asymptotically optimal in many cases of interest,
- including the ball walk for convex body.
+ including the ball walk for a convex body.
  However,
  when the starting distribution is more focused,
  e.g.,
  a single point,
- then there is a significant starting penalty usually a factor of the dimension or larger.
+ then there is a significant starting penalty,
+ usually a factor of the dimension or larger.
  One way to avoid this is to observe that the conductance of smaller subsets is in fact even higher and that one does not need to pay this large starting penalty.
  A classical technique in this regard is the log-Sobolev constant.
  For a Markov chain with stationary density 
@@ -1967,7 +1969,7 @@ Conductance of the Ball Walk
 \end_layout
 
 \begin_layout Standard
-In the section we bound the conductance of the ball walk when applied to the indicator function of a convex body.
+In this section we bound the conductance of the ball walk when applied to the indicator function of a convex body.
  At first glance,
  the ball walk is not an efficient algorithm,
  even for uniformly sampling a convex body.
@@ -1979,7 +1981,7 @@ In the section we bound the conductance of the ball walk when applied to the ind
 \begin_inset Quotes eld
 \end_inset
 
-smoothen
+smooth
 \begin_inset Quotes erd
 \end_inset
 
@@ -2126,7 +2128,7 @@ One-step overlap
 \begin_inset Formula $u,v\in K$
 \end_inset
 
- s.t.
+ such that
  
 \begin_inset Formula $\ell(u),\ell(v)\ge\ell$
 \end_inset
@@ -3582,7 +3584,7 @@ Input:
 \begin_inset Formula $K$
 \end_inset
 
- s.t.
+ such that
  
 \begin_inset Formula $B^{n}\subseteq K\subseteq DB^{n}$
 \end_inset
@@ -4014,7 +4016,7 @@ Input:
 \begin_inset Formula $K$
 \end_inset
 
- s.t.
+ such that
  
 \begin_inset Formula $B^{n}\subseteq K\subseteq RB^{n}$
 \end_inset
@@ -4841,7 +4843,8 @@ literal "false"
 \end_layout
 
 \begin_layout Proof
-WLOG we can assume that the functions 
+Without loss of generality,
+ we can assume that the functions 
 \begin_inset Formula $g,h$
 \end_inset
 
@@ -5284,7 +5287,8 @@ The last part of the proof is to argue that we can take
 \end_inset
 
 ;
- WLOG assume 
+ without loss of generality,
+ assume 
 \begin_inset Formula $a=0,b=e_{1}$
 \end_inset
 
@@ -5297,7 +5301,7 @@ The last part of the proof is to argue that we can take
 \begin_inset Formula $0\le\alpha\le\beta\le1$
 \end_inset
 
- with 
+ such that 
 \begin_inset Formula $\beta-\alpha$
 \end_inset
 
@@ -5367,7 +5371,8 @@ and similarly for
 \end_inset
 
 .
- WLOG we can assume that 
+ Without loss of generality,
+ we can assume that 
 \begin_inset Formula $\int_{\K'}\hat{g}=0$
 \end_inset
 
@@ -6546,7 +6551,8 @@ For every logconcave
 \uwave off
 \noun off
 \color none
-iff for every subinterval 
+if and only if
+ for every subinterval 
 \begin_inset Formula $\ensuremath{[a',b']\subseteq[a,b]}$
 \end_inset
 

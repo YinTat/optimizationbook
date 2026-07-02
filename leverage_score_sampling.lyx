@@ -190,7 +190,7 @@ Leverage scores
 \end_layout
 
 \begin_layout Standard
-The key concept in this reduction is leverage score.
+The key concept in this reduction is the leverage score.
 \end_layout
 
 \begin_layout Definition
@@ -416,7 +416,7 @@ Sampling rows from
 \end_inset
 
  with high probability.
- Sampling using leverage-score overestimates also suffices.
+ Sampling with leverage-score overestimates also suffices.
 \end_layout
 
 \begin_layout Lemma
@@ -538,7 +538,7 @@ literal "true"
 
 \end_inset
 
-, they showed that we can compute leverage scores approximately by solving
+, the authors showed that we can compute leverage scores approximately by solving
  only polylogarithmically many regression problems.
  This result uses the fact that 
 \begin_inset Formula 
@@ -595,11 +595,12 @@ T(n)=O^{*}(\nnz(A)+T(n)+T(d\log d)).
 
 \end_inset
 
-This is a chicken and egg problem.
- To solve an overdetermined system faster, we want to use leverage score
+This is a chicken-and-egg problem.
+ To solve an overdetermined system faster,
+ we want to use leverage scores
  to sample the rows.
- And to approximate the leverage score, we need to solve the original overdeterm
-ined system.
+ To approximate the leverage scores,
+ we need to solve the original overdetermined system.
  (Even worse, we need to solve it a few times.)
 \end_layout
 
@@ -608,7 +609,7 @@ Uniform Sampling
 \end_layout
 
 \begin_layout Standard
-The key idea to break this chicken and egg problem is to use uniform sampling
+The key idea to break this chicken-and-egg problem is to use uniform sampling
  of the rows of 
 \begin_inset Formula $A$
 \end_inset
@@ -776,7 +777,9 @@ Hence, we have that
 \end_layout
 
 \begin_layout Standard
-Next, using Sherman-Morrison formula, we have that
+Next,
+ using the Sherman-Morrison formula,
+ we have that
 \begin_inset Formula 
 \[
 \sigma_{i,S\cup\{i\}}=\begin{cases}

@@ -672,7 +672,7 @@ To compute
  we have
 \begin_inset Formula 
 \[
-Q^{(k+1)}=\mathtt{minSphere}\left(\left\{ \norm{x-g}_{2}^{2}\leq(1-\frac{\mu}{L})\cdot\norm g_{2}^{2}\right\} \cap\left\{ \|x\|\leq1\right\} \right).
+Q^{(k+1)}=\mathtt{minSphere}\left(\left\{ \norm{x-g}_{2}^{2}\leq(1-\frac{\mu}{L})\cdot\norm{g}_{2}^{2}\right\} \cap\left\{ \|x\|\leq1\right\} \right).
 \]
 
 \end_inset
@@ -1216,7 +1216,7 @@ As the algorithm proceeds,
  the original inequality can be strengthened to 
 \begin_inset Formula 
 \[
-f(x^{(new)})>f(x)+\left\langle \nabla f(x),x^{*}-x\right\rangle 
+f(x^{\new})>f(x)+\left\langle \nabla f(x),x^{*}-x\right\rangle 
 \]
 
 \end_inset
@@ -1224,7 +1224,7 @@ f(x^{(new)})>f(x)+\left\langle \nabla f(x),x^{*}-x\right\rangle
 or 
 \begin_inset Formula 
 \[
-\left\langle \nabla f(x),x^{*}-x\right\rangle <-(f(x)-f(x^{(new)})).
+\left\langle \nabla f(x),x^{*}-x\right\rangle <-(f(x)-f(x^{\new})).
 \]
 
 \end_inset
@@ -1830,7 +1830,7 @@ v_{\lambda}=v_{A}+\frac{\mu}{8}\frac{(\|c_{A}-c_{B}\|^{2}+\frac{2}{\mu}(v_{B}-v_
 
 \end_inset
 
-This says that the quadratic lower bound improves a lot whenever 
+This says that the quadratic lower bound improves significantly whenever 
 \begin_inset Formula $\frac{\mu}{2}\|c_{A}-c_{B}\|^{2}\gg v_{B}-v_{A}$
 \end_inset
 
@@ -1986,7 +1986,7 @@ Using the notation in
 
 \end_inset
 
-To bound the right hand side,
+To bound the right-hand side,
  it suffices to bound 
 \begin_inset Formula $v_{A}$
 \end_inset
@@ -2139,7 +2139,7 @@ Hence,
 \end_inset
 
  and hence 
-\begin_inset Formula $r_{1}\leq f(x^{(1)})-v^{(1)}\leq\frac{1}{2\mu}\|\nabla f(x^{(0)})\|^{2}$
+\begin_inset Formula $r_{1}^{2}=f(x^{(1)})-v^{(1)}\leq\frac{1}{2\mu}\|\nabla f(x^{(0)})\|^{2}$
 \end_inset
 
 .
@@ -2221,7 +2221,7 @@ nolink "false"
 \begin_inset Formula $x$
 \end_inset
 
- s.t.
+ such that
  
 \begin_inset Formula $B(0,\sqrt{1-\epsilon|g|^{2}})\cap B(g,|g|\sqrt{1-\epsilon})\subset B(x,\sqrt{1-\sqrt{\epsilon}})$
 \end_inset
@@ -2244,7 +2244,7 @@ This section was about the idea of managing cutting planes,
 .
  However,
  it seems that the use of line search helps in practice and that with a careful implementation,
- line search can be as cheap as gradient computation.
+ line search can be as cheap as a gradient computation.
  For more difficult problems,
  one may want to store multiple quadratic lower bounds (see 
 \begin_inset CommandInset citation

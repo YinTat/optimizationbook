@@ -94,7 +94,7 @@ Hit-and-Run
 \begin_layout Standard
 The ball walk does not mix rapidly from all starting points in arbitrary convex bodies.
  While this hurdle can be overcome by starting with a deep point and carefully maintaining a warm start,
- it is natural to ask if there is a simple process that does truly mix rapidly from any starting point.
+ it is natural to ask if there is a simple process that truly does mix rapidly from any starting point.
  Hit-and-Run satisfies this requirement.
 \end_layout
 
@@ -847,13 +847,13 @@ Define
 \end_inset
 
 We will prove the opposite inequality to establish a contradiction.
- Moreover,
- WLOG,
+Moreover,
+ without loss of generality,
  we can assume as in the proof of Euclidean isoperimetry that 
-\begin_inset Formula $Z_{1}Z_{2}$
+\begin_inset Formula $Z_{1},Z_{2}$
 \end_inset
 
- are single intervals,
+are single intervals,
  
 \begin_inset Formula $Z_{1}=[0,u]$
 \end_inset
@@ -997,7 +997,7 @@ be a partition of a convex body
 \begin_inset Formula $h:K\rightarrow\R_{+}$
 \end_inset
 
- be a function s.t.
+ be a function such that
  for any 
 \begin_inset Formula $u\in S_{1},$
 \end_inset
@@ -1399,7 +1399,7 @@ A\subseteq K\cap\left(x+\frac{r_{1}+r_{2}}{2}B^{n}\right).
 
 \end_inset
 
-By the Brunn-Minkowsky inequality (Thm.
+By the Brunn-Minkowski inequality (Thm.
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1695,7 +1695,7 @@ We are now ready for the proof of the main theorem.
 status open
 
 \begin_layout Plain Layout
-Proof of Thm.
+Proof of Theorem
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1844,7 +1844,7 @@ nolink "false"
 \end_inset
 
 ,
- we get that that one of the following holds:
+ we get that one of the following holds:
 \begin_inset Formula 
 \[
 d_{K}(u,v)\ge\frac{1}{8}\mbox{ or }\norm{u-v}\ge\frac{2}{\sqrt{n}}\max\left\{ F(u),F(v)\right\} 
@@ -1902,7 +1902,8 @@ then we have
 \begin_inset Formula $p,q.$
 \end_inset
 
- Suppose WLOG that 
+ Without loss of generality,
+ suppose that 
 \begin_inset Formula $x\in[u,q]$
 \end_inset
 
@@ -2782,7 +2783,7 @@ nolink "false"
 \end_layout
 
 \begin_layout Standard
-We note that strong self-concordance can be stronger than self-concordance since the Frobenius norm is always larger or equal to the spectral norm.
+We note that strong self-concordance can be stronger than self-concordance since the Frobenius norm is always greater than or equal to the spectral norm.
  
 \end_layout
 
@@ -3232,7 +3233,7 @@ Now,
 
 .
  Then,
- the strongly self-concordance and Lemma 
+ strong self-concordance and Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:global_strongly_self_concordant"
@@ -3566,7 +3567,7 @@ nolink "false"
 \begin_inset Formula $y$
 \end_inset
 
- s.t.
+ such that
  
 \begin_inset Formula $\norm{x-y}_{x}<1$
 \end_inset

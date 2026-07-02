@@ -327,7 +327,7 @@ Also,
 \begin_layout Standard
 The cutting plane method is well-suited for minimizing non-smooth convex functions with high accuracy.
  However,
- its relatively large polynomial time complexity and quadratic space requirement are not favorable for large scale problems.
+ its relatively large polynomial time complexity and quadratic space requirement are not favorable for large-scale problems.
  Here we discuss a different approach to minimize a non-smooth function with low accuracy.
 \end_layout
 
@@ -353,7 +353,7 @@ Mention what difficulty to minimize a non-smooth function and explain the change
 
 \end_inset
 
-Recall how to define gradient for non-smooth functions:
+Recall the definition of a subgradient for non-smooth functions:
 \end_layout
 
 \begin_layout Definition
@@ -1368,7 +1368,7 @@ mirror map
 \emph default
 .
  For constrained problems,
- the mirror map may not bring the point back to a point in 
+ the mirror map may not map the point back into 
 \begin_inset Formula $\mathcal{D}$
 \end_inset
 
@@ -2043,7 +2043,8 @@ D_{\Phi}(x^{*},x^{(k+1)}) & \leq D_{\Phi}(x^{*},x^{(k)})-h\cdot(f(x^{(k)})-f(x^{
 
 \end_inset
 
-Next we note that
+Next,
+ we note that
 \begin_inset Formula 
 \begin{align*}
  & D_{\Phi}(x^{(k)},y^{(k+1)})-D_{\Phi}(x^{(k+1)},y^{(k+1)})\\
@@ -2368,7 +2369,7 @@ f(x)-\min_{x\in\mathcal{D}}f(x)\leq\sqrt{\frac{2\log n}{T}}.
 
 \begin_layout Standard
 In comparison,
- projected gradient descent had the bound of 
+ projected gradient descent gives the bound 
 \begin_inset Formula $\sqrt{\frac{n}{T}}$
 \end_inset
 

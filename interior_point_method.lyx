@@ -204,13 +204,13 @@ regularized
 
 \end_inset
 
-We will explain the reason of choosing 
+We will explain the reason for choosing 
 \begin_inset Formula $\ln x$
 \end_inset
 
  in more detail later.
  For now,
- we can think it as a nice function that blows up to 
+ we can think of it as a nice function that blows up to 
 \begin_inset Formula $\infty$
 \end_inset
 
@@ -222,11 +222,11 @@ We will explain the reason of choosing
 \end_layout
 
 \begin_layout Standard
-One can think that 
+One can think of 
 \begin_inset Formula $-\ln x$
 \end_inset
 
- gives a force from every constraint 
+ as giving a force from every constraint 
 \begin_inset Formula $x\geq0$
 \end_inset
 
@@ -1529,8 +1529,8 @@ n+1-\frac{1}{R}\sum_{i=1}^{n}x_{i}\\
 
 \end_inset
 
-where the first step follows from modified program is solving a minimization problem,
- the second step follows from definition of 
+where the first step follows from the fact that the modified program solves a minimization problem,
+ the second step follows from the definition of 
 \begin_inset Formula $\overline{x}\in\R^{n+2}$
 \end_inset
 
@@ -1891,7 +1891,7 @@ Since
 \end_inset
 
 ,
- we start the algorithm by taking a least square solution of the constraint 
+ we start the algorithm by taking a least-squares solution of the constraint 
 \begin_inset Formula $\ma x=b$
 \end_inset
 
@@ -3955,18 +3955,18 @@ In practice,
  (called affine direction).
  Then,
  we check if we can take a large step on this affine direction.
- This is used to evaluation how long step size 
+ This is used to evaluate how large a step size 
 \begin_inset Formula $h$
 \end_inset
 
  we can take.
  Finally,
- we compute a second order update step.
+ we compute a second-order update step.
 \end_layout
 
 \begin_layout Plain Layout
 Formally,
- the algorithm as follows:
+ the algorithm is as follows:
 \end_layout
 
 \begin_layout Itemize
@@ -4219,7 +4219,7 @@ For any unconstrained
 \end_layout
 
 \begin_layout Enumerate
-For any two sided constraints 
+For any two-sided constraints 
 \begin_inset Formula $l\leq x\leq u$
 \end_inset
 
@@ -4268,7 +4268,7 @@ This code is barely stable enough to pass all test cases in netlib problems if w
 \end_inset
 
  is some tiny positive number.
- This avoided the issue that the set of optimum point can be unbounded.
+ This avoids the issue that the set of optimal points can be unbounded.
  All examples are solved in 70 iterations,
  most of them solved in 40 iterations.
  (for 
@@ -4279,7 +4279,7 @@ This code is barely stable enough to pass all test cases in netlib problems if w
 \end_layout
 
 \begin_layout Enumerate
-I have not implement the test for infeasibility (See 
+I have not implemented the test for infeasibility (See 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "xu1996simplified"
@@ -4310,22 +4310,22 @@ Add remark for detecting tight constraints.
 \end_layout
 
 \begin_layout Enumerate
-I have not implement methods to simplify the linear program or to rescale the program.
+I have not implemented methods to simplify the linear program or to rescale the program.
  However,
- to make the algorithm faster for problems with dense col in 
+ to make the algorithm faster for problems with dense columns in 
 \begin_inset Formula $A$
 \end_inset
 
 ,
- we split the corresponding columns into many copies and duplicate the corresponding variables (not shown in the matlab code above,
+ we split the corresponding columns into many copies and duplicate the corresponding variables (not shown in the MATLAB code above,
  but in the zip.).
  Usually this is not done in this way,
- but modify the linear system algorithm to handle those columns separately.
+ but one can modify the linear system algorithm to handle those columns separately.
  
 \end_layout
 
 \begin_layout Enumerate
-One may able to slightly improve the running time by doing a higher order approximation of the central path.
+One may be able to slightly improve the running time by doing a higher-order approximation of the central path.
 \end_layout
 
 \begin_layout Plain Layout
@@ -4515,18 +4515,18 @@ In this section,
  A key property of the Newton method is that it is invariant under linear transformation.
  In general,
  whenever a method uses 
-\begin_inset Formula $k^{th}$
+\begin_inset Formula $k^{\mathrm{th}}$
 \end_inset
 
  order information,
  we need to assume the 
-\begin_inset Formula $k^{th}$
+\begin_inset Formula $k^{\mathrm{th}}$
 \end_inset
 
  derivative is continuous.
  Otherwise,
  the 
-\begin_inset Formula $k^{th}$
+\begin_inset Formula $k^{\mathrm{th}}$
 \end_inset
 
  derivative is not useful for algorithmic purposes.
@@ -4588,7 +4588,7 @@ where
 \end_inset
 
  is the directional 
-\begin_inset Formula $k^{th}$
+\begin_inset Formula $k^{\mathrm{th}}$
 \end_inset
 
  derivative of 
@@ -4886,7 +4886,7 @@ pseudo inverse
 \end_inset
 
 .
- One can think this as the Lipschitz constant of 
+ One can think of this as the Lipschitz constant of 
 \begin_inset Formula $\phi$
 \end_inset
 
@@ -4932,7 +4932,9 @@ We call
 \end_layout
 
 \begin_layout Remark*
-The reason we utilize the pseudo-inverse is that we only care about the inverse in the direction of the gradient - the above definition only makes sense if for any 
+We use the pseudo-inverse because we only care about the inverse in the direction of the gradient:
+ the above definition only makes sense if,
+ for any 
 \begin_inset Formula $x\in K$
 \end_inset
 
@@ -6150,7 +6152,7 @@ Hence,
 \end_inset
 
 ,
- which is exactly same as the previous lecture.
+ which is exactly the same as in the previous lecture.
 \end_layout
 
 \begin_layout Theorem

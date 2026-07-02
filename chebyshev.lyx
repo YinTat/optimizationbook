@@ -79,7 +79,7 @@ and hence
 \begin_inset Formula $A^{-1}b$
 \end_inset
 
- by calculating 
+ by computing 
 \begin_inset Formula $p(A)b$
 \end_inset
 
@@ -93,8 +93,9 @@ and hence
 \end_inset
 
 .
- In this section, we will discuss whether there is such a polynomial that satisfies
- the condition above approximately.
+ In this section,
+ we will discuss whether there is a polynomial that approximately satisfies
+ the condition above.
  
 \end_layout
 
@@ -129,7 +130,7 @@ This corresponds to the Richardson iteration, and the above bound shows
 \begin_inset Formula $O(\frac{L}{\mu}\log(\frac{1}{\epsilon}))$
 \end_inset
 
- degree to make the error bounded by 
+ degree to bound the error by 
 \begin_inset Formula $\epsilon$
 \end_inset
 
@@ -157,11 +158,11 @@ For any integer
 \begin_inset Formula $d$
 \end_inset
 
-, the 
+, the degree 
 \begin_inset Formula $d$
 \end_inset
 
-'th Chebyshev polynomial is defined as the unique polynomial that satisfies
+ Chebyshev polynomial is defined as the unique polynomial that satisfies
  
 \begin_inset Note Note
 status open
@@ -252,7 +253,7 @@ Now we are ready to show that there is a degree
 \begin_inset Formula $\tilde{O}(\sqrt{s})$
 \end_inset
 
- polynomial that estimates 
+ polynomial that approximates 
 \begin_inset Formula $x^{s}$
 \end_inset
 
@@ -372,7 +373,7 @@ reference "eq:E_z_x_s"
 \begin_inset Formula $x\in[-1,1]$
 \end_inset
 
- on the third line and Chernoff bound (Theorem 
+ on the third line and the Chernoff bound (Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:chernoff"

@@ -147,7 +147,7 @@ nolink "false"
 \begin_inset Formula $A$
 \end_inset
 
- s.t.
+ such that
  
 \begin_inset Formula 
 \[
@@ -208,7 +208,7 @@ Volume Estimation
 \begin_inset Formula $A$
 \end_inset
 
- s.t.
+ such that
  
 \begin_inset Formula 
 \[
@@ -339,7 +339,8 @@ For all queries
 \begin_inset Formula $x\in B^{n},$
 \end_inset
 
-the oracle answers YES and for queries outside the unit ball it answers NO.
+the oracle answers YES,
+ and for queries outside the unit ball it answers NO.
  After 
 \begin_inset Formula $m$
 \end_inset
@@ -1049,7 +1050,7 @@ Notice that
 \begin_inset Formula $t\in[0,b]$
 \end_inset
 
- since it is a chord between two points of a concave function and therefore always below the concave function.
+ because it is the chord between two points of a concave function and therefore lies below the concave function.
  To see why 
 \begin_inset Formula $r(t)\le y(t)$
 \end_inset
@@ -1483,7 +1484,7 @@ for positive real numbers
  we have 
 \begin_inset Formula 
 \[
-\vol(A)=\prod^{n}_{i=1}a_{i},\,\vol(B)=\prod^{n}_{i=1}b_{i}\:\vol(A+B)=\prod^{n}_{i=1}(a_{i}+b_{i}).
+\vol(A)=\prod^{n}_{i=1}a_{i},\,\vol(B)=\prod^{n}_{i=1}b_{i},\quad \vol(A+B)=\prod^{n}_{i=1}(a_{i}+b_{i}).
 \]
 
 \end_inset
@@ -1557,11 +1558,11 @@ Let
 \end_inset
 
  along this coordinate the sets 
-\begin_inset Formula ${x:x_{i}\le0}$
+\begin_inset Formula $\{x:x_{i}\le0\}$
 \end_inset
 
 and 
-\begin_inset Formula ${x:x_{i}>0}$
+\begin_inset Formula $\{x:x_{i}>0\}$
 \end_inset
 
  both contain a complete cuboid of 

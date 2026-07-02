@@ -146,7 +146,7 @@ Integration
 \begin_inset Formula $x_{0}$
 \end_inset
 
- s.t.
+ such that
  
 \begin_inset Formula $f(x_{0})\ge\beta,$
 \end_inset
@@ -155,7 +155,7 @@ Integration
 \begin_inset Formula $r,R>0$
 \end_inset
 
- s.t.
+ such that
  (i) 
 \begin_inset Formula $\E(\norm{x-x_{0}}^{2})\le R^{2}$
 \end_inset
@@ -182,7 +182,7 @@ Integration
 \begin_inset Formula $A$
 \end_inset
 
- s.t.
+ such that
  
 \begin_inset Formula 
 \[
@@ -758,7 +758,8 @@ Volume Computation:
 \end_layout
 
 \begin_layout Theorem
-There exists a randomized algorithm that given any 
+There exists a randomized algorithm that,
+ given any 
 \begin_inset Formula $\varepsilon,\delta>0$
 \end_inset
 
@@ -880,7 +881,7 @@ K_{i}=2^{\frac{i}{n}}B\cap K.
 
 \end_inset
 
- The length the sequence is 
+ The length of the sequence is 
 \begin_inset Formula $m=\lceil n\log R\rceil$
 \end_inset
 
@@ -1300,7 +1301,8 @@ literal "true"
  To make this rigorous,
  besides establishing the amortized complexity of uniform sampling,
  we have to deal with some nontrivial technical issues:
- (1) the distribution from which samples are produced is close to the target uniform distribution but not exactly uniform (2) samples are nearly independent but not perfectly independent.
+ (1) the distribution from which samples are produced is close to the target uniform distribution but not exactly uniform;
+ (2) samples are nearly independent but not perfectly independent.
  Another important problem that will arise in establishing the complexity of (approximate) uniform sampling is 
 \begin_inset Quotes eld
 \end_inset
@@ -1865,7 +1867,7 @@ F\left(\frac{x+y}{2},\frac{t+s}{2}\right) & =f\left(\frac{x+y}{t+s}\right)^{\fra
 \end_layout
 
 \begin_layout Proof
-Now by the Prekopa-Leindler Theorem (see
+Now by the Prekopa-Leindler Theorem (see Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:marginal"
@@ -1899,7 +1901,7 @@ where we made the substitution
 
 \begin_layout Standard
 Note that in the simulated annealing algorithm we choose 
-\begin_inset Formula $\frac{a_{\{i+1\}}}{a_{i}}=(1+\frac{1}{\sqrt{{n\}}}})$
+\begin_inset Formula $\frac{a_{i+1}}{a_i}=1+\frac{1}{\sqrt n}$
 \end_inset
 
  since this guarantees that the distribution with density proportional to 
@@ -1920,7 +1922,7 @@ Note that in the simulated annealing algorithm we choose
 
 .
  This will be useful later in bounding 
-\begin_inset Formula $\text{{var}(Y)/\ensuremath{\mathbb{E}[Y]^{2}}}$
+\begin_inset Formula $\mathrm{var}(Y)/\mathbb{E}[Y]^2$
 \end_inset
 
  of the random variable given by 

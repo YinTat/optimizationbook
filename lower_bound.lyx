@@ -108,7 +108,8 @@ gradient-based
 \end_inset
 
  methods.
- For convenience the reader may consider 
+ For convenience,
+ the reader may consider 
 \begin_inset Formula $\mu=1$
 \end_inset
 
@@ -169,7 +170,7 @@ f(x^{(k)})-\min_{x}f(x)\geq(\frac{\mu}{L})^{3/2}(\frac{\sqrt{L/\mu}-1}{\sqrt{L/\
 \begin_layout Proof
 First, we check the strong convexity and smoothness.
  Note that 
-\begin_inset Formula $f(x)=-x_{1}+\frac{1}{2}x^{\top}Ax$
+\begin_inset Formula $f(x)=-\frac{L-\mu}{4}x_{1}+\frac{1}{2}x^{\top}Ax$
 \end_inset
 
  for some matrix 
@@ -319,8 +320,10 @@ worst
 \end_inset
 
  function naturally appears in many problems.
- So, it is a problem we need to address.
- In some sense, the proof points out a common issue of any algorithm which
+ Thus,
+ it is a problem we need to address.
+ In some sense,
+ the proof points out a common issue of any algorithm that
  only uses gradient information.
  Given any convex function, we construct the dependence graph 
 \begin_inset Formula $G$

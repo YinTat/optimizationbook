@@ -161,8 +161,8 @@ We begin with the Newton-Raphson method for finding the zeros of a function
 \end_inset
 
 .
- The Newton-Raphson iteration approximates a function by its gradient/Jacobian,
- then guesses where the gradient intersects the zero line as a likely zero,
+ The Newton-Raphson iteration approximates a function by its linearization/Jacobian,
+ then guesses where the linear approximation intersects the zero line as a likely zero,
  repeating this process until a sufficient approximation has been found.
  In one dimension,
  we approximate the function 
@@ -177,7 +177,7 @@ g(x)\sim g(x^{(k)})+g'(x^{(k)})(x-x^{(k)}).
 
 \end_inset
 
-Finding the zeros of the right hand side,
+Finding the zeros of the right-hand side,
  we have the Newton step
 \begin_inset Formula 
 \[
@@ -203,7 +203,7 @@ x^{(k+1)}=x^{(k)}-\left(Dg(x^{(k)})\right)^{-1}g(x^{(k)}).
 \end_layout
 
 \begin_layout Standard
-When the function 
+When 
 \begin_inset Formula $g(x)=\nabla f(x)$
 \end_inset
 
@@ -1006,7 +1006,7 @@ x^{(k+1)}=x^{(k)}-(\nabla^{2}f(x^{(k)}))^{-1}\nabla f(x^{(k)}).
 \end_inset
 
 By the above proof,
- Newton's iteration has quadratic convergence from points close enough to the optimal.
+ Newton's iteration has quadratic convergence from points close enough to the optimum.
 \end_layout
 
 \begin_layout Subsection*
@@ -1053,7 +1053,7 @@ When the Jacobian of
 
  is not available,
  we can approximate it using the function itself.
- For one dimension,
+ In one dimension,
  we can approximate the Newton method and get the following secant method 
 \begin_inset Formula 
 \[
@@ -1077,7 +1077,7 @@ where we approximated the
 \end_inset
 
 ,
- which is super linearly but not quadratic.
+ which is superlinear but not quadratic.
 \end_layout
 
 \begin_layout Standard
@@ -1096,7 +1096,7 @@ that is high-dimensional (of dimension at least
 \end_inset
 
  be the approximate Jacobian we maintained in the 
-\begin_inset Formula $k^{th}$
+\begin_inset Formula $k^{\mathrm{th}}$
 \end_inset
 
  iteration.
@@ -1356,11 +1356,12 @@ nolink "false"
 
 \begin_layout Standard
 In practice,
- the recursive formula 
-\begin_inset Formula $J^{(k)}$
+ the recursive formula for 
+\begin_inset Formula $\left(J^{(k)}\right)^{-1}$
 \end_inset
 
- becomes too expensive and hence one can stop the recursive formula after constant steps,
+ becomes too expensive,
+ and hence one can truncate the recursion after a constant number of steps,
  which gives the limited-memory BFGS algorithm.
 \end_layout
 

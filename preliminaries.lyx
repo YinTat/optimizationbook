@@ -369,7 +369,7 @@ A function
 \begin_inset Formula $x_{0}$
 \end_inset
 
- iff 
+ if and only if 
 \end_layout
 
 \begin_layout Definition
@@ -867,7 +867,7 @@ name "def:p-dist"
 \begin_inset Formula $\mu\ll\nu$
 \end_inset
 
- is defined as,
+ is defined as follows:
  for a convex function 
 \begin_inset Formula $f:\R_{+}\to\R$
 \end_inset
@@ -1106,7 +1106,7 @@ Geometry
 \end_layout
 
 \begin_layout Definition
-We denote the unit Euclidean ball as 
+We denote the unit Euclidean ball by 
 \begin_inset Formula $B^{n}=\left\{ x:\norm x_{2}\le1\right\} .$
 \end_inset
 

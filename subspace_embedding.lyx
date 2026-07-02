@@ -326,7 +326,8 @@ Note that
 \end_inset
 
 .
- Alternatively, we can think that our goal is to approximate 
+ Alternatively,
+ we can think of our goal as approximating 
 \begin_inset Formula $A$
 \end_inset
 
@@ -334,7 +335,7 @@ Note that
 \begin_inset Formula $B$
 \end_inset
 
- s.t.
+ such that
  
 \begin_inset Formula $\|Ax\|^{2}$
 \end_inset
@@ -639,7 +640,8 @@ Let
 \begin_inset Formula $\Pi\in\R^{m\times n}$
 \end_inset
 
- be a random matrix with i.i.d entries from 
+ be a random matrix with i.i.d.
+ entries from 
 \begin_inset Formula $N(0,\frac{1}{m})$
 \end_inset
 
@@ -971,7 +973,7 @@ Taking a union bound over all
 \end_layout
 
 \begin_layout Standard
-This reduction and the Johnson-Lindenstrauss Lemma shows that a random 
+This reduction and the Johnson-Lindenstrauss lemma show that a random matrix with entries 
 \begin_inset Formula $\pm\frac{1}{\sqrt{m}}$
 \end_inset
 
@@ -1092,7 +1094,7 @@ We consider the sparse matrix
 \begin_inset Formula $\|\Pi x\|^{2}$
 \end_inset
 
- is the number of non-zeros in the only column.
+ is the number of nonzero entries in its single column.
  Therefore, we indeed need that 
 \begin_inset Formula $s$
 \end_inset

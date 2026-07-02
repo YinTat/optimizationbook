@@ -745,7 +745,7 @@ shows that
 
 \end_inset
 
-The key idea to obtaining the primal solution is to take the dual of the right hand side (which is an approximate dual of the original problem).
+The key idea to obtaining the primal solution is to take the dual of the right-hand side (which is an approximate dual of the original problem).
  Now,
  we have
 \begin_inset Formula 
@@ -992,7 +992,7 @@ To be concrete,
 
 This is the weighted b-matching problem.
  Typically,
- the number of students is much more than the number of schools.
+ the number of students is much larger than the number of schools.
  Therefore,
  an algorithm with running time linear in the number of students is preferable.
  To apply our framework,
@@ -1158,7 +1158,7 @@ why?
 \end_inset
 
  For the last three examples,
- it is not clear how to compute gradient of 
+ it is not clear how to compute the gradient of 
 \begin_inset Formula $\delta_{K_{1}}$
 \end_inset
 
@@ -1606,7 +1606,7 @@ which is linear in the number of students!
 \begin_layout Standard
 In general,
  this statement says that if we can split a convex problem into two parts,
- with both being easy to solve and one part having fewer variables,
+ where both are easy to solve and one part has fewer variables,
  then we can solve the entire problem in time depending on the smaller dimension.
 \end_layout
 

@@ -495,7 +495,8 @@ Gradient Mapping
 \end_layout
 
 \begin_layout Standard
-To give a general version of acceleration, we consider problem of the form
+To give a general version of acceleration,
+ we consider a problem of the form
 \begin_inset Formula 
 \[
 \min_{x}\phi(x)\defeq f(x)+h(x)
@@ -648,7 +649,7 @@ The key lemma we use here is that
 \begin_inset Formula $\phi$
 \end_inset
 
- satisfies a lower bound defining using 
+ satisfies a lower bound defined using 
 \begin_inset Formula $g_{x}$
 \end_inset
 
@@ -874,7 +875,7 @@ Let
 \begin_inset Formula $\overline{f}(y)=f(x)+\nabla f(x)^{\top}(y-x)+\frac{L}{2}\norm{y-x}_{2}^{2}$
 \end_inset
 
-, then this is same as 
+, then this is the same as 
 \begin_inset Formula 
 \begin{equation}
 \nabla\overline{f}(p_{x})^{\top}(z-p_{x})+h(z)-h(p_{x})\geq0\label{eq:grad_map_claim}
@@ -1063,9 +1064,11 @@ This shows that each step of the gradient step decreases the function value
 \end_inset
 
 .
- Therefore, if the gradient is large, then we decrease the function value
- by a lot.
- On the other hand, Putting 
+ Therefore,
+ if the gradient is large,
+ then the function value decreases substantially.
+ On the other hand,
+ putting 
 \begin_inset Formula $z=x^{*}$
 \end_inset
 
@@ -1088,8 +1091,8 @@ reference "thm:gradient_mapping_lower_bound"
 \end_layout
 
 \begin_layout Standard
-If the gradient is small and domain is bounded, this shows that we are close
- to the optimal.
+If the gradient is small and the domain is bounded,
+ this shows that we are close to the optimum.
  Combining these two facts, we can get the gradient descent.
 \end_layout
 
@@ -1140,8 +1143,9 @@ Therefore, it suffices to upper bound
 \begin_inset Formula $g_{x^{(i)}}^{\top}(x^{(i)}-x^{*})$
 \end_inset
 
- is large, then either the gradient is large or the distance to optimum
- moves a lot.
+ is large,
+ then either the gradient is large or the distance to the optimum changes
+ substantially.
  It turns out this holds for any vector 
 \begin_inset Formula $g$
 \end_inset
@@ -1198,7 +1202,8 @@ reference "lem:gradient_descent_lemma"
 
 \end_inset
 
- shows that if the gradient is large, gradient descent makes a large progress.
+ shows that if the gradient is large,
+ gradient descent makes large progress.
  On the other hand, if the gradient is small, (
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1206,7 +1211,7 @@ reference "eq:mirror_lemma"
 
 \end_inset
 
-) shows that mirror descent makes a large progress.
+) shows that mirror descent makes large progress.
  Therefore, it is natural to combine two approaches.
 \end_layout
 
@@ -1498,7 +1503,7 @@ This shows that if the mirror descent has large error
 \begin_inset Formula $g_{x^{(k+1)}}^{\top}(z^{(k)}-x^{*})$
 \end_inset
 
-, then the gradient descent makes a large progress (
+, then the gradient descent makes large progress (
 \begin_inset Formula $\frac{\eta}{2}\norm{g_{x^{(k+1)}}}_{2}^{2}$
 \end_inset
 
@@ -1729,15 +1734,15 @@ Accelerated Coordinate Descent Convergence
 
 \end_inset
 
-Given an 
-\begin_inset Formula $\mu$
-\end_inset
-
- strongly-convex function 
+Let 
 \begin_inset Formula $\ell$
 \end_inset
 
-.
+ be a 
+\begin_inset Formula $\mu$
+\end_inset
+
+-strongly convex function.
  Suppose that 
 \begin_inset Formula $\frac{\partial^{2}}{\partial x_{i}^{2}}\ell(x)\leq L_{i}$
 \end_inset
