@@ -1704,7 +1704,7 @@ Note that since
 \begin_inset Formula $g(x^{(k)})=e_{1},$
 \end_inset
 
-we have 
+ we have 
 \begin_inset Formula $A^{(k+1)}=\frac{n^{2}}{n^{2}-1}\left(I-\frac{2}{n+1}e_{1}e_{1}^{\top}\right)$
 \end_inset
 
@@ -1746,7 +1746,7 @@ By the definition of
 \begin_inset Formula $E^{(k)}$
 \end_inset
 
-and the assumption 
+ and the assumption 
 \begin_inset Formula $A^{(k)}=I$
 \end_inset
 
@@ -2719,7 +2719,7 @@ literal "false"
 
 \end_inset
 
-Let 
+ Let 
 \begin_inset Formula $K$
 \end_inset
 
@@ -3296,6 +3296,15 @@ This shows that
 \end_inset
 
 .
+ Applying the same argument with 
+\begin_inset Formula $-\theta$
+\end_inset
+
+ gives 
+\begin_inset Formula $\P_{x\sim p}(x^{\top}\theta\ge0)\ge1/e$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Proof
@@ -3325,7 +3334,13 @@ nolink "false"
 \begin_inset Formula $1$
 \end_inset
 
--Lipschitz and we have
+-Lipschitz.
+ Hence,
+ for 
+\begin_inset Formula $t\ge0$
+\end_inset
+
+ we have
 \begin_inset Formula 
 \[
 \P_{x\sim p}(x^{\top}\theta\geq t)\ge\P_{x\sim p}(x^{\top}\theta\geq0)-t\geq\frac{1}{e}-t.
@@ -3333,6 +3348,16 @@ nolink "false"
 
 \end_inset
 
+For 
+\begin_inset Formula $t<0$
+\end_inset
+
+,
+ the claim follows from 
+\begin_inset Formula $\P_{x\sim p}(x^{\top}\theta\ge t)\ge\P_{x\sim p}(x^{\top}\theta\ge0)\ge1/e\ge1/e-\left|t\right|$
+\end_inset
+
+.
 
 \end_layout
 

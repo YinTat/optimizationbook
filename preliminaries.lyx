@@ -515,7 +515,7 @@ For any matrix
 ,
  we define its trace,
  
-\begin_inset Formula $\tr A=\sum A_{ii}$
+\begin_inset Formula $\tr A=\sum_i A_{ii}$
 \end_inset
 
 ,
@@ -596,7 +596,7 @@ For a vector
  
 \begin_inset Formula 
 \[
-\norm B_{A}=\sup_{x}\frac{\norm{Bx}_{A}}{\norm x_{A}}.
+\norm B_{A}=\sup_{x\ne0}\frac{\norm{Bx}_{A}}{\norm x_{A}}.
 \]
 
 \end_inset

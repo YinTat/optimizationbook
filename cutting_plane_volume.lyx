@@ -794,7 +794,7 @@ status open
 
 \begin_layout Standard
 Return 
-\begin_inset Formula $V_{\text{last}}\cdot\prod^{n}_{i=1}w_{i}(K^{(k+1)})$
+\begin_inset Formula $V_{\text{last}}\cdot\prod^{n}_{i=1}w_{i}(K^{(k)})$
 \end_inset
 
  where 
@@ -1190,7 +1190,7 @@ nolink "false"
 \end_inset
 
  (namely 
-\begin_inset Formula $\max_{x\in K}\left|e^{\top}_{i}x\right|\leq r$
+\begin_inset Formula $w_i(K^{(k)})\leq r$
 \end_inset
 
 ),

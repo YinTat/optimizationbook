@@ -506,7 +506,7 @@ where
 \begin_inset Formula $A\in\R^{V\times E}$
 \end_inset
 
- encodes the vertex-edge adjacency matrix with two nonzeros per column,
+ encodes the vertex-edge incidence matrix with two nonzeros per column,
  
 \begin_inset Formula $d$
 \end_inset
@@ -991,7 +991,7 @@ To be concrete,
  the problem can be formulated as
 \begin_inset Formula 
 \[
-\max_{x_{e}\geq0}\sum_{e\in E}w_{e}x_{e}\text{ subject to }\sum_{(a,b)\in E}x_{(a,b)}\leq1\ \forall a\in V_{1},\sum_{(a,b)\in E}x_{(a,b)}\leq c_{b}\ \forall b\in V_{2}.
+\max_{x_{e}\geq0}\sum_{e\in E}w_{e}x_{e}\text{ subject to }\sum_{b:(a,b)\in E}x_{(a,b)}\leq1\ \forall a\in V_{1},\sum_{a:(a,b)\in E}x_{(a,b)}\leq c_{b}\ \forall b\in V_{2}.
 \]
 
 \end_inset
@@ -1005,7 +1005,7 @@ This is the weighted b-matching problem.
  we let
 \begin_inset Formula 
 \begin{align*}
-K_{1} & =\{x\in\R^{E},x_{e}\geq0,\sum_{(a,b)\in E}x_{(a,b)}\leq1\ \forall a\in V_{1}\},\\
+K_{1} & =\{x\in\R^{E},x_{e}\geq0,\sum_{b:(a,b)\in E}x_{(a,b)}\leq1\ \forall a\in V_{1}\},\\
 K_{2} & =\{y\in\R^{V_{2}},y_{b}\leq c_{b}\},
 \end{align*}
 
@@ -1127,7 +1127,7 @@ Submodular flow:
 
 ,
  
-\begin_inset Formula $K_{2}=\{y\in\R^{V}:\sum_{i\in S}y_{i}\leq f(S)\text{ for all }S\subset[n]\}$
+\begin_inset Formula $K_{2}=\{y\in\R^{V}:\sum_{i\in S}y_{i}\leq f(S)\text{ for all }S\subset V\}$
 \end_inset
 
 ,

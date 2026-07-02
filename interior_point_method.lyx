@@ -4421,7 +4421,7 @@ where
 \begin_inset Formula $\phi$
 \end_inset
 
- as in the last lecture,
+ as in the linear-programming formulation above;
  it is slightly more convenient here.
  We say 
 \begin_inset Formula $\phi$
@@ -5274,7 +5274,7 @@ If
 \begin_inset Formula $\nu$
 \end_inset
 
--self-concordant for 
+-self-concordant barrier for 
 \begin_inset Formula $\{x:Ax+b\in K\}$
 \end_inset
 
@@ -6096,7 +6096,7 @@ Let
 \begin_layout Proof
 For the second result,
  let 
-\begin_inset Formula $f(x)=tc^{T}x+\phi(x)$
+\begin_inset Formula $f(x)=tc^{\top}x+\phi(x)$
 \end_inset
 
 .
@@ -6160,8 +6160,8 @@ Given a
 \begin_inset Formula $\phi$
 \end_inset
 
- and its minimizer.
- We can find 
+ and its minimizer,
+ we can find 
 \begin_inset Formula $x\in K$
 \end_inset
 
@@ -6182,7 +6182,7 @@ iterations.
 
 \begin_layout Proof
 We prove by induction that 
-\begin_inset Formula $\|\nabla f_{t}(x)\|_{\nabla^{2}f_{t}(x))^{-1}}\leq\frac{1}{6}$
+\begin_inset Formula $\|\nabla f_{t}(x)\|_{\nabla^{2}f_{t}(x)^{-1}}\leq\frac{1}{6}$
 \end_inset
 
  at the beginning of each iteration.

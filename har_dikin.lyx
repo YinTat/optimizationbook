@@ -161,7 +161,7 @@ caption{
 \end_inset
 
 
-\begin_inset Formula $\mathtt{Hit-and-Run}$
+\begin_inset Formula $\mathtt{Hit\mbox{-}and\mbox{-}Run}$
 \end_inset
 
 
@@ -427,7 +427,7 @@ literal "false"
 .
 \end_layout
 
-\begin_layout Exercise
+\begin_layout Standard
 \begin_inset Float figure
 placement document
 alignment document
@@ -479,7 +479,7 @@ name "thm:har-cond"
 
 \end_inset
 
-The conductance of Hit-and-Run in a convex body 
+ The conductance of Hit-and-Run in a convex body 
 \begin_inset Formula $K$
 \end_inset
 
@@ -847,7 +847,7 @@ Define
 \end_inset
 
 We will prove the opposite inequality to establish a contradiction.
-Moreover,
+ Moreover,
  without loss of generality,
  we can assume as in the proof of Euclidean isoperimetry that 
 \begin_inset Formula $Z_{1},Z_{2}$
@@ -1002,6 +1002,7 @@ be a partition of a convex body
 \begin_inset Formula $u\in S_{1},$
 \end_inset
 
+ any 
 
 \begin_inset Formula $v\in S_{2}$
 \end_inset
@@ -1881,7 +1882,7 @@ nolink "false"
 \begin_inset Formula $d_{K}(u,v)\ge\frac{1}{8},$
 \end_inset
 
-then we have 
+ then we have 
 \begin_inset Formula $h(x)\le d_{K}(u,v)/3$
 \end_inset
 

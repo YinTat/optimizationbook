@@ -744,7 +744,7 @@ An optimization problem
 \end_layout
 
 \begin_layout Standard
-Any point not in a convex set can be separated by a hyperplane from the set.
+Any point not in a closed convex set can be separated by a hyperplane from the set.
  We will see in Chapter 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1135,7 +1135,7 @@ nolink "false"
 \end_layout
 
 \begin_layout Standard
-This shows that convex optimization is related to linear programs (optimize linear functions over polytopes) as follows:
+This shows that convex optimization is related to linear programs (optimize linear functions over polyhedra) as follows:
 \begin_inset Formula 
 \[
 \min_{x\in K}f(x)=\min_{(x,y)\in\{x\in K,y\in\R:y\geq f(x)\}}y
@@ -1173,7 +1173,7 @@ Let
 \end_inset
 
  be nonempty disjoint closed convex sets.
- Then there exists a vector 
+ Then there exists a nonzero vector 
 \begin_inset Formula $v\in\R^{n}$
 \end_inset
 
@@ -1751,7 +1751,7 @@ status open
 
 \begin_layout Plain Layout
 Unfortunately,
- Nobel Laureate Stigler showed that 
+ Nobel Laureate Stigler 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "stigler1945cost"
@@ -1759,7 +1759,7 @@ literal "false"
 
 \end_inset
 
- the optimal meal is evaporated milk,
+ showed that the optimal meal is evaporated milk,
  cabbage,
  dried navy beans,
  and beef liver.
@@ -2233,7 +2233,7 @@ In particular,
 \emph on
 quasiconvex
 \emph default
- if every level set is convex.
+ if every sublevel set is convex.
  Equivalently,
  a function 
 \begin_inset Formula $f:\R^{n}\rightarrow\R$
@@ -3041,6 +3041,8 @@ subgradient selection
 \end_inset
 
 
+ we have 
+
 \begin_inset Formula $f(y)-f(x)\ge\langle g(x),y-x\rangle.$
 \end_inset
 
@@ -3471,7 +3473,7 @@ Now,
  
 \begin_inset Formula 
 \[
--\log\P(\theta|y)=c+\sum_{i}(y_{i}-\theta_{i})^{2}+\lambda\sum_{i=1}^{n-1}(\theta_{i}-\theta_{i+1})^{2}.
+-\log\P(\theta|y)=c+\frac{1}{2}\sum_{i}(y_{i}-\theta_{i})^{2}+\lambda\sum_{i=1}^{n-1}(\theta_{i}-\theta_{i+1})^{2}.
 \]
 
 \end_inset
@@ -3482,7 +3484,7 @@ Since each term in the function above is convex,
  the recovery question becomes a convex optimization problem
 \begin_inset Formula 
 \[
-\min_{\theta}\sum_{i}(y_{i}-\theta_{i})^{2}+\lambda\sum_{i=1}^{n-1}(\theta_{i}-\theta_{i+1})^{2}.
+\min_{\theta}\frac{1}{2}\sum_{i}(y_{i}-\theta_{i})^{2}+\lambda\sum_{i=1}^{n-1}(\theta_{i}-\theta_{i+1})^{2}.
 \]
 
 \end_inset
@@ -3509,7 +3511,7 @@ When we recover a signal,
  Note that
 \begin_inset Formula 
 \[
-\P(\theta|y)\varpropto e^{-\sum_{i}(y_{i}-\theta_{i})^{2}-\lambda\sum_{i=1}^{n-1}(\theta_{i}-\theta_{i+1})^{2}}
+\P(\theta|y)\varpropto e^{-\frac{1}{2}\sum_{i}(y_{i}-\theta_{i})^{2}-\lambda\sum_{i=1}^{n-1}(\theta_{i}-\theta_{i+1})^{2}}
 \]
 
 \end_inset

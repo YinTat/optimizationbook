@@ -1006,7 +1006,7 @@ nolink "false"
  such that
 \begin_inset Formula 
 \[
-\theta^{\top}y>\max_{x\in cl(conv(\mathit{K}\cup\left\{ 0\right\} ))}\theta^{\top}x.
+\theta^{\top}y>\sup_{x\in cl(conv(\mathit{K}\cup\left\{ 0\right\} ))}\theta^{\top}x.
 \]
 
 \end_inset
@@ -1034,7 +1034,7 @@ Since
  so that 
 \begin_inset Formula 
 \[
-\theta^{\top}y>1\geq\max_{x\in cl(conv(\mathit{K}\cup\left\{ 0\right\} ))}\theta^{\top}x.
+\theta^{\top}y>1\geq\sup_{x\in cl(conv(\mathit{K}\cup\left\{ 0\right\} ))}\theta^{\top}x.
 \]
 
 \end_inset
@@ -2845,17 +2845,17 @@ where
 \begin_inset Formula $n(y)$
 \end_inset
 
- is the normal vector on 
+ is the outward normal vector on 
 \begin_inset Formula $\partial B_{\infty}(x,r_{1})$
 \end_inset
 
- the boundary of the box 
+ of the box 
 \begin_inset Formula $B_{\infty}(x,r_{1})$
 \end_inset
 
 ,
  i.e.
- standard basis vectors.
+ a signed standard basis vector.
  Since 
 \begin_inset Formula $f$
 \end_inset
@@ -2909,7 +2909,7 @@ For an
 \begin_inset Formula $f:\R^{n}\rightarrow\R,$
 \end_inset
 
-and 
+ and 
 \begin_inset Formula $h=f*\chi_{B_{\infty}(0,1/2)}$
 \end_inset
 
@@ -5102,7 +5102,7 @@ name "thm:separate_set"
 
 .
  For any 
-\begin_inset Formula $0\leq\eta<\frac{1}{2}$
+\begin_inset Formula $0<\eta<\frac{1}{2}$
 \end_inset
 
 ,
@@ -5383,7 +5383,7 @@ with simple functions
 
  whose derivatives we know how to compute.
  The key idea is to compute 
-\begin_inset Formula $\frac{\partial f}{\partial x_{1}}$
+\begin_inset Formula $\frac{\partial f}{\partial x_{i}}$
 \end_inset
 
  not just for the inputs 
@@ -5899,11 +5899,11 @@ To bound the runtime,
 \end_inset
 
  and the cost of our algorithm are both 
-\begin_inset Formula $\Theta(m)$
+\begin_inset Formula $\Theta(\mathcal{T})$
 \end_inset
 
  where 
-\begin_inset Formula $m$
+\begin_inset Formula $\mathcal{T}$
 \end_inset
 
  is the number of edges in 
@@ -5936,6 +5936,10 @@ If we can compute
 
  exactly in time 
 \begin_inset Formula $\mathcal{T}$
+\end_inset
+
+ for nonsingular 
+\begin_inset Formula $A$
 \end_inset
 
 ,

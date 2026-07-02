@@ -584,7 +584,7 @@ nolink "false"
  
 \begin_inset Formula 
 \[
-\nabla f(x)=\lim_{h\rightarrow0}\frac{(f(x)+h\nabla f(x)^{\top}y+\frac{1}{2}h^{2}...)-f(x)}{h}=\lim_{h\rightarrow0}\frac{h\nabla f(x)^{\top}y+\frac{1}{2}h^{2}...}{h}
+\nabla f(x)^{\top}y=\lim_{h\rightarrow0}\frac{(f(x)+h\nabla f(x)^{\top}y+\frac{1}{2}h^{2}...)-f(x)}{h}=\lim_{h\rightarrow0}\frac{h\nabla f(x)^{\top}y+\frac{1}{2}h^{2}...}{h}
 \]
 
 \end_inset
@@ -2152,7 +2152,7 @@ Solving the right-hand side,
 .
  Now,
  we note that 
-\begin_inset Formula $\nabla F(\rho)=\log\frac{\rho}{\nu}-1$
+\begin_inset Formula $\nabla F(\rho)=\log\frac{\rho}{\nu}+1$
 \end_inset
 
 .
@@ -2160,7 +2160,7 @@ Solving the right-hand side,
  
 \begin_inset Formula 
 \begin{align*}
-\frac{d\rho}{dt} & =\nabla\cdot(\rho\nabla(\log\frac{\rho}{\nu}-1))\\
+\frac{d\rho}{dt} & =\nabla\cdot(\rho\nabla(\log\frac{\rho}{\nu}+1))\\
  & =\nabla\cdot(\rho\nabla\log\frac{\rho}{\nu})\\
  & =\nabla\cdot\left(\rho\nabla f\right)+\Delta\rho
 \end{align*}
@@ -2242,7 +2242,7 @@ on the manifold with the metric
 We write
 \begin_inset Formula 
 \[
-\frac{d}{dt}(F(x)-\min_{y}F(y))=\langle\nabla F(x_{t}),\frac{dx_{t}}{dt}\rangle_{x_{t}}=-\|\nabla F(x_{t})\|_{x_{t}}^{2}\leq-\alpha(F(x)-\min_{y}F(y)).
+\frac{d}{dt}(F(x_t)-\min_{y}F(y))=\langle\nabla F(x_{t}),\frac{dx_{t}}{dt}\rangle_{x_{t}}=-\|\nabla F(x_{t})\|_{x_{t}}^{2}\leq-\alpha(F(x_t)-\min_{y}F(y)).
 \]
 
 \end_inset

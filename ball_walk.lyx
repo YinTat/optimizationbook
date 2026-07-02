@@ -998,7 +998,7 @@ for each
 
 .
  To prove inductively that this quantity decreases,
- Let 
+ let 
 \begin_inset Formula ${\cal G}_{x}$
 \end_inset
 
@@ -4418,7 +4418,7 @@ Thus,
 status open
 
 \begin_layout Plain Layout
-KLS Hyperplane Conjecture.
+KLS Hyperplane Conjecture
 \end_layout
 
 \end_inset
@@ -6291,7 +6291,7 @@ Localization: Product form
 \end_inset
 
  Let 
-\begin_inset Formula $f_{1},f_{2},f_{3},f_{4}:[a,b]\rightarrow\R_{+}$
+\begin_inset Formula $f_{1},f_{2},f_{3},f_{4}:\R^{n}\rightarrow\R_{+}$
 \end_inset
 
  be nonnegative,
@@ -6304,7 +6304,7 @@ For every convex body
 \begin_inset Formula $K\subset\R^{n},$
 \end_inset
 
-we have
+ we have
 \begin_inset Formula 
 \[
 \int_{K}f_{1}\int_{K}f_{2}\le\int_{K}f_{3}\int_{K}f_{4}.

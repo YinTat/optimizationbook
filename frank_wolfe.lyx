@@ -290,7 +290,7 @@ SetAlgoLined
 Input:
 \series default
  Initial point 
-\begin_inset Formula $x^{(0)}\in\Rn$
+\begin_inset Formula $x^{(0)}\in\mathcal{D}$
 \end_inset
 
 .

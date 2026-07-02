@@ -2229,7 +2229,7 @@ Let
 \begin_inset Formula $x,y\in\R^{n},$
 \end_inset
 
-we have
+ we have
 \begin_inset Formula 
 \[
 \norm{\nabla f(x)}_{2}^{2}\ge2\mu\left(f(x)-f(y)\right).
@@ -2245,7 +2245,7 @@ By the definition of
 \begin_inset Formula $\mu$
 \end_inset
 
- strong convexity,
+-strong convexity,
  we have 
 \begin_inset Formula 
 \[
@@ -2607,7 +2607,7 @@ Let the objective for progress be
 \end_inset
 
 .
- The first condition requires the algorithm makes sufficient progress (
+ The first condition requires the algorithm to make sufficient progress (
 \begin_inset Formula $\phi(h)\geq c_{1}h\cdot\phi'(0)$
 \end_inset
 
@@ -2758,7 +2758,12 @@ Here we study properties of gradient descent that were actually used for the str
 \end_layout
 
 \begin_layout Definition
-We say 
+For 
+\begin_inset Formula $0<\alpha\leq1$
+\end_inset
+
+,
+ we say 
 \begin_inset Formula $g+h$
 \end_inset
 
@@ -2969,7 +2974,7 @@ Input:
 
 ,
  approximation factor 
-\begin_inset Formula $\alpha>0$
+\begin_inset Formula $0<\alpha\leq1$
 \end_inset
 
 .
@@ -3074,7 +3079,13 @@ name "thm:gd_general_apx"
 \begin_inset Formula $f$
 \end_inset
 
- such that we can find an 
+ such that,
+ for some 
+\begin_inset Formula $0<\alpha\leq1$
+\end_inset
+
+,
+ we can find an 
 \begin_inset Formula $\alpha$
 \end_inset
 
@@ -3465,7 +3476,7 @@ For matrices
 \begin_inset Formula $A$
 \end_inset
 
- satisfying restricted isometry property,
+ satisfying the restricted isometry property,
  one can apply 
 \begin_inset Formula $\mathtt{GeneralizedGradientDescent}$
 \end_inset

@@ -575,8 +575,8 @@ The idea is to move whatever we can optimize in
 \end_inset
 
  may not be differentiable.
- To handle this issue, we need to define an approximate derivative of 
-\begin_inset Formula $h$
+ To handle this issue, we need to define an approximate gradient of 
+\begin_inset Formula $\phi$
 \end_inset
 
  that we can compute.
@@ -1824,7 +1824,7 @@ reference "thm:stochastic_method"
 \end_inset
 
  that if 
-\begin_inset Formula $\nabla^{2}\ell_{i}(x)\leq L$
+\begin_inset Formula $\nabla^{2}\ell_{i}(x)\preceq L\cdot I$
 \end_inset
 
  for all 
@@ -1979,7 +1979,7 @@ Given a convex function
 
 .
  Suppose that 
-\begin_inset Formula $\nabla^{2}\ell_{i}(x)\leq L$
+\begin_inset Formula $\nabla^{2}\ell_{i}(x)\preceq L\cdot I$
 \end_inset
 
  for all 

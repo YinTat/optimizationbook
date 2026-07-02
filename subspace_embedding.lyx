@@ -1356,15 +1356,11 @@ Now, we can bound
 
 \begin_layout Lemma
 Assume that 
-\begin_inset Formula $s\gg\frac{m}{n}\log(\frac{1}{\delta}),$
-\end_inset
-
-
-\begin_inset Formula $s\gg\log^{2}(\frac{1}{\delta})/\epsilon^{2}$
+\begin_inset Formula $s\gg\frac{m}{n}\log(\frac{1}{\delta}),\quad s\gg\log^{2}(\frac{d}{\delta})/\epsilon^{2}$
 \end_inset
 
  and 
-\begin_inset Formula $m\gg d\log(\frac{1}{\delta})/\epsilon^{2}$
+\begin_inset Formula $m\gg d\log(\frac{d}{\delta})/\epsilon^{2}$
 \end_inset
 
 .

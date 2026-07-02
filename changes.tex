@@ -1,0 +1,113 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{hyperref}
+\newcommand{\R}{\mathbb{R}}
+
+\title{Author-Review Items from the Proofreading Pass}
+\author{}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+This file lists only issues that still need an author decision or follow-up edit. Local fixes already applied in LyX are intentionally omitted.
+
+\section{Items Needing Author Review}
+
+\subsection{Cutting-plane volume proof: make the final-cuboid argument explicit}
+\textbf{Location:} \texttt{cutting\_plane\_volume.lyx}, theorem proving \(\mathtt{CuttingPlaneVolume}\) computes volume.
+
+\textbf{Issue.} The proof says that when the algorithm stops, the remaining set ``must be an axis-parallel cuboid'' with side lengths in \([r/(n+1),r]\).  This can be made correct, but the proof currently skips the invariant that makes the conclusion true.
+
+\textbf{Minimal author change.} Replace the current sentence beginning ``Since the set always contains the origin...'' with an accumulated-box argument:
+\[
+  K^{(k)} = K\cap C_k,
+\]
+where \(C_k\) is the axis-parallel cuboid obtained by intersecting all previous cutting halfspaces.  All cuts are axis-aligned and are chosen to contain the origin, so \(C_k\) is axis-parallel and contains the origin.  At termination, \(w_i(K^{(k)})\le r\) for every coordinate \(i\); since \(0\in K^{(k)}\), this implies \(K^{(k)}\subseteq[-r,r]^n\).  Because the theorem assumes \([-r,r]^n\subseteq K\), it follows that
+\[
+  K^{(k)}=K\cap C_k=C_k\cap[-r,r]^n,
+\]
+which is an axis-parallel cuboid.
+
+Then add the side-length justification: after the last cut in coordinate \(i\), the width lemma gives retained width at least \(r/(n+1)\), and later cuts in other coordinates do not change the \(i\)-th side of the accumulated cuboid.  Thus each final side length lies in \([r/(n+1),r]\).
+
+\subsection{Reduction-rate prose: align the formulas with Table 5.1}
+\textbf{Location:} \texttt{reduction.lyx}, reduction summary around the complexity table.
+
+\textbf{Issue.} The prose says the number of iterations of gradient descent is \(GR/\epsilon\), while the table and the later derivation use the nonsmooth Lipschitz rate
+\[
+  \left(\frac{GR}{\epsilon}\right)^2.
+\]
+Nearby, the paragraph lists the per-\(k\) errors as \(GR/k\), \(G^2/(\mu k)\), and \(LR^2/k\).  If this paragraph is matching the table, these should be \(GR/\sqrt{k}\), \(G^2/(\mu k)\), and \(LR^2/k^2\), respectively.
+
+\textbf{Minimal author change.} Replace \(GR/\epsilon\) by \((GR/\epsilon)^2\).  Replace
+\[
+  \frac{GR}{k},\qquad \frac{G^2}{\mu k},\qquad \frac{LR^2}{k}
+\]
+by
+\[
+  \frac{GR}{\sqrt{k}},\qquad \frac{G^2}{\mu k},\qquad \frac{LR^2}{k^2}.
+\]
+The following relative-accuracy sentence can stay.
+
+\subsection{Annealing-volume schedule: change the exact schedule length}
+\textbf{Location:} \texttt{annealing\_volume.lyx}, Algorithm 34 and proof of the volume theorem.
+
+\textbf{Issue.} The algorithm currently sets
+\[
+  m=\left\lceil \sqrt n\ln(4R^2n/\epsilon)\right\rceil,
+  \qquad
+  a_i=\frac{2n}{(1+1/\sqrt n)^i}.
+\]
+Later the proof uses \(a_m\le \epsilon/(4R^2)\).  The current displayed value of \(m\) does not visibly imply this bound, and in general it is too small to prove it by simply adding a final line.
+
+\textbf{Minimal author change.} Change the algorithm to
+\[
+  m=\left\lceil \log_{1+1/\sqrt n}(8R^2n/\epsilon)\right\rceil.
+\]
+Then the proof line becomes immediate:
+\[
+  a_m=\frac{2n}{(1+1/\sqrt n)^m}\le \frac{2n}{8R^2n/\epsilon}=\frac{\epsilon}{4R^2}.
+\]
+
+\subsection{Annealing-volume variance proof: use scaled logconcavity}
+\textbf{Location:} \texttt{annealing\_volume.lyx}, proof of the ratio variance lemma.
+
+\textbf{Issue.} The proof says that \(F\) is logconcave in \(a\).  The referenced lemma proves logconcavity of
+\[
+  Z(a)=a^nF(a),
+\]
+and the displayed bound is exactly the result of applying logconcavity to \(Z\) and then dividing out the powers of \(a\).
+
+\textbf{Minimal author change.} Replace the sentence ``\(F\) is logconcave in \(a\)'' with ``\(Z(a)=a^nF(a)\) is logconcave in \(a\).''  Then use
+\[
+  Z(a_{i+1})^2 \ge Z(2a_{i+1}-a_i)Z(a_i)
+\]
+to get
+\[
+  \frac{F(2a_{i+1}-a_i)F(a_i)}{F(a_{i+1})^2}
+  =
+  \frac{Z(2a_{i+1}-a_i)Z(a_i)}{Z(a_{i+1})^2}
+  \left(\frac{a_{i+1}^2}{(2a_{i+1}-a_i)a_i}\right)^n
+  \le
+  \left(\frac{a_{i+1}^2}{(2a_{i+1}-a_i)a_i}\right)^n.
+\]
+
+\subsection{Dikin walk algorithm: rejection is implicit}
+\textbf{Location:} \texttt{har\_dikin.lyx}, Dikin walk algorithm.
+
+\textbf{Issue.} The algorithm says: if \(x\in E_y(r)\), go to \(y\) with probability
+\[
+  \min\left\{1,\frac{\operatorname{vol}(E_x(r))}{\operatorname{vol}(E_y(r))}\right\}.
+\]
+It does not explicitly state an ``otherwise'' branch.  As written, the only assignment that changes the current state is the accepted move to \(y\); therefore the current behavior is implicitly to stay at \(x\) when \(x\notin E_y(r)\) or when the Metropolis coin rejects.  The later proof treats these failures as rejection probability, so this is consistent with the intended chain.
+
+\textbf{Optional clarity change.} Add an explicit final sentence to the algorithm step:
+\[
+  \text{Otherwise, stay at }x.
+\]
+
+\end{document}

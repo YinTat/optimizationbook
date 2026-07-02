@@ -1371,7 +1371,7 @@ Gradient descent gives
 \end_inset
 
  gradients 
-\begin_inset Formula $\nabla f$
+\begin_inset Formula $\nabla f_i$
 \end_inset
 
 .

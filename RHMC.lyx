@@ -193,15 +193,7 @@ where
  Hamiltonian Monte Carlo (or RHMC) 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "Neal1996,Neal2012"
-literal "true"
-
-\end_inset
-
-
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Girolami2009,Girolami2011"
+key "Neal1996,Neal2012,Girolami2009,Girolami2011"
 literal "true"
 
 \end_inset
@@ -265,7 +257,7 @@ For the choice of
 
 ,
  no Metropolis correction is needed.
-In numerical HMC,
+ In numerical HMC,
  an inexact reversible volume-preserving integrator is usually paired with a Metropolis filter to correct discretization error.
  For exact flow,
  there is no discretization step size to tune.

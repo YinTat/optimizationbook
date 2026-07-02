@@ -169,7 +169,7 @@ We begin with the Newton-Raphson method for finding the zeros of a function
 \begin_inset Formula $g$
 \end_inset
 
- by its gradient 
+ by its linearization 
 \begin_inset Formula 
 \[
 g(x)\sim g(x^{(k)})+g'(x^{(k)})(x-x^{(k)}).
@@ -897,7 +897,7 @@ Assume that
 -Lipschitz.
  Then,
  if 
-\begin_inset Formula $|x^{0}-x^{*}|\le\frac{\alpha}{2L}$
+\begin_inset Formula $|x^{(0)}-x^{*}|\le\frac{\alpha}{2L}$
 \end_inset
 
 ,
