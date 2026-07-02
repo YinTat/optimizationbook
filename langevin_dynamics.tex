@@ -136,7 +136,7 @@ motion need not match that of the process $x_{t}$ that it diffuses.
 The usual chain rule comes from using Taylor expansion and taking
 a limit, i.e., 
 \[
-\nabla f(x)=\lim_{h\rightarrow0}\frac{(f(x)+h\nabla f(x)^{\top}y+\frac{1}{2}h^{2}...)-f(x)}{h}=\lim_{h\rightarrow0}\frac{h\nabla f(x)^{\top}y+\frac{1}{2}h^{2}...}{h}
+\nabla f(x)^{\top}y=\lim_{h\rightarrow0}\frac{(f(x)+h\nabla f(x)^{\top}y+\frac{1}{2}h^{2}...)-f(x)}{h}=\lim_{h\rightarrow0}\frac{h\nabla f(x)^{\top}y+\frac{1}{2}h^{2}...}{h}
 \]
 and only the first term survives, as the second and later terms go
 to zero. But with the stochastic component, roughly speaking, $(dW_{t})^{2}=dt$\footnote{By definition, $W_{t}\sim N(0,t)$, so the variance of $W_{t}$ is
@@ -540,10 +540,10 @@ For any function $c$, the optimization problem of interest satisfies
 \min_{\delta=\nabla\cdot(\rho\nabla\lambda)}\left\langle c,\delta\right\rangle +\frac{1}{2}\int\rho(x)\|\nabla\lambda(x)\|^{2}dx=\min_{\nabla\lambda}-\int\rho(x)\cdot\nabla c(x)^{\top}\nabla\lambda(x)dx+\frac{1}{2}\int\rho(x)\|\nabla\lambda(x)\|^{2}dx.
 \]
 Solving the right-hand side, we have $\nabla c=\nabla\lambda$ and
-hence $\delta=\nabla\cdot(\rho\nabla c)$. Now, we note that $\nabla F(\rho)=\log\frac{\rho}{\nu}-1$.
+hence $\delta=\nabla\cdot(\rho\nabla c)$. Now, we note that $\nabla F(\rho)=\log\frac{\rho}{\nu}+1$.
 Therefore, 
 \begin{align*}
-\frac{d\rho}{dt} & =\nabla\cdot(\rho\nabla(\log\frac{\rho}{\nu}-1))\\
+\frac{d\rho}{dt} & =\nabla\cdot(\rho\nabla(\log\frac{\rho}{\nu}+1))\\
  & =\nabla\cdot(\rho\nabla\log\frac{\rho}{\nu})\\
  & =\nabla\cdot\left(\rho\nabla f\right)+\Delta\rho
 \end{align*}
@@ -566,7 +566,7 @@ converges exponentially, i.e., $F(x_{t})-\min_{y}F(y)\le e^{-\alpha t}(F(x_{0})-
 \begin{proof}
 We write
 \[
-\frac{d}{dt}(F(x)-\min_{y}F(y))=\langle\nabla F(x_{t}),\frac{dx_{t}}{dt}\rangle_{x_{t}}=-\|\nabla F(x_{t})\|^{2}_{x_{t}}\leq-\alpha(F(x)-\min_{y}F(y)).
+\frac{d}{dt}(F(x_{t})-\min_{y}F(y))=\langle\nabla F(x_{t}),\frac{dx_{t}}{dt}\rangle_{x_{t}}=-\|\nabla F(x_{t})\|^{2}_{x_{t}}\leq-\alpha(F(x_{t})-\min_{y}F(y)).
 \]
 The conclusion follows.
 \end{proof}

@@ -438,14 +438,14 @@ $g(x)=f(x)-\frac{\mu}{2}\|x\|^{2}_{2}$.
 Next, we study gradient descent for $\mu$-strongly convex functions.
 \begin{lem}
 \label{lem:strongly_convex}Let $f\in\mathcal{C}^{2}(\R^{n})$ be
-$\mu$-strongly convex. Then, for any $x,y\in\R^{n},$we have
+$\mu$-strongly convex. Then, for any $x,y\in\R^{n},$ we have
 \[
 \norm{\nabla f(x)}^{2}_{2}\ge2\mu\left(f(x)-f(y)\right).
 \]
 \end{lem}
 
 \begin{proof}
-By the definition of $\mu$ strong convexity, we have 
+By the definition of $\mu$-strong convexity, we have 
 \[
 f(y)\ge f(x)+\langle\nabla f(x),y-x\rangle+\frac{\mu}{2}\norm{x-y}^{2}_{2}.
 \]
@@ -538,7 +538,7 @@ with $0<c_{1}<c_{2}<1$.
 \end{defn}
 
 Let the objective for progress be $\phi(h)=f(x)-f(x+hp)$. The first
-condition requires the algorithm makes sufficient progress ($\phi(h)\geq c_{1}h\cdot\phi'(0)$).
+condition requires the algorithm to make sufficient progress ($\phi(h)\geq c_{1}h\cdot\phi'(0)$).
 The second condition requires the slope to reduce significantly ($\phi'(h)\leq c_{2}\phi'(0)$).
 One can think of the first condition as giving an upper bound on $h$
 while the second condition gives a lower bound on $h$. In general,
@@ -582,8 +582,8 @@ we can split a function into two terms, one that is easy to optimize
 and another that we need to approximate with some error. More precisely,
 we consider the following 
 \begin{defn}
-We say $g+h$ is an $\alpha$-approximation to $f$ at the point $x$
-if
+For $0<\alpha\leq1$, we say $g+h$ is an $\alpha$-approximation
+to $f$ at the point $x$ if
 \begin{itemize}
 \item $g$ is convex, with the same value as $f$ at $x$, i.e., $g(x)=f(x)$,
 \item $h(x)=0$ and $h((1-\alpha)x+\alpha\widehat{x})\leq\alpha^{2}h(\widehat{x})$
@@ -611,7 +611,7 @@ Now, we consider the following algorithm:
 \SetAlgoLined
 
 \textbf{Input:} Initial point $x^{(0)}\in\Rn$, approximation factor
-$\alpha>0$.
+$0<\alpha\leq1$.
 
 \For{$k=0,1,\cdots$}{
 
@@ -624,9 +624,9 @@ $x^{(k+1)}\leftarrow\arg\min_{y}g^{(k)}(y)+h^{(k)}(y)$.
 \end{algorithm2e}
 \begin{thm}
 \label{thm:gd_general_apx} Suppose we are given a convex function
-$f$ such that we can find an $\alpha$-approximation at any $x$.
-Let $x^{*}$ be any minimizer of $f$. Then the sequence $x^{(k)}$
-in $\mathtt{GeneralizedGradientDescent}$ satisfies
+$f$ such that, for some $0<\alpha\leq1$, we can find an $\alpha$-approximation
+at any $x$. Let $x^{*}$ be any minimizer of $f$. Then the sequence
+$x^{(k)}$ in $\mathtt{GeneralizedGradientDescent}$ satisfies
 \[
 f(x^{(k)})-f(x^{*})\leq(1-\alpha)^{k}(f(x^{(0)})-f(x^{*})).
 \]
@@ -728,8 +728,8 @@ convexity. One prominent application is compressive sensing:
 \[
 \min_{\|x\|_{0}\leq k}\|Ax-b\|^{2}_{2}.
 \]
-For matrices $A$ satisfying restricted isometry property, one can
-apply $\mathtt{GeneralizedGradientDescent}$ to solve the problem
+For matrices $A$ satisfying the restricted isometry property, one
+can apply $\mathtt{GeneralizedGradientDescent}$ to solve the problem
 with the splitting $g(y)=\norm{Ax-b}^{2}_{2}+\langle2A^{\top}(Ax-b),y-x\rangle+\delta_{\|y\|_{0}\leq k}$
 and $h(y)=\|y-x\|^{2}_{2}$. In this case, the algorithm is called
 iterative hard-thresholding \cite{blumensath2009iterative} and the

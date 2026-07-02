@@ -140,7 +140,7 @@ $V_{k+1}=V_{k}\cdot\frac{\norm{\widehat{z}-z^{(k+1)}}}{\norm{\widehat{z}-z^{(k)}
 
 }
 
-Return $V_{\text{last}}\cdot\prod^{n}_{i=1}w_{i}(K^{(k+1)})$ where
+Return $V_{\text{last}}\cdot\prod^{n}_{i=1}w_{i}(K^{(k)})$ where
 $w_{i}(\cdot)$ is the width along $e_{i}$.
 
 \end{algorithm2e}
@@ -216,16 +216,16 @@ of $K$ using $O(n\log\frac{nR}{r})$ centroid computations.
 By Theorem \ref{thm:Grunbaum}, at each iteration, the volume of the
 remaining set $K^{(k)}$ decreases by at least a factor of $(1-\frac{1}{e})$.
 When the directional width along any axis is less than $r$ (namely
-$\max_{x\in K}\left|e^{\top}_{i}x\right|\leq r$), the algorithm stops
-cutting along that axis. So, just before the last cut along any axis,
-the width in that direction is at least $r$. Then, we use the center
-of gravity to cut. By Lemma \ref{lem:width}, the directional width
-along every axis of the surviving set is at least $r/(n+1)$. Since
-the set always contains the origin, and the original set contains
-a cube of side length $r$, when the algorithm stops, it must be an
-axis-parallel cuboid with each side of length in the range $[r/(n+1),r]$.
-So the final volume is at least $(r/(n+1))^{n}.$ The initial volume
-is at most $(2R)^{n}$. Therefore the number of iterations is at most
+$w_{i}(K^{(k)})\leq r$), the algorithm stops cutting along that axis.
+So, just before the last cut along any axis, the width in that direction
+is at least $r$. Then, we use the center of gravity to cut. By Lemma
+\ref{lem:width}, the directional width along every axis of the surviving
+set is at least $r/(n+1)$. Since the set always contains the origin,
+and the original set contains a cube of side length $r$, when the
+algorithm stops, it must be an axis-parallel cuboid with each side
+of length in the range $[r/(n+1),r]$. So the final volume is at least
+$(r/(n+1))^{n}.$ The initial volume is at most $(2R)^{n}$. Therefore
+the number of iterations is at most 
 \[
 \log_{1/(1-\frac{1}{e})}\left(\frac{(2R)^{n}}{(r/(n+1))^{n}}\right)=O\left(n\log(nR/r)\right).
 \]

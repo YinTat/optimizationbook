@@ -99,16 +99,16 @@ checked calculations
 \end_layout
 
 \begin_layout Standard
-In Section 
+By Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "sec:Gradient-Descent"
+reference "thm:gd_convex_strongly"
 nolink "false"
 
 \end_inset
 
 ,
- we proved that gradient descent converges at the rate 
+ gradient descent converges at the rate 
 \begin_inset Formula $(1-\frac{\mu}{L})^{k}$
 \end_inset
 
@@ -636,7 +636,7 @@ The fact
  suppose that 
 \begin_inset Formula 
 \[
-Q^{(k)}=\left\{ x\in\Rn:\|x-x^{(k)}\|\leq R^{(k)}\right\} .
+Q^{(k)}=\left\{ x\in\Rn:\|x-x^{(k)}\|\leq R^{(k)}\right\}.
 \]
 
 \end_inset
@@ -1550,7 +1550,7 @@ The differences between
 \end_layout
 
 \begin_layout Enumerate
-The latter is an epigraph cutting plane method and does not need to know
+The latter is an epigraph cutting plane method and does not need to know 
 \begin_inset Formula $f^{*}$
 \end_inset
 

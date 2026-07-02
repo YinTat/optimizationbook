@@ -63,10 +63,10 @@ $A\succeq0$ if $A$ is PSD and $A\succeq B$ if $A-B$ is PSD.
 \end{defn}
 
 \begin{defn}
-For any matrix $A$, we define its trace, $\tr A=\sum A_{ii}$, Frobenius
-norm, $\,\|A\|^{2}_{F}=\tr(A^{\top}A)=\sum_{i,j}A^{2}_{ij}$, and
-operator norm, $\,\|A\|_{\op}=\sup_{\|x\|_{2}=1}\|Ax\|_{2}$. Note
-that $x^{\top}Ax=\tr(Axx^{\top})$ and in general, $\tr(AB)=\tr(BA)$.
+For any matrix $A$, we define its trace, $\tr A=\sum_{i}A_{ii}$,
+Frobenius norm, $\,\|A\|^{2}_{F}=\tr(A^{\top}A)=\sum_{i,j}A^{2}_{ij}$,
+and operator norm, $\,\|A\|_{\op}=\sup_{\|x\|_{2}=1}\|Ax\|_{2}$.
+Note that $x^{\top}Ax=\tr(Axx^{\top})$ and in general, $\tr(AB)=\tr(BA)$.
 \end{defn}
 
 For symmetric $A$, we have $\tr A=\sum_{i}\lambda_{i}$, $\|A\|^{2}_{F}=\sum_{i}\lambda^{2}_{i}$
@@ -76,7 +76,7 @@ the eigenvalues of $A$.
 For a vector $x$ and a positive definite matrix $A$, $\norm x_{A}=\sqrt{x^{T}Ax}$;
 for a matrix $B$, 
 \[
-\norm B_{A}=\sup_{x}\frac{\norm{Bx}_{A}}{\norm x_{A}}.
+\norm B_{A}=\sup_{x\ne0}\frac{\norm{Bx}_{A}}{\norm x_{A}}.
 \]
 
 \begin{lem}[Sherman-Morrison-Woodbury]

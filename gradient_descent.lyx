@@ -409,7 +409,7 @@ Partial Approximation:
 \begin_layout Itemize
 Taylor Approximation:
  
-\begin_inset Formula $f(y)\approx\sum_{k=0}^{K}D^{k}f(x)[y-x]^{k}/k!$
+\begin_inset Formula $f(y)\approx\sum_{k=0}^{K}D^{k}f(x)[y-x]^{k}/k!.$
 \end_inset
 
  
@@ -422,7 +422,6 @@ Cite
 
 \end_inset
 
-.
 \end_layout
 
 \begin_layout Itemize
@@ -1604,7 +1603,7 @@ nolink "false"
 
 \end_inset
 
- and Cauchy-Schwarz inequality shows that 
+ and the Cauchy-Schwarz inequality show that 
 \begin_inset Formula 
 \[
 f(x)-f(y)\leq\left\langle \nabla f(x),x-y\right\rangle \leq\|\nabla f(x)\|_{2}\cdot\|x-y\|_{2}.
@@ -1629,7 +1628,7 @@ nolink "false"
 \end_inset
 
  rather than 
-\begin_inset Formula $\norm{x-x^{*}}_{2}$
+\begin_inset Formula $\norm{x-x^{*}}_{2}.$
 \end_inset
 
 
@@ -3233,7 +3232,7 @@ Show that the third condition in the definition of
 -approximation can be replaced by 
 \begin_inset Formula 
 \[
-g(y)+\alpha h(y/\alpha)\leq f(y)\leq g(y)+h(y)
+g(y)+\alpha h\left(x+\frac{y-x}{\alpha}\right)\leq f(y)\leq g(y)+h(y)
 \]
 
 \end_inset

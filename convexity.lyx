@@ -629,6 +629,10 @@ A function
 convex
 \emph default
  if for every 
+\begin_inset Formula $x,y\in\R^{n}$
+\end_inset
+
+ and 
 \begin_inset Formula $t\in[0,1]$
 \end_inset
 
@@ -791,7 +795,7 @@ polyhedron
 \emph on
 polytope
 \emph default
- is the convex hull of a set of points.
+ is the convex hull of a finite set of points.
  
 \end_layout
 
@@ -866,7 +870,7 @@ Let
  such that 
 \begin_inset Formula 
 \[
-\left\langle \theta,y\right\rangle >\sup_{x\in K}\left\langle \theta,x\right\rangle .
+\left\langle \theta,y\right\rangle >\sup_{x\in K}\left\langle \theta,x\right\rangle.
 \]
 
 \end_inset
@@ -1071,7 +1075,7 @@ Any closed convex set
  can be written as a possibly infinite intersection of halfspaces as follows
 \begin_inset Formula 
 \[
-K=\bigcap_{\theta\in\Rn}\left\{ x:\ \left\langle \theta,x\right\rangle \leq\sup_{y\in K}\left\langle \theta,y\right\rangle \right\} .
+K=\bigcap_{\theta\in\Rn}\left\{ x:\ \left\langle \theta,x\right\rangle \leq\sup_{y\in K}\left\langle \theta,y\right\rangle \right\}.
 \]
 
 \end_inset
@@ -1344,7 +1348,7 @@ Taking
  and hence
 \begin_inset Formula 
 \[
-f(y)\geq f(x)+\left\langle \nabla f(x),y-x\right\rangle .
+f(y)\geq f(x)+\left\langle \nabla f(x),y-x\right\rangle.
 \]
 
 \end_inset
@@ -1569,11 +1573,11 @@ The min cost flow problem has lots of applications such as route planning,
 
 .
  Further,
- we take 
+ we connect each flight node to 
 \begin_inset Formula $t$
 \end_inset
 
- to be connected to a node for each flight,
+,
  with 
 \begin_inset Formula $u_{e}$
 \end_inset
@@ -1841,12 +1845,12 @@ Consider the problem of predicting the likelihood of getting diabetes in the fut
 
  represents whether that person gets diabetes.
  For example,
- the feature vector can be (age,
+ the feature vector can include age,
  weight,
  height,
  BMI,
  fasting glucose level,
- ...).
+ etc.
  The features in the vector may be redundant and the purpose of extra variables is to make linear functions expressive enough to be able to classify.
  In particular,
  we assume that there is a vector 
@@ -2068,7 +2072,7 @@ Examples of convex sets and functions
 \end_layout
 
 \begin_layout Standard
-There are many important convex sets and here we only list some that appear in this course.
+There are many important convex sets and here we only list some that appear in this book.
  One of the most important classes of convex functions comes from convex sets.
 \end_layout
 
@@ -3441,7 +3445,7 @@ The Bayesian choice is to find
 \begin_inset Formula $\theta$
 \end_inset
 
- with maximum likelihood,
+ with maximum posterior density (the MAP estimate),
  namely 
 \begin_inset Formula $\theta=\argmax_{\theta}\log\P(\theta|y)=\argmin_{\theta}-\log\P(\theta|y)$
 \end_inset

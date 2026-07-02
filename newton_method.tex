@@ -12,7 +12,7 @@ Newton-Raphson iteration approximates a function by its linearization/Jacobian,
 then guesses where the linear approximation intersects the zero line
 as a likely zero, repeating this process until a sufficient approximation
 has been found. In one dimension, we approximate the function $g$
-by its gradient 
+by its linearization 
 \[
 g(x)\sim g(x^{(k)})+g'(x^{(k)})(x-x^{(k)}).
 \]
@@ -191,7 +191,7 @@ The convergence of the Newton method can be quadratic, when close
 enough to a root.
 \begin{thm}
 Assume that $|f'(x^{*})|\geq\alpha$ at $f(x^{*})=0$ and $f'$ is
-$L$-Lipschitz. Then, if $|x^{0}-x^{*}|\le\frac{\alpha}{2L}$,
+$L$-Lipschitz. Then, if $|x^{(0)}-x^{*}|\le\frac{\alpha}{2L}$,
 \[
 |x^{(k)}-x^{*}|\leq\frac{\alpha}{L}\left(\frac{L}{\alpha}|x^{(0)}-x^{*}|\right)^{2^{k}}.
 \]

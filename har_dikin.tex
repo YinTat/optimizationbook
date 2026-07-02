@@ -13,7 +13,7 @@ any starting point. Hit-and-Run satisfies this requirement.
 
 \begin{algorithm2e}[H]
 
-\caption{$\mathtt{Hit-and-Run}$}
+\caption{$\mathtt{Hit\mbox{-}and\mbox{-}Run}$}
 
 \SetAlgoLined
 
@@ -60,16 +60,15 @@ Prove Lemma \ref{lem:har-next-step}.
 \end{xca}
 
 The main theorem of this section is the following \cite{LV3}.
-\begin{xca}
+
 \begin{figure}[h]
 \begin{centering}
 \includegraphics[width=0.6\textwidth]{Figures/Thrm_10\lyxdot 37}\caption{Hit-and-Run from a corner}
 \par\end{centering}
 \end{figure}
-\end{xca}
 
 \begin{thm}
-\cite{LV3}\label{thm:har-cond}The conductance of Hit-and-Run in
+\cite{LV3}\label{thm:har-cond} The conductance of Hit-and-Run in
 a convex body $K$ containing the unit ball and of diameter $D$ is
 $\Omega(1/(nD))$.
 \end{thm}
@@ -157,10 +156,11 @@ Then, this is equivalent to:
 \[
 \nu([0,1])\nu(Z_{3})<d_{K}(Z_{1},Z_{2})\nu(Z_{1})\nu(Z_{2}).
 \]
-We will prove the opposite inequality to establish a contradiction.Moreover,
-without loss of generality, we can assume as in the proof of Euclidean
-isoperimetry that $Z_{1},Z_{2}$are single intervals, $Z_{1}=[0,u]$
-and $Z_{2}=[v,1].$ Rewriting, it suffices to show that 
+We will prove the opposite inequality to establish a contradiction.
+Moreover, without loss of generality, we can assume as in the proof
+of Euclidean isoperimetry that $Z_{1},Z_{2}$are single intervals,
+$Z_{1}=[0,u]$ and $Z_{2}=[v,1].$ Rewriting, it suffices to show
+that 
 \[
 \frac{(e^{v}-e^{u})(e-1)}{(e^{u}-1)(e-e^{v})}\ge\frac{v-u}{u(1-v)}
 \]
@@ -192,8 +192,8 @@ inequality, which uses an average distance.
 \begin{thm}
 \label{thm:har_weighted_iso} Let $S_{1},S_{2},S_{3}$be a partition
 of a convex body $K$. Let $h:K\rightarrow\R_{+}$ be a function such
-that for any $u\in S_{1},$$v\in S_{2}$, and any $x$ on the chord
-through $u$ and $v$, we have 
+that for any $u\in S_{1},$ any $v\in S_{2}$, and any $x$ on the
+chord through $u$ and $v$, we have 
 \[
 h(x)\le\frac{1}{3}\min\left\{ 1,d_{K}(u,v)\right\} .
 \]
@@ -408,7 +408,7 @@ d_{K}(u,v)\ge\frac{1}{8}\mbox{ or }\norm{u-v}\ge\frac{2}{\sqrt{n}}\max\left\{ F(
 \]
 We now apply Theorem \ref{thm:har_weighted_iso} using $h(x)=\frac{s(x)}{48\sqrt{n}D}$
 where $s(x)$ is defined with $\gamma=63/64.$ To see that this is
-a valid choice, first note that if $d_{K}(u,v)\ge\frac{1}{8},$then
+a valid choice, first note that if $d_{K}(u,v)\ge\frac{1}{8},$ then
 we have $h(x)\le d_{K}(u,v)/3$, as needed. So we can assume the second
 condition above holds. Next, noting that $x$ is some point on the
 chord through $u,v$, let the endpoints of the chord be $p,q.$ Without
@@ -485,6 +485,7 @@ Repeat $T$ times: at current point $x$,
 \begin{enumerate}
 \item Pick $y$ from $E_{x}(r)$.
 \item If $x\in E_{y}(r)$, go to $y$ with probability $\min\left\{ 1,\frac{\vol(E_{x}(r))}{\vol(E_{y}(r))}\right\} $.
+Otherwise, stay at $x$.
 \end{enumerate}
 \Return $x$.
 

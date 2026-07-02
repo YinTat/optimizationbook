@@ -853,7 +853,7 @@ We will prove the opposite inequality to establish a contradiction.
 \begin_inset Formula $Z_{1},Z_{2}$
 \end_inset
 
-are single intervals,
+ are single intervals,
  
 \begin_inset Formula $Z_{1}=[0,u]$
 \end_inset
@@ -988,7 +988,7 @@ name "thm:har_weighted_iso"
 \begin_inset Formula $S_{1},S_{2},S_{3}$
 \end_inset
 
-be a partition of a convex body 
+ be a partition of a convex body 
 \begin_inset Formula $K$
 \end_inset
 
@@ -1024,7 +1024,7 @@ be a partition of a convex body
  we have 
 \begin_inset Formula 
 \[
-h(x)\le\frac{1}{3}\min\left\{ 1,d_{K}(u,v)\right\} .
+h(x)\le\frac{1}{3}\min\left\{ 1,d_{K}(u,v)\right\}.
 \]
 
 \end_inset
@@ -1042,7 +1042,7 @@ Then,
  we have
 \begin_inset Formula 
 \[
-\pi(S_{3})\ge\E_{K}(h(x))\min\left\{ \pi(S_{1}),\pi(S_{2})\right\} .
+\pi(S_{3})\ge\E_{K}(h(x))\min\left\{ \pi(S_{1}),\pi(S_{2})\right\}.
 \]
 
 \end_inset
@@ -1760,7 +1760,7 @@ deep
  
 \begin_inset Formula 
 \[
-S_{1}'=\left\{ x\in S_{1}:P_{x}(S_{2})<\frac{1}{1000}\right\} \mbox{ and }S_{2}'=\left\{ x\in S_{2}:P_{x}(S_{1})<\frac{1}{1000}\right\} .
+S_{1}'=\left\{ x\in S_{1}:P_{x}(S_{2})<\frac{1}{1000}\right\} \mbox{ and }S_{2}'=\left\{ x\in S_{2}:P_{x}(S_{1})<\frac{1}{1000}\right\}.
 \]
 
 \end_inset
@@ -2104,7 +2104,7 @@ The general Dikin walk is defined as follows.
  let
 \begin_inset Formula 
 \[
-E_{u}(r)=\left\{ x:\,(x-u)^{\top}\mh(u)(x-u)\le r^{2}\right\} .
+E_{u}(r)=\left\{ x:\,(x-u)^{\top}\mh(u)(x-u)\le r^{2}\right\}.
 \]
 
 \end_inset
@@ -3027,7 +3027,7 @@ For the rejection probability at
  is
 \begin_inset Formula 
 \begin{equation}
-\min\left\{ 1,\frac{\vol(E_{x}(r))}{\vol(E_{z}(r))}\right\} =\min\left\{ 1,\sqrt{\frac{\det(\mathbf{H}(z))}{\det(\mathbf{H}(x))}}\right\} .\label{eq:reject_prob_z}
+\min\left\{ 1,\frac{\vol(E_{x}(r))}{\vol(E_{z}(r))}\right\} =\min\left\{ 1,\sqrt{\frac{\det(\mathbf{H}(z))}{\det(\mathbf{H}(x))}}\right\}.\label{eq:reject_prob_z}
 \end{equation}
 
 \end_inset
@@ -3859,7 +3859,7 @@ We can now bound the conductance of
 \begin{align*}
 \int_{S_{1}}P_{x}(S_{2})\,dx & \ge\frac{1}{2}\int_{S_{3}'}\frac{1}{8}dx\ge\frac{1}{16}\vol(S_{3}')\\
  & \ge\frac{1}{16}d_{K}(S_{1}',S_{2}')\frac{\vol(S_{1}')\vol(S_{2}')}{\vol(P)}\qquad\text{(Theorem \ref{thm:iso-cross-ratio})}\\
- & \ge\frac{r}{1000\sqrt{nm}}\min\left\{ \vol(S_{1}),\vol(S_{2})\right\} .
+ & \ge\frac{r}{1000\sqrt{nm}}\min\left\{ \vol(S_{1}),\vol(S_{2})\right\}.
 \end{align*}
 
 \end_inset
@@ -3913,7 +3913,7 @@ Let
  we have
 \begin_inset Formula 
 \[
-\int_{\partial S}p(x)dx\geq\frac{1}{\psi_{n}}\min\left\{ \int_{S}p(x)dx,\int_{\R^{n}\backslash S}p(x)dx\right\} .
+\int_{\partial S}p(x)dx\geq\frac{1}{\psi_{n}}\min\left\{ \int_{S}p(x)dx,\int_{\R^{n}\backslash S}p(x)dx\right\}.
 \]
 
 \end_inset

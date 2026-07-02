@@ -225,19 +225,18 @@ To lower bound the error, we note that the gradient at
 \begin_inset Formula $x^{(0)}$
 \end_inset
 
- is of the form 
-\begin_inset Formula $(?,0,0,0,\cdots)$
+ is supported only on the first coordinate.
+ Hence,
+ by the assumption,
+ 
+\begin_inset Formula $x^{(1)}$
 \end_inset
 
- and hence by the assumption 
-\begin_inset Formula $x^{(1)}=(?,0,0,0,\cdots)$
+ is supported only on the first coordinate and 
+\begin_inset Formula $\nabla f(x^{(1)})$
 \end_inset
 
- and 
-\begin_inset Formula $\nabla f(x^{(1)})=(?,?,0,0,\cdots)$
-\end_inset
-
-.
+ is supported only on the first two coordinates.
  By induction, only the first 
 \begin_inset Formula $k$
 \end_inset

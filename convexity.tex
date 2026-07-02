@@ -158,16 +158,16 @@ An optimization problem $\min_{x\in K}f(x)$ is convex if $K$ and
 $f$ are convex.
 \end{defn}
 
-Any point not in a convex set can be separated by a hyperplane from
-the set. We will see in Chapter \ref{chap:Elimination} that separating
-hyperplanes allow us to do binary search to find a point in a convex
-set. This is the basis of all polynomial-time algorithms for optimizing
-general convex functions. We will explore these binary search algorithms
-in Chapter \ref{chap:Elimination}. The following notions will be
-used routinely. A \emph{halfspace} in $\R^{n}$ is defined as the
-set $\left\{ x:\langle a,x\rangle\ge b\right\} $ for some $a\in\R^{n},b\in\R$.
-A \emph{polyhedron} is a finite intersection of halfspaces. A \emph{polytope}
-is the convex hull of a set of points. 
+Any point not in a closed convex set can be separated by a hyperplane
+from the set. We will see in Chapter \ref{chap:Elimination} that
+separating hyperplanes allow us to do binary search to find a point
+in a convex set. This is the basis of all polynomial-time algorithms
+for optimizing general convex functions. We will explore these binary
+search algorithms in Chapter \ref{chap:Elimination}. The following
+notions will be used routinely. A \emph{halfspace} in $\R^{n}$ is
+defined as the set $\left\{ x:\langle a,x\rangle\ge b\right\} $ for
+some $a\in\R^{n},b\in\R$. A \emph{polyhedron} is a finite intersection
+of halfspaces. A \emph{polytope} is the convex hull of a set of points. 
 
 \begin{figure}[h]
 \centering{}\includegraphics[width=0.75\columnwidth]{Figures/polyhedron_polytope}\caption{Polyhedron; Polytope}
@@ -244,7 +244,7 @@ $\theta$ such that $\theta^{\top}x>\sup_{y\in K}\theta^{\top}y$.
 Hence, we have $x\notin L$ and hence $L\subseteq K$.
 \end{proof}
 This shows that convex optimization is related to linear programs
-(optimize linear functions over polytopes) as follows:
+(optimize linear functions over polyhedra) as follows:
 \[
 \min_{x\in K}f(x)=\min_{(x,y)\in\{x\in K,y\in\R:y\geq f(x)\}}y
 \]
@@ -255,7 +255,7 @@ some matrix $A\in\R^{m\times(n+1)}$ and vector $b\in\R^{m}$ with
 $m\rightarrow+\infty$.
 \begin{xca}
 Let $A,B\subset\R^{n}$ be nonempty disjoint closed convex sets. Then
-there exists a vector $v\in\R^{n}$ such that $\sup_{x\in A}v^{\top}x\le\inf_{x\in B}v^{\top}x$.
+there exists a nonzero vector $v\in\R^{n}$ such that $\sup_{x\in A}v^{\top}x\le\inf_{x\in B}v^{\top}x$.
 Show strict inequality if the sets are also bounded.
 \end{xca}
 
@@ -383,9 +383,9 @@ that
 \]
 where $c\in\Rn$ is the cost vector, $b\in\Rm$ is the intake requirement
 vector and $A\in\R^{m\times n}$ is the matrix of nutrient contents
-of each food\footnote{Unfortunately, Nobel Laureate Stigler showed that \cite{stigler1945cost}
-the optimal meal is evaporated milk, cabbage, dried navy beans, and
-beef liver.}.
+of each food\footnote{Unfortunately, Nobel Laureate Stigler \cite{stigler1945cost} showed
+that the optimal meal is evaporated milk, cabbage, dried navy beans,
+and beef liver.}.
 
 Both the diet problem and the minimum cost flow problem can be reformulated
 into the form
@@ -510,7 +510,7 @@ $f$ is convex.
 In particular, this shows that the set of minimizers is connected.
 Therefore, any local minimum is a global minimum. We note that the
 converse of the fact above is not true. A function is \emph{quasiconvex}
-if every level set is convex. Equivalently, a function $f:\R^{n}\rightarrow\R$
+if every sublevel set is convex. Equivalently, a function $f:\R^{n}\rightarrow\R$
 is quasiconvex if for every $x,y\in\R^{n}$ and $t\in[0,1]$, 
 \[
 f((1-t)x+ty)\le\max\{f(x),f(y)\}.
@@ -669,9 +669,10 @@ The standard definition of a convex function in terms of gradients
 requires differentiability. However, a more general definition allows
 us to avoid this requirement. For a convex function $f:\R^{n}\rightarrow\R$,
 we say that a function $g:\R^{n}\rightarrow\R^{n}$ is called a \emph{subgradient
-selection} if it satisfies the following property: for any $x,y\in\R^{n},$$f(y)-f(x)\ge\langle g(x),y-x\rangle.$
-For the purpose of optimization algorithms, in almost all cases, a
-subgradient selection will suffice in place of a gradient. 
+selection} if it satisfies the following property: for any $x,y\in\R^{n},$
+we have $f(y)-f(x)\ge\langle g(x),y-x\rangle.$ For the purpose of
+optimization algorithms, in almost all cases, a subgradient selection
+will suffice in place of a gradient. 
 
 \begin{figure}[h]
 \begin{centering}
@@ -772,12 +773,12 @@ Using the noise assumption, we have that
 Now, say we know the signal is smooth and we model the prior as $\P(\theta)\varpropto\exp(-\lambda\sum^{n-1}_{i=1}(\theta_{i}-\theta_{i+1})^{2})$
 where $\lambda$ controls how smooth the signal is. Hence, 
 \[
--\log\P(\theta|y)=c+\sum_{i}(y_{i}-\theta_{i})^{2}+\lambda\sum^{n-1}_{i=1}(\theta_{i}-\theta_{i+1})^{2}.
+-\log\P(\theta|y)=c+\frac{1}{2}\sum_{i}(y_{i}-\theta_{i})^{2}+\lambda\sum^{n-1}_{i=1}(\theta_{i}-\theta_{i+1})^{2}.
 \]
 Since each term in the function above is convex, so is the whole formula.
 Hence, the recovery question becomes a convex optimization problem
 \[
-\min_{\theta}\sum_{i}(y_{i}-\theta_{i})^{2}+\lambda\sum^{n-1}_{i=1}(\theta_{i}-\theta_{i+1})^{2}.
+\min_{\theta}\frac{1}{2}\sum_{i}(y_{i}-\theta_{i})^{2}+\lambda\sum^{n-1}_{i=1}(\theta_{i}-\theta_{i+1})^{2}.
 \]
 
 When we recover a signal, we want to know how confident we are because
@@ -785,7 +786,7 @@ there are many choices of $\theta$ that could explain the same measurement
 $y$. One way to do this is to sample multiple $\theta\sim\P(\theta|y)$
 and compute the empirical variance or other statistics. Note that
 \[
-\P(\theta|y)\varpropto e^{-\sum_{i}(y_{i}-\theta_{i})^{2}-\lambda\sum^{n-1}_{i=1}(\theta_{i}-\theta_{i+1})^{2}}
+\P(\theta|y)\varpropto e^{-\frac{1}{2}\sum_{i}(y_{i}-\theta_{i})^{2}-\lambda\sum^{n-1}_{i=1}(\theta_{i}-\theta_{i+1})^{2}}
 \]
 which is a logconcave distribution. Therefore, one can study the signal
 and quality of signal recovery via logconcave sampling.

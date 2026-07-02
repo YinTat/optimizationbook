@@ -894,7 +894,7 @@ C & D
 
 .
  At the regular points used in the change-of-variables formula,
- the block
+ the block 
 \begin_inset Formula $B=DF^{x}_{\step}(y)$
 \end_inset
 

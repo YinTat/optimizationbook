@@ -111,8 +111,8 @@ The idea is to move whatever we can optimize in $\phi$ to $h$ and
 hopefully this makes the remaining part of $\phi$, $f$, as smooth
 and strongly convex as possible. To make the statement general, we
 only assume $h$ is convex and hence $h$ may not be differentiable.
-To handle this issue, we need to define an approximate derivative
-of $h$ that we can compute.
+To handle this issue, we need to define an approximate gradient of
+$\phi$ that we can compute.
 \begin{defn}
 We define the gradient step
 \[
@@ -406,7 +406,7 @@ steps \cite{allen2016even}.
 
 \section{Accelerated Stochastic Descent}
 
-Recall from Theorem \ref{thm:stochastic_method} that if $\nabla^{2}\ell_{i}(x)\leq L$
+Recall from Theorem \ref{thm:stochastic_method} that if $\nabla^{2}\ell_{i}(x)\preceq L\cdot I$
 for all $x$ and $i$ and that $\ell(x)=\frac{1}{n}\sum^{n}_{i=1}\ell_{i}(x)$
 is $\mu$ strongly convex, then we can find $x$ in $O((n+\frac{L}{\mu})\log(\frac{1}{\epsilon}))$
 stochastic steps such that 
@@ -443,10 +443,10 @@ O^{*}(1+\sqrt{\frac{L}{n\mu}})\cdot O^{*}(n)=O^{*}(n+\sqrt{n\frac{L}{\mu}}).
 
 \begin{thm}
 \label{thm:acc_stochastic_method}Given a convex function $\ell=\frac{1}{n}\sum\ell_{i}$.
-Suppose that $\nabla^{2}\ell_{i}(x)\leq L$ for all $i$ and $x$
-and that $\ell$ is $\mu$ strongly convex. Suppose we can compute
-$\nabla\ell_{i}$ in $O(1)$ time. We have an algorithm that outputs
-an $x$ such that 
+Suppose that $\nabla^{2}\ell_{i}(x)\preceq L\cdot I$ for all $i$
+and $x$ and that $\ell$ is $\mu$ strongly convex. Suppose we can
+compute $\nabla\ell_{i}$ in $O(1)$ time. We have an algorithm that
+outputs an $x$ such that 
 \[
 \E\ell(x)-\ell(x^{*})\leq\varepsilon(\ell(x^{(0)})-\ell(x^{*}))
 \]

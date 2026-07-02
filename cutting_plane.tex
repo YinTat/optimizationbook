@@ -200,7 +200,7 @@ and that $E^{(k)}\cap H^{(k)}\subset E^{(k+1)}$.
 
 Claim 1: $\vol E^{(k+1)}<e^{-\frac{1}{2(n+1)}}\vol E^{(k)}$.
 
-Note that since $g(x^{(k)})=e_{1},$we have $A^{(k+1)}=\frac{n^{2}}{n^{2}-1}\left(I-\frac{2}{n+1}e_{1}e^{\top}_{1}\right)$.
+Note that since $g(x^{(k)})=e_{1},$ we have $A^{(k+1)}=\frac{n^{2}}{n^{2}-1}\left(I-\frac{2}{n+1}e_{1}e^{\top}_{1}\right)$.
 Therefore, we have that
 \begin{align*}
 \left(\frac{\vol E^{(k+1)}}{\vol E^{(k)}}\right)^{2}=\left|\frac{\det A^{(k+1)}}{\det A^{(k)}}\right| & =\left(\frac{n^{2}}{n^{2}-1}\right)^{n}\det\left(I-\frac{2}{n+1}e_{1}e^{\top}_{1}\right)\\
@@ -212,7 +212,7 @@ where we used $1+x\leq e^{x}$ for all $x$.
 
 Claim 2. $E^{(k)}\cap H^{(k)}\subset E^{(k+1)}$.
 
-By the definition of $E^{(k)}$and the assumption $A^{(k)}=I$, we
+By the definition of $E^{(k)}$ and the assumption $A^{(k)}=I$, we
 have 
 \[
 x^{(k+1)}=-\frac{e_{1}}{n+1}
@@ -449,7 +449,7 @@ at what rate? The following classical theorem shows that the volume
 of the convex body decreases by a constant factor (no more than $1-\frac{1}{e}$)
 when using the exact center of gravity.
 \begin{thm}
-\label{thm:Grunbaum}\cite{Grunbaum1960}Let $K$ be a convex body
+\label{thm:Grunbaum}\cite{Grunbaum1960} Let $K$ be a convex body
 in $\R^{n}$ with center of gravity $z$. Let $H$ be any halfspace
 containing $z$. Then, 
 \[
@@ -542,14 +542,16 @@ Hence,
 \[
 M=\int^{M}_{-M}P(t)dt\leq\int^{\frac{1}{\alpha}}_{-\infty}P(0)e^{\alpha t}dt+\int^{M}_{1/\alpha}1dt=\frac{eP(0)}{\alpha}+M-\frac{1}{\alpha}.
 \]
-This shows that $P(0)\geq\frac{1}{e}$.
+This shows that $P(0)\geq\frac{1}{e}$. Applying the same argument
+with $-\theta$ gives $\P_{x\sim p}(x^{\top}\theta\ge0)\ge1/e$.
 
 Next, Lemma \ref{lem:logcon_max-1} shows that $\max_{x}p(x)\le1$.
-Therefore, the cumulative distribution $P$ is $1$-Lipschitz and
-we have
+Therefore, the cumulative distribution $P$ is $1$-Lipschitz. Hence,
+for $t\ge0$ we have
 \[
 \P_{x\sim p}(x^{\top}\theta\geq t)\ge\P_{x\sim p}(x^{\top}\theta\geq0)-t\geq\frac{1}{e}-t.
 \]
+For $t<0$, the claim follows from $\P_{x\sim p}(x^{\top}\theta\ge t)\ge\P_{x\sim p}(x^{\top}\theta\ge0)\ge1/e\ge1/e-\left|t\right|$.
 \end{proof}
 \begin{lem}
 \label{lem:logcon_max-1}Let $p$ be a one-dimensional isotropic logconcave

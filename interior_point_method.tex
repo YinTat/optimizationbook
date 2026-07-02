@@ -886,11 +886,11 @@ $x\in K$ by a soft constraint as follows:
 \]
 where $\phi(x)$ is a convex function such that $\phi(x)\rightarrow+\infty$
 as $x\rightarrow\partial K$. Note that we put the parameter $t$
-in front of the cost $c^{\top}x$ instead of $\phi$ as in the last
-lecture, it is slightly more convenient here. We say $\phi$ is a
-\emph{barrier} for $K$. To be concrete, we can always keep in mind
-$\phi(x)=-\sum^{n}_{i=1}\ln x_{i}$. As before, we define the central
-path.
+in front of the cost $c^{\top}x$ instead of $\phi$ as in the linear-programming
+formulation above; it is slightly more convenient here. We say $\phi$
+is a \emph{barrier} for $K$. To be concrete, we can always keep in
+mind $\phi(x)=-\sum^{n}_{i=1}\ln x_{i}$. As before, we define the
+central path.
 \begin{defn}
 The central path $x_{t}=\arg\min_{x}\phi_{t}(x)$.
 \end{defn}
@@ -1068,7 +1068,7 @@ is a $\nu_{1}+\nu_{2}$ self-concordant barrier for $K_{1}\cap K_{2}$.
 
 \begin{lem}
 If $\phi$ is a $\nu$-self-concordant barrier for $K$, then $\phi(Ax+b)$
-is $\nu$-self-concordant for $\{x:Ax+b\in K\}$.
+is $\nu$-self-concordant barrier for $\{x:Ax+b\in K\}$.
 \end{lem}
 
 \begin{xca}
@@ -1259,7 +1259,7 @@ we have
 \left\langle c,x_{t}\right\rangle -\left\langle c,x^{*}\right\rangle =\frac{1}{t}\left\langle \nabla\phi(x_{t}),x^{*}-x_{t}\right\rangle \leq\frac{\nu}{t}.
 \]
 
-For the second result, let $f(x)=tc^{T}x+\phi(x)$. Lemma \ref{lem:self_concordant_err}
+For the second result, let $f(x)=tc^{\top}x+\phi(x)$. Lemma \ref{lem:self_concordant_err}
 shows that
 \[
 \|x-x_{t}\|_{x}\leq2\|\nabla f(x)\|_{\nabla^{2}f(x)^{-1}}\leq\frac{1}{3}.
@@ -1279,8 +1279,8 @@ This gives the result.
 Hence, it suffices to end with $t=(\nu+\sqrt{\nu})/\varepsilon$,
 which is exactly the same as in the linear-programming case above.
 \begin{thm}
-Given a $\nu$-self-concordant barrier $\phi$ and its minimizer.
-We can find $x\in K$ such that $c^{\top}x\leq c^{\top}x^{*}+\epsilon$
+Given a $\nu$-self-concordant barrier $\phi$ and its minimizer,
+we can find $x\in K$ such that $c^{\top}x\leq c^{\top}x^{*}+\epsilon$
 in 
 \[
 O(\sqrt{\nu}\log(\frac{\nu}{\epsilon}\|c\|_{\nabla^{2}\phi(x^{(0)})^{-1}}))
@@ -1289,7 +1289,7 @@ iterations.
 \end{thm}
 
 \begin{proof}
-We prove by induction that $\|\nabla f_{t}(x)\|_{\nabla^{2}f_{t}(x))^{-1}}\leq\frac{1}{6}$
+We prove by induction that $\|\nabla f_{t}(x)\|_{\nabla^{2}f_{t}(x)^{-1}}\leq\frac{1}{6}$
 at the beginning of each iteration. This is true at the beginning
 by the definition of initial $t$. By Lemma \ref{lem:Newton_improvement},
 after the Newton step, we have

@@ -183,12 +183,12 @@ for every $y\in K^{*}$, and so $0\in K^{**}$.
 We now prove the other direction. Suppose there is a vector $y\in K^{**}\setminus\mathrm{cl(conv(\mathit{K}\cup\left\{ 0\right\} ))}$.
 By Theorem \ref{thm:sep}, there is $\theta$ such that
 \[
-\theta^{\top}y>\max_{x\in cl(conv(\mathit{K}\cup\left\{ 0\right\} ))}\theta^{\top}x.
+\theta^{\top}y>\sup_{x\in cl(conv(\mathit{K}\cup\left\{ 0\right\} ))}\theta^{\top}x.
 \]
 Since $0$ is feasible, the RHS is at least $0$. Thus, $\theta^{\top}y>0$.
 Scale $\theta$ so that 
 \[
-\theta^{\top}y>1\geq\max_{x\in cl(conv(\mathit{K}\cup\left\{ 0\right\} ))}\theta^{\top}x.
+\theta^{\top}y>1\geq\sup_{x\in cl(conv(\mathit{K}\cup\left\{ 0\right\} ))}\theta^{\top}x.
 \]
 Hence, $\theta\in K^{*}$ since $\theta^{\top}x\leq1$ for every $x\in K$.
 However, since $\theta^{\top}y>1$, we have $y\not\in K^{**}$, a
@@ -538,10 +538,10 @@ Integrating by parts, we have that
 \int_{B_{\infty}(x,r_{1})}\Delta h(y)dy=\int_{\partial B_{\infty}(x,r_{1})}\left\langle \nabla h(y),n(y)\right\rangle dy
 \]
 where $\Delta h(y)=\sum_{i}\frac{d^{2}h}{dx^{2}_{i}}(y)$ and $n(y)$
-is the normal vector on $\partial B_{\infty}(x,r_{1})$ the boundary
-of the box $B_{\infty}(x,r_{1})$, i.e. standard basis vectors. Since
-$f$ is $L$-Lipschitz with respect to $\norm{\cdot}_{\infty}$ so
-is $h$, i.e. $\norm{\nabla h(z)}_{\infty}\leq L$. Hence, we have
+is the outward normal vector on $\partial B_{\infty}(x,r_{1})$ of
+the box $B_{\infty}(x,r_{1})$, i.e. a signed standard basis vector.
+Since $f$ is $L$-Lipschitz with respect to $\norm{\cdot}_{\infty}$
+so is $h$, i.e. $\norm{\nabla h(z)}_{\infty}\leq L$. Hence, we have
 that
 \[
 \E_{y\in B_{\infty}(x,r_{1})}\Delta h(y)\leq\frac{1}{(2r_{1})^{n}}\int_{\partial B_{\infty}(x,r_{1})}\norm{\nabla h(y)}_{\infty}\norm{n(y)}_{1}dy\leq\frac{1}{(2r_{1})^{n}}\cdot2n(2r_{1})^{n-1}\cdot L=\frac{nL}{r_{1}}.
@@ -552,8 +552,8 @@ Therefore, we have that
 \]
 \end{proof}
 \begin{xca}
-For an $L$-gradient-Lipschitz function $f:\R^{n}\rightarrow\R,$and
-$h=f*\chi_{B_{\infty}(0,1/2)}$, prove that $h$ is also $L$-gradient-Lipschitz
+For an $L$-gradient-Lipschitz function $f:\R^{n}\rightarrow\R,$
+and $h=f*\chi_{B_{\infty}(0,1/2)}$, prove that $h$ is also $L$-gradient-Lipschitz
 and $\Delta h(y)=\E_{z\sim B_{\infty}(y,1/2)}(\Delta f(z))$.
 \end{xca}
 
@@ -956,7 +956,7 @@ for all $y\in K$.
 
 \begin{thm}
 \label{thm:separate_set} Let $K$ be a convex set satisfying $B_{2}(0,1/\kappa)\subset K\subset B_{2}(0,1)$.
-For any $0\leq\eta<\frac{1}{2}$, we have that
+For any $0<\eta<\frac{1}{2}$, we have that
 \[
 \text{SEP}_{\eta}(K)\leq O\left(n\log\left(\frac{n\kappa}{\eta}\right)\right)\text{MEM}_{(\eta/n\kappa)^{O(1)}}(K).
 \]
@@ -1023,7 +1023,7 @@ Note that each step involves computing
 x_{i}=f_{i}(\overset{\text{only a few }x_{j}}{\overbrace{x_{1},\cdots,x_{i-1}}})
 \]
 with simple functions $f_{i}$ whose derivatives we know how to compute.
-The key idea is to compute $\frac{\partial f}{\partial x_{1}}$ not
+The key idea is to compute $\frac{\partial f}{\partial x_{i}}$ not
 just for the inputs $x_{1}$ and $x_{2}$, but also for all intermediate
 variables. Here, we use $\frac{\partial f}{\partial x_{i}}$ to denote
 the derivative of $f$ with respect to $x_{i}$ while fixing $x_{1},x_{2},\cdots,x_{i-1}$
@@ -1090,16 +1090,17 @@ To bound the runtime, we define the computation graph $G$ to be a
 graph on $x_{1},x_{2},\cdots,x_{m}$ such that $i\rightarrow j$ if
 $f_{j}$ depends on $x_{i}$. Note that each edge is examined $O(1)$
 times whether evaluating $f$ or its gradient. Hence, the cost of
-computing $f$ and the cost of our algorithm are both $\Theta(m)$
-where $m$ is the number of edges in $G$. This completes the proof. 
+computing $f$ and the cost of our algorithm are both $\Theta(\mathcal{T})$
+where $\mathcal{T}$ is the number of edges in $G$. This completes
+the proof. 
 \end{proof}
 We note that an efficient implementation of the chain rule is the
 heart of the backpropagation algorithm for neural networks. To conclude
 this section, we see that Theorem \ref{thm:auto_diff} can be surprisingly
 useful even for some simple explicit functions.
 \begin{cor}
-If we can compute $f(A)=\det A$ exactly in time $\mathcal{T}$, then
-we can compute $A^{-1}$ exactly in $O(\mathcal{T})$.
+If we can compute $f(A)=\det A$ exactly in time $\mathcal{T}$ for
+nonsingular $A$, then we can compute $A^{-1}$ exactly in $O(\mathcal{T})$.
 \end{cor}
 
 \begin{proof}

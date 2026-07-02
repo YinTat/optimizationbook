@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.10.28)  2 JUL 2026 01:13
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.10.28)  2 JUL 2026 12:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -994,7 +994,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.75 ...mberline {6}Sparsification}{94}{chapter.6}
+l.75 ...mberline {6}Sparsification}{95}{chapter.6}
                                                   % [1
 
 ])
@@ -1065,7 +1065,7 @@ Package pdftex.def Info: Figures/Def_1.14.png  used on input line 498.
 <Figures/Section_1.6.png, id=600, 135.8676pt x 117.25807pt>
 File: Figures/Section_1.6.png Graphic file (type png)
 <use Figures/Section_1.6.png>
-Package pdftex.def Info: Figures/Section_1.6.png  used on input line 678.
+Package pdftex.def Info: Figures/Section_1.6.png  used on input line 679.
 (pdftex.def)             Requested size: 234.8775pt x 202.71765pt.
 
 
@@ -1086,7 +1086,15 @@ L/cmm/m/it/10 x[]$ \T1/cmr/m/it/10 be any min-i-mizer of $\OML/cmm/m/it/10 f$\T
 1/cmr/m/it/10 . Then $[]$
  []
 
-[21] [22] [23] [24] [25] [26] [27]) [28]
+[21] [22] [23] [24] [25]
+Overfull \hbox (13.7611pt too wide) in paragraph at lines 626--630
+\T1/cmr/m/it/10 approximation at any $\OML/cmm/m/it/10 x$\T1/cmr/m/it/10 . Let 
+$\OML/cmm/m/it/10 x[]$ \T1/cmr/m/it/10 be any min-i-mizer of $\OML/cmm/m/it/10 
+f$\T1/cmr/m/it/10 . Then the se-quence $\OML/cmm/m/it/10 x[]$ \T1/cmr/m/it/10 i
+n $[]$
+ []
+
+[26] [27]) [28]
 Chapter 3.
 (./cutting_plane.tex [29
 
@@ -1098,7 +1106,7 @@ Package pdftex.def Info: Figures/Section_3.2.png  used on input line 133.
 (pdftex.def)             Requested size: 352.31625pt x 97.5785pt.
  [30 <./Figures/Section_3.2.png>] [31] [32] [33]
 [34]
-Overfull \hbox (26.67146pt too wide) in paragraph at lines 580--583
+Overfull \hbox (26.67146pt too wide) in paragraph at lines 582--585
 []\T1/cmr/m/n/10 Without loss of gen-er-al-ity, we as-sume that $\OML/cmm/m/it/
 10 K$ \T1/cmr/m/n/10 is in isotropic po-si-tion, i.e., $\OT1/cmr/bx/n/10 E[]\OT
 1/cmr/m/n/10 (\OML/cmm/m/it/10 y[]\OT1/cmr/m/n/10 ) = 0$ \T1/cmr/m/n/10 and $\O
@@ -1110,14 +1118,14 @@ m/m/it/10 y[]\OT1/cmr/m/n/10 )[]) =
 <Figures/Thrm_3.20.png, id=916, 400.3758pt x 271.37386pt>
 File: Figures/Thrm_3.20.png Graphic file (type png)
 <use Figures/Thrm_3.20.png>
-Package pdftex.def Info: Figures/Thrm_3.20.png  used on input line 625.
+Package pdftex.def Info: Figures/Thrm_3.20.png  used on input line 627.
 (pdftex.def)             Requested size: 399.29463pt x 270.66095pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [36]
-Overfull \hbox (0.11588pt too wide) in paragraph at lines 686--689
+Overfull \hbox (0.11588pt too wide) in paragraph at lines 688--691
 [][]\T1/cmr/bx/n/10 Theorem 3.22. []\T1/cmr/m/it/10 Any al-go-rithm that solves
  Prob-lem [][]3.1[][] us-ing a sep-a-ra-tion or-a-cle needs to make $\OT1/cmr/m
 /n/10 
@@ -1128,7 +1136,7 @@ $
 <Figures/Thrm_3.22.png, id=925, 200.72992pt x 189.3474pt>
 File: Figures/Thrm_3.22.png Graphic file (type png)
 <use Figures/Thrm_3.22.png>
-Package pdftex.def Info: Figures/Thrm_3.22.png  used on input line 706.
+Package pdftex.def Info: Figures/Thrm_3.22.png  used on input line 708.
 (pdftex.def)             Requested size: 352.31625pt x 332.35388pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -1520,10 +1528,10 @@ Package pdftex.def Info: Figures/Thrm_10.37.png  used on input line 66.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [156 <./Figures/Section_10.1.png>]
-<Figures/Thrm_10.39.png, id=2284, 143.0946pt x 74.61877pt>
+<Figures/Thrm_10.39.png, id=2283, 143.0946pt x 74.61877pt>
 File: Figures/Thrm_10.39.png Graphic file (type png)
 <use Figures/Thrm_10.39.png>
-Package pdftex.def Info: Figures/Thrm_10.39.png  used on input line 129.
+Package pdftex.def Info: Figures/Thrm_10.39.png  used on input line 128.
 (pdftex.def)             Requested size: 281.85587pt x 146.97818pt.
 
 
@@ -1555,28 +1563,28 @@ L/cmm/m/it/10 :
  []
 
 [161] [162]
-Overfull \hbox (15.0pt too wide) detected at line 491
+Overfull \hbox (15.0pt too wide) detected at line 492
 [][] 
  []
 
 [163]
-<Figures/symmetry.png, id=2362, 674.52pt x 361.35pt>
+<Figures/symmetry.png, id=2361, 674.52pt x 361.35pt>
 File: Figures/symmetry.png Graphic file (type png)
 <use Figures/symmetry.png>
-Package pdftex.def Info: Figures/symmetry.png  used on input line 559.
+Package pdftex.def Info: Figures/symmetry.png  used on input line 560.
 (pdftex.def)             Requested size: 303.53119pt x 162.60599pt.
 
-Overfull \hbox (92.14287pt too wide) in paragraph at lines 559--560
+Overfull \hbox (92.14287pt too wide) in paragraph at lines 560--561
  [] 
  []
 
-<Figures/ssc.png, id=2363, 654.445pt x 390.45876pt>
+<Figures/ssc.png, id=2362, 654.445pt x 390.45876pt>
 File: Figures/ssc.png Graphic file (type png)
 <use Figures/ssc.png>
-Package pdftex.def Info: Figures/ssc.png  used on input line 564.
+Package pdftex.def Info: Figures/ssc.png  used on input line 565.
 (pdftex.def)             Requested size: 229.05917pt x 136.6626pt.
 
-Overfull \hbox (17.67085pt too wide) in paragraph at lines 564--565
+Overfull \hbox (17.67085pt too wide) in paragraph at lines 565--566
 []  
  []
 
@@ -1604,7 +1612,7 @@ Overfull \hbox (15.0pt too wide) detected at line 52
  []
 
 [177] [178]
-Overfull \hbox (15.0pt too wide) detected at line 197
+Overfull \hbox (15.0pt too wide) detected at line 200
 [][] 
  []
 
@@ -1616,7 +1624,7 @@ Appendix A.
 (./appendix.tex [185
 
 ]
-<Figures/fig3.png, id=2637, 963.6pt x 542.025pt>
+<Figures/fig3.png, id=2636, 963.6pt x 542.025pt>
 File: Figures/fig3.png Graphic file (type png)
 <use Figures/fig3.png>
 Package pdftex.def Info: Figures/fig3.png  used on input line 103.
@@ -1636,19 +1644,13 @@ Appendix B.
 
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
-
-Package rerunfilecheck Warning: File `main.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `main.out':
-(rerunfilecheck)             Before: 03D843261180219A61498A42440FDCD2;14840
-(rerunfilecheck)             After:  E306D152D13C1540499D0C2600D9A9A4;14824.
+Package rerunfilecheck Info: File `main.out' has not changed.
+(rerunfilecheck)             Checksum: E306D152D13C1540499D0C2600D9A9A4;14824.
  ) 
 Here is how much of TeX's memory you used:
- 30069 strings out of 475066
- 558517 string characters out of 5782772
- 902244 words of memory out of 5000000
+ 30068 strings out of 475066
+ 558506 string characters out of 5782772
+ 902249 words of memory out of 5000000
  49649 multiletter control sequences out of 15000+600000
  508207 words of font info for 128 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1698,10 +1700,10 @@ fonts/type1/public/cm-super/sfsx1000.pfb><c:/texlive/2022/texmf-dist/fonts/type
 1/public/cm-super/sfti0800.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/c
 m-super/sfti1000.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sf
 tt1000.pfb>
-Output written on main.pdf (191 pages, 3255681 bytes).
+Output written on main.pdf (191 pages, 3256889 bytes).
 PDF statistics:
- 3110 PDF objects out of 3580 (max. 8388607)
- 2711 compressed objects within 28 object streams
- 1114 named destinations out of 1200 (max. 500000)
+ 3109 PDF objects out of 3580 (max. 8388607)
+ 2710 compressed objects within 28 object streams
+ 1113 named destinations out of 1200 (max. 500000)
  822 words of extra memory for PDF output out of 10000 (max. 10000000)
 

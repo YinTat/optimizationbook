@@ -700,7 +700,7 @@ lIf{
 
 \end_inset
 
-There is no such 
+there is no such 
 \begin_inset Formula $e_{i}$
 \end_inset
 
@@ -718,7 +718,6 @@ status open
 \series bold
 Break
 \series default
-.
 \begin_inset ERT
 status open
 
@@ -1381,7 +1380,7 @@ name "ex: linExt-volume"
  
 \begin_inset Formula 
 \[
-Q=\left\{ x\in[0,1]^{n}:\,x_{i}<x_{j}\mbox{ if }(i,j)\in P\right\} .
+Q=\left\{ x\in[0,1]^{n}:\,x_{i}<x_{j}\mbox{ if }(i,j)\in P\right\}.
 \]
 
 \end_inset

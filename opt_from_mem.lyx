@@ -374,7 +374,7 @@ Given an approximately convex function
 \end_inset
 
  calls to the noisy EVAL oracle for 
-\begin_inset Formula $F$
+\begin_inset Formula $F.$
 \end_inset
 
  
@@ -386,8 +386,6 @@ Reference?
 \end_layout
 
 \end_inset
-
-.
 \end_layout
 
 \end_body

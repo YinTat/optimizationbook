@@ -87,15 +87,16 @@ name "sec:Stochastic-Gradient-Descent"
 \end_layout
 
 \begin_layout Standard
-In this section, we study problems of the form 
-\begin_inset Formula $\sum f_{i}$
+In this section, we study problems with objective 
+\begin_inset Formula $F(x)=\sum_i f_i(x)$
 \end_inset
 
+,
  where each 
 \begin_inset Formula $f_{i}$
 \end_inset
 
- is convex and the sum can be either infinite or finite.
+ is convex and the sum may be finite or infinite.
 \end_layout
 
 \begin_layout Subsection
@@ -813,7 +814,7 @@ Using
 \begin_inset Formula $h\leq\frac{1}{4L}$
 \end_inset
 
- and
+ and 
 \begin_inset Formula $F(x^{(k)})-F(x^{*})\geq\frac{\mu}{2}\|x^{(k)}-x^{*}\|_{2}^{2}$
 \end_inset
 
@@ -1278,7 +1279,7 @@ name "thm:stochastic_method"
 
 \end_inset
 
-Suppose each
+Suppose each 
 \begin_inset Formula $f_i$
 \end_inset
 
@@ -1286,7 +1287,7 @@ Suppose each
 \begin_inset Formula $L$
 \end_inset
 
--Lipschitz gradient and
+-Lipschitz gradient and 
 \begin_inset Formula $F$
 \end_inset
 

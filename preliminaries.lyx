@@ -1019,7 +1019,7 @@ status open
 \end_inset
 
  and 
-\begin_inset Formula $2\,\norm{\cdot}_{\tv}^{2}\leq\KL\leq\RR_{2}=\log(\chi^{2}+1)\leq\chi^{2}$
+\begin_inset Formula $2\,d_{TV}(\mu,\nu)^{2}\leq\KL(\mu\|\nu)\leq\RR_{2}(\mu\|\nu)=\log(\chi^{2}(\mu,\nu)+1)\leq\chi^{2}(\mu,\nu)$
 \end_inset
 
 .
@@ -1137,7 +1137,7 @@ Geometry
 
 \begin_layout Definition
 We denote the unit Euclidean ball by 
-\begin_inset Formula $B^{n}=\left\{ x:\norm x_{2}\le1\right\} .$
+\begin_inset Formula $B^{n}=\left\{ x:\norm x_{2}\le1\right\}.$
 \end_inset
 
  More generally,

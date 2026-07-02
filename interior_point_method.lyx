@@ -115,7 +115,7 @@ need to add analysis for initial solution
 In this section,
  we study interior point methods.
  In practice,
- this method reduces the problem of optimizing a convex function to solving a small number (
+ this method reduces the problem of optimizing a convex function to solving a small number of linear systems (
 \begin_inset Quotes eld
 \end_inset
 
@@ -127,7 +127,7 @@ typically less than
 \begin_inset Quotes erd
 \end_inset
 
-) linear systems.
+).
  In theory,
  it reduces the problem to 
 \begin_inset Formula $\tilde{O}(\sqrt{n})$
@@ -193,7 +193,7 @@ regularized
 \end_inset
 
  version of the linear program for some 
-\begin_inset Formula $t\ge0$
+\begin_inset Formula $t>0$
 \end_inset
 
 :
@@ -297,7 +297,11 @@ Existence and Uniqueness of central path
 
 \end_inset
 
-If the polytope 
+For 
+\begin_inset Formula $t>0$
+\end_inset
+
+, if the polytope 
 \begin_inset Formula $\{Ax=b,x\geq0\}$
 \end_inset
 
@@ -567,7 +571,7 @@ Suppose
 \begin_inset Formula $\PriR$
 \end_inset
 
- is non-empty and bounded.
+ has non-empty interior and is bounded.
  For any positive vector 
 \begin_inset Formula $\mu\in\R_{>0}^{n}$
 \end_inset
@@ -625,7 +629,7 @@ Fix
 \begin_inset Formula $\PriR$
 \end_inset
 
- is non-empty and bounded and since 
+ has non-empty interior and is bounded and since 
 \begin_inset Formula $f_{\mu}$
 \end_inset
 
@@ -1188,7 +1192,7 @@ We need to say the idea of the construction below.
 
 \end_inset
 
-The idea of the construction is simple:
+ The idea of the construction is simple:
  if we simply solve 
 \begin_inset Formula $Ax=b$
 \end_inset
@@ -2042,7 +2046,7 @@ Given a linear program
 
 .
  For any 
-\begin_inset Formula $0\leq\epsilon\leq\frac{1}{2}$
+\begin_inset Formula $0<\epsilon\leq\frac{1}{2}$
 \end_inset
 
 ,
@@ -5270,7 +5274,7 @@ If
 \begin_inset Formula $\phi(Ax+b)$
 \end_inset
 
- is 
+ is a 
 \begin_inset Formula $\nu$
 \end_inset
 
@@ -5946,7 +5950,7 @@ Let
  we have
 \begin_inset Formula 
 \[
-\alpha'(t)=\left\langle \nabla^{2}\phi(z_{t})(y-x),y-x\right\rangle .
+\alpha'(t)=\left\langle \nabla^{2}\phi(z_{t})(y-x),y-x\right\rangle.
 \]
 
 \end_inset

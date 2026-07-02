@@ -1005,7 +1005,7 @@ for each
  be the set of functions defined as 
 \begin_inset Formula 
 \[
-{\cal G}_{x}=\left\{ g:K\rightarrow[0,1]\ :\ \int_{u\in K}g(u)\ dQ(u)=x\right\} .
+{\cal G}_{x}=\left\{ g:K\rightarrow[0,1]\ :\ \int_{u\in K}g(u)\ dQ(u)=x\right\}.
 \]
 
 \end_inset
@@ -1032,7 +1032,7 @@ Show that the function
 \begin_inset Formula $Q$
 \end_inset
 
- is atom-free 
+ is atom-free,
 \begin_inset Note Note
 status open
 
@@ -1043,7 +1043,6 @@ why atom free?
 
 \end_inset
 
-,
  then 
 \begin_inset Formula $h_{t}(x)=\sup_{A:Q(A)=x}Q_{t}(A)-Q(A)$
 \end_inset
@@ -2449,7 +2448,7 @@ Isoperimetry
  Then,
 \begin_inset Formula 
 \[
-\vol(S_{3})\ge\frac{2}{D}d(S_{1},S_{2})\min\left\{ \vol(S_{1}),\vol(S_{2})\right\} .
+\vol(S_{3})\ge\frac{2}{D}d(S_{1},S_{2})\min\left\{ \vol(S_{1}),\vol(S_{2})\right\}.
 \]
 
 \end_inset
@@ -2596,7 +2595,7 @@ deep
  
 \begin_inset Formula 
 \[
-S_{1}'=\left\{ x\in S_{1}:P_{x}(S_{2})<\frac{\ell}{4}\right\} \mbox{ and }S_{2}'=\left\{ x\in S_{2}:P_{x}(S_{1})<\frac{\ell}{4}\right\} .
+S_{1}'=\left\{ x\in S_{1}:P_{x}(S_{2})<\frac{\ell}{4}\right\} \mbox{ and }S_{2}'=\left\{ x\in S_{2}:P_{x}(S_{1})<\frac{\ell}{4}\right\}.
 \]
 
 \end_inset
@@ -3138,7 +3137,7 @@ deep
  
 \begin_inset Formula 
 \[
-S_{1}'=\left\{ x\in S_{1}:P_{x}(S_{2})<\frac{1}{8}\right\} \mbox{ and }S_{2}'=\left\{ x\in S_{2}:P_{x}(S_{1})<\frac{1}{8}\right\} .
+S_{1}'=\left\{ x\in S_{1}:P_{x}(S_{2})<\frac{1}{8}\right\} \mbox{ and }S_{2}'=\left\{ x\in S_{2}:P_{x}(S_{1})<\frac{1}{8}\right\}.
 \]
 
 \end_inset
@@ -4378,7 +4377,7 @@ For any partition
  
 \begin_inset Formula 
 \[
-\mu(S_{3})\ge\frac{\ln2}{\E_{\mu}(\norm{x-\bar{x}})}\min\left\{ \mu(S_{1}),\mu(S_{2})\right\} .
+\mu(S_{3})\ge\frac{\ln2}{\E_{\mu}(\norm{x-\bar{x}})}\min\left\{ \mu(S_{1}),\mu(S_{2})\right\}.
 \]
 
 \end_inset
@@ -5907,7 +5906,7 @@ The functions
  
 \begin_inset Formula 
 \begin{equation}
-\int_{Z_{3}}F(t)\,dt<C\min\left\{ \int_{Z_{1}}F(t)\,dt,\int_{Z_{2}}F(t)\,dt\right\} .\label{FEQ}
+\int_{Z_{3}}F(t)\,dt<C\min\left\{ \int_{Z_{1}}F(t)\,dt,\int_{Z_{2}}F(t)\,dt\right\}.\label{FEQ}
 \end{equation}
 
 \end_inset
@@ -5936,7 +5935,7 @@ nolink "false"
  
 \begin_inset Formula 
 \begin{equation}
-\int_{Z_{3}}F(t)\,dt\geq2d(Z_{1},Z_{2})\min\left\{ \int_{Z_{1}}F(t)\,dt,\int_{Z_{2}}F(t)\,dt\right\} .\label{FEQ2}
+\int_{Z_{3}}F(t)\,dt\geq2d(Z_{1},Z_{2})\min\left\{ \int_{Z_{1}}F(t)\,dt,\int_{Z_{2}}F(t)\,dt\right\}.\label{FEQ2}
 \end{equation}
 
 \end_inset

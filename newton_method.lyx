@@ -975,7 +975,7 @@ After
 \begin_inset Formula $k$
 \end_inset
 
-steps,
+ steps,
 \begin_inset Formula 
 \[
 \frac{L}{\alpha}|x^{(k)}-x^{*}|\leq\left(\frac{L}{\alpha}\epsilon_{0}\right)^{2^{k}}

@@ -178,12 +178,12 @@ All the runtimes should have the correct ``units''. For instance,
 if the unit of the function value is $J$ (Joule) and the unit of
 the space is $m$, then the units of $G$, $R$ and $\epsilon$ are
 $Jm^{-1}$, $m$ and $J$ respectively. Therefore, the number of iterations
-of gradient descent $\frac{GR}{\epsilon}$ is unitless. In the table,
-we ignored some entries inside the $\log$ which leads to an ``incorrect''
-unit. However, when everything is written correctly, the number of
-iterations must be unitless. Furthermore, we can view $GR$, $LR^{2}$,
-$\frac{G^{2}}{\mu}$ all as upper bounds of the initial error $f(x^{(0)})-f^{*}$.
-For example, we know that
+of gradient descent $\left(\frac{GR}{\epsilon}\right)^{2}$ is unitless.
+In the table, we ignored some entries inside the $\log$ which leads
+to an ``incorrect'' unit. However, when everything is written correctly,
+the number of iterations must be unitless. Furthermore, we can view
+$GR$, $LR^{2}$, $\frac{G^{2}}{\mu}$ all as upper bounds of the
+initial error $f(x^{(0)})-f^{*}$. For example, we know that
 \[
 f(x^{(0)})-f^{*}\leq\left\langle \nabla f(x^{(0)}),x^{(0)}-x^{*}\right\rangle \leq GR
 \]
@@ -191,12 +191,13 @@ and that
 \[
 f(x^{(0)})-f^{*}\leq\left\langle \nabla f(x^{*}),x^{(0)}-x^{*}\right\rangle +\frac{L}{2}\|x^{(0)}-x^{*}\|^{2}\leq LR^{2}.
 \]
-Therefore, the terms $\frac{GR}{k}$, $\frac{G^{2}}{\mu k}$ and $\frac{LR^{2}}{k}$
-are all just measuring how much we need to decrease multiplicatively
-from the initial error. With this view, we can think of the required
-numbers of iterations for Lipschitz convex functions, strongly convex
-functions and smooth functions as exactly $\frac{1}{\epsilon^{2}_{\mathrm{relative}}}$,
-$\frac{1}{\epsilon_{\mathrm{relative}}}$ and $\frac{1}{\sqrt{\epsilon_{\mathrm{relative}}}}$.
+Therefore, the terms $\frac{GR}{\sqrt{k}}$, $\frac{G^{2}}{\mu k}$
+and $\frac{LR^{2}}{k^{2}}$ are all just measuring how much we need
+to decrease multiplicatively from the initial error. With this view,
+we can think of the required numbers of iterations for Lipschitz convex
+functions, strongly convex functions and smooth functions as exactly
+$\frac{1}{\epsilon^{2}_{\mathrm{relative}}}$, $\frac{1}{\epsilon_{\mathrm{relative}}}$
+and $\frac{1}{\sqrt{\epsilon_{\mathrm{relative}}}}$.
 
 \subsection{$L/\mu$ can be dimension dependent}
 

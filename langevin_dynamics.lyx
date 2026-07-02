@@ -765,15 +765,17 @@ For any process
 \begin_inset Formula $\mu(x_{t})\in\Rn$
 \end_inset
 
- and 
+,
+ 
 \begin_inset Formula $\sigma(x_{t})\in\R^{n\times m}$
 \end_inset
 
- with the initial point 
+,
+ and 
 \begin_inset Formula $x_{0}$
 \end_inset
 
- drawn from 
+ is drawn from 
 \begin_inset Formula $p_{0}$
 \end_inset
 
@@ -1037,7 +1039,7 @@ dX_{t}=-X_{t}dt+\sqrt{2}dW_{t}.
 
 \end_inset
 
-Use the Fokker-Planck equation to derive a corresponding stationary density.
+Use the Fokker--Planck equation to derive a corresponding stationary density.
  Use It
 \begin_inset ERT
 status open
@@ -1079,14 +1081,11 @@ status open
 \begin_inset Formula $\E df(X_{t})=d\E f(X_{t})$
 \end_inset
 
- for continuous 
+ when 
 \begin_inset Formula $f$
 \end_inset
 
- and 
-\begin_inset Formula $df$
-\end_inset
-
+ is sufficiently smooth
 ).
  
 \end_layout
@@ -1250,7 +1249,7 @@ Hence,
  
 \begin_inset Formula 
 \[
-\frac{1}{2}\frac{d}{dt}\|x_{t}-y_{t}\|^{2}=\left\langle \nabla f(y_{t})-\nabla f(x_{t}),x_{t}-y_{t}\right\rangle .
+\frac{1}{2}\frac{d}{dt}\|x_{t}-y_{t}\|^{2}=\left\langle \nabla f(y_{t})-\nabla f(x_{t}),x_{t}-y_{t}\right\rangle.
 \]
 
 \end_inset
@@ -1985,11 +1984,11 @@ Since we are interested only in vector fields that generate minimal movement in 
 
 \end_inset
 
-where we can think 
+where we can think of 
 \begin_inset Formula $v$
 \end_inset
 
- is the change of 
+ as the change in 
 \begin_inset Formula $p_{t}$
 \end_inset
 
@@ -2041,7 +2040,7 @@ This proves that any vector field that generates minimal movement in Wasserstein
 \begin_inset Formula $\lambda(x)$
 \end_inset
 
-.
+ up to an additive constant.
  Therefore,
  we can write 
 \begin_inset Formula $v(x)=\nabla\cdot(p(x)\nabla\lambda(x))$

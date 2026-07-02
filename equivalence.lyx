@@ -869,7 +869,7 @@ polar
  is defined as the following convex set:
 \begin_inset Formula 
 \[
-K^{*}=\left\{ y:\forall x\in K,\left\langle x,y\right\rangle \le1\right\} .
+K^{*}=\left\{ y:\forall x\in K,\left\langle x,y\right\rangle \le1\right\}.
 \]
 
 \end_inset
@@ -2069,7 +2069,7 @@ where
 \begin_inset Formula 
 \[
 \mathcal{H}=\left\{ (\theta,b):\,\forall x,\,f(x)\ge\theta^{\top}x-b\right\},\qquad
-\epi(f)=\bigcap_{(\theta,b)\in\mathcal{H}}\left\{ (x,t):t\ge\theta^{\top}x-b\right\} .
+\epi(f)=\bigcap_{(\theta,b)\in\mathcal{H}}\left\{ (x,t):t\ge\theta^{\top}x-b\right\}.
 \]
 
 \end_inset
@@ -3498,7 +3498,7 @@ Since we only compute
  we instead have that
 \begin_inset Formula 
 \[
-\E\zeta\leq2n^{3/2}\frac{r_{2}}{r_{1}}L+\frac{\varepsilon n}{2r_{2}}.
+\E\zeta\leq2n^{3/2}\frac{r_{2}}{r_{1}}L+\frac{\varepsilon n}{r_{2}}.
 \]
 
 \end_inset
@@ -4805,7 +4805,11 @@ name "lem:separate_set"
 \begin_inset Formula $\mathtt{Separate}_{\varepsilon,\rho}(K,x)$
 \end_inset
 
- outputs a halfspace that contains 
+ either asserts 
+\begin_inset Formula $x\in B(K,\varepsilon)$
+\end_inset
+
+ or outputs a halfspace that contains 
 \begin_inset Formula $K$
 \end_inset
 
@@ -5234,7 +5238,7 @@ Hence,
  Therefore,
 \begin_inset Formula 
 \[
-\text{SEP}_{O(\max\{n^{7/6}\kappa^{2}\delta^{1/3}/\rho,\rho,n\log(1/\delta)\delta\})}(K)\leq O(\log(1/\delta))\text{MEM}_{\delta}(K).
+\text{SEP}_{O(\max\{n^{7/6}\kappa^{2}\delta^{1/3}/\rho,\rho,n\log(1/\delta)\delta\})}(K)\leq O(n\log(1/\delta))\text{MEM}_{\delta}(K).
 \]
 
 \end_inset
@@ -5251,7 +5255,7 @@ Setting
  we have that 
 \begin_inset Formula 
 \[
-\text{SEP}_{\eta}(K)\leq O(\log(\frac{n\kappa}{\eta}))\text{MEM}_{\eta^{6}/(n^{7/2}\kappa^{6})}(K).
+\text{SEP}_{\eta}(K)\leq O(n\log(\frac{n\kappa}{\eta}))\text{MEM}_{\eta^{6}/(n^{7/2}\kappa^{6})}(K).
 \]
 
 \end_inset

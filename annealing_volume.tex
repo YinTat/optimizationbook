@@ -40,7 +40,7 @@ and $f(x)=\exp(-\|x\|^{2}/2)\chi_{K}(x).$
 
 \SetAlgoLined
 \begin{enumerate}
-\item For $i=0,\ldots,m=\lceil\sqrt{n}\ln(4R^{2}n/\varepsilon)\rceil$,
+\item For $i=0,\ldots,m=\left\lceil \log_{1+1/\sqrt{n}}(8R^{2}n/\varepsilon)\right\rceil $,
 let $a_{i}=2n/(1+\frac{1}{\sqrt{n}})^{i}$ and $f_{i}(x)=f(x)^{a_{i}}.$
 \item For $i=0,\ldots,m-1$, 
 \begin{enumerate}
@@ -73,9 +73,10 @@ Let $F(a)=\int_{K}f(x)^{a}\,dx$. Then
 \frac{\E\left(Y^{2}\right)}{\E\left(Y\right)^{2}} & =\frac{F(2a_{i+1}-a_{i})F(a_{i})}{F(a_{i+1})^{2}}.
 \end{align*}
 
-By Lemma \ref{lem:ratio_var}, $F$ is logconcave in $a$ and hence
+By Lemma \ref{lem:ratio_var}, $Z(a)=a^{n}F(a)$ is logconcave in
+$a$ and hence
 \[
-\frac{F(2a_{i+1}-a_{i})F(a_{i})}{F(a_{i+1})^{2}}\le\left(\frac{a^{2}_{i+1}}{(2a_{i+1}-a_{i})a_{i}}\right)^{n}.
+\frac{F(2a_{i+1}-a_{i})F(a_{i})}{F(a_{i+1})^{2}}=\frac{Z(2a_{i+1}-a_{i})Z(a_{i})}{Z(a_{i+1})^{2}}\left(\frac{a^{2}_{i+1}}{(2a_{i+1}-a_{i})a_{i}}\right)^{n}\le\left(\frac{a^{2}_{i+1}}{(2a_{i+1}-a_{i})a_{i}}\right)^{n}.
 \]
 For $a_{i}=a_{i+1}(1+\frac{1}{\sqrt{n}})$, we have 
 \[
@@ -113,7 +114,9 @@ $1/2n$, we have
 \[
 \int_{B^{n}}f_{0}(x)\ge(1-2^{-n})\int_{\R^{n}}f_{0}(x)\,dx=(1-2^{-n})\left(\frac{\pi}{n}\right)^{n/2}.
 \]
-Next, $a_{m}\le\varepsilon/(4R^{2})$ and hence 
+Next, by the definition of $m$, $(1+\frac{1}{\sqrt{n}})^{m}\ge8R^{2}n/\varepsilon$,
+so $a_{m}=2n/(1+\frac{1}{\sqrt{n}})^{m}\le\varepsilon/(4R^{2})$ and
+hence 
 \[
 f_{m}(x)=e^{-\frac{a_{m}}{2}\norm x^{2}}\ge e^{-\varepsilon/4}.
 \]

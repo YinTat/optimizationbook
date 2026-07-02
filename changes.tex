@@ -1,0 +1,75 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\title{Deferred Substantive Changes}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{Cutting-plane algorithms: ``small enough'' should not return the current query point}
+
+\paragraph{Location.}
+This concerns the cutting-plane algorithm descriptions in Chapter 3, around the
+printed PDF pages 30, 31, and 34, in \texttt{cutting\_plane.lyx}.  The visible
+algorithm steps include variants of
+\[
+\text{if } E^{(k)} \text{ is ``small enough'' then return } x^{(k)},
+\]
+and
+\[
+\text{if } E^{(k)} \text{ is ``small enough'' or Oracle says YES then return } x^{(k)}.
+\]
+
+\paragraph{Issue.}
+The two stopping reasons have different meanings.  If the oracle says YES at
+the current query point, then returning \(x^{(k)}\) is meaningful: the point has
+passed the oracle test.  By contrast, the event that the enclosing region
+\(E^{(k)}\) is ``small enough'' is a certificate about the remaining search
+region, not a certificate that the current query point is feasible or optimal.
+Thus returning \(x^{(k)}\) in the volume-small case can be misleading.
+
+This is especially delicate in the later variant where the algorithm checks
+whether \(E^{(k)}\) is small before the current query point has clearly been
+defined for that iteration.  In that case, the pseudocode can look as if it
+returns an undefined or unjustified \(x^{(k)}\).
+
+\paragraph{Why I did not edit it directly in the last pass.}
+Fixing this well requires choosing the intended algorithmic contract.  There
+are at least two reasonable versions:
+\begin{enumerate}
+\item For feasibility, separate the two cases:
+\[
+\text{if Oracle says YES, return } x^{(k)};
+\]
+\[
+\text{if } E^{(k)} \text{ is small enough, conclude that the feasible region is
+small (or empty up to the chosen tolerance).}
+\]
+\item For optimization, keep track of the best query point seen so far and
+return that point when the localization region becomes small.
+\end{enumerate}
+Those choices affect the surrounding prose, the stated guarantee, and possibly
+the later ``volume to function value'' explanation.  Since this is a final
+minimal proofreading pass, I did not silently rewrite the algorithms.
+
+\paragraph{Recommended change.}
+Revise each algorithm box so that the oracle-success case and the
+small-volume/stopping-certificate case are distinct.  A safe schematic
+replacement is:
+\[
+\begin{array}{l}
+\text{query the oracle at } x^{(k)};\\
+\text{if the oracle returns YES, return } x^{(k)};\\
+\text{if } E^{(k)} \text{ is small enough, return the appropriate certificate
+or the best query point maintained so far.}
+\end{array}
+\]
+Then adjust the paragraph immediately following the algorithm to state exactly
+what is certified in the small-volume case.
+
+\end{document}

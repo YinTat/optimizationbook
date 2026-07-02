@@ -14,8 +14,9 @@ discuss the following theorem.
 \begin{thm}[OPT via sampling]
 \label{thm:OPTviaSampling} Let $F(x)=e^{-\alpha c^{T}x}1_{K}(x)$
 for some convex set $K$ in $\R^{n}$ and vector $c\in\R^{n}.$ Suppose
-$\min_{x\in K}c^{T}x$ is bounded. Let $x$ be a random sample from
-the distribution with density proportional to $F(x)$. Then, 
+$\min_{x\in K}c^{T}x$ is bounded and $0<\int_{K}e^{-\alpha c^{T}x}\,dx<\infty$.
+Let $x$ be a random sample from the distribution with density proportional
+to $F(x)$. Then, 
 \[
 \E\left(c^{T}x\right)\le\min_{x\in K}c^{T}x+\frac{n}{\alpha}.
 \]

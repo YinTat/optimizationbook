@@ -177,7 +177,7 @@ Let
  we have that 
 \begin_inset Formula 
 \[
-f(x)\geq f(x^{*})\geq f(x)+\left\langle \nabla f(x),x^{*}-x\right\rangle .
+f(x)\geq f(x^{*})\geq f(x)+\left\langle \nabla f(x),x^{*}-x\right\rangle.
 \]
 
 \end_inset
@@ -3372,10 +3372,7 @@ Let
 \begin_inset Formula $p$
 \end_inset
 
- be a one-dimensional isotropic logconcave density
-\begin_inset Formula $.$
-\end_inset
-
+ be a one-dimensional isotropic logconcave density.
  Then 
 \begin_inset Formula $\max p(x)\le1$
 \end_inset

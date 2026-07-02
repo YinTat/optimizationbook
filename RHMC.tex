@@ -33,7 +33,7 @@ a local norm at $x$. In this sense, we can view the dynamics as evolving
 on a manifold with local metric $g(x)$. Here in this chapter, we
 will focus on the case when $g(x)=I$, the standard Euclidean metric.
 
-(Riemannian) Hamiltonian Monte Carlo (or RHMC) \cite{Neal1996,Neal2012}\cite{Girolami2009,Girolami2011}
+(Riemannian) Hamiltonian Monte Carlo (or RHMC) \cite{Neal1996,Neal2012,Girolami2009,Girolami2011}
 is a Markov chain Monte Carlo method for sampling from a desired distribution.
 Each step of the method consists of the following: At a current point
 $x$,
@@ -47,7 +47,7 @@ $(x,y)$ for time (distance) $\delta$.
 For the choice of $H$ above, the marginal distribution of the current
 point $x$ approaches the target distribution with density proportional
 to $e^{-f}$. For the exact Hamiltonian flow $T_{\step}$, no Metropolis
-correction is needed.In numerical HMC, an inexact reversible volume-preserving
+correction is needed. In numerical HMC, an inexact reversible volume-preserving
 integrator is usually paired with a Metropolis filter to correct discretization
 error. For exact flow, there is no discretization step size to tune.
 For numerical integrators, the integrator step size is still constrained

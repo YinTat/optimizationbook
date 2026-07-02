@@ -107,7 +107,7 @@ Consider the unit capacity flow problem on a graph $G=(V,E)$:
 \max_{Af=d,-1\leq f\leq1}c^{\top}f
 \]
 where $f\in\R^{E}$ is the flow vector, $A\in\R^{V\times E}$ encodes
-the vertex-edge adjacency matrix with two nonzeros per column, $d$
+the vertex-edge incidence matrix with two nonzeros per column, $d$
 is the demand vector so that $Af=d$ is flow conservation, and $c$
 is the cost vector. We can write the dual as follows:
 \begin{align*}
@@ -242,14 +242,14 @@ that every student can be assigned to at most one school and school
 $b$ can accept $c_{b}$ students. Then, the problem can be formulated
 as
 \[
-\max_{x_{e}\geq0}\sum_{e\in E}w_{e}x_{e}\text{ subject to }\sum_{(a,b)\in E}x_{(a,b)}\leq1\ \forall a\in V_{1},\sum_{(a,b)\in E}x_{(a,b)}\leq c_{b}\ \forall b\in V_{2}.
+\max_{x_{e}\geq0}\sum_{e\in E}w_{e}x_{e}\text{ subject to }\sum_{b:(a,b)\in E}x_{(a,b)}\leq1\ \forall a\in V_{1},\sum_{a:(a,b)\in E}x_{(a,b)}\leq c_{b}\ \forall b\in V_{2}.
 \]
 This is the weighted b-matching problem. Typically, the number of
 students is much larger than the number of schools. Therefore, an
 algorithm with running time linear in the number of students is preferable.
 To apply our framework, we let
 \begin{align*}
-K_{1} & =\{x\in\R^{E},x_{e}\geq0,\sum_{(a,b)\in E}x_{(a,b)}\leq1\ \forall a\in V_{1}\},\\
+K_{1} & =\{x\in\R^{E},x_{e}\geq0,\sum_{b:(a,b)\in E}x_{(a,b)}\leq1\ \forall a\in V_{1}\},\\
 K_{2} & =\{y\in\R^{V_{2}},y_{b}\leq c_{b}\},
 \end{align*}
 and $M:\R^{E}\rightarrow\R^{V_{2}}$ is the map $(Mx)_{b}=\sum_{a:(a,b)\in E}x_{(a,b)}.$
@@ -267,7 +267,7 @@ and $K_{2}=M_{2}$, $M=I$.
 \item Submodular minimization: $K_{1}=\{y\in\Rn:\sum_{i\in S}y_{i}\leq f(S)\text{ for all }S\subset[n]\}$,
 $K_{2}=\{y\leq0\}$, $M=I$.
 \item Submodular flow: $K_{1}=\{\varphi\in\R^{E},\ell_{e}\leq\varphi_{e}\leq u_{e}\text{ for all }e\in E\}$,
-$K_{2}=\{y\in\R^{V}:\sum_{i\in S}y_{i}\leq f(S)\text{ for all }S\subset[n]\}$,
+$K_{2}=\{y\in\R^{V}:\sum_{i\in S}y_{i}\leq f(S)\text{ for all }S\subset V\}$,
 $M$ is the incidence matrix.
 \end{itemize}
 In all of these examples, it is easy to compute the gradient of $\delta^{*}_{K_{1}}$
