@@ -1599,16 +1599,27 @@ Consider a random sparse matrix
 \end_layout
 
 \begin_layout Proof
-By the previous lemma, we have that
+Apply the previous lemma with failure probability 
+\begin_inset Formula $\delta/(2m)$
+\end_inset
+
+.
+ By a union bound,
+ with probability at least 
+\begin_inset Formula $1-\delta/2$
+\end_inset
+
+,
+ every row satisfies
 \begin_inset Formula 
 \[
-\pi_{r}^{\top}UU^{\top}\pi_{r}\leq\frac{\epsilon^{2}}{\log(d/\delta)}
+\pi_{r}^{\top}UU^{\top}\pi_{r}\leq\frac{\epsilon^{2}}{\log(2d/\delta)}.
 \]
 
 \end_inset
 
-with high probability.
- Under this event, using Theorem 
+On this event,
+ using Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:matrix-chernoff"
@@ -1618,7 +1629,7 @@ noprefix "false"
 
 \end_inset
 
- and 
+ and the bound 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "matrix_ub"
@@ -1628,14 +1639,29 @@ noprefix "false"
 
 \end_inset
 
-, we have that
+,
+ and choosing the constants in 
+\begin_inset Formula $m$
+\end_inset
+
+ and 
+\begin_inset Formula $s$
+\end_inset
+
+ large enough,
+ we have that
 \begin_inset Formula 
 \[
-(1-O(\varepsilon))I\preceq\sum_{r=1}^{m}\pi_{r}^{\top}UU^{\top}\pi_{r}\preceq(1+O(\varepsilon))I.
+(1-O(\varepsilon))I\preceq U^{\top}\Pi^{\top}\Pi U\preceq(1+O(\varepsilon))I.
 \]
 
 \end_inset
 
+This is exactly the OSE guarantee for the subspace spanned by 
+\begin_inset Formula $U$
+\end_inset
+
+.
 
 \end_layout
 

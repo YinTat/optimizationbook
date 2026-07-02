@@ -722,6 +722,16 @@ Suppose
 \end_inset
 
 .
+ Assume 
+\begin_inset Formula $\sigma^{2}<\infty$
+\end_inset
+
+ and that each sampled gradient is independent of the past,
+ so 
+\begin_inset Formula $\E[\nabla f(x)\mid x]=\nabla F(x)$
+\end_inset
+
+.
  For step size 
 \begin_inset Formula $h\leq\frac{1}{4L}$
 \end_inset
@@ -1284,6 +1294,20 @@ Suppose each
 
  be the minimizer of 
 \begin_inset Formula $F$
+\end_inset
+
+.
+ Here 
+\begin_inset Formula $F=\frac{1}{n}\sum_{i=1}^{n}f_i$
+\end_inset
+
+,
+ and the index 
+\begin_inset Formula $i$
+\end_inset
+
+ in each inner step is sampled uniformly from 
+\begin_inset Formula $[n]$
 \end_inset
 
 .

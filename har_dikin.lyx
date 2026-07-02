@@ -2102,11 +2102,17 @@ The general Dikin walk is defined as follows.
  let
 \begin_inset Formula 
 \[
-E_{u}(r)=\left\{ x:\,(x-u)^{\top}\mh(u)(x-u)\le r\right\} .
+E_{u}(r)=\left\{ x:\,(x-u)^{\top}\mh(u)(x-u)\le r^{2}\right\} .
 \]
 
 \end_inset
 
+Thus 
+\begin_inset Formula $r$
+\end_inset
+
+ denotes radius in the local norm.
+ 
 
 \end_layout
 
@@ -2896,7 +2902,7 @@ Prove the following for the log barrier in the polytope
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $\Pr_{w\sim E_{x}(r)}\left(\norm{w-x}_{x}\le r^{2}\left(1-\frac{1}{n}\right)\right)\ge1-c_{0}r$
+\begin_inset Formula $\Pr_{w\sim E_{x}(r)}\left(\norm{w-x}_{x}\le r\left(1-\frac{1}{n}\right)\right)\ge1-c_{0}r$
 \end_inset
 
  for some constant 
@@ -2907,7 +2913,7 @@ Prove the following for the log barrier in the polytope
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $\Pr_{w\sim E_{x}(r)}\left(\norm{w-x}_{w}+\norm{w-x}_{2x-w}\le2r^{2}\left(1-\frac{1}{n}\right)\vert\norm{w-x}_{x}\le r^{2}\left(1-\frac{1}{n}\right)\right)\ge1-c_{1}r$
+\begin_inset Formula $\Pr_{w\sim E_{x}(r)}\left(\norm{w-x}_{w}+\norm{w-x}_{2x-w}\le2r\left(1-\frac{1}{n}\right)\vert\norm{w-x}_{x}\le r\left(1-\frac{1}{n}\right)\right)\ge1-c_{1}r$
 \end_inset
 
  for some constant 
@@ -3844,7 +3850,7 @@ We can now bound the conductance of
 \begin_inset Formula 
 \begin{align*}
 \int_{S_{1}}P_{x}(S_{2})\,dx & \ge\frac{1}{2}\int_{S_{3}'}\frac{1}{8}dx\ge\frac{1}{16}\vol(S_{3}')\\
-\mbox{using isoperimetry (Theorem \ref{thm:iso-cross-ratio})} & \ge\frac{1}{16}d_{K}(S_{1}',S_{2}')\frac{\vol(S_{1}')\vol(S_{2}')}{\vol(P)}\\
+ & \ge\frac{1}{16}d_{K}(S_{1}',S_{2}')\frac{\vol(S_{1}')\vol(S_{2}')}{\vol(P)}\qquad\text{(Theorem \ref{thm:iso-cross-ratio})}\\
  & \ge\frac{r}{1000\sqrt{nm}}\min\left\{ \vol(S_{1}),\vol(S_{2})\right\} .
 \end{align*}
 

@@ -1303,8 +1303,12 @@ For any continuous function
 \begin_inset Formula $f$
 \end_inset
 
- with differentiable 
+ with 
 \begin_inset Formula $f^{*}$
+\end_inset
+
+ differentiable at 
+\begin_inset Formula $\theta$
 \end_inset
 
 ,
@@ -1410,18 +1414,27 @@ First we observe that the supremum is achieved.
 \end_inset
 
 .
+ Choose 
+\begin_inset Formula $t>0$
+\end_inset
+
+ small enough that 
+\begin_inset Formula $f^{*}(\theta+tu)<\infty$
+\end_inset
+
+.
  Since 
-\begin_inset Formula $g_{\theta+u}(x_{i})=g_{\theta}(x_{i})+u^{\top}x_{i}\ge f^{*}(\theta)-\epsilon+u^{\top}x_{i}$
+\begin_inset Formula $g_{\theta+tu}(x_{i})=g_{\theta}(x_{i})+tu^{\top}x_{i}\ge f^{*}(\theta)-\epsilon+tu^{\top}x_{i}$
 \end_inset
 
 ,
  this means that 
-\begin_inset Formula $g_{\theta+u}(x_{i})\to\infty$
+\begin_inset Formula $g_{\theta+tu}(x_{i})\to\infty$
 \end_inset
 
 ,
  contradicting 
-\begin_inset Formula $f^{*}(\theta+u)$
+\begin_inset Formula $f^{*}(\theta+tu)$
 \end_inset
 
  being finite.

@@ -786,7 +786,7 @@ halfspace
 \emph on
 polyhedron
 \emph default
- is the intersection of halfspaces.
+ is a finite intersection of halfspaces.
  A 
 \emph on
 polytope
@@ -866,7 +866,7 @@ Let
  such that 
 \begin_inset Formula 
 \[
-\left\langle \theta,y\right\rangle >\max_{x\in K}\left\langle \theta,x\right\rangle .
+\left\langle \theta,y\right\rangle >\sup_{x\in K}\left\langle \theta,x\right\rangle .
 \]
 
 \end_inset
@@ -1011,7 +1011,9 @@ nolink "false"
 
 \end_inset
 
- shows that a polyhedron (a finite intersection of halfspaces) is essentially as general as a convex set.
+ shows that closed convex sets can be represented as intersections,
+ possibly infinite,
+ of halfspaces.
 \end_layout
 
 \begin_layout Standard
@@ -1066,26 +1068,26 @@ Any closed convex set
 \begin_inset Formula $K$
 \end_inset
 
- can be written as the intersection of halfspaces as follows
+ can be written as a possibly infinite intersection of halfspaces as follows
 \begin_inset Formula 
 \[
-K=\bigcap_{\theta\in\Rn}\left\{ x:\ \left\langle \theta,x\right\rangle \leq\max_{y\in K}\left\langle \theta,y\right\rangle \right\} .
+K=\bigcap_{\theta\in\Rn}\left\{ x:\ \left\langle \theta,x\right\rangle \leq\sup_{y\in K}\left\langle \theta,y\right\rangle \right\} .
 \]
 
 \end_inset
 
 In other words,
- any closed convex set is the limit of a sequence of polyhedra.
+ closed convex sets are possibly infinite intersections of halfspaces.
 \end_layout
 
 \begin_layout Proof
 Let 
-\begin_inset Formula $L\defeq\bigcap_{\theta\in\Rn}\left\{ x:\ \left\langle \theta,x\right\rangle \leq\max_{y\in K}\left\langle \theta,y\right\rangle \right\} $
+\begin_inset Formula $L\defeq\bigcap_{\theta\in\Rn}\left\{ x:\ \left\langle \theta,x\right\rangle \leq\sup_{y\in K}\left\langle \theta,y\right\rangle \right\} $
 \end_inset
 
 .
  Since 
-\begin_inset Formula $K\subseteq\left\{ x:\ \left\langle \theta,x\right\rangle \leq\max_{y\in K}\left\langle \theta,y\right\rangle \right\} $
+\begin_inset Formula $K\subseteq\left\{ x:\ \left\langle \theta,x\right\rangle \leq\sup_{y\in K}\left\langle \theta,y\right\rangle \right\} $
 \end_inset
 
 ,
@@ -1116,7 +1118,7 @@ nolink "false"
 \end_inset
 
  such that 
-\begin_inset Formula $\theta^{\top}x>\max_{y\in K}\theta^{\top}y$
+\begin_inset Formula $\theta^{\top}x>\sup_{y\in K}\theta^{\top}y$
 \end_inset
 
 .
@@ -1145,8 +1147,8 @@ where the set
 \begin_inset Formula $\{x\in K,y\in\R:y\geq f(x)\}$
 \end_inset
 
- then can be approximated by intersection of halfspaces,
- namely 
+ then can be represented as a generally infinite intersection of halfspaces.
+ Using a finite subcollection gives sets of the form 
 \begin_inset Formula $\{A\binom{x}{y}\leq b\}$
 \end_inset
 
@@ -1409,7 +1411,7 @@ If
  then 
 \begin_inset Formula 
 \[
-f(x-\varepsilon\nabla f(x))=f(x)-\varepsilon\norm{\nabla f(x)}_{2}^{2}+O(\varepsilon^{2})\norm{\nabla f(x)}_{2}^{2}<f(x)
+f(x-\varepsilon\nabla f(x))=f(x)-\varepsilon\norm{\nabla f(x)}_{2}^{2}+o(\varepsilon)<f(x)
 \]
 
 \end_inset
@@ -1419,8 +1421,12 @@ for small enough
 \end_inset
 
 ,
- where we use Taylor approximation and the third term follows as a result of the boundedness of the Hessian of 
-\begin_inset Formula $f(x)$
+ where we use differentiability of 
+\begin_inset Formula $f$
+\end_inset
+
+ at 
+\begin_inset Formula $x$
 \end_inset
 
 .

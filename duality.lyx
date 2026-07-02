@@ -285,7 +285,7 @@ For any
  
 \begin_inset Formula 
 \begin{align*}
-f_{1}^{*}(-\theta_{1})+\sum_{i=2}^{m-1}f_{i}^{*}(\theta_{i-1}-\theta_{i})+f_{m}^{*}(\theta_{m-1}) & \ge((-\theta_{1})^{\top}x-f_{1}(x))+\sum_{i=1}^{m-1}((\theta_{i-1}-\theta_{i})^{\top}x-f_{i}(x))\\
+f_{1}^{*}(-\theta_{1})+\sum_{i=2}^{m-1}f_{i}^{*}(\theta_{i-1}-\theta_{i})+f_{m}^{*}(\theta_{m-1}) & \ge((-\theta_{1})^{\top}x-f_{1}(x))+\sum_{i=2}^{m-1}((\theta_{i-1}-\theta_{i})^{\top}x-f_{i}(x))\\
  & ~+(\theta_{m-1}^{\top}x-f_{m}(x))\\
  & =-\sum_{i=1}^{m}f_{i}(x)\\
 \sum_{i=1}^{m}f_{i}(x) & \ge-(f_{1}^{*}(-\theta_{1})+\sum_{i=2}^{m-1}f_{i}^{*}(\theta_{i-1}-\theta_{i})+f_{m}^{*}(\theta_{m-1}))
@@ -384,7 +384,7 @@ Finally,
 \end_inset
 
  for 
-\begin_inset Formula $i=0,\ldots,m$
+\begin_inset Formula $i=1,\ldots,m-1$
 \end_inset
 
 ,
@@ -1415,7 +1415,7 @@ To prove the claim,
 \end_inset
 
  and hence 
-\begin_inset Formula $\min_{x\in\widetilde{K_{1}}}\theta_{i}^{\top}x\geq\min_{x\in K_{1}}\theta_{i}^{\top}x$
+\begin_inset Formula $\max_{x\in\widetilde{K_{1}}}\theta_{i}^{\top}x\leq\max_{x\in K_{1}}\theta_{i}^{\top}x$
 \end_inset
 
 .
@@ -1423,25 +1423,25 @@ To prove the claim,
  note that 
 \begin_inset Formula 
 \[
-x_{i}=\arg\min_{x\in K_{1}}\theta_{i}^{\top}x\in\widetilde{K_{1}}
+x_{i}=\arg\max_{x\in K_{1}}\theta_{i}^{\top}x\in\widetilde{K_{1}}
 \]
 
 \end_inset
 
 and hence 
-\begin_inset Formula $\min_{x\in\widetilde{K_{1}}}\theta_{i}^{\top}x\leq\min_{x\in K_{1}}\theta_{i}^{\top}x$
+\begin_inset Formula $\max_{x\in\widetilde{K_{1}}}\theta_{i}^{\top}x\geq\max_{x\in K_{1}}\theta_{i}^{\top}x$
 \end_inset
 
 .
  Therefore,
  we have that 
-\begin_inset Formula $\min_{x\in\widetilde{K_{1}}}\theta_{i}^{\top}x=\min_{x\in K_{1}}\theta_{i}^{\top}x$
+\begin_inset Formula $\max_{x\in\widetilde{K_{1}}}\theta_{i}^{\top}x=\max_{x\in K_{1}}\theta_{i}^{\top}x$
 \end_inset
 
 .
  Therefore,
  
-\begin_inset Formula $x_{i}\in\arg\min_{x\in K_{1}}\theta_{i}^{\top}x$
+\begin_inset Formula $x_{i}\in\arg\max_{x\in\widetilde{K_{1}}}\theta_{i}^{\top}x$
 \end_inset
 
 .
@@ -1473,8 +1473,8 @@ This reduces the problem into the form
  we have
 \begin_inset Formula 
 \begin{align*}
-\min_{x\in\widetilde{K_{1}},Mx\in\widetilde{K_{2}}}c^{\top}x= & \min_{t_{i}\geq0,s_{i}\geq0,M\sum_{i}t_{i}x_{i}=\sum_{i}s_{i}y_{i}}c^{\top}(\sum_{i}t_{i}x_{i})\\
-= & \min_{t_{i}\geq0,s_{i}\geq0,\sum_{i}t_{i}z_{i}=\sum_{i}s_{i}y_{i}}\sum t_{i}\cdot c^{\top}x_{i}.
+\min_{x\in\widetilde{K_{1}},Mx\in\widetilde{K_{2}}}c^{\top}x= & \min_{\substack{t_{i},s_{i}\geq0,\ \sum_i t_i=\sum_i s_i=1\\M\sum_{i}t_{i}x_{i}=\sum_{i}s_{i}y_{i}}}c^{\top}(\sum_{i}t_{i}x_{i})\\
+= & \min_{\substack{t_{i},s_{i}\geq0,\ \sum_i t_i=\sum_i s_i=1\\\sum_{i}t_{i}z_{i}=\sum_{i}s_{i}y_{i}}}\sum_i t_{i}\cdot c^{\top}x_{i}.
 \end{align*}
 
 \end_inset

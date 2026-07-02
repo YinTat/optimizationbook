@@ -2049,7 +2049,7 @@ Let
  is at least an absolute constant.
 \end_layout
 
-\begin_layout Exercise
+\begin_layout Standard
 Using the exercise,
  it suffices to set 
 \begin_inset Formula $\alpha=1/n$
@@ -2071,7 +2071,7 @@ Using the exercise,
 .
 \end_layout
 
-\begin_layout Exercise
+\begin_layout Standard
 The second approach is to show that the local conductance is in fact large almost everywhere,
  and if the starting distribution is 
 \begin_inset Quotes eld
