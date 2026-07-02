@@ -262,7 +262,7 @@ SetAlgoLined
 
 \begin_layout Enumerate
 For 
-\begin_inset Formula $i=0,\ldots,m=\lceil\sqrt{n}\ln(4R^{2}n/\varepsilon)\rceil$
+\begin_inset Formula $i=0,\ldots,m=\left\lceil \log_{1+1/\sqrt{n}}(8R^{2}n/\varepsilon)\right\rceil$
 \end_inset
 
 ,
@@ -428,7 +428,7 @@ nolink "false"
 
 ,
  
-\begin_inset Formula $F$
+\begin_inset Formula $Z(a)=a^{n}F(a)$
 \end_inset
 
  is logconcave in 
@@ -438,7 +438,7 @@ nolink "false"
  and hence
 \begin_inset Formula 
 \[
-\frac{F(2a_{i+1}-a_{i})F(a_{i})}{F(a_{i+1})^{2}}\le\left(\frac{a_{i+1}^{2}}{(2a_{i+1}-a_{i})a_{i}}\right)^{n}.
+\frac{F(2a_{i+1}-a_{i})F(a_{i})}{F(a_{i+1})^{2}}=\frac{Z(2a_{i+1}-a_{i})Z(a_{i})}{Z(a_{i+1})^{2}}\left(\frac{a_{i+1}^{2}}{(2a_{i+1}-a_{i})a_{i}}\right)^{n}\le\left(\frac{a_{i+1}^{2}}{(2a_{i+1}-a_{i})a_{i}}\right)^{n}.
 \]
 
 \end_inset
@@ -583,8 +583,18 @@ We first note that since
 \end_inset
 
 Next,
+ by the definition of 
+\begin_inset Formula $m$
+\end_inset
+
+,
  
-\begin_inset Formula $a_{m}\le\varepsilon/(4R^{2})$
+\begin_inset Formula $(1+\frac{1}{\sqrt{n}})^{m}\ge8R^{2}n/\varepsilon$
+\end_inset
+
+,
+ so 
+\begin_inset Formula $a_{m}=2n/(1+\frac{1}{\sqrt{n}})^{m}\le\varepsilon/(4R^{2})$
 \end_inset
 
  and hence 

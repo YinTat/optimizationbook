@@ -1878,7 +1878,7 @@ units
  respectively.
  Therefore,
  the number of iterations of gradient descent 
-\begin_inset Formula $\frac{GR}{\epsilon}$
+\begin_inset Formula $\left(\frac{GR}{\epsilon}\right)^{2}$
 \end_inset
 
  is unitless.
@@ -1938,7 +1938,7 @@ f(x^{(0)})-f^{*}\leq\left\langle \nabla f(x^{*}),x^{(0)}-x^{*}\right\rangle +\fr
 
 Therefore,
  the terms 
-\begin_inset Formula $\frac{GR}{k}$
+\begin_inset Formula $\frac{GR}{\sqrt{k}}$
 \end_inset
 
 ,
@@ -1947,7 +1947,7 @@ Therefore,
 \end_inset
 
  and 
-\begin_inset Formula $\frac{LR^{2}}{k}$
+\begin_inset Formula $\frac{LR^{2}}{k^{2}}$
 \end_inset
 
  are all just measuring how much we need to decrease multiplicatively from the initial error.
