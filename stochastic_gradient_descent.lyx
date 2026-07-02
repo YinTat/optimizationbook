@@ -1010,7 +1010,7 @@ Note that
 \begin_inset Formula 
 \begin{align*}
 \E\|\nabla\widetilde{f}(x^{*})\|^{2} & \leq2\E\|\nabla f(x^{*})-\nabla f(x^{(0)})\|^{2}+2\|\nabla F(x^{(0)})-\nabla F(x^{*})\|^{2}\\
- & =2\E\|\nabla f(x^{*})-\nabla f(x^{(0)})\|^{2}+2\E\|\nabla f(x^{(0)})-\nabla f(x^{*})\|^{2}\\
+ & \leq2\E\|\nabla f(x^{*})-\nabla f(x^{(0)})\|^{2}+2\E\|\nabla f(x^{(0)})-\nabla f(x^{*})\|^{2}\\
  & \leq4L(F(x^{(0)})-F(x^{*}))+4L(F(x^{(0)})-F(x^{*}))
 \end{align*}
 

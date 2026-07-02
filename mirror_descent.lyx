@@ -1084,7 +1084,7 @@ Conceptually,
 \end_inset
 
  does not make sense either.
- Imagine the problem is infinitely dimensional.
+ Imagine the problem is infinite-dimensional.
  Note that 
 \begin_inset Formula $f(x)<+\infty$
 \end_inset
@@ -1404,7 +1404,7 @@ nolink "false"
 \end_layout
 
 \begin_layout Definition
-For any strictly convex function 
+For any differentiable strictly convex function 
 \begin_inset Formula $\Phi$
 \end_inset
 
@@ -2254,7 +2254,7 @@ for some
 
 .
  Since 
-\begin_inset Formula $\nabla^{2}\Phi(\zeta)=\frac{1}{\zeta}$
+\begin_inset Formula $\nabla^{2}\Phi(\zeta)=\operatorname{diag}(1/\zeta_i)$
 \end_inset
 
 ,

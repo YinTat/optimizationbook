@@ -81,7 +81,7 @@ Optimization from Membership via Sampling
 
 \begin_layout Standard
 So far in this chapter,
- we have assumed the oracle can be computed exactly.
+ we have assumed the oracle answers can be computed exactly.
  However, it is still open to determine the best runtime for reductions
  between 
 \emph on
@@ -297,7 +297,7 @@ The theorem says that if we sample according to
 \end_inset
 
 -approximation to the optimum.
- However, sampling from such a density is not trivial.
+ However, sampling from such a density is nontrivial.
  Instead, we will have to go through a sequence of overlapping distributions,
  starting with one that is easy to sample and ending with a distribution
  that is focused close to the minimum.

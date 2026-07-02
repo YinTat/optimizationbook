@@ -961,7 +961,7 @@ We first prove that
 \begin_inset Formula $x\in K^{**}$
 \end_inset
 
- .
+.
  Moreover,
  
 \begin_inset Formula $\langle0,y\rangle=0\leq1$
@@ -1076,7 +1076,7 @@ Let
 \begin_inset Formula $\,\R^{n}$
 \end_inset
 
- be a closed convex set .
+ be a closed convex set.
  Then 
 \begin_inset Formula $(K^{*})^{*}=K$
 \end_inset
@@ -2068,7 +2068,8 @@ where
  we can write
 \begin_inset Formula 
 \[
-\epi(f)=\bigcap_{{\cal H}=\left\{ (\theta,b):\,\forall x,\,f(x)\ge\theta^{\top}x-b\right\} }\left\{ (x,t):t\ge\theta^{\top}x-b\right\} .
+\mathcal{H}=\left\{ (\theta,b):\,\forall x,\,f(x)\ge\theta^{\top}x-b\right\},\qquad
+\epi(f)=\bigcap_{(\theta,b)\in\mathcal{H}}\left\{ (x,t):t\ge\theta^{\top}x-b\right\} .
 \]
 
 \end_inset
@@ -2301,7 +2302,7 @@ Order reversal
 ).
 \end_layout
 
-\begin_layout Exercise
+\begin_layout Remark*
 Interestingly,
  the convex conjugate is the 
 \emph on
@@ -2922,7 +2923,7 @@ and
 \end_inset
 
 -gradient-Lipschitz and 
-\begin_inset Formula $\Delta h(y)=\E_{z\sim B_{\infty(y,1/2)}}(\Delta f(z))$
+\begin_inset Formula $\Delta h(y)=\E_{z\sim B_{\infty}(y,1/2)}(\Delta f(z))$
 \end_inset
 
 .
@@ -4502,7 +4503,14 @@ Case 2:
 \end_inset
 
 .
- We consider the point 
+ If 
+\begin_inset Formula $d_{1}=d_{2}$
+\end_inset
+
+,
+ the claim is trivial.
+ Otherwise,
+ we consider the point 
 \begin_inset Formula $d_{3}=d_{1}+\frac{d_{2}-d_{1}}{\lambda}$
 \end_inset
 
@@ -5226,7 +5234,7 @@ Hence,
  Therefore,
 \begin_inset Formula 
 \[
-\text{SEP}_{\Omega(\max(n^{7/6}\kappa^{2}\delta^{1/3}/\rho+\rho+n\log(1/\delta)\delta)}(K)\leq O(\log(1/\delta))\text{MEM}_{\delta}(K).
+\text{SEP}_{O(\max\{n^{7/6}\kappa^{2}\delta^{1/3}/\rho,\rho,n\log(1/\delta)\delta\})}(K)\leq O(\log(1/\delta))\text{MEM}_{\delta}(K).
 \]
 
 \end_inset
@@ -5304,7 +5312,7 @@ In practice,
 \end_inset
 
  assuming we have enough memory.
- Check out google/jax for a modern implementation.
+ Check out JAX for a modern implementation.
 \end_layout
 
 \begin_layout Remark*
@@ -5364,7 +5372,7 @@ Before proving it formally,
 Note that each step involves computing
 \begin_inset Formula 
 \[
-x_{i}=f_{i}(\overset{\text{only few }x_{j}}{\overbrace{x_{1},\cdots,x_{i-1}}})
+x_{i}=f_{i}(\overset{\text{only a few }x_{j}}{\overbrace{x_{1},\cdots,x_{i-1}}})
 \]
 
 \end_inset
@@ -5374,7 +5382,7 @@ with simple functions
 \end_inset
 
  whose derivatives we know how to compute.
- The key idea is compute 
+ The key idea is to compute 
 \begin_inset Formula $\frac{\partial f}{\partial x_{1}}$
 \end_inset
 
@@ -5801,7 +5809,7 @@ We prove by induction that the formula
 .
  For the induction,
  we let 
-\begin_inset Formula $L_{i}=\{x_{j_{1}},x_{j_{2}},\cdots,x_{j_{k}}\}$
+\begin_inset Formula $L_{i}=\{j_{1},j_{2},\cdots,j_{k}\}$
 \end_inset
 
 .
@@ -6002,7 +6010,7 @@ Auto differentiation is great if the function can be computed exactly.
 \begin_inset Formula $f$
 \end_inset
 
- can be only approximated or the computation of 
+ can only be approximated or the computation of 
 \begin_inset Formula $f$
 \end_inset
 

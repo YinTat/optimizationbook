@@ -322,7 +322,7 @@ It remains to show that there exist
 \begin_inset Formula $\ge$
 \end_inset
 
- is guaranteed by above).
+ is guaranteed by the preceding inequality).
  We choose 
 \begin_inset Formula $x\in\R^{n}$
 \end_inset
@@ -552,8 +552,14 @@ When
 \begin_inset Formula $s-t$
 \end_inset
 
- cut problem with the cut given by 
-\begin_inset Formula $\{v\in V\text{ such that }\phi(v)\geq t\}$
+ cut problem with the cut,
+ for a threshold 
+\begin_inset Formula $\tau$
+\end_inset
+
+,
+ given by 
+\begin_inset Formula $\{v\in V:\phi(v)\geq\tau\}$
 \end_inset
 
 .
@@ -664,7 +670,7 @@ where
 \begin_inset Formula $\tilde{O}(n^{2}(Z+n^{4}))$
 \end_inset
 
- time algorithm for the primal (because there are 
+-time algorithm for the primal (because there are 
 \begin_inset Formula $n^{2}$
 \end_inset
 
@@ -720,10 +726,10 @@ v^{\top}(\sum_{i=1}^{m}y_{i}A_{i}-C)v\geq0.
 \end_inset
 
 Let 
-\begin_inset Formula $S$
+\begin_inset Formula $\mathcal{S}$
 \end_inset
 
- be the set of all cutting planes used in the algorithm.
+ be the set of vectors whose cutting planes are used in the algorithm.
  Then,
  the proof of the cutting plane method 
 \begin_inset Note Note
@@ -1188,7 +1194,7 @@ literal "true"
 \end_inset
 
 ,
- the standard way was to use the equivalence of 
+ the standard way was to use the equivalence between 
 \begin_inset Formula $\nabla\delta_{K_{1}}^{*}$
 \end_inset
 
@@ -1196,8 +1202,8 @@ literal "true"
 \begin_inset Formula $\nabla\delta_{K_{1}}$
 \end_inset
 
- ,
- and apply cutting plane methods.
+,
+ and then apply cutting plane methods.
  With the running time of cutting plane methods,
  such an algorithm usually had theoretical running time at least 
 \begin_inset Formula $n^{5}$
@@ -1249,7 +1255,7 @@ Taking the dual has two benefits.
 .
 \end_layout
 
-\begin_layout Proof
+\begin_layout Standard
 \begin_inset Float figure
 placement document
 alignment document
@@ -1296,7 +1302,7 @@ The key observation is the following lemma:
 
 \begin_layout Lemma
 Let 
-\begin_inset Formula $x_{i}\in K_{1}$
+\begin_inset Formula $\{x_i\}\subset K_{1}$
 \end_inset
 
  be the set of points output by the oracle 
@@ -1305,7 +1311,7 @@ Let
 
  during the cutting plane method.
  Define 
-\begin_inset Formula $y_{i}\in K_{2}$
+\begin_inset Formula $\{y_i\}\subset K_{2}$
 \end_inset
 
  similarly.
@@ -1318,7 +1324,7 @@ Let
  we have that
 \begin_inset Formula 
 \[
-\min_{x\in K_{1},Tx\in K_{2}}c^{\top}x\leq\min_{x\in\widetilde{K_{1}},Tx\in\widetilde{K_{2}}}c^{\top}x\leq\min_{x\in K_{1},Tx\in K_{2}}c^{\top}x+\varepsilon
+\min_{x\in K_{1},Mx\in K_{2}}c^{\top}x\leq\min_{x\in\widetilde{K_{1}},Mx\in\widetilde{K_{2}}}c^{\top}x\leq\min_{x\in K_{1},Mx\in K_{2}}c^{\top}x+\varepsilon
 \]
 
 \end_inset
@@ -1395,7 +1401,7 @@ Let
  we have that
 \begin_inset Formula 
 \[
-\min_{x\in\widetilde{K_{1}},Tx\in\widetilde{K_{2}}}c^{\top}x\leq c^{\top}x\leq\min_{x\in K_{1},Tx\in K_{2}}c^{\top}x+\varepsilon.
+\min_{x\in\widetilde{K_{1}},Mx\in\widetilde{K_{2}}}c^{\top}x\leq c^{\top}x\leq\min_{x\in K_{1},Mx\in K_{2}}c^{\top}x+\varepsilon.
 \]
 
 \end_inset
@@ -1459,7 +1465,7 @@ and hence
 
 \begin_layout Standard
 This reduces the problem into the form 
-\begin_inset Formula $\min_{x\in\widetilde{K_{1}},Tx\in\widetilde{K_{2}}}c^{\top}x$
+\begin_inset Formula $\min_{x\in\widetilde{K_{1}},Mx\in\widetilde{K_{2}}}c^{\top}x$
 \end_inset
 
 .

@@ -133,7 +133,7 @@ In the DFK algorithm,
  we consider 
 \begin_inset Formula 
 \[
-f_{i}(x)=\exp(-a_{i}\norm x)\chi_{K}(x)\mbox{ or }f_{i}(x)=\exp(-a_{i}\norm x^{2})\chi_{K}(x).
+f_{i}(x)=\exp(-a_{i}\norm{x})\chi_{K}(x)\mbox{ or }f_{i}(x)=\exp(-a_{i}\norm{x}^{2}/2)\chi_{K}(x).
 \]
 
 \end_inset
@@ -187,7 +187,7 @@ temperature
  in one or more phases.
  In the algorithm below,
  we assume that 
-\begin_inset Formula $B_{n}\subseteq K\subseteq RB_{n}$
+\begin_inset Formula $B^{n}\subseteq K\subseteq RB^{n}$
 \end_inset
 
  and 
@@ -271,7 +271,7 @@ For
 \end_inset
 
  and 
-\begin_inset Formula $f_{i}=f(x)^{a_{i}}.$
+\begin_inset Formula $f_i(x)=f(x)^{a_i}.$
 \end_inset
 
 
@@ -349,7 +349,7 @@ name "lem:chebychev_ratio"
 \end_inset
 
  For 
-\begin_inset Formula $X\sim f_{i}$
+\begin_inset Formula $X\sim\pi_{f_i}$
 \end_inset
 
  with 
@@ -370,7 +370,7 @@ name "lem:chebychev_ratio"
 \end_inset
 
 ,
- we have that the estimator 
+ the estimator 
 \begin_inset Formula $Y=\frac{f_{i+1}(X)}{f_{i}(X)}$
 \end_inset
 
@@ -470,7 +470,7 @@ Let
 
  in the LV algorithm.
  With probability at least 
-\begin_inset Formula $9/10$
+\begin_inset Formula $3/4$
 \end_inset
 
 ,
@@ -699,7 +699,7 @@ well-rounded
 \begin_inset Formula $\frac{1}{8}$
 \end_inset
 
- contains a constant-radius ball and the trace of the covariance (expected squared distance of a random point from the mean) to be bounded by 
+ contain a constant-radius ball and that the trace of the covariance (expected squared distance of a random point from the mean) be bounded by 
 \begin_inset Formula $O(n)$
 \end_inset
 
@@ -930,7 +930,7 @@ Let
 
 \begin_layout Enumerate
 For 
-\begin_inset Formula $i=0,\ldots,m-1$
+\begin_inset Formula $i=0,\ldots,m$
 \end_inset
 
 ,
@@ -939,7 +939,7 @@ For
 \end_inset
 
  and 
-\begin_inset Formula $f_{i}=f(x)^{a_{i}}$
+\begin_inset Formula $f_i(x)=f(x)^{a_i}$
 \end_inset
 
 ,

@@ -375,8 +375,17 @@ SetAlgoLined
 Input:
 
 \series default
- Initial point 
+ Function 
+\begin_inset Formula $g:\Rn\to\Rn$
+\end_inset
+
+, initial point 
 \begin_inset Formula $x^{(0)}\in\Rn$
+\end_inset
+
+,
+ and iteration count 
+\begin_inset Formula $T$
 \end_inset
 
 
@@ -705,12 +714,12 @@ globally
 \end_layout
 
 \begin_layout Theorem
-Given a polynomial 
+Let 
 \begin_inset Formula $g(x)=\sum_{i=0}^{n}a_{i}x^{i}$
 \end_inset
 
- with only real roots.
- Let 
+ be a polynomial with only real roots,
+ and let 
 \begin_inset Formula $\lambda_{1}$
 \end_inset
 
@@ -778,7 +787,7 @@ for some
 \end_inset
 
 For any 
-\begin_inset Formula $x\geq\lambda_{1}$
+\begin_inset Formula $x>\lambda_{1}$
 \end_inset
 
 ,
@@ -894,7 +903,7 @@ Assume that
 ,
 \begin_inset Formula 
 \[
-|x^{(k)}-x^{*}|\leq\frac{\alpha}{L}\left(\frac{L}{\alpha}|x^{(0)}-x^{*}|\right)^{2^{(k)}}.
+|x^{(k)}-x^{*}|\leq\frac{\alpha}{L}\left(\frac{L}{\alpha}|x^{(0)}-x^{*}|\right)^{2^{k}}.
 \]
 
 \end_inset
@@ -963,13 +972,13 @@ and
 \end_inset
 
 After 
-\begin_inset Formula $t$
+\begin_inset Formula $k$
 \end_inset
 
- steps,
+steps,
 \begin_inset Formula 
 \[
-\frac{L}{\alpha}|x^{(k)}-x^{*}|\leq\left(\frac{L}{\alpha}\epsilon_{0}\right)^{2^{(k)}}
+\frac{L}{\alpha}|x^{(k)}-x^{*}|\leq\left(\frac{L}{\alpha}\epsilon_{0}\right)^{2^{k}}
 \]
 
 \end_inset
@@ -1085,7 +1094,7 @@ For
 \begin_inset Formula $g$
 \end_inset
 
-that is high-dimensional (of dimension at least 
+ that is high-dimensional (of dimension at least 
 \begin_inset Formula $2$
 \end_inset
 

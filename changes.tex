@@ -1,0 +1,213 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+
+\title{Substantive Changes Requiring Author Review}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+This file records proofreading findings that are larger than local wording,
+punctuation, or notation fixes. I did not silently rewrite these parts in the
+LyX source because each one affects a proof structure, a theorem convention, or
+an extended example. For each item below, I describe the issue and a concrete
+repair path.
+
+\section{cutting\_plane\_volume.lyx: final set is not necessarily a cuboid}
+
+\textbf{Location/context.} In the volume lower-bound argument for cutting along
+coordinate directions, the text says that when the algorithm stops, the
+remaining set ``must be an axis-parallel cuboid'' with side lengths in a certain
+range, and then uses the product of these widths as the final volume lower
+bound.
+
+\textbf{Issue.} Intersecting an arbitrary convex body with a sequence of
+axis-parallel halfspaces does not, by itself, make the surviving body an
+axis-parallel cuboid. It only constrains the surviving body to lie inside a
+box, and possibly to contain some smaller structured subset if an additional
+invariant is proved. Therefore the product of final coordinate widths is not
+automatically the volume of the remaining convex set, nor even automatically a
+lower bound on its volume.
+
+\textbf{Suggested repair.} Replace the claim by a statement of the exact
+invariant available from the algorithm. Possible routes:
+\begin{enumerate}
+\item Prove that the current body always contains an axis-parallel cuboid whose
+side lengths are bounded below by the claimed quantities. Then the volume lower
+bound follows from the contained cuboid.
+\item Weaken the conclusion to a width/box-containment statement and avoid
+using the product of widths as a volume lower bound.
+\item Restrict the argument to an adversarial body that is itself maintained as
+an axis-parallel cuboid, if that is the intended lower-bound construction.
+\end{enumerate}
+
+\section{har\_dikin.lyx: inequality directions in the boundary-volume estimate}
+
+\textbf{Location/context.} In the proof around the estimate
+\[
+(1-\gamma)\operatorname{vol}(sB^n)
+ \leq \operatorname{vol}((x+sB^n\setminus K)
+ \leq p\operatorname{vol}(sB^n)-\operatorname{vol}((s/2)B^n),
+\]
+the next displayed conclusion is \(p\leq 1-\gamma+2^{-n}\).
+
+\textbf{Issue.} The displayed line has a missing parenthesis around
+\((x+sB^n)\setminus K\), and the inequality directions do not appear to imply
+the following bound on \(p\). The direction needed for the next line is of the
+form
+\[
+(1-\gamma)\operatorname{vol}(sB^n)
+ \geq \operatorname{vol}((x+sB^n)\setminus K)
+ \geq p\operatorname{vol}(sB^n)-\operatorname{vol}((s/2)B^n).
+\]
+This is not just a typographical punctuation change: it is part of the proof's
+measure comparison.
+
+\textbf{Suggested repair.} Recheck the geometric containment that bounds
+\(\operatorname{vol}((x+sB^n)\setminus K)\). If the intended implication is
+\(p\leq 1-\gamma+2^{-n}\), revise the displayed inequality to the direction
+above and add one sentence explaining why the excluded \((s/2)B^n\) term is the
+only loss.
+
+\section{interior\_point\_method.lyx: transformed LP lower bound}
+
+\textbf{Location/context.} In the reduction from a general linear program to a
+bounded transformed problem, the proof uses a display of the form
+\[
+\cdots \leq \frac{\delta}{LR}\,\overline{\mathrm{OPT}}+\delta^2
+\]
+and later lower-bounds the transformed objective using
+\(\|\frac{1}{R}x\|_1\) for a transformed feasible point.
+
+\textbf{Issue.} The preceding display appears to compare
+\(\overline{\mathrm{OPT}}\) to \(\mathrm{OPT}\), not to itself. In addition, the
+later lower bound treats a transformed feasible vector as though it directly
+came from an original feasible point. That loses the distinction between
+\(\overline{x}_{1:n}\) and an original feasible \(x\).
+
+\textbf{Suggested repair.} Use the original optimum in the comparison, e.g.
+\[
+\cdots \leq \frac{\delta}{LR}\,\mathrm{OPT}+\delta^2,
+\]
+and derive the lower bound directly from the transformed constraints. One
+candidate route is to use a bound such as
+\(\|\overline{x}_{1:n}\|_1\leq n+1\), which gives a lower bound of the form
+\[
+\frac{\delta}{L}c^\top\overline{x}_{1:n}\geq -\delta(n+1)
+\]
+under the normalization used in the proof. The exact constant should be checked
+against the surrounding scaling.
+
+\section{subspace\_embedding.lyx: net proof states only a one-sided bound}
+
+\textbf{Location/context.} In the proof of a subspace embedding from a finite
+net, the source uses incomplete notation such as \(N=\{x_i\}_{i=1}\) and the
+final probability statement bounds only
+\[
+\mathbb{P}\!\left(x^\top(U^\top\Pi^\top\Pi U-I)x\leq 4\epsilon\right).
+\]
+
+\textbf{Issue.} A subspace embedding requires a uniform two-sided/operator-norm
+bound. A one-sided quadratic-form statement for an unspecified \(x\) does not
+imply the desired OSE guarantee. The finite net should also be denoted as a set
+with a cardinality, e.g. \(\mathcal{N}=\{x_i\}_{i=1}^N\), and the proof should
+carry absolute values through the quadratic form.
+
+\textbf{Suggested repair.} State the net argument as: for every unit vector
+\(x\), compare \(x\) to a nearby \(y\in\mathcal N\), control
+\[
+\left|x^\top(U^\top\Pi^\top\Pi U-I)x\right|,
+\]
+and conclude
+\[
+\mathbb{P}\!\left(
+\|U^\top\Pi^\top\Pi U-I_d\|_{\mathrm{op}}\leq 4\epsilon
+\right)\geq 1-5^d\delta
+\]
+or the corresponding constant used in the chapter.
+
+\section{appendix.lyx: Holder proof sign and absolute values}
+
+\textbf{Location/context.} The appendix proof of Holder's inequality sets up a
+KKT proof using an objective like \(f(x)=-\sum_i x_i y_i\), stationarity, and
+powers such as \(x_i^p\).
+
+\textbf{Issue.} The current proof appears to have a sign mismatch:
+if \(f(x)=-\sum_i x_i y_i\), then \(\nabla f=-y\), not \(y\). The proof also
+uses powers of coordinates without explicitly reducing to nonnegative vectors
+or using absolute-value derivatives. For general real vectors, the derivatives
+should involve \(|x_i|^{p-2}x_i\), or the proof should first reduce to
+nonnegative \(x_i,y_i\).
+
+\textbf{Suggested repair.} Either:
+\begin{enumerate}
+\item state at the beginning that it suffices to prove the inequality for
+nonnegative vectors and then use \(x_i^p\), or
+\item keep general real vectors and write the stationarity condition with
+\(|x_i|^{p-2}x_i\).
+\end{enumerate}
+Also fix the sign convention in the Lagrangian/stationarity equations so that
+it is consistent with the chosen objective.
+
+\section{equivalence.lyx: automatic differentiation chain-rule notation}
+
+\textbf{Location/context.} In the automatic differentiation discussion, the
+source introduces \(L_i\) as a set of variables, later uses it as a set of
+indices, and then writes terms like \(x_{j_{-1}}\), \(x_{j_{-2}}\), etc.
+
+\textbf{Issue.} I corrected the local definition of \(L_i\) to be a set of
+indices, but the negative-index notation remains confusing and is not standard.
+It risks obscuring the actual chain-rule statement.
+
+\textbf{Suggested repair.} Replace the negative-index explanatory formula by a
+plain statement: after fixing all variables except \(x_i\) and the children
+\(x_j\) with \(j\in L_i\), each \(x_j\) is a function of \(x_i\), and hence
+\[
+\frac{\partial f}{\partial x_i}
+ =\sum_{j\in L_i}\frac{\partial f}{\partial x_j}
+  \frac{\partial x_j}{\partial x_i}.
+\]
+This keeps the chain rule clear without inventing notation for ``all other
+children.''
+
+\section{langevin\_dynamics.lyx: log-Sobolev constant convention}
+
+\textbf{Location/context.} The chapter states that for a logconcave measure with
+support diameter \(D\), the log-Sobolev constant is \(\Omega(1/D)\).
+
+\textbf{Issue.} The chapter defines \(C_{LSI}\) in the convention
+\[
+d_{KL}(\rho,\nu)\leq \frac{C_{LSI}}{2}J_\nu(\rho).
+\]
+Under this convention, results sometimes quoted as \(\Omega(1/D)\) may be using
+the reciprocal convention. The statement should specify the convention and any
+extra assumptions, such as isotropic normalization, required by the cited
+result.
+
+\textbf{Suggested repair.} Recheck the cited theorem's convention. If the cited
+constant is reciprocal to \(C_{LSI}\), rewrite the sentence as a bound on
+\(1/C_{LSI}\), or state the equivalent \(C_{LSI}=O(D)\) (or the correct power of
+\(D\)) under the assumptions used in the theorem.
+
+\section{mirror\_descent.lyx: unit-ball example starts outside the ball}
+
+\textbf{Location/context.} In the unit-ball example, the text starts from a
+point of the form
+\[
+x=(1,1/n,1/n,\ldots,1/n)
+\]
+and later derives a step-size restriction \(h\leq 1/n\).
+
+\textbf{Issue.} The displayed starting point is outside the Euclidean unit ball:
+its first coordinate already has magnitude \(1\), and the remaining coordinates
+add positive squared norm. Thus the example does not satisfy the stated domain.
+
+\textbf{Suggested repair.} Use a scaled point such as
+\[
+x=(1/2,1/(2n),\ldots,1/(2n))
+\]
+or another point strictly inside the unit ball, and adjust the later step-size
+bound accordingly, e.g. \(h\leq 1/(2n)\) if the same scaling is used.
+
+\end{document}

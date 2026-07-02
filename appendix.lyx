@@ -442,7 +442,7 @@ Usually,
 \begin_inset Formula $Df(x)[h]$
 \end_inset
 
- be the directional derivative of 
+ to be the directional derivative of 
 \begin_inset Formula $f$
 \end_inset
 
@@ -493,8 +493,8 @@ Given
 \begin_inset Formula $A\in\R^{n\times d}$
 \end_inset
 
-.
- Let 
+,
+ let 
 \begin_inset Formula $\Phi(x)=\sum_{i=1}^{n}f(a_{i}^{\top}x)$
 \end_inset
 
@@ -633,7 +633,7 @@ Let
 \end_inset
 
  axis.
- Suppose that this is the curve that takes the shortest time for a bead to slide along the curve frictionlessly from 
+ Suppose that this is the time-minimizing curve for a bead to slide frictionlessly from 
 \begin_inset Formula $(0,0)$
 \end_inset
 
@@ -967,11 +967,11 @@ where
 \begin_inset Formula $f$
 \end_inset
 
- with respect to 
+ with respect to the 
 \begin_inset Formula $x$
 \end_inset
 
- variables and 
+-variables and 
 \begin_inset Formula $Dg(x)$
 \end_inset
 
@@ -999,7 +999,11 @@ Consider
 \begin_inset Formula $f_{t}$
 \end_inset
 
- are strictly convex.
+ are strictly convex and 
+\begin_inset Formula $\nabla^{2}f_t(x_t)$
+\end_inset
+
+ is positive definite.
  Then,
  we have
 \begin_inset Formula 
@@ -1029,11 +1033,6 @@ By the optimality condition,
 \end_inset
 
 Since 
-\begin_inset Formula $f_{t}$
-\end_inset
-
- are strictly convex,
- 
 \begin_inset Formula $\nabla^{2}f_{t}(x_{t})$
 \end_inset
 
@@ -1231,7 +1230,7 @@ Dual Feasibility:
 \end_layout
 
 \end_deeper
-\begin_layout Theorem
+\begin_layout Standard
 We prove Hölder's inequality as an example:
 \end_layout
 

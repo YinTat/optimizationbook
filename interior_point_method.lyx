@@ -919,7 +919,7 @@ Similarly,
 .
  Therefore,
  when 
-\begin_inset Formula $\epsilon<\frac{1}{2}$
+\begin_inset Formula $\varepsilon<\frac{1}{2}$
 \end_inset
 
 ,
@@ -998,7 +998,7 @@ We have that
  
 \begin_inset Formula 
 \[
-\text{LHS}=\sum_{i}\left(x_{i}^{\new}s_{i}^{\new}-t\right)^{2}=\sum_{i}(x_{i}s_{i}+x_{i}\delta_{s,i}+s_{i}\delta_{x,i}+\delta_{x,i}\delta_{s,i}-t)^{2}=\sum_{i}\delta_{x,i}^{2}\delta_{s,i}^{2}\leq\left((1+\epsilon)t\right)^{2}\cdot\sum_{i}\left(\frac{\delta_{x,i}}{x_{i}}\right)^{2}\left(\frac{\delta_{s,i}}{s_{i}}\right)^{2}
+\text{LHS}=\sum_{i}\left(x_{i}^{\new}s_{i}^{\new}-t\right)^{2}=\sum_{i}(x_{i}s_{i}+x_{i}\delta_{s,i}+s_{i}\delta_{x,i}+\delta_{x,i}\delta_{s,i}-t)^{2}=\sum_{i}\delta_{x,i}^{2}\delta_{s,i}^{2}\leq\left((1+\varepsilon)t\right)^{2}\cdot\sum_{i}\left(\frac{\delta_{x,i}}{x_{i}}\right)^{2}\left(\frac{\delta_{s,i}}{s_{i}}\right)^{2}
 \]
 
 \end_inset
@@ -1754,7 +1754,7 @@ A\overline{x}_{1:n}+(\frac{1}{R}b-A1_{n})\theta=\frac{1}{R}b.
 \end_inset
 
 Using 
-\begin_inset Formula $\hat{x}=Rx_{1:n}\in\R^{n}$
+\begin_inset Formula $\hat{x}=R\overline{x}_{1:n}\in\R^{n}$
 \end_inset
 
 ,
@@ -4998,7 +4998,7 @@ Any convex set has an
 \begin_inset Formula $n$
 \end_inset
 
--self concordant barrier.
+-self-concordant barrier.
 \end_layout
 
 \begin_layout Standard
@@ -5225,7 +5225,7 @@ If
 \begin_inset Formula $\nu_{2}$
 \end_inset
 
--self concordant barriers for 
+-self-concordant barriers for 
 \begin_inset Formula $K_{1}$
 \end_inset
 
@@ -5242,7 +5242,7 @@ If
 \begin_inset Formula $\nu_{1}+\nu_{2}$
 \end_inset
 
- self concordant barrier for 
+ self-concordant barrier for 
 \begin_inset Formula $K_{1}\cap K_{2}$
 \end_inset
 
@@ -5265,7 +5265,7 @@ If
 \begin_inset Formula $\nu$
 \end_inset
 
--self concordant barrier for 
+-self-concordant barrier for 
 \begin_inset Formula $K$
 \end_inset
 
@@ -5278,7 +5278,7 @@ If
 \begin_inset Formula $\nu$
 \end_inset
 
--self concordant for 
+-self-concordant for 
 \begin_inset Formula $\{x:Ax+b\in K\}$
 \end_inset
 
@@ -5295,7 +5295,7 @@ Using the lemmas above,
 \begin_inset Formula $m$
 \end_inset
 
--self concordant barrier for the convex set 
+-self-concordant barrier for the convex set 
 \begin_inset Formula $\{Ax\geq b\}$
 \end_inset
 
@@ -5919,7 +5919,7 @@ Suppose that
 \begin_inset Formula $\nu$
 \end_inset
 
--self concordant barrier.
+-self-concordant barrier.
  For any 
 \begin_inset Formula $x,y\in K$
 \end_inset
@@ -5989,7 +5989,7 @@ Hence,
  
 \begin_inset Formula 
 \[
-\frac{1}{\alpha(1)}\leq\frac{1}{\alpha(0)}-\frac{1}{v}
+\frac{1}{\alpha(1)}\leq\frac{1}{\alpha(0)}-\frac{1}{\nu}
 \]
 
 \end_inset
@@ -6019,7 +6019,7 @@ Duality Gap
 \begin_inset Formula $\nu$
 \end_inset
 
--self concordant barrier,
+-self-concordant barrier,
  we have that
 \begin_inset Formula 
 \[
@@ -6075,7 +6075,7 @@ Let
 \begin_inset Formula $x_{t}$
 \end_inset
 
-for 
+ for 
 \begin_inset Formula $f_{t}$
 \end_inset
 
@@ -6152,7 +6152,7 @@ Hence,
 \end_inset
 
 ,
- which is exactly the same as in the previous lecture.
+ which is exactly the same as in the linear-programming case above.
 \end_layout
 
 \begin_layout Theorem
@@ -6160,7 +6160,7 @@ Given a
 \begin_inset Formula $\nu$
 \end_inset
 
--self concordant barrier 
+-self-concordant barrier 
 \begin_inset Formula $\phi$
 \end_inset
 

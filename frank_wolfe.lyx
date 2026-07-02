@@ -150,7 +150,7 @@ By the strong convexity of
 , we have that 
 \begin_inset Formula 
 \begin{align*}
-\E_{s_{k}\in\{\pm1\}\ \forall k\in[n]}\Phi(s_{1},\cdots,s_{n}) & \geq\E_{s_{k}\in\{\pm1\}\ \forall k\in[n-1]}\Phi(s_{1},\cdots,s_{n-1},0)+\E_{s_{n}}\left\langle \nabla\Phi(s_{1},\cdots,s_{n-1},0),s_{n}\right\rangle +\frac{1}{2}\\
+\E_{s_{k}\in\{\pm1\}\ \forall k\in[n]}\Phi(s_{1},\cdots,s_{n}) & \geq\E_{s_{k}\in\{\pm1\}\ \forall k\in[n-1]}\Phi(s_{1},\cdots,s_{n-1},0)+\E_{s_{n}}\left\langle \nabla\Phi(s_{1},\cdots,s_{n-1},0),s_{n}e_{n}\right\rangle +\frac{1}{2}\\
  & =\E_{s_{k}\in\{\pm1\}\ \forall k\in[n-1]}\Phi(s_{1},\cdots,s_{n-1},0)+\frac{1}{2}\\
  & \vdots\\
  & \geq\Phi(0)+\frac{n}{2}.

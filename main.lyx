@@ -1306,7 +1306,7 @@ literal "true"
 \end_layout
 
 \begin_layout Chapter
-Annealing 
+Annealing
 \begin_inset CommandInset label
 LatexCommand label
 name "chap:Annealing"
@@ -1382,7 +1382,7 @@ Probably should first have a more comprehensive introduction,
 \end_layout
 
 \begin_layout Chapter
-Notation 
+Notation
 \end_layout
 
 \begin_layout Standard

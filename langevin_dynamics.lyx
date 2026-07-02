@@ -924,7 +924,7 @@ For any smooth function
 
 ,
  the density proportional to 
-\begin_inset Formula $F=e^{-f}$
+\begin_inset Formula $e^{-f}$
 \end_inset
 
  is stationary for the Langevin dynamics.
@@ -1584,7 +1584,7 @@ where
 \begin_inset Formula $\rho$
 \end_inset
 
- wrt 
+ with respect to 
 \begin_inset Formula $\nu$
 \end_inset
 
@@ -1634,7 +1634,7 @@ The log-Sobolev constant of a distribution
 \begin_inset Formula $\R^{n}$
 \end_inset
 
-can be equivalently defined as follows:
+ can be equivalently defined as follows:
  for any distribution 
 \begin_inset Formula $\rho$
 \end_inset
@@ -1658,10 +1658,10 @@ d_{KL}(\rho,\nu)\le\frac{C_{LSI}}{2}J_{\nu}(\rho).
 \begin_layout Proof
 To go one way,
  we use 
-\begin_inset Formula $g=\sqrt{\frac{\rho}{\nu}};$
+\begin_inset Formula $g=\sqrt{\frac{\rho}{\nu}}$
 \end_inset
 
-to go the other way,
+; to go the other way,
  define 
 \begin_inset Formula $\rho=\frac{g^{2}\nu}{\E_{\nu}(g^{2})}$
 \end_inset
@@ -1697,7 +1697,7 @@ Integrating over time gives the theorem.
 \end_layout
 
 \begin_layout Exercise
-Show that for Langevin Dynamics applied to a target density 
+Show that Langevin dynamics applied to a target density 
 \begin_inset Formula $\nu$
 \end_inset
 

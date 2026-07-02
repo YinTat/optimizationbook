@@ -398,7 +398,7 @@ Hence, we have
 \end_inset
 
 Since 
-\begin_inset Formula $x^{(k)+}\in P$
+\begin_inset Formula $x^{(k)+}\in P^{(k)}$
 \end_inset
 
 , we have that 
@@ -1470,6 +1470,7 @@ in
 \begin_inset Formula $\mathcal{T}_{f}+\mathcal{T}_{h,L}$
 \end_inset
 
+.
 
 \end_layout
 
@@ -1662,7 +1663,7 @@ Since
 \begin_inset Formula $\mu+\frac{L}{n}$
 \end_inset
 
- smooth and 
+ smooth under this valid upper bound and 
 \begin_inset Formula $\mu$
 \end_inset
 
@@ -1894,7 +1895,7 @@ Since
 \begin_inset Formula $\mu+\frac{L}{n}$
 \end_inset
 
- smooth and 
+ smooth under this valid upper bound and 
 \begin_inset Formula $\mu$
 \end_inset
 

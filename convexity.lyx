@@ -339,7 +339,7 @@ where
 
 ,
  we have 
-\begin_inset Formula $|f(x)-f(y)|\le|x-y|$
+\begin_inset Formula $\left|f(x)-f(y)\right|\le\norm{x-y}_{2}$
 \end_inset
 
 ,
@@ -649,7 +649,7 @@ Suppose we have a continuous function
 \begin_inset Formula $f:\R^{n}\rightarrow\R\cup\{+\infty\}$
 \end_inset
 
-that has the property that for every 
+ that has the property that for every 
 \begin_inset Formula $x,y\in\R^{n},$
 \end_inset
 
@@ -1589,7 +1589,7 @@ The min cost flow problem has lots of applications such as route planning,
 \begin_inset Formula $c_{e}$
 \end_inset
 
- is proportional to how good that flight is for that person (does it get them where they need to go at the time they need to go?) with 
+ is proportional to how undesirable that flight is for that person (does it fail to get them where they need to go at the time they need to go?) with 
 \begin_inset Formula $0$
 \end_inset
 
@@ -1690,7 +1690,7 @@ Consider the diet problem:
 \begin_inset Formula $a_{1i}$
 \end_inset
 
- unit of nutrient 
+ units of nutrient 
 \begin_inset Formula $1$
 \end_inset
 
@@ -1699,7 +1699,7 @@ Consider the diet problem:
 \begin_inset Formula $a_{2i}$
 \end_inset
 
- unit of nutrient 
+ units of nutrient 
 \begin_inset Formula $2$
 \end_inset
 
@@ -1714,7 +1714,7 @@ Consider the diet problem:
 \begin_inset Formula $b_{j}$
 \end_inset
 
- unit of the nutrient 
+ units of nutrient 
 \begin_inset Formula $j$
 \end_inset
 
@@ -1874,7 +1874,7 @@ Consider the problem of predicting the likelihood of getting diabetes in the fut
 \begin_inset Formula $y_{i}=-1$
 \end_inset
 
- .
+.
  The error of the vector 
 \begin_inset Formula $\theta$
 \end_inset
@@ -2290,7 +2290,7 @@ For a matrix
 \end_inset
 
 ,
- positive scalars 
+ nonnegative scalars 
 \begin_inset Formula $t_{1},t_{2}\geq0$
 \end_inset
 
@@ -3459,7 +3459,7 @@ Using the noise assumption,
 
 Now,
  say we know the signal is smooth and we model the prior as 
-\begin_inset Formula $\P(\theta)\varpropto\exp(-\lambda\sum_{i}(\theta_{i}-\theta_{i+1})^{2})$
+\begin_inset Formula $\P(\theta)\varpropto\exp(-\lambda\sum_{i=1}^{n-1}(\theta_{i}-\theta_{i+1})^{2})$
 \end_inset
 
  where 
@@ -3471,7 +3471,7 @@ Now,
  
 \begin_inset Formula 
 \[
--\log\P(\theta|y)=c+\sum_{i}(y_{i}-\theta_{i})^{2}+\lambda\sum_{i}(\theta_{i}-\theta_{i+1})^{2}.
+-\log\P(\theta|y)=c+\sum_{i}(y_{i}-\theta_{i})^{2}+\lambda\sum_{i=1}^{n-1}(\theta_{i}-\theta_{i+1})^{2}.
 \]
 
 \end_inset
@@ -3482,7 +3482,7 @@ Since each term in the function above is convex,
  the recovery question becomes a convex optimization problem
 \begin_inset Formula 
 \[
-\min_{\theta}\sum_{i}(y_{i}-\theta_{i})^{2}+\lambda\sum_{i}(\theta_{i}-\theta_{i+1})^{2}.
+\min_{\theta}\sum_{i}(y_{i}-\theta_{i})^{2}+\lambda\sum_{i=1}^{n-1}(\theta_{i}-\theta_{i+1})^{2}.
 \]
 
 \end_inset
@@ -3509,7 +3509,7 @@ When we recover a signal,
  Note that
 \begin_inset Formula 
 \[
-\P(\theta|y)\varpropto e^{-\sum_{i}(y_{i}-\theta_{i})^{2}-\lambda\sum_{i}(\theta_{i}-\theta_{i+1})^{2}}
+\P(\theta|y)\varpropto e^{-\sum_{i}(y_{i}-\theta_{i})^{2}-\lambda\sum_{i=1}^{n-1}(\theta_{i}-\theta_{i+1})^{2}}
 \]
 
 \end_inset

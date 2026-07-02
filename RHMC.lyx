@@ -295,11 +295,11 @@ Hamiltonian
 \begin_inset Formula $\mathcal{M}$
 \end_inset
 
- is the 
+ is the domain of the 
 \begin_inset Formula $x$
 \end_inset
 
- domain of 
+-coordinate of 
 \begin_inset Formula $H$
 \end_inset
 
@@ -333,7 +333,7 @@ We define the map
 \begin_inset Formula $T_{\step}(x,y)\defeq(x(\step),y(\step))$
 \end_inset
 
- where the 
+ where 
 \begin_inset Formula $(x(t),y(t))$
 \end_inset
 
@@ -739,7 +739,6 @@ Using the previous two lemmas,
 \end_layout
 
 \begin_layout Lemma
-*
 \begin_inset CommandInset label
 LatexCommand label
 name "lem:time_reversibility"
@@ -831,7 +830,7 @@ Fix
 
 \end_inset
 
-We note that this formula assumed that 
+We note that this formula assumes that 
 \begin_inset Formula $DF^{x}_{\step}$
 \end_inset
 
@@ -840,7 +839,7 @@ We note that this formula assumed that
 \begin_inset Formula $F^{x}_{\step}(N)$
 \end_inset
 
- is measure 
+ has measure 
 \begin_inset Formula $0$
 \end_inset
 
@@ -889,7 +888,7 @@ where
 \begin_inset Formula $T_{-\step}(x,y)$
 \end_inset
 
- in the first and second sum respectively.
+ in the first and second terms, respectively.
 \end_layout
 
 \begin_layout Proof
@@ -915,7 +914,7 @@ C & D
 \end{array}\right)$
 \end_inset
 
-.Then 
+. Then 
 \begin_inset Formula $M=DF^{x'}_{-\step}(y')$
 \end_inset
 

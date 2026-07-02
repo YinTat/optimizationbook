@@ -129,8 +129,7 @@ nolink "false"
 \begin_inset Formula $\R^{n}$
 \end_inset
 
-,
- 
+, a number 
 \begin_inset Formula $R$
 \end_inset
 
@@ -336,10 +335,10 @@ In other words,
 
 \begin_layout Proof
 For all queries 
-\begin_inset Formula $x\in B^{n},$
+\begin_inset Formula $x\in B^{n}$
 \end_inset
 
-the oracle answers YES,
+, the oracle answers YES,
  and for queries outside the unit ball it answers NO.
  After 
 \begin_inset Formula $m$
@@ -955,7 +954,7 @@ nolink "false"
 \begin_inset Formula $K$
 \end_inset
 
- is symmetric by replacing each cross section 
+ has rotationally symmetric cross sections by replacing each cross section 
 \begin_inset Formula $\{x\in K\colon\theta^{\top}x=t\}$
 \end_inset
 

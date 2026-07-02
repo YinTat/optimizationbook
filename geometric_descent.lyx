@@ -2090,14 +2090,19 @@ nolink "false"
 \begin_inset Formula 
 \begin{align}
 \frac{r_{k}^{2}-r_{k+1}^{2}}{r_{k}^{2}} & \geq\frac{f(x^{(k)})-f(x^{(k+1)})}{r_{k}^{2}}+\frac{\mu\cdot r_{k}^{2}}{2\|\nabla f(x^{(k)})\|^{2}}\nonumber \\
- & \geq\frac{f(x^{(k+\frac{1}{2})})-f(x^{(k+1)})}{r_{k}^{2}}+\frac{\mu\cdot r_{k}^{2}}{2\|\nabla f(x^{(k)})\|^{2}}\nonumber \\
+ & \geq\frac{f(x^{(k)})-f(x^{(k+\frac{1}{2})})}{r_{k}^{2}}+\frac{\mu\cdot r_{k}^{2}}{2\|\nabla f(x^{(k)})\|^{2}}\nonumber \\
  & \geq\frac{\|\nabla f(x^{(k)})\|^{2}}{2Lr_{k}^{2}}+\frac{\mu\cdot r_{k}^{2}}{2\|\nabla f(x^{(k)})\|^{2}}\label{eq:geometric_key-1}\\
  & \geq\sqrt{\frac{\mu}{L}}\nonumber 
 \end{align}
 
 \end_inset
 
-where the second inequality is due to the fact 
+where the second inequality uses 
+\begin_inset Formula $f(x^{(k+1)})\leq f(x^{(k+\frac{1}{2})})$
+\end_inset
+
+,
+ and the third inequality follows from the fact that 
 \begin_inset Formula $x^{(k+\frac{1}{2})}$
 \end_inset
 
@@ -2106,7 +2111,7 @@ where the second inequality is due to the fact
 \end_inset
 
 ,
- the third inequality is due to the assumption on 
+ together with the assumption on 
 \begin_inset Formula $L$
 \end_inset
 
@@ -2190,7 +2195,7 @@ nolink "false"
 
  as the key equation of the proof above.
  It shows that the progress is roughly 
-\begin_inset Formula $\frac{\|\nabla f\|^{2}}{L}+\frac{\mu}{\|\nabla f\|^{2}}$
+\begin_inset Formula $\frac{\|\nabla f\|^{2}}{Lr_{k}^{2}}+\frac{\mu r_{k}^{2}}{\|\nabla f\|^{2}}$
 \end_inset
 
  where the first term comes from the progress on the function value and the second term comes from 

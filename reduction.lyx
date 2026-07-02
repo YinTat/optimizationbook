@@ -1952,12 +1952,12 @@ Therefore,
 
  are all just measuring how much we need to decrease multiplicatively from the initial error.
  With this view,
- we can think of the numbers of iterations required for Lipschitz convex functions,
- strongly convex functions and smooth functions are exactly 
+ we can think of the required numbers of iterations for Lipschitz convex functions,
+ strongly convex functions and smooth functions as exactly 
 \begin_inset Formula $\frac{1}{\epsilon_{\mathrm{relative}}^{2}}$
 \end_inset
 
- ,
+,
  
 \begin_inset Formula $\frac{1}{\epsilon_{\mathrm{relative}}}$
 \end_inset
@@ -2003,9 +2003,7 @@ f(x)=\frac{1}{2}x_{1}^{2}+\frac{1}{2}\sum_{k=1}^{n-1}(x_{k}-x_{k+1})^{2}+\frac{1
 
 \end_inset
 
-This problem appears everywhere from physical systems,
- graph problems,
- signal denoising to statistics.
+This problem appears everywhere from physical systems and graph problems to signal denoising and statistics.
  For this problem,
  we have 
 \begin_inset Formula $L=\Theta(1)$

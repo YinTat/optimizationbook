@@ -557,7 +557,7 @@ Perhaps the most natural algorithm for optimization is gradient descent.
 
  to be optimized is continuously differentiable.
  By basic calculus,
- either the minimum (or point achieving the minimum) is unbounded or the gradient is zero at a minimum.
+ either the objective is unbounded below or the gradient is zero at any attained unconstrained minimum.
  So we try to find a point with gradient close to zero (which,
  of course,
  does not guarantee global optimality).
@@ -973,10 +973,10 @@ Let
 \end_layout
 
 \begin_layout Enumerate
-\begin_inset Formula $-LI\preceq\nabla^{2}f(x)\preceq L$
+\begin_inset Formula $-LI\preceq\nabla^{2}f(x)\preceq LI$
 \end_inset
 
-I for all 
+ for all 
 \begin_inset Formula $x\in\Rn$
 \end_inset
 
@@ -1021,7 +1021,7 @@ Suppose (1) holds.
 \end_inset
 
 Since 
-\begin_inset Formula $\|\frac{\nabla f(x+hv)-\nabla f(x)}{h}\|_{2}\leq\frac{L}{h}\|hv\|_{2}=L\|v\|_{2}$
+\begin_inset Formula $\|\frac{\nabla f(x+hv)-\nabla f(x)}{h}\|_{2}\leq\frac{L}{|h|}\|hv\|_{2}=L\|v\|_{2}$
 \end_inset
 
 ,
@@ -2172,10 +2172,10 @@ Let
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $\nabla^{2}f(x)\succeq\mu$
+\begin_inset Formula $\nabla^{2}f(x)\succeq\mu I$
 \end_inset
 
-I for all 
+ for all 
 \begin_inset Formula $x\in\Rn$
 \end_inset
 
@@ -2357,8 +2357,8 @@ nolink "false"
 \begin_inset Formula 
 \begin{align}
 f(x^{(k+1)})-f(x^{*}) & \leq f(x^{(k)})-f(x^{*})-\frac{1}{2L}\|\nabla f(x^{(k)})\|_{2}^{2}\label{eq:strong_convex_progress}\\
- & \le f(x^{(k)})-f(x^{*})-\frac{\mu}{L}\left(f(x^{(k)})-f^{*}\right)\\
- & =\left(1-\frac{\mu}{L}\right)\left(f(x^{(k)})-f^{*}\right)
+ & \le f(x^{(k)})-f(x^{*})-\frac{\mu}{L}\left(f(x^{(k)})-f(x^{*})\right)\\
+ & =\left(1-\frac{\mu}{L}\right)\left(f(x^{(k)})-f(x^{*})\right)
 \end{align}
 
 \end_inset
@@ -2678,7 +2678,7 @@ As a corollary,
 
 .
  Therefore,
- this gives the same guarantee Theorem 
+ this gives the same guarantee as Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:gd_convex"
@@ -2727,7 +2727,7 @@ Finally,
 \end_inset
 
  and 
-\begin_inset Formula $Ah$
+\begin_inset Formula $Ap$
 \end_inset
 
 .
@@ -2797,7 +2797,7 @@ We say
 \begin_inset Formula $g(x)=f(x)$
 \end_inset
 
- ,
+,
 \end_layout
 
 \begin_layout Itemize

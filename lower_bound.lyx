@@ -290,7 +290,8 @@ By a direct substitution, we have that
 and that
 \begin_inset Formula 
 \[
-\|x^{(0)}-x^{*}\|_{2}^{2}\leq\sum_{i=1}^{\infty}(\frac{\sqrt{L/\mu}-1}{\sqrt{L/\mu}+1})^{2i}=(\frac{\sqrt{L/\mu}-1}{\sqrt{L/\mu}+1})^{2}\frac{\sqrt{L/\mu}+1}{2}.
+\|x^{(0)}-x^{*}\|_{2}^{2}\leq\sum_{i=1}^{\infty}q^{2i}=\frac{q^{2}}{1-q^{2}}=q^{2}\frac{(\sqrt{L/\mu}+1)^{2}}{4\sqrt{L/\mu}}\leq q^{2}\frac{\sqrt{L/\mu}+1}{2},
+\quad q=\frac{\sqrt{L/\mu}-1}{\sqrt{L/\mu}+1}.
 \]
 
 \end_inset

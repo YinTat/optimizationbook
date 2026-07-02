@@ -725,7 +725,7 @@ name "tab:volume"
 
 \end_inset
 
- The complexity of volume estimation,
+ Complexities for volume estimation;
  each step uses 
 \begin_inset Formula $\widetilde{O}(n)$
 \end_inset
@@ -763,15 +763,16 @@ There exists a randomized algorithm that,
 \begin_inset Formula $\varepsilon,\delta>0$
 \end_inset
 
-,
  and any convex body 
 \begin_inset Formula $K$
 \end_inset
 
+,
  with probability at least 
 \begin_inset Formula $1-\delta$
 \end_inset
 
+,
  solves the Volume Estimation problem for 
 \begin_inset Formula $K$
 \end_inset
@@ -813,7 +814,7 @@ Show that a randomized algorithm that outputs an acceptable estimate of a real n
  times and taking the median of the outputs of the independent trials.
 \end_layout
 
-\begin_layout Exercise
+\begin_layout Standard
 Going forward,
  we ignore the parameter 
 \begin_inset Formula $\delta$
@@ -824,7 +825,7 @@ Going forward,
  We will now show an algorithm for volume computation (as a first attempt) whose analysis yields a suboptimal bound on the sample complexity.
 \end_layout
 
-\begin_layout Exercise
+\begin_layout Standard
 The polynomial-time algorithm of Dyer,
  Frieze and Kannan 
 \begin_inset CommandInset citation
@@ -836,7 +837,7 @@ literal "true"
 
  is based on the following idea.
  We consider a sequence of convex bodies 
-\begin_inset Formula $K_{0}=B_{n}\subset K_{1}\subseteq\ldots\subseteq K_{m}=K$
+\begin_inset Formula $K_{0}=B^{n}\subset K_{1}\subseteq\ldots\subseteq K_{m}=K$
 \end_inset
 
 ,
@@ -860,7 +861,7 @@ literal "true"
 
 \end_layout
 
-\begin_layout Exercise
+\begin_layout Standard
 To estimate the volume of 
 \begin_inset Formula $K$
 \end_inset
@@ -882,7 +883,7 @@ K_{i}=2^{\frac{i}{n}}B\cap K.
 \end_inset
 
  The length of the sequence is 
-\begin_inset Formula $m=\lceil n\log R\rceil$
+\begin_inset Formula $m=\lceil n\log_{2}R\rceil$
 \end_inset
 
  so that the final body is just 
@@ -1020,7 +1021,7 @@ Let
 \end_inset
 
  and return 
-\begin_inset Formula $\vol(B_{n})/Y$
+\begin_inset Formula $\vol(B^{n})/Y$
 \end_inset
 
 .
@@ -1110,7 +1111,7 @@ For all
 We have 
 \begin_inset Formula 
 \[
-K_{i+1}=2^{(i+1)/n}B_{n}\cap K\subseteq2^{1/n}(2^{i/n}B_{n}\cap K)=2^{1/n}K_{i}.
+K_{i+1}=2^{(i+1)/n}B^{n}\cap K\subseteq2^{1/n}(2^{i/n}B^{n}\cap K)=2^{1/n}K_{i}.
 \]
 
 \end_inset
@@ -1182,7 +1183,7 @@ For any input convex body
 \end_inset
 
  satisfying 
-\begin_inset Formula $B_{n}\subseteq K\subseteq RB_{n}$
+\begin_inset Formula $B^{n}\subseteq K\subseteq RB^{n}$
 \end_inset
 
  given by a membership oracle and any 
@@ -1797,7 +1798,7 @@ name "lem:ratio_var"
 \end_inset
 
  is logconcave for 
-\begin_inset Formula $a\ge0$
+\begin_inset Formula $a>0$
 \end_inset
 
 .

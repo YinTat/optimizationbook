@@ -233,7 +233,7 @@ Pick a uniform random direction
 \end_layout
 
 \begin_layout Enumerate
-Go to uniform random point 
+Go to a uniformly random point 
 \begin_inset Formula $y$
 \end_inset
 
@@ -488,7 +488,7 @@ The conductance of Hit-and-Run in a convex body
 \end_inset
 
  is 
-\begin_inset Formula $\Omega(1/nD)$
+\begin_inset Formula $\Omega(1/(nD))$
 \end_inset
 
 .
@@ -557,11 +557,11 @@ median
 \begin_inset Formula $F$
 \end_inset
 
- as the 
+ by setting 
 \begin_inset Formula $F(x)$
 \end_inset
 
- such that
+ to satisfy
 \begin_inset Formula 
 \[
 \Pr(\norm{x-y}\le F(x))=\frac{1}{8}
@@ -1647,7 +1647,7 @@ Now consider a random line
 
 :
  with probability at least 
-\begin_inset Formula $1−2p$
+\begin_inset Formula $1-2p$
 \end_inset
 
 ,
@@ -2099,7 +2099,7 @@ The general Dikin walk is defined as follows.
 \begin_inset Formula $u\in K$
 \end_inset
 
- ,
+,
  let
 \begin_inset Formula 
 \[
@@ -2507,7 +2507,7 @@ Many natural barriers,
  satisfy a much stronger condition than self-concordance.
  However,
  this is not always true,
- as one can construct counterexamples even in one-dimension.
+ as one can construct counterexamples even in one dimension.
  
 \begin_inset Note Note
 status open
@@ -2649,7 +2649,7 @@ status open
 \begin_inset Formula $E_{u}\subseteq K\cap(2u-K)\subseteq\alpha E_{u}.$
 \end_inset
 
- (b) Strong self-concordance measures the rate of change of Hessian of a barrier in the Frobenius norm
+ (b) Strong self-concordance measures the rate of change of the Hessian of a barrier in the Frobenius norm
 \end_layout
 
 \end_inset
@@ -2690,8 +2690,8 @@ Given any strongly self-concordant matrix function
 \begin_inset Formula $K\subset\Rn$
 \end_inset
 
-.
- For any 
+,
+ for any 
 \begin_inset Formula $x,y\in K$
 \end_inset
 
@@ -2999,7 +2999,7 @@ For the rejection probability at
 \end_inset
 
 ,
- we consider the algorithm pick 
+ we consider the algorithm that picks 
 \begin_inset Formula $z$
 \end_inset
 
@@ -3088,7 +3088,7 @@ To compute
 \end_inset
 
 ,
- it is easier to compute directional derivative of 
+ it is easier to compute the directional derivative of 
 \begin_inset Formula $\nabla f$
 \end_inset
 
@@ -3543,10 +3543,10 @@ For the first inequality,
 
 ,
  we have that the barrier function 
-\begin_inset Formula $\phi(x)$
+\begin_inset Formula $\phi$
 \end_inset
 
- is finite with bounded first and second moments,
+ is finite with bounded first and second derivatives,
  and by Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref

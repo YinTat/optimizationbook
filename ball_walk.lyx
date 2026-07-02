@@ -732,7 +732,7 @@ lazy
 
 ,
  we do nothing;
- with the rest we take a step according to the Markov chain.
+ with the remaining probability we take a step according to the Markov chain.
  The next theorem is folklore.
 \end_layout
 
@@ -892,10 +892,10 @@ Convergence via Conductance
 
 \begin_layout Standard
 Now we introduce an important tool to bound the rate of convergence of 
-\begin_inset Formula $Q_{t},$
+\begin_inset Formula $Q_{t}$
 \end_inset
 
-the distribution after 
+, the distribution after 
 \begin_inset Formula $t$
 \end_inset
 
@@ -1816,7 +1816,7 @@ As a result,
  we have 
 \begin_inset Formula 
 \[
-\langle Mf,Mf\rangle\le\left(1-\frac{\phi^{2}}{4}\right)^{2}.
+\langle Mf,Mf\rangle\le\left(1-\frac{\phi^{2}}{4}\right)^{2}\langle f,f\rangle.
 \]
 
 \end_inset
@@ -2104,7 +2104,7 @@ To convey the main ideas of the analysis,
  the probability of crossing over in one step is at least proportional to the measure of the set or its complement,
  whichever is smaller.
  First,
- we argue that the one-step distributions of two points will have a significant overlap if the points are sufficient close.
+ we argue that the one-step distributions of two points will have a significant overlap if the points are sufficiently close.
 \end_layout
 
 \begin_layout Lemma
@@ -2694,7 +2694,7 @@ nolink "false"
 \end_inset
 
 Thus 
-\begin_inset Formula $d(S_{1},S_{2})\geq\ell\delta/2\sqrt{n}$
+\begin_inset Formula $d(S_{1}',S_{2}')\geq\ell\delta/(2\sqrt{n})$
 \end_inset
 
 .
@@ -3063,10 +3063,10 @@ nolink "false"
 
 ,
  we restrict the argument to 
-\begin_inset Formula $K_{\delta},$
+\begin_inset Formula $K_{\delta}$
 \end_inset
 
-the points in 
+, the set of points in 
 \begin_inset Formula $K$
 \end_inset
 
@@ -3465,7 +3465,7 @@ Show that the stationary density of the speedy walk in a convex body is proporti
 
 \begin_layout Theorem
 The conductance of the speedy walk is 
-\begin_inset Formula $\Omega(1/nD)$
+\begin_inset Formula $\Omega(1/(nD))$
 \end_inset
 
 .
@@ -4617,7 +4617,7 @@ nolink "false"
 
  up to a constant.
  One benefit of localization is that it does not require a carefully crafted potential.
- Localization has been extended to Riemannian setting 
+ Localization has been extended to the Riemannian setting 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "klartag2017needle"
@@ -5977,8 +5977,9 @@ nolink "false"
 
 \end_inset
 
- and to prove the theorem in general,
- and it suffices to prove it in the one-dimensional case.
+.
+ To prove the theorem in general,
+ it suffices to prove it in the one-dimensional case.
  A combinatorial argument reduces this to the case when each 
 \begin_inset Formula $Z_{i}$
 \end_inset
@@ -6214,7 +6215,7 @@ Let
 \begin_inset Formula $x$
 \end_inset
 
- drawn uniform from 
+ drawn uniformly from 
 \begin_inset Formula $K$
 \end_inset
 
@@ -6235,7 +6236,7 @@ Alternative formulations of Localization
 \end_layout
 
 \begin_layout Standard
-Here we give some alternative equivalent version of Lemma 
+Here we give some alternative equivalent versions of Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:LOCALIZATION"
@@ -6652,7 +6653,7 @@ the distributions
 \begin_inset Formula $v$
 \end_inset
 
- satisfies
+ that satisfy
 \end_layout
 
 \begin_deeper
@@ -6669,7 +6670,7 @@ density function is of the form
 \end_layout
 
 \begin_layout Enumerate
-support equals to a segment 
+support is a segment 
 \begin_inset Formula $[a,b]\subset K$
 \end_inset
 

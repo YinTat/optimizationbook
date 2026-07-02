@@ -101,7 +101,7 @@ literal "false"
 \end_inset
 
 ,
- developed into polynomial-time algorithms by 
+ and were developed into polynomial-time algorithms by 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "khachiyan1980polynomial,grotschel1981ellipsoid,bertsimas2004solving"
@@ -384,7 +384,7 @@ In this framework,
 \begin_inset Formula $g(x^{(k)})$
 \end_inset
 
- .
+.
  The guarantee for 
 \begin_inset Formula $g(.)$
 \end_inset
@@ -1332,7 +1332,7 @@ that contains
 \begin_inset Formula $A^{(k)}$
 \end_inset
 
- must be symmetric PSD.
+ must be symmetric positive definite.
  After we compute 
 \begin_inset Formula $g(x^{(k)})$
 \end_inset
@@ -1632,9 +1632,9 @@ Note that the proof below also shows that
 
 .
  Therefore,
- the ellipsoid method does not run faster even for any function,
+ the ellipsoid method does not run faster even for simple functions,
  e.g.,
- a linear function,
+ linear functions,
  making it provably 
 \begin_inset Quotes eld
 \end_inset
@@ -2565,7 +2565,7 @@ In this case,
 \begin_inset Formula $E^{(0)}$
 \end_inset
 
- be the Euclidean ball centered at 
+ to be the Euclidean ball centered at 
 \begin_inset Formula $0$
 \end_inset
 
@@ -3500,7 +3500,11 @@ nolink "false"
 \end_inset
 
  with 
-\begin_inset Formula $t=\sqrt{\frac{n}{N}}$
+\begin_inset Formula $t=|\theta^{\top}y|$
+\end_inset
+
+ and then use 
+\begin_inset Formula $\E|\theta^{\top}y|\le\E\norm y\le\sqrt{\frac{n}{N}}$
 \end_inset
 
  to bound 
@@ -3689,7 +3693,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Affine transformations for Centre of Gravity method
+Affine transformations for Center of Gravity method
 \end_layout
 
 \end_inset
@@ -3960,7 +3964,7 @@ Suppose
 \end_inset
 
 .
- Consider the oracle that always returns an axis parallel halfspace that does not cut any little cube and contains at least half of the volume of the 
+ Consider the oracle that always returns an axis-parallel halfspace that does not cut any little cube and contains at least half of the volume of the 
 \begin_inset Quotes eld
 \end_inset
 

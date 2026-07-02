@@ -1035,7 +1035,7 @@ literal "false"
 
 \end_inset
 
- for other basic properties of  R
+ for other basic properties of R
 \begin_inset ERT
 status open
 
@@ -1048,7 +1048,7 @@ status open
 
 \end_inset
 
-nyi-divergence.
+nyi divergence.
 \end_layout
 
 \begin_layout Standard
@@ -1071,7 +1071,7 @@ marginal
 \begin_inset Formula $\nu$
 \end_inset
 
- in the span of a 
+ onto a 
 \begin_inset Formula $k$
 \end_inset
 

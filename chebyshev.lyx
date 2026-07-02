@@ -126,20 +126,21 @@ We will bound
 \end_inset
 
 This corresponds to the Richardson iteration, and the above bound shows
- that it takes 
+ that it requires degree 
 \begin_inset Formula $O(\frac{L}{\mu}\log(\frac{1}{\epsilon}))$
 \end_inset
 
- degree to bound the error by 
+ to bound the error by 
 \begin_inset Formula $\epsilon$
 \end_inset
 
 .
- The key fact we will use is that we can in general approximate a polynomial
- of degree 
+ The key fact we will use is that we can approximate the Richardson polynomial above,
+ which has degree 
 \begin_inset Formula $k$
 \end_inset
 
+,
  by a polynomial of degree 
 \begin_inset Formula $\tilde{O}(\sqrt{k})$
 \end_inset
@@ -421,7 +422,7 @@ For any
 \end_inset
 
  and any 
-\begin_inset Formula $0\leq\epsilon\leq1$
+\begin_inset Formula $0<\epsilon\leq1$
 \end_inset
 
 , there is a polynomial 

@@ -243,7 +243,7 @@ Given a matrix
 \begin_inset Formula $x^{(k+1)}=x^{(k)}-M^{-1}(A^{\top}Ax^{(k)}-A^{\top}b)$
 \end_inset
 
- .
+.
  Then, we have that
 \begin_inset Formula 
 \[
@@ -556,7 +556,7 @@ Let
 \begin_inset Formula $S=\{y:y=Uz\}$
 \end_inset
 
- Then, the condition
+. Then, the condition
 \begin_inset Formula 
 \[
 (1-\epsilon)\|y\|^{2}\leq\|\Pi y\|^{2}\leq(1+\epsilon)\|y\|^{2}
@@ -973,7 +973,7 @@ Taking a union bound over all
 \end_layout
 
 \begin_layout Standard
-This reduction and the Johnson-Lindenstrauss lemma show that a random matrix with entries 
+This reduction and the Johnson-Lindenstrauss lemma show that a random matrix with independent uniformly random entries in 
 \begin_inset Formula $\pm\frac{1}{\sqrt{m}}$
 \end_inset
 
@@ -1094,7 +1094,11 @@ We consider the sparse matrix
 \begin_inset Formula $\|\Pi x\|^{2}$
 \end_inset
 
- is the number of nonzero entries in its single column.
+ is 
+\begin_inset Formula $1/s$
+\end_inset
+
+ times the number of nonzero entries in its single column.
  Therefore, we indeed need that 
 \begin_inset Formula $s$
 \end_inset
@@ -1351,7 +1355,7 @@ Assume that
 \end_inset
 
 
-\begin_inset Formula $\log^{2}(\frac{1}{\delta})/\epsilon^{2}$
+\begin_inset Formula $s\gg\log^{2}(\frac{1}{\delta})/\epsilon^{2}$
 \end_inset
 
  and 
@@ -1500,11 +1504,11 @@ with probability
 \begin_inset Formula $P$
 \end_inset
 
- is a random diagonal block of 
+ is a principal submatrix of 
 \begin_inset Formula $UU^{\top}$
 \end_inset
 
-of size at most 
+ of size at most 
 \begin_inset Formula $2sn/m$
 \end_inset
 
@@ -1538,7 +1542,7 @@ with probability
 \begin_inset Formula $m\gg d\log(\frac{d}{\delta})/\epsilon^{2}$
 \end_inset
 
- , we have 
+, we have 
 \begin_inset Formula $\sigma^{\top}P\sigma\leq\frac{\epsilon^{2}}{\log(d/\delta)}$
 \end_inset
 
@@ -1769,7 +1773,7 @@ Let
 \end_inset
 
  be a 
-\begin_inset Formula $O(d,\frac{1}{4},\delta)$
+\begin_inset Formula $(d,\frac{1}{4},\delta)$
 \end_inset
 
  OSE constructed by Theorem 

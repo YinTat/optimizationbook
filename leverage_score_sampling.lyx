@@ -119,12 +119,12 @@ literal "true"
 
 \end_inset
 
-Given a matrix 
+Given 
 \begin_inset Formula $A\in\R^{n\times d}$
 \end_inset
 
-.
- Let 
+,
+ let 
 \begin_inset Formula $T(m)$
 \end_inset
 
@@ -132,15 +132,15 @@ Given a matrix
 \begin_inset Formula $B^{\top}Bx=b$
 \end_inset
 
- among all 
-\begin_inset Formula $m$
-\end_inset
-
- distinct subrows 
+ over all submatrices 
 \begin_inset Formula $B$
 \end_inset
 
- of 
+ consisting of 
+\begin_inset Formula $m$
+\end_inset
+
+ distinct rows of 
 \begin_inset Formula $A$
 \end_inset
 
@@ -515,7 +515,7 @@ reference "lem:Richardson"
 , we have that
 \begin_inset Formula 
 \begin{equation}
-T(n)=\text{cost of computing }\sigma_{i}+O^{*}(\nnz(A)+T(d\log d))\label{eq:TmnS1}
+T(n)=\text{cost of computing all leverage scores }\sigma+O^{*}(\nnz(A)+T(d\log d))\label{eq:TmnS1}
 \end{equation}
 
 \end_inset
@@ -663,7 +663,7 @@ where
 
 .
  Hence, it suffices to bound 
-\begin_inset Formula $\norm{\sigma_{i,S}}_{1}$
+\begin_inset Formula $\sum_{i}\sigma_{i,S}$
 \end_inset
 
 .
