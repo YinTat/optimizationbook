@@ -42,18 +42,17 @@ Given an $n\times n$ random $0/1$ matrix $A$ with $O(n)$ nonzero
 entries and a $0/1$ vector $b$, can we solve $Ax=b$ in $o(n^{2})$
 time?
 \end{problem*}
-Computing the volume is an ancient problem, the early Egyptians and
-Greeks developed formulas for specific shapes of interest. Unlike
-convex optimization, even computing the volume of a convex body is
-intractable, as we will see later. Nevertheless, there are efficient
-randomized algorithms that can estimate the volume of convex bodies
-to arbitrary accuracy in time polynomial in the dimension and the
-desired accuracy. This extends to efficient algorithms for integrating
-\emph{logconcave} functions, i.e., functions of the form $e^{-f}$
-where $f$ is convex. The core ingredient is sampling in high dimension.
-Sampling and volume computation will be the motivating problems for
-the second part of this book. Again, many basic problems remain open.
-To illustrate:
+Computing volume is an ancient problem; the early Egyptians and Greeks
+developed formulas for specific shapes of interest. Unlike convex
+optimization, even computing the volume of a convex body is intractable,
+as we will see later. Nevertheless, there are efficient randomized
+algorithms that can estimate the volume of convex bodies to arbitrary
+accuracy in time polynomial in the dimension and the desired accuracy.
+This extends to efficient algorithms for integrating \emph{logconcave}
+functions, i.e., functions of the form $e^{-f}$ where $f$ is convex.
+The core ingredient is sampling in high dimension. Sampling and volume
+computation will be the motivating problems for the second part of
+this book. Again, many basic problems remain open. To illustrate:
 \begin{problem*}
 Given a polytope defined by $\left\{ x:\,Ax\le b\right\} $, can we
 estimate its volume to within a constant factor in nearly linear time?
@@ -325,7 +324,7 @@ We note that the proof above is in fact a constructive proof. If $x$
 is not a minimum, it suggests a point that has better function value.
 This will be the discussion of an upcoming section. For continuous
 convex functions, there is a weaker notion of gradient called sub-differential,
-which is a set instead of a vector. Both theorems above holds with
+which is a set instead of a vector. Both theorems above hold with
 gradients replaced by sub-differentials.
 
 \section{Convex problems are everywhere!}
@@ -364,15 +363,15 @@ for all $v\in V\setminus\left\{ s,t\right\} $.
 \end{itemize}
 To check this is a convex problem, we note that the objective function
 is a linear function $c^{\top}f$ which is convex. The domain is the
-intersection of three sets (the three set of equations above). The
-first set is a scaled hypercube, the second and last set is a linear
-subspace. All of them are convex and so is their intersection. Therefore,
-this is a convex problem.
+intersection of three sets (the three sets of constraints above).
+The first set is a scaled hypercube, and the second and third sets
+are affine subspaces. All of them are convex and so is their intersection.
+Therefore, this is a convex problem.
 
-\subsection{Linear Programs (Operation Research/Economics)}
+\subsection{Linear Programs (Operations Research/Economics)}
 
-Consider the diet problem: find a cheapest diet plan that satisfies
-the nutrients requirements. Formally, suppose there are $n$ different
+Consider the diet problem: find the cheapest diet plan that satisfies
+the nutrient requirements. Formally, suppose there are $n$ different
 foods and $m$ different nutrients. The food $i$ has unit cost $c_{i}$,
 $a_{1i}$ unit of nutrient $1$, $a_{2i}$ unit of nutrient $2$,
 $\cdots$. Furthermore, every day we need $b_{j}$ unit of the nutrient
@@ -450,8 +449,8 @@ where we say $g$ is feasible if $g(x,y)=f(x,y)$ for all $x,y$ on
 the boundary of $[0,1]^{2}$. One natural question (called Plateau's
 problem) is to find a minimal surface with a given boundary. For this
 particular case we consider, we can simply use convex optimization.
-Note that the constraint ($g$ is feasible) is exactly a linear subspace
-on the space of functions on $[0,1]^{2}$. Furthermore, the objective
+Note that the constraint ($g$ is feasible) is exactly an affine subspace
+of the space of functions on $[0,1]^{2}$. Furthermore, the objective
 is convex by using the fact that
 \[
 \text{SurfaceArea}(f)=\int^{1}_{0}\int^{1}_{0}\sqrt{1+\left(\frac{\partial f(x,y)}{\partial x}\right)^{2}+\left(\frac{\partial f(x,y)}{\partial y}\right)^{2}\,}dxdy.
@@ -531,16 +530,16 @@ we illustrate how to check convexity.
 \begin{example*}
 Convex sets: polyhedron $\{x:\,Ax\leq b\}$, polytope $\conv\left(\left\{ v_{1},\ldots,v_{m}\right\} \right)$
 with $v_{1},\ldots,v_{m}\in\R^{n}$, ellipsoid $\{x:\,x^{\top}Ax\leq1\}$
-with $A\succeq0$, positive semidefinite cone $\{X\in\R^{n\times n}\text{ : }X\succeq0\}$,
+with $A\succ0$, positive semidefinite cone $\{X\in\R^{n\times n}\text{ : }X\succeq0\}$,
 norm ball $\{x:\ \norm x_{p}\leq1\}$ for all $p\geq1$.
 \end{example*}
 %
 \begin{example*}
 Convex functions: $x$, $\max(x,0)$, $e^{x}$, $|x|^{a}$ for $a\geq1$,
 $-\log(x)$, $x\log x$, $\norm x_{p}$ for $p\geq1$, $(x,y)\rightarrow\frac{x^{2}}{y}$
-(for $y>0$), $A\rightarrow-\log\det A$ over PSD matrices $A$, $(x,Y)\rightarrow x^{\top}Y^{-1}x$
-(for $Y\succ0$), $\log\sum_{i}e^{x_{i}}$, $-(\prod^{n}_{i}x_{i})^{\frac{1}{n}}$
-for $x\ge0$.
+(for $y>0$), $A\rightarrow-\log\det A$ over positive definite matrices
+$A$, $(x,Y)\rightarrow x^{\top}Y^{-1}x$ (for $Y\succ0$), $\log\sum_{i}e^{x_{i}}$,
+$-(\prod^{n}_{i}x_{i})^{\frac{1}{n}}$ for $x\ge0$.
 \end{example*}
 \begin{xca}
 Show that the above sets and functions are all convex.
@@ -668,10 +667,10 @@ and $f''(z)=\frac{\exp(z)}{(1+\exp(z))^{2}}\geq0$.
 The standard definition of a convex function in terms of gradients
 requires differentiability. However, a more general definition allows
 us to avoid this requirement. For a convex function $f:\R^{n}\rightarrow\R$,
-we say that a function $g:\R^{n}\rightarrow\R^{n}$ is called a $subgradient$
-if it satisfies the following property: for any $x,y\in\R^{n},$$f(y)-f(x)\ge\langle g(x),y-x\rangle.$
+we say that a function $g:\R^{n}\rightarrow\R^{n}$ is called a \emph{subgradient
+selection} if it satisfies the following property: for any $x,y\in\R^{n},$$f(y)-f(x)\ge\langle g(x),y-x\rangle.$
 For the purpose of optimization algorithms, in almost all cases, a
-subgradient will suffice in place of a gradient. 
+subgradient selection will suffice in place of a gradient. 
 
 \begin{figure}[h]
 \begin{centering}
@@ -686,8 +685,8 @@ A function $f:\R^{n}\rightarrow\R_{+}$ is \emph{logconcave} if $\log f$
 is concave, i.e., $f$ is nonnegative and for any $t\in(0,1)$, we
 have $f(tx+(1-t)y)\ge f(x)^{t}f(y)^{1-t}$.
 
-Thus any logconcave function can be viewed as $e^{-f(x)}$ for some
-convex function $f$. 
+Thus any logconcave function can be written as $e^{-V(x)}$ for an
+extended-valued convex function $V=-\log f$. 
 \end{defn}
 
 \begin{xca}
@@ -710,8 +709,8 @@ $y$.
 \end{example}
 
 \begin{lem}[Dinghas; Prékopa; Leindler]
- \label{lem:marginal} The product, minimum and convolution of two
-logconcave functions is also logconcave; in particular, any linear
+ \label{lem:marginal} The product, minimum, and convolution of two
+logconcave functions are also logconcave; in particular, any linear
 transformation or any marginal of a logconcave density is logconcave;
 the distribution function of any logconcave density is logconcave. 
 \end{lem}

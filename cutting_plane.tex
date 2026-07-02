@@ -76,7 +76,7 @@ Choose a point $x^{(k)}\in E^{(k)}$.
 
 \lIf{$E^{(k)}$ is ``small enough''}{\Return$x^{(k)}$}
 
-Find $E^{(k+1)}\supset E^{(k)}\cap H^{(k)}$ where
+Find $E^{(k+1)}\supseteq E^{(k)}\cap H^{(k)}$ where
 \begin{equation}
 H^{(k)}\defeq\{x\in\Rn\text{ such that }g(x^{(k)})^{\top}(x-x^{(k)})\leq0\}.\label{eq:Hk}
 \end{equation}
@@ -192,14 +192,14 @@ e.g., a linear function, making it provably ``slow'' in practice.
 Note that the ratio of $\vol E^{(k+1)}/\vol E^{(k)}$ does not change
 under any affine transformation, and neither does set containment.
 Therefore, we can do a transformation so that $A^{(k)}=I$, $x^{(k)}=0$
-and $v(x^{(k)})=e_{1}$. Therefore $H^{(k)}$ is simply the halfspace
+and $g(x^{(k)})=e_{1}$. Therefore $H^{(k)}$ is simply the halfspace
 $\{x:x_{1}\le0\}$. This simplifies our calculation. We need to prove
 two statements: $\vol E^{(k+1)}<e^{-\frac{1}{2n+2}}\vol E^{(k)}$
 and that $E^{(k)}\cap H^{(k)}\subset E^{(k+1)}$.
 
 Claim 1: $\vol E^{(k+1)}<e^{-\frac{1}{2(n+1)}}\vol E^{(k)}$.
 
-Note that since $v(x^{(k)})=e_{1},$we have $A^{(k+1)}=\frac{n^{2}}{n^{2}-1}\left(I-\frac{2}{n+1}e_{1}e^{\top}_{1}\right)$.
+Note that since $g(x^{(k)})=e_{1},$we have $A^{(k+1)}=\frac{n^{2}}{n^{2}-1}\left(I-\frac{2}{n+1}e_{1}e^{\top}_{1}\right)$.
 Therefore, we have that
 \begin{align*}
 \left(\frac{\vol E^{(k+1)}}{\vol E^{(k)}}\right)^{2}=\left|\frac{\det A^{(k+1)}}{\det A^{(k)}}\right| & =\left(\frac{n^{2}}{n^{2}-1}\right)^{n}\det\left(I-\frac{2}{n+1}e_{1}e^{\top}_{1}\right)\\
@@ -370,9 +370,9 @@ As an illustration, we show how to solve linear programs to desired
 approximation in polynomial time here. 
 \begin{thm}
 Given a linear program $\min_{x\in P}c^{\top}x$ where $P=\{x\text{: }Ax\geq b\}$.
-Let the diameter of $P$ be $R\defeq\max_{x\in P}\norm x_{2}$ and
-its volume radius be $r=\vol(P)^{1/n}$. Then, we can find $x\in P$
-for which 
+Let $R\defeq\max_{x\in P}\norm x_{2}$ be an outer radius for $P$
+and let its volume radius be $r=\vol(P)^{1/n}$. Then, we can find
+$x\in P$ for which 
 \[
 c^{\top}x-\min_{y\in P}c^{\top}y\leq\varepsilon\cdot(\max_{y\in P}c^{\top}y-\min_{y\in P}c^{\top}y)
 \]
@@ -400,8 +400,8 @@ if $Ax\geq b$ and $v(x)=-a_{i}$ if $a^{\top}_{i}x<b_{i}$. If there
 are many violated constraints, any one of them will do.
 
 In this case, we can set $\Omega=P$. We can simply pick $E^{(0)}$
-be the unit ball centered at $0$ with radius $R$. We apply Theorem
-\ref{thm:ellipsoid} to find $x$ such that
+be the Euclidean ball centered at $0$ with radius $R$. We apply
+Theorem \ref{thm:ellipsoid} to find $x$ such that
 \[
 c^{\top}x-\min_{y\in P}c^{\top}y\leq\varepsilon\cdot(\max_{y\in P}c^{\top}y-\min_{y\in P}c^{\top}y)
 \]
@@ -473,7 +473,7 @@ on logconcave functions. A distribution $p$ is \emph{isotropic} if
 the mean of a random variable drawn from the distribution is zero
 and the covariance is the identity matrix.
 
-The randomized center of gravity method defined as follows: 
+The randomized center of gravity method is defined as follows: 
 
 \begin{algorithm2e}[H]
 
@@ -510,8 +510,8 @@ of Theorem \ref{thm:Grunbaum}, which will give a similar result despite
 using only an approximate center of gravity.
 \begin{thm}[Robust Gr\"unbaum]
 \label{thm:grun-1}Let $p$ be an isotropic logconcave distribution,
-namely $\E_{x\sim p}x=0$ and $\E_{x\sim p}x^{2}=1$. For any unit
-vector $\theta\in\R^{n}$, $t\in\R$ we have
+namely $\E_{x\sim p}x=0$ and $\E_{x\sim p}xx^{\top}=I$. For any
+unit vector $\theta\in\R^{n}$, $t\in\R$ we have
 \[
 \P_{x\sim p}(x^{\top}\theta\geq t)\geq\frac{1}{e}-\left|t\right|.
 \]

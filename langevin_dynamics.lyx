@@ -185,10 +185,10 @@ Without the restriction to the nonnegative orthant,
 
 ,
  we can sample each coordinate independently from 
-\begin_inset Formula $N(0,1$
+\begin_inset Formula $N(0,1)$
 \end_inset
 
-),
+,
  a problem which has many (efficient) numerical recipes.
  But how can we handle the restriction?
  In the course of forthcoming chapters,
@@ -474,7 +474,7 @@ dx_{t}=\mu(x_{t},t)dt+\sigma(x_{t},t)dW_{t}\label{eq:sde}
  which finds many applications in applied mathematics,
  finance,
  biology and physics.
- Another useful process is the Ornstein-Ulhenbeck Process:
+ Another useful process is the Ornstein-Uhlenbeck process:
  
 \end_layout
 
@@ -590,7 +590,7 @@ nolink "false"
 \end_inset
 
 and only the first term survives,
- as the second and later terms goes to zero.
+ as the second and later terms go to zero.
  But with the stochastic component,
  roughly speaking,
  
@@ -815,7 +815,7 @@ For any smooth function
 
 \end_inset
 
-Taking derivatives on the both sides with respect to 
+Taking derivatives on both sides with respect to 
 \begin_inset Formula $t$
 \end_inset
 
@@ -850,8 +850,8 @@ nolink "false"
  we have that
 \begin_inset Formula 
 \begin{align*}
-\int\phi(x)\,dp(x)dx & =\E\left(\nabla\phi(x_{t})^{\top}\mu(x_{t})\,dt+\nabla\phi(x_{t})^{\top}\sigma(x_{t})\,dW_{t}+\frac{1}{2}\tr(\sigma(x_{t})^{\top}\nabla^{2}\phi(x_{t})\sigma(x_{t}))\,dt\right)\\
- & =\E\left(\nabla\phi(x_{t})^{\top}\mu(x_{t})dt+\frac{1}{2}\tr(\nabla^{2}\phi(x_{t})D(x_{t}))\,dt\right).
+\int\phi(x)\frac{dp_{t}}{dt}dx & =\E\left(\nabla\phi(x_{t})^{\top}\mu(x_{t})+\frac{1}{2}\tr(\sigma(x_{t})^{\top}\nabla^{2}\phi(x_{t})\sigma(x_{t}))\right)\\
+ & =\E\left(\nabla\phi(x_{t})^{\top}\mu(x_{t})+\frac{1}{2}\tr(\nabla^{2}\phi(x_{t})D(x_{t}))\right).
 \end{align*}
 
 \end_inset
@@ -955,11 +955,15 @@ nolink "false"
 
 \end_inset
 
-Now since 
+To check stationarity, set 
 \begin_inset Formula $p_{t}$
 \end_inset
 
- is stationary the LHS is zero and we can rewrite the above as
+ proportional to 
+\begin_inset Formula $e^{-f}$
+\end_inset
+
+ in the right-hand side; then the LHS is zero and we can rewrite the above as
 \begin_inset Formula 
 \begin{align*}
 \frac{dp_{t}}{dt}=0 & =\sum_{i}\frac{\partial}{\partial x_{i}}\left(p_{t}(x)\frac{\partial f(x)}{\partial x_{i}}+\frac{\partial}{\partial x_{i}}p_{t}(x)\right)\\
@@ -1053,7 +1057,7 @@ status open
 
 .
  (Hint:
- Take expectation on both sides of It
+ take expectations on both sides of It
 \begin_inset ERT
 status open
 
@@ -1484,7 +1488,7 @@ Let
  Then the Langevin dynamics 
 \begin_inset Formula 
 \[
-dx_{t}=-\nabla f(x)dt+\sqrt{2}dW_{t}
+dx_{t}=-\nabla f(x_{t})dt+\sqrt{2}dW_{t}
 \]
 
 \end_inset
@@ -1515,8 +1519,8 @@ nolink "false"
 \begin_inset Formula $\nu(x)\propto e^{-f(x)}$
 \end_inset
 
- with mixing rate 
-\begin_inset Formula $O(C_{LSI})$
+ with decay rate 
+\begin_inset Formula $2/C_{LSI}$
 \end_inset
 
 ,
@@ -1609,7 +1613,7 @@ We compute the time derivative of the distribution of LD at time
  & =\int\nabla\cdot\left(\rho\nabla\log\frac{\rho}{\nu}\right)\log\frac{\rho}{\nu}\\
  & =-\int\langle\rho\nabla\log\frac{\rho}{\nu},\nabla\log\frac{\rho}{\nu}\rangle\\
  & =-\int\rho\norm{\nabla\log\frac{\rho}{\nu}}_{2}^{2}\\
- & =\E_{\rho}\left(\norm{\nabla\log\frac{\rho}{\nu}}_{2}^{2}\right)=-J_{\nu}(\rho_{t}).
+ & =-\E_{\rho}\left(\norm{\nabla\log\frac{\rho}{\nu}}_{2}^{2}\right)=-J_{\nu}(\rho_{t}).
 \end{align*}
 
 \end_inset
@@ -1681,7 +1685,7 @@ nolink "false"
 \end_layout
 
 \begin_layout Proof
-We use Lemmas and to obtain
+We use the previous two lemmas to obtain
 \begin_inset Formula 
 \[
 \frac{d}{dt}d_{KL}(\rho_{t},\nu)=-J_{\nu}(\rho_{t})\le-\frac{2}{C_{LSI}}d_{KL}(\rho_{t},\nu).
@@ -1945,7 +1949,7 @@ nolink "false"
 \begin_inset Formula $\E_{x\sim p_{t}}\phi(x)=\E\phi(x_{t}).$
 \end_inset
 
- Taking derivatives on the both sides with respect to 
+ Taking derivatives on both sides with respect to 
 \begin_inset Formula $t$
 \end_inset
 
@@ -1994,7 +1998,7 @@ where we can think
 \begin_inset Formula $\lambda(x)$
 \end_inset
 
- be the Lagrangian multiplier of the constraint 
+ be the Lagrange multiplier of the constraint 
 \begin_inset Formula $-\nabla\cdot(pc)=v$
 \end_inset
 
@@ -2024,7 +2028,7 @@ This proves that any vector field that generates minimum movement in Wasserstein
 \begin_inset Formula $v(x)=\nabla\cdot(p(x)\nabla\lambda(x)).$
 \end_inset
 
- Note that the right hand side is an elliptical differential equation and hence for any 
+ Note that the right-hand side is an elliptic differential equation and hence for any 
 \begin_inset Formula $v$
 \end_inset
 
@@ -2033,7 +2037,7 @@ This proves that any vector field that generates minimum movement in Wasserstein
 \end_inset
 
 ,
- there is an unique solution 
+ there is a unique solution 
 \begin_inset Formula $\lambda(x)$
 \end_inset
 
@@ -2105,7 +2109,7 @@ Let
  we have that
 \begin_inset Formula 
 \[
-\frac{d\rho}{dt}=\argmin_{v\in T_{p}P_{2}(\Rn)}\left\langle \nabla F(\rho),v\right\rangle _{p}+\frac{1}{2}\|v\|_{p}^{2}.
+\frac{d\rho}{dt}=\argmin_{v\in T_{\rho}P_{2}(\Rn)}\left\langle \nabla F(\rho),v\right\rangle _{\rho}+\frac{1}{2}\|v\|_{\rho}^{2}.
 \]
 
 \end_inset
@@ -2285,7 +2289,7 @@ Fix a density
  
 \begin_inset Formula 
 \[
-\frac{C_{LSI}}{2}\int\norm{\nabla g}^{2}\,d\nu\ge\int g(x)^{2}\log g(x)^{2}\ d\nu
+\Ent_{\nu}(g^{2})\leq2C_{LSI}\int\norm{\nabla g}^{2}\,d\nu
 \]
 
 \end_inset
@@ -2299,7 +2303,7 @@ nolink "false"
 \end_inset
 
 ) with 
-\begin_inset Formula $\alpha=1/C_{LSI}$
+\begin_inset Formula $\alpha=2/C_{LSI}$
 \end_inset
 
 .
@@ -2374,7 +2378,7 @@ nolink "false"
 \end_inset
 
 ,
- we obtain another proof of Therem 
+ we obtain another proof of Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:LDinKL"

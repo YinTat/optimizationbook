@@ -21,8 +21,8 @@ and $\norm{\cdot}_{W}$ are $\ell_{2}$ norms if unspecified.
 \end{defn}
 
 \begin{defn}
-A function $f\in\mathcal{C}^{k}(\Rn)$ if $f$ is a $k$-differentiable
-function and its $k^{\mathrm{th}}$ derivative is continuous.
+A function $f$ is in $\mathcal{C}^{k}(\Rn)$ if $f$ is $k$-times
+differentiable and its $k^{\mathrm{th}}$derivative is continuous.
 \end{defn}
 
 \begin{defn}
@@ -35,7 +35,7 @@ at $x_{0}$ iff
 \[
 {\displaystyle \liminf_{x\to x_{0}}f(x)\geq f(x_{0})}.
 \]
-The function is lower semi-continuous if is it so at every point in
+The function is lower semi-continuous if it is so at every point in
 its domain. The definition of upper semi-continuous is analogous with
 the inequalities reversed and $\liminf$ replaced by $\limsup$. 
 \end{defn}
@@ -49,8 +49,8 @@ g(y)=\sum^{k}_{j=0}g^{(j)}(x)\frac{(y-x)^{j}}{j!}+g^{(k+1)}(\zeta)\frac{(y-x)^{k
 \end{thm}
 
 \begin{defn}
-The $convolution$ of two functions $f,g:\R^{n}\rightarrow\R$ is
-defined as $h(x)=\int_{\R^{n}}f(z)g(x-z)\,dz.$
+The \emph{convolution} of two functions $f,g:\R^{n}\rightarrow\R$
+is defined as $h(x)=\int_{\R^{n}}f(z)g(x-z)\,dz.$
 \end{defn}
 
 
@@ -82,9 +82,11 @@ For a vector $x$, $\norm x_{A}=\sqrt{x^{T}Ax}$; for a matrix $B$,
  For matrix $A\in\R^{n\times n}$ and vectors $u,v\in\R^{n}$, we
 have
 \[
-\left(A+uv^{\top}\right)^{-1}=A^{-1}-\frac{A^{-1}uv^{\top}A^{-1}}{1+u^{\top}A^{-1}v}.
+\left(A+uv^{\top}\right)^{-1}=A^{-1}-\frac{A^{-1}uv^{\top}A^{-1}}{1+u^{\top}A^{-1}v},
 \]
-For matrices $U,V\in\R^{n\times k},$we have
+provided $A$ is invertible and $1+u^{\top}A^{-1}v\neq0$. For matrices
+$U,V\in\R^{n\times k},$ we have, provided $I+V^{\top}A^{-1}U$ is
+invertible,
 \[
 \left(A+UV^{\top}\right)^{-1}=A^{-1}-A^{-1}U\left(I+V^{\top}A^{-1}U\right)^{-1}V^{\top}A^{-1}.
 \]
@@ -94,7 +96,7 @@ For matrices $U,V\in\R^{n\times k},$we have
 \section*{Probability}
 \begin{defn}
 The Total Variation (TV) or $\ell_{1}$-distance between two distributions
-with measures $\rho,\nu$ with support $\Omega$ is 
+with densities $\rho,\nu$ on $\Omega$ is 
 \[
 d_{TV}(\rho,\nu)=\frac{1}{2}\int_{\Omega}\left|\rho(x)-\nu(x)\right|\,dx=\sup_{S\subset\Omega}\left|\rho(S)-\nu(S)\right|=\sup_{S\subset\Omega}\rho(S)-\nu(S).
 \]
@@ -111,7 +113,7 @@ of $\rho$ with respect to $\nu$, is
 \end{defn}
 
 \begin{defn}
-The $\chi$-squared distance of a densities $\rho$ with respect to
+The $\chi$-squared distance of a density $\rho$ with respect to
 another density $\nu$ is defined as  
 \[
 \chi^{2}(\rho,\nu)=\E_{\nu}\left(\left(\frac{\rho(x)}{\nu(x)}-1\right)^{2}\right)=\E_{\rho}\left(\frac{\rho(x)}{\nu(x)}\right)-1.
@@ -146,7 +148,7 @@ divergence} is defined as
 \]
 The \emph{R\'enyi-infinity divergence} is defined as
 \[
-\RR_{\infty}(\mu\|\nu):=\log\esssup_{\mu}\frac{d\mu}{d\nu}\,.
+\RR_{\infty}(\mu\|\nu):=\log\esssup_{\nu}\frac{d\mu}{d\nu}\,.
 \]
 \end{defn}
 
@@ -184,7 +186,7 @@ centered at $z$ as $B^{n}_{p}(z,r)=\left\{ x:\norm{x-z}_{p}\le r\right\} $.
 \end{defn}
 
 \begin{defn}
-The \emph{Minkowski sum }of two sets $A,B\subset\R^{n}$ is defined
+The \emph{Minkowski sum}of two sets $A,B\subset\R^{n}$ is defined
 as $A+B=\left\{ x+y:x\in A,y\in B\right\} $.
 \end{defn}
 

@@ -2,9 +2,9 @@
 
 \section{State of the Art}
 
-We have now seen various algorithms to minimize a convex function.They
-have different runtimes and seem difficult to compare. Before going
-deeper and discussing more results, here we discuss how to understand
+We have now seen various algorithms to minimize a convex function.
+They have different runtimes and seem difficult to compare. Before
+going deeper and discussing more results, here we discuss how to understand
 these different results and their relationships, via reductions between
 them. We will do this at three different levels. The most abstract
 is the level of oracles, which we will define presently; the second
@@ -165,7 +165,7 @@ convex problems. Unlike black-box problems, these algorithms assume
 the full description of the problem. For this setting, we usually
 aim for a runtime that depends on the structure of the problem instead
 of the numerical values of the input. Usually, such algorithms converge
-with a rate of $\log(1/\epsilon)$. For all of these problem, the
+with a rate of $\log(1/\epsilon)$. For all of these problems, the
 best possible runtime is open. Finally, we note that the last two
 problems, linear programs and empirical risk minimization are complete
 in the sense that they can be used to approximate any convex function.
@@ -193,8 +193,8 @@ f(x^{(0)})-f^{*}\leq\left\langle \nabla f(x^{*}),x^{(0)}-x^{*}\right\rangle +\fr
 \]
 Therefore, the terms $\frac{GR}{k}$, $\frac{G^{2}}{\mu k}$ and $\frac{LR^{2}}{k}$
 are all just measuring how much we need to decrease multiplicatively
-from the initial error. With this view, we can think the number of
-iteration required for Lipschitz convex functions, strongly convex
+from the initial error. With this view, we can think the numbers of
+iterations required for Lipschitz convex functions, strongly convex
 functions and smooth functions are exactly $\frac{1}{\epsilon^{2}_{\mathrm{relative}}}$
 , $\frac{1}{\epsilon_{\mathrm{relative}}}$ and $\frac{1}{\sqrt{\epsilon_{\mathrm{relative}}}}$.
 
@@ -239,10 +239,10 @@ For more complicated algorithms, the theory of convergence rate and
 cost per iteration sometimes gives a bad estimate of the reality.
 For example, the interior point method often takes $O(\log n)$ iterations
 to converge despite the $\sqrt{n}$ worst-case bound on its convergence
-rate; the simplex method is often the best of choice for solving linear
-programs despite its exponential complexity bound.
+rate; the simplex method is often the method of choice for solving
+linear programs despite its exponential complexity bound.
 
-The cost per iterations sometimes can be misleading also. Each iteration
+The cost per iteration sometimes can be misleading also. Each iteration
 of interior point methods takes $\nnz(A)+\mathrm{rank}(A)^{2}$ in
 theory while it takes nearly linear time in practice for sparse matrices
 due to the effectiveness of Cholesky decomposition. The $k^{th}$

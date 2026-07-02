@@ -149,7 +149,11 @@ name "thm:OPTviaSampling"
 \end_inset
 
  is bounded.
- Let x be a random sample from the distribution with density proportional
+ Let 
+\begin_inset Formula $x$
+\end_inset
+
+ be a random sample from the distribution with density proportional
  to 
 \begin_inset Formula $F(x)$
 \end_inset
@@ -158,7 +162,7 @@ name "thm:OPTviaSampling"
  Then, 
 \begin_inset Formula 
 \[
-\E\left(c^{T}x\right)\le\min_{K}c^{T}x+\frac{n}{\alpha}.
+\E\left(c^{T}x\right)\le\min_{x\in K}c^{T}x+\frac{n}{\alpha}.
 \]
 
 \end_inset
@@ -262,7 +266,7 @@ Now for this infinite cone, we compute, using
 \end_inset
 
 where the equality in the last line follows from properties of the Gamma
- functions.
+ function.
 \end_layout
 
 \begin_layout Standard
@@ -285,9 +289,9 @@ The theorem says that if we sample according to
  that is focused close to the minimum.
  This method is known as 
 \emph on
-simulated annealing 
+simulated annealing
 \emph default
-and is the subject of Chapter 
+ and is the subject of Chapter 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "chap:Annealing"
@@ -332,7 +336,7 @@ Given an approximately convex function
 \end_inset
 
  on unit ball such that 
-\begin_inset Formula $\max_{\norm x_{2}\leq1}|f(x)-F(x)|\leq\varepsilon/n$
+\begin_inset Formula $\max_{\norm{x}_{2}\leq1}|f(x)-F(x)|\leq\varepsilon/n$
 \end_inset
 
  for some convex function 
@@ -344,7 +348,7 @@ Given an approximately convex function
 \end_inset
 
  in the unit ball such that 
-\begin_inset Formula $F(x)\leq\min_{\norm x_{2}\leq1}F(x)+O(\varepsilon)$
+\begin_inset Formula $F(x)\leq\min_{\norm{x}_{2}\leq1}F(x)+O(\varepsilon)$
 \end_inset
 
 ? The current fastest algorithm takes 

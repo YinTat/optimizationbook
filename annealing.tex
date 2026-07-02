@@ -8,7 +8,7 @@ problem was defined in Chapter (\ref{chap:Elimination-and-Reduction})
 (Problem (\ref{problem:volume})). Integration is the following generalization.
 \begin{problem}[Integration]
  Given an evaluation oracle for an integrable logconcave function
-$f:\R^{n}\rightarrow\R$, a point $x_{0}$ s.t. $f(x_{0})\ge\beta,$
+$f:\R^{n}\rightarrow\R_{+}$, a point $x_{0}$ s.t. $f(x_{0})\ge\beta,$
 numbers $r,R>0$ s.t. (i) $\E(\norm{x-x_{0}}^{2})\le R^{2}$ (ii)
 the level set of $\pi_{f}$ of measure $1/8$ contains a ball of radius
 $r$, and $\varepsilon>0$, output a number $A$ s.t. 
@@ -18,7 +18,7 @@ $r$, and $\varepsilon>0$, output a number $A$ s.t.
 
 As in all problems in oracle models discussed in this book, the complexity
 of an algorithm to solve the above problem is given by the number
-of oracles calls and the number of arithmetic operations. 
+of oracle calls and the number of arithmetic operations. 
 \end{problem}
 
 Table \ref{tab:volume} below summarizes progress on the volume problem
@@ -56,7 +56,7 @@ Year/Authors & New ingredients & Steps\tabularnewline
 2021/Jia-Laddha-Lee-Vempala \cite{JLLV26} & Faster rounding & $n^{3.5}$\tabularnewline
 \hline 
 \end{tabular}\caption{\label{tab:volume} The complexity of volume estimation, each step
-uses $\widetilde{O}(n)$ bit of randomness. The last algorithm needs
+uses $\widetilde{O}(n)$ bits of randomness. The last algorithm needs
 $\widetilde{O}\left(mn^{\omega-1}\right)$ steps per iteration while
 the rest need $O(n^{2})$ per oracle query.}
 \end{table}
@@ -123,7 +123,7 @@ that lies in $K_{i}$ as the estimator.
 \item uniformly sample $X^{(1)},X^{(2)},\ldots,X^{(N)}$ from $K_{i+1}$.
 \item Set $Y_{i}=|{\{j:X^{(j)}\in K_{i}\}}|/N$. 
 \end{enumerate}
-\item Let $Y=\prod^{m-1}_{i=1}Y_{i}$ and return $\vol(B_{n})/Y$.
+\item Let $Y=\prod^{m-1}_{i=0}Y_{i}$ and return $\vol(B_{n})/Y$.
 \end{enumerate}
 \end{algorithm2e}
 
@@ -216,21 +216,21 @@ For integration, the desired integral of a function $f:\R^{n}\rightarrow\R_{+}$
 can be expressed as the following telescoping product:
 
 \[
-\int_{\R^{n}}f=\int f_{0}\frac{\int f_{1}}{\int f_{0}}\frac{\int f_{2}}{\int f_{3}}\cdots\frac{\int f_{m}}{\int f_{m-1}}
+\int_{\R^{n}}f=\int f_{0}\frac{\int f_{1}}{\int f_{0}}\frac{\int f_{2}}{\int f_{1}}\cdots\frac{\int f_{m}}{\int f_{m-1}}
 \]
 where $f_{0}$ is chosen to be a function with an easy integral (typically
-a formula) and $f_{m}=f$. To compute any the ratio $\int g/\int h$
-we can do the following: 
+a formula) and $f_{m}=f$. To compute any ratio $\int g/\int h$ we
+can do the following: 
 \begin{enumerate}
 \item Sample $X$ from the distribution with density proportional to $h$. 
 \item Use the estimator $Y=\frac{g(X)}{h(X)}$. 
 \end{enumerate}
 It is easy to establish the following fact about this estimator. 
 \begin{lem}
-For integrable functions $g,h$ with with support of $g$ contained
-in the support of $h$ and $g(X)/h(X)$ defined everywhere in the
-support of $h$, for $X$ drawn from the distribution with density
-proportional to $h$ and $Y=g(X)/h(X)$, we have 
+For integrable functions $g,h$ with support of $g$ contained in
+the support of $h$ and $g(X)/h(X)$ defined everywhere in the support
+of $h$, for $X$ drawn from the distribution with density proportional
+to $h$ and $Y=g(X)/h(X)$, we have 
 \[
 \E(Y)=\frac{\int g}{\int h}.
 \]

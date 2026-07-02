@@ -54,7 +54,7 @@ we have that
 \[
 \sigma_{i}(A)=\min_{A^{\top}x=a_{i}}\norm x^{2}_{2}.
 \]
-where $a_{i}$ is the $i^{th}$ row of $A$. 
+where $a^{\top}_{i}$ is the $i^{th}$ row of $A$. 
 \end{lem}
 
 \begin{lem}
@@ -67,11 +67,10 @@ a_{i}a^{\top}_{i}\preceq t\cdot A^{\top}A.\label{eq:leverage_score_spectral_uppe
 
 Sampling rows from $A$ according to their exact leverage scores gives
 a spectral approximation for $A$ with high probability. Sampling
-by leverage score overestimates also suffices.
+using leverage-score overestimates also suffices.
 \begin{lem}
-\label{lem:leveragescoresampling}Given a vector $u$ of leverage
-score overestimates, i.e., $\sigma_{i}(A)\le u_{i}$ for all $i$,
-define 
+\label{lem:leveragescoresampling}Given a vector $u$ of leverage-score
+overestimates, i.e., $\sigma_{i}(A)\le u_{i}$ for all $i$, define
 \[
 X=\frac{1}{p_{i}}a_{i}a^{\top}_{i}\quad\mbox{ with probability \quad\ }p_{i}=\frac{u_{i}}{\norm u_{1}}.
 \]
@@ -117,7 +116,7 @@ we have that
 \[
 \text{cost of approximating }\sigma_{i}=O^{*}(\nnz(A))+O^{*}(T(n)).
 \]
-Putting it into (\ref{eq:TmnS1}), we have this useless formula
+Putting it into (\ref{eq:TmnS1}), we have this non-informative recurrence
 \[
 T(n)=O^{*}(\nnz(A)+T(n)+T(d\log d)).
 \]
@@ -134,9 +133,10 @@ sampling of the rows of $A$. We define
 \sigma_{i,S}=a^{\top}_{i}(A^{\top}_{S}A_{S})^{-1}a_{i}
 \]
 where $A_{S}$ is $A$ restricted to rows in $S$. The set $S$ will
-be a random sample of $k$ rows of $A$. Note that $A^{\top}_{S}A_{S}$
-is an overestimate of $\sigma_{i}$. Hence, it suffices to bound $\norm{\sigma_{i,S}}_{1}$.
-The key lemma is the following:
+be a random sample of $k$ rows of $A$. Note that since $A^{\top}_{S}A_{S}\preceq A^{\top}A$,
+the quantity $\sigma_{i,S}$ is an overestimate of $\sigma_{i}(A)$.
+Hence, it suffices to bound $\norm{\sigma_{i,S}}_{1}$. The key lemma
+is the following:
 \begin{lem}
 \label{lem:sigmaSi}We have that
 \[
@@ -150,11 +150,11 @@ Note that
 \E_{|S|=k}\sum^{n}_{i=1}\sigma_{i,S\cup\{i\}} & =\E_{|S|=k}\sum_{i\notin S}\sigma_{i,S\cup\{i\}}+\E_{|S|=k}\sum_{i\in S}\sigma_{i,S\cup\{i\}}.
 \end{align*}
 Note that $\sum_{i\in S}\sigma_{i,S\cup\{i\}}=\sum_{i\in S}\sigma_{i,S}\leq d$.
-Hence, the second term is bounded by $n$. 
+Hence, the second term is bounded by $d$. 
 
 For the first term, we note that ``sample a set $S$ of size $k$,
-then sample $i\notin S$'' is same as ``sample a set $T$ of size
-$k+1$, then sample $i\in T$''. Hence, we have
+then sample $i\notin S$'' is the same as ``sample a set $T$ of
+size $k+1$, then sample $i\in T$''. Hence, we have
 \begin{align*}
 \E_{|S|=k}\E_{i\notin S}\sigma_{i,S\cup\{i\}} & =\E_{|T|=k+1}\E_{i\in T}\sigma_{i,T}\\
  & \leq\E_{|T|=k+1}\frac{d}{k+1}=\frac{d}{k+1}

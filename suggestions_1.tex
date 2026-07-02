@@ -1,0 +1,208 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\title{Remaining Large TODOs}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{Purpose}
+
+This file records only unresolved issues that still require an author-level decision, a rewritten proof, or a larger structural pass.
+
+\section*{Items to Review}
+
+\subsection*{1. Convexity: separation and ``intersection of halfspaces'' statements}
+
+\textbf{Issue.}  The separation discussion appears to mix several statements that need different hypotheses.  A separating hyperplane theorem for a point and a convex set usually needs the set to be closed, or else the separation may only be non-strict.  If the text writes a maximum over the set, that maximum need not be attained unless the set is compact or the relevant linear functional is bounded and attains its supremum.  Separately, a closed convex set is an intersection of supporting halfspaces, but it is not necessarily a finite intersection of halfspaces; finite intersections are polyhedra.
+
+\textbf{Why it matters.}  Without the compactness/closedness distinctions, the theorem can be false as stated.  Also, saying or implying that a general closed convex set is a polyhedron would be a serious mathematical error.
+
+\textbf{Suggested change.}  State the result in one of the following precise forms:
+\[
+K=\bigcap_{a\in\mathbb R^n}\{x:a^\top x\le h_K(a)\},
+\qquad
+h_K(a)=\sup_{y\in K}a^\top y,
+\]
+for a closed convex set \(K\), with no claim that the intersection is finite.  If a maximum is used, add compactness or replace ``max'' by ``sup''.  If a finite halfspace description is desired, explicitly restrict the statement to polyhedra.
+
+\subsection*{2. Convexity: first-order optimality proof versus differentiability assumptions}
+
+\textbf{Issue.}  One optimality argument for convex functions appears to assume a Hessian or a second-order Taylor expansion while the surrounding statement only assumes \(C^1\) smoothness.
+
+\textbf{Why it matters.}  The result is true under weaker assumptions, but the proof method must match the assumptions.  A \(C^1\) convex function need not have a classical Hessian everywhere.
+
+\textbf{Suggested change.}  Either strengthen the theorem to \(C^2\) and keep the Hessian proof, or keep the \(C^1\) theorem and prove it via the one-dimensional function \(g(t)=f(x+t(y-x))\), using monotonicity of directional derivatives.  For nonsmooth convex functions, state the subgradient condition \(0\in \partial f(x^\star)\).
+
+\subsection*{3. Convexity: clean example for nonconvexity of volume}
+
+\textbf{Issue.}  The discussion that volume is not convex should be checked carefully near boundary cases.  If the example uses two sets whose midpoint operation changes dimension or degenerates, the comparison can become ambiguous or depend on whether lower-dimensional sets are allowed.
+
+\textbf{Why it matters.}  This is a conceptual example, so it should be clean.  A confusing counterexample may distract from the main point.
+
+\textbf{Suggested change.}  Use full-dimensional boxes in \(\mathbb R^n\), for example two thin rectangles with the same area but whose Minkowski average has larger area, or explicitly state that all bodies are full-dimensional and have nonempty interior.
+
+\subsection*{4. Equivalence: gradient of the Fenchel conjugate}
+
+\textbf{Issue.}  A lemma relating \(\nabla f^\ast\) and \((\nabla f)^{-1}\) needs stronger assumptions than plain convexity.  In general, Fenchel conjugacy gives the subgradient relation
+\[
+y\in \partial f(x) \quad\Longleftrightarrow\quad x\in \partial f^\ast(y).
+\]
+The gradient inverse formula only follows when the relevant subgradients are single-valued and the gradient map is onto the intended domain.
+
+\textbf{Why it matters.}  Without these hypotheses, the conjugate may fail to be differentiable, the gradient map may fail to be invertible, or the inverse may only be defined on a proper subset.
+
+\textbf{Suggested change.}  State the lemma first in subgradient form.  Then add a corollary: if \(f\) is closed, proper, strictly convex, differentiable, and Legendre-type on its domain, then \(\nabla f^\ast=(\nabla f)^{-1}\) on the image of \(\nabla f\).  If strong convexity/smoothness is used later, state those conditions explicitly.
+
+\subsection*{5. Duality: convex hull recovery from a linear optimization oracle}
+
+\textbf{Issue.}  The convex hull recovery discussion appears to use an \(\arg\min\) oracle in a place where support-function logic usually requires \(\arg\max\), depending on sign conventions.  Also, an LP that reconstructs a convex combination needs normalization constraints such as \(\sum_i t_i=1\) and \(t_i\ge 0\).
+
+\textbf{Why it matters.}  The sign convention determines whether the oracle returns an exposed point in the desired direction or the opposite one.  Missing convex-combination constraints can turn a convex hull membership LP into a conic hull or affine hull calculation.
+
+\textbf{Suggested change.}  Decide whether the oracle is a minimization or maximization oracle and make all signs consistent.  For convex hull membership, write variables \(\lambda_i\ge 0\) and constraints
+\[
+x=\sum_i \lambda_i v_i,\qquad \sum_i\lambda_i=1.
+\]
+If slack variables are used, state exactly what they represent and keep the normalization constraint visible.
+
+\subsection*{6. Duality: decomposition sums and indexing}
+
+\textbf{Issue.}  In the dual decomposition material, at least one displayed sum/indexing convention should be checked.  The prose suggests a decomposition over multiple blocks, but the formula may not consistently sum over the same block index set.
+
+\textbf{Why it matters.}  Readers use this section to learn how separability enters the dual.  A mismatched index can make the final dual objective look different from the primal decomposition.
+
+\textbf{Suggested change.}  Introduce a fixed block index \(i=1,\ldots,m\), define every block variable and feasible set once, and write the Lagrangian and dual function with the same index range throughout.
+
+\subsection*{7. Conjugate gradient: full indexing-convention audit}
+
+\textbf{Issue.}  The conjugate-gradient section should still be checked as a whole for consistency between the algorithm, theorem, and proof.  The section uses a one-indexed direction convention, for example \(p^{(1)}=r^{(0)}\), which is less common than the zero-indexed convention.
+
+\textbf{Why it matters.}  Conjugate gradient is extremely sensitive to sign and indexing choices.  A formula can be locally correct but still hard to follow if the theorem, derivation, and algorithm use slightly different conventions.
+
+\textbf{Suggested change.}  Add a short paragraph before the algorithm declaring the indexing convention:
+\[
+p^{(1)}=r^{(0)},\qquad
+\alpha_k=\frac{\|r^{(k-1)}\|_2^2}{(p^{(k)})^\top A p^{(k)}}.
+\]
+Then keep every recurrence in that convention.  If preferred, switch to the more standard zero-indexed notation \(p_0=r_0\), \(x_{k+1}=x_k+\alpha_k p_k\), \(r_{k+1}=r_k-\alpha_k A p_k\), and \(p_{k+1}=r_{k+1}+\beta_k p_k\).
+
+\subsection*{8. Cutting-plane volume: exact volume versus bounding-box volume}
+
+\textbf{Issue.}  The volume algorithm/proof appears to conflate computing the volume of a convex body with computing the volume of a bounding box or cuboid associated with it.
+
+\textbf{Why it matters.}  A bounding box can be much larger than the convex body, even by an exponential factor in dimension.  Returning the bounding-box volume is not an exact volume algorithm and is not generally a good approximation without additional rounding or sampling arguments.
+
+\textbf{Suggested change.}  Make the algorithm's output explicit.  If it is a bounding-box routine, call it that and state what guarantee it has.  If the goal is volume computation, add the missing reduction from the bounding box to an actual volume estimate, such as decomposition, triangulation in a special case, or randomized sampling with rounding.
+
+\subsection*{9. Interior point method: Phase-I feasible-LP reduction}
+
+\textbf{Issue.}  The feasible-LP reduction and the \(\mathtt{SlowSolveLP}\) pseudocode use variables such as \(\bar c\) and \(\bar s\) whose roles should be made explicit.  The proof should also clearly show the equivalence between feasibility of the original LP and the behavior of the auxiliary LP.
+
+\textbf{Why it matters.}  Phase-I reductions are a common source of sign mistakes and hidden assumptions.  If the auxiliary objective, slack variables, or artificial variable are not introduced carefully, the proof may solve a different feasibility problem.
+
+\textbf{Suggested change.}  Introduce the auxiliary problem in a single display, define every barred variable immediately, and prove both directions:
+\[
+\text{original LP feasible}\Rightarrow \text{auxiliary optimum is }0,
+\]
+and
+\[
+\text{auxiliary optimum is }0\Rightarrow \text{original LP feasible}.
+\]
+Then align the pseudocode variables with the displayed problem.
+
+\subsection*{10. Subspace embeddings: sparse OSE proof}
+
+\textbf{Issue.}  The sparse OSE proof appears to pass from scalar concentration to a matrix statement too quickly, treating a quadratic form bound as if it immediately implied the full embedding guarantee.
+
+\textbf{Why it matters.}  An OSE must hold uniformly over all vectors in a subspace.  A fixed-vector calculation is not enough unless it is combined with a net argument, a matrix concentration theorem, or another uniformization step.
+
+\textbf{Suggested change.}  After proving the fixed-vector moment or concentration bound, add a net argument on the unit sphere of the column space, or use a matrix Bernstein/Chernoff theorem directly.  The final statement should explicitly quantify
+\[
+(1-\varepsilon)\|Ax\|_2^2\le \|SAx\|_2^2\le (1+\varepsilon)\|Ax\|_2^2
+\quad\text{for all }x.
+\]
+
+\subsection*{11. Stochastic gradient and SVRG assumptions}
+
+\textbf{Issue.}  Some stochastic-gradient bounds depend on whether gradients are almost surely bounded, whether the variance is bounded, or whether each component function is smooth.  The SVRG theorem also needs the sampling scheme, epoch length, and step-size assumptions to be stated together.
+
+\textbf{Why it matters.}  The same-looking recurrence can prove different rates depending on these assumptions.  Missing assumptions can make the theorem appear stronger than the proof supports.
+
+\textbf{Suggested change.}  For SGD, state either \(\mathbb E\|g_t\|^2\le G^2\) or an almost-sure bound, and specify unbiasedness.  For SVRG, state that each \(f_i\) has \(L\)-Lipschitz gradient, \(F=(1/n)\sum_i f_i\) is \(\mu\)-strongly convex, \(i\) is sampled uniformly, and the chosen \(\eta,m\) satisfy the contraction inequality used in the proof.
+
+\subsection*{12. RHMC/HMC: exact flow versus numerical implementation}
+
+\textbf{Issue.}  The HMC discussion should more explicitly distinguish exact Hamiltonian flow from implementable numerical HMC.
+
+\textbf{Why it matters.}  Practical HMC uses numerical integrators.  Unless the integrator is exact, the usual algorithm needs a Metropolis accept/reject correction to remove integration bias.  Readers may otherwise conclude that all implementable HMC methods can omit the filter.
+
+\textbf{Suggested change.}  Add a sentence such as: ``For the exact Hamiltonian flow, no Metropolis correction is needed.  In numerical HMC, a reversible volume-preserving integrator is usually paired with a Metropolis filter to correct discretization error.''
+
+\subsection*{13. RHMC: detailed-balance proof and singular block matrices}
+
+\textbf{Issue.}  The detailed-balance proof uses block formulas involving \(A^{-1}\).  This assumes the relevant block \(A\) is invertible.  The proof also relies on Sard's theorem and exceptional sets, which should be stated with the correct map and regular-value language.
+
+\textbf{Why it matters.}  The full Hamiltonian map can be invertible even if a block in its Jacobian is singular.  A proof that only covers the nonsingular-block case may miss a measure-zero caveat or require a coordinate patch argument.
+
+\textbf{Suggested change.}  State the regular-value restriction explicitly, or avoid the block inverse by using a change-of-variables theorem on the full map and then disintegrating over the \(x\)-coordinate.  If the block computation is kept, add ``for regular values where the relevant block is invertible; the remaining set has measure zero'' and justify this via Sard's theorem.
+
+\subsection*{14. Har-Dikin walk: Dikin ellipsoid radius convention}
+
+\textbf{Issue.}  The Dikin ellipsoid notation appears to alternate between radius and squared-radius conventions.  For example, one common definition is
+\[
+E_x(r)=\{y:(y-x)^\top \nabla^2\phi(x)(y-x)\le r^2\}.
+\]
+If the text instead defines \(E_x(r)\) with \(\le r\), then all later appearances of \(1\), \(\sqrt m\), and \(m\) must change accordingly.
+
+\textbf{Why it matters.}  The containment \(E_x(1)\subseteq K\cap(2x-K)\subseteq E_x(\sqrt m)\) is correct under the radius convention above.  Under a squared-radius convention, the same display would need different parameters.
+
+\textbf{Suggested change.}  Pick one convention at the first definition and add a short reminder before the sandwich lemma.  Then audit every later \(E_x(\cdot)\) expression for consistency.
+
+\subsection*{15. Har-Dikin walk: malformed step-size inequality}
+
+\textbf{Issue.}  One step-size inequality in the Har-Dikin proof is syntactically hard to parse and may have mismatched numerator/denominator terms.
+
+\textbf{Why it matters.}  This inequality is part of the conductance/mixing proof, so a malformed expression can make the proof unverifiable even if the intended result is standard.
+
+\textbf{Suggested change.}  Rewrite the inequality from scratch in a named display.  Define all scalar quantities before the display, then derive the inequality line by line.  Avoid compressing multiple substitutions into one long fraction.
+
+\subsection*{16. Ball walk: conductance exercise versus exposition}
+
+\textbf{Issue.}  Some explanatory paragraphs around the conductance exercise appear to be inside an exercise environment.  They read more like exposition than student tasks.
+
+\textbf{Why it matters.}  This affects presentation rather than correctness.  If exposition remains inside an exercise, readers may be unsure what they are expected to prove.
+
+\textbf{Suggested change.}  Move explanatory text into standard paragraphs and leave only the actual problem statement in the exercise environment.  If the material is intentionally an exercise with hints, label the hints explicitly.
+
+\subsection*{17. Appendix: KKT/Lagrange multiplier regularity}
+
+\textbf{Issue.}  The appendix's Lagrange multiplier and KKT discussion should include a constraint qualification before using multipliers as if they always exist.
+
+\textbf{Why it matters.}  KKT conditions can fail without regularity assumptions, even for differentiable constraints.  Optimization readers will expect conditions such as LICQ, Slater's condition, or full-rank equality constraints.
+
+\textbf{Suggested change.}  For equality constraints \(g(x)=0\), assume \(Dg(x^\star)\) has full row rank.  For convex inequality constraints, state Slater's condition before invoking KKT.  If this appendix is meant to be informal, at least add a warning that multiplier existence requires regularity.
+
+\subsection*{18. Appendix: Holder endpoint cases}
+
+\textbf{Issue.}  The proof of Holder's inequality should explicitly handle or exclude the endpoint cases \(p=1\), \(q=\infty\) and \(p=\infty\), \(q=1\).
+
+\textbf{Why it matters.}  Many standard proofs divide by \(p\) and \(q\), or use Young's inequality in a form valid for \(1<p,q<\infty\).  The endpoint cases are true but need a separate short argument.
+
+\textbf{Suggested change.}  State the proof first for \(1<p,q<\infty\).  Then add: ``The cases \(p=1,q=\infty\) and \(p=\infty,q=1\) follow directly from \(|x_i y_i|\le \|x\|_\infty |y_i|\) and its symmetric counterpart.''
+
+\subsection*{19. Notation table cleanup}
+
+\textbf{Issue.}  The notation table has placeholder notes and some rows that may be visually blank or under-specified.
+
+\textbf{Why it matters.}  A notation table is often consulted out of context.  Blank or ambiguous rows create friction even if the main text defines the symbols elsewhere.
+
+\textbf{Suggested change.}  After the mathematical chapters settle, do a dedicated pass over the notation table and remove placeholder rows.  Ensure every row has a symbol, a one-line meaning, and consistent dot notation such as \(\|\cdot\|_p\).
+
+\end{document}

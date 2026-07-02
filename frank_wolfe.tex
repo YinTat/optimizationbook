@@ -47,7 +47,7 @@ problems.
 
 \SetAlgoLined
 
-\textbf{Input:} Initial point $x^{(0)}\in\Rn$, step size $h>0$.
+\textbf{Input:} Initial point $x^{(0)}\in\Rn$.
 
 \For{$k=0,1,\cdots,T-1$}{
 
@@ -64,11 +64,11 @@ $x^{(k+1)}\leftarrow(1-h_{k})x^{(k)}+h_{k}y^{(k)}$ with $h_{k}=\frac{2}{k+2}$.
 \subsection*{Analysis}
 \begin{thm}
 Let $f$ be a convex function on a convex set $\mathcal{D}$ with
-a constant $C_{f}$ such that
+a constant $C_{f}$ such that for any $x,y\in\mathcal{D}$ and $h\in[0,1]$,
 \[
-f((1-h)x+hy))\leq f(x)+h\left\langle \nabla f(x),y-x\right\rangle +\frac{1}{2}C_{f}h^{2}.
+f((1-h)x+hy)\leq f(x)+h\left\langle \nabla f(x),y-x\right\rangle +\frac{1}{2}C_{f}h^{2}.
 \]
-Then, for any $x,y\in\mathcal{D}$ and $h\in[0,1]$, we have
+Then we have
 \[
 f(x^{(k)})-f(x^{*})\leq\frac{2C_{f}}{k+2}.
 \]

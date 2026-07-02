@@ -252,7 +252,7 @@ SetAlgoLined
 
 \begin_layout Enumerate
 For 
-\begin_inset Formula $i=0,\ldots,m=\lceil\sqrt{n}\ln(4R^{2}n/\varepsilon\rceil$
+\begin_inset Formula $i=0,\ldots,m=\lceil\sqrt{n}\ln(4R^{2}n/\varepsilon)\rceil$
 \end_inset
 
 ,
@@ -300,7 +300,7 @@ Set
 \end_deeper
 \begin_layout Enumerate
 Let 
-\begin_inset Formula $Y=\prod_{i=1}^{m-1}Y_{i}$
+\begin_inset Formula $Y=\prod_{i=0}^{m-1}Y_{i}$
 \end_inset
 
  and return 
@@ -907,7 +907,7 @@ Restrict
 
 \begin_layout Enumerate
 Let 
-\begin_inset Formula $Y_{0}$
+\begin_inset Formula $V_{0}$
 \end_inset
 
  be an estimate of the volume of 
@@ -969,7 +969,7 @@ sample
 
 \begin_layout Enumerate
 Set 
-\begin_inset Formula $Y_{i}=\frac{1}{N}\sum_{j=1}^{N}f(x)^{a_{i+1}-a_{i}}$
+\begin_inset Formula $Y_{i}=\frac{1}{N}\sum_{j=1}^{N}f(X^{(j)})^{a_{i+1}-a_{i}}$
 \end_inset
 
 
@@ -978,11 +978,11 @@ Set
 \end_deeper
 \begin_layout Enumerate
 Let 
-\begin_inset Formula $Y=\prod_{i=1}^{m-1}Y_{i}$
+\begin_inset Formula $Y=\prod_{i=0}^{m-1}Y_{i}$
 \end_inset
 
  and return 
-\begin_inset Formula $Y_{o}\cdot Y$
+\begin_inset Formula $V_{0}\cdot Y$
 \end_inset
 
 .
@@ -1019,7 +1019,7 @@ In words,
 
 \begin_layout Theorem
 The LV algorithm applied to an integrable logconcave function 
-\begin_inset Formula $f:\R^{n}\rightarrow\R$
+\begin_inset Formula $f:\R^{n}\rightarrow\R_{+}$
 \end_inset
 
  estimates the integral of 

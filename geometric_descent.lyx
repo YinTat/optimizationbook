@@ -1144,7 +1144,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-The left diagram shows the intersection shrinks at the same rate if only one of the ball shrinks;
+The left diagram shows the intersection shrinks at the same rate if only one of the balls shrinks;
  the right diagram shows the intersection shrinks much faster if two balls shrink at the same absolute amount.
 \begin_inset CommandInset label
 LatexCommand label
@@ -1480,7 +1480,7 @@ Let
 \begin_inset Formula $c^{(k+1)}$
 \end_inset
 
- be the minimizer of 
+ is the minimizer of 
 \begin_inset Formula $q^{(k+1)}(y)$
 \end_inset
 
@@ -1528,8 +1528,8 @@ As in gradient descent,
 \begin_inset Formula $x^{(k)}$
 \end_inset
 
- along the direction 
-\begin_inset Formula $\nabla f(x^{(k)})$
+ along the descent direction 
+\begin_inset Formula $-\nabla f(x^{(k)})$
 \end_inset
 
 .
@@ -1868,7 +1868,7 @@ Assume that
 
 -Lipschitz gradient.
  Let 
-\begin_inset Formula $r_{k}=f(x^{(k)})-\min_{y}q^{(k)}(y)$
+\begin_inset Formula $r_{k}^{2}=f(x^{(k)})-\min_{y}q^{(k)}(y)$
 \end_inset
 
 .
@@ -1909,10 +1909,10 @@ Note that the squared radius of
 .
  Hence,
  
-\begin_inset Formula $r_{k}$
+\begin_inset Formula $r_{k}^{2}$
 \end_inset
 
- is measuring the squared radius of our quadratic lower bound.
+ measures the squared radius of our quadratic lower bound.
  To relate to the cutting plane framework,
  we can view the set as 
 \begin_inset Formula $\{y:q^{(k)}(y)\leq f(x^{(k)})\}$

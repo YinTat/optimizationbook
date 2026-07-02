@@ -24,7 +24,7 @@ The runtime depends on the number of iterations and the cost per iteration.
 Philosophically, the difficulties of a problem can never be created
 nor destroyed, only converted from one form of difficulty to another.
 When we decrease the number of iterations, the cost per iteration
-often increases. The gain of new methods often come from avoiding
+often increases. The gain from new methods often comes from avoiding
 some wasted computation, utilizing some forgotten information or giving
 a faster but tailored algorithm for a sub-problem. This is of course
 just an empirical observation.
@@ -62,12 +62,12 @@ $B$ with $B\preceq2A$ and $\E(B)\succeq\frac{1}{2}A$
 \item Homotopy Method: Approximate a function by a family of functions 
 \end{itemize}
 The second question to answer is how to maintain different approximations
-created in different steps. One simple way would be forget the approximation
-we got in previous steps, but this is often not optimal. Another way
-is to keep all previous approximations/information (such as Section
-\ref{sec:Cutting-Plane-Methods}). Often the best way will be combining
-previous and current approximation carefully to a better approximation
-(such as Section \ref{sec:Accelerated-Gradient-Descent}).
+created in different steps. One simple way would be to forget the
+approximation we got in previous steps, but this is often not optimal.
+Another way is to keep all previous approximations/information (such
+as Section \ref{sec:Cutting-Plane-Methods}). Often the best way will
+be combining previous and current approximation carefully to a better
+approximation (such as Section \ref{sec:Accelerated-Gradient-Descent}).
 
 \section{Basic Algorithm\label{sec:Gradient-Descent}}
 
@@ -112,7 +112,8 @@ the Euclidean norm $\|x\|_{2}$. For example, if you use second-order
 approximation, then you would get a method involving Hessian of $f$.
 
 The step size of the algorithm usually either uses a fixed constant,
-or follows a predetermined schedule, or determined using a line search.
+or follows a predetermined schedule, or is determined using a line
+search.
 
 If the iteration stops, we get a point with $\norm{\nabla f(x)}_{2}\le\epsilon$.
 Why is this good? The hope is that $x$ is a near-minimum in the neighborhood
@@ -203,10 +204,10 @@ Hence, this gives the step $x^{(k+1)}=x^{(k)}-\frac{1}{L}\nabla f(x^{(k)})$.
 
 By Theorem \ref{thm:L_equ_def}, we know that $g$ is an upper bound
 of $f$, namely $g(y)\geq f(y)$ for all $y$. In general, many optimization
-methods involves minimizing some upper bound function every step.
-Note that the progress we made for $f$ is at least the progress we
-made for $g$. If $g$ is exactly $f$, we can get all the progress
-we can make in one step. Hence, we should believe if $g$ is a better
+methods involve minimizing some upper bound function every step. Note
+that the progress we made for $f$ is at least the progress we made
+for $g$. If $g$ is exactly $f$, we can get all the progress we
+can make in one step. Hence, we should believe if $g$ is a better
 approximation of $f$, then we are making more progress. For gradient
 descent, it uses the simplest first-order approximation. Although
 this is not the best approximation one can come up with, it is robust
@@ -291,7 +292,7 @@ that
 f(x)-f(y)\leq\left\langle \nabla f(x),x-y\right\rangle \leq\|\nabla f(x)\|_{2}\cdot\|x-y\|_{2}.
 \]
 \end{proof}
-This in turn give a better bound on the number of iterations because
+This in turn gives a better bound on the number of iterations because
 the bound in Theorem \ref{thm:gd_general} is affected by $f(x)-f(x^{*})$
 rather than $\norm{x-x^{*}}_{2}$
 \begin{thm}
@@ -336,7 +337,7 @@ This style of proof is typical in optimization. It shows that when
 the gradient is large, we make large progress and when the gradient
 is small, we are close to optimal. 
 
-This proof above does not make essential use any property of $\ell_{2}$
+This proof above does not make essential use of any property of $\ell_{2}$
 or inner product space. It can be extended to work for general norms
 if the gradient descent step is defined using that norm. For the case
 of $\ell_{2}$, one can prove that $\|x^{(k)}-x^{*}\|_{2}$ is in
@@ -385,7 +386,7 @@ $k$.
 \end{xca}
 
 Rewriting the bound, Theorem \ref{thm:gd_convex} shows it takes $\frac{2L\|x^{(0)}-x^{*}\|^{2}_{2}}{\epsilon}$
-iterations. Compare to the bound $\frac{2L}{\epsilon^{2}}\left(f(x^{(0)})-f(x^{*})\right)$
+iterations. Compared with the bound $\frac{2L}{\epsilon^{2}}\left(f(x^{(0)})-f(x^{*})\right)$
 in Theorem \ref{thm:gd_general}, it seems the new result has a strictly
 better dependence on $\epsilon$. However, this is not true because
 one measures the error in terms of $\|\nabla f(x)\|_{2}$ while the
@@ -539,10 +540,10 @@ with $0<c_{1}<c_{2}<1$.
 Let the objective for progress be $\phi(h)=f(x)-f(x+hp)$. The first
 condition requires the algorithm makes sufficient progress ($\phi(h)\geq c_{1}h\cdot\phi'(0)$).
 The second condition requires the slope to reduce significantly ($\phi'(h)\leq c_{2}\phi'(0)$).
-One can think the first condition gives a upper bound on $h$ while
+One can think the first condition gives an upper bound on $h$ while
 the second condition gives a lower bound on $h$. In general, a step
-size satisfying the Wolfe conditions will be larger than the step
-size $h=\frac{1}{L}$. In particular, one can show the following.
+size satisfying the Wolfe conditions can be larger than the step size
+$h=\frac{1}{L}$. In particular, one can show the following.
 \begin{xca}
 Suppose $f$ is $\mu$-strongly convex and has $L$-Lipschitz gradient.
 If a step size $h$ satisfies the Wolfe condition with respect to
@@ -574,12 +575,12 @@ search is almost free because we can store the vectors $Ax$ and $Ah$.
 
 Here we study properties of gradient descent that were actually used
 for the strongly convex case. There are many ways to generalize this
-case. One way is to view gradient descent is as approximating the
-function $f$ by splitting it into two terms, one is the first-order
-approximation and the second is just a squared $\ell_{2}$ norm. More
-generally, we can split a function into two terms, one that is easy
-to optimize and another that we need to approximate with some error.
-More precisely, we consider the following 
+case. One way is to view gradient descent as approximating the function
+$f$ by splitting it into two terms, one is the first-order approximation
+and the second is just a squared $\ell_{2}$ norm. More generally,
+we can split a function into two terms, one that is easy to optimize
+and another that we need to approximate with some error. More precisely,
+we consider the following 
 \begin{defn}
 We say $g+h$ is an $\alpha$-approximation to $f$ at the point $x$
 if
@@ -716,7 +717,7 @@ using the problem
 \min_{y}v^{\top}y+\|DA(y-x)\|^{2}_{2}+\|A(y-x)\|^{p}_{p}\label{eq:l2lp}
 \end{equation}
 for some vector $v$ and some diagonal matrix $D$. One can show that
-Theorem \ref{thm:gd_general_apx} only need to solve the sub-problem
+Theorem \ref{thm:gd_general_apx} only needs to solve the sub-problem
 approximately. Therefore, this shows that one can solve $\ell^{p}$
 regression with $\log(1/\epsilon)$ convergence by solving mixed $\ell_{2}+\ell_{p}$
 regression approximately. 
@@ -789,7 +790,7 @@ classical problems. For example, \cite{adil2019iterative} and \cite{kyng2019flow
 applied the decomposition of Eqn. (\ref{eq:l2lp}) to obtain fast
 algorithms for $\ell^{p}$ regression and the $\ell^{p}$ flow problem.
 \cite{kathuria2020unit} showed that the $\ell^{p}$ flow problem
-can be used as a subroutine to solve uncapacitied maximum flow problem
+can be used as a subroutine to solve uncapacitated maximum flow problem
 in $m^{4/3+o(1)}$ time. Instead of assuming $h(x)$ converges to
 $0$ quadratically, \cite{lu2016relatively} proved Theorem \ref{thm:gd_general_apx}
 assuming $h$ is given by some divergence function and showed its

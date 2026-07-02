@@ -349,7 +349,7 @@ name "leverage_score_opt"
 \end_inset
 
 where 
-\begin_inset Formula $a_{i}$
+\begin_inset Formula $a_{i}^{\top}$
 \end_inset
 
  is the 
@@ -416,7 +416,7 @@ Sampling rows from
 \end_inset
 
  with high probability.
- Sampling by leverage score overestimates also suffices.
+ Sampling using leverage-score overestimates also suffices.
 \end_layout
 
 \begin_layout Lemma
@@ -430,7 +430,7 @@ Given a vector
 \begin_inset Formula $u$
 \end_inset
 
- of leverage score overestimates, i.e., 
+ of leverage-score overestimates, i.e., 
 \begin_inset Formula $\sigma_{i}(A)\le u_{i}$
 \end_inset
 
@@ -441,13 +441,13 @@ Given a vector
 , define 
 \begin_inset Formula 
 \[
-X=\frac{1}{p_{i}}a_{i}a_{i}^{\top}\quad\mbox{ with probability \quad\ }p_{i}=\frac{u_{i}}{\norm u_{1}}.
+X=\frac{1}{p_{i}}a_{i}a_{i}^{\top}\quad\mbox{ with probability \quad\ }p_{i}=\frac{u_{i}}{\norm{u}_{1}}.
 \]
 
 \end_inset
 
 For 
-\begin_inset Formula $T=\Omega(\frac{\norm u_{1}\log n}{\varepsilon^{2}})$
+\begin_inset Formula $T=\Omega(\frac{\norm{u}_{1}\log n}{\varepsilon^{2}})$
 \end_inset
 
 , with probability 
@@ -481,7 +481,7 @@ Note that
  and that 
 \begin_inset Formula 
 \[
-0\preceq X=\frac{1}{p_{i}}a_{i}a_{i}^{\top}\preceq\frac{\norm u_{1}}{\sigma_{i}}a_{i}a_{i}^{\top}\preceq\norm u_{1}\cdot A^{\top}A.
+0\preceq X=\frac{1}{p_{i}}a_{i}a_{i}^{\top}\preceq\frac{\norm{u}_{1}}{\sigma_{i}}a_{i}a_{i}^{\top}\preceq\norm{u}_{1}\cdot A^{\top}A.
 \]
 
 \end_inset
@@ -491,7 +491,7 @@ Now, the statement simply follows from the matrix Chernoff bound with
 \end_inset
 
  and 
-\begin_inset Formula $R=\norm u_{1}$
+\begin_inset Formula $R=\norm{u}_{1}$
 \end_inset
 
 .
@@ -587,7 +587,7 @@ reference "eq:TmnS1"
 
 \end_inset
 
-), we have this useless formula
+), we have this non-informative recurrence
 \begin_inset Formula 
 \[
 T(n)=O^{*}(\nnz(A)+T(n)+T(d\log d)).
@@ -648,12 +648,16 @@ where
 \end_inset
 
 .
- Note that 
-\begin_inset Formula $A_{S}^{\top}A_{S}$
+ Note that since 
+\begin_inset Formula $A_{S}^{\top}A_{S}\preceq A^{\top}A$
+\end_inset
+
+, the quantity 
+\begin_inset Formula $\sigma_{i,S}$
 \end_inset
 
  is an overestimate of 
-\begin_inset Formula $\sigma_{i}$
+\begin_inset Formula $\sigma_{i}(A)$
 \end_inset
 
 .
@@ -698,7 +702,7 @@ Note that
 
 .
  Hence, the second term is bounded by 
-\begin_inset Formula $n$
+\begin_inset Formula $d$
 \end_inset
 
 .
@@ -726,7 +730,7 @@ sample a set
 \begin_inset Quotes erd
 \end_inset
 
- is same as 
+ is the same as 
 \begin_inset Quotes eld
 \end_inset
 

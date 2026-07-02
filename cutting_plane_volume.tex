@@ -56,9 +56,9 @@ we have that
 \[
 \conv\left\{ x_{1},\ldots,x_{m}\right\} \subseteq K\subseteq B^{n}.
 \]
-Now by Lemma , the volume of the convex hull of \emph{any $m$ }points
-in the unit ball is at most a $m/2^{n}$ fraction of the unit ball's
-volume. This proves the theorem.
+By the following lemma, the volume of the convex hull of \emph{any
+$m$ }points in the unit ball is at most a $m/2^{n}$ fraction of
+the unit ball's volume. This proves the theorem.
 \end{proof}
 \begin{lem}
 Let $x_{1},\ldots,x_{m}\in B^{n}$. Then 
@@ -68,27 +68,29 @@ Let $x_{1},\ldots,x_{m}\in B^{n}$. Then
 \end{lem}
 
 \begin{proof}
-For each $x_{i}$, define $B_{i}=B(x_{i},\|x_{i}\|/2)$, a ball with
-diameter $\|x_{i}\|\le1/2$. Then 
+For each $x_{i}$, define $B_{i}=B(x_{i}/2,\|x_{i}\|/2)$. Then 
 \[
 \vol\left(\bigcup^{m}_{i=1}B_{i}\right)\le m\cdot\vol(B(0,1/2))=\frac{m}{2^{n}}\vol(B^{n}).
 \]
 
 We argue that $\conv{x_{1},\ldots,x_{m}}\subset\bigcup B_{i}$. To
-see this, let $y$ be a point not contained in $B_{i}$. Then, the
-angle at $y$ induced by the vectors $y$ and $y-x_{i}$ must be acute,
-i.e., 
+see this, let $y$ be a point not contained in any $B_{i}$. Then,
+for every $i$, 
+\[
+\|y-x_{i}/2\|>\|x_{i}\|/2,
+\]
+which is equivalent to
 \[
 \langle y,x_{i}-y\rangle<0
 \]
-and this holds for all $i$. In other words, the halfspace $\langle y,x-y\rangle<0$
-separates $y$ from all the $x_{i}$. Therefore it separates it from
-their convex hull. 
+. In other words, all the $x_{i}$ lie in the open halfspace $\{x:\langle y,x-y\rangle<0\}$,
+while $y$ lies on its boundary. Therefore the hyperplane $\{x:\langle y,x-y\rangle=0\}$
+separates $y$ from $\conv\{x_{1},\ldots,x_{m}\}$. 
 \end{proof}
 Computing the volume exactly is hard even for explicit simple polyhedra
 as the following theorem asserts.
 \begin{thm}
-\cite{DF88} Let $P={x:x\in[0,1]^{n},a^{\top}x\le b}$ where $a$
+\cite{DF88} Let $P=\{x:x\in[0,1]^{n},a^{\top}x\le b\}$ where $a$
 is an integer vector. Computing the volume of $P$ (specified by $a,b$)
 is $\#$P-hard. 
 \end{thm}
@@ -149,7 +151,7 @@ the two sides passes through the original centroid (see Figure \ref{fig:cutting_
 moreover, the ratio of the two segments is exactly the ratio of the
 volumes of the two halfspaces (i.e., $V_{k}=\vol(K^{(0)})/\vol(K^{(k)})$).
 \begin{lem}
-\label{lem:centroid}For any measurable bounded set S in $\R^{n}$
+\label{lem:centroid}For any measurable bounded set $S$ in $\R^{n}$
 and any halfspace $H$ with bounding hyperplane containing the centroid
 of $S$, we have 
 \[
@@ -185,11 +187,11 @@ is to the left of $0$. Then,
 which can be rearranged to give the result. The equation for the cone
 is
 \[
-y(t)=-\frac{r(0)}{b}(x-b).
+y(t)=-\frac{r(0)}{b}(t-b).
 \]
 Notice that $y(t)\le r(t)$ for all $t\in[0,b]$ since it is a chord
 between two points of a concave function and therefore always below
-the concave function. To see why $r(t)\le y(t)$ for $t\in[-a,0]$,
+the concave function. To see why $r(t)\le y(t)$ for $t\in[a,0]$,
 consider $g(t)=r(t)-y(t)$. Then $g'(t)=r'(t)-y'(t)$. Notice that
 $g'(0)=r'(0)-y'(0)\ge0$, and since $y'(t)$ is a constant and $r'(t)$
 is decreasing, we must have $r'(t)-y'(t)\ge0$ for all $t\le0$. Since
@@ -225,7 +227,7 @@ axis-parallel cuboid with each side of length in the range $[r/(n+1),r]$.
 So the final volume is at least $(r/(n+1))^{n}.$ The initial volume
 is at most $R^{n}$. Therefore the number of iterations is at most
 \[
-\log_{(1-\frac{1}{e})}\left(\frac{(2R)^{n}}{(r/(n+1))^{n}}\right)=O\left(n\log(nR/r)\right).
+\log_{1/(1-\frac{1}{e})}\left(\frac{(2R)^{n}}{(r/(n+1))^{n}}\right)=O\left(n\log(nR/r)\right).
 \]
 In each iteration, by Lemma \ref{lem:centroid}, the algorithm maintains
 the ratio of the volume of the original $K$ to the current $K^{(k)}$.
@@ -271,7 +273,7 @@ We first consider the case when $A,B$ are cuboids, i.e.,
 \[
 A=\prod^{n}_{i=1}[0,a_{i}]\ \mbox{and \ }B=\prod^{n}_{i=1}[0,b_{i}]
 \]
-for positive real numbers $a_{1},\ldots,a_{m},b_{1},\ldots,b_{m}$.
+for positive real numbers $a_{1},\ldots,a_{n},b_{1},\ldots,b_{n}$.
 Then, we have 
 \[
 \vol(A)=\prod^{n}_{i=1}a_{i},\,\vol(B)=\prod^{n}_{i=1}b_{i}\:\vol(A+B)=\prod^{n}_{i=1}(a_{i}+b_{i}).
@@ -289,10 +291,10 @@ Using the AM-GM inequality, for each of the terms on the LHS, we have
 \left(\prod^{n}_{i=1}\frac{a_{i}}{a_{i}+b_{i}}\right)^{\frac{1}{n}}+\left(\prod^{n}_{i=1}\frac{b_{i}}{a_{i}+b_{i}}\right)^{\frac{1}{n}}\le\frac{1}{n}\sum^{n}_{i=1}\frac{a_{i}}{a_{i}+b_{i}}+\frac{1}{n}\sum^{n}_{i=1}\frac{b_{i}}{a_{i}+b_{i}}=1.
 \]
 
-We will now prove the inequality to any finite union of cuboids. That
-suffices to complete the proof because any measurable subset is the
-limit of a union of disjoint cubes as the cubes become smaller and
-smaller. 
+We will now prove the inequality for any finite union of cuboids.
+That suffices to complete the proof because any measurable subset
+is the limit of a union of disjoint cubes as the cubes become smaller
+and smaller. 
 
 Let $A$ be a finite collection of disjoint axis-parallel cuboids
 and $B$ be another such collection. We will prove the inequality

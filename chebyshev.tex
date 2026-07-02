@@ -17,8 +17,8 @@ I-Ap(A)=0
 and hence $A^{-1}=p(A).$ Therefore, we could compute $A^{-1}b$ by
 calculating $p(A)b$ which takes $\text{deg}(p)\cdot\nnz(A)$ time.
 Unfortunately, there is no such polynomial $q$. In this section,
-we will discuss if there is such polynomial that satisfies the condition
-above approximately. 
+we will discuss whether there is such a polynomial that satisfies
+the condition above approximately. 
 
 We will bound $\inf_{q(0)=1}\left(\max_{i}\left|q(\lambda_{i})\right|\right)$
 for matrices $A$ satisfying $\mu\cdot I\preceq A\preceq L\cdot I$.
@@ -69,7 +69,7 @@ there is a polynomial $p$ of degree $d$ such that
 \end{thm}
 
 \begin{proof}
-Let $Y_{i}$ are i.i.d. random variable uniform on $\{-1,1\}$. Let
+Let $Y_{i}$ be i.i.d. random variables uniform on $\{-1,1\}$. Let
 $Z_{s}=\sum^{s}_{i=1}Y_{i}$. Note that
 \[
 \E_{z\sim Z_{s}}T_{z}=\E_{z\sim Z_{s-1}}\frac{1}{2}(T_{z+1}+T_{z-1})
@@ -103,7 +103,7 @@ For any $0<\mu\leq L$ and any $0\leq\epsilon\leq1$, there is a polynomial
 $q$ of degree $O(\sqrt{\frac{L}{\mu}}\log(\frac{1}{\epsilon}))$
 such that 
 \[
-\inf_{q(0)=1}\max_{\mu\leq x\leq L}\left|q(x)\right|\leq\epsilon.
+q(0)=1\quad\text{and}\quad\max_{\mu\leq x\leq L}\left|q(x)\right|\leq\epsilon.
 \]
 \end{thm}
 
@@ -119,7 +119,7 @@ and that
 \max_{x\in[\mu,L]}\left|q(x)\right|\leq\left(1-\frac{\mu}{L}\right)^{s}+2\exp(-\frac{d^{2}}{2s}).
 \]
 To make both $|q(0)-1|\leq\frac{\epsilon}{3}$ and $\max_{x\in[\mu,L]}\left|q(x)\right|\leq\frac{\epsilon}{3}$,
-we set $d=O(\sqrt{s}\log\frac{1}{\epsilon})$ and $s=O(\frac{L}{\mu}\log(\frac{1}{\epsilon}))$.
+we set $d=O(\sqrt{s\log\frac{1}{\epsilon}})$ and $s=O(\frac{L}{\mu}\log(\frac{1}{\epsilon}))$.
 By rescaling $q$, we have $q(0)=1$.\selectlanguage{english}%
 \end{proof}
 

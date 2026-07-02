@@ -138,7 +138,7 @@ Integration
 \end_inset
 
  Given an evaluation oracle for an integrable logconcave function 
-\begin_inset Formula $f:\R^{n}\rightarrow\R$
+\begin_inset Formula $f:\R^{n}\rightarrow\R_{+}$
 \end_inset
 
 ,
@@ -196,7 +196,7 @@ Integration
 
 \begin_layout Problem
 As in all problems in oracle models discussed in this book,
- the complexity of an algorithm to solve the above problem is given by the number of oracles calls and the number of arithmetic operations.
+ the complexity of an algorithm to solve the above problem is given by the number of oracle calls and the number of arithmetic operations.
  
 \end_layout
 
@@ -730,7 +730,7 @@ name "tab:volume"
 \begin_inset Formula $\widetilde{O}(n)$
 \end_inset
 
- bit of randomness.
+ bits of randomness.
  The last algorithm needs 
 \begin_inset Formula $\widetilde{O}\left(mn^{\omega-1}\right)$
 \end_inset
@@ -1015,7 +1015,7 @@ Set
 \end_deeper
 \begin_layout Enumerate
 Let 
-\begin_inset Formula $Y=\prod_{i=1}^{m-1}Y_{i}$
+\begin_inset Formula $Y=\prod_{i=0}^{m-1}Y_{i}$
 \end_inset
 
  and return 
@@ -1375,7 +1375,7 @@ The same high-level algorithm can be used for optimization,
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\int_{\R^{n}}f=\int f_{0}\frac{\int f_{1}}{\int f_{0}}\frac{\int f_{2}}{\int f_{3}}\cdots\frac{\int f_{m}}{\int f_{m-1}}
+\int_{\R^{n}}f=\int f_{0}\frac{\int f_{1}}{\int f_{0}}\frac{\int f_{2}}{\int f_{1}}\cdots\frac{\int f_{m}}{\int f_{m-1}}
 \]
 
 \end_inset
@@ -1389,7 +1389,7 @@ where
 \end_inset
 
 .
- To compute any the ratio 
+ To compute any ratio 
 \begin_inset Formula $\int g/\int h$
 \end_inset
 
@@ -1429,7 +1429,7 @@ For integrable functions
 \begin_inset Formula $g,h$
 \end_inset
 
- with with support of 
+ with support of 
 \begin_inset Formula $g$
 \end_inset
 

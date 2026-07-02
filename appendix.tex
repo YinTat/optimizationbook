@@ -23,15 +23,15 @@ From this, over a domain $\Omega$, we have
 \[
 \int_{\Omega}\nabla f\cdot v=\int_{\Omega}\nabla\cdot(fv)-\int_{\Omega}(\nabla\cdot v)f.
 \]
-And using the divergence theorem, namely, $\int_{\Omega}\nabla\cdot f=\int_{\partial\Omega}f\overrightarrow{n}$,
-where $\overrightarrow{n}$is the normal vector at a point in $\partial\Omega$,
-we have:
+And using the divergence theorem, namely, $\int_{\Omega}\nabla\cdot w=\int_{\partial\Omega}w\cdot\overrightarrow{n}$,
+where $\overrightarrow{n}$is the outward normal vector at a point
+in $\partial\Omega$, we have:
 \[
 \int_{\Omega}\nabla f\cdot v=\int_{\partial\Omega}fv\cdot\overrightarrow{n}-\int_{\Omega}f(\nabla\cdot v).
 \]
-The first term on the RHS become zero if the vector field $v$ goes
-to $0$ at the boundary of the domain (e.g., if the domain is $\R^{n}$,
-then if it decays at infinity). 
+The first term on the right-hand side becomes zero if the vector field
+$v$ goes to $0$ at the boundary of the domain (e.g., if the domain
+is $\R^{n}$, then if it decays at infinity). 
 
 \section{Tips for Computing Gradients}
 
@@ -68,7 +68,7 @@ To write it in the traditional form, we note that
 \begin{align*}
 \nabla\Phi(x)^{\top}h & =D\Phi(x)[h]=f'(Ax)^{\top}Ah=(A^{\top}f'(Ax))^{\top}h.
 \end{align*}
-Since both side are the same for all $h$, we have $\nabla\Phi(x)=A^{\top}f'(Ax)$.
+Since both sides are the same for all $h$, we have $\nabla\Phi(x)=A^{\top}f'(Ax)$.
 
 Similarly, we have
 \begin{align*}
@@ -77,7 +77,7 @@ h^{\top}\nabla^{2}\Phi(x)h & =D^{2}\Phi(x)[h,h]\\
  & =h^{\top}A^{\top}\diag(f''(Ax))Ah.
 \end{align*}
 Since $\nabla^{2}\Phi(x)-A^{\top}\diag(f''(Ax))A$ is symmetric and
-both side are the same for all $h$, we have $\nabla^{2}\Phi(x)=A^{\top}\diag(f''(Ax))A$.
+both quadratic forms are the same for all $h$, we have $\nabla^{2}\Phi(x)=A^{\top}\diag(f''(Ax))A$.
 \end{proof}
 \begin{xca}
 Use the above method to compute the gradient and Hessian of $f(X)=\log\det A^{T}XA$.
@@ -99,7 +99,7 @@ to $(1,-1)$ under uniform gravity. Then, we have that
 Take a look at Wikipedia for the Brachistochrone curve. It is counterintuitive!
 \end{rem*}
 \begin{figure}
-\centering{}\includegraphics[width=4in]{Figures/fig3.png}\caption{The ``fastest'' curve\label{fig:rel-1}}
+\centering{}\includegraphics[width=4in]{Figures/fig3}\caption{The ``fastest'' curve\label{fig:rel-1}}
 \end{figure}
 
 \begin{proof}
@@ -167,14 +167,14 @@ D_{x}f(x,g(x))+D_{y}f(x,g(x))Dg(x)=0
 \]
 where $D_{x}f$ is the Jacobian of $f$ with respect to $x$ variables
 and $Dg(x)$ is the Jacobian of $g$. We note that the formula can
-be obtained from taking derivative on both sides with respective to
-$x$. Sometimes, taking derivatives on the both sides can greatly
-simplify calculations. Here are some examples.
+be obtained by taking derivatives on both sides with respect to $x$.
+Sometimes, taking derivatives on both sides can greatly simplify calculations.
+Here are some examples.
 \begin{lem}
 Consider $x_{t}=\argmin_{x\in\Rn}f_{t}(x)$ where $f_{t}$ are strictly
 convex. Then, we have
 \[
-\frac{dx_{t}}{dt}=(\nabla^{2}f_{t}(x_{t}))^{-1}\nabla\frac{df_{t}}{dt}(x_{t}).
+\frac{dx_{t}}{dt}=-(\nabla^{2}f_{t}(x_{t}))^{-1}\nabla\frac{df_{t}}{dt}(x_{t}).
 \]
 \end{lem}
 
@@ -185,7 +185,7 @@ derivatives on both sides, we have
 \nabla^{2}f_{t}(x_{t})\frac{dx_{t}}{dt}+\nabla\frac{df_{t}}{dt}(x_{t})=0.
 \]
 Since $f_{t}$ are strictly convex, $\nabla^{2}f_{t}(x_{t})$ is positive
-definite and is invertible. Hence, we have that the result.
+definite and is invertible. Hence, we have the desired result.
 \end{proof}
 In section \ref{sec:IPM}, we used this to compute the derivative
 of central path.

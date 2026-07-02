@@ -180,7 +180,7 @@ by the definition of the polar. Note that these inequalities are precisely
 the constraints of $K^{**}$, thus $x\in K^{**}$ . Moreover, $\langle0,y\rangle=0\leq1$,
 for every $y\in K^{*}$, and so $0\in K^{**}$.
 
-We now prove the other direction. Suppose there is a vector $x\in K^{**}\setminus\mathrm{cl(conv(\mathit{K}\cup\left\{ 0\right\} ))}$.
+We now prove the other direction. Suppose there is a vector $y\in K^{**}\setminus\mathrm{cl(conv(\mathit{K}\cup\left\{ 0\right\} ))}$.
 By Theorem \ref{thm:sep}, there is $\theta$ such that
 \[
 \theta^{\top}y>\max_{x\in cl(conv(\mathit{K}\cup\left\{ 0\right\} ))}\theta^{\top}x.
@@ -327,7 +327,7 @@ Show that
 
 \begin{itemize}
 \item The conjugate of $f(x)=\frac{1}{p}\|x\|^{p}_{p}$ is $f^{*}(\theta)=\frac{1}{q}\|\theta\|^{q}_{q}$
-where $\frac{1}{p}+\frac{1}{q}=1$ (with $p,q\ge1)$.
+where $\frac{1}{p}+\frac{1}{q}=1$ (with $1<p,q<\infty)$.
 \item The conjugate of $f(x)=\left\langle a,x\right\rangle -b$ is $f^{*}(\theta)=\begin{cases}
 b, & \theta=a\\
 +\infty & \mbox{otherwise}
@@ -432,7 +432,7 @@ Let $K$ be a convex set specified by a membership oracle, a point
 $x_{0}\in\R^{n}$, and numbers $0<r<R$ such that $B(x_{0},r)\subseteq K\subseteq B(x_{0},R)$.
 For any convex function $f$ given by an evaluation oracle and any
 $\epsilon>0$, there is a randomized algorithm that computes a point
-$z\in B(K,\epsilon)$ such that. 
+$z\in B(K,\epsilon)$ such that 
 \[
 f(z)\le\min_{x\in K}f(x)+\epsilon\left(\max_{x\in K}f(x)-\min_{x\in K}f(x)\right)
 \]
@@ -575,7 +575,7 @@ a desired error for the subgradient.
 \textbf{Require:} $r_{1}>0$, $\norm{\partial f(z)}_{\infty}\leq L$
 for any $z\in B_{\infty}(x,2r_{1})$.
 
-Set $r_{2}=\sqrt{\frac{\varepsilon r_{1}}{\sqrt{n}L}}$.
+Set $r_{2}=\frac{1}{2}\sqrt{\frac{\varepsilon r_{1}}{\sqrt{n}L}}$.
 
 Sample $y\in B_{\infty}(x,r_{1})$ and $z\in B_{\infty}(y,r_{2})$
 independently and uniformly at random.
@@ -798,7 +798,7 @@ and $d_{2}+\alpha_{x}(d_{2})x\in K$. Consequently,
 \]
 Therefore, if we let $d\defeq\lambda d_{1}+(1-\lambda)d_{2}$ we see
 that $\alpha_{x}(d)\geq\lambda\cdot\alpha_{x}(d_{1})+(1-\lambda)\cdot\alpha_{x}(d_{2})$
-and $h_{x}(\lambda d_{1}+(1-\lambda d_{2})\leq\lambda h_{x}(d_{1})+\lambda h_{x}(d_{2})$
+and $h_{x}(\lambda d_{1}+(1-\lambda)d_{2})\leq\lambda h_{x}(d_{1})+(1-\lambda)h_{x}(d_{2})$
 as claimed.
 \end{proof}
 \begin{lem}
@@ -997,7 +997,7 @@ In this section, we give yet another way to compute gradients using
 evaluations.
 \begin{thm}
 \label{thm:auto_diff} Given a function $f:\R^{n}\rightarrow\R$ represented
-by an circuit whose gates compute differentiable functions of a finite
+by a circuit whose gates compute differentiable functions of a finite
 number of variables. Suppose that $f(x)$ can be computed in time
 $\mathcal{T}$ (namely, the circuit has $\mathcal{T}$ edges). Then
 we can compute $\nabla f(x)$ in $O(\mathcal{T})$ time.
@@ -1026,8 +1026,8 @@ for the inputs $x_{1}$ and $x_{2}$, but also for all intermediate
 variables. Here, we use $\frac{\partial f}{\partial x_{i}}$ to denote
 the derivative of $f$ with respect to $x_{i}$ while fixing $x_{1},x_{2},\cdots,x_{i-1}$
 (and other inputs if $x_{i}$ is an input). For the example above,
-suppose we want to compute $\nabla f(\pi,2)$, we can simply compute
-first compute all $x_{i}$ from $i=1,2,\cdots,6$, then $\frac{\partial f}{\partial x_{i}}$
+suppose we want to compute $\nabla f(\pi,2)$, we can first compute
+all $x_{i}$ from $i=1,2,\cdots,6$, then $\frac{\partial f}{\partial x_{i}}$
 in the reverse order from $i=6,5,\cdots,1$:
 \begin{itemize}
 \item $x_{1}=\pi$, $x_{2}=2$, $x_{3}=\pi/2$, $x_{4}=\sin(x_{3})=1$,
@@ -1097,7 +1097,7 @@ $f$ and the cost of our algorithm are both $\Theta(m)$ where $m$
 is the number of edges in $G$. This completes the proof. 
 \end{proof}
 We note that an efficient implementation of the chain rule is the
-heart of the backpropagation algorithm fo neural networks. To conclude
+heart of the backpropagation algorithm for neural networks. To conclude
 this section, we see that Theorem \ref{thm:auto_diff} can be surprisingly
 useful even for some simple explicit functions.
 \begin{cor}
@@ -1148,7 +1148,7 @@ are large.
 
 The complex step differentiation uses the step
 \[
-\frac{\mathrm{Im}f(x+ih)}{h}\approx f'(x)+O(h^{2})f''(\zeta).
+\frac{\mathrm{Im}f(x+ih)}{h}\approx f'(x)+O(h^{2})f'''(\zeta).
 \]
 This formula works only for complex analytic functions, but it avoids
 subtracting numbers. In practice, this really allows us to compute

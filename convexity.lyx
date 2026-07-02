@@ -219,7 +219,7 @@ Given an
 \end_layout
 
 \begin_layout Standard
-Computing the volume is an ancient problem,
+Computing volume is an ancient problem;
  the early Egyptians and Greeks developed formulas for specific shapes of interest.
  Unlike convex optimization,
  even computing the volume of a convex body is intractable,
@@ -1466,7 +1466,7 @@ We note that the proof above is in fact a constructive proof.
  For continuous convex functions,
  there is a weaker notion of gradient called sub-differential,
  which is a set instead of a vector.
- Both theorems above holds with gradients replaced by sub-differentials.
+ Both theorems above hold with gradients replaced by sub-differentials.
 \end_layout
 
 \begin_layout Section
@@ -1646,21 +1646,21 @@ To check this is a convex problem,
 \end_inset
 
  which is convex.
- The domain is the intersection of three sets (the three set of equations above).
+ The domain is the intersection of three sets (the three sets of constraints above).
  The first set is a scaled hypercube,
- the second and last set is a linear subspace.
+ and the second and third sets are affine subspaces.
  All of them are convex and so is their intersection.
  Therefore,
  this is a convex problem.
 \end_layout
 
 \begin_layout Subsection
-Linear Programs (Operation Research/Economics)
+Linear Programs (Operations Research/Economics)
 \end_layout
 
 \begin_layout Standard
 Consider the diet problem:
- find a cheapest diet plan that satisfies the nutrients requirements.
+ find the cheapest diet plan that satisfies the nutrient requirements.
  Formally,
  suppose there are 
 \begin_inset Formula $n$
@@ -2031,7 +2031,7 @@ where we say
 \begin_inset Formula $g$
 \end_inset
 
- is feasible) is exactly a linear subspace on the space of functions on 
+ is feasible) is exactly an affine subspace of the space of functions on 
 \begin_inset Formula $[0,1]^{2}$
 \end_inset
 
@@ -2342,7 +2342,7 @@ Convex sets:
 \end_inset
 
  with 
-\begin_inset Formula $A\succeq0$
+\begin_inset Formula $A\succ0$
 \end_inset
 
 ,
@@ -2427,7 +2427,7 @@ Convex functions:
 \begin_inset Formula $A\rightarrow-\log\det A$
 \end_inset
 
- over PSD matrices 
+ over positive definite matrices 
 \begin_inset Formula $A$
 \end_inset
 
@@ -3025,9 +3025,9 @@ The standard definition of a convex function in terms of gradients requires diff
 \end_inset
 
  is called a 
-\begin_inset Formula $subgradient$
-\end_inset
-
+\emph on
+subgradient selection
+\emph default
  if it satisfies the following property:
  for any 
 \begin_inset Formula $x,y\in\R^{n},$
@@ -3039,7 +3039,7 @@ The standard definition of a convex function in terms of gradients requires diff
 
  For the purpose of optimization algorithms,
  in almost all cases,
- a subgradient will suffice in place of a gradient.
+ a subgradient selection will suffice in place of a gradient.
  
 \end_layout
 
@@ -3123,12 +3123,12 @@ logconcave
 \end_layout
 
 \begin_layout Definition
-Thus any logconcave function can be viewed as 
-\begin_inset Formula $e^{-f(x)}$
+Thus any logconcave function can be written as 
+\begin_inset Formula $e^{-V(x)}$
 \end_inset
 
- for some convex function 
-\begin_inset Formula $f$
+ for an extended-valued convex function 
+\begin_inset Formula $V=-\log f$
 \end_inset
 
 .
@@ -3219,7 +3219,8 @@ name "lem:marginal"
 \end_inset
 
  The product,
- minimum and convolution of two logconcave functions is also logconcave;
+ minimum,
+ and convolution of two logconcave functions are also logconcave;
  in particular,
  any linear transformation or any marginal of a logconcave density is logconcave;
  the distribution function of any logconcave density is logconcave.

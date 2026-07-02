@@ -983,7 +983,7 @@ We first prove that
 \begin_layout Proof
 We now prove the other direction.
  Suppose there is a vector 
-\begin_inset Formula $x\in K^{**}\setminus\mathrm{cl(conv(\mathit{K}\cup\left\{ 0\right\} ))}$
+\begin_inset Formula $y\in K^{**}\setminus\mathrm{cl(conv(\mathit{K}\cup\left\{ 0\right\} ))}$
 \end_inset
 
 .
@@ -1864,7 +1864,7 @@ The conjugate of
 \end_inset
 
  (with 
-\begin_inset Formula $p,q\ge1)$
+\begin_inset Formula $1<p,q<\infty)$
 \end_inset
 
 .
@@ -2431,7 +2431,7 @@ Let
 \begin_inset Formula $z\in B(K,\epsilon)$
 \end_inset
 
- such that.
+ such that
  
 \begin_inset Formula 
 \[
@@ -3040,7 +3040,7 @@ Require:
 
 \begin_layout Standard
 Set 
-\begin_inset Formula $r_{2}=\sqrt{\frac{\varepsilon r_{1}}{\sqrt{n}L}}$
+\begin_inset Formula $r_{2}=\frac{1}{2}\sqrt{\frac{\varepsilon r_{1}}{\sqrt{n}L}}$
 \end_inset
 
 .
@@ -3443,7 +3443,7 @@ nolink "false"
 \end_inset
 
  and use 
-\begin_inset Formula $r_{2}=\sqrt{\frac{\varepsilon r_{1}}{\sqrt{n}L}}\leq r_{1}$
+\begin_inset Formula $r_{2}=\frac{1}{2}\sqrt{\frac{\varepsilon r_{1}}{\sqrt{n}L}}\leq r_{1}$
 \end_inset
 
  to get
@@ -4354,7 +4354,7 @@ Therefore,
 \end_inset
 
  and 
-\begin_inset Formula $h_{x}(\lambda d_{1}+(1-\lambda d_{2})\leq\lambda h_{x}(d_{1})+\lambda h_{x}(d_{2})$
+\begin_inset Formula $h_{x}(\lambda d_{1}+(1-\lambda)d_{2})\leq\lambda h_{x}(d_{1})+(1-\lambda)h_{x}(d_{2})$
 \end_inset
 
  as claimed.
@@ -5258,7 +5258,7 @@ name "thm:auto_diff"
 \begin_inset Formula $f:\R^{n}\rightarrow\R$
 \end_inset
 
- represented by an circuit whose gates compute differentiable functions of a finite number of variables.
+ represented by a circuit whose gates compute differentiable functions of a finite number of variables.
  Suppose that 
 \begin_inset Formula $f(x)$
 \end_inset
@@ -5403,7 +5403,7 @@ with simple functions
 \end_inset
 
 ,
- we can simply compute first compute all 
+ we can first compute all 
 \begin_inset Formula $x_{i}$
 \end_inset
 
@@ -5913,7 +5913,7 @@ To bound the runtime,
 \end_layout
 
 \begin_layout Standard
-We note that an efficient implementation of the chain rule is the heart of the backpropagation algorithm fo neural networks.
+We note that an efficient implementation of the chain rule is the heart of the backpropagation algorithm for neural networks.
  To conclude this section,
  we see that Theorem 
 \begin_inset CommandInset ref
@@ -6104,7 +6104,7 @@ where
 The complex step differentiation uses the step
 \begin_inset Formula 
 \[
-\frac{\mathrm{Im}f(x+ih)}{h}\approx f'(x)+O(h^{2})f''(\zeta).
+\frac{\mathrm{Im}f(x+ih)}{h}\approx f'(x)+O(h^{2})f'''(\zeta).
 \]
 
 \end_inset

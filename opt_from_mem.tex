@@ -14,10 +14,10 @@ discuss the following theorem.
 \begin{thm}[OPT via sampling]
 \label{thm:OPTviaSampling} Let $F(x)=e^{-\alpha c^{T}x}1_{K}(x)$
 for some convex set $K$ in $\R^{n}$ and vector $c\in\R^{n}.$ Suppose
-$\min_{x\in K}c^{T}x$ is bounded. Let x be a random sample from the
-distribution with density proportional to $F(x)$. Then, 
+$\min_{x\in K}c^{T}x$ is bounded. Let $x$ be a random sample from
+the distribution with density proportional to $F(x)$. Then, 
 \[
-\E\left(c^{T}x\right)\le\min_{K}c^{T}x+\frac{n}{\alpha}.
+\E\left(c^{T}x\right)\le\min_{x\in K}c^{T}x+\frac{n}{\alpha}.
 \]
 \end{thm}
 
@@ -41,7 +41,7 @@ Now for this infinite cone, we compute, using $y=c^{T}x$,
  & =\frac{1}{\alpha}\frac{n!}{(n-1)!}=\frac{n}{\alpha}\,,
 \end{align*}
 where the equality in the last line follows from properties of the
-Gamma functions.
+Gamma function.
 \end{proof}
 The theorem says that if we sample according to $e^{-\alpha c^{T}x}$
 for $\alpha=n/\varepsilon$, we will get an $\varepsilon$-approximation
@@ -49,7 +49,7 @@ to the optimum. However, sampling from such a density is not trivial.
 Instead, we will have to go through a sequence of overlapping distributions,
 starting with one that is easy to sample and ending with a distribution
 that is focused close to the minimum. This method is known as \emph{simulated
-annealing }and is the subject of Chapter \ref{chap:Annealing}. The
+annealing}and is the subject of Chapter \ref{chap:Annealing}. The
 complexity of sampling is polynomial in the dimension and logarithmic
 in a suitable notion of probabilistic distance between the starting
 distribution and the target distribution. The sampling algorithm only

@@ -415,7 +415,7 @@ nolink "false"
 .
 \end_layout
 
-\begin_layout Exercise
+\begin_layout Standard
 The main theorem of this section is the following 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -746,7 +746,7 @@ nolink "false"
 \end_inset
 
  into subsets 
-\begin_inset Formula $S_{1},S_{2,}S_{3}$
+\begin_inset Formula $S_{1},S_{2},S_{3}$
 \end_inset
 
 .
@@ -801,7 +801,7 @@ nolink "false"
 
 .
  By the localization lemma there exist 
-\begin_inset Formula $a.b\in\R^{n}$
+\begin_inset Formula $a,b\in\R^{n}$
 \end_inset
 
  and 
@@ -904,7 +904,7 @@ name "xca:exp_needle_one_dim"
  we have 
 \begin_inset Formula 
 \[
-\frac{(e^{v}-e^{u})(e^{w}-1)}{(e^{u}-1)(e^{w}-e^{v})}\ge\frac{(v-u)(w-1)}{u(w-v)}.
+\frac{(e^{v}-e^{u})(e^{w}-1)}{(e^{u}-1)(e^{w}-e^{v})}\ge\frac{(v-u)w}{u(w-v)}.
 \]
 
 \end_inset
@@ -1029,7 +1029,7 @@ h(x)\le\frac{1}{3}\min\left\{ 1,d_{K}(u,v)\right\} .
 \end_inset
 
 Then,
- for any logconave measure 
+ for any logconcave measure 
 \begin_inset Formula $\pi$
 \end_inset
 
@@ -1361,7 +1361,7 @@ Let
 
 .
  We will show that 
-\begin_inset Formula $s(x)\ge(s(x_{1})+s(x_{2})/2$
+\begin_inset Formula $s(x)\ge(s(x_{1})+s(x_{2}))/2$
 \end_inset
 
 .
@@ -1852,7 +1852,7 @@ d_{K}(u,v)\ge\frac{1}{8}\mbox{ or }\norm{u-v}\ge\frac{2}{\sqrt{n}}\max\left\{ F(
 
 \end_inset
 
-We will now prove that Thm.
+We now apply Theorem
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -2307,7 +2307,7 @@ For any convex set
 \end_inset
 
 ,
- we call a matrix function 
+ we say that a matrix function 
 \begin_inset Formula $\mathbf{H}:K\rightarrow\R^{n\times n}$
 \end_inset
 
@@ -2434,7 +2434,7 @@ Now we fix any
  
 \begin_inset Formula 
 \[
-\left|\psi'(t)\right|=\left|v^{\top}\frac{d}{dt}\mh(x_{t})v\right|\leq2\|h\|_{x_{t}}\|v\|_{x_{t}}^{2}=2\phi(t)\psi(t).
+\left|\psi'(t)\right|=\left|v^{\top}\frac{d}{dt}\mh(x_{t})v\right|\leq2\|h\|_{x_{t}}\|v\|_{x_{t}}^{2}=2\sqrt{\phi(t)}\psi(t).
 \]
 
 \end_inset
@@ -2784,7 +2784,7 @@ We note that strong self-concordance can be stronger than self-concordance since
 Verify that the Hessian of the standard log barrier is strongly self-concordant.
 \end_layout
 
-\begin_layout Exercise
+\begin_layout Standard
 The main theorem of this section is the following guarantee for the Dikin walk.
 \end_layout
 
@@ -3490,7 +3490,7 @@ For
 \end_inset
 
  where 
-\begin_inset Formula $\norm ._{u}$
+\begin_inset Formula $\norm{\cdot}_{u}$
 \end_inset
 
  is the norm induced by the Hessian of the log barrier.
@@ -3510,7 +3510,7 @@ name "lem:dikin_sandwich"
 
 For the Dikin ellipsoid induced by any self-concordant barrier,
  we have 
-\begin_inset Formula $E_{u}(1)\subseteq K\cap2x-K$
+\begin_inset Formula $E_{x}(1)\subseteq K\cap(2x-K)$
 \end_inset
 
  and for the logarithmic barrier for a polytope 
@@ -3522,7 +3522,7 @@ For the Dikin ellipsoid induced by any self-concordant barrier,
 \end_inset
 
  inequalities we also have 
-\begin_inset Formula $K\cap2x-K\subseteq E_{u}(\sqrt{m})$
+\begin_inset Formula $K\cap(2x-K)\subseteq E_{x}(\sqrt{m})$
 \end_inset
 
 .
@@ -3552,7 +3552,7 @@ nolink "false"
 \end_inset
 
 ,
- the Hessian remains finite for for every point in 
+ the Hessian remains finite for every point in 
 \begin_inset Formula $[x,y]$
 \end_inset
 
@@ -3591,7 +3591,7 @@ nolink "false"
 \begin_layout Proof
 For the second part,
  for any 
-\begin_inset Formula $y\in K\cap2x-K$
+\begin_inset Formula $y\in K\cap(2x-K)$
 \end_inset
 
 ,
@@ -3620,7 +3620,7 @@ Therefore,
  
 \begin_inset Formula 
 \[
-(y-x)^{\top}\nabla^{2}\phi(x)(y0x)=\sum_{i=1}^{m}\frac{\left(a_{i}^{\top}(y-x)\right)^{2}}{\left(a_{i}^{\top}x-b_{i}\right)^{2}}\le m.
+(y-x)^{\top}\nabla^{2}\phi(x)(y-x)=\sum_{i=1}^{m}\frac{\left(a_{i}^{\top}(y-x)\right)^{2}}{\left(a_{i}^{\top}x-b_{i}\right)^{2}}\le m.
 \]
 
 \end_inset

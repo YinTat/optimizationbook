@@ -15,7 +15,7 @@ is given by
 \[
 x=(A^{\top}A)^{-1}A^{\top}b.
 \]
-If $A^{T}A$ is not invertible, we use its pseudo-inverse. If the
+If $A^{\top}A$ is not invertible, we use its pseudo-inverse. If the
 matrix $A^{\top}A\in\R^{d\times d}$ is given, then we can solve the
 equation above in time $d^{\omega}$, the current complexity of matrix
 multiplication. If $n>d^{\omega}$, then the bottleneck is simply
@@ -24,13 +24,13 @@ to approximate $A^{\top}A$.
 
 The simplest iteration is the Richardson iteration: 
 \[
-x^{(k+1)}=A^{T}b+(I-A^{\top}A)x^{(k)}=x^{(k)}+A^{T}b-A^{\top}Ax^{(k)}.
+x^{(k+1)}=A^{\top}b+(I-A^{\top}A)x^{(k)}=x^{(k)}+A^{\top}b-A^{\top}Ax^{(k)}.
 \]
-To ensure this converges, we scale down $A^{T}A$ by its largest eigenvalue
-so that $A^{T}A\prec I$. This gives a bound of $O(\kappa(A^{\top}A)\log(1/\epsilon))$
+To ensure this converges, we scale down $A^{\top}A$ by its largest
+eigenvalue so that $A^{\top}A\prec I$. This gives a bound of $O(\kappa(A^{\top}A)\log(1/\epsilon))$
 on the number of iterations to get $\epsilon$ error where $\kappa(A^{\top}A)=\lambda_{\max}(A^{\top}A)/\lambda_{\min}(A^{\top}A)$.
 More generally, one can use \emph{pre-conditioning. }Recall that for
-a vector $v$, the norm $\norm v_{M}$ is defined as $v^{T}Mv$.
+a vector $v$, the squared norm $\norm v^{2}_{M}$ is defined as $v^{\top}Mv$.
 \begin{lem}
 \label{lem:Richardson}Given a matrix $M$ such that $A^{\top}A\preceq M\preceq\kappa\cdot A^{\top}A$
 for some $\kappa\geq1$. Consider the algorithm $x^{(k+1)}=x^{(k)}-M^{-1}(A^{\top}Ax^{(k)}-A^{\top}b)$
@@ -95,7 +95,7 @@ $\epsilon<1$ must have at least $d$ rows.
 \end{xca}
 
 This embedding is not useful for solving the least squares problem
-because the solution of the least square problem is simply a closed
+because the solution of the least squares problem is simply a closed
 form of the SVD decomposition $x=V\Sigma^{-1}U^{\top}b$ and finding
 the SVD is usually more expensive.
 
@@ -144,13 +144,13 @@ $d$, but later versions extended this to Gaussian, Bernoulli and
 more general random matrices \cite{Vempala04}.
 \begin{lem}[Johnson-Lindenstrauss Lemma]
 Let $\Pi\in\R^{m\times n}$ be a random matrix with i.i.d entries
-from $N(0,\frac{1}{\sqrt{m}})$ or uniformly sampled from $\pm\frac{1}{\sqrt{m}}$
+from $N(0,\frac{1}{m})$ or uniformly sampled from $\pm\frac{1}{\sqrt{m}}$
 with $m=\Theta(\frac{1}{\epsilon^{2}}\log(\frac{1}{\delta}))$. Then,
 $\Pi$ is a $(1,\epsilon,\delta)$ OSE.
 \end{lem}
 
 We will skip the proof for this as we will prove a more general result
-later. Next, we show that any OSE for $d=1$ is a OSE for general
+later. Next, we show that any OSE for $d=1$ is an OSE for general
 $d$. Therefore, it suffices to focus on the case $d=1$. First, we
 need a lemma about $\epsilon$-net on $S^{n-1}$.
 \begin{lem}
@@ -342,7 +342,7 @@ Now we can prove the main theorem.
 where each entry is $\pm\frac{1}{\sqrt{s}}$ with probability $\frac{s}{m}$
 and $0$ otherwise. There exist constants $c_{1},c_{2}$ such that
 for $m=c_{1}\frac{d\log(\frac{d}{\delta})}{\epsilon^{2}}$ and $s=c_{2}\frac{\log^{2}(\frac{d}{\delta})}{\epsilon^{2}}$
-$\Pi$ is an $O(d,\epsilon,\delta)$-OSE.
+$\Pi$ is a $(d,\epsilon,\delta)$-OSE.
 \end{thm}
 
 \begin{proof}
@@ -368,7 +368,7 @@ OSE. For completeness, we state a tighter version here:
 
 \SetAlgoLined
 
-\textbf{Input:} a matrix $A\in\R^{n\times d}$, a vector $b\in\R^{d}$,
+\textbf{Input:} a matrix $A\in\R^{n\times d}$, a vector $b\in\R^{n}$,
 success probability $\delta$ and target accuracy $\epsilon$.
 
 Let $\Pi$ be a $O(d,\frac{1}{4},\delta)$ OSE constructed by Theorem
@@ -388,7 +388,7 @@ $x^{(k+1)}=x^{(k)}-M^{-1}(A^{\top}Ax^{(k)}-A^{\top}b)$
 
 \end{algorithm2e}
 \begin{thm}
-Given any matrix $A\in\R^{n\times d}$, any vector $b\in\R^{d}$,
+Given any matrix $A\in\R^{n\times d}$, any vector $b\in\R^{n}$,
 the algorithm $\mathtt{RegressionUsingOSE}$ returns a vector $x$
 such that 
 \[
@@ -405,7 +405,7 @@ each row of $A$ into roughly $s$ many rows in $\Pi A$. Hence, the
 cost of computing $\Pi A$ is $O(s\cdot\nnz(A))=\widetilde{O}(\nnz(A))$.
 The cost of computing $M$ takes $\widetilde{O}(d^{\omega})$ time.
 Computing $M^{-1}$ takes $\widetilde{O}(d^{\omega})$ time. The loop
-takes $\widetilde{O}(\nnz(A))$ time. This explain the total time.
+takes $\widetilde{O}(\nnz(A))$ time. This explains the total time.
 \end{proof}
 Linear regression can also be solved in time $O\left(\nnz(A)+d^{O(1)}\right)$
 via a very sparse embedding: each column of $\Pi$ picks exactly one

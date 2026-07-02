@@ -36,14 +36,14 @@ and $f(x)=\exp(-\|x\|^{2}/2)\chi_{K}(x).$
 
 \SetAlgoLined
 \begin{enumerate}
-\item For $i=0,\ldots,m=\lceil\sqrt{n}\ln(4R^{2}n/\varepsilon\rceil$, let
-$a_{i}=2n/(1+\frac{1}{\sqrt{n}})^{i}$ and $f_{i}=f(x)^{a_{i}}.$
+\item For $i=0,\ldots,m=\lceil\sqrt{n}\ln(4R^{2}n/\varepsilon)\rceil$,
+let $a_{i}=2n/(1+\frac{1}{\sqrt{n}})^{i}$ and $f_{i}=f(x)^{a_{i}}.$
 \item For $i=0,\ldots,m-1$, 
 \begin{enumerate}
 \item sample $X^{(1)},X^{(2)},\ldots,X^{(N)}$ from $\pi_{f_{i}}$.
 \item Set $Y_{i}=\frac{1}{N}\sum^{N}_{j=1}\frac{f_{i+1}(X^{(j)})}{f_{i}(X^{(j)})}$ 
 \end{enumerate}
-\item Let $Y=\prod^{m-1}_{i=1}Y_{i}$ and return $Y\cdot(\pi/n)^{n/2}$.
+\item Let $Y=\prod^{m-1}_{i=0}Y_{i}$ and return $Y\cdot(\pi/n)^{n/2}$.
 \end{enumerate}
 \end{algorithm2e}
 
@@ -186,9 +186,9 @@ $a_{m-1}<1$.
 \item For $i=0,\ldots,m-1$, 
 \begin{enumerate}
 \item sample $X^{(1)},X^{(2)},\ldots,X^{(N)}$ from $\pi_{f_{i}}$.
-\item Set $Y_{i}=\frac{1}{N}\sum^{N}_{j=1}f(x)^{a_{i+1}-a_{i}}$
+\item Set $Y_{i}=\frac{1}{N}\sum^{N}_{j=1}f(X^{(j)})^{a_{i+1}-a_{i}}$
 \end{enumerate}
-\item Let $Y=\prod^{m-1}_{i=1}Y_{i}$ and return $Y_{o}\cdot Y$.
+\item Let $Y=\prod^{m-1}_{i=0}Y_{i}$ and return $Y_{0}\cdot Y$.
 \end{enumerate}
 \end{algorithm2e}
 
@@ -196,7 +196,7 @@ In words, the algorithm starts with the indicator function over a
 convex body containing most of the measure of $f$ and anneals through
 a sequence of distributions to reach $f$.
 \begin{thm}
-The LV algorithm applied to an integrable logconcave function $f:\R^{n}\rightarrow\R$
+The LV algorithm applied to an integrable logconcave function $f:\R^{n}\rightarrow\R_{+}$
 estimates the integral of $f$ to relative error $\varepsilon$ with
 probability at least $3/4$ using $\widetilde{O}(n^{4}/\varepsilon^{2})$
 evaluation oracle queries and $\widetilde{O}(n^{2})$ arithmetic operations

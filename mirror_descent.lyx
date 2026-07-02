@@ -132,14 +132,13 @@ For the usual Euclidean norm,
 
 \begin_layout Standard
 It is often useful to consider affine transformations,
- and the (semi)norms they induce,
- e.g.,
- for a PSD matrix 
+ and the (semi)norms they induce.
+ For a positive semidefinite matrix 
 \begin_inset Formula $A$
 \end_inset
 
- (would be an induced norm in the case when A is PD),
- we can define the associated norm as follows:
+,
+ we can define the associated seminorm as follows:
 \begin_inset Formula 
 \[
 \norm x_{A}=\sqrt{x^{\top}Ax}.
@@ -147,7 +146,12 @@ It is often useful to consider affine transformations,
 
 \end_inset
 
-The convex body (unit ball) of this norm is an ellipsoid centered at zero and defined by the matrix 
+When 
+\begin_inset Formula $A$
+\end_inset
+
+ is positive definite,
+ the unit ball of this norm is an ellipsoid centered at zero and defined by the matrix 
 \begin_inset Formula $A$
 \end_inset
 
@@ -176,11 +180,11 @@ K^{*}=\left\{ y:\forall x\in K,\left\langle x,y\right\rangle \le1\right\} .
 
 \begin_layout Standard
 The dual norm for 
-\begin_inset Formula $\norm ._{K}$
+\begin_inset Formula $\norm{\cdot}_{K}$
 \end_inset
 
  is 
-\begin_inset Formula $\norm ._{K^{*}}$
+\begin_inset Formula $\norm{\cdot}_{K^{*}}$
 \end_inset
 
 .
@@ -232,7 +236,7 @@ local
 \begin_inset Formula $A(x)$
 \end_inset
 
- s.t.
+ such that
  the norm at 
 \begin_inset Formula $x$
 \end_inset
@@ -362,7 +366,7 @@ For any convex function
 \begin_inset Formula $\partial f(x)$
 \end_inset
 
- be the set of vectors 
+ to be the set of vectors 
 \begin_inset Formula $g$
 \end_inset
 
@@ -488,7 +492,7 @@ For{
 \end_inset
 
 
-\begin_inset Formula $k=0,1,\cdots,T-2$
+\begin_inset Formula $k=0,1,\cdots,T-1$
 \end_inset
 
 
@@ -619,7 +623,7 @@ Given a convex set
 
 ,
  let 
-\begin_inset Formula $\pi(y)=arg\min_{x\in\mathcal{D}}\|x-y\|_{2}$
+\begin_inset Formula $\pi(y)=\arg\min_{x\in\mathcal{D}}\|x-y\|_{2}$
 \end_inset
 
 .
@@ -1161,7 +1165,7 @@ over the reals is a vector space over the reals together with a norm that define
 \begin_inset Formula $x$
 \end_inset
 
- s.t.
+ such that
  
 \begin_inset Formula $\lim_{n\rightarrow\infty}\norm{x_{n}-x}=0$
 \end_inset
@@ -1572,7 +1576,7 @@ For{
 \end_inset
 
 
-\begin_inset Formula $k=0,1,\cdots,T-2$
+\begin_inset Formula $k=0,1,\cdots,T-1$
 \end_inset
 
 
@@ -1809,7 +1813,7 @@ Given a convex set
 
 ,
  let 
-\begin_inset Formula $\pi(y)=\arg\min D_{\Phi}(x,y)$
+\begin_inset Formula $\pi(y)=\arg\min_{x\in\mathcal{D}}D_{\Phi}(x,y)$
 \end_inset
 
 .
@@ -1861,7 +1865,7 @@ h'(0)=(\nabla\Phi(\pi(y))-\nabla\Phi(y))^{\top}(z-\pi(y))\geq0.
 Hence,
 \begin_inset Formula 
 \begin{align*}
-D_{\Phi}(z,y) & =D_{\Phi}(z,\pi(y))+2(z-\pi(y))^{\top}(\nabla\Phi(\pi(y))-\nabla\Phi(y))+D_{\Phi}(\pi(y),y)\\
+D_{\Phi}(z,y) & =D_{\Phi}(z,\pi(y))+(z-\pi(y))^{\top}(\nabla\Phi(\pi(y))-\nabla\Phi(y))+D_{\Phi}(\pi(y),y)\\
  & \geq D_{\Phi}(z,\pi(y))+D_{\Phi}(\pi(y),y).
 \end{align*}
 
@@ -1915,6 +1919,11 @@ Let
 \end_inset
 
 .
+ Assume that mirror descent starts at 
+\begin_inset Formula $x^{(0)}\in\arg\min_{x\in\mathcal{D}}\Phi(x)$
+\end_inset
+
+.
  Then,
  mirror descent outputs 
 \begin_inset Formula $x$
@@ -1923,7 +1932,7 @@ Let
  such that
 \begin_inset Formula 
 \[
-f(x)-\min_{x}f(x)\leq\frac{R^{2}}{hT}+\frac{h}{2\rho}G^{2}.
+f(x)-\min_{x\in\mathcal{D}}f(x)\leq\frac{R^{2}}{hT}+\frac{h}{2\rho}G^{2}.
 \]
 
 \end_inset
@@ -2190,7 +2199,7 @@ hg_{i}^{(k)}+\log\frac{x_{i}^{(k+1)}}{x_{i}^{(k)}}+1-\lambda=0
 
 \end_inset
 
-for some Lagrangian multiplier 
+for some Lagrange multiplier 
 \begin_inset Formula $\lambda$
 \end_inset
 
@@ -2332,7 +2341,7 @@ Let
 \begin_inset Formula $1$
 \end_inset
 
--Lipschitz function on 
+-Lipschitz function with respect to 
 \begin_inset Formula $\|\cdot\|_{1}$
 \end_inset
 
@@ -2342,10 +2351,14 @@ Let
 \begin_inset Formula $\Phi(x)=\sum_{i}x_{i}\log x_{i}$
 \end_inset
 
-.
+ outputs a point 
+\begin_inset Formula $x$
+\end_inset
+
+ satisfying
 \begin_inset Formula 
 \[
-f(x^{T})-\min_{x}f(x)\leq\sqrt{\frac{2\log n}{T}}.
+f(x)-\min_{x\in\mathcal{D}}f(x)\leq\sqrt{\frac{2\log n}{T}}.
 \]
 
 \end_inset

@@ -1,5 +1,5 @@
-#LyX 2.4 created this file. For more info see https://www.lyx.org/
-\lyxformat 620
+#LyX 2.5 created this file. For more info see https://www.lyx.org/
+\lyxformat 643
 \begin_document
 \begin_header
 \save_transient_properties true
@@ -54,11 +54,19 @@
 \use_indices false
 \paperorientation portrait
 \suppress_date false
-\justification true
-\use_refstyle 1
+\justification default
+\crossref_package refstyle
 \use_formatted_ref 0
 \use_minted 0
 \use_lineno 0
+\backgroundcolor none
+\fontcolor none
+\notefontcolor lightgray
+\boxbgcolor red
+\table_border_color default
+\table_odd_row_color default
+\table_even_row_color default
+\table_alt_row_colors_start 1
 \index Index
 \shortcut idx
 \color #008000
@@ -84,6 +92,7 @@
 \html_be_strict false
 \docbook_table_output 0
 \docbook_mathml_prefix 1
+\docbook_mathml_version 0
 \end_header
 
 \begin_body
@@ -95,7 +104,6 @@ Volume computation of a given set is a fundamental problem in theoretical comput
 status open
 
 \begin_layout Plain Layout
-
 ~
 \end_layout
 
@@ -344,12 +352,12 @@ the oracle answers YES and for queries outside the unit ball it answers NO.
  we have that 
 \begin_inset Formula 
 \[
-\conv\left\{ x_{1},\ldots,x_{m}\right\} \subseteq K\subseteq B^{n}.
+\conv(x_{1},\ldots,x_{m})\subseteq K\subseteq B^{n}.
 \]
 
 \end_inset
 
-Now by Lemma ,
+By the following lemma,
  the volume of the convex hull of 
 \emph on
 any 
@@ -375,7 +383,7 @@ Let
  Then 
 \begin_inset Formula 
 \[
-\vol\left(\conv\left\{ x_{1},\ldots,x_{m}\right\} \right)\le\frac{m}{2^{n}}\vol(B^{n}).
+\vol\left(\conv(x_{1},\ldots,x_{m})\right)\le\frac{m}{2^{n}}\vol(B^{n}).
 \]
 
 \end_inset
@@ -390,19 +398,14 @@ For each
 
 ,
  define 
-\begin_inset Formula $B_{i}=B(x_{i},\|x_{i}\|/2)$
-\end_inset
-
-,
- a ball with diameter 
-\begin_inset Formula $\|x_{i}\|\le1/2$
+\begin_inset Formula $B_{i}=B(x_{i}/2,\|x_{i}\|/2)$
 \end_inset
 
 .
  Then 
 \begin_inset Formula 
 \[
-\vol\left(\bigcup_{i=1}^{m}B_{i}\right)\le m\cdot\vol(B(0,1/2))=\frac{m}{2^{n}}\vol(B^{n}).
+\vol\left(\bigcup^{m}_{i=1}B_{i}\right)\le m\cdot\vol(B(0,1/2))=\frac{m}{2^{n}}\vol(B^{n}).
 \]
 
 \end_inset
@@ -412,7 +415,7 @@ For each
 
 \begin_layout Proof
 We argue that 
-\begin_inset Formula $\conv{x_{1},\ldots,x_{m}}\subset\bigcup B_{i}$
+\begin_inset Formula $\conv(x_{1},\ldots,x_{m})\subset\bigcup B_{i}$
 \end_inset
 
 .
@@ -421,54 +424,61 @@ We argue that
 \begin_inset Formula $y$
 \end_inset
 
- be a point not contained in 
+ be a point not contained in any 
 \begin_inset Formula $B_{i}$
 \end_inset
 
 .
  Then,
- the angle at 
-\begin_inset Formula $y$
+ for every 
+\begin_inset Formula $i$
 \end_inset
 
- induced by the vectors 
-\begin_inset Formula $y$
-\end_inset
-
- and 
-\begin_inset Formula $y-x_{i}$
-\end_inset
-
- must be acute,
- i.e.,
+,
  
 \begin_inset Formula 
 \[
-\langle y,x_{i}-y\rangle<0
+\|y-x_{i}/2\|>\|x_{i}\|/2,
 \]
 
 \end_inset
 
-and this holds for all 
-\begin_inset Formula $i$
+which is equivalent to
+\begin_inset Formula 
+\[
+\langle y,x_{i}-y\rangle<0.
+\]
+
 \end_inset
 
-.
- In other words,
- the halfspace 
-\begin_inset Formula $\langle y,x-y\rangle<0$
+In other words,
+ all the 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ lie in the open halfspace 
+\begin_inset Formula $\{x:\langle y,x-y\rangle<0\}$
+\end_inset
+
+,
+ while 
+\begin_inset Formula $y$
+\end_inset
+
+ lies on its boundary.
+ Therefore the hyperplane 
+\begin_inset Formula $\{x:\langle y,x-y\rangle=0\}$
 \end_inset
 
  separates 
 \begin_inset Formula $y$
 \end_inset
 
- from all the 
-\begin_inset Formula $x_{i}$
+ from 
+\begin_inset Formula $\conv(x_{1},\ldots,x_{m})$
 \end_inset
 
 .
- Therefore it separates it from their convex hull.
  
 \end_layout
 
@@ -485,7 +495,7 @@ literal "false"
 \end_inset
 
  Let 
-\begin_inset Formula $P={x:x\in[0,1]^{n},a^{\top}x\le b}$
+\begin_inset Formula $P=\{x:x\in[0,1]^{n},a^{\top}x\le b\}$
 \end_inset
 
  where 
@@ -530,7 +540,6 @@ status open
 
 \begin_layout Plain Layout
 
-
 \backslash
 begin{algorithm2e}[H]
 \end_layout
@@ -545,7 +554,6 @@ begin{algorithm2e}[H]
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 caption{
@@ -562,7 +570,6 @@ caption{
 status open
 
 \begin_layout Plain Layout
-
 }
 \end_layout
 
@@ -583,7 +590,6 @@ name "alg:cutting-plane-volume"
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 SetAlgoLined
@@ -639,7 +645,6 @@ status open
 
 \begin_layout Plain Layout
 
-
 \backslash
 For{
 \end_layout
@@ -655,7 +660,6 @@ For{
 status open
 
 \begin_layout Plain Layout
-
 }{
 \end_layout
 
@@ -690,7 +694,6 @@ status open
 
 \begin_layout Plain Layout
 
-
 \backslash
 lIf{
 \end_layout
@@ -706,7 +709,6 @@ There is no such
 status open
 
 \begin_layout Plain Layout
-
 }{
 \end_layout
 
@@ -721,7 +723,6 @@ Break
 status open
 
 \begin_layout Plain Layout
-
 }
 \end_layout
 
@@ -783,7 +784,6 @@ Let
 status open
 
 \begin_layout Plain Layout
-
 }
 \end_layout
 
@@ -794,7 +794,7 @@ status open
 
 \begin_layout Standard
 Return 
-\begin_inset Formula $V_{\text{last}}\cdot\prod_{i=1}^{n}w_{i}(K^{(k+1)})$
+\begin_inset Formula $V_{\text{last}}\cdot\prod^{n}_{i=1}w_{i}(K^{(k+1)})$
 \end_inset
 
  where 
@@ -813,7 +813,6 @@ Return
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 end{algorithm2e}
@@ -855,7 +854,11 @@ name "lem:centroid"
 
 \end_inset
 
-For any measurable bounded set S in 
+For any measurable bounded set 
+\begin_inset Formula $S$
+\end_inset
+
+ in 
 \begin_inset Formula $\R^{n}$
 \end_inset
 
@@ -1033,7 +1036,7 @@ which can be rearranged to give the result.
  The equation for the cone is
 \begin_inset Formula 
 \[
-y(t)=-\frac{r(0)}{b}(x-b).
+y(t)=-\frac{r(0)}{b}(t-b).
 \]
 
 \end_inset
@@ -1052,7 +1055,7 @@ Notice that
 \end_inset
 
  for 
-\begin_inset Formula $t\in[-a,0]$
+\begin_inset Formula $t\in[a,0]$
 \end_inset
 
 ,
@@ -1111,9 +1114,9 @@ Notice that
  we have
 \begin_inset Formula 
 \begin{align*}
-t_{0} & =\frac{\int_{a}^{b}ty^{n-1}(t)dt}{\int_{a}^{b}y^{n-1}(t)dt}\\
- & =\frac{1}{\int_{a}^{b}y^{n-1}(t)dt}\left(\int_{a}^{0}ty^{n-1}(t)dt+\int_{0}^{b}ty^{n-1}(t)dt\right)\\
- & \le\frac{1}{\int_{a}^{b}y^{n-1}(t)dt}\left(\int_{a}^{0}tr^{n-1}(t)dt+\int_{0}^{b}tr^{n-1}(t)dt\right)=0.
+t_{0} & =\frac{\int^{b}_{a}ty^{n-1}(t)dt}{\int^{b}_{a}y^{n-1}(t)dt}\\
+ & =\frac{1}{\int^{b}_{a}y^{n-1}(t)dt}\left(\int^{0}_{a}ty^{n-1}(t)dt+\int^{b}_{0}ty^{n-1}(t)dt\right)\\
+ & \le\frac{1}{\int^{b}_{a}y^{n-1}(t)dt}\left(\int^{0}_{a}tr^{n-1}(t)dt+\int^{b}_{0}tr^{n-1}(t)dt\right)=0.
 \end{align*}
 
 \end_inset
@@ -1187,7 +1190,7 @@ nolink "false"
 \end_inset
 
  (namely 
-\begin_inset Formula $\max_{x\in K}\left|e_{i}^{\top}x\right|\leq r$
+\begin_inset Formula $\max_{x\in K}\left|e^{\top}_{i}x\right|\leq r$
 \end_inset
 
 ),
@@ -1235,14 +1238,14 @@ nolink "false"
 \end_inset
 
  The initial volume is at most 
-\begin_inset Formula $R^{n}$
+\begin_inset Formula $(2R)^{n}$
 \end_inset
 
 .
  Therefore the number of iterations is at most 
 \begin_inset Formula 
 \[
-\log_{(1-\frac{1}{e})}\left(\frac{(2R)^{n}}{(r/(n+1))^{n}}\right)=O\left(n\log(nR/r)\right).
+\log_{1/(1-\frac{1}{e})}\left(\frac{(2R)^{n}}{(r/(n+1))^{n}}\right)=O\left(n\log(nR/r)\right).
 \]
 
 \end_inset
@@ -1466,13 +1469,13 @@ We first consider the case when
  
 \begin_inset Formula 
 \[
-A=\prod_{i=1}^{n}[0,a_{i}]\ \mbox{and \ }B=\prod_{i=1}^{n}[0,b_{i}]
+A=\prod^{n}_{i=1}[0,a_{i}]\ \mbox{and \ }B=\prod^{n}_{i=1}[0,b_{i}]
 \]
 
 \end_inset
 
 for positive real numbers 
-\begin_inset Formula $a_{1},\ldots,a_{m},b_{1},\ldots,b_{m}$
+\begin_inset Formula $a_{1},\ldots,a_{n},b_{1},\ldots,b_{n}$
 \end_inset
 
 .
@@ -1480,7 +1483,7 @@ for positive real numbers
  we have 
 \begin_inset Formula 
 \[
-\vol(A)=\prod_{i=1}^{n}a_{i},\,\vol(B)=\prod_{i=1}^{n}b_{i}\:\vol(A+B)=\prod_{i=1}^{n}(a_{i}+b_{i}).
+\vol(A)=\prod^{n}_{i=1}a_{i},\,\vol(B)=\prod^{n}_{i=1}b_{i}\:\vol(A+B)=\prod^{n}_{i=1}(a_{i}+b_{i}).
 \]
 
 \end_inset
@@ -1488,7 +1491,7 @@ for positive real numbers
 Now we need to verify that 
 \begin_inset Formula 
 \[
-\left(\prod_{i=1}^{n}(a_{i}+b_{i})\right)^{\frac{1}{n}}\ge\left(\prod_{i=1}^{n}a_{i}\right)^{\frac{1}{n}}+\left(\prod_{i=1}^{n}b_{i}\right)^{\frac{1}{n}}
+\left(\prod^{n}_{i=1}(a_{i}+b_{i})\right)^{\frac{1}{n}}\ge\left(\prod^{n}_{i=1}a_{i}\right)^{\frac{1}{n}}+\left(\prod^{n}_{i=1}b_{i}\right)^{\frac{1}{n}}
 \]
 
 \end_inset
@@ -1496,7 +1499,7 @@ Now we need to verify that
 which is equivalent to 
 \begin_inset Formula 
 \[
-\left(\prod_{i=1}^{n}\frac{a_{i}}{a_{i}+b_{i}}\right)^{\frac{1}{n}}+\left(\prod_{i=1}^{n}\frac{b_{i}}{a_{i}+b_{i}}\right)^{\frac{1}{n}}\le1.
+\left(\prod^{n}_{i=1}\frac{a_{i}}{a_{i}+b_{i}}\right)^{\frac{1}{n}}+\left(\prod^{n}_{i=1}\frac{b_{i}}{a_{i}+b_{i}}\right)^{\frac{1}{n}}\le1.
 \]
 
 \end_inset
@@ -1506,7 +1509,7 @@ Using the AM-GM inequality,
  we have 
 \begin_inset Formula 
 \[
-\left(\prod_{i=1}^{n}\frac{a_{i}}{a_{i}+b_{i}}\right)^{\frac{1}{n}}+\left(\prod_{i=1}^{n}\frac{b_{i}}{a_{i}+b_{i}}\right)^{\frac{1}{n}}\le\frac{1}{n}\sum_{i=1}^{n}\frac{a_{i}}{a_{i}+b_{i}}+\frac{1}{n}\sum_{i=1}^{n}\frac{b_{i}}{a_{i}+b_{i}}=1.
+\left(\prod^{n}_{i=1}\frac{a_{i}}{a_{i}+b_{i}}\right)^{\frac{1}{n}}+\left(\prod^{n}_{i=1}\frac{b_{i}}{a_{i}+b_{i}}\right)^{\frac{1}{n}}\le\frac{1}{n}\sum^{n}_{i=1}\frac{a_{i}}{a_{i}+b_{i}}+\frac{1}{n}\sum^{n}_{i=1}\frac{b_{i}}{a_{i}+b_{i}}=1.
 \]
 
 \end_inset
@@ -1515,7 +1518,7 @@ Using the AM-GM inequality,
 \end_layout
 
 \begin_layout Standard
-We will now prove the inequality to any finite union of cuboids.
+We will now prove the inequality for any finite union of cuboids.
  That suffices to complete the proof because any measurable subset is the limit of a union of disjoint cubes as the cubes become smaller and smaller.
  
 \end_layout
@@ -1583,7 +1586,7 @@ Translate
  so that we have 
 \begin_inset Formula 
 \begin{equation}
-\frac{\vol(A^{+})}{\vol(A)}=\frac{\vol(B^{+})}{\vol(B^{-})}.\label{eq:AB_ratio}
+\frac{\vol(A^{+})}{\vol(A)}=\frac{\vol(B^{+})}{\vol(B)}.\label{eq:AB_ratio}
 \end{equation}
 
 \end_inset

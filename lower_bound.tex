@@ -71,14 +71,14 @@ Given any convex function, we construct the dependence graph $G$
 on the set of variables $x_{i}$ by connecting $x_{i}$ to $x_{j}$
 if $\nabla f(x)_{i}$ depends on $x_{j}$ or $\nabla f(x)_{j}$ depends
 on $x_{i}$ (given all other variables). Note that the dependence
-graph $G$ of the worst function is simply a $n$ vertex path, whose
+graph $G$ of the worst function is simply an $n$-vertex path, whose
 diameter is $n-1$. Also, note that gradient descent can only transmit
 information from one vertex to another in each iteration. Therefore,
 it takes at least $\Omega(\mathrm{diameter})$ time to solve the problem
 unless we know the solution is sparse (when $L/\mu$ is small). However,
 we note that this is not a lower bound for all algorithms.
 
-The problem (\ref{eq:worst_function}) belongs to a general class
-of functions called Laplacian systems and it can be solved in nearly
-linear time using spectral graph theory. \selectlanguage{english}%
+The problem (\ref{eq:worst_function}) is a quadratic whose optimality
+conditions form a Laplacian linear system, and it can be solved in
+nearly linear time using spectral graph theory. \selectlanguage{english}%
 

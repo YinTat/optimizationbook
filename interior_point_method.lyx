@@ -351,10 +351,11 @@ The optimality condition,
 \begin_inset Formula $y$
 \end_inset
 
-(Lagrangian multipliers) for the Lagrangian of 
+ (Lagrange multipliers) for the constraint 
 \begin_inset Formula $Ax=b$
 \end_inset
 
+,
  is given by
 \begin_inset Formula 
 \[
@@ -572,7 +573,7 @@ Suppose
 \end_inset
 
 ,
- there is an unique pair 
+ there is a unique pair 
 \begin_inset Formula $(x_{\mu},s_{\mu})\in\PriR^{\circ}\times\DualR^{\circ}$
 \end_inset
 
@@ -749,7 +750,7 @@ A^{\top}(y+\delta_{y})+(s+\delta_{s}) & =c.
 \end_inset
 
  is small,
- the equation can simplified as follows.
+ the equation can be simplified as follows.
  We use the notation 
 \begin_inset Formula $X=\Diag(x)$
 \end_inset
@@ -809,7 +810,7 @@ Let
 .
 \end_layout
 
-\begin_layout Exercise
+\begin_layout Standard
 First,
  we show that 
 \begin_inset Formula $x^{\new}=x+\delta_{x}$
@@ -2027,7 +2028,7 @@ name "thm:IPM_interior"
 \end_inset
 
 Given a linear program 
-\begin_inset Formula $\min_{\ma x=b,x\in\R_{\geq}^{n}}c^{\top}x$
+\begin_inset Formula $\min_{\ma x=b,x\in\R_{\geq 0}^{n}}c^{\top}x$
 \end_inset
 
  with inner radius 
@@ -2598,7 +2599,7 @@ After the second call of
 \end_inset
 
  such that 
-\begin_inset Formula $\|x_{\mathrm{end}}s_{\mathrm{end}}-t_{\mathrm{end}}\|_{2}\leq\frac{t}{6}$
+\begin_inset Formula $\|x_{\mathrm{end}}s_{\mathrm{end}}-t_{\mathrm{end}}\|_{2}\leq\frac{t_{\mathrm{end}}}{6}$
 \end_inset
 
  with 
@@ -4545,7 +4546,7 @@ Given a convex function
 \end_inset
 
  define the norm 
-\begin_inset Formula $\norm ._{x}$
+\begin_inset Formula $\norm{\cdot}_{x}$
 \end_inset
 
  as 
@@ -4626,7 +4627,7 @@ Show that the following property is equivalent to self-concordance as defined ab
 
 ,
  we have 
-\begin_inset Formula $g'''(t)\leq2g''(t)^{3/2}$
+\begin_inset Formula $|g'''(t)|\leq2g''(t)^{3/2}$
 \end_inset
 
 .
@@ -4775,7 +4776,7 @@ For
 \begin_inset Formula $\frac{d}{dt}\frac{1}{\sqrt{\alpha(t)}}\geq-1.$
 \end_inset
 
- Integrating both sides w.r.t.
+ Integrating both sides with respect to
  
 \begin_inset Formula $t$
 \end_inset
@@ -4950,7 +4951,7 @@ The reason we utilize the pseudo-inverse is that we only care about the inverse 
 
 .
  In the analysis to come,
- this is will be the semantics of the vector 
+ this will be the semantics of the vector 
 \family roman
 \series medium
 \shape up
@@ -5049,7 +5050,7 @@ The following functions are self-concordant barriers.
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $-\ln(t^{2}-\norm x^{2})$
+\begin_inset Formula $-\ln(t^{2}-\norm{x}_{2}^{2})$
 \end_inset
 
  is 
@@ -5057,7 +5058,7 @@ The following functions are self-concordant barriers.
 \end_inset
 
 -sc for 
-\begin_inset Formula $\{t\geq\norm x_{2}\}$
+\begin_inset Formula $\{t\geq\norm{x}_{2}\}$
 \end_inset
 
 .
@@ -5275,7 +5276,7 @@ If
 \end_inset
 
 -self concordant for 
-\begin_inset Formula $\{y:Ay+b\in K\}$
+\begin_inset Formula $\{x:Ax+b\in K\}$
 \end_inset
 
 .

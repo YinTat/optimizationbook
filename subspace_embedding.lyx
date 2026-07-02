@@ -128,7 +128,7 @@ x=(A^{\top}A)^{-1}A^{\top}b.
 \end_inset
 
 If 
-\begin_inset Formula $A^{T}A$
+\begin_inset Formula $A^{\top}A$
 \end_inset
 
  is not invertible, we use its pseudo-inverse.
@@ -162,17 +162,17 @@ If
 The simplest iteration is the Richardson iteration: 
 \begin_inset Formula 
 \[
-x^{(k+1)}=A^{T}b+(I-A^{\top}A)x^{(k)}=x^{(k)}+A^{T}b-A^{\top}Ax^{(k)}.
+x^{(k+1)}=A^{\top}b+(I-A^{\top}A)x^{(k)}=x^{(k)}+A^{\top}b-A^{\top}Ax^{(k)}.
 \]
 
 \end_inset
 
 To ensure this converges, we scale down 
-\begin_inset Formula $A^{T}A$
+\begin_inset Formula $A^{\top}A$
 \end_inset
 
  by its largest eigenvalue so that 
-\begin_inset Formula $A^{T}A\prec I$
+\begin_inset Formula $A^{\top}A\prec I$
 \end_inset
 
 .
@@ -198,12 +198,12 @@ Recall that for a vector
 \begin_inset Formula $v$
 \end_inset
 
-, the norm 
-\begin_inset Formula $\norm v_{M}$
+, the squared norm 
+\begin_inset Formula $\norm{v}_{M}^{2}$
 \end_inset
 
  is defined as 
-\begin_inset Formula $v^{T}Mv$
+\begin_inset Formula $v^{\top}Mv$
 \end_inset
 
 .
@@ -461,7 +461,7 @@ For any
 
 \begin_layout Standard
 This embedding is not useful for solving the least squares problem because
- the solution of the least square problem is simply a closed form of the
+ the solution of the least squares problem is simply a closed form of the
  SVD decomposition 
 \begin_inset Formula $x=V\Sigma^{-1}U^{\top}b$
 \end_inset
@@ -640,7 +640,7 @@ Let
 \end_inset
 
  be a random matrix with i.i.d entries from 
-\begin_inset Formula $N(0,\frac{1}{\sqrt{m}})$
+\begin_inset Formula $N(0,\frac{1}{m})$
 \end_inset
 
  or uniformly sampled from 
@@ -678,7 +678,7 @@ We will skip the proof for this as we will prove a more general result later.
 \begin_inset Formula $d=1$
 \end_inset
 
- is a OSE for general 
+ is an OSE for general 
 \begin_inset Formula $d$
 \end_inset
 
@@ -1591,8 +1591,8 @@ Consider a random sparse matrix
 \begin_inset Formula $\Pi$
 \end_inset
 
- is an 
-\begin_inset Formula $O(d,\epsilon,\delta)$
+ is a 
+\begin_inset Formula $(d,\epsilon,\delta)$
 \end_inset
 
 -OSE.
@@ -1721,7 +1721,7 @@ Input:
 \end_inset
 
 , a vector 
-\begin_inset Formula $b\in\R^{d}$
+\begin_inset Formula $b\in\R^{n}$
 \end_inset
 
 , success probability 
@@ -1871,7 +1871,7 @@ Given any matrix
 \end_inset
 
 , any vector 
-\begin_inset Formula $b\in\R^{d}$
+\begin_inset Formula $b\in\R^{n}$
 \end_inset
 
 , the algorithm 
@@ -1963,7 +1963,7 @@ reference "lem:Richardson"
 \end_inset
 
  time.
- This explain the total time.
+ This explains the total time.
 \end_layout
 
 \begin_layout Standard

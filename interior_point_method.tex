@@ -53,8 +53,8 @@ and $xs=t$ is shorthand of $x_{i}s_{i}=t$ for all $i$.
 \end{lem}
 
 \begin{proof}
-The optimality condition, using dual variables $y$(Lagrangian multipliers)
-for the Lagrangian of $Ax=b$ is given by
+The optimality condition, using dual variables $y$(Lagrange multipliers)
+for the constraint $Ax=b$, is given by
 \[
 c-\frac{t}{x}=A^{\top}y.
 \]
@@ -111,7 +111,7 @@ satisfying the invariant $xs=t$, we prove the following generalization.
 \begin{lem}[Quadrant Representation of Primal-Dual]
 \label{lem:primal_dual_representation}Suppose $\PriR$ is non-empty
 and bounded. For any positive vector $\mu\in\R^{n}_{>0}$, there is
-an unique pair $(x_{\mu},s_{\mu})\in\PriR^{\circ}\times\DualR^{\circ}$
+a unique pair $(x_{\mu},s_{\mu})\in\PriR^{\circ}\times\DualR^{\circ}$
 such that $x_{\mu}s_{\mu}=\mu$. Furthermore, $x_{\mu}=\arg\min_{x\in\PriR}f_{\mu}(x)$
 where
 \[
@@ -150,7 +150,7 @@ A^{\top}(y+\delta_{y})+(s+\delta_{s}) & =c.
 \end{align*}
 (Omitted the non-negative conditions.) Using our assumption on $(x,y,s)$
 and noting that $\delta_{x}\cdot\delta_{s}$ is small, the equation
-can simplified as follows. We use the notation $X=\Diag(x)$, $S=\Diag(s)$.
+can be simplified as follows. We use the notation $X=\Diag(x)$, $S=\Diag(s)$.
 \[
 \left[\begin{array}{ccc}
 0 & A^{\top} & I\\
@@ -170,11 +170,10 @@ This is a linear system and hence we can solve it exactly.
 \begin{xca}
 \label{exer:d_central}Let $r=t-xs$. Prove that $S\delta_{x}=(I-\overline{P})r$
 and $X\delta_{s}=\overline{P}r$ where $\overline{P}=XA^{\top}(AS^{-1}XA^{\top})^{-1}AS^{-1}$.
-
-First, we show that $x^{\new}=x+\delta_{x}$ and $s^{\new}=s+\delta_{s}$
-are feasible.
 \end{xca}
 
+First,we show that $x^{\new}=x+\delta_{x}$ and $s^{\new}=s+\delta_{s}$
+are feasible.
 \begin{lem}
 Suppose $\sum_{i}\left(x_{i}s{}_{i}-t\right)^{2}\leq\varepsilon^{2}t^{2}$
 with $\varepsilon<\frac{1}{2}$. Then, $x^{\new}_{i}>0$ and $s^{\new}_{i}>0$
@@ -500,7 +499,7 @@ dual polytope by
 
 The main result about the modified program is the following.
 \begin{thm}
-\label{thm:IPM_interior}Given a linear program $\min_{\ma x=b,x\in\R^{n}_{\geq}}c^{\top}x$
+\label{thm:IPM_interior}Given a linear program $\min_{\ma x=b,x\in\R^{n}_{\geq0}}c^{\top}x$
 with inner radius $r$, outer radius $R$ and Lipschitz constant $L$.
 For any $0\leq\epsilon\leq\frac{1}{2}$, the modified linear program
 (Definition \ref{def:IPM_interior_modified}) with $\overline{R}=\frac{5}{\epsilon}R,t=2^{16}\epsilon^{-3}n^{2}\frac{R}{r}\cdot LR$
@@ -594,7 +593,7 @@ with $t=LR$, we have that $\|xs-t\|_{2}\leq\frac{t}{4}$. This verifies
 the condition for the second call of $\mathtt{L2Step}$.
 
 After the second call of $\mathtt{L2Step}$, we have $(x_{\mathrm{end}},s_{\mathrm{end}})$
-such that $\|x_{\mathrm{end}}s_{\mathrm{end}}-t_{\mathrm{end}}\|_{2}\leq\frac{t}{6}$
+such that $\|x_{\mathrm{end}}s_{\mathrm{end}}-t_{\mathrm{end}}\|_{2}\leq\frac{t_{\mathrm{end}}}{6}$
 with $t_{\mathrm{end}}=\delta LR/(2n)$. Hence, by the bound on the
 duality gap, 
 \[
@@ -919,7 +918,7 @@ it only makes sense to impose an assumption that is invariant under
 linear transformation.
 \begin{defn}
 Given a convex function $f:\R^{n}\rightarrow\R$, and any point $x\in\R^{n},$
-define the norm $\norm ._{x}$ as 
+define the norm $\norm{\cdot}_{x}$ as 
 \[
 \norm v^{2}_{x}=v^{\top}\nabla^{2}f(x)v.
 \]
@@ -940,7 +939,7 @@ we can change any constant to any other constant.
 \begin{xca}
 Show that the following property is equivalent to self-concordance
 as defined above: restricted on any straight line $g(t)=f(x+th)$,
-we have $g'''(t)\leq2g''(t)^{3/2}$.
+we have $|g'''(t)|\leq2g''(t)^{3/2}$.
 \end{xca}
 
 \begin{xca}
@@ -983,7 +982,7 @@ By self-concordance, we have
 
 For $u=y-x$, we have $\left|\alpha'(t)\right|\leq2\alpha(t)^{\frac{3}{2}}$.
 Hence, we have $\frac{d}{dt}\frac{1}{\sqrt{\alpha(t)}}\geq-1.$ Integrating
-both sides w.r.t. $t$, we have
+both sides with respect to $t$, we have
 \[
 \frac{1}{\sqrt{\alpha(t)}}\geq\frac{1}{\sqrt{\alpha(0)}}-t=\frac{1}{\norm{x-y}_{x}}-t.
 \]
@@ -1023,7 +1022,7 @@ the inverse in the direction of the gradient - the above definition
 only makes sense if for any $x\in K$, there is a vector $v_{x}$
 such that $\nabla^{2}\phi(x)v_{x}=\nabla\phi(x)$, so we can define
 $\nabla^{2}\phi(x)^{-1}\nabla\phi(x):=v_{x}$. In the analysis to
-come, this is will be the semantics of the vector $\nabla^{2}\phi(x)^{-1}\nabla\phi(x)$,
+come, this will be the semantics of the vector $\nabla^{2}\phi(x)^{-1}\nabla\phi(x)$,
 and the norm induced by the inverse Hessian should be computed with
 this in mind, i.e. $\nabla^{2}f(x)^{-1}$ should be viewed as $\nabla^{2}f(x)^{+}$.
 \end{rem*}
@@ -1043,7 +1042,7 @@ as a short form for $\nu$-self-concordant barrier.
 \begin{itemize}
 \item $-\ln x$ is $1$-sc for $\{x\geq0\}$.
 \item $-\ln\cos(x)$ is $1$-sc for $\{\left|x\right|\leq\frac{\pi}{2}\}$.
-\item $-\ln(t^{2}-\norm x^{2})$ is $2$-sc for $\{t\geq\norm x_{2}\}$.
+\item $-\ln(t^{2}-\norm x^{2}_{2})$ is $2$-sc for $\{t\geq\norm x_{2}\}$.
 \item $-\ln\det X$ is $n$-sc for $\{X\in\R^{n\times n},X\succeq0\}$.
 \item $-\ln x-\ln(\ln x+t)$ is $2$-sc for $\{x\geq0,t\geq-\ln x\}$.
 \item $-\ln t-\ln(\ln t-x)$ is $2$-sc for $\{t\geq e^{x}\}$.
@@ -1068,7 +1067,7 @@ is a $\nu_{1}+\nu_{2}$ self concordant barrier for $K_{1}\cap K_{2}$.
 
 \begin{lem}
 If $\phi$ is a $\nu$-self concordant barrier for $K$, then $\phi(Ax+b)$
-is $\nu$-self concordant for $\{y:Ay+b\in K\}$.
+is $\nu$-self concordant for $\{x:Ax+b\in K\}$.
 \end{lem}
 
 \begin{xca}

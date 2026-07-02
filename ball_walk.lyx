@@ -104,7 +104,7 @@ The Ball Walk
 \end_layout
 
 \begin_layout Standard
-The simplest continuous algorithm for exploring space is Brownian motion with the ODE 
+The simplest continuous algorithm for exploring space is Brownian motion with the SDE 
 \begin_inset Formula $dx_{t}=dW_{t}$
 \end_inset
 
@@ -123,7 +123,7 @@ The simplest continuous algorithm for exploring space is Brownian motion with th
  namely 
 \begin_inset Formula 
 \[
-dx_{t}=-\nabla f(x_{t})+\sqrt{2}dW_{t}
+dx_{t}=-\nabla f(x_{t})dt+\sqrt{2}dW_{t}
 \]
 
 \end_inset
@@ -135,8 +135,8 @@ which can be used to sample according to the density proportional to
 .
  In this chapter we will begin with an even simpler method,
  which does not need access to the gradient or assume differentiability,
- only an oracle that can evaluate 
-\begin_inset Formula $F$
+ only an oracle that can evaluate a function proportional to 
+\begin_inset Formula $Q$
 \end_inset
 
 .
@@ -264,6 +264,14 @@ Go to
 
  with probability 
 \begin_inset Formula $\min\left\{ 1,\frac{Q(y)}{Q(x)}\right\} $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Otherwise, stay at 
+\begin_inset Formula $x$
 \end_inset
 
 .
@@ -684,7 +692,7 @@ ergodic flow
 \begin_inset Formula $A$
 \end_inset
 
- w.r.t.
+ with respect to
  the distribution 
 \begin_inset Formula $Q$
 \end_inset
@@ -733,7 +741,7 @@ If
 \begin_inset Formula $Q$
 \end_inset
 
- is stationary w.r.t.
+ is stationary with respect to
  a lazy,
  ergodic Markov chain,
  then it is the unique stationary distribution for that Markov chain.
@@ -811,7 +819,7 @@ Warmth:
 
 -warm
 \emph default
- w.r.t.
+ with respect to
  
 \begin_inset Formula $Q$
 \end_inset
@@ -832,7 +840,7 @@ We say that a distribution
 \emph on
 absolutely continuous 
 \emph default
-w.r.t.
+with respect to
  another distribution 
 \begin_inset Formula $Q$
 \end_inset
@@ -858,7 +866,7 @@ The following relationships hold when
 \begin_inset Formula $P$
 \end_inset
 
- is absolutely continuous w.r.t.
+ is absolutely continuous with respect to
  
 \begin_inset Formula $Q$
 \end_inset
@@ -902,9 +910,9 @@ the distribution after
 
  is the unique stationary distribution.
  The 
-\begin_inset Formula $conductance$
-\end_inset
-
+\emph on
+conductance
+\emph default
  of a subset 
 \begin_inset Formula $A$
 \end_inset
@@ -2083,7 +2091,7 @@ warm
 \begin_inset Formula $\delta=1/\sqrt{n}.$
 \end_inset
 
- Larger step sizes should allows us to prove faster mixing.
+ Larger step sizes should allow us to prove faster mixing.
 \end_layout
 
 \begin_layout Standard
@@ -2966,12 +2974,16 @@ Let
 \begin_inset Formula $L$
 \end_inset
 
- be any measurable subset of the boundary of a convex body K and 
-\begin_inset Formula $S_{L}=\{(x,y):x\in K,y\not\in K,\norm{x-y}\le\delta,[x,y]\cap L\neq\phi\}$
+ be any measurable subset of the boundary of a convex body 
+\begin_inset Formula $K$
+\end_inset
+
+ and 
+\begin_inset Formula $S_{L}=\{(x,y):x\in K,y\not\in K,\norm{x-y}\le\delta,[x,y]\cap L\neq\emptyset\}$
 \end_inset
 
 .
- Then,,
+ Then,
  we have 
 \begin_inset Formula 
 \[
@@ -3063,7 +3075,7 @@ the points in
 
 ,
  and is convex,
- we will able to use its isoperimetry to lower bound the conductance.
+ we will be able to use its isoperimetry to lower bound the conductance.
 \begin_inset Note Note
 status open
 
@@ -3785,7 +3797,7 @@ isotropic
 .
  An affine transformation is said to be an 
 \emph on
-isotropic tranformation
+isotropic transformation
 \emph default
  if the resulting distribution is isotropic.
 \end_layout
@@ -4233,7 +4245,7 @@ For an isotropic logconcave distribution
 \end_inset
 
 ,
- the covariance 
+ the empirical covariance matrix from 
 \begin_inset Formula $N=O(n)$
 \end_inset
 
@@ -4910,7 +4922,7 @@ Thus,
 \begin_inset Formula $H$
 \end_inset
 
- or its compliment will have positive integrals for both 
+ or its complement will have positive integrals for both 
 \begin_inset Formula $g$
 \end_inset
 
@@ -5137,7 +5149,7 @@ Note that
 
 ,
  we have 
-\begin_inset Formula $\alpha_{m}\le0,\beta_{m}\ge0$
+\begin_inset Formula $\alpha_{m}\le0,\beta_{m}\ge1$
 \end_inset
 
  and 
@@ -5218,7 +5230,7 @@ Note that for
 ,
 \begin_inset Formula 
 \[
-\frac{1}{\vol(K_{m})}\int_{K_{m}}g(x)\,dx=\int_{\alpha_{i}}^{\beta_{i}}\frac{1}{\vol_{n-1}(K_{m}\cap Z_{t})}\int_{K_{m}\cap Z_{t}}g(y,t)\,dy\,\psi_{m}(t)^{n-1}\,dt\,.
+\frac{1}{\vol(K_{m})}\int_{K_{m}}g(x)\,dx=\int_{\alpha_{m}}^{\beta_{m}}\frac{1}{\vol_{n-1}(K_{m}\cap Z_{t})}\int_{K_{m}\cap Z_{t}}g(y,t)\,dy\,\psi_{m}(t)^{n-1}\,dt\,.
 \]
 
 \end_inset
@@ -6267,8 +6279,7 @@ The first is in terms of single inequality on products of integrals.
 status open
 
 \begin_layout Plain Layout
-Localization:
- Product form]
+Localization: Product form
 \end_layout
 
 \end_inset

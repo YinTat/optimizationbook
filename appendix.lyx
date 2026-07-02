@@ -379,7 +379,7 @@ From this,
 And using the divergence theorem,
  namely,
  
-\begin_inset Formula $\int_{\Omega}\nabla\cdot f=\int_{\partial\Omega}f\overrightarrow{n}$
+\begin_inset Formula $\int_{\Omega}\nabla\cdot w=\int_{\partial\Omega}w\cdot\overrightarrow{n}$
 \end_inset
 
 ,
@@ -387,7 +387,7 @@ And using the divergence theorem,
 \begin_inset Formula $\overrightarrow{n}$
 \end_inset
 
-is the normal vector at a point in 
+ is the outward normal vector at a point in 
 \begin_inset Formula $\partial\Omega$
 \end_inset
 
@@ -400,7 +400,7 @@ is the normal vector at a point in
 
 \end_inset
 
-The first term on the RHS become zero if the vector field 
+The first term on the right-hand side becomes zero if the vector field 
 \begin_inset Formula $v$
 \end_inset
 
@@ -550,7 +550,7 @@ To write it in the traditional form,
 
 \end_inset
 
-Since both side are the same for all 
+Since both sides are the same for all 
 \begin_inset Formula $h$
 \end_inset
 
@@ -578,7 +578,7 @@ Since
 \begin_inset Formula $\nabla^{2}\Phi(x)-A^{\top}\diag(f''(Ax))A$
 \end_inset
 
- is symmetric and both side are the same for all 
+ is symmetric and both quadratic forms are the same for all 
 \begin_inset Formula $h$
 \end_inset
 
@@ -980,13 +980,13 @@ where
 \end_inset
 
 .
- We note that the formula can be obtained from taking derivative on both sides with respective to 
+ We note that the formula can be obtained by taking derivatives on both sides with respect to 
 \begin_inset Formula $x$
 \end_inset
 
 .
  Sometimes,
- taking derivatives on the both sides can greatly simplify calculations.
+ taking derivatives on both sides can greatly simplify calculations.
  Here are some examples.
 \end_layout
 
@@ -1004,7 +1004,7 @@ Consider
  we have
 \begin_inset Formula 
 \[
-\frac{dx_{t}}{dt}=(\nabla^{2}f_{t}(x_{t}))^{-1}\nabla\frac{df_{t}}{dt}(x_{t}).
+\frac{dx_{t}}{dt}=-(\nabla^{2}f_{t}(x_{t}))^{-1}\nabla\frac{df_{t}}{dt}(x_{t}).
 \]
 
 \end_inset
@@ -1039,7 +1039,7 @@ Since
 
  is positive definite and is invertible.
  Hence,
- we have that the result.
+ we have the desired result.
 \end_layout
 
 \begin_layout Standard

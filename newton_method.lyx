@@ -224,7 +224,7 @@ Alternatively,
  we can derive the Newton step as 
 \begin_inset Formula 
 \[
-x^{(k+1)}\leftarrow\min_{x}f(x^{(k)})+\left\langle \nabla f(x^{(k)}),x-x^{(k)}\right\rangle +\frac{1}{2}(x-x^{(k)})^{\mathsf{T}}(\nabla^{2}f(x^{(k)}))(x-x^{(k)}).
+x^{(k+1)}\leftarrow\arg\min_{x}f(x^{(k)})+\left\langle \nabla f(x^{(k)}),x-x^{(k)}\right\rangle +\frac{1}{2}(x-x^{(k)})^{\mathsf{T}}(\nabla^{2}f(x^{(k)}))(x-x^{(k)}).
 \]
 
 \end_inset
@@ -303,7 +303,7 @@ For many classes of functions,
  each step of Newton method involves solving a linear system,
  which can be much more expensive.
  Furthermore,
- Newton method may not converges if the starting point is far away.
+ Newton method may not converge if the starting point is far away.
 \end_layout
 
 \begin_layout Standard
@@ -706,7 +706,7 @@ globally
 
 \begin_layout Theorem
 Given a polynomial 
-\begin_inset Formula $g(x)=\sum_{i=1}^{n}a_{i}x^{i}$
+\begin_inset Formula $g(x)=\sum_{i=0}^{n}a_{i}x^{i}$
 \end_inset
 
  with only real roots.
@@ -864,7 +864,7 @@ Such a dependence of
 \end_inset
 
  is called linear convergence.
- The convergence of the Newton method can be quadratic,
+ The convergence of the Newton method can be quadratic,
  when close enough to a root.
 \end_layout
 
@@ -877,7 +877,11 @@ Assume that
 \begin_inset Formula $f(x^{*})=0$
 \end_inset
 
- and f' is 
+ and 
+\begin_inset Formula $f'$
+\end_inset
+
+ is 
 \begin_inset Formula $L$
 \end_inset
 
@@ -910,7 +914,7 @@ x^{(k+1)}-x^{*}=x^{(k)}-x^{*}-\frac{f(x^{(k)})}{f'(x^{(k)})}.
 
 \begin_inset Formula 
 \begin{align*}
-f(x^{*}) & =f(x^{(k)})+\int_{x^{k}}^{x^{*}}f'(z)dz=f(x^{(k)})+f'(x^{(k)})(x^{*}-x^{(k)})+\int_{x^{k}}^{x^{*}}(f'(z)-f'(x^{(k)}))dz.
+f(x^{*}) & =f(x^{(k)})+\int_{x^{(k)}}^{x^{*}}f'(z)dz=f(x^{(k)})+f'(x^{(k)})(x^{*}-x^{(k)})+\int_{x^{(k)}}^{x^{*}}(f'(z)-f'(x^{(k)}))dz.
 \end{align*}
 
 \end_inset
@@ -919,15 +923,14 @@ Therefore,
  
 \begin_inset Formula 
 \begin{align*}
-x^{(k+1)}-x^{*} & =\frac{1}{f'(x^{(k)})}\int_{x^{k}}^{x^{*}}(f'(z)-f'(x^{(k)}))dz.\\
- & \leq\frac{L}{|f'(x^{(k)})|}\int_{x^{k}}^{x^{*}}|z-x^{(k)}|dz\\
- & =\frac{L|x^{*}-x^{(k)}|^{2}}{2|f'(x^{(k)})|}.
+\left|x^{(k+1)}-x^{*}\right| & =\frac{1}{|f'(x^{(k)})|}\left|\int_{x^{(k)}}^{x^{*}}(f'(z)-f'(x^{(k)}))dz\right|\\
+ & \leq\frac{L|x^{*}-x^{(k)}|^{2}}{2|f'(x^{(k)})|}.
 \end{align*}
 
 \end_inset
 
 Since 
-\begin_inset Formula $f'(x^{(k)})\geq f'(x^{*})-L|x^{(k)}-x^{*}|$
+\begin_inset Formula $|f'(x^{(k)})|\geq |f'(x^{*})|-L|x^{(k)}-x^{*}|$
 \end_inset
 
 
@@ -1268,7 +1271,7 @@ where
 \end_inset
 
  such that 
-\begin_inset Formula $Wy=s$
+\begin_inset Formula $Ws=y$
 \end_inset
 
 ).
@@ -1287,7 +1290,7 @@ literal "false"
 \end_inset
 
 ,
- one obtain the update
+ one obtains the update
 \begin_inset Formula 
 \begin{equation}
 \left(J^{(k+1)}\right)^{-1}=(I-\rho_{k}\cdot s^{(k)}y^{(k)\top})\left(J^{(k)}\right)^{-1}(I-\rho_{k}\cdot y^{(k)}s^{(k)\top})+\rho_{k}\cdot s^{(k)}s^{(k)\top}\label{eq:recursive}
@@ -1549,7 +1552,7 @@ Consider the generalized Newton method
 \end_inset
 
  are invertible.
- Then generalized Newton method is super-linear convergence in a neighborhood of 
+ Then generalized Newton method has super-linear convergence in a neighborhood of 
 \begin_inset Formula $x^{*}$
 \end_inset
 

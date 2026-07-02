@@ -190,7 +190,7 @@ the $O(n^{2})$ time of the Ellipsoid method.
 \end{minipage}
 
 \caption{The left diagram shows the intersection shrinks at the same rate if
-only one of the ball shrinks; the right diagram shows the intersection
+only one of the balls shrinks; the right diagram shows the intersection
 shrinks much faster if two balls shrink at the same absolute amount.\label{fig:geometric_descent-1}}
 \end{figure}
 
@@ -258,14 +258,14 @@ Let $x^{(k+\frac{1}{2})}=\ls(x^{(k)},-\nabla f(x^{(k)}))$ where
 \ls(x,y)=\argmin_{z=x+ty\text{ with }t\geq0}f(z).
 \]
 Let $x^{(k+1)}=\ls(x^{(k+\frac{1}{2})},c^{(k+1)}-x^{(k+\frac{1}{2})})$
-where $c^{(k+1)}$ be the minimizer of $q^{(k+1)}(y)$.
+where $c^{(k+1)}$ is the minimizer of $q^{(k+1)}(y)$.
 
 }
 
 \end{algorithm2e}
 
 As in gradient descent, to avoid using the parameter $L$, we do a
-line search from $x^{(k)}$ along the direction $\nabla f(x^{(k)})$.
+line search from $x^{(k)}$ along the descent direction $-\nabla f(x^{(k)})$.
  The subroutine $\mathtt{maxParabola}$ has an explicit formula \cite{drusvyatskiy2016optimal}.
 
 \begin{algorithm2e}[H]
@@ -301,7 +301,7 @@ or $\frac{\mu}{2}\|c_{A}-c_{B}\|^{2}\ll v_{B}-v_{A}$. Using this,
 we can analyze the $\mathtt{ParabolaMethod}$.
 \begin{thm}
 \label{lem:geometric_convergence_rate-1}Assume that $f$ is $\mu$-strongly
-convex with $L$-Lipschitz gradient. Let $r_{k}=f(x^{(k)})-\min_{y}q^{(k)}(y)$.
+convex with $L$-Lipschitz gradient. Let $r^{2}_{k}=f(x^{(k)})-\min_{y}q^{(k)}(y)$.
 Then, we have that
 \[
 r^{2}_{k+1}\leq(1-\sqrt{\frac{\mu}{L}})\cdot r^{2}_{k}.
@@ -315,7 +315,7 @@ f(x^{(k+1)})-f^{*}\leq\frac{1}{2\mu}(1-\sqrt{\frac{\mu}{L}})^{k}\|\nabla f(x^{(0
 \begin{rem}
 Note that the squared radius of $\{y:q^{(k)}(y)=f(x^{(k)})\}$ is
 $\frac{2}{\mu}(f(x^{(k)})-\min_{y}q^{(k)}(y))$ because $q^{(k)}(y)=\min_{y}q^{(k)}(y)+\frac{\mu}{2}\|y-\arg\min_{x}q^{(k)}(x)\|^{2}$.
-Hence, $r_{k}$ is measuring the squared radius of our quadratic lower
+Hence, $r^{2}_{k}$ measures the squared radius of our quadratic lower
 bound. To relate to the cutting plane framework, we can view the set
 as $\{y:q^{(k)}(y)\leq f(x^{(k)})\}$ and the measure $\mathcal{V}=f(x^{(k)})-\min_{y}q^{(k)}(y)$.
 \end{rem}

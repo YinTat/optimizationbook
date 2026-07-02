@@ -55,7 +55,7 @@ a formula for $v^{(k)}$.
 \begin{lem}
 \label{lem:CG_v}We have 
 \[
-v^{(k)}=\frac{v^{(k)\top}r^{(k-1)}}{\|r^{(k-1)}\|^{2}}\left(r^{(k-1)}-\frac{r^{(k-1)\top}Av^{(k-1)}}{v^{(k-1)}Av^{(k-1)}}v^{(k-1)}\right).
+v^{(k)}=\frac{v^{(k)\top}r^{(k-1)}}{\|r^{(k-1)}\|^{2}}\left(r^{(k-1)}-\frac{r^{(k-1)\top}Av^{(k-1)}}{v^{(k-1)\top}Av^{(k-1)}}v^{(k-1)}\right).
 \]
 \end{lem}
 
@@ -78,23 +78,23 @@ $v^{(k)\top}r^{(k-1)}=c_{0}\|r^{(k-1)}\|^{2}$.
 For $c_{k-1}$, since $v^{(i)\top}Av^{(k-1)}=0$ for any $i\neq k-1$,
 we have
 \[
-0=v^{(k)\top}Av^{(k-1)}=c_{0}r^{(k-1)\top}Av^{(k-1)}+c_{k-1}v^{(k-1)}Av^{(k-1)}
+0=v^{(k)\top}Av^{(k-1)}=c_{0}r^{(k-1)\top}Av^{(k-1)}+c_{k-1}v^{(k-1)\top}Av^{(k-1)}
 \]
 
-and $c_{k-1}=-c_{0}\cdot\frac{r^{(k-1)\top}Av^{(k-1)}}{v^{(k-1)}Av^{(k-1)}}$. 
+and $c_{k-1}=-c_{0}\cdot\frac{r^{(k-1)\top}Av^{(k-1)}}{v^{(k-1)\top}Av^{(k-1)}}$. 
 
 For other $c_{i}$, we note that $Av^{(j)}\in\K_{j+1}$ and $r^{(k-1)}\in\K^{\perp}_{k-1}$.
 Hence, $c_{i}=0$ for all $i\notin\{0,k-1\}$. 
 
 Substitute the $c_{i}$, we get
 \[
-v^{(k)}=\frac{v^{(k)\top}r^{(k-1)}}{\|r^{(k-1)}\|^{2}}\left(r^{(k-1)}-\frac{r^{(k-1)\top}Av^{(k-1)}}{v^{(k-1)}Av^{(k-1)}}v^{(k-1)}\right).
+v^{(k)}=\frac{v^{(k)\top}r^{(k-1)}}{\|r^{(k-1)}\|^{2}}\left(r^{(k-1)}-\frac{r^{(k-1)\top}Av^{(k-1)}}{v^{(k-1)\top}Av^{(k-1)}}v^{(k-1)}\right).
 \]
 \end{proof}
 To make the formula simpler, we define $p^{(k)}=\frac{\|r^{(k-1)}\|^{2}_{2}}{v^{(k)\top}r^{(k-1)}}v^{(k)}$.
 \begin{lem}
 We have that $x^{(k)}=x^{(k-1)}+\frac{\|r^{(k-1)}\|^{2}_{2}}{p^{(k)\top}Ap^{(k)}}p^{(k)}$
-and $p^{(k)}=r^{(k-1)}-\frac{\|r^{(k-1)}\|^{2}}{\|r^{(k-2)}\|^{2}_{2}}p^{(k-1)}.$
+and $p^{(k)}=r^{(k-1)}+\frac{\|r^{(k-1)}\|^{2}}{\|r^{(k-2)}\|^{2}_{2}}p^{(k-1)}.$
 \end{lem}
 
 \begin{proof}
@@ -125,7 +125,7 @@ Note that
 r^{(k-1)}=b-Ax^{(k-1)}=r^{(k-2)}-Av^{(k-1)}.
 \]
 Taking inner product with $r^{(k-1)}$ and using $r^{(k-1)}\perp r^{(k-2)}$
-gives $\|r^{(k-1)}\|^{2}=r^{(k-1)\top}Av^{(k-1)}$. Put this into
+gives $\|r^{(k-1)}\|^{2}=-r^{(k-1)\top}Av^{(k-1)}$. Put this into
 (\ref{eq:CG_p_temp}) gives the result.
 \end{proof}
 \begin{algorithm2e}[H]
@@ -134,7 +134,7 @@ gives $\|r^{(k-1)}\|^{2}=r^{(k-1)\top}Av^{(k-1)}$. Put this into
 
 \SetAlgoLined
 
-$r^{(0)}=b-Ax^{(0)}$. $p^{(0)}=r^{(0)}$.
+$r^{(0)}=b-Ax^{(0)}$. $p^{(1)}=r^{(0)}$.
 
 \For{$k=1,2,\cdots$}{
 
@@ -142,11 +142,11 @@ $\alpha=\frac{\|r^{(k-1)}\|^{2}_{2}}{p^{(k)\top}Ap^{(k)}}$.
 
 $x^{(k)}\leftarrow x^{(k-1)}+\alpha p^{(k)}$.
 
-$r^{(k)}\leftarrow r^{(k-1)}+\alpha Ap^{(k)}$.
+$r^{(k)}\leftarrow r^{(k-1)}-\alpha Ap^{(k)}$.
 
 \lIf{$\|r^{(k)}\|_{2}\leq\epsilon$}{\Return$x^{(k)}$}
 
-$p^{(k+1)}=r^{(k)}-\frac{\|r^{(k)}\|^{2}}{\|r^{(k-1)}\|^{2}}p^{(k)}.$
+$p^{(k+1)}=r^{(k)}+\frac{\|r^{(k)}\|^{2}}{\|r^{(k-1)}\|^{2}}p^{(k)}.$
 
 }
 

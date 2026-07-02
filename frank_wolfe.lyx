@@ -293,10 +293,6 @@ Input:
 \begin_inset Formula $x^{(0)}\in\Rn$
 \end_inset
 
-, step size 
-\begin_inset Formula $h>0$
-\end_inset
-
 .
 \end_layout
 
@@ -417,15 +413,7 @@ Let
 \begin_inset Formula $C_{f}$
 \end_inset
 
- such that
-\begin_inset Formula 
-\[
-f((1-h)x+hy))\leq f(x)+h\left\langle \nabla f(x),y-x\right\rangle +\frac{1}{2}C_{f}h^{2}.
-\]
-
-\end_inset
-
-Then, for any 
+ such that for any 
 \begin_inset Formula $x,y\in\mathcal{D}$
 \end_inset
 
@@ -433,7 +421,21 @@ Then, for any
 \begin_inset Formula $h\in[0,1]$
 \end_inset
 
-, we have
+,
+\begin_inset Formula 
+\[
+f((1-h)x+hy)\leq f(x)+h\left\langle \nabla f(x),y-x\right\rangle +\frac{1}{2}C_{f}h^{2}.
+\]
+
+\end_inset
+
+Then,
+ for every 
+\begin_inset Formula $k\ge1$
+\end_inset
+
+,
+ we have
 \begin_inset Formula 
 \[
 f(x^{(k)})-f(x^{*})\leq\frac{2C_{f}}{k+2}.
@@ -519,29 +521,23 @@ e_{k+1}\leq(1-h_{k})e_{k}+\frac{1}{2}C_{f}h_{k}^{2}.
 
 \end_inset
 
-Note that 
-\begin_inset Formula $e_{0}=f(x^{(0)})-f^{*}\leq\frac{1}{2}C_{f}$
+Since 
+\begin_inset Formula $h_{0}=1$
+\end_inset
+
+,
+ the recurrence gives 
+\begin_inset Formula $e_{1}\leq\frac{1}{2}C_{f}\leq\frac{2}{3}C_{f}$
 \end_inset
 
 .
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-change that from 
-\begin_inset Formula $e_{2}$
+ By induction,
+ for every 
+\begin_inset Formula $k\ge1$
 \end_inset
 
- to 
-\begin_inset Formula $e_{0}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
- By induction, we have that 
+,
+ we have that 
 \begin_inset Formula $e_{k}\leq\frac{2C_{f}}{k+2}$
 \end_inset
 

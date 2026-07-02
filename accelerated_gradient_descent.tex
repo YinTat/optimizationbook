@@ -81,13 +81,13 @@ for all $T$. Solving this recursion gives the result.
 Solve the recursion omitted at the end of the proof.
 \end{xca}
 
-Note that the proof above used only the fact that $\{x^{(1)},x^{(k)+},\sum^{k}_{s=1}\frac{\nabla f(x^{(s)})}{\|\nabla f(x^{(s)})\|}\}\subset P$.
+Note that the proof above used only the fact that $\{x^{(1)},x^{(k)+},\sum^{k}_{s=1}\frac{\nabla f(x^{(s)})}{\|\nabla f(x^{(s)})\|}\}\subset P^{(k)}$.
 Therefore, one can put extra vectors in $P$ to obtain extra features.
 For example, if we use the subspace
 \[
 P=x^{(k)}+\mathrm{span}(x^{(k)}-x^{(1)},\nabla f(x^{(k)}),\sum^{k}_{s=1}\frac{\nabla f(x^{(s)})}{\|\nabla f(x^{(s)})\|},x^{(k)}-x^{(k-1)}),
 \]
-then one can prove that this algorithm is equivalently to conjugate
+then one can prove that this algorithm is equivalent to conjugate
 gradient when $f$ is a quadratic function.
 
 \section{Accelerated Gradient Descent\label{sec:Accelerated-Gradient-Descent}}
@@ -130,7 +130,7 @@ p_{x}=x-\frac{1}{L}\nabla\phi(x)+O(\frac{1}{L^{2}}).
 \]
 Therefore, we have that $g_{x}=\nabla\phi(x)+O(\frac{1}{L})$. Hence,
 the gradient mapping is an approximation of the gradient of $\phi$
-that is computable in time $\mathcal{T}_{g}+\mathcal{T}_{h,L}$.
+that is computable in time $\mathcal{T}_{f}+\mathcal{T}_{h,L}$.
 
 The key lemma we use here is that $\phi$ satisfies a lower bound
 defining using $g_{x}$. Ideally, we would love to get a lower bound
@@ -138,9 +138,9 @@ as follows:
 \[
 \phi(z)\geq\phi(x)+g^{\top}_{x}(z-x)+\frac{\mu}{2}\norm{z-x}^{2}_{2}.
 \]
-But it is WRONG. If that was true for all $z$, then we would have
-$g_{x}=\nabla\phi(x)$. However, if $\phi\in\mathcal{C}^{2}$ is $\mu$
-strongly convex, then we have
+However, this inequality is false. If that was true for all $z$,
+then we would have $g_{x}=\nabla\phi(x)$. However, if $\phi\in\mathcal{C}^{2}$
+is $\mu$ strongly convex, then we have
 \begin{align}
 \phi(z) & \geq\phi(x)+\nabla\phi(x)^{\top}(z-x)+\frac{\mu}{2}\norm{z-x}^{2}_{2}\nonumber \\
  & \geq\phi(x-\frac{1}{L}\nabla\phi(x))+\frac{1}{2L}\norm{\nabla\phi(x)}^{2}+\nabla\phi(x)^{\top}(z-x)+\frac{\mu}{2}\norm{z-x}^{2}_{2}.\label{eq:gradient_lower_bound}
@@ -343,13 +343,13 @@ Now, we set $\frac{1-\tau}{\tau}=\eta L$ and get
 \[
 g^{\top}_{x^{(k+1)}}(x^{(k+1)}-x^{*})\leq\eta L(\phi(y^{(k)})-\phi(y^{(k+1)}))+\frac{1}{2\eta}\left(\norm{z^{(k)}-x^{*}}^{2}_{2}-\norm{z^{(k+1)}-x^{*}}^{2}_{2}\right).
 \]
-Taking a sum on both side and let $\overline{x}=\frac{1}{T}\sum^{T}_{k=1}p_{x^{(k+1)}}$,
+Summing over all $k$ and letting $\overline{x}=\frac{1}{T}\sum^{T}_{k=1}p_{x^{(k+1)}}$,
 we have that
 \begin{align*}
 \phi(\overline{x})-\phi(x^{*}) & \leq\frac{1}{T}\sum^{T}_{k=1}(\phi(p_{x^{(k+1)}})-\phi(x^{*}))\\
  & \leq\frac{1}{T}\sum^{T}_{k=1}g^{\top}_{x^{(k+1)}}(x^{(k+1)}-x^{*})\\
  & \leq\frac{\eta L}{T}\left(\phi(y^{(1)})-\phi(y^{(T+1)})\right)+\frac{1}{2\eta T}\norm{z^{(1)}-x^{*}}^{2}_{2}\\
- & \leq\left(\frac{\eta L}{T}+\frac{1}{2\eta T\mu}\right)\left(\phi(x^{(1)})-\phi(x^{*})\right)
+ & \leq\left(\frac{\eta L}{T}+\frac{1}{\eta T\mu}\right)\left(\phi(x^{(1)})-\phi(x^{*})\right)
 \end{align*}
 The conclusion follows from our setting of $\eta$.
 \end{proof}
@@ -360,21 +360,21 @@ Recall from Theorem \ref{thm:coordinate_descent} that if $\frac{\partial^{2}}{\p
 for all $x$ and that $\ell$ is $\mu$ strongly convex, then we can
 find $x^{(k)}$ in $k$ coordinate steps such that 
 \[
-\E\ell(x^{(k)})-\ell(x^{*})\leq(1-\frac{\mu}{L})^{\Omega(k)}(\ell(x^{(0)})-f(x^{*}))
+\E\ell(x^{(k)})-\ell(x^{*})\leq(1-\frac{\mu}{L})^{\Omega(k)}(\ell(x^{(0)})-\ell(x^{*}))
 \]
 where $L=\sum_{i}L_{i}$. Now, the really fun part is here. Consider
 the function 
 \[
 \phi(x)=f(x)+h(x)\quad\text{with}\quad f(x)=\frac{\mu}{2}\norm x^{2}_{2}\text{ and }h(x)=\ell(x)-\frac{\mu}{2}\norm x^{2}_{2}.
 \]
-Since $f$ is $\mu+\frac{L}{n}$ smooth (YES!, I know this is also
-$\mu$ smooth) and $\mu$ strongly convex and since $h$ is convex,
-we apply Theorem \ref{thm:AGD} and get an algorithm that takes $O^{*}(\sqrt{\frac{L}{n\mu}})$
-steps. Note that each step involves $\mathcal{T}_{f}+\mathcal{T}_{h,\mu+\frac{L}{n}}$.
+Since $f$ is $\mu+\frac{L}{n}$ smooth and $\mu$ strongly convex
+and since $h$ is convex, we apply Theorem \ref{thm:AGD} and get
+an algorithm that takes $O^{*}(\sqrt{\frac{L}{n\mu}})$ steps. Note
+that each step involves $\mathcal{T}_{f}+\mathcal{T}_{h,\mu+\frac{L}{n}}$.
 Obviously, $\mathcal{T}_{f}=0$. Next, note that $\mathcal{T}_{h,\mu+\frac{L}{n}}$
 involves solving a problem of the form
 \begin{align*}
-y_{x} & =\argmin_{y}(\frac{\mu}{2}+\frac{L}{2n})\norm{y-x}^{2}+(\ell(y)-\frac{\mu}{2}\norm x^{2})\\
+y_{x} & =\argmin_{y}(\frac{\mu}{2}+\frac{L}{2n})\norm{y-x}^{2}+(\ell(y)-\frac{\mu}{2}\norm y^{2})\\
  & =\argmin_{y}\ell(y)-\mu y^{\top}x+\frac{L}{2n}\norm{y-x}^{2}.
 \end{align*}
 Now, we can apply Theorem \ref{thm:coordinate_descent} to solve this
@@ -416,14 +416,14 @@ accelerated gradient descent (Theorem \ref{thm:AGD}). To apply Theorem
 \[
 \phi(x)=f(x)+h(x)\quad\text{with}\quad f(x)=\frac{\mu}{2}\norm x^{2}_{2}\text{ and }h(x)=\ell(x)-\frac{\mu}{2}\norm x^{2}_{2}.
 \]
-Since $f$ is $\mu+\frac{L}{n}$ smooth (YES!, I know this is also
-$\mu$ smooth) and $\mu$ strongly convex and since $h$ is convex,
-we apply Theorem \ref{thm:AGD} and get an algorithm that takes $O^{*}(1+\sqrt{\frac{L}{n\mu}})$
-steps. Note that each step involves $\mathcal{T}_{f}+\mathcal{T}_{h,\mu+\frac{L}{n}}$.
+Since $f$ is $\mu+\frac{L}{n}$ smooth and $\mu$ strongly convex
+and since $h$ is convex, we apply Theorem \ref{thm:AGD} and get
+an algorithm that takes $O^{*}(1+\sqrt{\frac{L}{n\mu}})$ steps. Note
+that each step involves $\mathcal{T}_{f}+\mathcal{T}_{h,\mu+\frac{L}{n}}$.
 Obviously, $\mathcal{T}_{f}=0$. Next, note that $\mathcal{T}_{h,\mu+\frac{L}{n}}$
 involves solving a problem of the form
 \begin{align*}
-y_{x} & =\argmin_{y}(\frac{\mu}{2}+\frac{L}{2n})\norm{y-x}^{2}+(\ell(y)-\frac{\mu}{2}\norm x^{2})\\
+y_{x} & =\argmin_{y}(\frac{\mu}{2}+\frac{L}{2n})\norm{y-x}^{2}+(\ell(y)-\frac{\mu}{2}\norm y^{2})\\
  & =\argmin_{y}\ell(y)-\mu y^{\top}x+\frac{L}{2n}\norm{y-x}^{2}\\
  & =\argmin_{y}\frac{1}{n}\sum_{i}(\ell_{i}(y)+\frac{L}{2n}\norm{y-x}^{2}-\mu y^{\top}x)
 \end{align*}

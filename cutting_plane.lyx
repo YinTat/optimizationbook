@@ -601,7 +601,7 @@ status open
 
 \begin_layout Standard
 Find 
-\begin_inset Formula $E^{(k+1)}\supset E^{(k)}\cap H^{(k)}$
+\begin_inset Formula $E^{(k+1)}\supseteq E^{(k)}\cap H^{(k)}$
 \end_inset
 
  where
@@ -1664,7 +1664,7 @@ Note that the ratio of
 \end_inset
 
  and 
-\begin_inset Formula $v(x^{(k)})=e_{1}$
+\begin_inset Formula $g(x^{(k)})=e_{1}$
 \end_inset
 
 .
@@ -1701,7 +1701,7 @@ Claim 1:
 
 \begin_layout Proof
 Note that since 
-\begin_inset Formula $v(x^{(k)})=e_{1},$
+\begin_inset Formula $g(x^{(k)})=e_{1},$
 \end_inset
 
 we have 
@@ -2457,15 +2457,15 @@ Given a linear program
 \end_inset
 
 .
- Let the diameter of 
-\begin_inset Formula $P$
-\end_inset
-
- be 
+ Let 
 \begin_inset Formula $R\defeq\max_{x\in P}\norm x_{2}$
 \end_inset
 
- and its volume radius be 
+ be an outer radius for 
+\begin_inset Formula $P$
+\end_inset
+
+ and let its volume radius be 
 \begin_inset Formula $r=\vol(P)^{1/n}$
 \end_inset
 
@@ -2565,7 +2565,7 @@ In this case,
 \begin_inset Formula $E^{(0)}$
 \end_inset
 
- be the unit ball centered at 
+ be the Euclidean ball centered at 
 \begin_inset Formula $0$
 \end_inset
 
@@ -2815,7 +2815,7 @@ isotropic
 \end_layout
 
 \begin_layout Standard
-The randomized center of gravity method defined as follows:
+The randomized center of gravity method is defined as follows:
  
 \end_layout
 
@@ -3134,7 +3134,7 @@ Let
 \end_inset
 
  and 
-\begin_inset Formula $\E_{x\sim p}x^{2}=1$
+\begin_inset Formula $\E_{x\sim p}xx^{\top}=I$
 \end_inset
 
 .

@@ -56,9 +56,10 @@ length of the chord in $K$ through $u$ and $x$.
 
 \begin{xca}
 Prove Lemma \ref{lem:har-next-step}.
+\end{xca}
 
 The main theorem of this section is the following \cite{LV3}.
-
+\begin{xca}
 \begin{figure}[h]
 \begin{centering}
 \includegraphics[width=0.6\textwidth]{Figures/Thrm_10\lyxdot 37}\caption{Hit-and-Run from a corner}
@@ -139,12 +140,12 @@ of a convex body $K$,
 \begin{proof}
 We use the exponential needle version of the localization lemma \ref{lem:localization_exp_needles}.
 Assume the conclusion of the lemma is false for some partition of
-$K$ into subsets $S_{1},S_{2,}S_{3}$. Let $F$ be the indicator
+$K$ into subsets $S_{1},S_{2},S_{3}$. Let $F$ be the indicator
 of $K$, the functions $f_{i}$ be the indicators of the sets $S_{i}$,
 $i=1,2,3$, and $f_{4}$ be the constant function of value $1/d_{K}(S_{1},S_{2})$.
 To satisfy the continuity assumption, we can use a sufficiently large
 $T>0$ and set $f_{i}(x)=\max\{0,1-Td(x,S_{i})\}$ for $i=1,2$ and
-$f_{3}=1-f_{1}-f_{2}$. By the localization lemma there exist $a.b\in\R^{n}$
+$f_{3}=1-f_{1}-f_{2}$. By the localization lemma there exist $a,b\in\R^{n}$
 and $\gamma\in\R$ such that 
 \[
 \int^{1}_{0}e^{\gamma t}\,dt\int^{1}_{0}e^{\gamma t}\chi_{S_{3}}((1-t)a+tb)\,dt<d_{K}(S_{1},S_{2})\int^{1}_{0}e^{\gamma t}\chi_{S_{1}}((1-t)a+tb)\,dt\int^{1}_{0}e^{\gamma t}\chi_{S_{2}}((1-t)a+tb)\,dt.
@@ -168,7 +169,7 @@ $w=1$.
 \begin{xca}
 \label{xca:exp_needle_one_dim} Show that for any $0<u<v<w$, we have
 \[
-\frac{(e^{v}-e^{u})(e^{w}-1)}{(e^{u}-1)(e^{w}-e^{v})}\ge\frac{(v-u)(w-1)}{u(w-v)}.
+\frac{(e^{v}-e^{u})(e^{w}-1)}{(e^{u}-1)(e^{w}-e^{v})}\ge\frac{(v-u)w}{u(w-v)}.
 \]
 {[}Hint: use the logconvexity of $(e^{t}-1)/t$.{]} 
 \end{xca}
@@ -195,7 +196,7 @@ $u$ and $v$, we have
 \[
 h(x)\le\frac{1}{3}\min\left\{ 1,d_{K}(u,v)\right\} .
 \]
-Then, for any logconave measure $\pi$ with support $K$, we have
+Then, for any logconcave measure $\pi$ with support $K$, we have
 \[
 \pi(S_{3})\ge\E_{K}(h(x))\min\left\{ \pi(S_{1}),\pi(S_{2})\right\} .
 \]
@@ -275,7 +276,7 @@ over any convex body $K$.
 \begin{proof}
 Let $x_{1},x_{2}\in K$ with $r_{i}=s(x_{i})$ and $A_{i}=K\cap(x_{i}+r_{i}B^{n})$.
 Define $x=(x_{1}+x_{2})/2$ and $A=(A_{1}+A_{2})/2$. We will show
-that $s(x)\ge(s(x_{1})+s(x_{2})/2$. 
+that $s(x)\ge(s(x_{1})+s(x_{2}))/2$. 
 
 Note that by convexity $A\subseteq K$ and for any point $y\in A$,
 we can write 
@@ -404,7 +405,7 @@ following holds:
 \[
 d_{K}(u,v)\ge\frac{1}{8}\mbox{ or }\norm{u-v}\ge\frac{2}{\sqrt{n}}\max\left\{ F(u),F(v)\right\} 
 \]
-We will now prove that Thm. \ref{thm:har_weighted_iso} using $h(x)=\frac{s(x)}{48\sqrt{n}D}$
+We will now apply Thm. \ref{thm:har_weighted_iso} using $h(x)=\frac{s(x)}{48\sqrt{n}D}$
 where $s(x)$ is defined with $\gamma=63/64.$ To see that this is
 a valid choice, first note that if $d_{K}(u,v)\ge\frac{1}{8},$then
 we have $h(x)\le d_{K}(u,v)/3$, as needed. So we can assume the second
@@ -491,8 +492,9 @@ Repeat $T$ times: at current point $x$,
 We require a family of matrices to have the following properties.
 These matrices typically arise as the Hessians of convex functions.
 \begin{defn}[Self-concordance]
-For any convex set $K\subset\Rn$, we call a matrix function $\mathbf{H}:K\rightarrow\R^{n\times n}$
-is self-concordant if for any $u\in K$, we have
+For any convex set $K\subset\Rn$, we say that a matrix function
+$\mathbf{H}:K\rightarrow\R^{n\times n}$ is self-concordant if for
+any $u\in K$, we have
 \[
 -2\Vert h\Vert_{\mathbf{H}(u)}\mathbf{H}(u)\preceq\frac{d}{dt}\mathbf{H}(u+th)\preceq2\Vert h\Vert_{\mathbf{H}(u)}\mathbf{H}(u).
 \]
@@ -523,7 +525,7 @@ and hence,
 
 Now we fix any $v$ and define $\psi(t)=v^{\top}\mh(x_{t})v$. Then,
 \[
-\left|\psi'(t)\right|=\left|v^{\top}\frac{d}{dt}\mh(x_{t})v\right|\leq2\|h\|_{x_{t}}\|v\|^{2}_{x_{t}}=2\phi(t)\psi(t).
+\left|\psi'(t)\right|=\left|v^{\top}\frac{d}{dt}\mh(x_{t})v\right|\leq2\|h\|_{x_{t}}\|v\|^{2}_{x_{t}}=2\sqrt{\phi(t)}\psi(t).
 \]
 Using (\ref{eq:phi_bound}) at the end, we have
 \[
@@ -551,12 +553,12 @@ at $x$ in the direction $h$.
 \begin{figure}[h]
 \begin{minipage}[t]{0.45\textwidth}%
 \begin{center}
-\includegraphics[scale=0.45]{Figures/symmetry.png}
+\includegraphics[scale=0.45]{Figures/symmetry}
 \par\end{center}%
 \end{minipage}\hfill{}%
 \begin{minipage}[t]{0.45\textwidth}%
 \noindent\begin{flushleft}
-\includegraphics[scale=0.35]{Figures/ssc.png}
+\includegraphics[scale=0.35]{Figures/ssc}
 \par\end{flushleft}%
 \end{minipage}
 
@@ -605,11 +607,10 @@ since the Frobenius norm is always larger or equal to the spectral
 norm. 
 \begin{xca}
 Verify that the Hessian of the standard log barrier is strongly self-concordant.
+\end{xca}
 
 The main theorem of this section is the following guarantee for the
 Dikin walk.
-\end{xca}
-
 \begin{thm}
 \label{thm:dikin}The mixing rate of the Dikin walk with the logarithmic
 barrier for a polytope $\{\mathbf{A}x\ge b\}$ is $O(mn)$.
@@ -753,28 +754,28 @@ of Hit-and-Run. We can relate the cross-ratio distance to the local
 norm induced by the Dikin ellipsoid.
 \begin{lem}
 \label{lem:dikin-dist-1}For $u,v\in K$, $d_{K}(u,v)\ge\frac{\Vert u-v\Vert_{u}}{\sqrt{m}}$
-where $\norm ._{u}$ is the norm induced by the Hessian of the log
-barrier. 
+where $\norm{\cdot}_{u}$ is the norm induced by the Hessian of the
+log barrier. 
 \end{lem}
 
 The proof will need the following elementary fact about the log barrier.
 \begin{lem}
 \label{lem:dikin_sandwich}For the Dikin ellipsoid induced by any
-self-concordant barrier, we have $E_{u}(1)\subseteq K\cap2x-K$ and
-for the logarithmic barrier for a polytope $K=\{\mathbf{A}x\ge b\}$
-defined by $m$ inequalities we also have $K\cap2x-K\subseteq E_{u}(\sqrt{m})$.
+self-concordant barrier, we have $E_{x}(1)\subseteq K\cap(2x-K)$
+and for the logarithmic barrier for a polytope $K=\{\mathbf{A}x\ge b\}$
+defined by $m$ inequalities we also have $K\cap(2x-K)\subseteq E_{x}(\sqrt{m})$.
 \end{lem}
 
 \begin{proof}
 For the first inequality, we notice that since for any $x\in K$,
 we have that the barrier function $\phi(x)$ is finite with bounded
 first and second moments, and by Lemma \ref{lem:global_self_concordant},
-the Hessian remains finite for for every point in $[x,y]$ for $y$
-s.t. $\norm{x-y}_{x}<1$, we have that $\phi(y)$ is also finite,
-and hence $y\in K$, since $\phi$ is a barrier function for $K$. 
+the Hessian remains finite for every point in $[x,y]$ for $y$ s.t.
+$\norm{x-y}_{x}<1$, we have that $\phi(y)$ is also finite, and hence
+$y\in K$, since $\phi$ is a barrier function for $K$. 
 
-For the second part, for any $y\in K\cap2x-K$, we have that for every
-$i\in[m]$, 
+For the second part, for any $y\in K\cap(2x-K)$, we have that for
+every $i\in[m]$, 
 \[
 \left|a^{\top}_{i}y-a^{\top}_{i}x\right|\le a^{\top}_{i}x-b_{i}
 \]
@@ -784,7 +785,7 @@ and hence
 \]
 Therefore, 
 \[
-(y-x)^{\top}\nabla^{2}\phi(x)(y0x)=\sum^{m}_{i=1}\frac{\left(a^{\top}_{i}(y-x)\right)^{2}}{\left(a^{\top}_{i}x-b_{i}\right)^{2}}\le m.
+(y-x)^{\top}\nabla^{2}\phi(x)(y-x)=\sum^{m}_{i=1}\frac{\left(a^{\top}_{i}(y-x)\right)^{2}}{\left(a^{\top}_{i}x-b_{i}\right)^{2}}\le m.
 \]
 \end{proof}
 We can now prove Lemma \ref{lem:dikin-dist-1}.

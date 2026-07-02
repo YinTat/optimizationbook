@@ -155,7 +155,7 @@ where
 \end_inset
 
  is a matrix,
- and when it is PSD,
+ and when it is positive definite,
  it defines a local norm at 
 \begin_inset Formula $x$
 \end_inset
@@ -250,7 +250,7 @@ For the choice of
 \end_inset
 
 .
- Note that HMC does not require a Metropolis filter!
+ Note that the exact Hamiltonian flow described here does not require a Metropolis filter!
  Thus,
  unlike the walks we have seen so far,
  its step sizes are not limited by this consideration even in high dimension.
@@ -421,7 +421,7 @@ For{
 \end_inset
 
 
-\begin_inset Formula $i=1,2,\cdots,T$
+\begin_inset Formula $k=1,2,\cdots,T$
 \end_inset
 
 
@@ -646,7 +646,7 @@ nolink "false"
 
 \end_inset
 
-) w.r.t.
+) with respect to
  
 \begin_inset Formula $s$
 \end_inset
@@ -765,7 +765,7 @@ Let
 
 \end_inset
 
-for almost everywhere in 
+for almost every 
 \begin_inset Formula $x$
 \end_inset
 
@@ -808,7 +808,7 @@ Fix
 \end_inset
 
  and 
-\begin_inset Formula $V_{-}=\{y:\text{ }F_{-\step}^{x}(y)=x')\}$
+\begin_inset Formula $V_{-}=\{y:\text{ }F_{-\step}^{x}(y)=x'\}$
 \end_inset
 
 .
@@ -826,7 +826,7 @@ We note that this formula assumed that
 \end_inset
 
  is invertible.
- Sard's theorem showed that 
+ Sard's theorem shows that 
 \begin_inset Formula $F_{\step}^{x}(N)$
 \end_inset
 
@@ -835,7 +835,7 @@ We note that this formula assumed that
 \end_inset
 
  where 
-\begin_inset Formula $N\defeq\{y:\,DF_{s}^{x}(y)\text{ is not invertible}\}$
+\begin_inset Formula $N\defeq\{y:\,DF_{\step}^{x}(y)\text{ is not invertible}\}$
 \end_inset
 
 .
@@ -922,11 +922,11 @@ C & D
 
 Therefore,
  we have that 
-\begin_inset Formula $F_{\step}^{x}(y)=B$
+\begin_inset Formula $DF_{\step}^{x}(y)=B$
 \end_inset
 
  and 
-\begin_inset Formula $F_{-\step}^{x'}(y')=-A^{-1}B(D-CA^{-1}B)^{-1}$
+\begin_inset Formula $DF_{-\step}^{x'}(y')=-A^{-1}B(D-CA^{-1}B)^{-1}$
 \end_inset
 
 .
@@ -1006,7 +1006,7 @@ nolink "false"
  we have that
 \begin_inset Formula 
 \[
-\frac{1}{2}\int_{y\in V_{-}}\frac{e^{-H(x,y)}}{\left|\det\left(DF_{-\step}^{x}(y)\right)\right|}=\frac{1}{2}\int_{y\in V_{+}}\frac{e^{-H(x',y')}}{\left|\det\left(DF_{\step}^{x'}(y')\right)\right|}
+\frac{1}{2}\int_{y\in V_{-}}\frac{e^{-H(x,y)}}{\left|\det\left(DF_{-\step}^{x}(y)\right)\right|}=\frac{1}{2}\int_{y\in V_{-}}\frac{e^{-H(x',y')}}{\left|\det\left(DF_{\step}^{x'}(y')\right)\right|}
 \]
 
 \end_inset

@@ -134,7 +134,7 @@ difficult
 
 ,
  i.e.,
- one that does not satisfy some smoothness condition which direct suggests a faster than worst-case optimization method.
+ one that does not satisfy some smoothness condition which directly suggests a faster than worst-case optimization method.
  Often,
  we can decompose the difficult problem as 
 \begin_inset Formula $f(x)=g(x)+h(Ax)$
@@ -246,7 +246,7 @@ Compactness is necessary.
 \end_layout
 
 \begin_layout Standard
-The above idea of passing to the dual extends to a sum of convex functions as below below.
+The above idea of passing to the dual extends to a sum of convex functions as below.
 \end_layout
 
 \begin_layout Lemma
@@ -604,7 +604,7 @@ When you can solve the dual problem,
  the proof of the optimality of the dual problem often directly gives you the solution of the primal problem,
  or gives you some way to solve the primal problem efficiently.
  Here,
- we use the semidefinite programming as an concrete example.
+ we use semidefinite programming as a concrete example.
  Define 
 \begin_inset Formula $\bullet$
 \end_inset
@@ -1006,11 +1006,11 @@ K_{2} & =\{y\in\R^{V_{2}},y_{b}\leq c_{b}\},
 \end_inset
 
 and 
-\begin_inset Formula $M\in\R^{E}\rightarrow\R^{V_{2}}$
+\begin_inset Formula $M:\R^{E}\rightarrow\R^{V_{2}}$
 \end_inset
 
  is the map 
-\begin_inset Formula $(Tx)_{b}=\sum_{a:(a,b)\in E}x_{(a,b)}.$
+\begin_inset Formula $(Mx)_{b}=\sum_{a:(a,b)\in E}x_{(a,b)}.$
 \end_inset
 
 

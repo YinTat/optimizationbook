@@ -10,7 +10,7 @@ duality. In general, two reasons to consider a dual problem are that
 are easier to compute. We will see such examples. 
 
 Suppose we have a ``difficult'' convex problem $\min_{x}f(x)$,
-i.e., one that does not satisfy some smoothness condition which direct
+i.e., one that does not satisfy some smoothness condition which directly
 suggests a faster than worst-case optimization method. Often, we can
 decompose the difficult problem as $f(x)=g(x)+h(Ax)$ such that the
 (sub)gradients $\nabla g^{*}(x)$ and $\nabla h^{*}(x)$ are easy
@@ -40,7 +40,7 @@ Compactness is necessary. Consider $f(x,y)=x+y$. This theorem generalizes
 Von Neumann's minimax theorem. 
 \end{rem*}
 The above idea of passing to the dual extends to a sum of convex functions
-as below below.
+as below.
 \begin{lem}
 \label{lem:dual-decomp}For convex functions $f_{1},\dots,f_{m}$
 with closed epigraphs, we have (assuming the minimum exists)
@@ -133,8 +133,8 @@ the problem.
 When you can solve the dual problem, the proof of the optimality of
 the dual problem often directly gives you the solution of the primal
 problem, or gives you some way to solve the primal problem efficiently.
-Here, we use the semidefinite programming as an concrete example.
-Define $\bullet$ as the inner product of matrices, i.e., 
+Here, we use semidefinite programming as a concrete example. Define
+$\bullet$ as the inner product of matrices, i.e., 
 \[
 A\bullet B=\sum_{i,j}A_{ij}B_{ij}.
 \]
@@ -251,7 +251,7 @@ To apply our framework, we let
 K_{1} & =\{x\in\R^{E},x_{e}\geq0,\sum_{(a,b)\in E}x_{(a,b)}\leq1\ \forall a\in V_{1}\},\\
 K_{2} & =\{y\in\R^{V_{2}},y_{b}\leq c_{b}\},
 \end{align*}
-and $M\in\R^{E}\rightarrow\R^{V_{2}}$ is the map $(Tx)_{b}=\sum_{a:(a,b)\in E}x_{(a,b)}.$
+and $M:\R^{E}\rightarrow\R^{V_{2}}$is the map $(Mx)_{b}=\sum_{a:(a,b)\in E}x_{(a,b)}.$
 
 To further emphasize its importance, consider some general examples
 here:

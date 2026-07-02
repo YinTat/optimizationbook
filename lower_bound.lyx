@@ -359,11 +359,11 @@ worst
 \begin_inset Formula $G$
 \end_inset
 
- of the worst function is simply a 
+ of the worst function is simply an 
 \begin_inset Formula $n$
 \end_inset
 
- vertex path, whose diameter is 
+-vertex path, whose diameter is 
 \begin_inset Formula $n-1$
 \end_inset
 
@@ -390,8 +390,7 @@ reference "eq:worst_function"
 
 \end_inset
 
-) belongs to a general class of functions called Laplacian systems and it
- can be solved in nearly linear time using spectral graph theory.
+) is a quadratic whose optimality conditions form a Laplacian linear system, and it can be solved in nearly linear time using spectral graph theory.
  
 \begin_inset Note Note
 status open

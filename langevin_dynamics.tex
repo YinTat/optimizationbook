@@ -27,7 +27,7 @@ Without the restriction to the nonnegative orthant, the target density
 is the Gaussian $N(0,A^{-1})$, and can be sampled by first sampling
 the standard Gaussian $N(0,I)$ and applying the linear transformation
 $A^{-1/2}$. To sample from the standard Gaussian in $\R^{n}$, we
-can sample each coordinate independently from $N(0,1$), a problem
+can sample each coordinate independently from $N(0,1)$), a problem
 which has many (efficient) numerical recipes. But how can we handle
 the restriction? In the course of forthcoming chapters, we will see
 that this problem and its generalization to sampling logconcave densities,
@@ -107,7 +107,7 @@ dx_{t}=\mu(x_{t},t)dt+\sigma(x_{t},t)dW_{t}\label{eq:sde}
 field and $\sigma(x_{t},t)\in\R^{n\times m}$ is a time-varying linear
 transformation. The simplest such process is the Wiener process: $dx_{t}=dW_{t}$
 which finds many applications in applied mathematics, finance, biology
-and physics. Another useful process is the Ornstein-Ulhenbeck Process: 
+and physics. Another useful process is the Ornstein-Uhlenbeck process: 
 
 \[
 dx_{t}=-ax_{t}dt+\sigma dW_{t}
@@ -138,7 +138,7 @@ a limit, i.e.,
 \[
 \nabla f(x)=\lim_{h\rightarrow0}\frac{(f(x)+h\nabla f(x)^{\top}y+\frac{1}{2}h^{2}...)-f(x)}{h}=\lim_{h\rightarrow0}\frac{h\nabla f(x)^{\top}y+\frac{1}{2}h^{2}...}{h}
 \]
-and only the first term survives, as the second and later terms goes
+and only the first term survives, as the second and later terms go
 to zero. But with the stochastic component, roughly speaking, $(dW_{t})^{2}=dt$\footnote{By definition, $W_{t}\sim N(0,t)$, so the variance of $W_{t}$ is
 $t$. Thus, $(dW_{t})^{2}=dt$ may seem to make sense. This can be
 justified rigorously through \emph{quadratic variations}.}, and we need to keep track of the second term in the Taylor expansion
@@ -181,11 +181,11 @@ For any smooth function $\phi$, we have that
 \[
 \E_{x\sim p_{t}}\phi(x)=\E\phi(x_{t}).
 \]
-Taking derivatives on the both sides with respect to $t$, using It\^{o}'s
+Taking derivatives on both sides with respect to $t$, using It\^{o}'s
 lemma (Lemma \ref{lem:itos}), and noting that $\E dW_{t}=0$, we
 have that
 \begin{align*}
-\int\phi(x)\,dp(x)dx & =\E\left(\nabla\phi(x_{t})^{\top}\mu(x_{t})\,dt+\nabla\phi(x_{t})^{\top}\sigma(x_{t})\,dW_{t}+\frac{1}{2}\tr(\sigma(x_{t})^{\top}\nabla^{2}\phi(x_{t})\sigma(x_{t}))\,dt\right)\\
+\int\phi(x)\frac{dp_{t}}{dt}dx & =\E\left(\nabla\phi(x_{t})^{\top}\mu(x_{t})\,dt+\nabla\phi(x_{t})^{\top}\sigma(x_{t})\,dW_{t}+\frac{1}{2}\tr(\sigma(x_{t})^{\top}\nabla^{2}\phi(x_{t})\sigma(x_{t}))\,dt\right)\\
  & =\E\left(\nabla\phi(x_{t})^{\top}\mu(x_{t})dt+\frac{1}{2}\tr(\nabla^{2}\phi(x_{t})D(x_{t}))\,dt\right).
 \end{align*}
 Using $x_{t}\sim p_{t}$, we have that
@@ -222,8 +222,9 @@ that the distribution $p_{t}$ of $x_{t}$ satisfies
 \begin{equation}
 \frac{dp_{t}}{dt}=\sum_{i}\frac{\partial}{\partial x_{i}}(\frac{\partial f(x)}{\partial x_{i}}p_{t}(x))+\sum_{i}\frac{\partial^{2}}{\partial x^{2}_{i}}\left[p_{t}(x)\right].\label{eq:dp_LD}
 \end{equation}
-Now since $p_{t}$ is stationary the LHS is zero and we can rewrite
-the above as
+To check stationarity, set $p_{t}$ proportional to $e^{-f}$ in the
+right-hand side; then the LHS is zero and we can rewrite the above
+as
 \begin{align*}
 \frac{dp_{t}}{dt}=0 & =\sum_{i}\frac{\partial}{\partial x_{i}}\left(p_{t}(x)\frac{\partial f(x)}{\partial x_{i}}+\frac{\partial}{\partial x_{i}}p_{t}(x)\right)\\
  & =\sum_{i}\frac{\partial}{\partial x_{i}}\left(p_{t}(x)\left(\frac{\partial f(x)}{\partial x_{i}}+\frac{\partial}{\partial x_{i}}\log p_{t}(x)\right)\right)\\
@@ -251,7 +252,7 @@ dX_{t}=-X_{t}dt+\sqrt{2}dW_{t}.
 \]
 Use the Fokker-Planck equation to derive a corresponding stationary
 density. Use It\^{o}'s lemma to derive $\E(\norm{X_{t}}^{4}_{4})$.
-(Hint: Take expectation on both sides of It\^{o}'s lemma for appropriate
+(Hint: take expectations on both sides of It\^{o}'s lemma for appropriate
 $f(X_{t})$, and use $\E df(X_{t})=d\E f(X_{t})$ for continuous $f$
 and $df$). 
 \end{xca}
@@ -380,10 +381,10 @@ where $\Ent_{\nu}(g^{2}):=\E_{\nu}(g^{2}\log g^{2})-\E_{\nu}(g^{2})\log\E_{\nu}(
 \label{thm:LDinKL}Let $f$ be a smooth function with log-Sobolev
 constant $C_{LSI}$. Then the Langevin dynamics 
 \[
-dx_{t}=-\nabla f(x)dt+\sqrt{2}dW_{t}
+dx_{t}=-\nabla f(x_{t})dt+\sqrt{2}dW_{t}
 \]
 converges exponentially in KL-divergence (Definition~\ref{defn:KL-divergence})
-to the density $\nu(x)\propto e^{-f(x)}$ with mixing rate $O(C_{LSI})$,
+to the density $\nu(x)\propto e^{-f(x)}$ with decay rate $2/C_{LSI}$,
 i.e., the distribution $\rho_{t}$of $x_{t}$satisfies 
 \[
 d_{KL}(\rho_{t},\nu)\le e^{-\frac{2}{C_{LSI}}t}d_{KL}(\rho_{0},\nu).
@@ -412,7 +413,7 @@ with $\rho=\rho_{t}$:
  & =\int\nabla\cdot\left(\rho\nabla\log\frac{\rho}{\nu}\right)\log\frac{\rho}{\nu}\\
  & =-\int\langle\rho\nabla\log\frac{\rho}{\nu},\nabla\log\frac{\rho}{\nu}\rangle\\
  & =-\int\rho\norm{\nabla\log\frac{\rho}{\nu}}^{2}_{2}\\
- & =\E_{\rho}\left(\norm{\nabla\log\frac{\rho}{\nu}}^{2}_{2}\right)=-J_{\nu}(\rho_{t}).
+ & =-\E_{\rho}\left(\norm{\nabla\log\frac{\rho}{\nu}}^{2}_{2}\right)=-J_{\nu}(\rho_{t}).
 \end{align*}
 \end{proof}
 The next lemma shows that the log-Sobolev constant can be equivalently
@@ -432,7 +433,7 @@ way, define $\rho=\frac{g^{2}\nu}{\E_{\nu}(g^{2})}$.
 \end{proof}
 We are now ready to prove Theorem \ref{thm:LDinKL}.
 \begin{proof}
-We use Lemmas and to obtain
+We use the previous two lemmas to obtain
 \[
 \frac{d}{dt}d_{KL}(\rho_{t},\nu)=-J_{\nu}(\rho_{t})\le-\frac{2}{C_{LSI}}d_{KL}(\rho_{t},\nu).
 \]
@@ -481,7 +482,7 @@ Let $p_{t}$ be the density of the distribution of $x_{t}$. To compute
 $\frac{d}{dt}p_{t}$, we follow the same idea as in the proof as Theorem
 \ref{thm:fokker_planck}. For any smooth function $\phi$, we have
 that $\E_{x\sim p_{t}}\phi(x)=\E\phi(x_{t}).$ Taking derivatives
-on the both sides with respect to $t$, we have that
+on both sides with respect to $t$, we have that
 \[
 \int\phi(x)\frac{d}{dt}p_{t}(x)dx=\int\nabla\phi(x)^{\top}c(x)p_{t}(x)dx=-\int\nabla\cdot(c(x)p_{t}(x))\phi(x)dx
 \]
@@ -496,7 +497,7 @@ movement in Wasserstein distance, we consider the optimization problem
 \min_{-\nabla\cdot(pc)=v}\frac{1}{2}\int p(x)\|c(x)\|^{2}dx
 \]
 where we can think $v$ is the change of $p_{t}$. Let $\lambda(x)$
-be the Lagrangian multiplier of the constraint $-\nabla\cdot(pc)=v$.
+be the Lagrange multiplier of the constraint $-\nabla\cdot(pc)=v$.
 Then, the problem becomes
 \begin{align*}
  & \min_{c}\frac{1}{2}\int p(x)\|c(x)\|^{2}dx-\int\lambda(x)\nabla\cdot(p(x)c(x))dx.\\
@@ -509,8 +510,8 @@ c(x)=-\nabla\lambda(x).
 \]
 This proves that any vector field that generates minimum movement
 in Wasserstein distance is a gradient field. Also, we have that $v(x)=\nabla\cdot(p(x)\nabla\lambda(x)).$
-Note that the right hand side is an elliptical differential equation
-and hence for any $v$ with $\int v(x)dx=0$, there is an unique solution
+Note that the right-hand side is an elliptic differential equation
+and hence for any $v$ with $\int v(x)dx=0$, there is a unique solution
 $\lambda(x)$. Therefore, we can write $v(x)=\nabla\cdot(p(x)\nabla\lambda(x))$
 for some $\lambda(x)$.
 
@@ -527,7 +528,7 @@ use the local norm as given in Lemma \ref{lem:local-norm}.
 produced by Langevin Dynamics for the target distribution $\nu=e^{-f(x)}/\int e^{-f(y)}dy$.
 Then, we have that
 \[
-\frac{d\rho}{dt}=\argmin_{v\in T_{p}P_{2}(\Rn)}\left\langle \nabla F(\rho),v\right\rangle _{p}+\frac{1}{2}\|v\|^{2}_{p}.
+\frac{d\rho}{dt}=\argmin_{v\in T_{\rho}P_{2}(\Rn)}\left\langle \nabla F(\rho),v\right\rangle _{\rho}+\frac{1}{2}\|v\|^{2}_{\rho}.
 \]
 Namely, $\rho_{t}$ follows continuous gradient descent in the density
 space for the function $F(\rho)=\KL(\rho\|\nu)$ under the Wasserstein
@@ -578,7 +579,7 @@ inequality, namely, for every smooth function $g$,
 \[
 \frac{C_{LSI}}{2}\int\norm{\nabla g}^{2}\,d\nu\ge\int g(x)^{2}\log g(x)^{2}\ d\nu
 \]
- implies the condition (\ref{eq:LD_strong_convexity}) with $\alpha=1/C_{LSI}$.
+ implies the condition (\ref{eq:LD_strong_convexity}) with $\alpha=2/C_{LSI}$.
 \end{lem}
 
 \begin{proof}
@@ -596,7 +597,7 @@ Therefore, this is exactly the condition (\ref{eq:LD_strong_convexity})
 with coefficient $2/C_{LSI}$.
 \end{proof}
 Combining Lemma \ref{lem:log_sob_LD} and Lemma \ref{lem:grad-dom},
-we obtain another proof of Therem \ref{thm:LDinKL}.
+we obtain another proof of Theorem \ref{thm:LDinKL}.
 
 \subsection{Discussion}
 

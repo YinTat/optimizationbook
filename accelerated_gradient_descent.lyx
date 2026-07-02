@@ -440,7 +440,7 @@ Solve the recursion omitted at the end of the proof.
 
 \begin_layout Standard
 Note that the proof above used only the fact that 
-\begin_inset Formula $\{x^{(1)},x^{(k)+},\sum_{s=1}^{k}\frac{\nabla f(x^{(s)})}{\|\nabla f(x^{(s)})\|}\}\subset P$
+\begin_inset Formula $\{x^{(1)},x^{(k)+},\sum_{s=1}^{k}\frac{\nabla f(x^{(s)})}{\|\nabla f(x^{(s)})\|}\}\subset P^{(k)}$
 \end_inset
 
 .
@@ -457,7 +457,7 @@ P=x^{(k)}+\mathrm{span}(x^{(k)}-x^{(1)},\nabla f(x^{(k)}),\sum_{s=1}^{k}\frac{\n
 
 \end_inset
 
-then one can prove that this algorithm is equivalently to conjugate gradient
+then one can prove that this algorithm is equivalent to conjugate gradient
  when 
 \begin_inset Formula $f$
 \end_inset
@@ -637,7 +637,7 @@ Therefore, we have that
 \end_inset
 
  that is computable in time 
-\begin_inset Formula $\mathcal{T}_{g}+\mathcal{T}_{h,L}$
+\begin_inset Formula $\mathcal{T}_{f}+\mathcal{T}_{h,L}$
 \end_inset
 
 .
@@ -661,7 +661,7 @@ The key lemma we use here is that
 
 \end_inset
 
-But it is WRONG.
+However, this inequality is false.
  If that was true for all 
 \begin_inset Formula $z$
 \end_inset
@@ -1174,7 +1174,7 @@ Let
  Then, we have that
 \begin_inset Formula 
 \[
-g^{\top}(x-u)=\frac{\eta}{2}\norm g_{2}^{2}+\frac{1}{2\eta}\left(\norm{x-u}_{2}^{2}-\norm{p-u}_{2}^{2}\right)
+g^{\top}(x-u)=\frac{\eta}{2}\norm{g}_{2}^{2}+\frac{1}{2\eta}\left(\norm{x-u}_{2}^{2}-\norm{p-u}_{2}^{2}\right)
 \]
 
 \end_inset
@@ -1550,7 +1550,11 @@ g_{x^{(k+1)}}^{\top}(x^{(k+1)}-x^{*})\leq\eta L(\phi(y^{(k)})-\phi(y^{(k+1)}))+\
 
 \end_inset
 
-Taking a sum on both side and let 
+Summing over all 
+\begin_inset Formula $k$
+\end_inset
+
+ and letting 
 \begin_inset Formula $\overline{x}=\frac{1}{T}\sum_{k=1}^{T}p_{x^{(k+1)}}$
 \end_inset
 
@@ -1560,7 +1564,7 @@ Taking a sum on both side and let
 \phi(\overline{x})-\phi(x^{*}) & \leq\frac{1}{T}\sum_{k=1}^{T}(\phi(p_{x^{(k+1)}})-\phi(x^{*}))\\
  & \leq\frac{1}{T}\sum_{k=1}^{T}g_{x^{(k+1)}}^{\top}(x^{(k+1)}-x^{*})\\
  & \leq\frac{\eta L}{T}\left(\phi(y^{(1)})-\phi(y^{(T+1)})\right)+\frac{1}{2\eta T}\norm{z^{(1)}-x^{*}}_{2}^{2}\\
- & \leq\left(\frac{\eta L}{T}+\frac{1}{2\eta T\mu}\right)\left(\phi(x^{(1)})-\phi(x^{*})\right)
+ & \leq\left(\frac{\eta L}{T}+\frac{1}{\eta T\mu}\right)\left(\phi(x^{(1)})-\phi(x^{*})\right)
 \end{align*}
 
 \end_inset
@@ -1611,7 +1615,7 @@ reference "thm:coordinate_descent"
  coordinate steps such that 
 \begin_inset Formula 
 \[
-\E\ell(x^{(k)})-\ell(x^{*})\leq(1-\frac{\mu}{L})^{\Omega(k)}(\ell(x^{(0)})-f(x^{*}))
+\E\ell(x^{(k)})-\ell(x^{*})\leq(1-\frac{\mu}{L})^{\Omega(k)}(\ell(x^{(0)})-\ell(x^{*}))
 \]
 
 \end_inset
@@ -1638,11 +1642,7 @@ Since
 \begin_inset Formula $\mu+\frac{L}{n}$
 \end_inset
 
- smooth (YES!, I know this is also 
-\begin_inset Formula $\mu$
-\end_inset
-
- smooth) and 
+ smooth and 
 \begin_inset Formula $\mu$
 \end_inset
 
@@ -1679,7 +1679,7 @@ reference "thm:AGD"
  involves solving a problem of the form
 \begin_inset Formula 
 \begin{align*}
-y_{x} & =\argmin_{y}(\frac{\mu}{2}+\frac{L}{2n})\norm{y-x}^{2}+(\ell(y)-\frac{\mu}{2}\norm x^{2})\\
+y_{x} & =\argmin_{y}(\frac{\mu}{2}+\frac{L}{2n})\norm{y-x}^{2}+(\ell(y)-\frac{\mu}{2}\norm y^{2})\\
  & =\argmin_{y}\ell(y)-\mu y^{\top}x+\frac{L}{2n}\norm{y-x}^{2}.
 \end{align*}
 
@@ -1874,11 +1874,7 @@ Since
 \begin_inset Formula $\mu+\frac{L}{n}$
 \end_inset
 
- smooth (YES!, I know this is also 
-\begin_inset Formula $\mu$
-\end_inset
-
- smooth) and 
+ smooth and 
 \begin_inset Formula $\mu$
 \end_inset
 
@@ -1915,7 +1911,7 @@ reference "thm:AGD"
  involves solving a problem of the form
 \begin_inset Formula 
 \begin{align*}
-y_{x} & =\argmin_{y}(\frac{\mu}{2}+\frac{L}{2n})\norm{y-x}^{2}+(\ell(y)-\frac{\mu}{2}\norm x^{2})\\
+y_{x} & =\argmin_{y}(\frac{\mu}{2}+\frac{L}{2n})\norm{y-x}^{2}+(\ell(y)-\frac{\mu}{2}\norm y^{2})\\
  & =\argmin_{y}\ell(y)-\mu y^{\top}x+\frac{L}{2n}\norm{y-x}^{2}\\
  & =\argmin_{y}\frac{1}{n}\sum_{i}(\ell_{i}(y)+\frac{L}{2n}\norm{y-x}^{2}-\mu y^{\top}x)
 \end{align*}

@@ -5,7 +5,7 @@ walk}.
 \subsection*{The Ball Walk}
 
 The simplest continuous algorithm for exploring space is Brownian
-motion with the ODE $dx_{t}=dW_{t}$. To turn this into a sampling
+motion with the SDE $dx_{t}=dW_{t}$. To turn this into a sampling
 algorithm, for a convex function $f$, we saw an extension using the
 gradient of $f$, namely 
 \[
@@ -14,7 +14,7 @@ dx_{t}=-\nabla f(x_{t})+\sqrt{2}dW_{t}
 which can be used to sample according to the density proportional
 to $e^{-f}$. In this chapter we will begin with an even simpler method,
 which does not need access to the gradient or assume differentiability,
-only an oracle that can evaluate $F$.
+only an oracle that can evaluate a function proportional to $Q$.
 
 \begin{algorithm2e}[H]
 
@@ -29,6 +29,7 @@ Repeat $T$ times: at a point $x$,
 \begin{enumerate}
 \item Pick a random point $y$ in the $\delta$-ball centered at $x$.
 \item Go to $y$ with probability $\min\left\{ 1,\frac{Q(y)}{Q(x)}\right\} $.
+\item Otherwise, stay at $x$.
 \end{enumerate}
 \Return $x$.
 
@@ -113,8 +114,8 @@ P_{u}(A)=\frac{\vol\left(A\cap(u+\delta B_{n})\right)}{\vol(\delta B_{n})}+1_{u\
 The uniform distribution is stationary, i.e., $Q(A)=\frac{\vol(A)}{\vol(K)}$.
 \end{example*}
 \begin{defn}
-The \emph{ergodic flow} of a subset $A$ w.r.t. the distribution $Q$
-is defined as 
+The \emph{ergodic flow} of a subset $A$ with respect to the distribution
+$Q$ is defined as 
 \[
 \Phi(A)=\int_{A}P_{u}(K\setminus A)\,dQ(u).
 \]
@@ -128,8 +129,8 @@ Markov chain. The next theorem is folklore.
 \end{defn}
 
 \begin{xca}
-If $Q$ is stationary w.r.t. a lazy, ergodic Markov chain, then it
-is the unique stationary distribution for that Markov chain.
+If $Q$ is stationary with respect to a lazy, ergodic Markov chain,
+then it is the unique stationary distribution for that Markov chain.
 \end{xca}
 
 Informally, the mixing rate of a random walk is the number of steps
@@ -146,16 +147,17 @@ notions will be useful for comparing two distributions $P,Q$.
 \[
 d_{KL}(P,Q)=\int_{K}\log\frac{dP(u)}{dQ(u)}\,dP(u).
 \]
-\item Warmth: $P$ is said to be\emph{ $M$-warm} w.r.t. $Q$ if $M=\sup_{A\in\mathcal{A}}\frac{P(A)}{Q(A)}.$
+\item Warmth: $P$ is said to be\emph{ $M$-warm} with respect to $Q$ if
+$M=\sup_{A\in\mathcal{A}}\frac{P(A)}{Q(A)}.$
 \end{enumerate}
 \begin{defn}
-We say that a distribution $P$ is \emph{absolutely continuous }w.r.t.
-another distribution $Q$ if for any set $A$ for which $Q(A)=0$
-we also have $P(A)=0$. 
+We say that a distribution $P$ is \emph{absolutely continuous }with
+respect to another distribution $Q$ if for any set $A$ for which
+$Q(A)=0$ we also have $P(A)=0$. 
 \end{defn}
 
 The following relationships hold when $P$ is absolutely continuous
-w.r.t. $Q$.
+with respect to $Q$.
 \begin{fact}
 We have 
 \[
@@ -168,8 +170,8 @@ We have
 
 Now we introduce an important tool to bound the rate of convergence
 of $Q_{t},$the distribution after $t$ steps to $Q$. Assume that
-$Q$ is the unique stationary distribution. The $conductance$ of
-a subset $A$ is defined as 
+$Q$ is the unique stationary distribution. The \emph{conductance}
+of a subset $A$ is defined as 
 \[
 \phi(A)=\frac{\Phi(A)}{\min\{Q(A),Q(K\setminus A)\}}
 \]
@@ -486,7 +488,7 @@ The second approach is to show that the local conductance is in fact
 large almost everywhere, and if the starting distribution is ``warm''
 then these points can effectively be ignored. This will allow us to
 make $\delta$ much larger, namely $\delta=1/\sqrt{n}.$ Larger step
-sizes should allows us to prove faster mixing.
+sizes should allow us to prove faster mixing.
 \end{xca}
 
 To convey the main ideas of the analysis, we focus on the first approach
@@ -682,8 +684,8 @@ The proof of the above lemma will use the following bound on crossing
 the boundary of $K$. 
 \begin{lem}
 Let $L$ be any measurable subset of the boundary of a convex body
-K and $S_{L}=\{(x,y):x\in K,y\not\in K,\norm{x-y}\le\delta,[x,y]\cap L\neq\phi\}$.
-Then,, we have 
+$K$ and $S_{L}=\{(x,y):x\in K,y\not\in K,\norm{x-y}\le\delta,[x,y]\cap L\neq\emptyset\}$.
+Then, we have 
 \[
 \vol_{2n}(S_{L})\le\frac{\delta}{(n+1)}\frac{\vol(B^{n-1})}{\vol(B^{n})}\vol_{n-1}(L)\vol(\delta B^{n}).
 \]
@@ -707,8 +709,8 @@ This proof is similar to that of Theorem \ref{thm:ball_walk_cond},
 with one important extension. Rather than applying the argument to
 a partition of the original convex body $K$, we restrict the argument
 to $K_{\delta},$the points in $K$ that have high local conductance.
-Since this subset takes up most of $K$, and is convex, we will able
-to use its isoperimetry to lower bound the conductance. 
+Since this subset takes up most of $K$, and is convex, we will be
+able to use its isoperimetry to lower bound the conductance. 
 \begin{proof}
 As before, we consider the following partition of $K$. Let $K=S_{1}\cup S_{2}$
 be a partition into measurable sets. We will prove that
@@ -857,7 +859,7 @@ and $\E_{Q}(xx^{T})=I$, i.e., the mean is zero and the covariance
 matrix (exists and) is the identity. We say that the distribution
 is $C$-isotropic if the eigenvalues of its covariance matrix are
 in $[\frac{1}{C},C]$. An affine transformation is said to be an \emph{isotropic
-tranformation} if the resulting distribution is isotropic.
+transformation} if the resulting distribution is isotropic.
 
 Any distribution with bounded second moments has an isotropic transformation.
 It is clear that satisfying the first condition is merely a translation,
@@ -940,7 +942,7 @@ A tight bound on the sample complexity was established by \cite{adamczak2010quan
 
 \begin{thm}
 For an isotropic logconcave distribution $Q$ in $\R^{n}$, the covariance
-$N=O(n)$ random samples satisfies $\norm{A-I}_{\op}\le0.5$.
+matrix from $N=O(n)$ random samples satisfies $\norm{A-I}_{\op}\le0.5$.
 \end{thm}
 
 \begin{lem}
@@ -1104,7 +1106,7 @@ Let us call this a bisecting halfspace. Now either
 \[
 \int_{H}h(x)\,dx>0\quad\mbox{ or }\quad\int_{\R^{n}\setminus H}h(x)\,dx>0\,.
 \]
-Thus, either $H$ or its compliment will have positive integrals for
+Thus, either $H$ or its complement will have positive integrals for
 both $g$ and $h$, reducing the domain of the integrals from $\R^{n}$
 to a halfspace. If we could repeat this, we might hope to reduce the
 dimensionality of the domain. For any $(n-2)$-dimensional affine
@@ -1143,7 +1145,7 @@ for $m\ge0$:
 \psi_{m}(t):=\left(\frac{\vol_{n-1}(K_{m}\cap Z_{t})}{\vol_{n}(K_{m})}\right)^{\frac{1}{n-1}}\,.
 \]
 Note that $\int\psi_{m}(t)^{n-1}\,dt=1$. For $\alpha_{m}:=\min\{x_{1}:x\in K_{m}\}$
-and $\beta_{m}:=\max\{x_{1}:x\in K_{m}\}$, we have $\alpha_{m}\le0,\beta_{m}\ge0$
+and $\beta_{m}:=\max\{x_{1}:x\in K_{m}\}$, we have $\alpha_{m}\le0,\beta_{m}\ge1$
 and $\alpha_{m}\rightarrow0,\beta_{m}\rightarrow1$. Moreover, by
 the Brunn--Minkowski inequality (Thm \ref{thm:Brunn-Minkowski})
 $\psi_{i}$ is non-negative concave on its support. Then we can take
@@ -1156,7 +1158,7 @@ i.e., $\int\psi(t)^{n-1}\,dt=1$.
 
 Note that for $x=(y,t)\in\R^{n-1}\times\R$,
 \[
-\frac{1}{\vol(K_{m})}\int_{K_{m}}g(x)\,dx=\int^{\beta_{i}}_{\alpha_{i}}\frac{1}{\vol_{n-1}(K_{m}\cap Z_{t})}\int_{K_{m}\cap Z_{t}}g(y,t)\,dy\,\psi_{m}(t)^{n-1}\,dt\,.
+\frac{1}{\vol(K_{m})}\int_{K_{m}}g(x)\,dx=\int^{\beta_{m}}_{\alpha_{m}}\frac{1}{\vol_{n-1}(K_{m}\cap Z_{t})}\int_{K_{m}\cap Z_{t}}g(y,t)\,dy\,\psi_{m}(t)^{n-1}\,dt\,.
 \]
 Since the LHS is nonnegative, and the RHS approaches $\int^{1}_{0}g(0,t)\,\psi(t)^{n-1}\,dt$,
 we obtain that
@@ -1191,7 +1193,7 @@ and similarly for $\int_{\K'}\hat{h}\ge0$. WLOG we can assume that
 $\int_{\K'}\hat{g}=0$.
 
 \begin{figure}[H]
-\centering{}\includegraphics[width=0.5\textwidth]{Figures/concave-to-affine.png}\caption{Going to an affine needle}
+\centering{}\includegraphics[width=0.5\textwidth]{Figures/concave-to-affine}\caption{Going to an affine needle}
 \end{figure}
 
 The overall proof idea is to subdivide $K'$ with a hyperplane in
@@ -1362,7 +1364,7 @@ The integral over a needle is defined as
 \int_{N}f=\int^{1}_{0}f((1-t)a+tb)\ell(t)^{n-1}\,dt.
 \]
 
-\begin{lem}[{Localization: Product form{]}}]
+\begin{lem}[Localization: Product form]
  Let $f_{1},f_{2},f_{3},f_{4}:[a,b]\rightarrow\R_{+}$ be nonnegative,
 continuous functions. Then the following are equivalent:
 \end{lem}
