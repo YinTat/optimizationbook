@@ -1,0 +1,545 @@
+\begin{thebibliography}{10}
+
+\bibitem{adamczak2010quantitative}
+Rados{\l}aw Adamczak, Alexander Litvak, Alain Pajor, and Nicole
+  Tomczak-Jaegermann.
+\newblock Quantitative estimates of the convergence of the empirical covariance
+  matrix in log-concave ensembles.
+\newblock {\em Journal of the American Mathematical Society}, 23(2):535--561,
+  2010.
+
+\bibitem{adil2019iterative}
+Deeksha Adil, Rasmus Kyng, Richard Peng, and Sushant Sachdeva.
+\newblock Iterative refinement for $\ell_p$-norm regression.
+\newblock In {\em Proceedings of the Thirtieth Annual ACM-SIAM Symposium on
+  Discrete Algorithms}, pages 1405--1424. SIAM, 2019.
+
+\bibitem{aldous1995reversible}
+David Aldous and James Fill.
+\newblock {\em Reversible Markov chains and random walks on graphs}.
+\newblock Berkeley, 1995.
+
+\bibitem{allen2016optimal}
+Zeyuan Allen-Zhu and Elad Hazan.
+\newblock Optimal black-box reductions between optimization objectives.
+\newblock In {\em Advances in Neural Information Processing Systems}, pages
+  1614--1622, 2016.
+
+\bibitem{allen2016even}
+Zeyuan Allen-Zhu, Zheng Qu, Peter Richt{\'a}rik, and Yang Yuan.
+\newblock Even faster accelerated coordinate descent using non-uniform
+  sampling.
+\newblock In {\em International Conference on Machine Learning}, pages
+  1110--1119, 2016.
+
+\bibitem{applegate1991sampling}
+David Applegate and Ravi Kannan.
+\newblock Sampling and integration of near log-concave functions.
+\newblock In {\em Proceedings of the 23rd Annual {ACM} Symposium on Theory of
+  Computing, May 5-8, 1991, New Orleans, Louisiana, {USA}}, pages 156--163,
+  1991.
+
+\bibitem{artstein2009concept}
+Shiri Artstein-Avidan and Vitali Milman.
+\newblock The concept of duality in convex analysis, and the characterization
+  of the legendre transform.
+\newblock {\em Annals of mathematics}, pages 661--674, 2009.
+
+\bibitem{atkinson1995cutting}
+David~S Atkinson and Pravin~M Vaidya.
+\newblock A cutting plane algorithm for convex programming that uses analytic
+  centers.
+\newblock {\em Mathematical Programming}, 69(1-3):1--43, 1995.
+
+\bibitem{belloni2015escaping}
+Alexandre Belloni, Tengyuan Liang, Hariharan Narayanan, and Alexander Rakhlin.
+\newblock Escaping the local minima via simulated annealing: Optimization of
+  approximately convex functions.
+\newblock In {\em Conference on Learning Theory}, pages 240--265, 2015.
+
+\bibitem{bertsimas2004solving}
+Dimitris Bertsimas and Santosh Vempala.
+\newblock Solving convex programs by random walks.
+\newblock {\em Journal of the ACM (JACM)}, 51(4):540--556, 2004.
+
+\bibitem{blumensath2009iterative}
+Thomas Blumensath and Mike~E Davies.
+\newblock Iterative hard thresholding for compressed sensing.
+\newblock {\em Applied and computational harmonic analysis}, 27(3):265--274,
+  2009.
+
+\bibitem{Bourgain96}
+J.~Bourgain.
+\newblock Random points in isotropic convex sets.
+\newblock {\em Convex geometric analysis}, 34:53--58, 1996.
+
+\bibitem{brightwell1991counting}
+Graham Brightwell and Peter Winkler.
+\newblock Counting linear extensions.
+\newblock {\em Order}, 8:225--242, 1991.
+
+\bibitem{bubeck2016kernel}
+S{\'e}bastien Bubeck, Ronen Eldan, and Yin~Tat Lee.
+\newblock Kernel-based methods for bandit convex optimization.
+\newblock {\em arXiv preprint arXiv:1607.03084}, 2016.
+
+\bibitem{carbery2001distributional}
+Anthony Carbery and James Wright.
+\newblock Distributional and l\^{} q norm inequalities for polynomials over
+  convex bodies in r\^{} n.
+\newblock {\em Mathematical research letters}, 8(3):233--248, 2001.
+
+\bibitem{carmon2017lower}
+Yair Carmon, John~C Duchi, Oliver Hinder, and Aaron Sidford.
+\newblock Lower bounds for finding stationary points i.
+\newblock {\em arXiv preprint arXiv:1710.11606}, 2017.
+
+\bibitem{chen2022optimal}
+Zongchen Chen and Santosh~S Vempala.
+\newblock Optimal convergence rate of hamiltonian monte carlo for strongly
+  logconcave distributions.
+\newblock {\em Theory of Computing}, 18(1):1--18, 2022.
+
+\bibitem{cohen2016nearly}
+Michael~B Cohen.
+\newblock Nearly tight oblivious subspace embeddings by trace inequalities.
+\newblock In {\em Proceedings of the twenty-seventh annual ACM-SIAM symposium
+  on Discrete algorithms}, pages 278--287. SIAM, 2016.
+
+\bibitem{cohen2015uniform}
+Michael~B Cohen, Yin~Tat Lee, Cameron Musco, Christopher Musco, Richard Peng,
+  and Aaron Sidford.
+\newblock Uniform sampling for matrix approximation.
+\newblock In {\em Proceedings of the 2015 Conference on Innovations in
+  Theoretical Computer Science}, pages 181--190. ACM, 2015.
+
+\bibitem{cohen2018solving}
+Michael~B Cohen, Yin~Tat Lee, and Zhao Song.
+\newblock Solving linear programs in the current matrix multiplication time.
+\newblock {\em arXiv preprint arXiv:1810.07896}, 2018.
+
+\bibitem{CV2014}
+B.~Cousins and S.~Vempala.
+\newblock A cubic algorithm for computing {G}aussian volume.
+\newblock In {\em SODA}, pages 1215--1228, 2014.
+
+\bibitem{CV2015}
+B.~Cousins and S.~Vempala.
+\newblock Bypassing {KLS}: {Gauss}ian cooling and an {$O^*(n^3)$} volume
+  algorithm.
+\newblock In {\em STOC}, pages 539--548, 2015.
+
+\bibitem{drusvyatskiy2016optimal}
+Dmitriy Drusvyatskiy, Maryam Fazel, and Scott Roy.
+\newblock An optimal first order method based on optimal quadratic averaging.
+\newblock {\em arXiv preprint arXiv:1604.06543}, 2016.
+
+\bibitem{DF88}
+M.~E. Dyer and A.~M. Frieze.
+\newblock On the complexity of computing the volume of a polyhedron.
+\newblock {\em SIAM J. Comput.}, 17(5):967--974, 1988.
+
+\bibitem{DyerF90}
+M.~E. Dyer and A.~M. Frieze.
+\newblock Computing the volume of a convex body: a case where randomness
+  provably helps.
+\newblock In {\em Proc. of AMS Symposium on Probabilistic Combinatorics and Its
+  Applications}, pages 123--170, 1991.
+
+\bibitem{DyerFK89}
+M.~E. Dyer, A.~M. Frieze, and R.~Kannan.
+\newblock A random polynomial time algorithm for approximating the volume of
+  convex bodies.
+\newblock In {\em STOC}, pages 375--381, 1989.
+
+\bibitem{E86}
+G.~Elekes.
+\newblock A geometric inequality and the complexity of computing volume.
+\newblock {\em Discrete \& Computational Geometry}, pages 289--292, 1986.
+
+\bibitem{Feldman2015statistical}
+Vitaly Feldman, Cristobal Guzman, and Santosh Vempala.
+\newblock Statistical query algorithms for stochastic convex optimization.
+\newblock {\em CoRR}, abs/1512.09170, 2015.
+
+\bibitem{fletcher1987practical}
+R~Fletcher.
+\newblock Practical methods of optimization.
+\newblock 1987.
+
+\bibitem{fletcher1991new}
+Roger Fletcher.
+\newblock A new variational result for quasi-newton formulae.
+\newblock {\em SIAM Journal on Optimization}, 1(1):18--21, 1991.
+
+\bibitem{fradelizi2004extreme}
+Matthieu Fradelizi and Olivier Gu{\'e}don.
+\newblock The extreme points of subsets of s-concave probabilities and a
+  geometric localization theorem.
+\newblock {\em Discrete \& Computational Geometry}, 31(2):327--335, 2004.
+
+\bibitem{frostig2015regularizing}
+Roy Frostig, Rong Ge, Sham Kakade, and Aaron Sidford.
+\newblock Un-regularizing: approximate proximal point and faster stochastic
+  algorithms for empirical risk minimization.
+\newblock In {\em International Conference on Machine Learning}, pages
+  2540--2548, 2015.
+
+\bibitem{BF87}
+Z.~Furedi and I.~Barany.
+\newblock Computing the volume is difficult.
+\newblock In {\em STOC '86: Proceedings of the eighteenth annual ACM symposium
+  on Theory of computing}, pages 442--447, New York, NY, USA, 1986. ACM.
+
+\bibitem{BF88}
+Z.~Furedi and I.~Barany.
+\newblock Approximation of the sphere by polytopes having few vertices.
+\newblock {\em Proceedings of the AMS}, 102(3), 1988.
+
+\bibitem{Girolami2009}
+M.~{Girolami}, B.~{Calderhead}, and S.~A. {Chin}.
+\newblock {Riemannian Manifold Hamiltonian Monte Carlo}.
+\newblock {\em ArXiv e-prints}, July 2009.
+
+\bibitem{Girolami2011}
+Mark Girolami and Ben Calderhead.
+\newblock Riemann manifold langevin and hamiltonian monte carlo methods.
+\newblock {\em Journal of the Royal Statistical Society: Series B (Statistical
+  Methodology)}, 73(2):123--214, 2011.
+
+\bibitem{grotschel1981ellipsoid}
+Martin Gr{\"o}tschel, L{\'a}szl{\'o} Lov{\'a}sz, and Alexander Schrijver.
+\newblock The ellipsoid method and its consequences in combinatorial
+  optimization.
+\newblock {\em Combinatorica}, 1(2):169--197, 1981.
+
+\bibitem{grotschel2012geometric}
+Martin Gr{\"o}tschel, L{\'a}szl{\'o} Lov{\'a}sz, and Alexander Schrijver.
+\newblock {\em Geometric algorithms and combinatorial optimization}, volume~2.
+\newblock Algorithms and Combinatorics, 1988.
+
+\bibitem{Grunbaum1960}
+B.~Grunbaum.
+\newblock Partitions of mass-distributions and convex bodies by hyperplanes.
+\newblock {\em Pacific J. Math.}, 10:1257--1261, 1960.
+
+\bibitem{JLLV26}
+He~Jia, Aditi Laddha, Yin~Tat Lee, and Santosh Vempala.
+\newblock Reducing isotropy and volume to kls: Faster rounding and volume
+  algorithms.
+\newblock {\em J. ACM}, February 2026.
+\newblock Just Accepted.
+
+\bibitem{jiang2020improved}
+Haotian Jiang, Yin~Tat Lee, Zhao Song, and Sam Chiu-wai Wong.
+\newblock An improved cutting plane method for convex optimization,
+  convex-concave games, and its applications.
+\newblock In {\em Proceedings of the 52nd Annual ACM SIGACT Symposium on Theory
+  of Computing}, pages 944--953, 2020.
+
+\bibitem{Kalai2006simulated}
+Adam~Tauman Kalai and Santosh Vempala.
+\newblock Simulated annealing for convex optimization.
+\newblock {\em Math. Oper. Res.}, 31(2):253--266, February 2006.
+
+\bibitem{Kannan1995}
+Ravi Kannan, L{\'a}szl{\'o} Lov{\'a}sz, and Mikl{\'o}s Simonovits.
+\newblock Isoperimetric problems for convex bodies and a localization lemma.
+\newblock {\em Discrete \& Computational Geometry}, 13(1):541--559, 1995.
+
+\bibitem{kannan1997random}
+Ravi Kannan, L{\'a}szl{\'o} Lov{\'a}sz, and Mikl{\'o}s Simonovits.
+\newblock Random walks and an o*(n5) volume algorithm for convex bodies.
+\newblock {\em Random structures and algorithms}, 11(1):1--50, 1997.
+
+\bibitem{kannan_vempala_2017}
+Ravindran Kannan and Santosh Vempala.
+\newblock Randomized algorithms in numerical linear algebra.
+\newblock {\em Acta Numerica}, 26:95--135, 2017.
+
+\bibitem{KarzanovK91}
+Alexander Karzanov and Leonid Khachiyan.
+\newblock On the conductance of order {Markov} chains.
+\newblock {\em Order}, 8(1):7--15, 1991.
+
+\bibitem{kathuria2020unit}
+Tarun Kathuria, Yang~P Liu, and Aaron Sidford.
+\newblock Unit capacity maxflow in almost ${O}(m^{4/3})$ time.
+\newblock In {\em 2020 IEEE 61st Annual Symposium on Foundations of Computer
+  Science (FOCS)}, pages 119--130. IEEE, 2020.
+
+\bibitem{khachiyan1988inscribed}
+L~Khachiyan, S~Tarasov, and E~Erlich.
+\newblock The inscribed ellipsoid method.
+\newblock In {\em Soviet Math. Dokl}, volume 298, 1988.
+
+\bibitem{khachiyan1980polynomial}
+Leonid~G Khachiyan.
+\newblock Polynomial algorithms in linear programming.
+\newblock {\em USSR Computational Mathematics and Mathematical Physics},
+  20(1):53--72, 1980.
+
+\bibitem{klartag2017needle}
+Bo'az Klartag.
+\newblock {\em Needle decompositions in Riemannian geometry}, volume 249.
+\newblock American Mathematical Society, 2017.
+
+\bibitem{kyng2019flows}
+Rasmus Kyng, Richard Peng, Sushant Sachdeva, and Di~Wang.
+\newblock Flows in almost linear time via adaptive preconditioning.
+\newblock In {\em Proceedings of the 51st Annual ACM SIGACT Symposium on Theory
+  of Computing}, pages 902--913, 2019.
+
+\bibitem{Ledoux1999}
+Michel Ledoux.
+\newblock Concentration of measure and logarithmic sobolev inequalities.
+\newblock {\em Seminaire de probabilites de Strasbourg}, 33:120--216, 1999.
+
+\bibitem{lee2017efficient}
+Yin~Tat Lee, Aaron Sidford, and Santosh~S Vempala.
+\newblock Efficient convex optimization with membership oracles.
+\newblock {\em arXiv preprint arXiv:1706.07357}, 2017.
+
+\bibitem{lee2020efficient}
+Yin~Tat Lee, Aaron Sidford, and Santosh~S Vempala.
+\newblock Efficient convex optimization with oracles.
+\newblock In {\em Building Bridges II: Mathematics of L{\'a}szl{\'o}
+  Lov{\'a}sz}, pages 317--335. Springer, 2020.
+
+\bibitem{lee2015faster}
+Yin~Tat Lee, Aaron Sidford, and Sam Chiu-wai Wong.
+\newblock A faster cutting plane method and its implications for combinatorial
+  and convex optimization.
+\newblock In {\em Foundations of Computer Science (FOCS), 2015 IEEE 56th Annual
+  Symposium on}, pages 1049--1065. IEEE, 2015.
+
+\bibitem{LV2022geodesic}
+Yin~Tat Lee and Santosh Vempala.
+\newblock Geodesic walks in polytopes.
+\newblock {\em SIAM Journal on Computing}, 51(2):STOC17--400--STOC17--488,
+  2022.
+
+\bibitem{lee2017convergence}
+Yin~Tat Lee and Santosh~S Vempala.
+\newblock Convergence rate of riemannian hamiltonian monte carlo and faster
+  polytope volume computation.
+\newblock {\em arXiv preprint arXiv:1710.06261}, 2017.
+
+\bibitem{LV18riemannian}
+Yin~Tat Lee and Santosh~S. Vempala.
+\newblock Convergence rate of {R}iemannian {H}amiltonian {M}onte {C}arlo and
+  faster polytope volume computation.
+\newblock In {\em {S}ymposium on {T}heory of {C}omputing}, pages 1115--1121.
+  ACM, 2018.
+
+\bibitem{lee2024eldan}
+Yin~Tat Lee and Santosh~S Vempala.
+\newblock Eldan's stochastic localization and the kls conjecture: Isoperimetry,
+  concentration and mixing.
+\newblock {\em Annals of Mathematics}, 199(3):1043--1092, 2024.
+
+\bibitem{levin1965algorithm}
+A~Yu Levin.
+\newblock On an algorithm for the minimization of convex functions.
+\newblock In {\em Soviet Mathematics Doklady}, volume 160, pages 1244--1247,
+  1965.
+
+\bibitem{li1980estimates}
+Peter Li and Shing~Tung Yau.
+\newblock Estimates of eigenvalues of a compact riemannian manifold.
+\newblock {\em Geometry of the Laplace operator}, 36:205--239, 1980.
+
+\bibitem{lin2015universal}
+Hongzhou Lin, Julien Mairal, and Zaid Harchaoui.
+\newblock A universal catalyst for first-order optimization.
+\newblock In {\em Advances in Neural Information Processing Systems}, pages
+  3384--3392, 2015.
+
+\bibitem{L90}
+L.~Lov\'{a}sz.
+\newblock How to compute the volume?
+\newblock {\em Jber. d. Dt. Math.-Verein, Jubil\"aumstagung 1990}, pages
+  138--151, 1990.
+
+\bibitem{Lovasz1998}
+L.~Lov\'asz.
+\newblock Hit-and-run mixes fast.
+\newblock {\em Math. Prog.}, 86:443--461, 1998.
+
+\bibitem{LS90}
+L.~Lov\'{a}sz and M.~Simonovits.
+\newblock Mixing rate of {M}arkov chains, an isoperimetric inequality, and
+  computing the volume.
+\newblock In {\em ROCS}, pages 482--491, 1990.
+
+\bibitem{LS93}
+L.~Lov\'asz and M.~Simonovits.
+\newblock Random walks in a convex body and an improved volume algorithm.
+\newblock In {\em Random Structures and Alg.}, volume~4, pages 359--412, 1993.
+
+\bibitem{LV3}
+L.~Lov\'{a}sz and S.~Vempala.
+\newblock Hit-and-run from a corner.
+\newblock {\em SIAM J. Computing}, 35:985--1005, 2006.
+
+\bibitem{lovasz1993random}
+L{\'a}szl{\'o} Lov{\'a}sz and Mikl{\'o}s Simonovits.
+\newblock Random walks in a convex body and an improved volume algorithm.
+\newblock {\em Random structures \& algorithms}, 4(4):359--412, 1993.
+
+\bibitem{LV2003}
+L{\'a}szl{\'o} Lov{\'a}sz and Santosh Vempala.
+\newblock Simulated annealing in convex bodies and an {$O^*(n^4)$} volume
+  algorithm.
+\newblock In {\em FOCS}, pages 650--659, 2003.
+
+\bibitem{lovasz2007geometry}
+L{\'{a}}szl{\'{o}} Lov{\'{a}}sz and Santosh Vempala.
+\newblock The geometry of logconcave functions and sampling algorithms.
+\newblock {\em Random Struct. Algorithms}, 30(3):307--358, 2007.
+
+\bibitem{lu2016relatively}
+Haihao Lu, Robert~M Freund, and Yurii Nesterov.
+\newblock Relatively-smooth convex optimization by first-order methods, and
+  applications.
+\newblock {\em arXiv preprint arXiv:1610.05708}, 2016.
+
+\bibitem{manselli1991maximum}
+Paolo Manselli and Carlo Pucci.
+\newblock Maximum length of steepest descent curves for quasi-convex functions.
+\newblock {\em Geometriae Dedicata}, 38(2):211--227, 1991.
+
+\bibitem{Neal2012}
+Radford~M. Neal.
+\newblock {MCMC} using {Hamiltonian} dynamics.
+\newblock {\em Handbook of Markov Chain Monte Carlo}, 54:113--162, 2010.
+
+\bibitem{Neal1996}
+R.M. Neal.
+\newblock {\em Bayesian Learning for Neural Networks}.
+\newblock Lecture Notes in Statistics. Springer New York, 1996.
+
+\bibitem{nesterov1998introductory}
+Yu~Nesterov.
+\newblock Introductory lectures on convex programming volume i: Basic course.
+\newblock {\em Lecture notes}, 1998.
+
+\bibitem{newman1965location}
+Donald~J Newman.
+\newblock Location of the maximum on unimodal surfaces.
+\newblock {\em Journal of the ACM (JACM)}, 12(3):395--398, 1965.
+
+\bibitem{constantin2018convex}
+Constantin~P.. Niculescu and Lars-Erik Persson.
+\newblock {\em Convex Functions and Their Applications: A Contemporary
+  Approach}.
+\newblock Springer., 2018.
+
+\bibitem{o2015adaptive}
+Brendan Odonoghue and Emmanuel Candes.
+\newblock Adaptive restart for accelerated gradient schemes.
+\newblock {\em Foundations of computational mathematics}, 15(3):715--732, 2015.
+
+\bibitem{oksendal2013stochastic}
+Bernt Oksendal.
+\newblock {\em Stochastic differential equations: an introduction with
+  applications}.
+\newblock Springer Science \& Business Media, 2013.
+
+\bibitem{payne1960optimal}
+Lawrence~E Payne and Hans~F Weinberger.
+\newblock An optimal poincar{\'e} inequality for convex domains.
+\newblock {\em Archive for Rational Mechanics and Analysis}, 5(1):286--292,
+  1960.
+
+\bibitem{rademacher2007approximating}
+Luis Rademacher.
+\newblock Approximating the centroid is hard.
+\newblock In {\em Proceedings of the 23rd {ACM} Symposium on Computational
+  Geometry, Gyeongju, South Korea, June 6-8, 2007}, pages 302--305, 2007.
+
+\bibitem{Rudelson1999}
+M.~Rudelson.
+\newblock Random vectors in the isotropic position.
+\newblock {\em Journal of Functional Analysis}, 164:60--72, 1999.
+
+\bibitem{sachdeva2014faster}
+Sushant Sachdeva, Nisheeth~K Vishnoi, et~al.
+\newblock Faster algorithms via approximation theory.
+\newblock {\em Foundations and Trends{\textregistered} in Theoretical Computer
+  Science}, 9(2):125--210, 2014.
+
+\bibitem{shor1977cut}
+Naum~Z Shor.
+\newblock Cut-off method with space extension in convex programming problems.
+\newblock {\em Cybernetics and systems analysis}, 13(1):94--96, 1977.
+
+\bibitem{Simonovits03}
+Mikl{\'o}s Simonovits.
+\newblock How to compute the volume in high dimension?
+\newblock {\em Math. Program.}, 97(1-2):337--374, 2003.
+
+\bibitem{spielman2011graph}
+Daniel~A Spielman and Nikhil Srivastava.
+\newblock Graph sparsification by effective resistances.
+\newblock {\em SIAM Journal on Computing}, 40(6):1913--1926, 2011.
+
+\bibitem{srivastava2013covariance}
+Nikhil Srivastava, Roman Vershynin, et~al.
+\newblock Covariance estimation for distributions with 2+eps moments.
+\newblock {\em The Annals of Probability}, 41(5):3081--3111, 2013.
+
+\bibitem{stigler1945cost}
+George~J Stigler.
+\newblock The cost of subsistence.
+\newblock {\em Journal of farm economics}, 27(2):303--314, 1945.
+
+\bibitem{tropp2015introduction}
+Joel~A Tropp et~al.
+\newblock An introduction to matrix concentration inequalities.
+\newblock {\em Foundations and Trends{\textregistered} in Machine Learning},
+  8(1-2):1--230, 2015.
+
+\bibitem{DBLP:conf/focs/Vaidya89b}
+Pravin~M. Vaidya.
+\newblock A new algorithm for minimizing convex functions over convex sets.
+\newblock In {\em 30th Annual Symposium on Foundations of Computer Science,
+  Research Triangle Park, North Carolina, USA, 30 October - 1 November 1989},
+  pages 338--343, 1989.
+
+\bibitem{van2014renyi}
+Tim Van~Erven and Peter Harremos.
+\newblock R{\'e}nyi divergence and {K}ullback-{L}eibler divergence.
+\newblock {\em IEEE Transactions on Information Theory}, 60(7):3797--3820,
+  2014.
+
+\bibitem{VemSurvey}
+S.~Vempala.
+\newblock Geometric random walks: A survey.
+\newblock {\em MSRI Combinatorial and Computational Geometry}, 52:573--612,
+  2005.
+
+\bibitem{Vempala04}
+S.~S. Vempala.
+\newblock {\em The Random Projection Method}.
+\newblock AMS, 2004.
+
+\bibitem{wibisono2018sampling}
+Andre Wibisono.
+\newblock Sampling as optimization in the space of measures: The langevin
+  dynamics as a composite optimization problem.
+\newblock {\em arXiv preprint arXiv:1802.08089}, 2018.
+
+\bibitem{woodruff2014sketching}
+David~P Woodruff et~al.
+\newblock Sketching as a tool for numerical linear algebra.
+\newblock {\em Foundations and Trends{\textregistered} in Theoretical Computer
+  Science}, 10(1--2):1--157, 2014.
+
+\bibitem{yudin1976evaluation}
+David~B Yudin and Arkadii~S Nemirovski.
+\newblock Evaluation of the information complexity of mathematical programming
+  problems.
+\newblock {\em Ekonomika i Matematicheskie Metody}, 12:128--142, 1976.
+
+\end{thebibliography}

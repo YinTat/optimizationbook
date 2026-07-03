@@ -134,7 +134,7 @@ difficult
 
 ,
  i.e.,
- one that does not satisfy some smoothness condition which direct suggests a faster than worst-case optimization method.
+ one that does not satisfy some smoothness condition which directly suggests a faster than worst-case optimization method.
  Often,
  we can decompose the difficult problem as 
 \begin_inset Formula $f(x)=g(x)+h(Ax)$
@@ -246,7 +246,7 @@ Compactness is necessary.
 \end_layout
 
 \begin_layout Standard
-The above idea of passing to the dual extends to a sum of convex functions as below below.
+The above idea of passing to the dual extends to a sum of convex functions as below.
 \end_layout
 
 \begin_layout Lemma
@@ -285,7 +285,7 @@ For any
  
 \begin_inset Formula 
 \begin{align*}
-f_{1}^{*}(-\theta_{1})+\sum_{i=2}^{m-1}f_{i}^{*}(\theta_{i-1}-\theta_{i})+f_{m}^{*}(\theta_{m-1}) & \ge((-\theta_{1})^{\top}x-f_{1}(x))+\sum_{i=1}^{m-1}((\theta_{i-1}-\theta_{i})^{\top}x-f_{i}(x))\\
+f_{1}^{*}(-\theta_{1})+\sum_{i=2}^{m-1}f_{i}^{*}(\theta_{i-1}-\theta_{i})+f_{m}^{*}(\theta_{m-1}) & \ge((-\theta_{1})^{\top}x-f_{1}(x))+\sum_{i=2}^{m-1}((\theta_{i-1}-\theta_{i})^{\top}x-f_{i}(x))\\
  & ~+(\theta_{m-1}^{\top}x-f_{m}(x))\\
  & =-\sum_{i=1}^{m}f_{i}(x)\\
 \sum_{i=1}^{m}f_{i}(x) & \ge-(f_{1}^{*}(-\theta_{1})+\sum_{i=2}^{m-1}f_{i}^{*}(\theta_{i-1}-\theta_{i})+f_{m}^{*}(\theta_{m-1}))
@@ -322,7 +322,7 @@ It remains to show that there exist
 \begin_inset Formula $\ge$
 \end_inset
 
- is guaranteed by above).
+ is guaranteed by the preceding inequality).
  We choose 
 \begin_inset Formula $x\in\R^{n}$
 \end_inset
@@ -384,7 +384,7 @@ Finally,
 \end_inset
 
  for 
-\begin_inset Formula $i=0,\ldots,m$
+\begin_inset Formula $i=1,\ldots,m-1$
 \end_inset
 
 ,
@@ -506,7 +506,7 @@ where
 \begin_inset Formula $A\in\R^{V\times E}$
 \end_inset
 
- encodes the vertex-edge adjacency matrix with two nonzeros per column,
+ encodes the vertex-edge incidence matrix with two nonzeros per column,
  
 \begin_inset Formula $d$
 \end_inset
@@ -552,8 +552,14 @@ When
 \begin_inset Formula $s-t$
 \end_inset
 
- cut problem with the cut given by 
-\begin_inset Formula $\{v\in V\text{ such that }\phi(v)\geq t\}$
+ cut problem with the cut,
+ for a threshold 
+\begin_inset Formula $\tau$
+\end_inset
+
+,
+ given by 
+\begin_inset Formula $\{v\in V:\phi(v)\geq\tau\}$
 \end_inset
 
 .
@@ -604,7 +610,7 @@ When you can solve the dual problem,
  the proof of the optimality of the dual problem often directly gives you the solution of the primal problem,
  or gives you some way to solve the primal problem efficiently.
  Here,
- we use the semidefinite programming as an concrete example.
+ we use semidefinite programming as a concrete example.
  Define 
 \begin_inset Formula $\bullet$
 \end_inset
@@ -664,7 +670,7 @@ where
 \begin_inset Formula $\tilde{O}(n^{2}(Z+n^{4}))$
 \end_inset
 
- time algorithm for the primal (because there are 
+-time algorithm for the primal (because there are 
 \begin_inset Formula $n^{2}$
 \end_inset
 
@@ -720,10 +726,10 @@ v^{\top}(\sum_{i=1}^{m}y_{i}A_{i}-C)v\geq0.
 \end_inset
 
 Let 
-\begin_inset Formula $S$
+\begin_inset Formula $\mathcal{S}$
 \end_inset
 
- be the set of all cutting planes used in the algorithm.
+ be the set of vectors whose cutting planes are used in the algorithm.
  Then,
  the proof of the cutting plane method 
 \begin_inset Note Note
@@ -745,7 +751,7 @@ shows that
 
 \end_inset
 
-The key idea to obtaining the primal solution is to take the dual of the right hand side (which is an approximate dual of the original problem).
+The key idea to obtaining the primal solution is to take the dual of the right-hand side (which is an approximate dual of the original problem).
  Now,
  we have
 \begin_inset Formula 
@@ -972,7 +978,7 @@ To be concrete,
 \end_inset
 
  be the happiness of a school/student if the student is assigned to that school.
- Suppose that every student can only be assigned to one school and school 
+ Suppose that every student can be assigned to at most one school and school 
 \begin_inset Formula $b$
 \end_inset
 
@@ -985,32 +991,32 @@ To be concrete,
  the problem can be formulated as
 \begin_inset Formula 
 \[
-\max_{x_{e}\geq0}\sum_{e\in E}w_{e}x_{e}\text{ subject to }\sum_{(a,b)\in E}x_{(a,b)}\leq1\ \forall a\in V_{1},\sum_{(a,b)\in E}x_{(a,b)}\leq c_{b}\ \forall b\in V_{2}.
+\max_{x_{e}\geq0}\sum_{e\in E}w_{e}x_{e}\text{ subject to }\sum_{b:(a,b)\in E}x_{(a,b)}\leq1\ \forall a\in V_{1},\sum_{a:(a,b)\in E}x_{(a,b)}\leq c_{b}\ \forall b\in V_{2}.
 \]
 
 \end_inset
 
 This is the weighted b-matching problem.
  Typically,
- the number of students is much more than the number of schools.
+ the number of students is much larger than the number of schools.
  Therefore,
  an algorithm with running time linear in the number of students is preferable.
  To apply our framework,
  we let
 \begin_inset Formula 
 \begin{align*}
-K_{1} & =\{x\in\R^{E},x_{e}\geq0,\sum_{(a,b)\in E}x_{(a,b)}\leq1\ \forall a\in V_{1}\},\\
+K_{1} & =\{x\in\R^{E},x_{e}\geq0,\sum_{b:(a,b)\in E}x_{(a,b)}\leq1\ \forall a\in V_{1}\},\\
 K_{2} & =\{y\in\R^{V_{2}},y_{b}\leq c_{b}\},
 \end{align*}
 
 \end_inset
 
 and 
-\begin_inset Formula $M\in\R^{E}\rightarrow\R^{V_{2}}$
+\begin_inset Formula $M:\R^{E}\rightarrow\R^{V_{2}}$
 \end_inset
 
  is the map 
-\begin_inset Formula $(Tx)_{b}=\sum_{a:(a,b)\in E}x_{(a,b)}.$
+\begin_inset Formula $(Mx)_{b}=\sum_{a:(a,b)\in E}x_{(a,b)}.$
 \end_inset
 
 
@@ -1121,7 +1127,7 @@ Submodular flow:
 
 ,
  
-\begin_inset Formula $K_{2}=\{y\in\R^{V}:\sum_{i\in S}y_{i}\leq f(S)\text{ for all }S\subset[n]\}$
+\begin_inset Formula $K_{2}=\{y\in\R^{V}:\sum_{i\in S}y_{i}\leq f(S)\text{ for all }S\subset V\}$
 \end_inset
 
 ,
@@ -1158,7 +1164,7 @@ why?
 \end_inset
 
  For the last three examples,
- it is not clear how to compute gradient of 
+ it is not clear how to compute the gradient of 
 \begin_inset Formula $\delta_{K_{1}}$
 \end_inset
 
@@ -1188,7 +1194,7 @@ literal "true"
 \end_inset
 
 ,
- the standard way was to use the equivalence of 
+ the standard way was to use the equivalence between 
 \begin_inset Formula $\nabla\delta_{K_{1}}^{*}$
 \end_inset
 
@@ -1196,8 +1202,8 @@ literal "true"
 \begin_inset Formula $\nabla\delta_{K_{1}}$
 \end_inset
 
- ,
- and apply cutting plane methods.
+,
+ and then apply cutting plane methods.
  With the running time of cutting plane methods,
  such an algorithm usually had theoretical running time at least 
 \begin_inset Formula $n^{5}$
@@ -1249,7 +1255,7 @@ Taking the dual has two benefits.
 .
 \end_layout
 
-\begin_layout Proof
+\begin_layout Standard
 \begin_inset Float figure
 placement document
 alignment document
@@ -1296,7 +1302,7 @@ The key observation is the following lemma:
 
 \begin_layout Lemma
 Let 
-\begin_inset Formula $x_{i}\in K_{1}$
+\begin_inset Formula $\{x_i\}\subset K_{1}$
 \end_inset
 
  be the set of points output by the oracle 
@@ -1305,7 +1311,7 @@ Let
 
  during the cutting plane method.
  Define 
-\begin_inset Formula $y_{i}\in K_{2}$
+\begin_inset Formula $\{y_i\}\subset K_{2}$
 \end_inset
 
  similarly.
@@ -1318,7 +1324,7 @@ Let
  we have that
 \begin_inset Formula 
 \[
-\min_{x\in K_{1},Tx\in K_{2}}c^{\top}x\leq\min_{x\in\widetilde{K_{1}},Tx\in\widetilde{K_{2}}}c^{\top}x\leq\min_{x\in K_{1},Tx\in K_{2}}c^{\top}x+\varepsilon
+\min_{x\in K_{1},Mx\in K_{2}}c^{\top}x\leq\min_{x\in\widetilde{K_{1}},Mx\in\widetilde{K_{2}}}c^{\top}x\leq\min_{x\in K_{1},Mx\in K_{2}}c^{\top}x+\varepsilon
 \]
 
 \end_inset
@@ -1395,7 +1401,7 @@ Let
  we have that
 \begin_inset Formula 
 \[
-\min_{x\in\widetilde{K_{1}},Tx\in\widetilde{K_{2}}}c^{\top}x\leq c^{\top}x\leq\min_{x\in K_{1},Tx\in K_{2}}c^{\top}x+\varepsilon.
+\min_{x\in\widetilde{K_{1}},Mx\in\widetilde{K_{2}}}c^{\top}x\leq c^{\top}x\leq\min_{x\in K_{1},Mx\in K_{2}}c^{\top}x+\varepsilon.
 \]
 
 \end_inset
@@ -1415,7 +1421,7 @@ To prove the claim,
 \end_inset
 
  and hence 
-\begin_inset Formula $\min_{x\in\widetilde{K_{1}}}\theta_{i}^{\top}x\geq\min_{x\in K_{1}}\theta_{i}^{\top}x$
+\begin_inset Formula $\max_{x\in\widetilde{K_{1}}}\theta_{i}^{\top}x\leq\max_{x\in K_{1}}\theta_{i}^{\top}x$
 \end_inset
 
 .
@@ -1423,25 +1429,25 @@ To prove the claim,
  note that 
 \begin_inset Formula 
 \[
-x_{i}=\arg\min_{x\in K_{1}}\theta_{i}^{\top}x\in\widetilde{K_{1}}
+x_{i}=\arg\max_{x\in K_{1}}\theta_{i}^{\top}x\in\widetilde{K_{1}}
 \]
 
 \end_inset
 
 and hence 
-\begin_inset Formula $\min_{x\in\widetilde{K_{1}}}\theta_{i}^{\top}x\leq\min_{x\in K_{1}}\theta_{i}^{\top}x$
+\begin_inset Formula $\max_{x\in\widetilde{K_{1}}}\theta_{i}^{\top}x\geq\max_{x\in K_{1}}\theta_{i}^{\top}x$
 \end_inset
 
 .
  Therefore,
  we have that 
-\begin_inset Formula $\min_{x\in\widetilde{K_{1}}}\theta_{i}^{\top}x=\min_{x\in K_{1}}\theta_{i}^{\top}x$
+\begin_inset Formula $\max_{x\in\widetilde{K_{1}}}\theta_{i}^{\top}x=\max_{x\in K_{1}}\theta_{i}^{\top}x$
 \end_inset
 
 .
  Therefore,
  
-\begin_inset Formula $x_{i}\in\arg\min_{x\in K_{1}}\theta_{i}^{\top}x$
+\begin_inset Formula $x_{i}\in\arg\max_{x\in\widetilde{K_{1}}}\theta_{i}^{\top}x$
 \end_inset
 
 .
@@ -1459,7 +1465,7 @@ and hence
 
 \begin_layout Standard
 This reduces the problem into the form 
-\begin_inset Formula $\min_{x\in\widetilde{K_{1}},Tx\in\widetilde{K_{2}}}c^{\top}x$
+\begin_inset Formula $\min_{x\in\widetilde{K_{1}},Mx\in\widetilde{K_{2}}}c^{\top}x$
 \end_inset
 
 .
@@ -1473,8 +1479,8 @@ This reduces the problem into the form
  we have
 \begin_inset Formula 
 \begin{align*}
-\min_{x\in\widetilde{K_{1}},Mx\in\widetilde{K_{2}}}c^{\top}x= & \min_{t_{i}\geq0,s_{i}\geq0,M\sum_{i}t_{i}x_{i}=\sum_{i}s_{i}y_{i}}c^{\top}(\sum_{i}t_{i}x_{i})\\
-= & \min_{t_{i}\geq0,s_{i}\geq0,\sum_{i}t_{i}z_{i}=\sum_{i}s_{i}y_{i}}\sum t_{i}\cdot c^{\top}x_{i}.
+\min_{x\in\widetilde{K_{1}},Mx\in\widetilde{K_{2}}}c^{\top}x= & \min_{\substack{t_{i},s_{i}\geq0,\ \sum_i t_i=\sum_i s_i=1\\M\sum_{i}t_{i}x_{i}=\sum_{i}s_{i}y_{i}}}c^{\top}(\sum_{i}t_{i}x_{i})\\
+= & \min_{\substack{t_{i},s_{i}\geq0,\ \sum_i t_i=\sum_i s_i=1\\\sum_{i}t_{i}z_{i}=\sum_{i}s_{i}y_{i}}}\sum_i t_{i}\cdot c^{\top}x_{i}.
 \end{align*}
 
 \end_inset
@@ -1606,7 +1612,7 @@ which is linear in the number of students!
 \begin_layout Standard
 In general,
  this statement says that if we can split a convex problem into two parts,
- with both being easy to solve and one part having fewer variables,
+ where both are easy to solve and one part has fewer variables,
  then we can solve the entire problem in time depending on the smaller dimension.
 \end_layout
 

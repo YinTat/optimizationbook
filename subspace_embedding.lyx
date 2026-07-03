@@ -128,7 +128,7 @@ x=(A^{\top}A)^{-1}A^{\top}b.
 \end_inset
 
 If 
-\begin_inset Formula $A^{T}A$
+\begin_inset Formula $A^{\top}A$
 \end_inset
 
  is not invertible, we use its pseudo-inverse.
@@ -162,17 +162,17 @@ If
 The simplest iteration is the Richardson iteration: 
 \begin_inset Formula 
 \[
-x^{(k+1)}=A^{T}b+(I-A^{\top}A)x^{(k)}=x^{(k)}+A^{T}b-A^{\top}Ax^{(k)}.
+x^{(k+1)}=A^{\top}b+(I-A^{\top}A)x^{(k)}=x^{(k)}+A^{\top}b-A^{\top}Ax^{(k)}.
 \]
 
 \end_inset
 
 To ensure this converges, we scale down 
-\begin_inset Formula $A^{T}A$
+\begin_inset Formula $A^{\top}A$
 \end_inset
 
  by its largest eigenvalue so that 
-\begin_inset Formula $A^{T}A\prec I$
+\begin_inset Formula $A^{\top}A\prec I$
 \end_inset
 
 .
@@ -198,12 +198,12 @@ Recall that for a vector
 \begin_inset Formula $v$
 \end_inset
 
-, the norm 
-\begin_inset Formula $\norm v_{M}$
+, the squared norm 
+\begin_inset Formula $\norm{v}_{M}^{2}$
 \end_inset
 
  is defined as 
-\begin_inset Formula $v^{T}Mv$
+\begin_inset Formula $v^{\top}Mv$
 \end_inset
 
 .
@@ -243,7 +243,7 @@ Given a matrix
 \begin_inset Formula $x^{(k+1)}=x^{(k)}-M^{-1}(A^{\top}Ax^{(k)}-A^{\top}b)$
 \end_inset
 
- .
+.
  Then, we have that
 \begin_inset Formula 
 \[
@@ -326,7 +326,8 @@ Note that
 \end_inset
 
 .
- Alternatively, we can think that our goal is to approximate 
+ Alternatively,
+ we can think of our goal as approximating 
 \begin_inset Formula $A$
 \end_inset
 
@@ -334,7 +335,7 @@ Note that
 \begin_inset Formula $B$
 \end_inset
 
- s.t.
+ such that
  
 \begin_inset Formula $\|Ax\|^{2}$
 \end_inset
@@ -461,7 +462,7 @@ For any
 
 \begin_layout Standard
 This embedding is not useful for solving the least squares problem because
- the solution of the least square problem is simply a closed form of the
+ the solution of the least squares problem is simply a closed form of the
  SVD decomposition 
 \begin_inset Formula $x=V\Sigma^{-1}U^{\top}b$
 \end_inset
@@ -555,7 +556,7 @@ Let
 \begin_inset Formula $S=\{y:y=Uz\}$
 \end_inset
 
- Then, the condition
+. Then, the condition
 \begin_inset Formula 
 \[
 (1-\epsilon)\|y\|^{2}\leq\|\Pi y\|^{2}\leq(1+\epsilon)\|y\|^{2}
@@ -604,17 +605,17 @@ for all unit vectors
 \end_inset
 
 .
- An OSE for 
-\begin_inset Formula $d=1$
-\end_inset
-
- is given by the Johnson-Lindenstrauss Lemma.
- The original version was for a uniform random subspace of dimension 
+ The classical Johnson-Lindenstrauss lemma is usually stated for finite
+ point sets under random projection.
+ The OSE formulation asks instead for simultaneous preservation of every
+ vector in a fixed 
 \begin_inset Formula $d$
 \end_inset
 
-, but later versions extended this to Gaussian, Bernoulli and more general
- random matrices 
+-dimensional subspace;
+ Gaussian,
+ Bernoulli,
+ and more general random matrices can achieve this 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Vempala04"
@@ -639,8 +640,9 @@ Let
 \begin_inset Formula $\Pi\in\R^{m\times n}$
 \end_inset
 
- be a random matrix with i.i.d entries from 
-\begin_inset Formula $N(0,\frac{1}{\sqrt{m}})$
+ be a random matrix with i.i.d.
+ entries from 
+\begin_inset Formula $N(0,\frac{1}{m})$
 \end_inset
 
  or uniformly sampled from 
@@ -678,7 +680,7 @@ We will skip the proof for this as we will prove a more general result later.
 \begin_inset Formula $d=1$
 \end_inset
 
- is a OSE for general 
+ is an OSE for general 
 \begin_inset Formula $d$
 \end_inset
 
@@ -866,7 +868,7 @@ Suppose that
 
 \begin_layout Proof
 Let 
-\begin_inset Formula $N=\{x_{i}\}_{i=1}$
+\begin_inset Formula $\mathcal{N}=\{x_i\}_{i=1}^{N}$
 \end_inset
 
  be a 
@@ -877,92 +879,97 @@ Let
 \begin_inset Formula $S^{d-1}$
 \end_inset
 
-.
- Then, for any 
-\begin_inset Formula $x$
-\end_inset
-
-, we have 
-\begin_inset Formula $x_{1}\in N$
-\end_inset
-
- such that 
-\begin_inset Formula $\|x-x_{1}\|_{2}\leq\frac{1}{2}$
-\end_inset
-
-.
- Using the 
-\begin_inset Formula $\frac{1}{2}$
-\end_inset
-
--net guarantee on the vector 
-\begin_inset Formula $x-x_{1}$
-\end_inset
-
-, we can find 
-\begin_inset Formula $x_{2}\in N$
-\end_inset
-
- and 
-\begin_inset Formula $0\leq t_{2}\leq\frac{1}{2}$
-\end_inset
-
- such that
-\begin_inset Formula 
-\[
-\|x-x_{1}-t_{2}x_{2}\|\leq\frac{1}{4}.
-\]
-
-\end_inset
-
-Continuing similarly, we have 
-\begin_inset Formula $x=\sum_{i=1}^{\infty}t_{i}x_{i}$
-\end_inset
-
+,
  with 
-\begin_inset Formula $0\leq t_{i}\leq\frac{1}{2^{i-1}}$
+\begin_inset Formula $N\leq5^d$
 \end_inset
 
 .
- Hence, we have that
-\begin_inset Formula 
-\begin{align*}
-x^{\top}(U^{\top}\Pi^{\top}\Pi U-I_{d})x & =\sum_{i,j}t_{i}t_{j}x_{i}^{\top}(U^{\top}\Pi^{\top}\Pi U-I_{d})x_{j}\\
- & \leq\sum_{i,j}t_{i}t_{j}\cdot\max_{x\in N}\left|x^{\top}\left|U^{\top}\Pi^{\top}\Pi U-I_{d}\right|x\right|\\
- & \le4\max_{x\in N}\left|x^{\top}\left|U^{\top}\Pi^{\top}\Pi U-I_{d}\right|x\right|\\
- & =4\max_{x\in UN}\left|\|\Pi x\|^{2}-1\right|
-\end{align*}
-
+ Put 
+\begin_inset Formula $\Delta=U^\top\Pi^\top\Pi U-I_d$
 \end_inset
 
-
-\end_layout
-
-\begin_layout Proof
-Now, using that 
-\begin_inset Formula $\Pi$
-\end_inset
-
- is 
+.
+ By the 
 \begin_inset Formula $(1,\epsilon,\delta)$
 \end_inset
 
- OSE, we have that
+ guarantee for 
+\begin_inset Formula $\Pi$
+\end_inset
+
+ and a union bound over 
+\begin_inset Formula $U\mathcal{N}$
+\end_inset
+
+,
+ with probability at least 
+\begin_inset Formula $1-5^d\delta$
+\end_inset
+
+,
+ 
 \begin_inset Formula 
 \[
-\P(\left|\|\Pi x\|^{2}-1\right|\leq\epsilon)\geq1-\delta.
+|y^\top\Delta y|=\left|\|\Pi Uy\|^2-1\right|\leq\epsilon\quad\text{for all }y\in\mathcal{N}.
 \]
 
 \end_inset
 
-Taking a union bound over all 
-\begin_inset Formula $x\in UN$
+On this event,
+ let 
+\begin_inset Formula $x$
 \end_inset
 
-, we have
+ be a unit eigenvector of 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ with 
+\begin_inset Formula $|x^\top\Delta x|=\|\Delta\|_{\op}$
+\end_inset
+
+,
+ and choose 
+\begin_inset Formula $y\in\mathcal{N}$
+\end_inset
+
+ with 
+\begin_inset Formula $\|x-y\|_2\leq\frac{1}{2}$
+\end_inset
+
+.
+ Write 
+\begin_inset Formula $y=\alpha x+z$
+\end_inset
+
+ with 
+\begin_inset Formula $z\perp x$
+\end_inset
+
+.
+ Then 
+\begin_inset Formula $\alpha\geq\frac{7}{8}$
+\end_inset
+
+,
+ so
 \begin_inset Formula 
 \[
-\P(x^{\top}(U^{\top}\Pi^{\top}\Pi U-I_{d})x\leq4\epsilon)\geq1-5^{d}\delta.
+|y^\top\Delta y|\geq(2\alpha^2-1)\|\Delta\|_{\op}\geq\frac{17}{32}\|\Delta\|_{\op}.
+\]
+
+\end_inset
+
+Thus 
+\begin_inset Formula $\|\Delta\|_{\op}\leq\frac{32}{17}\epsilon\leq4\epsilon$
+\end_inset
+
+,
+ and hence
+\begin_inset Formula 
+\[
+\P\left(\|U^\top\Pi^\top\Pi U-I_d\|_{\op}\leq4\epsilon\right)\geq1-5^d\delta.
 \]
 
 \end_inset
@@ -971,7 +978,7 @@ Taking a union bound over all
 \end_layout
 
 \begin_layout Standard
-This reduction and the Johnson-Lindenstrauss Lemma shows that a random 
+This reduction and the Johnson-Lindenstrauss lemma show that a random matrix with independent uniformly random entries in 
 \begin_inset Formula $\pm\frac{1}{\sqrt{m}}$
 \end_inset
 
@@ -1059,13 +1066,23 @@ We consider the sparse matrix
 \end_inset
 
  where each entry is 
-\begin_inset Formula $\pm\frac{1}{\sqrt{s}}$
+\begin_inset Formula $+\frac{1}{\sqrt{s}}$
 \end_inset
 
  with probability 
-\begin_inset Formula $\frac{s}{m}$
+\begin_inset Formula $\frac{s}{2m}$
 \end_inset
 
+,
+ 
+\begin_inset Formula $-\frac{1}{\sqrt{s}}$
+\end_inset
+
+ with probability 
+\begin_inset Formula $\frac{s}{2m}$
+\end_inset
+
+,
  and 
 \begin_inset Formula $0$
 \end_inset
@@ -1092,7 +1109,11 @@ We consider the sparse matrix
 \begin_inset Formula $\|\Pi x\|^{2}$
 \end_inset
 
- is the number of non-zeros in the only column.
+ is 
+\begin_inset Formula $1/s$
+\end_inset
+
+ times the number of nonzero entries in its single column.
  Therefore, we indeed need that 
 \begin_inset Formula $s$
 \end_inset
@@ -1345,15 +1366,11 @@ Now, we can bound
 
 \begin_layout Lemma
 Assume that 
-\begin_inset Formula $s\gg\frac{m}{n}\log(\frac{1}{\delta}),$
-\end_inset
-
-
-\begin_inset Formula $\log^{2}(\frac{1}{\delta})/\epsilon^{2}$
+\begin_inset Formula $s\gg\frac{m}{n}\log(\frac{1}{\delta}),\quad s\gg\log^{2}(\frac{d}{\delta})/\epsilon^{2}$
 \end_inset
 
  and 
-\begin_inset Formula $m\gg d\log(\frac{1}{\delta})/\epsilon^{2}$
+\begin_inset Formula $m\gg d\log(\frac{d}{\delta})/\epsilon^{2}$
 \end_inset
 
 .
@@ -1498,11 +1515,11 @@ with probability
 \begin_inset Formula $P$
 \end_inset
 
- is a random diagonal block of 
+ is a principal submatrix of 
 \begin_inset Formula $UU^{\top}$
 \end_inset
 
-of size at most 
+ of size at most 
 \begin_inset Formula $2sn/m$
 \end_inset
 
@@ -1536,7 +1553,7 @@ with probability
 \begin_inset Formula $m\gg d\log(\frac{d}{\delta})/\epsilon^{2}$
 \end_inset
 
- , we have 
+, we have 
 \begin_inset Formula $\sigma^{\top}P\sigma\leq\frac{\epsilon^{2}}{\log(d/\delta)}$
 \end_inset
 
@@ -1563,13 +1580,23 @@ Consider a random sparse matrix
 \end_inset
 
  where each entry is 
-\begin_inset Formula $\pm\frac{1}{\sqrt{s}}$
+\begin_inset Formula $+\frac{1}{\sqrt{s}}$
 \end_inset
 
  with probability 
-\begin_inset Formula $\frac{s}{m}$
+\begin_inset Formula $\frac{s}{2m}$
 \end_inset
 
+,
+ 
+\begin_inset Formula $-\frac{1}{\sqrt{s}}$
+\end_inset
+
+ with probability 
+\begin_inset Formula $\frac{s}{2m}$
+\end_inset
+
+,
  and 
 \begin_inset Formula $0$
 \end_inset
@@ -1591,24 +1618,35 @@ Consider a random sparse matrix
 \begin_inset Formula $\Pi$
 \end_inset
 
- is an 
-\begin_inset Formula $O(d,\epsilon,\delta)$
+ is a 
+\begin_inset Formula $(d,\epsilon,\delta)$
 \end_inset
 
 -OSE.
 \end_layout
 
 \begin_layout Proof
-By the previous lemma, we have that
+Apply the previous lemma with failure probability 
+\begin_inset Formula $\delta/(2m)$
+\end_inset
+
+.
+ By a union bound,
+ with probability at least 
+\begin_inset Formula $1-\delta/2$
+\end_inset
+
+,
+ every row satisfies
 \begin_inset Formula 
 \[
-\pi_{r}^{\top}UU^{\top}\pi_{r}\leq\frac{\epsilon^{2}}{\log(d/\delta)}
+\pi_{r}^{\top}UU^{\top}\pi_{r}\leq\frac{\epsilon^{2}}{\log(2d/\delta)}.
 \]
 
 \end_inset
 
-with high probability.
- Under this event, using Theorem 
+On this event,
+ using Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:matrix-chernoff"
@@ -1618,7 +1656,7 @@ noprefix "false"
 
 \end_inset
 
- and 
+ and the bound 
 \begin_inset CommandInset ref
 LatexCommand eqref
 reference "matrix_ub"
@@ -1628,14 +1666,29 @@ noprefix "false"
 
 \end_inset
 
-, we have that
+,
+ and choosing the constants in 
+\begin_inset Formula $m$
+\end_inset
+
+ and 
+\begin_inset Formula $s$
+\end_inset
+
+ large enough,
+ we have that
 \begin_inset Formula 
 \[
-(1-O(\varepsilon))I\preceq\sum_{r=1}^{m}\pi_{r}^{\top}UU^{\top}\pi_{r}\preceq(1+O(\varepsilon))I.
+(1-O(\varepsilon))I\preceq U^{\top}\Pi^{\top}\Pi U\preceq(1+O(\varepsilon))I.
 \]
 
 \end_inset
 
+This is exactly the OSE guarantee for the subspace spanned by 
+\begin_inset Formula $U$
+\end_inset
+
+.
 
 \end_layout
 
@@ -1721,7 +1774,7 @@ Input:
 \end_inset
 
 , a vector 
-\begin_inset Formula $b\in\R^{d}$
+\begin_inset Formula $b\in\R^{n}$
 \end_inset
 
 , success probability 
@@ -1741,7 +1794,7 @@ Let
 \end_inset
 
  be a 
-\begin_inset Formula $O(d,\frac{1}{4},\delta)$
+\begin_inset Formula $(d,\frac{1}{4},\delta)$
 \end_inset
 
  OSE constructed by Theorem 
@@ -1866,12 +1919,12 @@ end{algorithm2e}
 \end_layout
 
 \begin_layout Theorem
-Given any matrix 
+Given any full-column-rank matrix 
 \begin_inset Formula $A\in\R^{n\times d}$
 \end_inset
 
 , any vector 
-\begin_inset Formula $b\in\R^{d}$
+\begin_inset Formula $b\in\R^{n}$
 \end_inset
 
 , the algorithm 
@@ -1885,7 +1938,7 @@ Given any matrix
  such that 
 \begin_inset Formula 
 \[
-\|A^{\top}Ax-A^{\top}b\|_{(A^{\top}A)^{-1}}\leq\epsilon\|A^{\top}b\|_{(A^{\top}A)^{-1}}.
+\|A^{\top}Ax-A^{\top}b\|_{(A^{\top}A)^{-1}}\leq\epsilon\|A^{\top}b\|_{(A^{\top}A)^{-1}}
 \]
 
 \end_inset
@@ -1963,7 +2016,7 @@ reference "lem:Richardson"
 \end_inset
 
  time.
- This explain the total time.
+ This explains the total time.
 \end_layout
 
 \begin_layout Standard

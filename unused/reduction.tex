@@ -1,0 +1,338 @@
+\selectlanguage{american}%
+
+\section{State of the Art}
+
+We have now seen various algorithms to minimize a convex function.They
+have different runtimes and seem difficult to compare. Before going
+deeper and discussing more results, here we discuss how to understand
+these different results and their relationships, via reductions between
+them. We will do this at three different levels. The most abstract
+is the level of oracles, which we will define presently; the second
+is black-box algorithms which access the function in restricted ways,
+e.g., via the gradient; and the last is with full information and
+under additional structural assumptions.
+
+Here we summarize the state-of-the-art in two tables. We tried to
+keep the tables short, and there are many important results omitted.
+
+\begin{table}[H]
+\begin{centering}
+\begin{tabular}{|>{\centering}m{0.15\paperwidth}|>{\centering}m{0.15\paperwidth}|>{\centering}m{0.15\paperwidth}|>{\centering}m{0.1\paperwidth}|>{\centering}m{0.15\paperwidth}|}
+\hline 
+{\scriptsize Convex Problem} & {\scriptsize Assumption} & {\scriptsize Algorithm} & {\scriptsize Iterations} & {\scriptsize Cost/Iter}\tabularnewline
+\hline 
+{\scriptsize
+\[
+\min_{x}f(x)
+\]
+} & \centering{}{\scriptsize -} & {\scriptsize Hybrid Center Cutting Plane} & {\scriptsize$n\log(\frac{n}{\epsilon})$} & {\scriptsize$\mathcal{T}_{f}+n^{2}\log^{O(1)}(\frac{n}{\epsilon})$}\tabularnewline
+\hline 
+{\scriptsize
+\[
+\min_{x\in\Omega_{1}\cap\Omega_{2}}c^{\top}x
+\]
+} & \centering{}{\scriptsize -} & {\scriptsize Hybrid Center Cutting Plane} & {\scriptsize$n\log(\frac{n}{\epsilon})$} & {\scriptsize$\mathcal{T}_{\Omega_{1}}+\mathcal{T}_{\Omega_{2}}+n^{2}\log^{O(1)}(\frac{n}{\epsilon})$}\tabularnewline
+\hline 
+{\scriptsize
+\[
+\min_{x}f(x)+g(x)
+\]
+} & {\scriptsize$\|\nabla f\|_{2}\leq G$, $\|x^{*}\|_{2}\leq R$} & {\scriptsize Gradient Descent} & {\scriptsize$\left(\frac{GR}{\epsilon}\right)^{2}$} & {\scriptsize$\mathcal{T}_{\nabla f}+\mathcal{T}_{g}$}\tabularnewline
+\hline 
+{\scriptsize
+\[
+\min_{x}f(x)+g(x)
+\]
+} & {\scriptsize$\|\nabla f\|_{2}\leq G$, $\nabla^{2}f\succeq\mu\cdot I$} & {\scriptsize Gradient Descent} & {\scriptsize$\frac{G^{2}}{\mu\epsilon}$} & {\scriptsize$\mathcal{T}_{\nabla f}+\mathcal{T}_{g}$}\tabularnewline
+\hline 
+{\scriptsize
+\[
+\min_{x}f(x)+g(x)
+\]
+} & \centering{}{\scriptsize$\nabla^{2}f\preceq L\cdot I$, $\|x^{*}\|_{2}\leq R$} & {\scriptsize Accelerated Gradient Descent} & {\scriptsize$\sqrt{\frac{LR^{2}}{\epsilon}}$} & {\scriptsize$\mathcal{T}_{\nabla f}+\mathcal{T}_{g}$}\tabularnewline
+\hline 
+{\scriptsize
+\[
+\min_{x}f(x)+g(x)
+\]
+} & \centering{}{\scriptsize$\mu\cdot I\preceq\nabla^{2}f\preceq L\cdot I$,
+$\|x^{*}\|_{2}\leq R$} & {\scriptsize Accelerated Gradient Descent} & {\scriptsize$\sqrt{\frac{L}{\mu}}\log(\frac{LR^{2}}{\epsilon})$} & {\scriptsize$\mathcal{T}_{\nabla f}+\mathcal{T}_{g}$}\tabularnewline
+\hline 
+{\scriptsize
+\[
+\min_{x\in\Omega}f(x)
+\]
+} & {\scriptsize$\nabla f$ is $L$ Lipschitz in $\|\cdot\|$, }{\scriptsize\par}
+
+{\scriptsize$\max_{x,y\in\Omega}\|x-y\|\leq R$} & {\scriptsize Frank Wolfe} & {\scriptsize$\frac{LR^{2}}{\epsilon}$} & {\scriptsize$\mathcal{T}_{\nabla f}+\mathcal{T}_{\Omega}$ }\tabularnewline
+\hline 
+{\scriptsize
+\[
+\min_{x}\E_{\omega}f_{\omega}(x)
+\]
+} & {\scriptsize$\E_{\omega}\|\nabla f_{\omega}\|_{2}^{2}\leq G^{2}$,
+$\|x^{*}\|_{2}\leq R$} & {\scriptsize Stochastic Gradient Descent} & {\scriptsize$\left(\frac{GR}{\epsilon}\right)^{2}$} & {\scriptsize$\mathcal{T}_{\nabla f_{\omega}}$}\tabularnewline
+\hline 
+{\scriptsize
+\[
+\min_{x}f(x)\defeq\frac{1}{n}\sum_{i}f_{i}(x)
+\]
+} & {\scriptsize$\nabla^{2}f\succeq\mu\cdot I,\nabla^{2}f_{i}\preceq L_{i}\cdot I$} & {\scriptsize Accelerated Stochastic Descent} & \multicolumn{2}{c|}{{\scriptsize Total Cost: $(\mathcal{T}_{\nabla f}+\sqrt{\frac{1}{\mu}\sum_{i}L_{i}}\mathcal{T}_{\nabla f_{i}})\log(\frac{1}{\epsilon})$}}\tabularnewline
+\hline 
+{\scriptsize
+\[
+\min_{x\in\Rn}f(x)
+\]
+} & {\scriptsize$\nabla^{2}f\succeq\mu\cdot I,\partial_{i}^{2}f\leq L_{i}$} & {\scriptsize Accelerated Coordinate Descent} & \multicolumn{2}{c|}{{\scriptsize Total Cost: $\sum_{i}\sqrt{\beta_{i}/\mu}\mathcal{T}_{\partial_{i}f}\log(\frac{1}{\epsilon})$}}\tabularnewline
+\hline 
+\end{tabular}
+\par\end{centering}
+\caption{Black-box Problems. The goal is to find $x$ such that $f(x)-\min_{x}f\protect\leq\epsilon$
+with initial point $x^{(0)}=0$. $\mathcal{T}_{\nabla f}$ is the
+cost of computing $\nabla f(x)$ for any $x$. $\mathcal{T}_{g}$
+is the cost of computing $\arg\min_{x}g(x)+\frac{\lambda}{2}\|x-c\|^{2}$
+for any $c$. $\mathcal{T}_{\Omega}$ is the cost of computing $\arg\min_{x\in\Omega}c^{\top}x$
+for any $c$. $\mathcal{T}_{\nabla f_{\omega}}$, $\mathcal{T}_{\nabla f_{i}}$
+and $\mathcal{T}_{\partial_{i}f}$ are the cost of computing $\nabla f_{\omega}$,
+$\nabla f_{i}$ and $\partial_{i}f$ for one of the $\omega$ or $i$.\label{tab:Black-Box-Problems}}
+\end{table}
+
+\begin{table}[H]
+\begin{centering}
+\begin{tabular}{|>{\centering}m{0.1\paperwidth}|>{\centering}m{0.15\paperwidth}|>{\centering}m{0.15\paperwidth}|c|c|}
+\hline 
+{\scriptsize Convex Problem} & {\scriptsize Assumption} & {\scriptsize Algorithm} & {\scriptsize Depth} & {\scriptsize Total Work}\tabularnewline
+\hline 
+\hline 
+\multirow{3}{0.1\paperwidth}{\centering{}{\scriptsize
+\[
+Ax=b
+\]
+}} & \centering{}{\scriptsize -} & {\scriptsize Fast Matrix Multiplication} & {\scriptsize$\log^{O(1)}(n)\log(\frac{1}{\epsilon})$} & {\scriptsize$n^{2.3728\cdots}\log(\frac{1}{\epsilon})$}\tabularnewline
+\cline{2-5}
+ & \centering{}{\scriptsize$\mu\cdot I\preceq A\preceq L\cdot I$} & {\scriptsize Conjugate Gradient} & {\scriptsize$\sqrt{\frac{L}{\mu}}\log(\frac{1}{\epsilon})$} & {\scriptsize$\nnz(A)\sqrt{\frac{L}{\mu}}\log(\frac{1}{\epsilon})$}\tabularnewline
+\cline{2-5}
+ & {\scriptsize$A_{ii}\geq\sum_{j\neq i}|A_{ji}|$} & {\scriptsize Sparse LU Factorization} & {\scriptsize$\log^{O(1)}(\frac{nL}{\mu})\log(\frac{1}{\epsilon})$} & {\scriptsize$\nnz(A)\log^{O(1)}(\frac{nL}{\mu})\log(\frac{1}{\epsilon})$}\tabularnewline
+\hline 
+\multirow{2}{0.1\paperwidth}{\centering{}{\scriptsize
+\[
+\min_{x}\|Ax-b\|_{2}
+\]
+}} & \centering{}{\scriptsize -} & {\scriptsize Subspace Embedding / Row Sampling} & {\scriptsize$\log^{O(1)}(n)\log(\frac{1}{\epsilon})$} & {\scriptsize$(\nnz(A)+r^{2.3728\cdots})\log(\frac{1}{\epsilon})$}\tabularnewline
+\cline{2-5}
+ & \centering{}{\scriptsize Each row of $A$ has $\leq2$ non-zeros} & {\scriptsize Sparse Cholesky Factorization} & {\scriptsize$\log^{O(1)}(n)\log(\frac{1}{\epsilon})$} & {\scriptsize$\nnz(A)\log^{O(1)}(n)\log(\frac{1}{\epsilon})$}\tabularnewline
+\hline 
+\multirow{2}{0.1\paperwidth}{\centering{}{\scriptsize
+\[
+\min_{Ax=b,x\in\Rn_{+}}c^{\top}x
+\]
+}} & \multirow{2}{0.15\paperwidth}{\centering{}{\scriptsize -}} & {\scriptsize Interior Point Method} & {\scriptsize$\sqrt{n}\log^{O(1)}(n)\log(\frac{1}{\epsilon})$} & {\scriptsize$n^{2.3728\cdots}\log(\frac{1}{\epsilon})$}\tabularnewline
+\cline{3-5}
+ &  & {\scriptsize Interior Point Method} & {\scriptsize$\sqrt{r}\log^{O(1)}(n)\log(\frac{1}{\epsilon})$} & {\scriptsize$\sqrt{r}(\nnz(A)+r^{2})\log^{O(1)}n\log(\frac{1}{\epsilon})$}\tabularnewline
+\hline 
+\centering{}{\scriptsize
+\[
+\min_{x}\sum_{i=1}^{n}f_{i}(a_{i}^{\top}x)
+\]
+} & \centering{}{\scriptsize -} & {\scriptsize Interior Point Method} & {\scriptsize$\sqrt{n}\log^{O(1)}(n)\log(\frac{1}{\epsilon})$} & {\scriptsize$n^{2.3728\cdots}\log(\frac{1}{\epsilon})$}\tabularnewline
+\hline 
+\end{tabular}
+\par\end{centering}
+\caption{Structured Problems. $r=\mathrm{rank}(A)$. We omit the precise definition
+of $\epsilon$, but all algorithms have complexity depending on $\log(1/\epsilon)$.\label{tab:Structured-Problems}}
+\end{table}
+
+
+\section{Remarks on the Runtime}
+
+\subsection{Structured vs black-box problems}
+
+Table \ref{tab:Black-Box-Problems} shows the runtimes for some convex
+problems assuming some restricted way to access the input convex function.
+We call the way to access the function an \emph{oracle}. For example,
+we say we only have a first-order oracle if we can only access the
+function using the gradient of the function. In this setting, we are
+particularly interested in how many times we need to use the oracle,
+such as how many gradients we need to compute. Since the function
+is only accessed through an oracle, we can usually bound how many
+calls are needed to effectively ``learn'' the function. In fact,
+all algorithms in the table are optimal in terms of the number of
+oracle calls. This is in huge contrast to structured problems where
+the tightness of all known results is open.
+
+Table \ref{tab:Structured-Problems} has the runtimes for some general
+convex problems. Unlike black-box problems, these algorithms assume
+the full description of the problem. For this setting, we usually
+aim for a runtime that depends on the structure of the problem instead
+of the numerical values of the input. Usually, such algorithms converge
+with a rate of $\log(1/\epsilon)$. For all of these problem, the
+best possible runtime is open. Finally, we note that the last two
+problems, linear programs and empirical risk minimization are complete
+in the sense that they can be used to approximate any convex function.
+Therefore, these last results seem to suggest that general convex
+problems are as easy as general linear systems (for now!).
+
+\subsection{Understanding the bounds}
+
+All the runtimes should have the correct ``units''. For instance,
+if the unit of the function value is $J$ (Joule) and the unit of
+the space is $m$, then the units of $G$, $R$ and $\epsilon$ are
+$Jm^{-1}$, $m$ and $J$ respectively. Therefore, the number of iterations
+of gradient descent $\frac{GR}{\epsilon}$ is unitless. In the table,
+we ignored some entries inside the $\log$ which leads to an ``incorrect''
+unit. However, when everything is written correctly, the number of
+iterations must be unitless. Furthermore, we can view $GR$, $LR^{2}$,
+$\frac{G^{2}}{\mu}$ all as upper bounds of the initial error $f(x^{(0)})-f^{*}$.
+For example, we know that
+\[
+f(x^{(0)})-f^{*}\leq\left\langle \nabla f(x^{(0)}),x^{(0)}-x^{*}\right\rangle \leq GR
+\]
+and that
+\[
+f(x^{(0)})-f^{*}\leq\left\langle \nabla f(x^{*}),x^{(0)}-x^{*}\right\rangle +\frac{L}{2}\|x^{(0)}-x^{*}\|^{2}\leq LR^{2}.
+\]
+Therefore, the terms $\frac{GR}{k}$, $\frac{G^{2}}{\mu k}$ and $\frac{LR^{2}}{k}$
+are all just measuring how much we need to decrease multiplicatively
+from the initial error. With this view, we can think the number of
+iteration required for Lipschitz convex functions, strongly convex
+functions and smooth functions are exactly $\frac{1}{\epsilon_{\mathrm{relative}}^{2}}$
+, $\frac{1}{\epsilon_{\mathrm{relative}}}$ and $\frac{1}{\sqrt{\epsilon_{\mathrm{relative}}}}$.
+
+\subsection{$L/\mu$ can be dimension dependent}
+
+The ratio $L/\mu$ heavily depends on the application. For some easy
+problems, it can be as small as $O(1)$. However, it can be very large
+for many natural problems. Here we give a few examples of natural
+convex functions with huge $\frac{L}{\mu}$. One very simple example
+is 
+\[
+f(x)=\frac{1}{2}x_{1}^{2}+\frac{1}{2}\sum_{k=1}^{n-1}(x_{k}-x_{k+1})^{2}+\frac{1}{2}x_{n}^{2}
+\]
+This problem appears everywhere from physical systems, graph problems,
+signal denoising to statistics. For this problem, we have $L=\Theta(1)$
+and $\mu=\Theta(\frac{1}{n^{2}})$. This example shows that you can
+have large $\frac{L}{\mu}$ even with small description coefficients
+in the problem. Here is another example:
+\[
+f(x)=\norm{Ax-b}_{2}^{2}
+\]
+where $A$ is a random $n\times n$ matrix with independent Gaussian
+entries. For this problem, we have $L=\Theta(n)$ and $\mu=\Theta(\frac{1}{n})$
+with high probability. For an extreme example, the function $|x|$
+has both $L=+\infty$ and $\mu=0$. 
+
+\subsection{Accuracy of analysis}
+
+For gradient descent and accelerated gradient descent, the convergence
+rate is asymptotically accurate if we take $L\sim\lambda_{\max}(\nabla^{2}f(x^{*}))$
+and $\mu\sim\lambda_{\min}(\nabla^{2}f(x^{*}))$ and $f\in\mathcal{C}^{2}$.
+This is because any $\mathcal{C}^{2}$ function locally looks like
+a quadratic around its minimum. We take gradient descent as an example.
+Note that gradient descent is invariant under any rotation and translation
+transformation. Therefore, we can assume $x^{*}=0$ and that $\nabla^{2}f(x^{*})$
+is a diagonal matrix with diagonals $\lambda_{1},\lambda_{2},\cdots,\lambda_{n}$.
+When $x$ is close to the optimal $x^{*}=0$, gradient descent $x^{\new}=x-h\nabla f(x)$
+is similar to a coordinate-wise iteration $x_{i}^{\new}=(1-h\lambda_{i})x_{i}$.
+This gives a precise description of the convergence rate.
+
+For more complicated algorithms, the theory of convergence rate and
+cost per iteration sometimes gives a bad estimate of the reality.
+For example, the interior point method often takes $O(\log n)$ iterations
+to converge despite the $\sqrt{n}$ worst-case bound on its convergence
+rate; the simplex method is often the best of choice for solving linear
+programs despite its exponential complexity bound.
+
+The cost per iterations sometimes can be misleading also. Each iteration
+of interior point methods takes $\nnz(A)+\mathrm{rank}(A)^{2}$ in
+theory while it takes nearly linear time in practice for sparse matrices
+due to the effectiveness of Cholesky decomposition. The $k^{th}$
+iteration of cutting plane methods often takes $nk+k^{O(1)}$ if implemented
+correctly despite its super-linear bound.
+
+Finally, the error of floating point computation gradually starts
+to have an effect when the target accuracy $\epsilon$ is small.
+
+\section{Relations Between Different First-order Methods}
+
+In the table \ref{tab:Black-Box-Problems}, we omitted many cases.
+For example, what is the runtime if we have a stochastic function
+$\min_{x}\E_{\omega}f_{\omega}(x)$ such that $\E_{\omega}f_{\omega}(x)$
+is strongly convex? What is the runtime if we have a finite sum problem
+$\frac{1}{n}\sum_{i}f_{i}(x)$ which is not strongly convex? In this
+section, we show that one can reduce runtimes between different cases.
+To highlight the idea, we will be informal and ignore polylogarithmic
+terms. We note that some of the reduction ideas are not just useful
+for proving theorems, but are practical tricks to speed up algorithms
+and to avoid having to know parameters. See \cite{lin2015universal,frostig2015regularizing,o2015adaptive,allen2016optimal}
+for more reduction tricks for first-order methods.
+
+\subsection*{From Strongly Convex to Convex}
+
+Suppose we have an algorithm $\mathcal{A}(f,x^{(0)})$ that inputs
+a $\mu$-strongly convex function $f$ such that $\|\nabla f(x)\|_{2}\leq G$
+for the domain of $f$ (such as a ball of radius $R$ around $x^{(0)}$)\footnote{Any strongly convex function on $\Rn$ cannot be uniformly Lipschitz
+on $\Rn$. Therefore, we must assume the domain is bounded in some
+way.} and outputs a point $x$ such that $f(x)\leq\min_{x}f(x)+\epsilon$
+in $\frac{G^{2}}{\mu\epsilon}$ calls to $\nabla f$. Equivalently,
+$f(x)\leq\min_{x}f(x)+\frac{G^{2}}{\mu k}$ in $k$ calls to $\nabla f$.
+Now, we show how to recover the bound $(\frac{GR}{\epsilon})^{2}$
+by the following algorithm:
+\begin{itemize}
+\item Output $\mathcal{A}(\widetilde{f},x^{(0)})$ where $\widetilde{f}(x)=f(x)+\frac{G}{R\sqrt{2k}}\|x\|_{2}^{2}.$
+\end{itemize}
+To understand the result, we let $f_{\sigma}(x)=f(x)+\frac{\sigma}{2}\|x\|_{2}^{2}$
+and let $x$ be the output of $\mathcal{A}(f_{\sigma})$. Note that
+$f_{\sigma}$ is $\sigma$ strongly convex. Hence, in $k$ iterations,
+we have that
+\[
+f_{\sigma}(x)\leq\min_{x}f_{\sigma}(x)+\frac{G^{2}}{\sigma k}\leq f_{\sigma}(x^{*})+\frac{G^{2}}{\sigma k}=f(x^{*})+\frac{\sigma}{2}R^{2}+\frac{G^{2}}{\sigma k}
+\]
+where $x^{*}$ is the minimum of $f(x)$. To get the best runtime
+for the fix $k$, we choose $\sigma$ such that 
+\[
+\frac{\sigma}{2}R^{2}=\frac{G^{2}}{\sigma k}
+\]
+which leads to $\sigma=\sqrt{\frac{2}{k}}\frac{G}{R}$ and hence the
+total error is $\sqrt{2}\frac{GR}{\sqrt{k}}$ which is exactly what
+we expect to get (up to constant).
+
+\subsection*{From Convex to Strongly Convex}
+
+Suppose we have an algorithm $\mathcal{A}(f,x^{(0)})$ that inputs
+a Lipschitz function $f$ such that $\|\nabla f(x)\|_{2}\leq G$ and
+that $\|x^{(0)}-x^{*}\|_{2}\leq R$ and outputs a point $x$ such
+that $f(x)\leq\min_{x}f(x)+\epsilon$ in $(\frac{GR}{\epsilon})^{2}$
+calls to $\nabla f$. Equivalently, $f(x)\leq\min_{x}f(x)+\frac{GR}{\sqrt{k}}$
+in $k$ calls to $\nabla f$. Now, we show how to recover the result
+$\widetilde{O}(\frac{G^{2}}{\mu\epsilon})$ by the following algorithm:
+\begin{itemize}
+\item For $i=1,2,\cdots,\widetilde{O}(1)$
+\begin{itemize}
+\item $x^{(i)}\leftarrow\mathcal{A}(f,x^{(i-1)})$ for $\frac{G^{2}}{\mu\epsilon}$
+iterations
+\end{itemize}
+\end{itemize}
+By the guarantee of $\mathcal{A}$, we have that 
+\begin{equation}
+f(x^{(i)})\leq\min_{x}f(x)+\frac{G\|x^{(i-1)}-x^{*}\|_{2}}{\sqrt{k}}=\min_{x}f(x)+\sqrt{\mu\epsilon}\|x^{(i-1)}-x^{*}\|_{2}.\label{eq:convex2strongly}
+\end{equation}
+On the other hand, the strong convexity of $f$ shows that $f(x^{(i)})-\min_{x}f(x)\geq\frac{\mu}{2}\cdot\|x^{(i)}-x^{*}\|_{2}^{2}$.
+Therefore, we have that
+\[
+\|x^{(i)}-x^{*}\|_{2}^{2}\leq2\sqrt{\frac{\epsilon}{\mu}}\|x^{(i-1)}-x^{*}\|_{2}.
+\]
+Therefore, if $\|x^{(i-1)}-x^{*}\|_{2}\geq8\sqrt{\frac{\epsilon}{\mu}}$,
+then the distance to OPT decreases by at least a factor of two. After
+$\widetilde{O}(1)$ iterations, we have that $\|x^{(i-1)}-x^{*}\|_{2}=O\left(\sqrt{\frac{\epsilon}{\mu}}\right)$
+and hence (\ref{eq:convex2strongly}) shows that $f(x^{(i)})\leq\min_{x}f(x)+\sqrt{\mu\epsilon}\cdot O\left(\sqrt{\frac{\epsilon}{\mu}}\right)=\min_{x}f(x)+O(\epsilon)$.
+\begin{xca}
+Given an algorithm that can minimize convex $f$ with $\epsilon$
+additive error in $\sqrt{\frac{LR^{2}}{\epsilon}}$ iterations, show
+how to use this algorithm to minimize $f$ again with $\epsilon$
+additive error in $\widetilde{O}\left(\sqrt{\frac{L}{\mu}}\log\left(\frac{LR^{2}}{\epsilon}\right)\right)$
+iterations.
+\end{xca}
+
+
+\subsection*{}\selectlanguage{english}%
+

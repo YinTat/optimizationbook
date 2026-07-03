@@ -133,11 +133,21 @@ In the DFK algorithm,
  we consider 
 \begin_inset Formula 
 \[
-f_{i}(x)=\exp(-a_{i}\norm x)\chi_{K}(x)\mbox{ or }f_{i}(x)=\exp(-a_{i}\norm x^{2})\chi_{K}(x).
+f_{i}(x)=\exp(-a_{i}\norm{x})\chi_{K}(x)\mbox{ or }f_{i}(x)=\exp(-a_{i}\norm{x}^{2}/2)\chi_{K}(x).
 \]
 
 \end_inset
 
+The first form is a useful radial model,
+ while the second is the Gaussian cooling schedule used below for volume.
+ The variance calculation below is stated in the more general logconcave-power
+ form,
+ which includes the Gaussian schedule by taking 
+\begin_inset Formula $f(x)=e^{-\norm{x}^{2}/2}\chi_{K}(x)$
+\end_inset
+
+.
+ 
 The coefficient 
 \begin_inset Formula $a_{i}$
 \end_inset
@@ -177,7 +187,7 @@ temperature
  in one or more phases.
  In the algorithm below,
  we assume that 
-\begin_inset Formula $B_{n}\subseteq K\subseteq RB_{n}$
+\begin_inset Formula $B^{n}\subseteq K\subseteq RB^{n}$
 \end_inset
 
  and 
@@ -252,7 +262,7 @@ SetAlgoLined
 
 \begin_layout Enumerate
 For 
-\begin_inset Formula $i=0,\ldots,m=\lceil\sqrt{n}\ln(4R^{2}n/\varepsilon\rceil$
+\begin_inset Formula $i=0,\ldots,m=\left\lceil \log_{1+1/\sqrt{n}}(8R^{2}n/\varepsilon)\right\rceil$
 \end_inset
 
 ,
@@ -261,7 +271,7 @@ For
 \end_inset
 
  and 
-\begin_inset Formula $f_{i}=f(x)^{a_{i}}.$
+\begin_inset Formula $f_i(x)=f(x)^{a_i}.$
 \end_inset
 
 
@@ -300,7 +310,7 @@ Set
 \end_deeper
 \begin_layout Enumerate
 Let 
-\begin_inset Formula $Y=\prod_{i=1}^{m-1}Y_{i}$
+\begin_inset Formula $Y=\prod_{i=0}^{m-1}Y_{i}$
 \end_inset
 
  and return 
@@ -339,7 +349,7 @@ name "lem:chebychev_ratio"
 \end_inset
 
  For 
-\begin_inset Formula $X\sim f_{i}$
+\begin_inset Formula $X\sim\pi_{f_i}$
 \end_inset
 
  with 
@@ -360,7 +370,7 @@ name "lem:chebychev_ratio"
 \end_inset
 
 ,
- we have that the estimator 
+ the estimator 
 \begin_inset Formula $Y=\frac{f_{i+1}(X)}{f_{i}(X)}$
 \end_inset
 
@@ -418,7 +428,7 @@ nolink "false"
 
 ,
  
-\begin_inset Formula $F$
+\begin_inset Formula $Z(a)=a^{n}F(a)$
 \end_inset
 
  is logconcave in 
@@ -428,7 +438,7 @@ nolink "false"
  and hence
 \begin_inset Formula 
 \[
-\frac{F(2a_{i+1}-a_{i})F(a_{i})}{F(a_{i+1})^{2}}\le\left(\frac{a_{i+1}^{2}}{(2a_{i+1}-a_{i})a_{i}}\right)^{n}.
+\frac{F(2a_{i+1}-a_{i})F(a_{i})}{F(a_{i+1})^{2}}=\frac{Z(2a_{i+1}-a_{i})Z(a_{i})}{Z(a_{i+1})^{2}}\left(\frac{a_{i+1}^{2}}{(2a_{i+1}-a_{i})a_{i}}\right)^{n}\le\left(\frac{a_{i+1}^{2}}{(2a_{i+1}-a_{i})a_{i}}\right)^{n}.
 \]
 
 \end_inset
@@ -460,7 +470,7 @@ Let
 
  in the LV algorithm.
  With probability at least 
-\begin_inset Formula $9/10$
+\begin_inset Formula $3/4$
 \end_inset
 
 ,
@@ -573,8 +583,18 @@ We first note that since
 \end_inset
 
 Next,
+ by the definition of 
+\begin_inset Formula $m$
+\end_inset
+
+,
  
-\begin_inset Formula $a_{m}\le\varepsilon/(4R^{2})$
+\begin_inset Formula $(1+\frac{1}{\sqrt{n}})^{m}\ge8R^{2}n/\varepsilon$
+\end_inset
+
+,
+ so 
+\begin_inset Formula $a_{m}=2n/(1+\frac{1}{\sqrt{n}})^{m}\le\varepsilon/(4R^{2})$
 \end_inset
 
  and hence 
@@ -630,19 +650,19 @@ nolink "false"
 \end_inset
 
 ,
- samples from the 
+ samples from phase 
 \begin_inset Formula $i$
 \end_inset
 
-'th phase provide an 
+ provide an 
 \begin_inset Formula $\ell_{2}$
 \end_inset
 
--warm start for the 
+-warm start for phase 
 \begin_inset Formula $(i+1)$
 \end_inset
 
-'st phase.
+.
  This gives an overall complexity of 
 \begin_inset Formula $O^{*}(n^{3}R^{2})$
 \end_inset
@@ -689,7 +709,7 @@ well-rounded
 \begin_inset Formula $\frac{1}{8}$
 \end_inset
 
- contains a constant-radius ball and the trace of the covariance (expected squared distance of a random point from the mean) to be bounded by 
+ contain a constant-radius ball and that the trace of the covariance (expected squared distance of a random point from the mean) be bounded by 
 \begin_inset Formula $O(n)$
 \end_inset
 
@@ -757,7 +777,8 @@ A faster volume algorithm is known for well-rounded convex bodies (any isotropic
 
  and is well-rounded).
  This variant of simulated annealing,
- called Gaussian cooling utilizes the fact that the KLS conjecture holds for a Gaussian density restricted by any convex body,
+ called Gaussian cooling,
+ utilizes the fact that the KLS conjecture holds for a Gaussian density restricted by any convex body,
  and completely avoids computing an isotropic transformation.
 \end_layout
 
@@ -907,7 +928,7 @@ Restrict
 
 \begin_layout Enumerate
 Let 
-\begin_inset Formula $Y_{0}$
+\begin_inset Formula $V_{0}$
 \end_inset
 
  be an estimate of the volume of 
@@ -919,7 +940,7 @@ Let
 
 \begin_layout Enumerate
 For 
-\begin_inset Formula $i=0,\ldots,m-1$
+\begin_inset Formula $i=0,\ldots,m$
 \end_inset
 
 ,
@@ -928,7 +949,7 @@ For
 \end_inset
 
  and 
-\begin_inset Formula $f_{i}=f(x)^{a_{i}}$
+\begin_inset Formula $f_i(x)=f(x)^{a_i}$
 \end_inset
 
 ,
@@ -936,7 +957,7 @@ For
 \begin_inset Formula $m-1$
 \end_inset
 
- being the largest integer s.t.
+ being the largest integer such that
  
 \begin_inset Formula $a_{m-1}<1$
 \end_inset
@@ -969,7 +990,7 @@ sample
 
 \begin_layout Enumerate
 Set 
-\begin_inset Formula $Y_{i}=\frac{1}{N}\sum_{j=1}^{N}f(x)^{a_{i+1}-a_{i}}$
+\begin_inset Formula $Y_{i}=\frac{1}{N}\sum_{j=1}^{N}f(X^{(j)})^{a_{i+1}-a_{i}}$
 \end_inset
 
 
@@ -978,11 +999,11 @@ Set
 \end_deeper
 \begin_layout Enumerate
 Let 
-\begin_inset Formula $Y=\prod_{i=1}^{m-1}Y_{i}$
+\begin_inset Formula $Y=\prod_{i=0}^{m-1}Y_{i}$
 \end_inset
 
  and return 
-\begin_inset Formula $Y_{o}\cdot Y$
+\begin_inset Formula $V_{0}\cdot Y$
 \end_inset
 
 .
@@ -1019,7 +1040,7 @@ In words,
 
 \begin_layout Theorem
 The LV algorithm applied to an integrable logconcave function 
-\begin_inset Formula $f:\R^{n}\rightarrow\R$
+\begin_inset Formula $f:\R^{n}\rightarrow\R_{+}$
 \end_inset
 
  estimates the integral of 

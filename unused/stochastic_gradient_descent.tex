@@ -1,0 +1,358 @@
+
+\section{Stochastic Gradient Descent\label{sec:Stochastic-Gradient-Descent}}
+
+In this section, we study problems of the form $\sum f_{i}$ where
+each $f_{i}$ is convex and the sum can be either infinite or finite.
+
+\subsection{Stochastic Problem}
+
+In this part, we discuss the problem
+\[
+\min_{x}F(x),\mbox{ where }F(x)\defeq\E_{f\sim\mathcal{D}}f(x)
+\]
+where $\mathcal{D}$ is a distribution of convex functions in $\R^{d}$.
+The goal is to find the minimizer $x^{*}=\argmin_{x}F(x)$. Suppose
+we observed samples $f_{1},f_{2},\cdots,f_{T}$ from $\mathcal{D}$.
+Ideally, we wish to approximate $x^{*}$ by the empirical risk minimizer
+\[
+x_{\mathrm{ERM}}^{(T)}=\arg\min_{x}F_{T}(x)\defeq\frac{1}{T}\sum_{i=1}^{T}f_{i}(x).
+\]
+It is known that $x_{\mathrm{ERM}}^{(T)}$ is optimal in a certain
+sense in spite of its computational cost. Therefore, to discuss the
+efficiency of an optimization algorithm for $F(x)$, it is helpful
+to consider the ratio
+\[
+\frac{\E F(x^{(T)})-F(x^{*})}{\E F(x_{\mathrm{ERM}}^{(T)})-F(x^{*})}.
+\]
+We will first discuss the term $\E F(x_{\mathrm{ERM}}^{(T)})-F(x^{*})$.
+As an example, consider the simplest one-dimensional problem $F(x)=\E_{b\sim N(0,I)}(x-b)^{2}$.
+Note that $x^{(T)}$ is simply the average of $T$ standard normal
+variables and hence 
+\begin{align*}
+\E F(x_{\mathrm{ERM}}^{(T)})-F(x^{*}) & =\E_{b_{1},b_{2},\cdots,b_{T}}\E_{b}(x_{\mathrm{ERM}}^{(T)}-b)^{2}-b^{2}\\
+ & =\E_{b_{1},b_{2},\cdots,b_{T}}(x_{\mathrm{ERM}}^{(T)})^{2}\\
+ & =\E_{b_{1},b_{2},\cdots,b_{T}}(\frac{1}{T}\sum_{i=1}^{T}b_{i})^{2}=\frac{1}{T}.
+\end{align*}
+In general, the following lemma shows that
+\[
+\E F(x_{\mathrm{ERM}}^{(T)})-F(x^{*})\rightarrow\frac{\sigma^{2}}{T}\quad\text{where }\sigma^{2}=\frac{1}{2}\E\|\nabla f(x^{*})\|_{(\nabla^{2}F(x^{*}))^{-1}}^{2}.
+\]
+where $\frac{\sigma^{2}}{T}$ is called the Cramer-Rao bound. 
+
+\begin{lem}
+Suppose that $f$ is $\mu$-strongly convex with Lipschitz Hessian
+for all $f\sim\mathcal{D}$ for some $\mu>0$. Suppose that $\E_{f\sim\mathcal{D}}\|\nabla f(x^{*})\|^{2}<+\infty$.
+Then, we have that
+\[
+\lim_{N\rightarrow+\infty}\frac{\E F(x_{\mathrm{ERM}}^{(N)})-F(x^{*})}{\sigma^{2}/N}=1.
+\]
+\end{lem}
+
+\begin{rem*}
+The statement holds with weaker assumptions and the rate of convergence
+can be made quantitative.
+\end{rem*}
+\begin{proof}
+We first prove $x_{\mathrm{ERM}}^{(N)}\rightarrow x^{*}$ as $N\rightarrow+\infty$.
+By the optimality condition of $x_{\mathrm{ERM}}^{(N)}$, and using
+Taylor's theorem, for some $\widetilde{x}$, we have that
+\begin{equation}
+0=\nabla F_{N}(x_{\mathrm{ERM}}^{(N)})=\nabla F_{N}(x^{*})+\nabla^{2}F_{N}(\widetilde{x})(x_{\mathrm{ERM}}^{(N)}-x^{*}).\label{eq:error_F_N}
+\end{equation}
+By the $\mu$-strongly convexity, we have
+\[
+\|x_{\mathrm{ERM}}^{(N)}-x^{*}\|_{2}^{2}\leq\frac{1}{\mu}\|\nabla F_{N}(x^{*})\|^{2}.
+\]
+Since $\E_{f\sim\mathcal{D}}\nabla f(x^{*})=\nabla F(x^{*})=0$, we
+have
+\begin{align*}
+\E\|x_{\mathrm{ERM}}^{(N)}-x^{*}\|_{2}^{2} & \leq\frac{1}{\mu}\E\frac{1}{N^{2}}\sum_{i}\|\nabla f_{i}(x^{*})\|^{2}\\
+ & =\frac{1}{\mu N}\E_{f\sim\mathcal{D}}\|\nabla f(x^{*})\|^{2}
+\end{align*}
+Therefore, $x_{\mathrm{ERM}}^{(N)}\rightarrow x^{*}$ as $N\rightarrow+\infty$.
+
+Now, to compute the error, Taylor expansion of $F$ at $x^{*}$ shows
+that
+\[
+F(x_{\mathrm{ERM}}^{(N)})-F(x^{*})=\frac{1}{2}(x_{\mathrm{ERM}}^{(N)}-x^{*})^{\top}\nabla^{2}F(\overline{x})(x_{\mathrm{ERM}}^{(N)}-x^{*})
+\]
+for some $\overline{x}$ between $x^{*}$ and $x_{\mathrm{ERM}}^{(N)}$.
+Using this and (\ref{eq:error_F_N}) gives
+\[
+F(x_{\mathrm{ERM}}^{(N)})-F(x^{*})=\frac{1}{2}\nabla F_{N}(x^{*})^{\top}(\nabla^{2}F_{N}(\widetilde{x}))^{-1}\nabla^{2}F(\overline{x})(\nabla^{2}F_{N}(\widetilde{x}))^{-1}\nabla F_{N}(x^{*}).
+\]
+
+Since $x_{\mathrm{ERM}}^{(N)}\rightarrow x^{*}$ and $\nabla^{2}F_{N}\succeq\mu I$,
+we have $(\nabla^{2}F_{N}(\widetilde{x}))^{-1}\nabla^{2}F(\overline{x})(\nabla^{2}F_{N}(\widetilde{x}))^{-1}\rightarrow(\nabla^{2}F(x^{*}))^{-1}$.
+Hence, we have
+\begin{align*}
+\lim_{N\rightarrow\infty}\E N\cdot(F(x_{\mathrm{ERM}}^{(N)})-F(x^{*})) & =\lim_{N\rightarrow\infty}\frac{N}{2}\E\nabla F_{N}(x^{*})^{\top}(\nabla^{2}F(x^{*}))^{-1}\nabla F_{N}(x^{*})\\
+ & =\frac{1}{2}\E\|\nabla f(x^{*})\|_{(\nabla^{2}F(x^{*}))^{-1}}^{2}.
+\end{align*}
+\end{proof}
+Now, we discuss how to achieve a bound similar to $\sigma^{2}/T$
+using stochastic gradient descent. Since gradient descent is a first
+order method, we can only achieve a bound related to the $\ell_{2}$
+norm, $\E\|\nabla f(x^{*})\|_{2}^{2}$, instead of the inverse Hessian
+norm. 
+\begin{lem}
+\label{lem:change_variance}Suppose $f$ has $L$-Lipschitz gradient
+for all $f\in\mathcal{D}$. Let $x^{*}$ be the minimizer of $F$.
+Then, we have
+\[
+\E_{f\sim\mathcal{D}}\|\nabla f(x)-\nabla f(x^{*})\|_{2}^{2}\leq2L\cdot(F(x)-F(x^{*})).
+\]
+\end{lem}
+
+\begin{proof}
+Let $g(x)=f(x)-\nabla f(x^{*})^{\top}(x-x^{*})$. By construction,
+$x^{*}$ is the minimizer of $g$ and $f(x^{*})=g(x^{*})$. Hence,
+by the progress of gradient descent, we know
+\[
+g(x^{*})\leq g(x)-\frac{1}{2L}\|\nabla g(x)\|^{2}.
+\]
+Rearranging the term, we have
+\[
+\|\nabla g(x)\|^{2}\leq2L(g(x)-g(x^{*}))
+\]
+and hence
+\[
+\|\nabla f(x)-\nabla f(x^{*})\|^{2}\leq2L\cdot(f(x)-f(x^{*})-\nabla f(x^{*})^{\top}(x-x^{*})).
+\]
+Taking expectation, we have the result.
+\end{proof}
+\begin{algorithm2e}[H]
+
+\caption{$\mathtt{StochasticGradientDescent}$ (SGD)}
+
+\SetAlgoLined
+
+\textbf{Input:} Initial point $x^{(0)}\in\R^{d}$, step size $h>0$.
+Access to $\mathcal{D}$, a distribution on convex functions.
+
+\For{$k=0,1,\cdots,T$}{
+
+Sample $f\sim\mathcal{D}$.
+
+$x^{(k+1)}\leftarrow x^{(k)}-h\cdot\nabla f(x^{(k)})$.
+
+}
+
+\end{algorithm2e}
+\begin{thm}
+\label{thm:sgd_convex_strongly}Suppose $f$ has $L$-Lipschitz gradient
+for all $f\in\mathcal{D}$ and $F$ is $\mu$ strongly convex. Let
+$x^{*}$ be the minimizer of $F$ and $\sigma^{2}=\frac{1}{2}\E\|\nabla f(x^{*})\|^{2}$.
+For step size $h\leq\frac{1}{4L}$, the sequence $x^{(k)}$ in $\mathtt{StochasticGradientDescent}$
+satisfies
+\[
+\E\|x^{(k)}-x^{*}\|^{2}\leq\frac{8h\sigma^{2}}{\mu}+(1-\frac{h\mu}{2})^{k}\cdot\|x^{(0)}-x^{*}\|^{2}
+\]
+and
+\[
+\frac{1}{T}\sum_{k=0}^{T-1}\E F(x^{(k)})-F(x^{*})\leq4h\sigma^{2}+\frac{\|x^{(0)}-x^{*}\|^{2}}{hT}.
+\]
+\end{thm}
+
+\begin{proof}
+Note that
+\[
+\|x^{(k+1)}-x^{*}\|^{2}=\|x^{(k)}-x^{*}\|^{2}-2h\left\langle x^{(k)}-x^{*},\nabla f(x^{(k)})\right\rangle +h^{2}\|\nabla f(x^{(k)})\|^{2}.
+\]
+Taking expectation on $f$ and using that 
+\begin{align*}
+\E\|\nabla f(x^{(k)})\|^{2} & \leq2\E\|\nabla f(x^{(k)})-\nabla f(x^{*})\|^{2}+2\E\|\nabla f(x^{*})\|^{2}\\
+ & \leq4L\cdot(F(x^{(k)})-F(x^{*}))+4\sigma^{2},
+\end{align*}
+we have
+\begin{align}
+\E\|x^{(k+1)}-x^{*}\|^{2} & =\|x^{(k)}-x^{*}\|^{2}-2h\left\langle x^{(k)}-x^{*},\nabla F(x^{(k)})\right\rangle +4h^{2}\sigma^{2}+4Lh^{2}\cdot(F(x^{(k)})-F(x^{*}))\nonumber \\
+ & \leq\|x^{(k)}-x^{*}\|^{2}-(2h-4Lh^{2})(F(x^{(k)})-F(x^{*}))+4h^{2}\sigma^{2}.\label{eq:SGD_distance}
+\end{align}
+Using $h\leq\frac{1}{4L}$ and $F(x^{(k)})-F(x^{*})\leq\frac{1}{2\mu}\|\nabla F(x^{(k)})\|_{2}^{2}$,
+we have
+\[
+\E\|x^{(k+1)}-x^{*}\|^{2}\leq4h^{2}\sigma^{2}+(1-\frac{h\mu}{2})\cdot\|x^{(k)}-x^{*}\|^{2}.
+\]
+
+The first conclusion follows.
+
+For the second conclusion, (\ref{eq:SGD_distance}) shows that
+\[
+\E F(x^{(k)})-F(x^{*})\leq\frac{\E\|x^{(k)}-x^{*}\|^{2}-\E\|x^{(k+1)}-x^{*}\|^{2}}{h}+4h\sigma^{2}.
+\]
+Hence, we have
+\begin{align*}
+\frac{1}{T}\sum_{k=0}^{T-1}\E F(x^{(k)})-F(x^{*}) & \leq4h\sigma^{2}+\frac{\|x^{(0)}-x^{*}\|^{2}}{hT}
+\end{align*}
+\end{proof}
+\begin{xca}
+Applying the theorem above twice, show that one can achieve error
+$\tilde{O}(\frac{\sigma^{2}}{\mu T})$, which is roughly same as the
+Cramer-Rao bound. 
+\end{xca}
+
+We note that for many algorithms in this book, such as mirror descent,
+the stochastic version is obtained by replacing the gradient $\nabla F$
+by the gradient of a sample, $\nabla f$.
+
+\subsection{Finite Sum Problem}
+
+When $\nabla f(x^{*})=0$ for all $f\sim\mathcal{D}$, stochastic
+gradient descent converges exponentially. When the function is given
+by a finite sum $F=\frac{1}{n}\sum f_{i}$, we can reduce the variance
+at $x^{*}$ by replacing 
+\[
+\nabla\widetilde{f}_{i}(x)=\nabla f_{i}(x)-\nabla f_{i}(x^{(0)})+\nabla F(x^{(0)}).
+\]
+Note that if $x^{(0)}$ is close to $x^{*}$, then $\nabla\widetilde{f}_{i}(x^{*})$
+is small because both $\nabla f_{i}(x^{*})-\nabla f_{i}(x^{(0)})$
+and $\nabla F(x^{(0)})$ are small. Formally, the variance for $\widetilde{f}$
+is bounded as follows:
+\begin{lem}
+\label{lem:variance_reduction}Suppose $f$ has $L$-Lipschitz gradient
+for all $f\in\mathcal{D}$. For any $f\in\mathcal{D}$, let $\nabla\widetilde{f}(x)=\nabla f(x)-\nabla f(x^{(0)})+\nabla F(x^{(0)})$
+for some fixed $x^{(0)}$. Then, we have
+\[
+\E\|\nabla\widetilde{f}(x^{*})\|^{2}\leq8L\cdot(F(x^{(0)})-F(x^{*})).
+\]
+\end{lem}
+
+\begin{proof}
+Note that
+\begin{align*}
+\E\|\nabla\widetilde{f}(x^{*})\|^{2} & \leq2\E\|\nabla f(x^{*})-\nabla f(x^{(0)})\|^{2}+2\|\nabla F(x^{(0)})-\nabla F(x^{*})\|^{2}\\
+ & =2\E\|\nabla f(x^{*})-\nabla f(x^{(0)})\|^{2}+2\E\|\nabla f(x^{(0)})-\nabla f(x^{*})\|^{2}\\
+ & \leq4L(F(x^{(0)})-F(x^{*}))+4L(F(x^{(0)})-F(x^{*}))
+\end{align*}
+where we used Lemma \ref{lem:change_variance} at the end.
+\end{proof}
+\begin{algorithm2e}[H]
+
+\caption{$\mathtt{StochasticVarianceReducedGradient}$ (SVRG)}
+
+\SetAlgoLined
+
+\textbf{Input:} Initial point $x^{(0)}\in\R^{d}$, step size $h>0$,
+restart time $m$.
+
+$\widetilde{x}=x^{(0)}$.
+
+\For{$k=0,1,\cdots,T$}{
+
+\If{$k$ is a multiple of $m$ and $k\neq0$}{
+
+$x^{(k)}=\frac{1}{m}\sum_{j=1}^{m}x^{(k-j)}$.
+
+$\widetilde{x}=x^{(k)}$.
+
+}
+
+Sample $f_{i}$ for $i\in[n]$
+
+$x^{(k+1)}\leftarrow x^{(k)}-h\cdot(\nabla f(x^{(k)})-\nabla f(\widetilde{x})+\nabla F(\widetilde{x}))$.
+
+}
+
+\end{algorithm2e}
+\begin{thm}
+\label{thm:stochastic_method}Suppose $f$ has $L$-Lipschitz gradient
+for all $f_{i}$ and $F$ is $\mu$ strongly convex. Let $x^{*}$
+be the minimizer of $F$. For step size $h=\frac{1}{64L}$ and $m=\frac{256L}{\mu}$,
+the sequence $x^{(km)}$ in $\mathtt{StochasticVarianceReducedGradient}$
+satisfies
+\[
+\E F(x^{(km)})-F(x^{*})\leq\frac{1}{2^{k}}\cdot(F(x^{(0)})-F(x^{*})).
+\]
+In particular, it takes $O((n+\frac{L}{\mu})\log(\frac{1}{\epsilon}))$
+gradient computations to find $x$ such that $\E F(x)-F(x^{*})\leq\epsilon\cdot(F(x^{(0)})-F(x^{*}))$.
+\end{thm}
+
+\begin{rem*}
+Gradient descent gives $O(n\frac{L}{\mu}\log(\frac{1}{\epsilon}))$
+instead because computing $\nabla F$ involves computing $n$ gradients
+$\nabla f$.
+\end{rem*}
+\begin{proof}
+The algorithm consists of $\frac{T}{m}$ phases. For the first phase,
+we compute $\nabla F(x^{(0)})$. Lemma \ref{lem:variance_reduction}
+shows that 
+\[
+\E\|\nabla f(x^{(k)})-\nabla f(x^{(0)})+\nabla F(x^{(0)})\|^{2}\leq8L\cdot(F(x^{(0)})-F(x^{*})).
+\]
+Hence, Theorem \ref{thm:sgd_convex_strongly} shows that
+\begin{align*}
+\frac{1}{m}\sum_{k=0}^{m-1}\E F(x^{(k)})-F(x^{*}) & \leq16hL\cdot(F(x^{(0)})-F(x^{*}))+\frac{F(x^{(0)})-F(x^{*})}{\mu hm}\\
+ & \leq\frac{1}{2}(F(x^{(0)})-F(x^{*})).
+\end{align*}
+Hence, the error decreases by half each phase. This shows the result.
+\end{proof}
+
+\section{Coordinate Descent}
+
+If some of the coordinates are more important than others for optimization,
+it makes sense to update the important coordinates more often.
+\begin{lem}
+\label{lem:coordinate_descent}Given a convex function $f$, suppose
+that $\frac{\partial^{2}}{\partial x_{i}^{2}}f(x)\leq L_{i}$ for
+all $x$ and let $L=\sum L_{i}$. If we sample coordinate $i$ with
+probability $p_{i}=\frac{L_{i}}{L}$, then, 
+\[
+\E_{i}f(x-\frac{1}{L_{i}}\frac{\partial}{\partial x_{i}}f(x)e_{i})\leq f(x)-\frac{1}{2L}\norm{\nabla f(x)}_{2}^{2}.
+\]
+\end{lem}
+
+\begin{proof}
+Note that the function $\zeta(t)=f(x+te_{i})$ is $L_{i}$ smooth.
+Hence, we have that
+\[
+f(x-\frac{1}{L_{i}}\frac{\partial}{\partial x_{i}}f(x)e_{i})\leq f(x)-\frac{1}{2L_{i}}\frac{\partial}{\partial x_{i}}f(x)^{2}.
+\]
+Since we sample coordinate $i$ with probability $p_{i}=\frac{L_{i}}{L}$,
+we have that
+\begin{align*}
+\E f(x-\frac{1}{L_{i}}\frac{\partial}{\partial x_{i}}f(x)e_{i}) & \le f(x)-\sum_{i}\frac{L_{i}}{L}\frac{1}{2L_{i}}\frac{\partial}{\partial x_{i}}f(x)^{2}\\
+ & =f(x)-\frac{1}{2L}\sum_{i}\frac{\partial}{\partial x_{i}}f(x)^{2}\\
+ & =f(x)-\frac{1}{2L}\norm{\nabla f(x)}_{2}^{2}.
+\end{align*}
+\end{proof}
+By the same proof as Theorem \ref{thm:gd_convex}, we have the following:
+
+\begin{algorithm2e}[H]
+
+\caption{$\mathtt{CoordinateDescent}$ (CD)}
+
+\SetAlgoLined
+
+\textbf{Input:} Initial point $x^{(0)}\in\R^{d}$, step size $h>0$.
+
+\For{$k=0,1,\cdots,T$}{
+
+Sample $i$ with probability proportional to $L_{i}$.
+
+$x^{(k+1)}\leftarrow x^{(k)}-\frac{1}{L_{i}}\frac{\partial}{\partial x_{i}}f(x^{(k)})e_{i}$.
+
+}
+
+\end{algorithm2e}
+\begin{thm}[Coordinate Descent Convergence]
+\label{thm:coordinate_descent}Given a convex function $f$, suppose
+that $\frac{\partial^{2}}{\partial x_{i}^{2}}f(x)\leq L_{i}$ for
+all $x$ and let $L=\sum L_{i}$. Consider the algorithm $x^{(k+1)}\leftarrow x^{(k)}-\frac{1}{L_{i}}\frac{\partial}{\partial x_{i}}f(x^{(k)})e_{i}$.
+Then, we have that 
+\[
+\E f(x^{(k)})-f(x^{*})\leq\frac{2LR^{2}}{k+4}\quad\text{with}\quad R=\max_{f(x)\leq f(x^{(0)})}\norm{x-x^{*}}_{2}
+\]
+for any minimizer $x^{*}$ of $f$. If $f$ is $\mu$ strongly convex,
+then we also have 
+\[
+\E f(x^{(k)})-f(x^{*})\leq(1-\frac{\mu}{L})^{\Omega(k)}(f(x^{(0)})-f(x^{*})).
+\]
+\end{thm}
+
+\begin{rem*}
+Note that $\frac{L}{d}\leq\Lip(\nabla f)\leq L$. Therefore gradient
+descent takes at least $\frac{1}{d}$ times as many steps as coordinate
+descent while each step takes $d$ times longer (usually).
+\end{rem*}
+

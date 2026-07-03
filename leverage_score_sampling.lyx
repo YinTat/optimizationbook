@@ -119,28 +119,34 @@ literal "true"
 
 \end_inset
 
-Given a matrix 
+Given 
 \begin_inset Formula $A\in\R^{n\times d}$
 \end_inset
 
-.
- Let 
+,
+ let 
 \begin_inset Formula $T(m)$
 \end_inset
 
  be the cost of solving 
-\begin_inset Formula $B^{\top}Bx=b$
+\begin_inset Formula $B^{\top}Bx=c$
 \end_inset
 
- among all 
-\begin_inset Formula $m$
+,
+ for arbitrary 
+\begin_inset Formula $c\in\R^{d}$
 \end_inset
 
- distinct subrows 
+,
+ over all submatrices 
 \begin_inset Formula $B$
 \end_inset
 
- of 
+ consisting of 
+\begin_inset Formula $m$
+\end_inset
+
+ distinct rows of 
 \begin_inset Formula $A$
 \end_inset
 
@@ -190,7 +196,7 @@ Leverage scores
 \end_layout
 
 \begin_layout Standard
-The key concept in this reduction is leverage score.
+The key concept in this reduction is the leverage score.
 \end_layout
 
 \begin_layout Definition
@@ -349,7 +355,7 @@ name "leverage_score_opt"
 \end_inset
 
 where 
-\begin_inset Formula $a_{i}$
+\begin_inset Formula $a_{i}^{\top}$
 \end_inset
 
  is the 
@@ -416,7 +422,7 @@ Sampling rows from
 \end_inset
 
  with high probability.
- Sampling by leverage score overestimates also suffices.
+ Sampling with leverage-score overestimates also suffices.
 \end_layout
 
 \begin_layout Lemma
@@ -430,7 +436,7 @@ Given a vector
 \begin_inset Formula $u$
 \end_inset
 
- of leverage score overestimates, i.e., 
+ of leverage-score overestimates, i.e., 
 \begin_inset Formula $\sigma_{i}(A)\le u_{i}$
 \end_inset
 
@@ -441,13 +447,13 @@ Given a vector
 , define 
 \begin_inset Formula 
 \[
-X=\frac{1}{p_{i}}a_{i}a_{i}^{\top}\quad\mbox{ with probability \quad\ }p_{i}=\frac{u_{i}}{\norm u_{1}}.
+X=\frac{1}{p_{i}}a_{i}a_{i}^{\top}\quad\mbox{ with probability \quad\ }p_{i}=\frac{u_{i}}{\norm{u}_{1}}.
 \]
 
 \end_inset
 
 For 
-\begin_inset Formula $T=\Omega(\frac{\norm u_{1}\log n}{\varepsilon^{2}})$
+\begin_inset Formula $T=\Omega(\frac{\norm{u}_{1}\log n}{\varepsilon^{2}})$
 \end_inset
 
 , with probability 
@@ -481,7 +487,7 @@ Note that
  and that 
 \begin_inset Formula 
 \[
-0\preceq X=\frac{1}{p_{i}}a_{i}a_{i}^{\top}\preceq\frac{\norm u_{1}}{\sigma_{i}}a_{i}a_{i}^{\top}\preceq\norm u_{1}\cdot A^{\top}A.
+0\preceq X=\frac{1}{p_{i}}a_{i}a_{i}^{\top}\preceq\frac{\norm{u}_{1}}{\sigma_{i}}a_{i}a_{i}^{\top}\preceq\norm{u}_{1}\cdot A^{\top}A.
 \]
 
 \end_inset
@@ -491,7 +497,7 @@ Now, the statement simply follows from the matrix Chernoff bound with
 \end_inset
 
  and 
-\begin_inset Formula $R=\norm u_{1}$
+\begin_inset Formula $R=\norm{u}_{1}$
 \end_inset
 
 .
@@ -515,7 +521,7 @@ reference "lem:Richardson"
 , we have that
 \begin_inset Formula 
 \begin{equation}
-T(n)=\text{cost of computing }\sigma_{i}+O^{*}(\nnz(A)+T(d\log d))\label{eq:TmnS1}
+T(n)=\text{cost of computing all leverage scores }\sigma+O^{*}(\nnz(A)+T(d\log d))\label{eq:TmnS1}
 \end{equation}
 
 \end_inset
@@ -538,7 +544,7 @@ literal "true"
 
 \end_inset
 
-, they showed that we can compute leverage scores approximately by solving
+, the authors showed that we can compute leverage scores approximately by solving
  only polylogarithmically many regression problems.
  This result uses the fact that 
 \begin_inset Formula 
@@ -587,7 +593,7 @@ reference "eq:TmnS1"
 
 \end_inset
 
-), we have this useless formula
+), we have this non-informative recurrence
 \begin_inset Formula 
 \[
 T(n)=O^{*}(\nnz(A)+T(n)+T(d\log d)).
@@ -595,11 +601,12 @@ T(n)=O^{*}(\nnz(A)+T(n)+T(d\log d)).
 
 \end_inset
 
-This is a chicken and egg problem.
- To solve an overdetermined system faster, we want to use leverage score
+This is a chicken-and-egg problem.
+ To solve an overdetermined system faster,
+ we want to use leverage scores
  to sample the rows.
- And to approximate the leverage score, we need to solve the original overdeterm
-ined system.
+ To approximate the leverage scores,
+ we need to solve the original overdetermined system.
  (Even worse, we need to solve it a few times.)
 \end_layout
 
@@ -608,7 +615,7 @@ Uniform Sampling
 \end_layout
 
 \begin_layout Standard
-The key idea to break this chicken and egg problem is to use uniform sampling
+The key idea to break this chicken-and-egg problem is to use uniform sampling
  of the rows of 
 \begin_inset Formula $A$
 \end_inset
@@ -648,17 +655,21 @@ where
 \end_inset
 
 .
- Note that 
-\begin_inset Formula $A_{S}^{\top}A_{S}$
+ Note that since 
+\begin_inset Formula $A_{S}^{\top}A_{S}\preceq A^{\top}A$
+\end_inset
+
+, the quantity 
+\begin_inset Formula $\sigma_{i,S}$
 \end_inset
 
  is an overestimate of 
-\begin_inset Formula $\sigma_{i}$
+\begin_inset Formula $\sigma_{i}(A)$
 \end_inset
 
 .
  Hence, it suffices to bound 
-\begin_inset Formula $\norm{\sigma_{i,S}}_{1}$
+\begin_inset Formula $\sum_{i}\sigma_{i,S}$
 \end_inset
 
 .
@@ -698,7 +709,7 @@ Note that
 
 .
  Hence, the second term is bounded by 
-\begin_inset Formula $n$
+\begin_inset Formula $d$
 \end_inset
 
 .
@@ -726,7 +737,7 @@ sample a set
 \begin_inset Quotes erd
 \end_inset
 
- is same as 
+ is the same as 
 \begin_inset Quotes eld
 \end_inset
 
@@ -772,7 +783,9 @@ Hence, we have that
 \end_layout
 
 \begin_layout Standard
-Next, using Sherman-Morrison formula, we have that
+Next,
+ using the Sherman-Morrison formula,
+ we have that
 \begin_inset Formula 
 \[
 \sigma_{i,S\cup\{i\}}=\begin{cases}

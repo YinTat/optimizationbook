@@ -1,0 +1,336 @@
+
+\paragraph*{Integration and Volume Computation. }
+
+In this chapter, we develop efficient algorithms for volume computation
+and integration based on a technique called \emph{Simulated Annealing,
+}which is also provably efficient for convex optimization. The volume
+problem was defined in Chapter (\ref{chap:Elimination-and-Reduction})
+(Problem (\ref{problem:volume})). Integration is the following generalization.
+\begin{problem}[Integration]
+ Given an evaluation oracle for an integrable logconcave function
+$f:\R^{n}\rightarrow\R$, a point $x_{0}$ s.t. $f(x_{0})\ge\beta,$
+numbers $r,R>0$ s.t. (i) $\E(\norm{x-x_{0}}^{2})\le R^{2}$ (ii)
+the level set of $\pi_{f}$ of measure $1/8$ contains a ball of radius
+$r$, and $\varepsilon>0$, output a number $A$ s.t. 
+\[
+(1-\varepsilon)\int f\le A\le(1+\varepsilon)\int f.
+\]
+
+As in all problems in oracle models discussed in this book, the complexity
+of an algorithm to solve the above problem is given by the number
+of oracles calls and the number of arithmetic operations. 
+\end{problem}
+
+Table \ref{tab:volume} below summarizes progress on the volume problem
+over the past three decades. Besides improving the complexity of volume
+computation, each step has typically resulted in new techniques. For
+more details, we refer the reader to surveys on the topic \cite{Simonovits03,VemSurvey}.
+
+\begin{table}[h]
+\centering{}%
+\begin{tabular}{|c|l|c|}
+\hline 
+Year/Authors & New ingredients & Steps\tabularnewline
+\hline 
+\hline 
+1989/Dyer-Frieze-Kannan \cite{DyerFK89} & Everything & $n^{23}$\tabularnewline
+\hline 
+1990/Lovász-Simonovits \cite{LS90} & Better isoperimetry & $n^{16}$\tabularnewline
+\hline 
+1990/Lovász \cite{L90} & Ball walk & $n^{10}$\tabularnewline
+\hline 
+1991/Applegate-Kannan \cite{applegate1991sampling} & Logconcave sampling & $n^{10}$\tabularnewline
+\hline 
+1990/Dyer-Frieze \cite{DyerF90} & Better error analysis & $n^{8}$\tabularnewline
+\hline 
+1993/Lovász-Simonovits \cite{LS93} & Localization lemma & $n^{7}$\tabularnewline
+\hline 
+1997/Kannan-Lovász-Simonovits \cite{kannan1997random} & Speedy walk, isotropy & $n^{5}$\tabularnewline
+\hline 
+2003/Lovász-Vempala \cite{LV2003} & Annealing, hit-and-run & $n^{4}$\tabularnewline
+\hline 
+2015/Cousins-Vempala \cite{CV2015} (well-rounded) & Gaussian Cooling & $n^{3}$\tabularnewline
+\hline 
+2017/Lee-Vempala (polytopes) \cite{lee2017convergence} & Hamiltonian Walk & $mn^{\frac{2}{3}}$\tabularnewline
+\hline 
+2021/Jia-Laddha-Lee-Vempala \cite{JLLV26} & Faster rounding & $n^{3.5}$\tabularnewline
+\hline 
+\end{tabular}\caption{\label{tab:volume} The complexity of volume estimation, each step
+uses $\widetilde{O}(n)$ bit of randomness. The last algorithm needs
+$\widetilde{O}\left(mn^{\omega-1}\right)$ steps per iteration while
+the rest need $O(n^{2})$ per oracle query.}
+\end{table}
+We begin with a description and analysis of the DFK algorithm to estimate
+the volume of a convex body in high dimension.
+
+\section{Volume Computation: the DFK Algorithm}
+\begin{thm}
+There exists a randomized algorithm that given any $\varepsilon,\delta>0$,
+and any convex body $K$ with probability at least $1-\delta$ solves
+the Volume Estimation problem for $K$ using $\mbox{poly}(n,1/\varepsilon,\ln(1/\delta),\ln R)$
+oracle queries and arithmetic operations. 
+\end{thm}
+
+The next exercise is the general observation that any algorithm that
+succeeds with failure probability less than $1/2$ can be converted
+to one with failure probability at most $\delta$. 
+\begin{xca}
+Show that a randomized algorithm that outputs an acceptable estimate
+of a real number with failure probability at most $1/4$ can be converted
+to one that outputs an acceptable estimate with failure probability
+at most $\delta$ by repeating the algorithm independently $O(\ln(1/\delta))$
+times and taking the median of the outputs of the independent trials.
+
+Going forward, we ignore the parameter $\delta$, and focus on algorithms
+with constant failure probability. We will now show an algorithm for
+volume computation (as a first attempt) whose analysis yields a suboptimal
+bound on the sample complexity.
+
+The polynomial-time algorithm of Dyer, Frieze and Kannan \cite{DyerFK89}
+is based on the following idea. We consider a sequence of convex bodies
+$K_{0}=B_{n}\subset K_{1}\subseteq\ldots\subseteq K_{m}=K$, starting
+with the ball contained inside the input body $K$ and ending with
+$K$ itself. Then the following telescoping formula suggests an algorithm:
+\[
+\vol(K)=\vol(K_{0})\cdot\frac{\vol(K_{1})}{\vol(K_{0})}\cdot\ldots\cdot\frac{\vol(K_{m})}{\vol(K_{m-1})}.
+\]
+
+To estimate the volume of $K$, we estimate each of the ratios on
+the RHS and output their product together with the volume of the unit
+ball. We need to set up the sequence so that the sequence is not too
+long and this estimator is accurate and efficient. In the DFK algorithm,
+each body in the sequence is a ball intersected with the given convex
+body $K$:
+\[
+K_{i}=2^{\frac{i}{n}}B\cap K.
+\]
+ The length the sequence is $m=\lceil n\log R\rceil$ so that the
+final body is just $K$. We can now state the algorithm. In each iteration
+the algorithm estimates the ratio $\vol(K_{i})/\vol(K_{i+1})$ by
+sampling uniformly from $K_{i+1}$ and using the fraction of the sample
+that lies in $K_{i}$ as the estimator.
+\end{xca}
+
+\begin{algorithm2e}[H]
+
+\caption{$\mathtt{DFK\ Volume}$}
+
+\SetAlgoLined
+\begin{enumerate}
+\item For $i=0,\ldots,m=\lceil n\log_{2}R\rceil$, let $K_{i}=2^{\frac{i}{n}}B\cap K.$
+\item For $i=0,\ldots,m-1$, 
+\begin{enumerate}
+\item uniformly sample $X^{(1)},X^{(2)},\ldots,X^{(N)}$ from $K_{i+1}$.
+\item Set $Y_{i}=|{\{j:X^{(j)}\in K_{i}\}}|/N$. 
+\end{enumerate}
+\item Let $Y=\prod_{i=1}^{m-1}Y_{i}$ and return $\vol(B_{n})/Y$.
+\end{enumerate}
+\end{algorithm2e}
+
+The following observation is immediate.
+\begin{lem}
+Let $r_{i}=\vol(K_{i})/\vol(K_{i+1})$. Then $\E(Y_{i})=r_{i}$ and
+$\Var(Y_{i})=r_{i}(1-r_{i})/N.$
+\end{lem}
+
+Since we want to output a multiplicative approximation, we need $\Var(Y)$
+to be small compared to $\E(Y)^{2}$, which means we need $r_{i}$
+to be bounded from below. The choice of $K_{i}$ is precisely to ensure
+this.
+\begin{lem}
+\label{lem:r_bound}For all $i=0,\ldots,m-1$, we have $\vol(K_{i+1})\le2\vol(K_{i})$. 
+\end{lem}
+
+\begin{proof}
+We have 
+\[
+K_{i+1}=2^{(i+1)/n}B_{n}\cap K\subseteq2^{1/n}(2^{i/n}B_{n}\cap K)=2^{1/n}K_{i}.
+\]
+The lemma follows.
+\end{proof}
+Using the above lemmas in each phase, and keeping the total error
+over $m$ phases smaller than a target $\varepsilon$ leads to a bound
+of $N=O(m^{3}/\varepsilon^{2})$ samples per phase. The next lemma
+which applies to any product of independent random variables gives
+us the ``right'' bound.
+\begin{lem}
+\label{lem:prod_var}Let $Y=\prod_{i=0}^{m-1}Y_{i}$ where $Y_{i}\ge0$
+are independent real-valued random variables. Then, 
+\[
+\frac{\Var(Y)}{\E(Y)^{2}}=\prod_{i=0}^{m-1}\left(1+\frac{\Var(Y_{i})}{\E(Y_{i})^{2}}\right)-1.
+\]
+\end{lem}
+
+We can now prove the main theorem about the sample complexity of the
+DFK volume algorithm.
+\begin{thm}
+For any input convex body $K$ satisfying $B_{n}\subseteq K\subseteq RB_{n}$
+given by a membership oracle and any $\varepsilon>0$, with $N=O(\varepsilon^{-2}n\log R)$
+samples per phase, with probability at least $3/4$, the DFK volume
+algorithm outputs a multiplicative $(1+\varepsilon)$ approximation
+to the volume of $K$. The total number of samples is thus $O^{*}(m^{2})=O^{*}(n^{2})$. 
+\end{thm}
+
+\begin{proof}
+In each phase we have 
+\[
+\frac{\Var(Y_{i})}{\E(Y_{i})^{2}}=\frac{r_{i}(1-r_{i})}{Nr_{i}^{2}}=\frac{1-r_{i}}{Nr_{i}}\le\frac{1}{N}
+\]
+where we used the fact that $r_{i}\ge1/2$ from Lemma \ref{lem:r_bound}.
+Now using Lemma \ref{lem:prod_var}, we have 
+\[
+\frac{\Var(Y)}{\E(Y)^{2}}\le\left(1+\frac{1}{N}\right)^{m}-1\le\frac{\varepsilon^{2}}{4}
+\]
+where we used that $(1+\frac{1}{N})^{m}-1\leq\frac{2m}{N}$ for $N\ge8m/\varepsilon^{2}$.
+The theorem follows using Chebyshev's inequality.
+\end{proof}
+In \cite{kannan1997random}, it was shown that the amortized complexity
+of uniform sampling is $O^{*}(n^{3})$ per sample when $\Omega(n^{2})$
+samples are needed, giving an overall oracle complexity of $O^{*}(n^{5})$
+for the entire algorithm. To make this rigorous, besides establishing
+the amortized complexity of uniform sampling, we have to deal with
+some nontrivial technical issues: (1) the distribution from which
+samples are produced is close to the target uniform distribution but
+not exactly uniform (2) samples are nearly independent but not perfectly
+independent. Another important problem that will arise in establishing
+the complexity of (approximate) uniform sampling is ``rounding''
+which allows us to reduce the dependence of the sampling complexity
+from polynomial in $R$ to polynomial in $\log R$. 
+
+The quadratic sample complexity might appear to be nearly optimal
+-- the final ratio being estimated could be as large as $R^{n}$
+or $n^{n}$, which means that any sequence that uses at most $m$
+phases estimates a ratio as large as $n^{n/m}$ needing as many samples,
+and this means that $m=\Omega(n)$ is needed to get polynomial complexity
+even. We will soon see that this intuitive reasoning is not valid. 
+
+\section{Simulated Annealing}
+
+In this section we introduce a sampling-based approach for optimization
+and integration in high dimension. The main idea is to sample a sequence
+of logconcave distributions, starting with one that is easy to integrate
+and ending with the function whose integral is desired. This process
+is known as \emph{simulated annealing. }The same high-level algorithm
+can be used for optimization, volume computation/integration or rounding.
+For integration, the desired integral of a function $f:\R^{n}\rightarrow\R_{+}$
+can be expressed as the following telescoping product:
+
+\[
+\int_{\R^{n}}f=\int f_{0}\frac{\int f_{1}}{\int f_{0}}\frac{\int f_{2}}{\int f_{3}}\cdots\frac{\int f_{m}}{\int f_{m-1}}
+\]
+where $f_{0}$ is chosen to be a function with an easy integral (typically
+a formula) and $f_{m}=f$. To compute any the ratio $\int g/\int h$
+we can do the following: 
+\begin{enumerate}
+\item Sample $X$ from the distribution with density proportional to $h$. 
+\item Use the estimator $Y=\frac{g(X)}{h(X)}$. 
+\end{enumerate}
+It is easy to establish the following fact about this estimator. 
+\begin{lem}
+For integrable functions $g,h$ with with support of $g$ contained
+in the support of $h$ and $g(X)/h(X)$ defined everywhere in the
+support of $h$, for $X$ drawn from the distribution with density
+proportional to $h$ and $Y=g(X)/h(X)$, we have 
+\[
+\E(Y)=\frac{\int g}{\int h}.
+\]
+ 
+\end{lem}
+
+Of course, the accuracy of the estimator depends on its variance.
+Our goal is to choose a sequence of functions that are easy to sample
+and lead to a small variance estimator. What sequence of functions
+should we use?
+
+In fact, we can view annealing as a general framework for efficient
+statistical estimation by following a sequence of distributions, starting
+with a particularly simple one and ending with the distribution of
+interest. We state this ``meta''-algorithm below and later we will
+specialize it to optimization and integration. 
+
+\begin{algorithm2e}[H]
+
+\caption{$\mathtt{SimulatedAnnealing}$}
+
+\SetAlgoLined
+\begin{enumerate}
+\item For $i=0,\ldots,m$, define
+\[
+a_{i}=b\left(1+\frac{1}{\sqrt{n}}\right)^{i}\mbox{ and }f_{i}(x)=f(x)^{a_{i}}.
+\]
+\item Let $X_{0}^{1},\ldots,X_{0}^{k}$ be independent random points with
+density proportional to $f_{0}$.
+\item For $i=0,\ldots,m-1$: starting with $X_{i}^{1},\ldots,X_{i}^{k}$,
+generate random points $X_{i+1}=\{X_{i+1}^{1},\ldots,X_{i+1}^{k}\}$;
+update a running estimate $g$ based on these samples; update the
+isotropic transformation using the samples.
+\item Output the final $g$.
+\end{enumerate}
+\end{algorithm2e}
+
+For optimization, the function $f_{m}$ is set to be a sufficiently
+high power of $f$, the function to be maximized while $g$ is simply
+the maximum objective value so far. For integration and rounding,
+$f_{m}=f$, the target function to be integrated or rounded. For integration,
+the function $g$ starts out as the integral of $f_{0}$ and is multiplied
+by the ratio $\int f_{i+1}/\int f_{i}$ in each step. For rounding,
+$g$ is simply the estimate of the isotropic transformation for the
+current function.
+
+For sampling and optimization, it is natural to ask why one uses a
+sequence of functions rather than jumping straight to the target function
+$f_{m}$. For optimizing a linear function $c^{T}x$ over a convex
+set $K$, all we need to do is sample according to the density proportional
+to $e^{-a(c^{T}x)}$ for a sufficiently large coefficient $a$ (recall
+Theorem \ref{thm:OPTviaSampling}). The reason for using a sequence
+is that the function $f_{m}$ and corresponding density $p_{m}$ can
+be very far from the starting function or distribution, and hence
+the mixing time can be high. The sequence ensures that samples from
+the current function provide a ``warm'' start for sampling from
+the next function. This is captured in the next lemma.
+\begin{lem}
+\label{thm:L2_warm_start} Let $p_{i}(x)=f_{i}(x)/\int f_{i}$ with
+$f_{i}$ defined as in the annealing algorithm for some logconcave
+function $f:\R^{n}\rightarrow\R_{+}$. Then a random sample $X\sim p_{i}$
+satisfies
+\[
+\E_{p_{i}}\left(\frac{p_{i}(x)}{p_{i+1}(x)}\right)=O(1).
+\]
+\end{lem}
+
+The underlying mathematical property behind this lemma is the following.
+\begin{lem}
+\label{lem:ratio_var} Let $f$ be a logconcave function in $\R^{n}.$
+Then $Z(a)=a^{n}\int_{\R^{n}}f(x)^{a}$ is logconcave for $a\ge0$.
+If $f$ has support $K$, then $Z(a)=a^{n}\int_{K}f(ax)$ is logconcave
+for $a>0$.
+\end{lem}
+
+\begin{proof}
+Consider the function 
+\[
+F(x,t)=f\left(\frac{x}{t}\right)^{t}
+\]
+for $x\in\R^{n}$ and $t>0$. Then $F$ is logconcave as verified
+below. Consider $(x,t),(y,s)$ for $t,s>0$ and proceed as follows
+using logconcavity: 
+\begin{align*}
+F\left(\frac{x+y}{2},\frac{t+s}{2}\right) & =f\left(\frac{x+y}{t+s}\right)^{\frac{t+s}{2}}\\
+ & =f\left(\frac{x}{t}\cdot\frac{t}{t+s}+\frac{y}{s}\cdot\frac{s}{t+s}\right)^{\frac{t+s}{2}}\\
+ & \ge f\left(\frac{x}{t}\right)^{\frac{t}{2}}f\left(\frac{y}{s}\right)^{\frac{s}{2}}=\sqrt{F(x,t)F(y,s)}.
+\end{align*}
+
+Now by the Prekopa-Leindler Theorem (see\ref{lem:marginal}), the
+marginal of $F$ in $t$ is also logconcave. This marginal is 
+\[
+\int_{\R^{n}}F(x,t)\,dx=\int_{\R^{n}}f\left(\frac{x}{t}\right)^{t}\,dx=t^{n}\int_{\R^{n}}f(y)^{t}\,dy
+\]
+where we made the substitution $y=x/t$.
+\end{proof}
+Note that in the simulated annealing algorithm we choose $\frac{a_{\{i+1\}}}{a_{i}}=(1+\frac{1}{\sqrt{{n\}}}})$
+since this guarantees that the distribution with density proportional
+to $f_{i}$ has $\chi^{2}$-distance $O(1)$ to the distribution with
+density proportional to $f_{i+1}$. This will be useful later in bounding
+$\text{{var}(Y)/\ensuremath{\mathbb{E}[Y]^{2}}}$ of the random variable
+given by $Y=f_{i+1}(X)/f_{i}(X)$ for a random sample $X$ drawn from
+the distribution with density proportional to $f_{i}$.

@@ -1,0 +1,401 @@
+
+\section{Sphere and Parabola Methods}
+
+In Section \ref{sec:Gradient-Descent}, we proved that gradient descent
+converges at the rate $(1-\frac{\mu}{L})^{k}$ in function value assuming
+the function satisfies $\mu\cdot I\preceq\nabla^{2}f(x)\preceq L\cdot I$
+for all $x$. Hence, if $\frac{L}{\mu}$ is not too large, this rate
+of decrease of the function value can be much better than the $\left(1-\frac{1}{n^{2}}\right)^{k}$
+rate of the ellipsoid method or the $\left(1-\frac{1}{n}\right)^{k}$
+rate of the center of gravity method (recall that the convergence
+rate in function value is $n$ times slower than the convergence rate
+in volume). In this section, we show how to modify the ellipsoid method
+to get a faster convergence rate when $\frac{L}{\mu}$ is small. One
+can view this whole section as just an interpretation of accelerated
+gradient descent (which we haven't seen yet) in the cutting plane
+framework. In a later section, we will give another interpretation.
+
+\subsection{Sphere Method}
+
+We have been using convexity to find a halfspace containing the optimum
+with the current point on its boundary. For a strongly convex function,
+any optimal $x^{*}$ is contained in a strictly smaller region than
+a halfspace. In particular, we have
+\[
+f(x^{*})\geq f(x)+\nabla f(x)^{\top}(x^{*}-x)+\frac{\mu}{2}\norm{x^{*}-x}_{2}^{2}.
+\]
+Completing the square, we have that
+\[
+\frac{\mu}{2}\norm{(x^{*}-x)+\frac{1}{\mu}\nabla f(x)}_{2}^{2}-\frac{\norm{\nabla f(x)}_{2}^{2}}{2\mu}\le-\left(f(x)-f(x^{*})\right)
+\]
+Using $x^{+}\defeq x-\frac{1}{L}\nabla f(x)$ and $x^{++}\defeq x-\frac{1}{\mu}\nabla f(x)$,
+we can write
+\begin{equation}
+\norm{x^{*}-x^{++}}_{2}^{2}\leq\frac{\norm{\nabla f(x)}_{2}^{2}}{\mu^{2}}-\frac{2}{\mu}(f(x)-f(x^{*})).\label{eq:geometricdescent_ball-1}
+\end{equation}
+To use this formula in the cutting plane framework, we need a crude
+upper bound on $f(x^{*})$. One can simply use $f(x^{*})\leq f(x)$.
+Or, we can use Lemma \ref{lem:gradient_progress} and get
+\[
+f(x^{*})\leq f(x^{+})\le f(x-\frac{1}{L}\nabla f(x))\leq f(x)-\frac{1}{2L}\|\nabla f(x)\|^{2}.
+\]
+
+Putting it into (\ref{eq:geometricdescent_ball-1}), we see that
+\begin{align}
+\norm{x^{*}-x^{++}}_{2}^{2} & \leq\frac{1}{\mu^{2}}\left(\norm{\nabla f(x)}_{2}^{2}-2\mu\cdot\left(f(x)-f(x^{*})\right)\right)\nonumber \\
+ & \leq\frac{1}{\mu^{2}}\left(\norm{\nabla f(x)}_{2}^{2}-2\mu\cdot\left(f(x)-f(x^{+})\right)\right)-\frac{2}{\mu}\left(f(x^{+})-f(x^{*})\right)\nonumber \\
+ & \leq\frac{1}{\mu^{2}}\left(\norm{\nabla f(x)}_{2}^{2}-2\mu\cdot\frac{1}{2L}\|\nabla f(x)\|_{2}^{2}\right)-\frac{2}{\mu}\left(f(x^{+})-f(x^{*})\right)\nonumber \\
+ & \leq\frac{\left(1-\frac{\mu}{L}\right)}{\mu^{2}}\norm{\nabla f(x)}_{2}^{2}-\frac{2}{\mu}\left(f(x^{+})-f(x^{*})\right).\label{eq:radius-decrease}
+\end{align}
+Therefore, using the trivial bound of zero for the second term on
+the RHS, $x^{*}$ lies in a ball centered at $x^{++}$ with radius
+at most
+\begin{equation}
+\sqrt{1-\frac{\mu}{L}}\cdot\frac{\norm{\nabla f(x)}_{2}}{\mu}.\label{eq:geometr_descent_simple-1}
+\end{equation}
+
+This suggests using balls instead of ellipsoids in a cutting plane
+algorithm; it would certainly be more efficient to maintain!
+
+We arrive at the following algorithm.
+
+\begin{algorithm2e}[H]
+
+\caption{$\mathtt{SphereMethod}$}
+
+\SetAlgoLined
+
+\textbf{Input:} Initial point $x^{(0)}\in\Rn$, strong convexity parameter
+$\mu$, Lipschitz gradient parameter $L$.
+
+$Q^{(0)}\leftarrow\Rn$.
+
+\For{$k=0,1,\cdots$}{
+
+Set $Q=\left\{ x\in\Rn:\norm{x-(x^{(k)}-\frac{1}{\mu}\nabla f(x^{(k)}))}_{2}^{2}\leq\frac{1-\frac{\mu}{L}}{\mu^{2}}\cdot\norm{\nabla f(x^{(k)})}_{2}^{2}\right\} $.
+
+$Q^{(k+1)}\leftarrow\mathtt{minSphere}(Q\cap Q^{(k)})$ where $\mathtt{minSphere}(K)$
+is the smallest sphere covering $K$.
+
+$x^{(k+1)}\leftarrow$ center of $Q^{(k+1)}$.
+
+}
+
+\end{algorithm2e}
+
+To analyze $\mathtt{SphereMethod}$, we need the following lemma,
+which is illustrated in Figure \ref{fig:geometric_descent-1}.
+\begin{lem}
+\label{lem:one_ball_shrink-1}For any $g\in\Rn$ and $\epsilon\in(0,1)$,
+we have $B(0,1)\cap B(g,\|g\|_{2}\sqrt{1-\epsilon})\subset B(x,\sqrt{1-\epsilon})$
+for some $x$.
+\end{lem}
+
+\begin{proof}
+By symmetry, it suffices to consider the two-dimensional case, and
+to assume that $g=ae_{1}$. If $a\leq1$, we can simply pick $x=g$.
+Otherwise, let $(x,0)$ be the center of the smallest ball containing
+the required intersection, and $y$ be its radius. (See Figure \ref{fig:geometric_descent-1}).
+We have $x^{2}+y^{2}=1$ and $(x-a)^{2}+y^{2}=(1-\epsilon)a^{2}$.
+This implies that 
+\[
+x=\frac{1+\epsilon a^{2}}{2a}
+\]
+and so 
+\[
+y^{2}=1-\frac{\epsilon}{2}-\frac{1}{4a^{2}}-\frac{\epsilon^{2}a^{2}}{4}\le1-\epsilon
+\]
+as claimed.
+\end{proof}
+\begin{lem}
+Let the measure of progress $\mathcal{V}(Q)=\mathrm{radius}(Q)$.
+Then, we have that $x^{*}\in Q^{(k)}$ and $\mathcal{V}(Q^{(k+1)})\leq\sqrt{1-\frac{\mu}{L}}\cdot\mathcal{V}(Q^{(k)})$
+for all $k$.
+\end{lem}
+
+\begin{rem}
+The function value decrease follows from Theorem \ref{thm:conv_opt}.
+\end{rem}
+
+\begin{proof}[Proof Sketch.]
+The fact $x^{*}\in Q^{(k)}$ follows directly from the definition
+of $Q$. For the decrease of radius, suppose that 
+\[
+Q^{(k)}=\left\{ x\in\Rn:\|x-x^{(k)}\|\leq R^{(k)}\right\} .
+\]
+Then, the new ball is given by
+\[
+Q^{(k+1)}=\mathtt{minSphere}\left(\left\{ \norm{x-(x^{(k)}-\frac{1}{\mu}\nabla f(x^{(k)}))}_{2}^{2}\leq\frac{1-\frac{\mu}{L}}{\mu^{2}}\cdot\norm{\nabla f(x^{(k)})}_{2}^{2}\right\} \cap\left\{ \|x-x^{(k)}\|\leq R^{(k)}\right\} \right).
+\]
+To compute $\frac{\mathrm{radius}(Q^{(k+1)})^{2}}{\mathrm{radius}(Q^{(k)})^{2}}$,
+we can assume $x^{(k)}=0$ and $R^{(k)}=1$ and let $g=\frac{\nabla f(0)}{\mu}$.
+Hence, we have
+\[
+Q^{(k+1)}=\mathtt{minSphere}\left(\left\{ \norm{x-g}_{2}^{2}\leq(1-\frac{\mu}{L})\cdot\norm g_{2}^{2}\right\} \cap\left\{ \|x\|\leq1\right\} \right).
+\]
+Now Lemma \ref{lem:one_ball_shrink-1} (with $\epsilon=\frac{\mu}{L}$)
+shows that the $\mathrm{radius}(Q^{(k+1)})^{2}\leq1-\frac{\mu}{L}$.
+\end{proof}
+Note that this gives the same convergence rate as gradient descent
+for strongly convex functions. Each iteration is much faster than
+the $O(n^{2})$ time of the Ellipsoid method.
+
+\begin{figure}
+\begin{minipage}[t]{0.45\columnwidth}%
+\begin{tikzpicture}[scale=0.7, every node/.style={transform shape}]
+
+\draw  (0,0) ellipse (2 and 2);
+\draw[dashed]  (4,0) ellipse (4 and 4);
+\draw  (4,0) ellipse (3.85 and 3.85);
+\draw [|-|] (4,0) -- (4,4) node[pos=0.5, right] {$|g|$};
+\draw [|-|] (4,0) -- (7.85,0) node[pos=0.5, above] {$\sqrt{1-\epsilon}\ |g|$};
+
+\begin{scope}
+\clip (0,0) ellipse (2 and 2);
+\fill[lightgray] (4,0) ellipse (3.85 and 3.85);
+\end{scope}
+
+\draw (0,0) node[cross=5pt] {};
+\draw [|-|] (0,0) -- (-2,0) node[pos=0.4, above] {$1$};
+\draw [|-|] (0.64719,0) -- (2.53958,0) node[pos=0.35, above] {$\sqrt{1-\epsilon}$};
+\draw[thick]  (0.64719,0) ellipse (1.8924 and 1.8924);
+\end{tikzpicture}
+
+\caption*{$B(0,1)\cap B(g,|g|\sqrt{1-\epsilon})\subset B(x,\sqrt{1-\epsilon})$}%
+\end{minipage}\hfill{}%
+\begin{minipage}[t]{0.45\columnwidth}%
+\begin{tikzpicture}[scale=0.7, every node/.style={transform shape}]
+\draw[dashed]  (0,0) ellipse (2 and 2);
+\draw  (0,0) ellipse (1.68 and 1.68);
+\draw[dashed]  (4,0) ellipse (4 and 4);
+\draw  (4,0) ellipse (3.85 and 3.85);
+\draw [|-|] (4,0) -- (4,4) node[pos=0.5, right] {$|g|$};
+\draw [|-|] (4,0) -- (7.85,0) node[pos=0.5, above] {$\sqrt{1-\epsilon}\ |g|$};
+
+\begin{scope}
+\clip (0,0) ellipse (1.68 and 1.68);
+\fill[lightgray] (4,0) ellipse (3.85 and 3.85);
+\end{scope}
+
+\draw (0,0) node[cross=4pt] {};
+\draw [->] (0,3) -- (0,1.68) node[pos=0, above] {radius = $\sqrt{1-\epsilon |g|^2}$};
+%\draw [|-|] (0,-3) -- (-1.68,-3) node[pos=0.5, above] {$\sqrt{1-\epsilon |g|^2}$};
+\draw [|-|] (0.5,0) -- (2.1044,0) node[pos=0.3, above] {\scriptsize $\sqrt{1-\sqrt{\epsilon}}$};
+%%\draw[thick]  (0.5,0) ellipse (1.6044 and 1.6044);
+\draw[thick]  (0.5,0) ellipse (1.6044 and 1.6044);
+
+\end{tikzpicture}
+
+\caption*{$B(0,\sqrt{1-\epsilon|g|^{2}})\cap B(g,|g|\sqrt{1-\epsilon})\subset B(x,\sqrt{1-\sqrt{\epsilon}})$}%
+\end{minipage}
+
+\caption{The left diagram shows the intersection shrinks at the same rate if
+only one of the ball shrinks; the right diagram shows the intersection
+shrinks much faster if two balls shrink at the same absolute amount.\label{fig:geometric_descent-1}}
+\end{figure}
+
+
+\subsection{Parabola Method Via Epigraph}
+
+In previous sections, we have discussed cutting plane methods that
+maintain a region that contains the minimizer $x^{*}$ of $f$. The
+proof of such a cutting plane method relies on the following inequality
+\begin{equation}
+f(x)>f(x^{*})\geq f(x)+\left\langle \nabla f(x),x^{*}-x\right\rangle \label{eq:epigraph_cuttingplane-1}
+\end{equation}
+Notice that the left-hand side is a strict inequality (unless we already
+solved the problem). We infer a halfspace containing the optimum using
+the subgradient at $x$, namely 
+\[
+\left\langle \nabla f(x),x^{*}-x\right\rangle \le0.
+\]
+As the algorithm proceeds, we find a new point $x^{\new}$ such that
+$f(x^{\new})<f(x)$. Therefore, the original inequality can be strengthened
+to 
+\[
+f(x^{(new)})>f(x)+\left\langle \nabla f(x),x^{*}-x\right\rangle 
+\]
+or 
+\[
+\left\langle \nabla f(x),x^{*}-x\right\rangle <-(f(x)-f(x^{(new)})).
+\]
+This suggests we should move earlier halfspaces and thereby reduce
+the measure of the next set. We expect merely updating the halfspaces
+can improve the convergence rate from $1-\frac{\mu}{L}$ to $1-\sqrt{\frac{\mu}{L}}$
+because of the right diagram in Figure \ref{fig:geometric_descent-1}.
+An efficient way to manage all this information is to directly maintain
+a region that contains $(x^{*},f(x^{*}))$. Now, we can view the inequality
+$f(y)\geq f(x)+\left\langle \nabla f(x),y-x\right\rangle $ as a cutting
+plane of the epigraph of $f$ and we do not need to update previous
+cutting planes anymore.
+
+The next algorithm is an epigraph cutting plane method.
+
+\begin{algorithm2e}[H]
+
+\caption{$\mathtt{ParabolaMethod}$}
+
+\SetAlgoLined
+
+\textbf{Input:} Initial point $x^{(0)}\in\Rn$ and the strong convexity
+parameter $\mu$.
+
+$q^{(0)}(y)\leftarrow-\infty$.
+
+\For{$k=0,1,\cdots$}{
+
+Set $q^{(k+\frac{1}{2})}(y)=f(x^{(k)})+\nabla f(x^{(k)})^{\top}(y-x^{(k)})+\frac{\mu}{2}\norm{y-x^{(k)}}^{2}$.
+
+Let $q^{(k+1)}=\mathtt{maxParabola}(\max(q^{(k+\frac{1}{2})},q^{(k)}))$
+where $\mathtt{maxParabola}(q)$ outputs the parabolic function $p$
+such that $p(x)\leq q(x)$ for all $x$, and $p$ maximizes $\min_{x}p(x)$.
+
+\tcp{Alternatively, one can use $x^{(k+\frac{1}{2})}\leftarrow x^{(k)}-\frac{1}{L}\nabla f(x^{(k)})$
+below.}
+
+Let $x^{(k+\frac{1}{2})}=\ls(x^{(k)},-\nabla f(x^{(k)}))$ where
+\[
+\ls(x,y)=\argmin_{z=x+ty\text{ with }t\geq0}f(z).
+\]
+Let $x^{(k+1)}=\ls(x^{(k+\frac{1}{2})},c^{(k+1)}-x^{(k+\frac{1}{2})})$
+where $c^{(k+1)}$ be the minimizer of $q^{(k+1)}(y)$.
+
+}
+
+\end{algorithm2e}
+
+As in gradient descent, to avoid using the parameter $L$, we do a
+line search from $x^{(k)}$ along the direction $\nabla f(x^{(k)})$.
+ The subroutine $\mathtt{maxParabola}$ has an explicit formula \cite{drusvyatskiy2016optimal}.
+
+\begin{algorithm2e}[H]
+
+\caption{$q=\mathtt{maxParabola}(\max(q_{a},q_{b}))$}
+
+\SetAlgoLined
+
+\textbf{Input:} $q_{A}(x)=v_{A}+\frac{\mu}{2}\|x-c_{A}\|_{2}^{2}$
+and $q_{B}(x)=v_{B}+\frac{\mu}{2}\|x-c_{B}\|_{2}^{2}$.
+
+Compute $\lambda=\mathrm{proj}_{[0,1]}\left(\frac{1}{2}+\frac{v_{A}-v_{B}}{\mu\|c_{A}-c_{B}\|^{2}}\right)$.
+
+$c_{\lambda}=\lambda c_{A}+(1-\lambda)c_{B}$.
+
+$v_{\lambda}=\lambda v_{A}+(1-\lambda)v_{B}+\frac{\mu}{2}\lambda(1-\lambda)\|c_{A}-c_{B}\|^{2}$.
+
+\textbf{Output: $q(x)=v_{\lambda}+\frac{\mu}{2}\|x-c_{\lambda}\|_{2}^{2}$.}
+
+\end{algorithm2e}
+\begin{xca}
+Show that the formula for $\mathtt{maxParabola}$ computes the optimal
+parabola.
+\end{xca}
+
+The key fact we will be using from the formula is that when $0<\lambda<1$,
+we have
+\[
+v_{\lambda}=v_{A}+\frac{\mu}{8}\frac{(\|c_{A}-c_{B}\|^{2}+\frac{2}{\mu}(v_{B}-v_{A}))^{2}}{\|c_{A}-c_{B}\|^{2}}.
+\]
+This says that the quadratic lower bound improves a lot whenever $\frac{\mu}{2}\|c_{A}-c_{B}\|^{2}\gg v_{B}-v_{A}$
+or $\frac{\mu}{2}\|c_{A}-c_{B}\|^{2}\ll v_{B}-v_{A}$. Using this,
+we can analyze the $\mathtt{ParabolaMethod}$.
+\begin{thm}
+\label{lem:geometric_convergence_rate-1}Assume that $f$ is $\mu$-strongly
+convex with $L$-Lipschitz gradient. Let $r_{k}=f(x^{(k)})-\min_{y}q^{(k)}(y)$.
+Then, we have that
+\[
+r_{k+1}^{2}\leq(1-\sqrt{\frac{\mu}{L}})\cdot r_{k}^{2}.
+\]
+In particular, we have that
+\[
+f(x^{(k+1)})-f^{*}\leq\frac{1}{2\mu}(1-\sqrt{\frac{\mu}{L}})^{k}\|\nabla f(x^{(0)})\|^{2}.
+\]
+\end{thm}
+
+\begin{rem}
+Note that the squared radius of $\{y:q^{(k)}(y)=f(x^{(k)})\}$ is
+$\frac{2}{\mu}(f(x^{(k)})-\min_{y}q^{(k)}(y))$ because $q^{(k)}(y)=\min_{y}q^{(k)}(y)+\frac{\mu}{2}\|y-\arg\min_{x}q^{(k)}(x)\|^{2}$.
+Hence, $r_{k}$ is measuring the squared radius of our quadratic lower
+bound. To relate to the cutting plane framework, we can view the set
+as $\{y:q^{(k)}(y)\leq f(x^{(k)})\}$ and the measure $\mathcal{V}=f(x^{(k)})-\min_{y}q^{(k)}(y)$.
+\end{rem}
+
+\begin{proof}
+Fix some $k$. We write $q^{(k)}(y)=v_{A}+\frac{\mu}{2}\norm{y-c_{A}}^{2}$
+and $q^{(k+\frac{1}{2})}(y)=v_{B}+\frac{\mu}{2}\norm{y-c_{B}}^{2}$
+with
+\[
+c_{A}=c^{(k)},\quad c_{B}=x^{(k)}-\frac{\nabla f(x^{(k)})}{\mu}\quad\text{and}\quad v_{B}=f(x^{(k)})-\frac{\|\nabla f(x^{(k)})\|^{2}}{2\mu}.
+\]
+Using the notation in $\mathtt{maxParabola}$, we write $q^{(k+1)}(y)=v_{\lambda}+\frac{\mu}{2}\norm{y-c_{\lambda}}^{2}$.
+Note that $r_{k+1}^{2}=f(x^{(k+1)})-v_{\lambda}$ and $r_{k}^{2}=f(x^{(k)})-v_{A}$.
+Therefore, we have
+\begin{equation}
+\frac{r_{k}^{2}-r_{k+1}^{2}}{r_{k}^{2}}=\frac{f(x^{(k)})-f(x^{(k+1)})+v_{\lambda}-v_{A}}{r_{k}^{2}}.\label{eq:r_ratio-1}
+\end{equation}
+To bound the right hand side, it suffices to bound $v_{A}$ and $v_{\lambda}$.
+From the description of the algorithm $\mathtt{maxParabola}$, we
+see that there are three cases $\lambda=0$, $\lambda=1$ and $0<\lambda<1$.
+We only focus on proving the nontrivial case $\lambda\in(0,1)$. 
+In this case, we have that
+\begin{align*}
+v_{\lambda} & =v_{A}+\frac{\mu}{8}\frac{(\|c_{A}-c_{B}\|^{2}+\frac{2}{\mu}(v_{B}-v_{A}))^{2}}{\|c_{A}-c_{B}\|^{2}}\\
+ & =v_{A}+\frac{\mu}{8}\frac{(\|c_{A}-c_{B}\|^{2}+\frac{2}{\mu}(f(x^{(k)})-v_{A})-\frac{\|\nabla f(x^{(k)})\|^{2}}{\mu^{2}})^{2}}{\|c_{A}-c_{B}\|^{2}}.
+\end{align*}
+Since $f\geq q^{(k)}$, we have $f(x^{(k)})\geq q^{(k)}(x^{(k)})\geq\min_{x}q^{(k)}(x)=v_{A}$.
+Next, we claim that $\|c_{A}-c_{B}\|^{2}\geq\frac{\|\nabla f(x^{(k)})\|^{2}}{\mu^{2}}$.
+Using these two facts, we can prove that
+\[
+v_{\lambda}\geq v_{A}+\frac{\mu}{8}\frac{(\frac{2}{\mu}(f(x^{(k)})-v_{A}))^{2}}{\frac{\|\nabla f(x^{(k)})\|^{2}}{\mu^{2}}}=v_{A}+\frac{\mu\cdot r_{k}^{4}}{2\|\nabla f(x^{(k)})\|^{2}}.
+\]
+Putting this into (\ref{eq:r_ratio-1}), we have
+\begin{align}
+\frac{r_{k}^{2}-r_{k+1}^{2}}{r_{k}^{2}} & \geq\frac{f(x^{(k)})-f(x^{(k+1)})}{r_{k}^{2}}+\frac{\mu\cdot r_{k}^{2}}{2\|\nabla f(x^{(k)})\|^{2}}\nonumber \\
+ & \geq\frac{f(x^{(k+\frac{1}{2})})-f(x^{(k+1)})}{r_{k}^{2}}+\frac{\mu\cdot r_{k}^{2}}{2\|\nabla f(x^{(k)})\|^{2}}\nonumber \\
+ & \geq\frac{\|\nabla f(x^{(k)})\|^{2}}{2Lr_{k}^{2}}+\frac{\mu\cdot r_{k}^{2}}{2\|\nabla f(x^{(k)})\|^{2}}\label{eq:geometric_key-1}\\
+ & \geq\sqrt{\frac{\mu}{L}}\nonumber 
+\end{align}
+where the second inequality is due to the fact $x^{(k+\frac{1}{2})}$
+is a line search from $x^{(k)}$, the third inequality is due to the
+assumption on $L$ (Lemma \ref{lem:gradient_progress}), the last
+inequality follows from the Cauchy-Schwarz inequality.
+
+For the final conclusion, we note that
+\begin{align*}
+q^{(1)}(y) & =f(x^{(0)})+\nabla f(x^{(0)})^{\top}(y-x^{(0)})+\frac{\mu}{2}\norm{y-x^{(0)}}^{2}\\
+ & =f(x^{(0)})-\frac{1}{2\mu}\|\nabla f(x^{(0)})\|^{2}+\frac{\mu}{2}\norm{y-(x^{(0)}-\frac{1}{\mu}\nabla f(x^{(0)}))}^{2}.
+\end{align*}
+Hence, we have $v^{(1)}=f(x^{(0)})-\frac{1}{2\mu}\|\nabla f(x^{(0)})\|^{2}$
+and hence $r_{1}\leq f(x^{(1)})-v^{(1)}\leq\frac{1}{2\mu}\|\nabla f(x^{(0)})\|^{2}$.
+
+To prove the claim, we note that $x^{(k)}$ is the result of a line
+search of $f$ between $c^{(k)}$ and some point. Therefore, we have
+that $\nabla f(x^{(k)})\perp(x^{(k)}-c^{(k)})$ and hence
+\[
+\|c_{A}-c_{B}\|^{2}=\|c^{(k)}-x^{(k)}+\frac{\nabla f(x^{(k)})}{\mu}\|^{2}\geq\frac{\|\nabla f(x^{(k)})\|^{2}}{\mu^{2}}.
+\]
+\end{proof}
+\begin{rem}
+We can view (\ref{eq:geometric_key-1}) as the key equation of the
+proof above. It shows that the progress is roughly $\frac{\|\nabla f\|^{2}}{L}+\frac{\mu}{\|\nabla f\|^{2}}$
+where the first term comes from the progress on the function value
+and the second term comes from ``the curvature'' of the cutting
+sphere.
+\end{rem}
+
+\begin{xca}
+Prove the following extension of Lemma \ref{lem:one_ball_shrink-1}:
+There exists $x$ s.t. $B(0,\sqrt{1-\epsilon|g|^{2}})\cap B(g,|g|\sqrt{1-\epsilon})\subset B(x,\sqrt{1-\sqrt{\epsilon}})$.
+\end{xca}
+
+
+\subsection{Discussion}
+
+This section was about the idea of managing cutting planes, and as
+a byproduct we get an accelerated rate of convergence. As we will
+see later, standard accelerated gradient descent does not use line
+search and achieves the rate $1-\sqrt{\frac{\mu}{L}}$. However, it
+seems that the use of line search helps in practice and that with
+a careful implementation, line search can be as cheap as gradient
+computation. For more difficult problems, one may want to store multiple
+quadratic lower bounds (see \cite{drusvyatskiy2016optimal}).

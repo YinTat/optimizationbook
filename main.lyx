@@ -1,5 +1,5 @@
-#LyX 2.4 created this file. For more info see https://www.lyx.org/
-\lyxformat 620
+#LyX 2.5 created this file. For more info see https://www.lyx.org/
+\lyxformat 643
 \begin_document
 \begin_header
 \save_transient_properties true
@@ -75,11 +75,19 @@
 \use_indices false
 \paperorientation portrait
 \suppress_date false
-\justification true
-\use_refstyle 1
+\justification default
+\crossref_package refstyle
 \use_formatted_ref 0
 \use_minted 0
 \use_lineno 0
+\backgroundcolor none
+\fontcolor none
+\notefontcolor lightgray
+\boxbgcolor red
+\table_border_color default
+\table_odd_row_color default
+\table_even_row_color default
+\table_alt_row_colors_start 1
 \index Index
 \shortcut idx
 \color #008000
@@ -105,6 +113,7 @@
 \html_be_strict false
 \docbook_table_output 0
 \docbook_mathml_prefix 1
+\docbook_mathml_version 0
 \end_header
 
 \begin_body
@@ -373,7 +382,7 @@ Techniques in Optimization and Sampling
 \begin_inset Newline newline
 \end_inset
 
-(book in progress with improving citations)
+(book in progress; citations being improved)
 \end_layout
 
 \begin_layout Author
@@ -409,7 +418,6 @@ University of Washington
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 and 
@@ -929,9 +937,6 @@ literal "true"
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand input
 filename "examples.lyx"
@@ -1061,7 +1066,7 @@ literal "true"
 
  
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 I don't like the current outline where I couple the equivalence with the convex conjugate.
@@ -1092,7 +1097,7 @@ Geometrization
 
 \begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Seems Mirror Descent is really doing the job as Newton Method.
@@ -1106,22 +1111,8 @@ Just we never use in that way?
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset include
-LatexCommand input
-filename "mirror_descent.lyx"
-literal "true"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Should we give a continuous proof everywhere?
@@ -1138,9 +1129,6 @@ Is mirror descent is about the decomposition of online and offline parts?
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand input
 filename "frank_wolfe.lyx"
@@ -1276,9 +1264,6 @@ literal "true"
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand input
 filename "opt_from_mem.lyx"
@@ -1321,7 +1306,7 @@ literal "true"
 \end_layout
 
 \begin_layout Chapter
-Annealing 
+Annealing
 \begin_inset CommandInset label
 LatexCommand label
 name "chap:Annealing"
@@ -1344,23 +1329,6 @@ literal "true"
 LatexCommand input
 filename "annealing_volume.lyx"
 literal "true"
-
-\end_inset
-
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-\begin_inset CommandInset include
-LatexCommand input
-filename "rounding.lyx"
-literal "true"
-
-\end_inset
-
-
-\end_layout
 
 \end_inset
 
@@ -1414,77 +1382,13 @@ Probably should first have a more comprehensive introduction,
 \end_layout
 
 \begin_layout Chapter
-Notation 
+Notation
 \end_layout
 
 \begin_layout Standard
 \begin_inset CommandInset include
 LatexCommand input
 filename "notation.lyx"
-literal "true"
-
-\end_inset
-
-
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{document}
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Chapter
-—
--
-\end_layout
-
-\begin_layout Chapter
-Expansion
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset include
-LatexCommand input
-filename "ode.lyx"
-literal "true"
-
-\end_inset
-
-
-\begin_inset CommandInset include
-LatexCommand input
-filename "collocation_method.lyx"
-literal "true"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Chapter
-Decomposition
-\end_layout
-
-\begin_layout Standard
-\begin_inset CommandInset include
-LatexCommand input
-filename "cholesky_decomposition.lyx"
-literal "true"
-
-\end_inset
-
-
-\begin_inset CommandInset include
-LatexCommand input
-filename "multigrid.lyx"
 literal "true"
 
 \end_inset

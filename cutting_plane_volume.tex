@@ -2,8 +2,8 @@
 Volume computation of a given set is a fundamental problem in theoretical
 computer science, with diverse applications to other problems (see
 Exercise~\ref{ex: linExt-volume}). For a convex body $K$ in $\R^{n}$,
-$R$ such that $B_{n}\subseteq K\subseteq RB_{n}$ and $\varepsilon>0$,
-the problem is to output a number $A$ s.t. 
+a number $R$ such that $B_{n}\subseteq K\subseteq RB_{n}$ and $\varepsilon>0$,
+the problem is to output a number $A$ such that 
 \[
 (1-\varepsilon)\vol(K)\le A\le(1+\varepsilon)\vol(K).
 \]
@@ -12,7 +12,7 @@ More precisely, we have the following basic problem.
 \begin{problem}[Volume Estimation]
 \label{problem:volume} Given a membership oracle for a convex body
 $K$ in $\R^{n}$, $R$ such that $B_{n}\subseteq K\subseteq RB_{n}$
-and $\varepsilon>0$, output a number $A$ s.t. 
+and $\varepsilon>0$, output a number $A$ such that 
 \[
 (1-\varepsilon)\vol(K)\le A\le(1+\varepsilon)\vol(K).
 \]
@@ -50,45 +50,47 @@ body $K$ for which
 In other words, even getting a simple exponential volume approximation
 requires an exponential number of queries. 
 \begin{proof}
-For all queries $x\in B^{n},$the oracle answers YES and for queries
+For all queries $x\in B^{n}$, the oracle answers YES, and for queries
 outside the unit ball it answers NO. After $m$ queries $x_{1},\ldots,x_{m}$,
 we have that 
 \[
-\conv\left\{ x_{1},\ldots,x_{m}\right\} \subseteq K\subseteq B^{n}.
+\conv(x_{1},\ldots,x_{m})\subseteq K\subseteq B^{n}.
 \]
-Now by Lemma , the volume of the convex hull of \emph{any $m$ }points
-in the unit ball is at most a $m/2^{n}$ fraction of the unit ball's
-volume. This proves the theorem.
+By the following lemma, the volume of the convex hull of \emph{any
+$m$ }points in the unit ball is at most a $m/2^{n}$ fraction of
+the unit ball's volume. This proves the theorem.
 \end{proof}
 \begin{lem}
 Let $x_{1},\ldots,x_{m}\in B^{n}$. Then 
 \[
-\vol\left(\conv\left\{ x_{1},\ldots,x_{m}\right\} \right)\le\frac{m}{2^{n}}\vol(B^{n}).
+\vol\left(\conv(x_{1},\ldots,x_{m})\right)\le\frac{m}{2^{n}}\vol(B^{n}).
 \]
 \end{lem}
 
 \begin{proof}
-For each $x_{i}$, define $B_{i}=B(x_{i},\|x_{i}\|/2)$, a ball with
-diameter $\|x_{i}\|\le1/2$. Then 
+For each $x_{i}$, define $B_{i}=B(x_{i}/2,\|x_{i}\|/2)$. Then 
 \[
-\vol\left(\bigcup_{i=1}^{m}B_{i}\right)\le m\cdot\vol(B(0,1/2))=\frac{m}{2^{n}}\vol(B^{n}).
+\vol\left(\bigcup^{m}_{i=1}B_{i}\right)\le m\cdot\vol(B(0,1/2))=\frac{m}{2^{n}}\vol(B^{n}).
 \]
 
-We argue that $\conv{x_{1},\ldots,x_{m}}\subset\bigcup B_{i}$. To
-see this, let $y$ be a point not contained in $B_{i}$. Then, the
-angle at $y$ induced by the vectors $y$ and $y-x_{i}$ must be acute,
-i.e., 
+We argue that $\conv(x_{1},\ldots,x_{m})\subset\bigcup B_{i}$. To
+see this, let $y$ be a point not contained in any $B_{i}$. Then,
+for every $i$, 
 \[
-\langle y,x_{i}-y\rangle<0
+\|y-x_{i}/2\|>\|x_{i}\|/2,
 \]
-and this holds for all $i$. In other words, the halfspace $\langle y,x-y\rangle<0$
-separates $y$ from all the $x_{i}$. Therefore it separates it from
-their convex hull. 
+which is equivalent to
+\[
+\langle y,x_{i}-y\rangle<0.
+\]
+In other words, all the $x_{i}$ lie in the open halfspace $\{x:\langle y,x-y\rangle<0\}$,
+while $y$ lies on its boundary. Therefore the hyperplane $\{x:\langle y,x-y\rangle=0\}$
+separates $y$ from $\conv(x_{1},\ldots,x_{m})$. 
 \end{proof}
 Computing the volume exactly is hard even for explicit simple polyhedra
 as the following theorem asserts.
 \begin{thm}
-\cite{DF88} Let $P={x:x\in[0,1]^{n},a^{\top}x\le b}$ where $a$
+\cite{DF88} Let $P=\{x:x\in[0,1]^{n},a^{\top}x\le b\}$ where $a$
 is an integer vector. Computing the volume of $P$ (specified by $a,b$)
 is $\#$P-hard. 
 \end{thm}
@@ -123,7 +125,7 @@ $K^{(0)}=K,$ $z^{(0)}=\mbox{centroid}(K^{(0)}),k=0,V_{0}=1$.
 Let $e_{i}$ be an axis vector so that the width of $K^{(k)}$ along
 $e_{i}$ is greater than $r$.
 
-\lIf{There is no such $e_{i}$}{\textbf{Break}.}
+\lIf{there is no such $e_{i}$}{\textbf{Break}}
 
 Let $a$ be $e_{i}$ or $-e_{i}$ with sign chosen so that $H^{(k)}\defeq\left\{ x\,:\,a^{\top}x\le a^{\top}z^{(k)}\right\} $
 contains the origin.
@@ -138,18 +140,18 @@ $V_{k+1}=V_{k}\cdot\frac{\norm{\widehat{z}-z^{(k+1)}}}{\norm{\widehat{z}-z^{(k)}
 
 }
 
-Return $V_{\text{last}}\cdot\prod_{i=1}^{n}w_{i}(K^{(k+1)})$ where
+Return $V_{\text{last}}\cdot\prod^{n}_{i=1}w_{i}(K^{(k)})$ where
 $w_{i}(\cdot)$ is the width along $e_{i}$.
 
 \end{algorithm2e}
 
 The idea behind the algorithm is simple: when we cut a set with a
 hyperplane through its centroid, the line joining the centroids of
-the two sides passes through the original centroid (see Figure~\ref{fig:cutting-volume});
+the two sides passes through the original centroid (see Figure \ref{fig:cutting_plane_vol});
 moreover, the ratio of the two segments is exactly the ratio of the
 volumes of the two halfspaces (i.e., $V_{k}=\vol(K^{(0)})/\vol(K^{(k)})$).
 \begin{lem}
-\label{lem:centroid}For any measurable bounded set S in $\R^{n}$
+\label{lem:centroid}For any measurable bounded set $S$ in $\R^{n}$
 and any halfspace $H$ with bounding hyperplane containing the centroid
 of $S$, we have 
 \[
@@ -170,35 +172,35 @@ of $K$ along $\theta$ is $[a,b]$. Then,
 \begin{proof}
 The goal of this proof is to show that a cone attains the maximum
 ratio of $b/|a|$ (and it equals $n$ in that case). As with the proof
-of Theorem \ref{thm:Grunbaum}, we may assume $K$ is symmetric by
-replacing each cross section $\{x\in K\colon\theta^{\top}x=t\}$ with
-the $(n-1)$-dimensional ball of the same volume with radius $r(t)$,
-i.e., $r^{n-1}(t)C_{n-1}$ is the $(n-1)$-dimensional volume of $K\cap\{y\in\R^{n}:y^{\top}\theta=t\}$,
-with the center of gravity at $t=0$. We will exploit the fact that
-$r(t)$ is concave in $t$, and replace $r(t)$ by a line going through
-$(b,0)$ and $(0,r(0))$ so that we get a cone with base at $t=a$.
-We will show that the center of gravity of the cone, say $t_{0}$,
-is to the left of $0$. Then, 
+of Theorem \ref{thm:Grunbaum}, we may assume $K$ has rotationally
+symmetric cross sections by replacing each cross section $\{x\in K\colon\theta^{\top}x=t\}$
+with the $(n-1)$-dimensional ball of the same volume with radius
+$r(t)$, i.e., $r^{n-1}(t)C_{n-1}$ is the $(n-1)$-dimensional volume
+of $K\cap\{y\in\R^{n}:y^{\top}\theta=t\}$, with the center of gravity
+at $t=0$. We will exploit the fact that $r(t)$ is concave in $t$,
+and replace $r(t)$ by a line going through $(b,0)$ and $(0,r(0))$
+so that we get a cone with base at $t=a$. We will show that the center
+of gravity of the cone, say $t_{0}$, is to the left of $0$. Then,
 \[
 \frac{b}{|a|}\le\frac{b-t_{0}}{t_{0}-a}=\frac{n}{n+1}\frac{n+1}{1}=n
 \]
 which can be rearranged to give the result. The equation for the cone
 is
 \[
-y(t)=-\frac{r(0)}{b}(x-b).
+y(t)=-\frac{r(0)}{b}(t-b).
 \]
-Notice that $y(t)\le r(t)$ for all $t\in[0,b]$ since it is a chord
-between two points of a concave function and therefore always below
-the concave function. To see why $r(t)\le y(t)$ for $t\in[-a,0]$,
+Notice that $y(t)\le r(t)$ for all $t\in[0,b]$ because it is the
+chord between two points of a concave function and therefore lies
+below the concave function. To see why $r(t)\le y(t)$ for $t\in[a,0]$,
 consider $g(t)=r(t)-y(t)$. Then $g'(t)=r'(t)-y'(t)$. Notice that
 $g'(0)=r'(0)-y'(0)\ge0$, and since $y'(t)$ is a constant and $r'(t)$
 is decreasing, we must have $r'(t)-y'(t)\ge0$ for all $t\le0$. Since
 $g(0)=0$ by construction of $y(t)$, we get that $g(t)\le0$ for
 all $t\le0$. Then, we have
 \begin{align*}
-t_{0} & =\frac{\int_{a}^{b}ty^{n-1}(t)dt}{\int_{a}^{b}y^{n-1}(t)dt}\\
- & =\frac{1}{\int_{a}^{b}y^{n-1}(t)dt}\left(\int_{a}^{0}ty^{n-1}(t)dt+\int_{0}^{b}ty^{n-1}(t)dt\right)\\
- & \le\frac{1}{\int_{a}^{b}y^{n-1}(t)dt}\left(\int_{a}^{0}tr^{n-1}(t)dt+\int_{0}^{b}tr^{n-1}(t)dt\right)=0.
+t_{0} & =\frac{\int^{b}_{a}ty^{n-1}(t)dt}{\int^{b}_{a}y^{n-1}(t)dt}\\
+ & =\frac{1}{\int^{b}_{a}y^{n-1}(t)dt}\left(\int^{0}_{a}ty^{n-1}(t)dt+\int^{b}_{0}ty^{n-1}(t)dt\right)\\
+ & \le\frac{1}{\int^{b}_{a}y^{n-1}(t)dt}\left(\int^{0}_{a}tr^{n-1}(t)dt+\int^{b}_{0}tr^{n-1}(t)dt\right)=0.
 \end{align*}
 So $t_{0}\le0$.
 \end{proof}
@@ -214,18 +216,18 @@ of $K$ using $O(n\log\frac{nR}{r})$ centroid computations.
 By Theorem \ref{thm:Grunbaum}, at each iteration, the volume of the
 remaining set $K^{(k)}$ decreases by at least a factor of $(1-\frac{1}{e})$.
 When the directional width along any axis is less than $r$ (namely
-$\max_{x\in K}\left|e_{i}^{\top}x\right|\leq r$), the algorithm stops
-cutting along that axis. So, just before the last cut along any axis,
-the width in that direction is at least $r$. Then, we use the center
-of gravity to cut. By Lemma \ref{lem:width}, the directional width
-along every axis of the surviving set is at least $r/(n+1)$. Since
-the set always contains the origin, and the original set contains
-a cube of side length $r$, when the algorithm stops, it must be an
-axis-parallel cuboid with each side of length in the range $[r/(n+1),r]$.
-So the final volume is at least $(r/(n+1))^{n}.$ The initial volume
-is at most $R^{n}$. Therefore the number of iterations is at most
+$w_{i}(K^{(k)})\leq r$), the algorithm stops cutting along that axis.
+So, just before the last cut along any axis, the width in that direction
+is at least $r$. Then, we use the center of gravity to cut. By Lemma
+\ref{lem:width}, the directional width along every axis of the surviving
+set is at least $r/(n+1)$. Since the set always contains the origin,
+and the original set contains a cube of side length $r$, when the
+algorithm stops, it must be an axis-parallel cuboid with each side
+of length in the range $[r/(n+1),r]$. So the final volume is at least
+$(r/(n+1))^{n}.$ The initial volume is at most $(2R)^{n}$. Therefore
+the number of iterations is at most 
 \[
-\log_{(1-\frac{1}{e})}\left(\frac{(2R)^{n}}{(r/(n+1))^{n}}\right)=O\left(n\log(nR/r)\right).
+\log_{1/(1-\frac{1}{e})}\left(\frac{(2R)^{n}}{(r/(n+1))^{n}}\right)=O\left(n\log(nR/r)\right).
 \]
 In each iteration, by Lemma \ref{lem:centroid}, the algorithm maintains
 the ratio of the volume of the original $K$ to the current $K^{(k)}$.
@@ -233,6 +235,7 @@ the ratio of the volume of the original $K$ to the current $K^{(k)}$.
 \selectlanguage{english}%
 \begin{figure}
 \centering{}\includegraphics[width=0.5\columnwidth]{Figures/Section_9\lyxdot 2}\caption{\foreignlanguage{american}{Algorithm (\ref{alg:cutting-plane-volume}) in its second iteration. }}
+\label{fig:cutting_plane_vol}
 \end{figure}
 \end{proof}
 The above algorithm shows that computing the volume is polytime reducible
@@ -268,30 +271,30 @@ to showing that for all measurable $A,B$:
 
 We first consider the case when $A,B$ are cuboids, i.e., 
 \[
-A=\prod_{i=1}^{n}[0,a_{i}]\ \mbox{and \ }B=\prod_{i=1}^{n}[0,b_{i}]
+A=\prod^{n}_{i=1}[0,a_{i}]\ \mbox{and \ }B=\prod^{n}_{i=1}[0,b_{i}]
 \]
-for positive real numbers $a_{1},\ldots,a_{m},b_{1},\ldots,b_{m}$.
+for positive real numbers $a_{1},\ldots,a_{n},b_{1},\ldots,b_{n}$.
 Then, we have 
 \[
-\vol(A)=\prod_{i=1}^{n}a_{i},\,\vol(B)=\prod_{i=1}^{n}b_{i}\:\vol(A+B)=\prod_{i=1}^{n}(a_{i}+b_{i}).
+\vol(A)=\prod^{n}_{i=1}a_{i},\,\vol(B)=\prod^{n}_{i=1}b_{i},\quad\vol(A+B)=\prod^{n}_{i=1}(a_{i}+b_{i}).
 \]
 Now we need to verify that 
 \[
-\left(\prod_{i=1}^{n}(a_{i}+b_{i})\right)^{\frac{1}{n}}\ge\left(\prod_{i=1}^{n}a_{i}\right)^{\frac{1}{n}}+\left(\prod_{i=1}^{n}b_{i}\right)^{\frac{1}{n}}
+\left(\prod^{n}_{i=1}(a_{i}+b_{i})\right)^{\frac{1}{n}}\ge\left(\prod^{n}_{i=1}a_{i}\right)^{\frac{1}{n}}+\left(\prod^{n}_{i=1}b_{i}\right)^{\frac{1}{n}}
 \]
 which is equivalent to 
 \[
-\left(\prod_{i=1}^{n}\frac{a_{i}}{a_{i}+b_{i}}\right)^{\frac{1}{n}}+\left(\prod_{i=1}^{n}\frac{b_{i}}{a_{i}+b_{i}}\right)^{\frac{1}{n}}\le1.
+\left(\prod^{n}_{i=1}\frac{a_{i}}{a_{i}+b_{i}}\right)^{\frac{1}{n}}+\left(\prod^{n}_{i=1}\frac{b_{i}}{a_{i}+b_{i}}\right)^{\frac{1}{n}}\le1.
 \]
 Using the AM-GM inequality, for each of the terms on the LHS, we have
 \[
-\left(\prod_{i=1}^{n}\frac{a_{i}}{a_{i}+b_{i}}\right)^{\frac{1}{n}}+\left(\prod_{i=1}^{n}\frac{b_{i}}{a_{i}+b_{i}}\right)^{\frac{1}{n}}\le\frac{1}{n}\sum_{i=1}^{n}\frac{a_{i}}{a_{i}+b_{i}}+\frac{1}{n}\sum_{i=1}^{n}\frac{b_{i}}{a_{i}+b_{i}}=1.
+\left(\prod^{n}_{i=1}\frac{a_{i}}{a_{i}+b_{i}}\right)^{\frac{1}{n}}+\left(\prod^{n}_{i=1}\frac{b_{i}}{a_{i}+b_{i}}\right)^{\frac{1}{n}}\le\frac{1}{n}\sum^{n}_{i=1}\frac{a_{i}}{a_{i}+b_{i}}+\frac{1}{n}\sum^{n}_{i=1}\frac{b_{i}}{a_{i}+b_{i}}=1.
 \]
 
-We will now prove the inequality to any finite union of cuboids. That
-suffices to complete the proof because any measurable subset is the
-limit of a union of disjoint cubes as the cubes become smaller and
-smaller. 
+We will now prove the inequality for any finite union of cuboids.
+That suffices to complete the proof because any measurable subset
+is the limit of a union of disjoint cubes as the cubes become smaller
+and smaller. 
 
 Let $A$ be a finite collection of disjoint axis-parallel cuboids
 and $B$ be another such collection. We will prove the inequality
@@ -299,7 +302,7 @@ by induction on the total number of cuboids in $A\cup B$. First note
 that there is at least one complete cuboid of $A$ separated from
 another complete cuboid of $A$ by an axis-aligned halfspace, i.e.,
 there is a coordinate $i$ so that after translating $A$ along this
-coordinate the sets ${x:x_{i}\le0}$and ${x:x_{i}>0}$ both contain
+coordinate the sets $\{x:x_{i}\le0\}$and $\{x:x_{i}>0\}$ both contain
 a complete cuboid of $A$. This follows from the fact that disjoint
 axis-parallel cuboids can be separated by an axis-parallel halfspace.
 Now define the following sets:
@@ -309,7 +312,7 @@ B^{+} & =B\cap\left\{ x:x_{i}>0\right\} \ \ B^{-}=B\setminus B^{+}.
 \end{align*}
 Translate $B$ so that we have 
 \begin{equation}
-\frac{\vol(A^{+})}{\vol(A)}=\frac{\vol(B^{+})}{\vol(B^{-})}.\label{eq:AB_ratio}
+\frac{\vol(A^{+})}{\vol(A)}=\frac{\vol(B^{+})}{\vol(B)}.\label{eq:AB_ratio}
 \end{equation}
 (Translation only translates the Minkowski sum.) Since $A^{+}\cup B^{+}$
 and $A^{-}\cup B^{-}$ are both smaller collections of cuboids compared

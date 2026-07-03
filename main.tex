@@ -1,10 +1,11 @@
-%% LyX 2.4.3 created this file.  For more info, see https://www.lyx.org/.
+%% LyX 2.5.1 created this file.  For more info, see https://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
 \documentclass[oneside,american,english]{book}
 \usepackage[T1]{fontenc}
 \usepackage[latin9]{inputenc}
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{1}
+\usepackage{colortbl}
 \usepackage{array}
 \usepackage{float}
 \usepackage{multirow}
@@ -107,7 +108,7 @@
 \global\long\def\DualR{\mathcal{D}}%
  
 \title{Techniques in Optimization and Sampling\\
-(book in progress with improving citations)}
+(book in progress; citations being improved)}
 \author{Yin Tat Lee\thanks{yintat@uw.edu. This work is supported in part by CCF-1749609, DMS-1839116,
 DMS-2023166, Microsoft Research Faculty Fellowship, Sloan Research
 Fellowship and Packard Fellowships.}\\
@@ -125,9 +126,7 @@ Georgia Tech}
 
 \chapter*{Preliminaries}
 
-\input{preliminaries.tex}
-
-\input{examples.tex} 
+\input{preliminaries.tex}\input{examples.tex} 
 
 \chapter{Introduction}
 
@@ -150,8 +149,6 @@ Georgia Tech}
 
 \chapter{Geometrization}
 
-\input{mirror_descent.tex}
-
 \input{frank_wolfe.tex}\input{newton_method.tex}\input{interior_point_method.tex}\input{reduction.tex}
 
 \chapter{Sparsification}
@@ -170,15 +167,13 @@ Georgia Tech}
 
 \chapter{Elimination and Reduction\label{chap:Elimination-and-Reduction}}
 
-\input{cutting_plane_volume.tex}
-
-\input{opt_from_mem.tex}
+\input{cutting_plane_volume.tex}\input{opt_from_mem.tex}
 
 \chapter{Geometrization }
 
 \input{ball_walk.tex}\input{har_dikin.tex}\input{RHMC.tex}
 
-\chapter{Annealing \label{chap:Annealing} }
+\chapter{Annealing\label{chap:Annealing} }
 
 \input{annealing.tex}\input{annealing_volume.tex}
 
@@ -194,17 +189,7 @@ Georgia Tech}
 
 \input{appendix.tex}
 
-\chapter{Notation }
+\chapter{Notation}
 
-\input{notation.tex}\end{document}
-
-\chapter{----}
-
-\chapter{Expansion}
-
-\input{ode.tex}\input{collocation_method.tex}
-
-\chapter{Decomposition}
-
-\input{cholesky_decomposition.tex}\input{multigrid.tex}
+\input{notation.tex}
 \end{document}

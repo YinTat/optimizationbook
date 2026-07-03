@@ -1,0 +1,390 @@
+
+\section{Composite Problem via Duality}
+
+
+\subsection{Motivation}
+
+In this section, we will discuss a few algorithmic applications of
+duality. In general, two reasons to consider a dual problem are that
+(1) the dual problem might have smaller dimension and (2) (sub)gradients
+are easier to compute. We will see such examples. 
+
+Suppose we have a ``difficult'' convex problem $\min_{x}f(x)$,
+i.e., one that does not satisfy some smoothness condition which direct
+suggests a faster than worst-case optimization method. Often, we can
+decompose the difficult problem as $f(x)=g(x)+h(Ax)$ such that the
+(sub)gradients $\nabla g^{*}(x)$ and $\nabla h^{*}(x)$ are easy
+to compute. Then, it is useful to compute its dual as follows:
+\begin{align*}
+\min_{x}g(x)+h(Ax) & =\min_{x}\max_{\theta}g(x)+\theta^{\top}Ax-h^{*}(\theta)\\
+ & =\max_{\theta}\min_{x}g(x)+(A^{\top}\theta)^{\top}x-h^{*}(\theta)\\
+ & =\max_{\theta}-g^{*}(-A^{\top}\theta)-h^{*}(\theta)\\
+ & =-\min_{\theta}g^{*}(-A^{\top}\theta)+h^{*}(\theta)
+\end{align*}
+where we used $h=h^{**}$ in the first line, the following minimax
+theorem on the second line, and the definition of $g^{*}$ on the
+third line.
+\begin{thm}[Sion's minimax theorem]
+Let $X\subset\Rn$ be a compact convex set and $Y\subset\Rm$ be
+a convex set. If $f:X\times Y\rightarrow\R\cup\{+\infty\}$ such that
+$f(x,\cdot)$ is upper semi-continuous and quasi-concave on $Y$ for
+all $x\in X$ and $f(\cdot,y)$ is lower semi-continuous and quasi-convex
+on $X$ for all $y\in Y$. Then, we have
+\[
+\min_{x\in X}\sup_{y\in Y}f(x,y)=\sup_{y\in Y}\min_{x\in X}f(x,y).
+\]
+\end{thm}
+
+\begin{rem*}
+Compactness is necessary. Consider $f(x,y)=x+y$. This theorem generalizes
+Von Neumann's minimax theorem. 
+\end{rem*}
+The above idea of passing to the dual extends to a sum of convex functions
+as below below.
+\begin{lem}
+\label{lem:dual-decomp}For convex functions $f_{1},\dots,f_{m}$
+with closed epigraphs, we have (assuming the minimum exists)
+\[
+\min_{x}\sum_{i=1}^{m}f_{i}(x)=-\min_{\theta_{1},\ldots,\theta_{m-1}}\left(f_{1}^{*}(-\theta_{1})+\sum_{i=2}^{m-1}f_{i}^{*}(\theta_{i-1}-\theta_{i})+f_{m}^{*}(\theta_{m-1})\right)
+\]
+\end{lem}
+
+\begin{proof}
+For any $\theta_{1},\ldots,\theta_{m-1}$ and $x$, 
+\begin{align*}
+f_{1}^{*}(-\theta_{1})+\sum_{i=2}^{m-1}f_{i}^{*}(\theta_{i-1}-\theta_{i})+f_{m}^{*}(\theta_{m-1}) & \ge((-\theta_{1})^{\top}x-f_{1}(x))+\sum_{i=1}^{m-1}((\theta_{i-1}-\theta_{i})^{\top}x-f_{i}(x))\\
+ & ~+(\theta_{m-1}^{\top}x-f_{m}(x))\\
+ & =-\sum_{i=1}^{m}f_{i}(x)\\
+\sum_{i=1}^{m}f_{i}(x) & \ge-(f_{1}^{*}(-\theta_{1})+\sum_{i=2}^{m-1}f_{i}^{*}(\theta_{i-1}-\theta_{i})+f_{m}^{*}(\theta_{m-1}))
+\end{align*}
+So, 
+\begin{align*}
+\inf_{x}\sum_{i=1}^{m}f_{i}(x) & \ge\sup_{\theta_{1},\ldots,\theta_{m-1}}-(f_{1}^{*}(-\theta_{1})+\sum_{i=2}^{m-1}f_{i}^{*}(\theta_{i-1}-\theta_{i})+f_{m}^{*}(\theta_{m-1}))
+\end{align*}
+It remains to show that there exist $x$ and $\theta_{1},\ldots,\theta_{m-1}$
+such that 
+\[
+\sum_{i=1}^{m}f_{i}(x)\le-(f_{1}^{*}(-\theta_{1})+\sum_{i=2}^{m-1}f_{i}^{*}(\theta_{i-1}-\theta_{i})+f_{m}^{*}(\theta_{m-1}))
+\]
+($\ge$ is guaranteed by above). We choose $x\in\R^{n}$ to minimize
+the convex function $\sum_{i=1}^{m}f_{i}(x)$. Then, $0\in\nabla(\sum_{i=1}^{m}f_{i}(x))=\sum_{i=1}^{m}\nabla f_{i}(x)$
+(as Minkowski sum of subgradients), so there exists $\alpha_{1},\ldots,\alpha_{m}\in\R^{n}$
+such that $\sum_{i=1}^{m}\alpha_{i}=0$ and $\alpha_{i}\in\nabla f_{i}(x)$.
+By definition of subgradient, for all $y\in\R^{n}$, 
+\begin{align*}
+f_{i}(y) & \ge f_{i}(x)+\alpha_{i}^{\top}(y-x)\\
+\alpha_{i}^{\top}y-f_{i}(y) & \le\alpha_{i}^{\top}x-f_{i}(x)\\
+f_{i}^{*}(\alpha_{i}) & =\sup_{y}\alpha_{i}^{\top}y-f_{i}(y)\\
+ & \le\alpha_{i}^{\top}x-f_{i}(x)
+\end{align*}
+Then, 
+\begin{align*}
+\sum_{i=1}^{m}f_{i}^{*}(\alpha_{i}) & \le\sum_{i=1}^{m}\left(\alpha_{i}^{\top}x-f_{i}(x)\right)\\
+ & =-\sum_{i=1}^{m}f_{i}(x)
+\end{align*}
+Finally, we choose $\theta_{i}=-\sum_{j=1}^{i}\alpha_{j}$ for $i=0,\ldots,m$,
+so that $\alpha_{i}=\theta_{i-1}-\theta_{i}$, and $\theta_{0}=\theta_{m}=0$.
+Then, 
+\[
+\sum_{i=1}^{m}f_{i}(x)\le-\sum_{i=1}^{m}f_{i}^{*}(\theta_{i-1}-\theta_{i})
+\]
+as desired.
+\end{proof}
+\begin{rem*}
+The alternative form in Lemma \ref{lem:dual-decomp} can be used to
+implement a distributed version of gradient descent. If server $i$
+only has access to $f_{i}$, then it suffices to communicate with
+only neighboring servers $i\pm1$ to compute the contribution of $\theta_{i}$
+to the gradient, as the only terms with $\theta_{i}$ are $f_{i}^{*}(\theta_{i-1}-\theta_{i}),f_{i+1}^{*}(\theta_{i}-\theta_{i+1})$
+\end{rem*}
+We call ``$g(x)+h(Ax)$'' the primal problem and ``$g^{*}(-A^{\top}\theta)+h^{*}(\theta)$''
+the dual problem. Often, the dual problem gives us some insight on
+the primal problem. However, we note that there are many ways to split
+a problem into two and hence many candidate dual problems.
+\begin{example}
+Consider the unit capacity flow problem on a graph $G=(V,E)$:
+\[
+\max_{Af=d,-1\leq f\leq1}c^{\top}f
+\]
+where $f\in\R^{E}$ is the flow vector, $A\in\R^{V\times E}$ encodes
+the vertex-edge adjacency matrix with two nonzeros per column, $d$
+is the demand vector so that $Af=d$ is flow conservation, and $c$
+is the cost vector. We can write the dual as follows:
+\begin{align*}
+\max_{Af=d,-1\leq f\leq1}c^{\top}f & =\max_{-1\leq f\leq1}\min_{\phi}c^{\top}f-\phi^{\top}(Af-d)\\
+ & =\min_{\phi}\max_{-1\leq f\leq1}\phi^{\top}d+(c-A^{\top}\phi)^{\top}f\\
+ & =\min_{\phi}\phi^{\top}d+\sum_{e\in E}|c-A^{\top}\phi|_{e}.
+\end{align*}
+\end{example}
+
+When $c=0$ and $d=F\cdot1_{st}$ this is the maximum flow problem
+with flow value $F$, and the dual problem is the minimum $s-t$ cut
+problem with the cut given by $\{v\in V\text{ such that }\phi(v)\geq t\}$.
+We can view $\phi$ as assigning a ``potential'' to every vertex
+of the graph. Note that there are $|E|$ variables in primal and $|V|$
+variables in dual. So, in this sense, the dual problem is easier for
+dense graphs. Although we do not have a way to turn a minimum $s-t$
+cut to a maximum $s-t$ flow in general, we will see various tricks
+to reconstruct the primal solution from the dual solution by modifying
+the problem.
+
+\subsection{Example: Semidefinite Programming}
+
+When you can solve the dual problem, the proof of the optimality of
+the dual problem often directly gives you the solution of the primal
+problem, or gives you some way to solve the primal problem efficiently.
+Here, we use the semidefinite programming as an concrete example.
+Define $\bullet$ as the inner product of matrices, i.e., 
+\[
+A\bullet B=\sum_{i,j}A_{ij}B_{ij}.
+\]
+Consider the semidefinite programming (SDP) problem:
+\begin{equation}
+\max_{X\succeq0}C\bullet X\text{ s.t. }A_{i}\bullet X=b_{i}\text{ for }i=1,2,\cdots,m\label{eq:SDP}
+\end{equation}
+and its dual
+\begin{equation}
+\min_{y}b^{\top}y\text{ s.t. }\sum_{i=1}^{m}y_{i}A_{i}\succeq C\label{eq:dual_SDP}
+\end{equation}
+where $X$, $C$, $A_{i}$ are $n\times n$ symmetric matrices and
+$b,y\in\Rm$. SDP is a generalization of linear programming and is
+useful for various problems involving matrices. If we apply the current-best
+cutting plane method naively on the primal problem, we would get $\tilde{O}(n^{2}(Z+n^{4}))$
+time algorithm for the primal (because there are $n^{2}$ variables)
+and $\tilde{O}(m(Z+n^{\omega}+m^{2}))$ for the dual where $Z$ is
+the total number of non-zeros in $A_{i}$. (The term $Z+n^{\omega}$
+is the cost of computing $\sum y_{i}A_{i}$ and finding its minimum
+eigenvalue.) Generally, $n^{2}\gg m$ and hence it takes much less
+time to solve the dual.
+
+We note that
+\[
+\min_{\sum_{i=1}^{m}y_{i}A_{i}\succeq C}b^{\top}y=\min_{v^{\top}(\sum_{i=1}^{m}y_{i}A_{i}-C)v\geq0\ \forall\norm v_{2}=1}b^{\top}y.
+\]
+In each step of the cutting plane method, the (sub)gradient oracle
+either outputs $b$ or outputs one of the cutting planes
+\[
+v^{\top}(\sum_{i=1}^{m}y_{i}A_{i}-C)v\geq0.
+\]
+Let $S$ be the set of all cutting planes used in the algorithm. Then,
+the proof of the cutting plane method shows that
+\begin{equation}
+\min_{\sum_{i=1}^{m}y_{i}A_{i}\succeq C}b^{\top}y=\min_{v^{\top}(\sum_{i=1}^{m}y_{i}A_{i}-C)v\geq0\ \forall v\in\mathcal{S}}b^{\top}y\pm\varepsilon.\label{eq:SDP_apx}
+\end{equation}
+The key idea to obtaining the primal solution is to take the dual
+of the right hand side (which is an approximate dual of the original
+problem). Now, we have
+\begin{align*}
+\min_{v^{\top}(\sum_{i=1}^{m}y_{i}A_{i}-C)v\geq0\ \forall v\in\mathcal{S}}b^{\top}y & =\min_{y}\max_{\lambda_{v}\geq0}b^{\top}y-\sum_{v\in\mathcal{S}}\lambda_{v}v^{\top}(\sum_{i=1}^{m}y_{i}A_{i}-C)v\\
+ & =\max_{\lambda_{v}\geq0}\min_{y}C\bullet\sum_{v\in\mathcal{S}}\lambda_{v}vv^{\top}+b^{\top}y-\sum_{i=1}^{m}y_{i}\sum_{v\in\mathcal{S}}\lambda_{v}vv^{\top}\bullet A_{i}\\
+ & =\max_{X=\sum_{v\in\mathcal{S}}\lambda_{v}vv^{\top},\lambda_{v}\geq0}\min_{y}C\bullet X+\sum_{i=1}^{m}y_{i}(b_{i}-X\bullet A_{i})\\
+ & =\max_{X=\sum_{v\in\mathcal{S}}\lambda_{v}vv^{\top},\lambda_{v}\geq0,X\bullet A_{i}=b_{i}}C\bullet X.
+\end{align*}
+Note that this is exactly the primal SDP problem, except that we restrict
+the set of solutions to the form $\sum_{v\in\mathcal{S}}\lambda_{v}vv^{\top}$
+with $\lambda_{v}\geq0$. Also, we can write this problem as a linear
+program:
+\begin{equation}
+\max_{\sum_{v}\lambda_{v}v^{\top}A_{i}v=b_{i}\text{ for all }i,\lambda_{v}\geq0}\sum_{v}\lambda_{v}v^{\top}Cv.\label{eq:SDP_LP}
+\end{equation}
+Therefore, we can simply solve this linear program and recover an
+approximate solution for the SDP. By (\ref{eq:SDP_apx}), we know
+that this is an approximate solution with the same guarantee as the
+dual SDP. 
+
+Now, we analyze the runtime of this algorithm. This algorithm contains
+two phases: solve the dual SDP via cutting plane method, and solve
+the primal linear program. Note that each step of the cutting plane
+method involves finding a separating hyperplane of $\sum_{i=1}^{m}y_{i}A_{i}\succeq C$. 
+\begin{xca}
+Let $\Omega=\{y\in\Rm:\ \sum_{i=1}^{m}y_{i}A_{i}\succeq C\}$. Show
+that one can implement the separation oracle in time $O^{*}(Z+n^{\omega})$
+via eigenvalue computation.
+\end{xca}
+
+Therefore, the first phase takes $O^{*}(m(Z+n^{\omega}+m^{2}))$ time
+in total. Since the cutting plane method takes $O^{*}(m)$ steps,
+we have $|\mathcal{S}|=O^{*}(m)$. In the second phase, we need to
+solve a linear program (\ref{eq:SDP_LP}) with $O^{*}(m)$ variables
+with $O(m)$ constraints. It is known how to solve such linear programs
+in time $O^{*}(m^{2.38})$ \cite{cohen2018solving}. Hence, the total
+cost is dominated by the first phase 
+\[
+O^{*}\left(mZ+mn^{\omega}+m^{3}\right).
+\]
+
+\begin{problem}
+In the first phase, each step involves computing an eigenvector of
+similar matrices. So, can we use matrix update formulas to decrease
+the cost per step in the cutting plane to $O^{*}(Z+n^{2})$? Namely,
+can we solve SDP in time $O^{*}\left(mZ+m^{3}\right)?$
+\end{problem}
+
+
+\subsection{Duality and Convex Hull}
+
+The problem $\min_{x}g(x)+h(Ax)$ in general can be solved by a similar
+trick. To make this geometric picture clearer, we consider its linear
+optimization version: $\min_{(x,t_{1})\in\epi\,g,(Ax,t_{2})\in\epi\,h}t_{1}+t_{2}.$
+To simplify the notation, we consider the problem
+\[
+\min_{x\in K_{1},Mx\in K_{2}}c^{\top}x
+\]
+where $M\in\R^{m\times n}$, and we have convex sets $K_{1}\subset\Rn$
+and $K_{2}\subset\Rm$. 
+
+To be concrete, let us consider the following example. Let $V_{1}$
+be a set of students, $V_{2}$ be a set of schools. Each edge $e\in E$
+represents a possible choice of a student. Let $w_{e}$ be the happiness
+of a school/student if the student is assigned to that school. Suppose
+that every student can only be assigned to one school and school $b$
+can accept $c_{b}$ students. Then, the problem can be formulated
+as
+\[
+\max_{x_{e}\geq0}\sum_{e\in E}w_{e}x_{e}\text{ subject to }\sum_{(a,b)\in E}x_{(a,b)}\leq1\ \forall a\in V_{1},\sum_{(a,b)\in E}x_{(a,b)}\leq c_{b}\ \forall b\in V_{2}.
+\]
+This is the weighted b-matching problem. Typically, the number of
+students is much more than the number of schools. Therefore, an algorithm
+with running time linear in the number of students is preferable.
+To apply our framework, we let
+\begin{align*}
+K_{1} & =\{x\in\R^{E},x_{e}\geq0,\sum_{(a,b)\in E}x_{(a,b)}\leq1\ \forall a\in V_{1}\},\\
+K_{2} & =\{y\in\R^{V_{2}},y_{b}\leq c_{b}\},
+\end{align*}
+and $M\in\R^{E}\rightarrow\R^{V_{2}}$ is the map $(Tx)_{b}=\sum_{a:(a,b)\in E}x_{(a,b)}.$
+
+To further emphasize its importance, consider some general examples
+here:
+\begin{itemize}
+\item Linear programming: $\min_{Ax=b,x\geq0}c^{\top}x$: $K_{1}=\{x\geq0\}$,
+$K_{2}=\{b\}$ and $M=A$.
+\item Semidefinite programming: $\min_{A_{i}\bullet X=b_{i},X\succeq0}C\bullet X$:
+$K_{1}=\{X\succeq0\}$, $K_{2}=\{b\}$ and $M:\R^{n\times n}\rightarrow\Rm$
+defined by $(MX)_{i}=A_{i}\bullet X$.
+\item Matroid intersection: $\min_{x\in M_{1}\cap M_{2}}1^{\top}x$: $K_{1}=M_{1}$
+and $K_{2}=M_{2}$, $M=I$.
+\item Submodular minimization: $K_{1}=\{y\in\Rn:\sum_{i\in S}y_{i}\leq f(S)\text{ for all }S\subset[n]\}$,
+$K_{2}=\{y\leq0\}$, $M=I$.
+\item Submodular flow: $K_{1}=\{\varphi\in\R^{E},\ell_{e}\leq\varphi_{e}\leq u_{e}\text{ for all }e\in E\}$,
+$K_{2}=\{y\in\R^{V}:\sum_{i\in S}y_{i}\leq f(S)\text{ for all }S\subset[n]\}$,
+$M$ is the incidence matrix.
+\end{itemize}
+In all of these examples, it is easy to compute the gradient of $\delta_{K_{1}}^{*}$
+and $\delta_{K_{2}}^{*}$. For the last three examples, it is not
+clear how to compute gradient of $\delta_{K_{1}}$ and/or $\delta_{K_{2}}$
+directly. Furthermore, in all examples, $M$ maps from a larger space
+to the same or smaller space. Therefore, it is good to take advantage
+of the smaller space.
+
+Before \cite{lee2015faster}, the standard way was to use the equivalence
+of $\nabla\delta_{K_{1}}^{*}$ and $\nabla\delta_{K_{1}}$ , and apply
+cutting plane methods. With the running time of cutting plane methods,
+such an algorithm usually had theoretical running time at least $n^{5}$
+and was of little practical value. 
+
+Now we rewrite the problem as we did in the beginning:
+\begin{align*}
+\min_{x\in K_{1},Mx\in K_{2}}c^{\top}x & =\min_{x\in\Rn}c^{\top}x+\delta_{K_{1}}(x)+\delta_{K_{2}}(Mx)\\
+ & =\min_{x\in\Rn}\max_{\theta\in\Rm}c^{\top}x+\delta_{K_{1}}(x)+\theta^{\top}Mx-\delta_{K_{2}}^{*}(\theta)\\
+ & =\max_{\theta\in\Rm}\min_{x\in\Rn}c^{\top}x+\delta_{K_{1}}(x)+\theta^{\top}Mx-\delta_{K_{2}}^{*}(\theta)\\
+ & =\max_{\theta\in\Rm}-\delta_{K_{1}}^{*}(-c-M^{\top}\theta)-\delta_{K_{2}}^{*}(\theta).
+\end{align*}
+Taking the dual has two benefits. First, the number of variables is
+smaller. Second, the gradient oracle is something we can compute efficiently.
+Hence, cutting plane methods can be used to solve it in $O^{*}(m\mathcal{T}+m^{3})$
+where $\mathcal{T}$ is the time to evaluate $\nabla\delta_{K_{1}}^{*}$
+and $\nabla\delta_{K_{2}}^{*}$. The only problem left is to recover
+the primal $x$.
+\begin{proof}
+\begin{figure}
+\centering{}\includegraphics[width=0.5\columnwidth]{Figures/Lemma_4\lyxdot 47}\caption{The oracle behaves identically on $K_{1}$ and $\widetilde{K_{1}}$ }
+\end{figure}
+\end{proof}
+The key observation is the following lemma:
+\begin{lem}
+Let $x_{i}\in K_{1}$ be the set of points output by the oracle $\nabla\delta_{K_{1}}^{*}$
+during the cutting plane method. Define $y_{i}\in K_{2}$ similarly.
+Suppose that the cutting plane method ends with the guarantee that
+the additive error is less than $\varepsilon$. Then, we have that
+\[
+\min_{x\in K_{1},Tx\in K_{2}}c^{\top}x\leq\min_{x\in\widetilde{K_{1}},Tx\in\widetilde{K_{2}}}c^{\top}x\leq\min_{x\in K_{1},Tx\in K_{2}}c^{\top}x+\varepsilon
+\]
+where $\widetilde{K_{1}}=\conv(x_{i})$ and $\widetilde{K_{2}}=\conv(y_{i})$.
+\end{lem}
+
+\begin{proof}
+Let $\theta_{i}$ be the set of directions queried by the oracle for
+$\nabla\delta_{K_{1}}^{*}$ and $\varphi_{i}$ be the directions queried
+by the oracle for $\nabla\delta_{K_{2}}^{*}$. We claim that $x_{i}\in\nabla\delta_{\widetilde{K_{1}}}^{*}(\theta_{i})$
+and $y_{i}\in\nabla\delta_{\widetilde{K_{2}}}^{*}(\varphi_{i})$.
+Having this, the algorithm cannot distinguish between $\widetilde{K_{1}}$
+and $K_{1}$, and between $\widetilde{K_{2}}$ and $K_{2}$. Hence,
+the algorithm runs exactly the same, i.e., uses the same sequence
+of points. Therefore, we get the same value $c^{\top}x$. However,
+by the guarantee of cutting plane method, we have that
+\[
+\min_{x\in\widetilde{K_{1}},Tx\in\widetilde{K_{2}}}c^{\top}x\leq c^{\top}x\leq\min_{x\in K_{1},Tx\in K_{2}}c^{\top}x+\varepsilon.
+\]
+
+To prove the claim, we note that $x_{i}\in\nabla\delta_{\widetilde{K_{1}}}^{*}(\theta_{i})$.
+Note that $\widetilde{K_{1}}\subset K_{1}$ and hence $\min_{x\in\widetilde{K_{1}}}\theta_{i}^{\top}x\geq\min_{x\in K_{1}}\theta_{i}^{\top}x$.
+Also, note that 
+\[
+x_{i}=\arg\min_{x\in K_{1}}\theta_{i}^{\top}x\in\widetilde{K_{1}}
+\]
+and hence $\min_{x\in\widetilde{K_{1}}}\theta_{i}^{\top}x\leq\min_{x\in K_{1}}\theta_{i}^{\top}x$.
+Therefore, we have that $\min_{x\in\widetilde{K_{1}}}\theta_{i}^{\top}x=\min_{x\in K_{1}}\theta_{i}^{\top}x$.
+Therefore, $x_{i}\in\arg\min_{x\in K_{1}}\theta_{i}^{\top}x$. This
+proves the claim for $\widetilde{K_{1}}$. The proof for $\widetilde{K_{2}}$
+is the same.
+\end{proof}
+This reduces the problem into the form $\min_{x\in\widetilde{K_{1}},Tx\in\widetilde{K_{2}}}c^{\top}x$.
+For the second phase, we let $z_{i}=Mx_{i}\in\Rm$. Then, we have
+\begin{align*}
+\min_{x\in\widetilde{K_{1}},Mx\in\widetilde{K_{2}}}c^{\top}x= & \min_{t_{i}\geq0,s_{i}\geq0,M\sum_{i}t_{i}x_{i}=\sum_{i}s_{i}y_{i}}c^{\top}(\sum_{i}t_{i}x_{i})\\
+= & \min_{t_{i}\geq0,s_{i}\geq0,\sum_{i}t_{i}z_{i}=\sum_{i}s_{i}y_{i}}\sum t_{i}\cdot c^{\top}x_{i}.
+\end{align*}
+Note that it takes $O^{*}(mZ)$ time to write down this linear program
+where $Z$ is the number of non-zeros in $M$. Next, we note that
+this linear program has $O^{*}(m)$ variables and $m$ constraints.
+Therefore, we can solve it in $O^{*}(m^{2.38})$ time. 
+
+Therefore, the total running time is 
+\[
+O^{*}(m(\mathcal{T}+m^{2})+(mZ+m^{2.38})).
+\]
+
+To conclude, we have the following theorem.
+\begin{thm}
+Given convex sets $K_{1}\subset\Rn$ and $K_{2}\subset\Rm$ with $m\leq n$
+and a matrix $M:\Rn\rightarrow\Rm$ with $Z$ non-zeros, let $\mathcal{T}$
+be the cost to compute $\nabla\delta_{K_{1}}^{*}$ and $\nabla\delta_{K_{2}}^{*}$.
+Then, we can solve the problem
+\[
+\min_{x\in K_{1},Mx\in K_{2}}c^{\top}x
+\]
+in time $O^{*}(m\mathcal{T}+mZ+m^{3}).$
+\end{thm}
+
+\begin{rem*}
+We hid all sorts of terms in the log term hidden in $O^{*}$ such
+as the diameter of the set. Also this is the number of arithmetic
+operations, not the bit complexity.
+\end{rem*}
+Going back to the school/student problem, this algorithm gives a running
+time of
+\[
+O^{*}(|V_{2}||E|+|V_{2}|^{3})
+\]
+which is linear in the number of students!
+
+In general, this statement says that if we can split a convex problem
+into two parts, with both being easy to solve and one part having
+fewer variables, then we can solve the entire problem in time depending
+on the smaller dimension.
+\begin{xca}
+How fast can we solve $\min_{x\in\cap_{i=1}^{k}K_{i}}c^{\top}x$ given
+the oracles $\nabla\delta_{K_{i}}^{*}$?
+\end{xca}
+
+

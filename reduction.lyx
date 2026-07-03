@@ -1,5 +1,5 @@
-#LyX 2.4 created this file. For more info see https://www.lyx.org/
-\lyxformat 620
+#LyX 2.5 created this file. For more info see https://www.lyx.org/
+\lyxformat 643
 \begin_document
 \begin_header
 \save_transient_properties true
@@ -54,11 +54,19 @@
 \use_indices false
 \paperorientation portrait
 \suppress_date false
-\justification true
-\use_refstyle 1
+\justification default
+\crossref_package refstyle
 \use_formatted_ref 0
 \use_minted 0
 \use_lineno 0
+\backgroundcolor none
+\fontcolor none
+\notefontcolor lightgray
+\boxbgcolor red
+\table_border_color default
+\table_odd_row_color default
+\table_even_row_color default
+\table_alt_row_colors_start 1
 \index Index
 \shortcut idx
 \color #008000
@@ -84,6 +92,7 @@
 \html_be_strict false
 \docbook_table_output 0
 \docbook_mathml_prefix 1
+\docbook_mathml_version 0
 \end_header
 
 \begin_body
@@ -93,7 +102,8 @@ State of the Art
 \end_layout
 
 \begin_layout Standard
-We have now seen various algorithms to minimize a convex function.They have different runtimes and seem difficult to compare.
+We have now seen various algorithms to minimize a convex function.
+ They have different runtimes and seem difficult to compare.
  Before going deeper and discussing more results,
  here we discuss how to understand these different results and their relationships,
  via reductions between them.
@@ -251,7 +261,7 @@ Hybrid Center Cutting Plane
 \begin_layout Plain Layout
 
 \size scriptsize
-\begin_inset Formula $\mathcal{T}_{f}+n^{2}\log^{O(1)}(\frac{n}{\epsilon})$
+\begin_inset Formula $\mathcal{T}_{f}+n^{2}$
 \end_inset
 
 
@@ -323,7 +333,7 @@ Hybrid Center Cutting Plane
 \begin_layout Plain Layout
 
 \size scriptsize
-\begin_inset Formula $\mathcal{T}_{\Omega_{1}}+\mathcal{T}_{\Omega_{2}}+n^{2}\log^{O(1)}(\frac{n}{\epsilon})$
+\begin_inset Formula $\mathcal{T}_{\Omega_{1}}+\mathcal{T}_{\Omega_{2}}+n^{2}$
 \end_inset
 
 
@@ -764,7 +774,7 @@ Frank Wolfe
 \begin_layout Plain Layout
 
 \size scriptsize
-\begin_inset Formula $\E_{\omega}\|\nabla f_{\omega}\|_{2}^{2}\leq G^{2}$
+\begin_inset Formula $\E_{\omega}\|\nabla f_{\omega}\|^{2}_{2}\leq G^{2}$
 \end_inset
 
 ,
@@ -867,7 +877,7 @@ Accelerated Stochastic Descent
 \begin_layout Plain Layout
 
 \size scriptsize
-Total Cost:
+Total:
  
 \begin_inset Formula $(\mathcal{T}_{\nabla f}+\sqrt{\frac{1}{\mu}\sum_{i}L_{i}}\mathcal{T}_{\nabla f_{i}})\log(\frac{1}{\epsilon})$
 \end_inset
@@ -912,7 +922,7 @@ Total Cost:
 \begin_layout Plain Layout
 
 \size scriptsize
-\begin_inset Formula $\nabla^{2}f\succeq\mu\cdot I,\partial_{i}^{2}f\leq L_{i}$
+\begin_inset Formula $\nabla^{2}f\succeq\mu\cdot I,\partial^{2}_{i}f\leq L_{i}$
 \end_inset
 
 
@@ -937,9 +947,9 @@ Accelerated Coordinate Descent
 \begin_layout Plain Layout
 
 \size scriptsize
-Total Cost:
+Total:
  
-\begin_inset Formula $\sum_{i}\sqrt{\beta_{i}/\mu}\mathcal{T}_{\partial_{i}f}\log(\frac{1}{\epsilon})$
+\begin_inset Formula $\sum_{i}\sqrt{L_{i}/\mu}\mathcal{T}_{\partial_{i}f}\log(\frac{1}{\epsilon})$
 \end_inset
 
 
@@ -1509,11 +1519,7 @@ Sparse Cholesky Factorization
 \align center
 
 \size scriptsize
-\begin_inset Formula 
-\[
-\min_{Ax=b,x\in\Rn_{+}}c^{\top}x
-\]
-
+\begin_inset Formula $\min_{Ax=b,x\in\Rn_{+}}c^{\top}x$
 \end_inset
 
 
@@ -1644,7 +1650,7 @@ Interior Point Method
 \size scriptsize
 \begin_inset Formula 
 \[
-\min_{x}\sum_{i=1}^{n}f_{i}(a_{i}^{\top}x)
+\min_{x}\sum^{n}_{i=1}f_{i}(a^{\top}_{i}x)
 \]
 
 \end_inset
@@ -1816,7 +1822,7 @@ nolink "false"
 \end_inset
 
 .
- For all of these problem,
+ For all of these problems,
  the best possible runtime is open.
  Finally,
  we note that the last two problems,
@@ -1878,16 +1884,16 @@ units
  respectively.
  Therefore,
  the number of iterations of gradient descent 
-\begin_inset Formula $\frac{GR}{\epsilon}$
+\begin_inset Formula $\left(\frac{GR}{\epsilon}\right)^{2}$
 \end_inset
 
  is unitless.
- In the table,
- we ignored some entries inside the 
+ In the tables,
+ we have ignored some entries inside the 
 \begin_inset Formula $\log$
 \end_inset
 
- which leads to an 
+ which leads to 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1895,7 +1901,7 @@ incorrect
 \begin_inset Quotes erd
 \end_inset
 
- unit.
+ units.
  However,
  when everything is written correctly,
  the number of iterations must be unitless.
@@ -1938,7 +1944,7 @@ f(x^{(0)})-f^{*}\leq\left\langle \nabla f(x^{*}),x^{(0)}-x^{*}\right\rangle +\fr
 
 Therefore,
  the terms 
-\begin_inset Formula $\frac{GR}{k}$
+\begin_inset Formula $\frac{GR}{\sqrt{k}}$
 \end_inset
 
 ,
@@ -1947,17 +1953,17 @@ Therefore,
 \end_inset
 
  and 
-\begin_inset Formula $\frac{LR^{2}}{k}$
+\begin_inset Formula $\frac{LR^{2}}{k^{2}}$
 \end_inset
 
  are all just measuring how much we need to decrease multiplicatively from the initial error.
  With this view,
- we can think the number of iteration required for Lipschitz convex functions,
- strongly convex functions and smooth functions are exactly 
-\begin_inset Formula $\frac{1}{\epsilon_{\mathrm{relative}}^{2}}$
+ we can think of the required numbers of iterations for Lipschitz convex functions,
+ strongly convex functions and smooth functions as exactly 
+\begin_inset Formula $\frac{1}{\epsilon^{2}_{\mathrm{relative}}}$
 \end_inset
 
- ,
+,
  
 \begin_inset Formula $\frac{1}{\epsilon_{\mathrm{relative}}}$
 \end_inset
@@ -1998,14 +2004,12 @@ The ratio
  One very simple example is 
 \begin_inset Formula 
 \[
-f(x)=\frac{1}{2}x_{1}^{2}+\frac{1}{2}\sum_{k=1}^{n-1}(x_{k}-x_{k+1})^{2}+\frac{1}{2}x_{n}^{2}
+f(x)=\frac{1}{2}x^{2}_{1}+\frac{1}{2}\sum^{n-1}_{k=1}(x_{k}-x_{k+1})^{2}+\frac{1}{2}x^{2}_{n}
 \]
 
 \end_inset
 
-This problem appears everywhere from physical systems,
- graph problems,
- signal denoising to statistics.
+This problem appears everywhere from physical systems and graph problems to signal denoising and statistics.
  For this problem,
  we have 
 \begin_inset Formula $L=\Theta(1)$
@@ -2024,7 +2028,7 @@ This problem appears everywhere from physical systems,
  Here is another example:
 \begin_inset Formula 
 \[
-f(x)=\norm{Ax-b}_{2}^{2}
+f(x)=\norm{Ax-b}^{2}_{2}
 \]
 
 \end_inset
@@ -2109,7 +2113,7 @@ For gradient descent and accelerated gradient descent,
 \begin_inset Formula $x$
 \end_inset
 
- is close to the optimal 
+ is close to the optimum 
 \begin_inset Formula $x^{*}=0$
 \end_inset
 
@@ -2119,7 +2123,7 @@ For gradient descent and accelerated gradient descent,
 \end_inset
 
  is similar to a coordinate-wise iteration 
-\begin_inset Formula $x_{i}^{\new}=(1-h\lambda_{i})x_{i}$
+\begin_inset Formula $x^{\new}_{i}=(1-h\lambda_{i})x_{i}$
 \end_inset
 
 .
@@ -2128,7 +2132,7 @@ For gradient descent and accelerated gradient descent,
 
 \begin_layout Standard
 For more complicated algorithms,
- the theory of convergence rate and cost per iteration sometimes gives a bad estimate of the reality.
+ the theory of convergence rates and per-iteration costs sometimes gives a poor estimate of practical performance.
  For example,
  the interior point method often takes 
 \begin_inset Formula $O(\log n)$
@@ -2139,18 +2143,18 @@ For more complicated algorithms,
 \end_inset
 
  worst-case bound on its convergence rate;
- the simplex method is often the best of choice for solving linear programs despite its exponential complexity bound.
+ the simplex method is often the method of choice for solving linear programs despite its exponential complexity bound.
 \end_layout
 
 \begin_layout Standard
-The cost per iterations sometimes can be misleading also.
+The cost per iteration can also be misleading.
  Each iteration of interior point methods takes 
 \begin_inset Formula $\nnz(A)+\mathrm{rank}(A)^{2}$
 \end_inset
 
  in theory while it takes nearly linear time in practice for sparse matrices due to the effectiveness of Cholesky decomposition.
  The 
-\begin_inset Formula $k^{th}$
+\begin_inset Formula $k^{\mathrm{th}}$
 \end_inset
 
  iteration of cutting plane methods often takes 
@@ -2174,7 +2178,7 @@ Relations Between Different First-order Methods
 \end_layout
 
 \begin_layout Standard
-In the table 
+In Table 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "tab:Black-Box-Problems"
@@ -2314,7 +2318,7 @@ Output
 \end_inset
 
  where 
-\begin_inset Formula $\widetilde{f}(x)=f(x)+\frac{G}{R\sqrt{2k}}\|x\|_{2}^{2}.$
+\begin_inset Formula $\widetilde{f}(x)=f(x)+\frac{G}{R\sqrt{2k}}\|x\|^{2}_{2}.$
 \end_inset
 
 
@@ -2323,7 +2327,7 @@ Output
 \begin_layout Standard
 To understand the result,
  we let 
-\begin_inset Formula $f_{\sigma}(x)=f(x)+\frac{\sigma}{2}\|x\|_{2}^{2}$
+\begin_inset Formula $f_{\sigma}(x)=f(x)+\frac{\sigma}{2}\|x\|^{2}_{2}$
 \end_inset
 
  and let 
@@ -2367,7 +2371,7 @@ where
 \end_inset
 
 .
- To get the best runtime for the fix 
+ To get the best runtime for a fixed 
 \begin_inset Formula $k$
 \end_inset
 
@@ -2496,7 +2500,7 @@ On the other hand,
 \end_inset
 
  shows that 
-\begin_inset Formula $f(x^{(i)})-\min_{x}f(x)\geq\frac{\mu}{2}\cdot\|x^{(i)}-x^{*}\|_{2}^{2}$
+\begin_inset Formula $f(x^{(i)})-\min_{x}f(x)\geq\frac{\mu}{2}\cdot\|x^{(i)}-x^{*}\|^{2}_{2}$
 \end_inset
 
 .
@@ -2504,7 +2508,7 @@ On the other hand,
  we have that
 \begin_inset Formula 
 \[
-\|x^{(i)}-x^{*}\|_{2}^{2}\leq2\sqrt{\frac{\epsilon}{\mu}}\|x^{(i-1)}-x^{*}\|_{2}.
+\|x^{(i)}-x^{*}\|^{2}_{2}\leq2\sqrt{\frac{\epsilon}{\mu}}\|x^{(i-1)}-x^{*}\|_{2}.
 \]
 
 \end_inset
@@ -2515,7 +2519,7 @@ Therefore,
 \end_inset
 
 ,
- then the distance to OPT decreases by at least a factor of two.
+ then the distance to the optimum decreases by at least a factor of two.
  After 
 \begin_inset Formula $\widetilde{O}(1)$
 \end_inset

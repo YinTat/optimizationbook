@@ -80,7 +80,8 @@ Optimization from Membership via Sampling
 \end_layout
 
 \begin_layout Standard
-In this chapter, we assumed the oracle can be computed exactly.
+So far in this chapter,
+ we have assumed the oracle answers can be computed exactly.
  However, it is still open to determine the best runtime for reductions
  between 
 \emph on
@@ -89,7 +90,7 @@ noisy
  oracles, where the oracle provides answers to within some bounded error.
  In particular, the question about minimizing (approximately) convex functions
  under noisy oracles is an active research area, and the gaps between the
- lower bound and upper bound for many problems are still quite large (
+ lower and upper bounds for many problems are still quite large (
 \begin_inset CommandInset citation
 LatexCommand cite
 key "belloni2015escaping,Feldman2015statistical,bubeck2016kernel"
@@ -148,8 +149,16 @@ name "thm:OPTviaSampling"
 \begin_inset Formula $\min_{x\in K}c^{T}x$
 \end_inset
 
- is bounded.
- Let x be a random sample from the distribution with density proportional
+ is bounded and 
+\begin_inset Formula $0<\int_K e^{-\alpha c^Tx}\,dx<\infty$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $x$
+\end_inset
+
+ be a random sample from the distribution with density proportional
  to 
 \begin_inset Formula $F(x)$
 \end_inset
@@ -158,7 +167,7 @@ name "thm:OPTviaSampling"
  Then, 
 \begin_inset Formula 
 \[
-\E\left(c^{T}x\right)\le\min_{K}c^{T}x+\frac{n}{\alpha}.
+\E\left(c^{T}x\right)\le\min_{x\in K}c^{T}x+\frac{n}{\alpha}.
 \]
 
 \end_inset
@@ -172,16 +181,7 @@ We will show that the worst case is when the convex set
 \end_inset
 
  is an infinite cone.
- WLOG
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-Without loss of generality.
-\end_layout
-
-\end_inset
-
+ Without loss of generality,
  assume that the minimum is at 
 \begin_inset Formula $x=0.$
 \end_inset
@@ -233,6 +233,28 @@ Without loss of generality.
 
 .
  Again, this expectation can only be higher.
+ The reason is that after conditioning on 
+\begin_inset Formula $y=c^{T}x$
+\end_inset
+
+,
+ both the objective and the density depend only on 
+\begin_inset Formula $y$
+\end_inset
+
+,
+ while each cross-section contributes only its 
+\begin_inset Formula $(n-1)$
+\end_inset
+
+-dimensional volume.
+ Thus the first replacement preserves the one-dimensional marginal of 
+\begin_inset Formula $y$
+\end_inset
+
+,
+ and the two conical replacements shift this marginal to larger values
+ in the stochastic order.
  
 \begin_inset Note Note
 status open
@@ -262,7 +284,7 @@ Now for this infinite cone, we compute, using
 \end_inset
 
 where the equality in the last line follows from properties of the Gamma
- functions.
+ function.
 \end_layout
 
 \begin_layout Standard
@@ -279,15 +301,15 @@ The theorem says that if we sample according to
 \end_inset
 
 -approximation to the optimum.
- However, sampling from such a density is not trivial.
+ However, sampling from such a density is nontrivial.
  Instead, we will have to go through a sequence of overlapping distributions,
  starting with one that is easy to sample and ending with a distribution
  that is focused close to the minimum.
  This method is known as 
 \emph on
-simulated annealing 
+simulated annealing
 \emph default
-and is the subject of Chapter 
+ and is the subject of Chapter 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "chap:Annealing"
@@ -301,7 +323,7 @@ noprefix "false"
  The complexity of sampling is polynomial in the dimension and logarithmic
  in a suitable notion of probabilistic distance between the starting distributio
 n and the target distribution.
- The sampling algorithm only uses a membership (EVAL) oracle.
+ The sampling algorithm only uses a membership (MEM) oracle.
 \end_layout
 
 \begin_layout Exercise
@@ -331,8 +353,8 @@ Given an approximately convex function
 \begin_inset Formula $F$
 \end_inset
 
- on unit ball such that 
-\begin_inset Formula $\max_{\norm x_{2}\leq1}|f(x)-F(x)|\leq\varepsilon/n$
+ on the unit ball such that 
+\begin_inset Formula $\max_{\norm{x}_{2}\leq1}|f(x)-F(x)|\leq\varepsilon/n$
 \end_inset
 
  for some convex function 
@@ -344,7 +366,7 @@ Given an approximately convex function
 \end_inset
 
  in the unit ball such that 
-\begin_inset Formula $F(x)\leq\min_{\norm x_{2}\leq1}F(x)+O(\varepsilon)$
+\begin_inset Formula $F(x)\leq\min_{\norm{x}_{2}\leq1}F(x)+O(\varepsilon)$
 \end_inset
 
 ? The current fastest algorithm takes 
@@ -352,7 +374,7 @@ Given an approximately convex function
 \end_inset
 
  calls to the noisy EVAL oracle for 
-\begin_inset Formula $F$
+\begin_inset Formula $F.$
 \end_inset
 
  
@@ -364,8 +386,6 @@ Reference?
 \end_layout
 
 \end_inset
-
-.
 \end_layout
 
 \end_body

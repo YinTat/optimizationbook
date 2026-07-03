@@ -114,7 +114,7 @@ Taylor expansion shows that we can approximate a function locally by its derivat
 \end_layout
 
 \begin_layout Plain Layout
-As a illustration,
+As an illustration,
  we give a formula for approximating integration (Simpson's rule).
 \end_layout
 
@@ -149,7 +149,7 @@ with
 \end_layout
 
 \begin_layout Proof
-Note that the right hand side comes from approximating 
+Note that the right-hand side comes from approximating 
 \begin_inset Formula $\int_{0}^{1}f(x)dx$
 \end_inset
 
@@ -284,7 +284,7 @@ gives a better constant.
 
 \begin_layout Plain Layout
 Throughout this book,
- we used the Taylor expansion a lot (see Lemma 
+ we have used Taylor expansion repeatedly (see Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:second_order"
@@ -379,7 +379,7 @@ From this,
 And using the divergence theorem,
  namely,
  
-\begin_inset Formula $\int_{\Omega}\nabla\cdot f=\int_{\partial\Omega}f\overrightarrow{n}$
+\begin_inset Formula $\int_{\Omega}\nabla\cdot w=\int_{\partial\Omega}w\cdot\overrightarrow{n}$
 \end_inset
 
 ,
@@ -387,7 +387,7 @@ And using the divergence theorem,
 \begin_inset Formula $\overrightarrow{n}$
 \end_inset
 
-is the normal vector at a point in 
+ is the outward normal vector at a point in 
 \begin_inset Formula $\partial\Omega$
 \end_inset
 
@@ -400,7 +400,7 @@ is the normal vector at a point in
 
 \end_inset
 
-The first term on the RHS become zero if the vector field 
+The first term on the right-hand side becomes zero if the vector field 
 \begin_inset Formula $v$
 \end_inset
 
@@ -442,7 +442,7 @@ Usually,
 \begin_inset Formula $Df(x)[h]$
 \end_inset
 
- be the directional derivative of 
+ to be the directional derivative of 
 \begin_inset Formula $f$
 \end_inset
 
@@ -493,8 +493,8 @@ Given
 \begin_inset Formula $A\in\R^{n\times d}$
 \end_inset
 
-.
- Let 
+,
+ let 
 \begin_inset Formula $\Phi(x)=\sum_{i=1}^{n}f(a_{i}^{\top}x)$
 \end_inset
 
@@ -550,7 +550,7 @@ To write it in the traditional form,
 
 \end_inset
 
-Since both side are the same for all 
+Since both sides are the same for all 
 \begin_inset Formula $h$
 \end_inset
 
@@ -578,7 +578,7 @@ Since
 \begin_inset Formula $\nabla^{2}\Phi(x)-A^{\top}\diag(f''(Ax))A$
 \end_inset
 
- is symmetric and both side are the same for all 
+ is symmetric and both quadratic forms are the same for all 
 \begin_inset Formula $h$
 \end_inset
 
@@ -633,7 +633,7 @@ Let
 \end_inset
 
  axis.
- Suppose that this is the curve that takes the shortest time for a bead to slide along the curve frictionlessly from 
+ Suppose that this is the time-minimizing curve for a bead to slide frictionlessly from 
 \begin_inset Formula $(0,0)$
 \end_inset
 
@@ -670,7 +670,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename fig3.png
+	filename Figures/fig3.png
 	width 4in
 
 \end_inset
@@ -764,7 +764,7 @@ Since
 
  is a 
 \emph on
-shortest
+time-minimizing
 \emph default
  curve,
  any local change in 
@@ -847,7 +847,7 @@ Since the endpoints of the curve are fixed,
 
 .
  Hence,
- the first term on the right hand side is 
+ the first term on the right-hand side is 
 \begin_inset Formula $0$
 \end_inset
 
@@ -967,11 +967,11 @@ where
 \begin_inset Formula $f$
 \end_inset
 
- with respect to 
+ with respect to the 
 \begin_inset Formula $x$
 \end_inset
 
- variables and 
+-variables and 
 \begin_inset Formula $Dg(x)$
 \end_inset
 
@@ -980,13 +980,13 @@ where
 \end_inset
 
 .
- We note that the formula can be obtained from taking derivative on both sides with respective to 
+ We note that the formula can be obtained by taking derivatives on both sides with respect to 
 \begin_inset Formula $x$
 \end_inset
 
 .
  Sometimes,
- taking derivatives on the both sides can greatly simplify calculations.
+ taking derivatives on both sides can greatly simplify calculations.
  Here are some examples.
 \end_layout
 
@@ -999,12 +999,16 @@ Consider
 \begin_inset Formula $f_{t}$
 \end_inset
 
- are strictly convex.
+ are strictly convex and 
+\begin_inset Formula $\nabla^{2}f_t(x_t)$
+\end_inset
+
+ is positive definite.
  Then,
  we have
 \begin_inset Formula 
 \[
-\frac{dx_{t}}{dt}=(\nabla^{2}f_{t}(x_{t}))^{-1}\nabla\frac{df_{t}}{dt}(x_{t}).
+\frac{dx_{t}}{dt}=-(\nabla^{2}f_{t}(x_{t}))^{-1}\nabla\frac{df_{t}}{dt}(x_{t}).
 \]
 
 \end_inset
@@ -1029,17 +1033,12 @@ By the optimality condition,
 \end_inset
 
 Since 
-\begin_inset Formula $f_{t}$
-\end_inset
-
- are strictly convex,
- 
 \begin_inset Formula $\nabla^{2}f_{t}(x_{t})$
 \end_inset
 
  is positive definite and is invertible.
  Hence,
- we have that the result.
+ we have the desired result.
 \end_layout
 
 \begin_layout Standard
@@ -1052,22 +1051,23 @@ nolink "false"
 \end_inset
 
 ,
- we used this to compute the derivative of central path.
+ we used this to compute the derivative of the central path.
 \end_layout
 
 \begin_layout Subsection
-Linearity of Expectation - the continuous version
+Linearity of Expectation: the Continuous Version
 \end_layout
 
 \begin_layout Standard
-Often times one would like to compute the differential of a quantity that is most appropriately expressed by an integral,
+Often,
+ one would like to compute the differential of a quantity that is most appropriately expressed by an integral,
  and under mild assumptions we can do so by simply swapping the integral and derivative,
  i.e.
- for time differentiable and (Lebesgue) integrable 
+ for time-differentiable and (Lebesgue) integrable 
 \begin_inset Formula $f(x,t)$
 \end_inset
 
- we want to do
+ we want to justify
 \begin_inset Formula 
 \[
 \frac{d}{dt}\int_{\Omega}f(x,t)dx=\int_{\Omega}\frac{\partial}{\partial t}f(x,t)dx
@@ -1079,7 +1079,7 @@ For example,
  we use this trick in deriving the Fokker-Planck equation in gradient-based sampling.
  Fortunately,
  measure theory gives us the dominated convergence theorem,
- a quick corollary of which tells us we can perform the above trick as long as there exists integrable 
+ a quick corollary of which tells us we can perform the above trick as long as there exists an integrable 
 \begin_inset Formula $g:\Omega\rightarrow\R$
 \end_inset
 
@@ -1112,7 +1112,7 @@ Solving optimization problems by hand
 
 \begin_layout Standard
 In this section,
- we introduce the KKT condition and show how to use it to solve optimization problem by hand.
+ we introduce the KKT conditions and show how to use them to solve optimization problems by hand.
 \end_layout
 
 \begin_layout Theorem
@@ -1155,8 +1155,21 @@ for some open set
 \begin_inset Formula $x$
 \end_inset
 
- is a local minimum,
- 
+ is a local minimum and the gradients of the active inequalities together
+ with the equality gradients are linearly independent at 
+\begin_inset Formula $x$
+\end_inset
+
+,
+ then there exist multipliers 
+\begin_inset Formula $u_i$
+\end_inset
+
+ and 
+\begin_inset Formula $v_j$
+\end_inset
+
+ such that 
 \begin_inset Formula $x$
 \end_inset
 
@@ -1217,8 +1230,8 @@ Dual Feasibility:
 \end_layout
 
 \end_deeper
-\begin_layout Theorem
-We prove Holder's inequality as an example:
+\begin_layout Standard
+We prove Hölder's inequality as an example:
 \end_layout
 
 \begin_layout Fact
@@ -1247,7 +1260,17 @@ For any vector
 \end_layout
 
 \begin_layout Proof
-By symmetries,
+Assume first that 
+\begin_inset Formula $1<p,q<\infty$
+\end_inset
+
+.
+ By symmetry,
+ we may assume 
+\begin_inset Formula $y_i\ge0$
+\end_inset
+
+ and take a nonnegative maximizer;
  it suffices to compute
 \begin_inset Formula 
 \[
@@ -1285,7 +1308,7 @@ for non-zero
  we have that
 \begin_inset Formula 
 \begin{align*}
--\nabla f(x)+u\nabla h(x) & =0,\\
+\nabla f(x)+u\nabla h(x) & =0,\\
 uh(x) & =0,\\
 h(x)\leq0, & u\geq0.
 \end{align*}
@@ -1293,11 +1316,11 @@ h(x)\leq0, & u\geq0.
 \end_inset
 
 Note that 
-\begin_inset Formula $\nabla f(x)=y$
+\begin_inset Formula $\nabla f(x)=-y$
 \end_inset
 
  and 
-\begin_inset Formula $(\nabla h(x))_{i}=\frac{1}{p}\|x\|_{p}^{1-p}\cdot px_{i}^{p-1}=\|x\|_{p}^{1-p}\cdot x^{p-1}$
+\begin_inset Formula $(\nabla h(x))_{i}=\|x\|_{p}^{1-p}x_i^{p-1}$
 \end_inset
 
 .
@@ -1375,6 +1398,22 @@ Now,
 
 \end_inset
 
+The endpoint cases are direct:
+ if 
+\begin_inset Formula $p=1,q=\infty$
+\end_inset
+
+,
+ then 
+\begin_inset Formula $\sum_i |x_i y_i|\leq\|y\|_{\infty}\|x\|_1$
+\end_inset
+
+,
+ and the case 
+\begin_inset Formula $p=\infty,q=1$
+\end_inset
+
+ is symmetric.
 
 \end_layout
 

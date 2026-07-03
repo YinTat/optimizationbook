@@ -219,7 +219,7 @@ Given an
 \end_layout
 
 \begin_layout Standard
-Computing the volume is an ancient problem,
+Computing volume is an ancient problem;
  the early Egyptians and Greeks developed formulas for specific shapes of interest.
  Unlike convex optimization,
  even computing the volume of a convex body is intractable,
@@ -339,7 +339,7 @@ where
 
 ,
  we have 
-\begin_inset Formula $|f(x)-f(y)|\le|x-y|$
+\begin_inset Formula $\left|f(x)-f(y)\right|\le\norm{x-y}_{2}$
 \end_inset
 
 ,
@@ -629,6 +629,10 @@ A function
 convex
 \emph default
  if for every 
+\begin_inset Formula $x,y\in\R^{n}$
+\end_inset
+
+ and 
 \begin_inset Formula $t\in[0,1]$
 \end_inset
 
@@ -649,7 +653,7 @@ Suppose we have a continuous function
 \begin_inset Formula $f:\R^{n}\rightarrow\R\cup\{+\infty\}$
 \end_inset
 
-that has the property that for every 
+ that has the property that for every 
 \begin_inset Formula $x,y\in\R^{n},$
 \end_inset
 
@@ -744,7 +748,7 @@ An optimization problem
 \end_layout
 
 \begin_layout Standard
-Any point not in a convex set can be separated by a hyperplane from the set.
+Any point not in a closed convex set can be separated by a hyperplane from the set.
  We will see in Chapter 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -786,12 +790,12 @@ halfspace
 \emph on
 polyhedron
 \emph default
- is the intersection of halfspaces.
+ is a finite intersection of halfspaces.
  A 
 \emph on
 polytope
 \emph default
- is the convex hull of a set of points.
+ is the convex hull of a finite set of points.
  
 \end_layout
 
@@ -866,7 +870,7 @@ Let
  such that 
 \begin_inset Formula 
 \[
-\left\langle \theta,y\right\rangle >\max_{x\in K}\left\langle \theta,x\right\rangle .
+\left\langle \theta,y\right\rangle >\sup_{x\in K}\left\langle \theta,x\right\rangle.
 \]
 
 \end_inset
@@ -1011,7 +1015,9 @@ nolink "false"
 
 \end_inset
 
- shows that a polyhedron (a finite intersection of halfspaces) is essentially as general as a convex set.
+ shows that closed convex sets can be represented as intersections,
+ possibly infinite,
+ of halfspaces.
 \end_layout
 
 \begin_layout Standard
@@ -1066,26 +1072,26 @@ Any closed convex set
 \begin_inset Formula $K$
 \end_inset
 
- can be written as the intersection of halfspaces as follows
+ can be written as a possibly infinite intersection of halfspaces as follows
 \begin_inset Formula 
 \[
-K=\bigcap_{\theta\in\Rn}\left\{ x:\ \left\langle \theta,x\right\rangle \leq\max_{y\in K}\left\langle \theta,y\right\rangle \right\} .
+K=\bigcap_{\theta\in\Rn}\left\{ x:\ \left\langle \theta,x\right\rangle \leq\sup_{y\in K}\left\langle \theta,y\right\rangle \right\}.
 \]
 
 \end_inset
 
 In other words,
- any closed convex set is the limit of a sequence of polyhedra.
+ closed convex sets are possibly infinite intersections of halfspaces.
 \end_layout
 
 \begin_layout Proof
 Let 
-\begin_inset Formula $L\defeq\bigcap_{\theta\in\Rn}\left\{ x:\ \left\langle \theta,x\right\rangle \leq\max_{y\in K}\left\langle \theta,y\right\rangle \right\} $
+\begin_inset Formula $L\defeq\bigcap_{\theta\in\Rn}\left\{ x:\ \left\langle \theta,x\right\rangle \leq\sup_{y\in K}\left\langle \theta,y\right\rangle \right\} $
 \end_inset
 
 .
  Since 
-\begin_inset Formula $K\subseteq\left\{ x:\ \left\langle \theta,x\right\rangle \leq\max_{y\in K}\left\langle \theta,y\right\rangle \right\} $
+\begin_inset Formula $K\subseteq\left\{ x:\ \left\langle \theta,x\right\rangle \leq\sup_{y\in K}\left\langle \theta,y\right\rangle \right\} $
 \end_inset
 
 ,
@@ -1116,7 +1122,7 @@ nolink "false"
 \end_inset
 
  such that 
-\begin_inset Formula $\theta^{\top}x>\max_{y\in K}\theta^{\top}y$
+\begin_inset Formula $\theta^{\top}x>\sup_{y\in K}\theta^{\top}y$
 \end_inset
 
 .
@@ -1133,7 +1139,7 @@ nolink "false"
 \end_layout
 
 \begin_layout Standard
-This shows that convex optimization is related to linear programs (optimize linear functions over polytopes) as follows:
+This shows that convex optimization is related to linear programs (optimize linear functions over polyhedra) as follows:
 \begin_inset Formula 
 \[
 \min_{x\in K}f(x)=\min_{(x,y)\in\{x\in K,y\in\R:y\geq f(x)\}}y
@@ -1145,8 +1151,8 @@ where the set
 \begin_inset Formula $\{x\in K,y\in\R:y\geq f(x)\}$
 \end_inset
 
- then can be approximated by intersection of halfspaces,
- namely 
+ then can be represented as a generally infinite intersection of halfspaces.
+ Using a finite subcollection gives sets of the form 
 \begin_inset Formula $\{A\binom{x}{y}\leq b\}$
 \end_inset
 
@@ -1171,7 +1177,7 @@ Let
 \end_inset
 
  be nonempty disjoint closed convex sets.
- Then there exists a vector 
+ Then there exists a nonzero vector 
 \begin_inset Formula $v\in\R^{n}$
 \end_inset
 
@@ -1342,7 +1348,7 @@ Taking
  and hence
 \begin_inset Formula 
 \[
-f(y)\geq f(x)+\left\langle \nabla f(x),y-x\right\rangle .
+f(y)\geq f(x)+\left\langle \nabla f(x),y-x\right\rangle.
 \]
 
 \end_inset
@@ -1409,7 +1415,7 @@ If
  then 
 \begin_inset Formula 
 \[
-f(x-\varepsilon\nabla f(x))=f(x)-\varepsilon\norm{\nabla f(x)}_{2}^{2}+O(\varepsilon^{2})\norm{\nabla f(x)}_{2}^{2}<f(x)
+f(x-\varepsilon\nabla f(x))=f(x)-\varepsilon\norm{\nabla f(x)}_{2}^{2}+o(\varepsilon)<f(x)
 \]
 
 \end_inset
@@ -1419,8 +1425,12 @@ for small enough
 \end_inset
 
 ,
- where we use Taylor approximation and the third term follows as a result of the boundedness of the Hessian of 
-\begin_inset Formula $f(x)$
+ where we use differentiability of 
+\begin_inset Formula $f$
+\end_inset
+
+ at 
+\begin_inset Formula $x$
 \end_inset
 
 .
@@ -1466,7 +1476,7 @@ We note that the proof above is in fact a constructive proof.
  For continuous convex functions,
  there is a weaker notion of gradient called sub-differential,
  which is a set instead of a vector.
- Both theorems above holds with gradients replaced by sub-differentials.
+ Both theorems above hold with gradients replaced by sub-differentials.
 \end_layout
 
 \begin_layout Section
@@ -1534,11 +1544,11 @@ The min cost flow problem has lots of applications such as route planning,
 \end_inset
 
 .
- The problem is to minimize the total cost of sending 
+ The problem is to minimize the total cost of sending an amount 
 \begin_inset Formula $d$
 \end_inset
 
- amount of flow from a source vertex 
+ of flow from a source vertex 
 \begin_inset Formula $s\in V$
 \end_inset
 
@@ -1563,11 +1573,11 @@ The min cost flow problem has lots of applications such as route planning,
 
 .
  Further,
- we take 
+ we connect each flight node to 
 \begin_inset Formula $t$
 \end_inset
 
- to be connected to a node for each flight,
+,
  with 
 \begin_inset Formula $u_{e}$
 \end_inset
@@ -1583,7 +1593,7 @@ The min cost flow problem has lots of applications such as route planning,
 \begin_inset Formula $c_{e}$
 \end_inset
 
- is proportional to how good that flight is for that person (does it get them where they need to go at the time they need to go?) with 
+ is proportional to how undesirable that flight is for that person (does it fail to get them where they need to go at the time they need to go?) with 
 \begin_inset Formula $0$
 \end_inset
 
@@ -1646,21 +1656,21 @@ To check this is a convex problem,
 \end_inset
 
  which is convex.
- The domain is the intersection of three sets (the three set of equations above).
+ The domain is the intersection of three sets (the three sets of constraints above).
  The first set is a scaled hypercube,
- the second and last set is a linear subspace.
+ and the second and third sets are affine subspaces.
  All of them are convex and so is their intersection.
  Therefore,
  this is a convex problem.
 \end_layout
 
 \begin_layout Subsection
-Linear Programs (Operation Research/Economics)
+Linear Programs (Operations Research/Economics)
 \end_layout
 
 \begin_layout Standard
 Consider the diet problem:
- find a cheapest diet plan that satisfies the nutrients requirements.
+ find the cheapest diet plan that satisfies the nutrient requirements.
  Formally,
  suppose there are 
 \begin_inset Formula $n$
@@ -1684,7 +1694,7 @@ Consider the diet problem:
 \begin_inset Formula $a_{1i}$
 \end_inset
 
- unit of nutrient 
+ units of nutrient 
 \begin_inset Formula $1$
 \end_inset
 
@@ -1693,7 +1703,7 @@ Consider the diet problem:
 \begin_inset Formula $a_{2i}$
 \end_inset
 
- unit of nutrient 
+ units of nutrient 
 \begin_inset Formula $2$
 \end_inset
 
@@ -1708,13 +1718,13 @@ Consider the diet problem:
 \begin_inset Formula $b_{j}$
 \end_inset
 
- unit of the nutrient 
+ units of nutrient 
 \begin_inset Formula $j$
 \end_inset
 
 .
  Then,
- the problem is simply find an assignment 
+ the problem is simply to find an assignment 
 \begin_inset Formula $x$
 \end_inset
 
@@ -1739,13 +1749,13 @@ where
 \begin_inset Formula $A\in\R^{m\times n}$
 \end_inset
 
- is the matrix of nutrients contents of each food
+ is the matrix of nutrient contents of each food
 \begin_inset Foot
 status open
 
 \begin_layout Plain Layout
 Unfortunately,
- Nobel Laureate Stigler showed that 
+ Nobel Laureate Stigler 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "stigler1945cost"
@@ -1753,7 +1763,7 @@ literal "false"
 
 \end_inset
 
- the optimal meal is evaporated milk,
+ showed that the optimal meal is evaporated milk,
  cabbage,
  dried navy beans,
  and beef liver.
@@ -1835,12 +1845,12 @@ Consider the problem of predicting the likelihood of getting diabetes in the fut
 
  represents whether that person gets diabetes.
  For example,
- the feature vector can be (age,
+ the feature vector can include age,
  weight,
  height,
  BMI,
  fasting glucose level,
- ...).
+ etc.
  The features in the vector may be redundant and the purpose of extra variables is to make linear functions expressive enough to be able to classify.
  In particular,
  we assume that there is a vector 
@@ -1868,7 +1878,7 @@ Consider the problem of predicting the likelihood of getting diabetes in the fut
 \begin_inset Formula $y_{i}=-1$
 \end_inset
 
- .
+.
  The error of the vector 
 \begin_inset Formula $\theta$
 \end_inset
@@ -1943,7 +1953,7 @@ regularization
 
 ,
  and then this problem is called logistic regression.
- In the section 
+ In Section 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:Checking-Convexity"
@@ -2031,7 +2041,7 @@ where we say
 \begin_inset Formula $g$
 \end_inset
 
- is feasible) is exactly a linear subspace on the space of functions on 
+ is feasible) is exactly an affine subspace of the space of functions on 
 \begin_inset Formula $[0,1]^{2}$
 \end_inset
 
@@ -2052,8 +2062,9 @@ where we say
 Show that surface area is convex by using the definition.
 \end_layout
 
-\begin_layout Exercise
-Calculus of variations is an area of mathematics that studies optimization in function spaces and there are many common theorems between this and convex optimization.
+\begin_layout Standard
+Calculus of variations is an area of mathematics that studies optimization in function spaces,
+ and there are many common theorems between this and convex optimization.
 \end_layout
 
 \begin_layout Section
@@ -2061,7 +2072,7 @@ Examples of convex sets and functions
 \end_layout
 
 \begin_layout Standard
-There are many important convex sets and here we only list some that appear in this course.
+There are many important convex sets and here we only list some that appear in this book.
  One of the most important classes of convex functions comes from convex sets.
 \end_layout
 
@@ -2205,7 +2216,7 @@ This characterization shows that
 \end_layout
 
 \begin_layout Fact
-Any level set 
+Any sublevel set 
 \begin_inset Formula $\{x\in\Rn:\ f(x)\leq t\}$
 \end_inset
 
@@ -2226,7 +2237,7 @@ In particular,
 \emph on
 quasiconvex
 \emph default
- if every level set is convex.
+ if every sublevel set is convex.
  Equivalently,
  a function 
 \begin_inset Formula $f:\R^{n}\rightarrow\R$
@@ -2283,7 +2294,7 @@ For a matrix
 \end_inset
 
 ,
- positive scalars 
+ nonnegative scalars 
 \begin_inset Formula $t_{1},t_{2}\geq0$
 \end_inset
 
@@ -2342,7 +2353,7 @@ Convex sets:
 \end_inset
 
  with 
-\begin_inset Formula $A\succeq0$
+\begin_inset Formula $A\succ0$
 \end_inset
 
 ,
@@ -2427,7 +2438,7 @@ Convex functions:
 \begin_inset Formula $A\rightarrow-\log\det A$
 \end_inset
 
- over PSD matrices 
+ over positive definite matrices 
 \begin_inset Formula $A$
 \end_inset
 
@@ -2540,7 +2551,7 @@ name "lem:second_order"
 
 \end_inset
 
-For any real-valued and twice continuously-differentiable function 
+For any real-valued and twice continuously differentiable function 
 \begin_inset Formula $f\in\mathcal{C}^{2}(\R^{n})$
 \end_inset
 
@@ -2554,7 +2565,7 @@ For any real-valued and twice continuously-differentiable function
 \begin_inset Formula $z\in[x,y]$
 \end_inset
 
- s.t.
+ such that
  
 \begin_inset Formula 
 \[
@@ -2650,7 +2661,7 @@ Let
 \begin_inset Formula $f$
 \end_inset
 
- is real-valued and twice continuously-differentiable.
+ is real-valued and twice continuously differentiable.
  
 \begin_inset Note Note
 status open
@@ -3025,21 +3036,23 @@ The standard definition of a convex function in terms of gradients requires diff
 \end_inset
 
  is called a 
-\begin_inset Formula $subgradient$
-\end_inset
-
+\emph on
+subgradient selection
+\emph default
  if it satisfies the following property:
  for any 
 \begin_inset Formula $x,y\in\R^{n},$
 \end_inset
 
 
+ we have 
+
 \begin_inset Formula $f(y)-f(x)\ge\langle g(x),y-x\rangle.$
 \end_inset
 
  For the purpose of optimization algorithms,
  in almost all cases,
- a subgradient will suffice in place of a gradient.
+ a subgradient selection will suffice in place of a gradient.
  
 \end_layout
 
@@ -3123,12 +3136,12 @@ logconcave
 \end_layout
 
 \begin_layout Definition
-Thus any logconcave function can be viewed as 
-\begin_inset Formula $e^{-f(x)}$
+Thus any logconcave function can be written as 
+\begin_inset Formula $e^{-V(x)}$
 \end_inset
 
- for some convex function 
-\begin_inset Formula $f$
+ for an extended-valued convex function 
+\begin_inset Formula $V=-\log f$
 \end_inset
 
 .
@@ -3141,7 +3154,7 @@ Show that for any
 \end_inset
 
 ,
- the level set 
+ the superlevel set 
 \begin_inset Formula $L(t)=\left\{ x:f(x)\ge t\right\} $
 \end_inset
 
@@ -3219,7 +3232,8 @@ name "lem:marginal"
 \end_inset
 
  The product,
- minimum and convolution of two logconcave functions is also logconcave;
+ minimum,
+ and convolution of two logconcave functions are also logconcave;
  in particular,
  any linear transformation or any marginal of a logconcave density is logconcave;
  the distribution function of any logconcave density is logconcave.
@@ -3431,7 +3445,7 @@ The Bayesian choice is to find
 \begin_inset Formula $\theta$
 \end_inset
 
- with maximum likelihood,
+ with maximum posterior density (the MAP estimate),
  namely 
 \begin_inset Formula $\theta=\argmax_{\theta}\log\P(\theta|y)=\argmin_{\theta}-\log\P(\theta|y)$
 \end_inset
@@ -3451,7 +3465,7 @@ Using the noise assumption,
 
 Now,
  say we know the signal is smooth and we model the prior as 
-\begin_inset Formula $\P(\theta)\varpropto\exp(-\lambda\sum_{i}(\theta_{i}-\theta_{i+1})^{2})$
+\begin_inset Formula $\P(\theta)\varpropto\exp(-\lambda\sum_{i=1}^{n-1}(\theta_{i}-\theta_{i+1})^{2})$
 \end_inset
 
  where 
@@ -3463,7 +3477,7 @@ Now,
  
 \begin_inset Formula 
 \[
--\log\P(\theta|y)=c+\sum_{i}(y_{i}-\theta_{i})^{2}+\lambda\sum_{i}(\theta_{i}-\theta_{i+1})^{2}.
+-\log\P(\theta|y)=c+\frac{1}{2}\sum_{i}(y_{i}-\theta_{i})^{2}+\lambda\sum_{i=1}^{n-1}(\theta_{i}-\theta_{i+1})^{2}.
 \]
 
 \end_inset
@@ -3474,7 +3488,7 @@ Since each term in the function above is convex,
  the recovery question becomes a convex optimization problem
 \begin_inset Formula 
 \[
-\min_{\theta}\sum_{i}(y_{i}-\theta_{i})^{2}+\lambda\sum_{i}(\theta_{i}-\theta_{i+1})^{2}.
+\min_{\theta}\frac{1}{2}\sum_{i}(y_{i}-\theta_{i})^{2}+\lambda\sum_{i=1}^{n-1}(\theta_{i}-\theta_{i+1})^{2}.
 \]
 
 \end_inset
@@ -3501,7 +3515,7 @@ When we recover a signal,
  Note that
 \begin_inset Formula 
 \[
-\P(\theta|y)\varpropto e^{-\sum_{i}(y_{i}-\theta_{i})^{2}-\lambda\sum_{i}(\theta_{i}-\theta_{i+1})^{2}}
+\P(\theta|y)\varpropto e^{-\frac{1}{2}\sum_{i}(y_{i}-\theta_{i})^{2}-\lambda\sum_{i=1}^{n-1}(\theta_{i}-\theta_{i+1})^{2}}
 \]
 
 \end_inset

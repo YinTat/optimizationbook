@@ -104,7 +104,7 @@ The Ball Walk
 \end_layout
 
 \begin_layout Standard
-The simplest continuous algorithm for exploring space is Brownian motion with the ODE 
+The simplest continuous algorithm for exploring space is Brownian motion with the SDE 
 \begin_inset Formula $dx_{t}=dW_{t}$
 \end_inset
 
@@ -123,7 +123,7 @@ The simplest continuous algorithm for exploring space is Brownian motion with th
  namely 
 \begin_inset Formula 
 \[
-dx_{t}=-\nabla f(x_{t})+\sqrt{2}dW_{t}
+dx_{t}=-\nabla f(x_{t})dt+\sqrt{2}dW_{t}
 \]
 
 \end_inset
@@ -135,8 +135,8 @@ which can be used to sample according to the density proportional to
 .
  In this chapter we will begin with an even simpler method,
  which does not need access to the gradient or assume differentiability,
- only an oracle that can evaluate 
-\begin_inset Formula $F$
+ only an oracle that can evaluate a function proportional to 
+\begin_inset Formula $Q$
 \end_inset
 
 .
@@ -264,6 +264,14 @@ Go to
 
  with probability 
 \begin_inset Formula $\min\left\{ 1,\frac{Q(y)}{Q(x)}\right\} $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Otherwise, stay at 
+\begin_inset Formula $x$
 \end_inset
 
 .
@@ -684,7 +692,7 @@ ergodic flow
 \begin_inset Formula $A$
 \end_inset
 
- w.r.t.
+ with respect to
  the distribution 
 \begin_inset Formula $Q$
 \end_inset
@@ -724,7 +732,7 @@ lazy
 
 ,
  we do nothing;
- with the rest we take a step according to the Markov chain.
+ with the remaining probability we take a step according to the Markov chain.
  The next theorem is folklore.
 \end_layout
 
@@ -733,7 +741,7 @@ If
 \begin_inset Formula $Q$
 \end_inset
 
- is stationary w.r.t.
+ is stationary with respect to
  a lazy,
  ergodic Markov chain,
  then it is the unique stationary distribution for that Markov chain.
@@ -811,7 +819,7 @@ Warmth:
 
 -warm
 \emph default
- w.r.t.
+ with respect to
  
 \begin_inset Formula $Q$
 \end_inset
@@ -832,7 +840,7 @@ We say that a distribution
 \emph on
 absolutely continuous 
 \emph default
-w.r.t.
+with respect to
  another distribution 
 \begin_inset Formula $Q$
 \end_inset
@@ -858,7 +866,7 @@ The following relationships hold when
 \begin_inset Formula $P$
 \end_inset
 
- is absolutely continuous w.r.t.
+ is absolutely continuous with respect to
  
 \begin_inset Formula $Q$
 \end_inset
@@ -884,10 +892,10 @@ Convergence via Conductance
 
 \begin_layout Standard
 Now we introduce an important tool to bound the rate of convergence of 
-\begin_inset Formula $Q_{t},$
+\begin_inset Formula $Q_{t}$
 \end_inset
 
-the distribution after 
+, the distribution after 
 \begin_inset Formula $t$
 \end_inset
 
@@ -902,9 +910,9 @@ the distribution after
 
  is the unique stationary distribution.
  The 
-\begin_inset Formula $conductance$
-\end_inset
-
+\emph on
+conductance
+\emph default
  of a subset 
 \begin_inset Formula $A$
 \end_inset
@@ -990,14 +998,14 @@ for each
 
 .
  To prove inductively that this quantity decreases,
- Let 
+ let 
 \begin_inset Formula ${\cal G}_{x}$
 \end_inset
 
  be the set of functions defined as 
 \begin_inset Formula 
 \[
-{\cal G}_{x}=\left\{ g:K\rightarrow[0,1]\ :\ \int_{u\in K}g(u)\ dQ(u)=x\right\} .
+{\cal G}_{x}=\left\{ g:K\rightarrow[0,1]\ :\ \int_{u\in K}g(u)\ dQ(u)=x\right\}.
 \]
 
 \end_inset
@@ -1024,7 +1032,7 @@ Show that the function
 \begin_inset Formula $Q$
 \end_inset
 
- is atom-free 
+ is atom-free,
 \begin_inset Note Note
 status open
 
@@ -1035,7 +1043,6 @@ why atom free?
 
 \end_inset
 
-,
  then 
 \begin_inset Formula $h_{t}(x)=\sup_{A:Q(A)=x}Q_{t}(A)-Q(A)$
 \end_inset
@@ -1187,11 +1194,12 @@ Since the walk is lazy,
 \begin_inset Formula $P_{u}(A)\geq\frac{1}{2}$
 \end_inset
 
- iff 
+ if and only if 
 \begin_inset Formula $u\in A$
 \end_inset
 
-,
+.
+ Hence,
  the range of the functions 
 \begin_inset Formula $g_{1},g_{2}$
 \end_inset
@@ -1631,7 +1639,7 @@ The core of this proof is Cheeger's classical inequality.
 \begin_inset Formula $r$
 \end_inset
 
- be s.t.
+ be such that
  
 \begin_inset Formula $Q(\{x:f(x)>r\})\le1/2$
 \end_inset
@@ -1807,7 +1815,7 @@ As a result,
  we have 
 \begin_inset Formula 
 \[
-\langle Mf,Mf\rangle\le\left(1-\frac{\phi^{2}}{4}\right)^{2}.
+\langle Mf,Mf\rangle\le\left(1-\frac{\phi^{2}}{4}\right)^{2}\langle f,f\rangle.
 \]
 
 \end_inset
@@ -1865,12 +1873,13 @@ Convergence via Log-Sobolev
 \begin_layout Standard
 For a warm start,
  the convergence rate established by conductance is asymptotically optimal in many cases of interest,
- including the ball walk for convex body.
+ including the ball walk for a convex body.
  However,
  when the starting distribution is more focused,
  e.g.,
  a single point,
- then there is a significant starting penalty usually a factor of the dimension or larger.
+ then there is a significant starting penalty,
+ usually a factor of the dimension or larger.
  One way to avoid this is to observe that the conductance of smaller subsets is in fact even higher and that one does not need to pay this large starting penalty.
  A classical technique in this regard is the log-Sobolev constant.
  For a Markov chain with stationary density 
@@ -1959,7 +1968,7 @@ Conductance of the Ball Walk
 \end_layout
 
 \begin_layout Standard
-In the section we bound the conductance of the ball walk when applied to the indicator function of a convex body.
+In this section we bound the conductance of the ball walk when applied to the indicator function of a convex body.
  At first glance,
  the ball walk is not an efficient algorithm,
  even for uniformly sampling a convex body.
@@ -1971,7 +1980,7 @@ In the section we bound the conductance of the ball walk when applied to the ind
 \begin_inset Quotes eld
 \end_inset
 
-smoothen
+smooth
 \begin_inset Quotes erd
 \end_inset
 
@@ -2041,7 +2050,7 @@ Let
  is at least an absolute constant.
 \end_layout
 
-\begin_layout Exercise
+\begin_layout Standard
 Using the exercise,
  it suffices to set 
 \begin_inset Formula $\alpha=1/n$
@@ -2063,7 +2072,7 @@ Using the exercise,
 .
 \end_layout
 
-\begin_layout Exercise
+\begin_layout Standard
 The second approach is to show that the local conductance is in fact large almost everywhere,
  and if the starting distribution is 
 \begin_inset Quotes eld
@@ -2083,7 +2092,7 @@ warm
 \begin_inset Formula $\delta=1/\sqrt{n}.$
 \end_inset
 
- Larger step sizes should allows us to prove faster mixing.
+ Larger step sizes should allow us to prove faster mixing.
 \end_layout
 
 \begin_layout Standard
@@ -2094,7 +2103,7 @@ To convey the main ideas of the analysis,
  the probability of crossing over in one step is at least proportional to the measure of the set or its complement,
  whichever is smaller.
  First,
- we argue that the one-step distributions of two points will have a significant overlap if the points are sufficient close.
+ we argue that the one-step distributions of two points will have a significant overlap if the points are sufficiently close.
 \end_layout
 
 \begin_layout Lemma
@@ -2118,7 +2127,7 @@ One-step overlap
 \begin_inset Formula $u,v\in K$
 \end_inset
 
- s.t.
+ such that
  
 \begin_inset Formula $\ell(u),\ell(v)\ge\ell$
 \end_inset
@@ -2439,7 +2448,7 @@ Isoperimetry
  Then,
 \begin_inset Formula 
 \[
-\vol(S_{3})\ge\frac{2}{D}d(S_{1},S_{2})\min\left\{ \vol(S_{1}),\vol(S_{2})\right\} .
+\vol(S_{3})\ge\frac{2}{D}d(S_{1},S_{2})\min\left\{ \vol(S_{1}),\vol(S_{2})\right\}.
 \]
 
 \end_inset
@@ -2586,7 +2595,7 @@ deep
  
 \begin_inset Formula 
 \[
-S_{1}'=\left\{ x\in S_{1}:P_{x}(S_{2})<\frac{\ell}{4}\right\} \mbox{ and }S_{2}'=\left\{ x\in S_{2}:P_{x}(S_{1})<\frac{\ell}{4}\right\} .
+S_{1}'=\left\{ x\in S_{1}:P_{x}(S_{2})<\frac{\ell}{4}\right\} \mbox{ and }S_{2}'=\left\{ x\in S_{2}:P_{x}(S_{1})<\frac{\ell}{4}\right\}.
 \]
 
 \end_inset
@@ -2684,7 +2693,7 @@ nolink "false"
 \end_inset
 
 Thus 
-\begin_inset Formula $d(S_{1},S_{2})\geq\ell\delta/2\sqrt{n}$
+\begin_inset Formula $d(S_{1}',S_{2}')\geq\ell\delta/(2\sqrt{n})$
 \end_inset
 
 .
@@ -2966,12 +2975,16 @@ Let
 \begin_inset Formula $L$
 \end_inset
 
- be any measurable subset of the boundary of a convex body K and 
-\begin_inset Formula $S_{L}=\{(x,y):x\in K,y\not\in K,\norm{x-y}\le\delta,[x,y]\cap L\neq\phi\}$
+ be any measurable subset of the boundary of a convex body 
+\begin_inset Formula $K$
+\end_inset
+
+ and 
+\begin_inset Formula $S_{L}=\{(x,y):x\in K,y\not\in K,\norm{x-y}\le\delta,[x,y]\cap L\neq\emptyset\}$
 \end_inset
 
 .
- Then,,
+ Then,
  we have 
 \begin_inset Formula 
 \[
@@ -3049,10 +3062,10 @@ nolink "false"
 
 ,
  we restrict the argument to 
-\begin_inset Formula $K_{\delta},$
+\begin_inset Formula $K_{\delta}$
 \end_inset
 
-the points in 
+, the set of points in 
 \begin_inset Formula $K$
 \end_inset
 
@@ -3063,7 +3076,7 @@ the points in
 
 ,
  and is convex,
- we will able to use its isoperimetry to lower bound the conductance.
+ we will be able to use its isoperimetry to lower bound the conductance.
 \begin_inset Note Note
 status open
 
@@ -3124,7 +3137,7 @@ deep
  
 \begin_inset Formula 
 \[
-S_{1}'=\left\{ x\in S_{1}:P_{x}(S_{2})<\frac{1}{8}\right\} \mbox{ and }S_{2}'=\left\{ x\in S_{2}:P_{x}(S_{1})<\frac{1}{8}\right\} .
+S_{1}'=\left\{ x\in S_{1}:P_{x}(S_{2})<\frac{1}{8}\right\} \mbox{ and }S_{2}'=\left\{ x\in S_{2}:P_{x}(S_{1})<\frac{1}{8}\right\}.
 \]
 
 \end_inset
@@ -3451,7 +3464,7 @@ Show that the stationary density of the speedy walk in a convex body is proporti
 
 \begin_layout Theorem
 The conductance of the speedy walk is 
-\begin_inset Formula $\Omega(1/nD)$
+\begin_inset Formula $\Omega(1/(nD))$
 \end_inset
 
 .
@@ -3570,7 +3583,7 @@ Input:
 \begin_inset Formula $K$
 \end_inset
 
- s.t.
+ such that
  
 \begin_inset Formula $B^{n}\subseteq K\subseteq DB^{n}$
 \end_inset
@@ -3785,7 +3798,7 @@ isotropic
 .
  An affine transformation is said to be an 
 \emph on
-isotropic tranformation
+isotropic transformation
 \emph default
  if the resulting distribution is isotropic.
 \end_layout
@@ -4002,7 +4015,7 @@ Input:
 \begin_inset Formula $K$
 \end_inset
 
- s.t.
+ such that
  
 \begin_inset Formula $B^{n}\subseteq K\subseteq RB^{n}$
 \end_inset
@@ -4233,7 +4246,7 @@ For an isotropic logconcave distribution
 \end_inset
 
 ,
- the covariance 
+ the empirical covariance matrix from 
 \begin_inset Formula $N=O(n)$
 \end_inset
 
@@ -4364,7 +4377,7 @@ For any partition
  
 \begin_inset Formula 
 \[
-\mu(S_{3})\ge\frac{\ln2}{\E_{\mu}(\norm{x-\bar{x}})}\min\left\{ \mu(S_{1}),\mu(S_{2})\right\} .
+\mu(S_{3})\ge\frac{\ln2}{\E_{\mu}(\norm{x-\bar{x}})}\min\left\{ \mu(S_{1}),\mu(S_{2})\right\}.
 \]
 
 \end_inset
@@ -4404,7 +4417,7 @@ Thus,
 status open
 
 \begin_layout Plain Layout
-KLS Hyperplane Conjecture.
+KLS Hyperplane Conjecture
 \end_layout
 
 \end_inset
@@ -4603,7 +4616,7 @@ nolink "false"
 
  up to a constant.
  One benefit of localization is that it does not require a carefully crafted potential.
- Localization has been extended to Riemannian setting 
+ Localization has been extended to the Riemannian setting 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "klartag2017needle"
@@ -4829,7 +4842,8 @@ literal "false"
 \end_layout
 
 \begin_layout Proof
-WLOG we can assume that the functions 
+Without loss of generality,
+ we can assume that the functions 
 \begin_inset Formula $g,h$
 \end_inset
 
@@ -4910,7 +4924,7 @@ Thus,
 \begin_inset Formula $H$
 \end_inset
 
- or its compliment will have positive integrals for both 
+ or its complement will have positive integrals for both 
 \begin_inset Formula $g$
 \end_inset
 
@@ -5137,7 +5151,7 @@ Note that
 
 ,
  we have 
-\begin_inset Formula $\alpha_{m}\le0,\beta_{m}\ge0$
+\begin_inset Formula $\alpha_{m}\le0,\beta_{m}\ge1$
 \end_inset
 
  and 
@@ -5218,7 +5232,7 @@ Note that for
 ,
 \begin_inset Formula 
 \[
-\frac{1}{\vol(K_{m})}\int_{K_{m}}g(x)\,dx=\int_{\alpha_{i}}^{\beta_{i}}\frac{1}{\vol_{n-1}(K_{m}\cap Z_{t})}\int_{K_{m}\cap Z_{t}}g(y,t)\,dy\,\psi_{m}(t)^{n-1}\,dt\,.
+\frac{1}{\vol(K_{m})}\int_{K_{m}}g(x)\,dx=\int_{\alpha_{m}}^{\beta_{m}}\frac{1}{\vol_{n-1}(K_{m}\cap Z_{t})}\int_{K_{m}\cap Z_{t}}g(y,t)\,dy\,\psi_{m}(t)^{n-1}\,dt\,.
 \]
 
 \end_inset
@@ -5272,7 +5286,8 @@ The last part of the proof is to argue that we can take
 \end_inset
 
 ;
- WLOG assume 
+ without loss of generality,
+ assume 
 \begin_inset Formula $a=0,b=e_{1}$
 \end_inset
 
@@ -5285,7 +5300,7 @@ The last part of the proof is to argue that we can take
 \begin_inset Formula $0\le\alpha\le\beta\le1$
 \end_inset
 
- with 
+ such that 
 \begin_inset Formula $\beta-\alpha$
 \end_inset
 
@@ -5355,7 +5370,8 @@ and similarly for
 \end_inset
 
 .
- WLOG we can assume that 
+ Without loss of generality,
+ we can assume that 
 \begin_inset Formula $\int_{\K'}\hat{g}=0$
 \end_inset
 
@@ -5385,7 +5401,7 @@ centering{}
 
 
 \begin_inset Graphics
-	filename ../../../../GaTech Dropbox/Santosh Vempala/2025 Localization/concave-to-affine.png
+	filename Figures/concave-to-affine.png
 	width 50text%
 
 \end_inset
@@ -5890,7 +5906,7 @@ The functions
  
 \begin_inset Formula 
 \begin{equation}
-\int_{Z_{3}}F(t)\,dt<C\min\left\{ \int_{Z_{1}}F(t)\,dt,\int_{Z_{2}}F(t)\,dt\right\} .\label{FEQ}
+\int_{Z_{3}}F(t)\,dt<C\min\left\{ \int_{Z_{1}}F(t)\,dt,\int_{Z_{2}}F(t)\,dt\right\}.\label{FEQ}
 \end{equation}
 
 \end_inset
@@ -5919,7 +5935,7 @@ nolink "false"
  
 \begin_inset Formula 
 \begin{equation}
-\int_{Z_{3}}F(t)\,dt\geq2d(Z_{1},Z_{2})\min\left\{ \int_{Z_{1}}F(t)\,dt,\int_{Z_{2}}F(t)\,dt\right\} .\label{FEQ2}
+\int_{Z_{3}}F(t)\,dt\geq2d(Z_{1},Z_{2})\min\left\{ \int_{Z_{1}}F(t)\,dt,\int_{Z_{2}}F(t)\,dt\right\}.\label{FEQ2}
 \end{equation}
 
 \end_inset
@@ -5960,8 +5976,9 @@ nolink "false"
 
 \end_inset
 
- and to prove the theorem in general,
- and it suffices to prove it in the one-dimensional case.
+.
+ To prove the theorem in general,
+ it suffices to prove it in the one-dimensional case.
  A combinatorial argument reduces this to the case when each 
 \begin_inset Formula $Z_{i}$
 \end_inset
@@ -6197,7 +6214,7 @@ Let
 \begin_inset Formula $x$
 \end_inset
 
- drawn uniform from 
+ drawn uniformly from 
 \begin_inset Formula $K$
 \end_inset
 
@@ -6218,7 +6235,7 @@ Alternative formulations of Localization
 \end_layout
 
 \begin_layout Standard
-Here we give some alternative equivalent version of Lemma 
+Here we give some alternative equivalent versions of Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:LOCALIZATION"
@@ -6267,14 +6284,13 @@ The first is in terms of single inequality on products of integrals.
 status open
 
 \begin_layout Plain Layout
-Localization:
- Product form]
+Localization: Product form
 \end_layout
 
 \end_inset
 
  Let 
-\begin_inset Formula $f_{1},f_{2},f_{3},f_{4}:[a,b]\rightarrow\R_{+}$
+\begin_inset Formula $f_{1},f_{2},f_{3},f_{4}:\R^{n}\rightarrow\R_{+}$
 \end_inset
 
  be nonnegative,
@@ -6287,7 +6303,7 @@ For every convex body
 \begin_inset Formula $K\subset\R^{n},$
 \end_inset
 
-we have
+ we have
 \begin_inset Formula 
 \[
 \int_{K}f_{1}\int_{K}f_{2}\le\int_{K}f_{3}\int_{K}f_{4}.
@@ -6535,7 +6551,8 @@ For every logconcave
 \uwave off
 \noun off
 \color none
-iff for every subinterval 
+if and only if
+ for every subinterval 
 \begin_inset Formula $\ensuremath{[a',b']\subseteq[a,b]}$
 \end_inset
 
@@ -6635,7 +6652,7 @@ the distributions
 \begin_inset Formula $v$
 \end_inset
 
- satisfies
+ that satisfy
 \end_layout
 
 \begin_deeper
@@ -6652,7 +6669,7 @@ density function is of the form
 \end_layout
 
 \begin_layout Enumerate
-support equals to a segment 
+support is a segment 
 \begin_inset Formula $[a,b]\subset K$
 \end_inset
 

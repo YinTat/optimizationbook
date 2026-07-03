@@ -42,18 +42,17 @@ Given an $n\times n$ random $0/1$ matrix $A$ with $O(n)$ nonzero
 entries and a $0/1$ vector $b$, can we solve $Ax=b$ in $o(n^{2})$
 time?
 \end{problem*}
-Computing the volume is an ancient problem, the early Egyptians and
-Greeks developed formulas for specific shapes of interest. Unlike
-convex optimization, even computing the volume of a convex body is
-intractable, as we will see later. Nevertheless, there are efficient
-randomized algorithms that can estimate the volume of convex bodies
-to arbitrary accuracy in time polynomial in the dimension and the
-desired accuracy. This extends to efficient algorithms for integrating
-\emph{logconcave} functions, i.e., functions of the form $e^{-f}$
-where $f$ is convex. The core ingredient is sampling in high dimension.
-Sampling and volume computation will be the motivating problems for
-the second part of this book. Again, many basic problems remain open.
-To illustrate:
+Computing volume is an ancient problem; the early Egyptians and Greeks
+developed formulas for specific shapes of interest. Unlike convex
+optimization, even computing the volume of a convex body is intractable,
+as we will see later. Nevertheless, there are efficient randomized
+algorithms that can estimate the volume of convex bodies to arbitrary
+accuracy in time polynomial in the dimension and the desired accuracy.
+This extends to efficient algorithms for integrating \emph{logconcave}
+functions, i.e., functions of the form $e^{-f}$ where $f$ is convex.
+The core ingredient is sampling in high dimension. Sampling and volume
+computation will be the motivating problems for the second part of
+this book. Again, many basic problems remain open. To illustrate:
 \begin{problem*}
 Given a polytope defined by $\left\{ x:\,Ax\le b\right\} $, can we
 estimate its volume to within a constant factor in nearly linear time?
@@ -82,7 +81,7 @@ Consider the function $f:B(0_{n},1)\rightarrow\R$ defined by
 f(x)=\min(\|x-x^{*}\|_{2},\epsilon)\label{eq:f_lower_bound}
 \end{equation}
 where $B(0_{n},1)$ is the unit ball centered at the origin, $0_{n}$.
-This function is $1$-Lipschitz, i.e., for any $x,y$, we have $|f(x)-f(y)|\le|x-y|$,
+This function is $1$-Lipschitz, i.e., for any $x,y$, we have $\left|f(x)-f(y)\right|\le\norm{x-y}_{2}$,
 and unless we query $f(x)$ with $x$ that is $\epsilon$-close to
 $x^{*}$, it will always return $\epsilon$. Since the region where
 $f$ is not $\epsilon$ has volume $\epsilon^{n}$ times the volume
@@ -135,15 +134,16 @@ is the one-dimensional interval from $x$ to $y$.
 %
 \begin{defn}
 \label{def:convex_func}A function $f:\R^{n}\rightarrow\R\cup\{+\infty\}$
-is \emph{convex} if for every $t\in[0,1]$, we have 
+is \emph{convex} if for every $x,y\in\R^{n}$ and $t\in[0,1]$, we
+have 
 \[
 f(tx+(1-t)y)\le tf(x)+(1-t)f(y).
 \]
 \end{defn}
 
 \begin{xca}
-Suppose we have a continuous function $f:\R^{n}\rightarrow\R\cup\{+\infty\}$that
-has the property that for every $x,y\in\R^{n},$
+Suppose we have a continuous function $f:\R^{n}\rightarrow\R\cup\{+\infty\}$
+that has the property that for every $x,y\in\R^{n},$
 \[
 f\left(\frac{x+y}{2}\right)\le\frac{1}{2}\left(f(x)+f(y)\right).
 \]
@@ -159,16 +159,17 @@ An optimization problem $\min_{x\in K}f(x)$ is convex if $K$ and
 $f$ are convex.
 \end{defn}
 
-Any point not in a convex set can be separated by a hyperplane from
-the set. We will see in Chapter \ref{chap:Elimination} that separating
-hyperplanes allow us to do binary search to find a point in a convex
-set. This is the basis of all polynomial-time algorithms for optimizing
-general convex functions. We will explore these binary search algorithms
-in Chapter \ref{chap:Elimination}. The following notions will be
-used routinely. A \emph{halfspace} in $\R^{n}$ is defined as the
-set $\left\{ x:\langle a,x\rangle\ge b\right\} $ for some $a\in\R^{n},b\in\R$.
-A \emph{polyhedron} is the intersection of halfspaces. A \emph{polytope}
-is the convex hull of a set of points. 
+Any point not in a closed convex set can be separated by a hyperplane
+from the set. We will see in Chapter \ref{chap:Elimination} that
+separating hyperplanes allow us to do binary search to find a point
+in a convex set. This is the basis of all polynomial-time algorithms
+for optimizing general convex functions. We will explore these binary
+search algorithms in Chapter \ref{chap:Elimination}. The following
+notions will be used routinely. A \emph{halfspace} in $\R^{n}$ is
+defined as the set $\left\{ x:\langle a,x\rangle\ge b\right\} $ for
+some $a\in\R^{n},b\in\R$. A \emph{polyhedron} is a finite intersection
+of halfspaces. A \emph{polytope} is the convex hull of a finite set
+of points. 
 
 \begin{figure}[h]
 \centering{}\includegraphics[width=0.75\columnwidth]{Figures/polyhedron_polytope}\caption{Polyhedron; Polytope}
@@ -178,28 +179,28 @@ is the convex hull of a set of points.
 \label{thm:sep}Let $K$ be a nonempty closed convex set in $\Rn$
 and $y\notin K$. There is a non-zero $\theta\in\Rn$ such that 
 \[
-\left\langle \theta,y\right\rangle >\max_{x\in K}\left\langle \theta,x\right\rangle .
+\left\langle \theta,y\right\rangle >\sup_{x\in K}\left\langle \theta,x\right\rangle .
 \]
 \end{thm}
 
 \begin{proof}
-Let $x^{*}$ be a point in $K$ closest to $y$, namely $x^{*}\in\arg\min_{x\in K}\norm{x-y}_{2}^{2}$
+Let $x^{*}$ be a point in $K$ closest to $y$, namely $x^{*}\in\arg\min_{x\in K}\norm{x-y}^{2}_{2}$
 (such a minimizer always exists for closed convex sets and is unique;
 this is sometimes called Hilbert's projection theorem but can be proved
 directly for this setting). Using convexity of $K$, for any $x\in K$
 and any $0<t\leq1$, we have that $(1-t)x^{*}+tx\in K$ and hence
 \[
-\norm{y-(1-t)x^{*}-tx}_{2}^{2}\geq\min_{x\in K}\norm{y-x}_{2}^{2}=\norm{y-x^{*}}_{2}^{2}.
+\norm{y-(1-t)x^{*}-tx}^{2}_{2}\geq\min_{x\in K}\norm{y-x}^{2}_{2}=\norm{y-x^{*}}^{2}_{2}.
 \]
 Expanding the LHS, we have
 \begin{align*}
-\norm{y-(1-t)x^{*}-tx}_{2}^{2} & =\norm{y-x^{*}+t(x^{*}-x)}_{2}^{2}\\
- & =\norm{y-x^{*}}_{2}^{2}+2t\left\langle y-x^{*},x^{*}-x\right\rangle +t^{2}\norm{x^{*}-x}_{2}^{2}.
+\norm{y-(1-t)x^{*}-tx}^{2}_{2} & =\norm{y-x^{*}+t(x^{*}-x)}^{2}_{2}\\
+ & =\norm{y-x^{*}}^{2}_{2}+2t\left\langle y-x^{*},x^{*}-x\right\rangle +t^{2}\norm{x^{*}-x}^{2}_{2}.
 \end{align*}
-Canceling the term $\norm{y-x^{*}}_{2}^{2}$ and dividing both sides
+Canceling the term $\norm{y-x^{*}}^{2}_{2}$ and dividing both sides
 by $t$, 
 \[
-2\left\langle y-x^{*},x^{*}-x\right\rangle +t\norm{x^{*}-x}_{2}^{2}\ge0.
+2\left\langle y-x^{*},x^{*}-x\right\rangle +t\norm{x^{*}-x}^{2}_{2}\ge0.
 \]
 Taking $t\rightarrow0^{+}$, we have that
 \begin{equation}
@@ -209,13 +210,13 @@ Taking $\theta=y-x^{*}$ and using (\ref{eq:seq_1}), for all $x\in K$,
 we have that
 \begin{align*}
 \left\langle \theta,y-x\right\rangle  & =\left\langle \theta,y-x^{*}\right\rangle +\left\langle y-x^{*},x^{*}-x\right\rangle \\
- & =\|\theta\|_{2}^{2}+\left\langle y-x^{*},x^{*}-x\right\rangle \\
+ & =\|\theta\|^{2}_{2}+\left\langle y-x^{*},x^{*}-x\right\rangle \\
  & >0
 \end{align*}
-where we used that $y\notin K$ and hence $\|\theta\|_{2}^{2}>0$.
+where we used that $y\notin K$ and hence $\|\theta\|^{2}_{2}>0$.
 \end{proof}
-Theorem \ref{thm:sep} shows that a polyhedron (a finite intersection
-of halfspaces) is essentially as general as a convex set.
+Theorem \ref{thm:sep} shows that closed convex sets can be represented
+as intersections, possibly infinite, of halfspaces.
 
 \begin{figure}[h]
 
@@ -226,35 +227,37 @@ of halfspaces) is essentially as general as a convex set.
 
 \begin{cor}
 \label{cor:convex_function_intersection}Any closed convex set $K$
-can be written as the intersection of halfspaces as follows
+can be written as a possibly infinite intersection of halfspaces as
+follows
 \[
-K=\bigcap_{\theta\in\Rn}\left\{ x:\ \left\langle \theta,x\right\rangle \leq\max_{y\in K}\left\langle \theta,y\right\rangle \right\} .
+K=\bigcap_{\theta\in\Rn}\left\{ x:\ \left\langle \theta,x\right\rangle \leq\sup_{y\in K}\left\langle \theta,y\right\rangle \right\} .
 \]
-In other words, any closed convex set is the limit of a sequence of
-polyhedra.
+In other words, closed convex sets are possibly infinite intersections
+of halfspaces.
 \end{cor}
 
 \begin{proof}
-Let $L\defeq\bigcap_{\theta\in\Rn}\left\{ x:\ \left\langle \theta,x\right\rangle \leq\max_{y\in K}\left\langle \theta,y\right\rangle \right\} $.
-Since $K\subseteq\left\{ x:\ \left\langle \theta,x\right\rangle \leq\max_{y\in K}\left\langle \theta,y\right\rangle \right\} $,
+Let $L\defeq\bigcap_{\theta\in\Rn}\left\{ x:\ \left\langle \theta,x\right\rangle \leq\sup_{y\in K}\left\langle \theta,y\right\rangle \right\} $.
+Since $K\subseteq\left\{ x:\ \left\langle \theta,x\right\rangle \leq\sup_{y\in K}\left\langle \theta,y\right\rangle \right\} $,
 we have $K\subseteq L$. 
 
 For any $x\notin K$, Theorem \ref{thm:sep} shows that there is a
-$\theta$ such that $\theta^{\top}x>\max_{y\in K}\theta^{\top}y$.
+$\theta$ such that $\theta^{\top}x>\sup_{y\in K}\theta^{\top}y$.
 Hence, we have $x\notin L$ and hence $L\subseteq K$.
 \end{proof}
 This shows that convex optimization is related to linear programs
-(optimize linear functions over polytopes) as follows:
+(optimize linear functions over polyhedra) as follows:
 \[
 \min_{x\in K}f(x)=\min_{(x,y)\in\{x\in K,y\in\R:y\geq f(x)\}}y
 \]
-where the set $\{x\in K,y\in\R:y\geq f(x)\}$ then can be approximated
-by intersection of halfspaces, namely $\{A\binom{x}{y}\leq b\}$ for
+where the set $\{x\in K,y\in\R:y\geq f(x)\}$ then can be represented
+as a generally infinite intersection of halfspaces. Using a finite
+subcollection gives sets of the form $\{A\binom{x}{y}\leq b\}$ for
 some matrix $A\in\R^{m\times(n+1)}$ and vector $b\in\R^{m}$ with
 $m\rightarrow+\infty$.
 \begin{xca}
 Let $A,B\subset\R^{n}$ be nonempty disjoint closed convex sets. Then
-there exists a vector $v\in\R^{n}$ such that $\sup_{x\in A}v^{\top}x\le\inf_{x\in B}v^{\top}x$.
+there exists a nonzero vector $v\in\R^{n}$ such that $\sup_{x\in A}v^{\top}x\le\inf_{x\in B}v^{\top}x$.
 Show strict inequality if the sets are also bounded.
 \end{xca}
 
@@ -309,11 +312,10 @@ if $\nabla f(x)=0$.
 \begin{proof}
 If $\nabla f(x)\neq0$, then 
 \[
-f(x-\varepsilon\nabla f(x))=f(x)-\varepsilon\norm{\nabla f(x)}_{2}^{2}+O(\varepsilon^{2})\norm{\nabla f(x)}_{2}^{2}<f(x)
+f(x-\varepsilon\nabla f(x))=f(x)-\varepsilon\norm{\nabla f(x)}^{2}_{2}+o(\varepsilon)<f(x)
 \]
-for small enough $\varepsilon$, where we use Taylor approximation
-and the third term follows as a result of the boundedness of the Hessian
-of $f(x)$. Hence, such a point cannot be the minimizer.
+for small enough $\varepsilon$, where we use differentiability of
+$f$ at $x$. Hence, such a point cannot be the minimizer.
 
 On the other hand, if $\nabla f(x)=0$, Theorem \ref{thm:first_order}
 shows that
@@ -325,7 +327,7 @@ We note that the proof above is in fact a constructive proof. If $x$
 is not a minimum, it suggests a point that has better function value.
 This will be the discussion of an upcoming section. For continuous
 convex functions, there is a weaker notion of gradient called sub-differential,
-which is a set instead of a vector. Both theorems above holds with
+which is a set instead of a vector. Both theorems above hold with
 gradients replaced by sub-differentials.
 
 \section{Convex problems are everywhere!}
@@ -339,18 +341,18 @@ The min cost flow problem has lots of applications such as route planning,
 airline scheduling, image segmentation, recommendation systems, etc.
 In this problem, there is a graph $G=(V,E)$ with $m=|E|$ and $n=|V|$.
 Each edge $e\in E$ has capacity $u_{e}>0$ and cost $c_{e}$. The
-problem is to minimize the total cost of sending $d$ amount of flow
-from a source vertex $s\in V$ to a sink vertex $t\in V$. To imagine
-this less abstractly, imagine we want to match every person to the
-best flight for them. Then we can have a source node $s$ connected
+problem is to minimize the total cost of sending an amount $d$ of
+flow from a source vertex $s\in V$ to a sink vertex $t\in V$. To
+imagine this less abstractly, imagine we want to match every person
+to the best flight for them. Then we can have a source node $s$ connected
 to a node for each person with $u_{e}=1$ for all such $e$. Further,
-we take $t$ to be connected to a node for each flight, with $u_{e}$
-being the number of people that can fit on that flight. Then, all
-the remaining edges will be from people nodes to flight nodes. For
-any such $e,u_{e}=1$ and $c_{e}$ is proportional to how good that
-flight is for that person (does it get them where they need to go
-at the time they need to go?) with $0$ representing a perfect flight
-and $\infty$ representing a flight they would not take even if given
+we connect each flight node to $t$, with $u_{e}$ being the number
+of people that can fit on that flight. Then, all the remaining edges
+will be from people nodes to flight nodes. For any such $e,u_{e}=1$
+and $c_{e}$ is proportional to how undesirable that flight is for
+that person (does it fail to get them where they need to go at the
+time they need to go?) with $0$ representing a perfect flight and
+$\infty$ representing a flight they would not take even if given
 the option for free. Then we can calculate the min-cost flow to find
 the best allocation of people to flights.
 
@@ -364,27 +366,28 @@ for all $v\in V\setminus\left\{ s,t\right\} $.
 \end{itemize}
 To check this is a convex problem, we note that the objective function
 is a linear function $c^{\top}f$ which is convex. The domain is the
-intersection of three sets (the three set of equations above). The
-first set is a scaled hypercube, the second and last set is a linear
-subspace. All of them are convex and so is their intersection. Therefore,
-this is a convex problem.
+intersection of three sets (the three sets of constraints above).
+The first set is a scaled hypercube, and the second and third sets
+are affine subspaces. All of them are convex and so is their intersection.
+Therefore, this is a convex problem.
 
-\subsection{Linear Programs (Operation Research/Economics)}
+\subsection{Linear Programs (Operations Research/Economics)}
 
-Consider the diet problem: find a cheapest diet plan that satisfies
-the nutrients requirements. Formally, suppose there are $n$ different
+Consider the diet problem: find the cheapest diet plan that satisfies
+the nutrient requirements. Formally, suppose there are $n$ different
 foods and $m$ different nutrients. The food $i$ has unit cost $c_{i}$,
-$a_{1i}$ unit of nutrient $1$, $a_{2i}$ unit of nutrient $2$,
-$\cdots$. Furthermore, every day we need $b_{j}$ unit of the nutrient
-$j$. Then, the problem is simply find an assignment $x$ such that
+$a_{1i}$ units of nutrient $1$, $a_{2i}$ units of nutrient $2$,
+$\cdots$. Furthermore, every day we need $b_{j}$ units of nutrient
+$j$. Then, the problem is simply to find an assignment $x$ such
+that
 \[
 \min_{x\geq0,Ax\geq b}c^{\top}x
 \]
 where $c\in\Rn$ is the cost vector, $b\in\Rm$ is the intake requirement
-vector and $A\in\R^{m\times n}$ is the matrix of nutrients contents
-of each food\footnote{Unfortunately, Nobel Laureate Stigler showed that \cite{stigler1945cost}
-the optimal meal is evaporated milk, cabbage, dried navy beans, and
-beef liver.}.
+vector and $A\in\R^{m\times n}$ is the matrix of nutrient contents
+of each food\footnote{Unfortunately, Nobel Laureate Stigler \cite{stigler1945cost} showed
+that the optimal meal is evaporated milk, cabbage, dried navy beans,
+and beef liver.}.
 
 Both the diet problem and the minimum cost flow problem can be reformulated
 into the form
@@ -405,32 +408,32 @@ is a convex problem.
 \subsection{Logistic regression (from Machine Learning)}
 
 Consider the problem of predicting the likelihood of getting diabetes
-in the future. Suppose we have collected many examples $\{(x_{i},y_{i})\}_{i=1}^{n}$
+in the future. Suppose we have collected many examples $\{(x_{i},y_{i})\}^{n}_{i=1}$
 where $x_{i}\in\R^{d}$ represents the features of a person and $y_{i}\in\{\pm1\}$
 represents whether that person gets diabetes. For example, the feature
-vector can be (age, weight, height, BMI, fasting glucose level, ...).
-The features in the vector may be redundant and the purpose of extra
-variables is to make linear functions expressive enough to be able
-to classify. In particular, we assume that there is a vector $\theta$
-such that for most $i$, we have $\langle x_{i},\theta\rangle<0$
-if $y_{i}=1$ and $\langle x_{i},\theta\rangle>0$ if $y_{i}=-1$
-. The error of the vector $\theta$ is
+vector can include age, weight, height, BMI, fasting glucose level,
+etc. The features in the vector may be redundant and the purpose of
+extra variables is to make linear functions expressive enough to be
+able to classify. In particular, we assume that there is a vector
+$\theta$ such that for most $i$, we have $\langle x_{i},\theta\rangle<0$
+if $y_{i}=1$ and $\langle x_{i},\theta\rangle>0$ if $y_{i}=-1$.
+The error of the vector $\theta$ is
 \[
-\frac{1}{n}\sum_{i=1}^{n}1_{y_{i}\langle x_{i},\theta\rangle>0}.
+\frac{1}{n}\sum^{n}_{i=1}1_{y_{i}\langle x_{i},\theta\rangle>0}.
 \]
 This function is not convex in $\theta$. More generally, one considers
 the objective function (to be minimized over $\theta$)
 \begin{equation}
-R(\theta)=\frac{1}{n}\sum_{i=1}^{n}f(y_{i}\langle x_{i},\theta\rangle)+\lambda\|\theta\|_{1}\label{eq:logistic_regression}
+R(\theta)=\frac{1}{n}\sum^{n}_{i=1}f(y_{i}\langle x_{i},\theta\rangle)+\lambda\|\theta\|_{1}\label{eq:logistic_regression}
 \end{equation}
 where $f$ is some function such that $f(z)$ is large when $z$ is
 positive and large and $f(z)\rightarrow0$ when $z\rightarrow-\infty$
 (which is desired), and $\lambda\|\theta\|_{1}$ is a \emph{regularization}
 term to make sure $\theta$ is bounded (any norm can be used in place
 of $\norm{\cdot}_{1}$). One popular choice of function is $f(z)=\log(1+e^{z})$,
-and then this problem is called logistic regression. In the section
-\ref{sec:Checking-Convexity}, we prove that the function (\ref{eq:logistic_regression})
-is indeed convex when $f(z)=\log(1+e^{z})$.
+and then this problem is called logistic regression. In Section \ref{sec:Checking-Convexity},
+we prove that the function (\ref{eq:logistic_regression}) is indeed
+convex when $f(z)=\log(1+e^{z})$.
 
 \subsection{Minimal Surface (Physics)}
 
@@ -450,27 +453,26 @@ where we say $g$ is feasible if $g(x,y)=f(x,y)$ for all $x,y$ on
 the boundary of $[0,1]^{2}$. One natural question (called Plateau's
 problem) is to find a minimal surface with a given boundary. For this
 particular case we consider, we can simply use convex optimization.
-Note that the constraint ($g$ is feasible) is exactly a linear subspace
-on the space of functions on $[0,1]^{2}$. Furthermore, the objective
+Note that the constraint ($g$ is feasible) is exactly an affine subspace
+of the space of functions on $[0,1]^{2}$. Furthermore, the objective
 is convex by using the fact that
 \[
-\text{SurfaceArea}(f)=\int_{0}^{1}\int_{0}^{1}\sqrt{1+\left(\frac{\partial f(x,y)}{\partial x}\right)^{2}+\left(\frac{\partial f(x,y)}{\partial y}\right)^{2}\,}dxdy.
+\text{SurfaceArea}(f)=\int^{1}_{0}\int^{1}_{0}\sqrt{1+\left(\frac{\partial f(x,y)}{\partial x}\right)^{2}+\left(\frac{\partial f(x,y)}{\partial y}\right)^{2}\,}dxdy.
 \]
 
 \begin{xca}
 Show that surface area is convex by using the definition.
-
-Calculus of variations is an area of mathematics that studies optimization
-in function spaces and there are many common theorems between this
-and convex optimization.
 \end{xca}
 
+Calculus of variations is an area of mathematics that studies optimization
+in function spaces, and there are many common theorems between this
+and convex optimization.
 
 \section{Examples of convex sets and functions}
 
 There are many important convex sets and here we only list some that
-appear in this course. One of the most important classes of convex
-functions comes from convex sets.
+appear in this book. One of the most important classes of convex functions
+comes from convex sets.
 \begin{defn}
 For a convex set $K$, we define the indicator function of $K$ by
 \[
@@ -503,14 +505,14 @@ Therefore, convex optimization is the same as optimizing a linear
 function over a convex set. Another important feature of a convex
 set is the following.
 \begin{fact}
-Any level set $\{x\in\Rn:\ f(x)\leq t\}$ of a convex function $f$
-is convex.
+Any sublevel set $\{x\in\Rn:\ f(x)\leq t\}$ of a convex function
+$f$ is convex.
 \end{fact}
 
 In particular, this shows that the set of minimizers is connected.
 Therefore, any local minimum is a global minimum. We note that the
 converse of the fact above is not true. A function is \emph{quasiconvex}
-if every level set is convex. Equivalently, a function $f:\R^{n}\rightarrow\R$
+if every sublevel set is convex. Equivalently, a function $f:\R^{n}\rightarrow\R$
 is quasiconvex if for every $x,y\in\R^{n}$ and $t\in[0,1]$, 
 \[
 f((1-t)x+ty)\le\max\{f(x),f(y)\}.
@@ -521,7 +523,7 @@ quasiconvex but not convex.
 Finally, we note that many operations preserve convexity. Here is
 an example.
 \begin{xca}
-For a matrix $A$, vector $b$, positive scalars $t_{1},t_{2}\geq0$,
+For a matrix $A$, vector $b$, nonnegative scalars $t_{1},t_{2}\geq0$,
 and convex functions $f_{1}$ and $f_{2}$, the function $g(x)=t_{1}f_{1}(Ax+b)+t_{2}f_{2}(x)$
 is convex.
 \end{xca}
@@ -531,16 +533,16 @@ we illustrate how to check convexity.
 \begin{example*}
 Convex sets: polyhedron $\{x:\,Ax\leq b\}$, polytope $\conv\left(\left\{ v_{1},\ldots,v_{m}\right\} \right)$
 with $v_{1},\ldots,v_{m}\in\R^{n}$, ellipsoid $\{x:\,x^{\top}Ax\leq1\}$
-with $A\succeq0$, positive semidefinite cone $\{X\in\R^{n\times n}\text{ : }X\succeq0\}$,
+with $A\succ0$, positive semidefinite cone $\{X\in\R^{n\times n}\text{ : }X\succeq0\}$,
 norm ball $\{x:\ \norm x_{p}\leq1\}$ for all $p\geq1$.
 \end{example*}
 %
 \begin{example*}
 Convex functions: $x$, $\max(x,0)$, $e^{x}$, $|x|^{a}$ for $a\geq1$,
 $-\log(x)$, $x\log x$, $\norm x_{p}$ for $p\geq1$, $(x,y)\rightarrow\frac{x^{2}}{y}$
-(for $y>0$), $A\rightarrow-\log\det A$ over PSD matrices $A$, $(x,Y)\rightarrow x^{\top}Y^{-1}x$
-(for $Y\succ0$), $\log\sum_{i}e^{x_{i}}$, $-(\prod_{i}^{n}x_{i})^{\frac{1}{n}}$
-for $x\ge0$.
+(for $y>0$), $A\rightarrow-\log\det A$ over positive definite matrices
+$A$, $(x,Y)\rightarrow x^{\top}Y^{-1}x$ (for $Y\succ0$), $\log\sum_{i}e^{x_{i}}$,
+$-(\prod^{n}_{i}x_{i})^{\frac{1}{n}}$ for $x\ge0$.
 \end{example*}
 \begin{xca}
 Show that the above sets and functions are all convex.
@@ -567,9 +569,9 @@ A useful idea here is to note that a function is convex if and only
 if its restriction to any one-dimensional line is convex, and to define
 a suitable one-dimensional function.
 \begin{lem}
-\label{lem:second_order}For any real-valued and twice continuously-differentiable
-function $f\in\mathcal{C}^{2}(\R^{n})$, and any $x,y\in\R^{n}$,
-there is a $z\in[x,y]$ s.t. 
+\label{lem:second_order}For any real-valued and twice continuously
+differentiable function $f\in\mathcal{C}^{2}(\R^{n})$, and any $x,y\in\R^{n}$,
+there is a $z\in[x,y]$ such that 
 \[
 f(y)=f(x)+\nabla f(x)^{\top}(y-x)+\frac{1}{2}(y-x)^{\top}\nabla^{2}f(z)(y-x).
 \]
@@ -588,7 +590,7 @@ Now, we show that $f$ is convex if and only if $\nabla^{2}f(x)\succeq0$
 for all $x$.
 \begin{thm}
 \label{thm:equ_convex}Let $f\in\mathcal{C}^{2}(\Rn)$, i.e., $f$
-is real-valued and twice continuously-differentiable. Then, the following
+is real-valued and twice continuously differentiable. Then, the following
 are equivalent:
 \begin{enumerate}
 \item $f$ is convex.
@@ -648,14 +650,14 @@ The function (\ref{eq:logistic_regression}) is convex for $f(z)=\log(1+\exp(z))$
 \end{example}
 
 \begin{proof}
-We write $R(\theta)=R_{1}(\theta)+R_{2}(\theta)$ where $R_{1}(\theta)=\frac{1}{n}\sum_{i=1}^{n}f(y_{i}\cdot\left\langle x_{i},\theta\right\rangle )$
+We write $R(\theta)=R_{1}(\theta)+R_{2}(\theta)$ where $R_{1}(\theta)=\frac{1}{n}\sum^{n}_{i=1}f(y_{i}\cdot\left\langle x_{i},\theta\right\rangle )$
 and $R_{2}(\theta)=\lambda\|\theta\|_{1}$. It is easy to check $R_{2}$
 is convex. So, it suffices to prove $R_{1}$ is convex. Now, we use
 Theorem \ref{thm:equ_convex} to prove that $R_{1}$ is convex. Note
 that
 \begin{align*}
-\nabla R_{1}(\theta) & =\frac{1}{n}\sum_{i=1}^{n}f'(y_{i}\left\langle x_{i},\theta\right\rangle )y_{i}x_{i},\\
-\nabla^{2}R_{1}(\theta) & =\frac{1}{n}\sum_{i=1}^{n}f''(y_{i}\left\langle x_{i},\theta\right\rangle )x_{i}(x_{i})^{\top}
+\nabla R_{1}(\theta) & =\frac{1}{n}\sum^{n}_{i=1}f'(y_{i}\left\langle x_{i},\theta\right\rangle )y_{i}x_{i},\\
+\nabla^{2}R_{1}(\theta) & =\frac{1}{n}\sum^{n}_{i=1}f''(y_{i}\left\langle x_{i},\theta\right\rangle )x_{i}(x_{i})^{\top}
 \end{align*}
 where we used $(y_{i})^{2}=1$. Since $x_{i}(x_{i})^{\top}\succeq0$,
 it suffices to prove that $f''(y_{i}\left\langle x_{i},\theta\right\rangle )\geq0$.
@@ -668,10 +670,11 @@ and $f''(z)=\frac{\exp(z)}{(1+\exp(z))^{2}}\geq0$.
 The standard definition of a convex function in terms of gradients
 requires differentiability. However, a more general definition allows
 us to avoid this requirement. For a convex function $f:\R^{n}\rightarrow\R$,
-we say that a function $g:\R^{n}\rightarrow\R^{n}$ is called a $subgradient$
-if it satisfies the following property: for any $x,y\in\R^{n},$$f(y)-f(x)\ge\langle g(x),y-x\rangle.$
-For the purpose of optimization algorithms, in almost all cases, a
-subgradient will suffice in place of a gradient. 
+we say that a function $g:\R^{n}\rightarrow\R^{n}$ is called a \emph{subgradient
+selection} if it satisfies the following property: for any $x,y\in\R^{n},$
+we have $f(y)-f(x)\ge\langle g(x),y-x\rangle.$ For the purpose of
+optimization algorithms, in almost all cases, a subgradient selection
+will suffice in place of a gradient. 
 
 \begin{figure}[h]
 \begin{centering}
@@ -686,12 +689,12 @@ A function $f:\R^{n}\rightarrow\R_{+}$ is \emph{logconcave} if $\log f$
 is concave, i.e., $f$ is nonnegative and for any $t\in(0,1)$, we
 have $f(tx+(1-t)y)\ge f(x)^{t}f(y)^{1-t}$.
 
-Thus any logconcave function can be viewed as $e^{-f(x)}$ for some
-convex function $f$. 
+Thus any logconcave function can be written as $e^{-V(x)}$ for an
+extended-valued convex function $V=-\log f$. 
 \end{defn}
 
 \begin{xca}
-Show that for any $t\ge0$, the level set $L(t)=\left\{ x:f(x)\ge t\right\} $
+Show that for any $t\ge0$, the superlevel set $L(t)=\left\{ x:f(x)\ge t\right\} $
 of a logconcave function $f$ is convex. 
 \end{xca}
 
@@ -710,8 +713,8 @@ $y$.
 \end{example}
 
 \begin{lem}[Dinghas; Prékopa; Leindler]
- \label{lem:marginal} The product, minimum and convolution of two
-logconcave functions is also logconcave; in particular, any linear
+ \label{lem:marginal} The product, minimum, and convolution of two
+logconcave functions are also logconcave; in particular, any linear
 transformation or any marginal of a logconcave density is logconcave;
 the distribution function of any logconcave density is logconcave. 
 \end{lem}
@@ -762,22 +765,22 @@ recovery is $\theta=y$. With a prior, one can apply Bayes' theorem:
 \P(\theta|y)=\frac{\P(y|\theta)\P(\theta)}{\P(y)}.
 \]
 
-The Bayesian choice is to find $\theta$ with maximum likelihood,
-namely $\theta=\argmax_{\theta}\log\P(\theta|y)=\argmin_{\theta}-\log\P(\theta|y)$.
+The Bayesian choice is to find $\theta$ with maximum posterior density
+(the MAP estimate), namely $\theta=\argmax_{\theta}\log\P(\theta|y)=\argmin_{\theta}-\log\P(\theta|y)$.
 
 Using the noise assumption, we have that 
 \[
 \P(y|\theta)\varpropto\exp(-\frac{1}{2}\sum_{i}(y_{i}-\theta_{i})^{2}).
 \]
-Now, say we know the signal is smooth and we model the prior as $\P(\theta)\varpropto\exp(-\lambda\sum_{i}(\theta_{i}-\theta_{i+1})^{2})$
+Now, say we know the signal is smooth and we model the prior as $\P(\theta)\varpropto\exp(-\lambda\sum^{n-1}_{i=1}(\theta_{i}-\theta_{i+1})^{2})$
 where $\lambda$ controls how smooth the signal is. Hence, 
 \[
--\log\P(\theta|y)=c+\sum_{i}(y_{i}-\theta_{i})^{2}+\lambda\sum_{i}(\theta_{i}-\theta_{i+1})^{2}.
+-\log\P(\theta|y)=c+\frac{1}{2}\sum_{i}(y_{i}-\theta_{i})^{2}+\lambda\sum^{n-1}_{i=1}(\theta_{i}-\theta_{i+1})^{2}.
 \]
 Since each term in the function above is convex, so is the whole formula.
 Hence, the recovery question becomes a convex optimization problem
 \[
-\min_{\theta}\sum_{i}(y_{i}-\theta_{i})^{2}+\lambda\sum_{i}(\theta_{i}-\theta_{i+1})^{2}.
+\min_{\theta}\frac{1}{2}\sum_{i}(y_{i}-\theta_{i})^{2}+\lambda\sum^{n-1}_{i=1}(\theta_{i}-\theta_{i+1})^{2}.
 \]
 
 When we recover a signal, we want to know how confident we are because
@@ -785,7 +788,7 @@ there are many choices of $\theta$ that could explain the same measurement
 $y$. One way to do this is to sample multiple $\theta\sim\P(\theta|y)$
 and compute the empirical variance or other statistics. Note that
 \[
-\P(\theta|y)\varpropto e^{-\sum_{i}(y_{i}-\theta_{i})^{2}-\lambda\sum_{i}(\theta_{i}-\theta_{i+1})^{2}}
+\P(\theta|y)\varpropto e^{-\frac{1}{2}\sum_{i}(y_{i}-\theta_{i})^{2}-\lambda\sum^{n-1}_{i=1}(\theta_{i}-\theta_{i+1})^{2}}
 \]
 which is a logconcave distribution. Therefore, one can study the signal
 and quality of signal recovery via logconcave sampling.
