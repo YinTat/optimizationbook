@@ -4,9 +4,9 @@
 Here we give a way to reduce solving a tall linear regression system
 into a sequence of submatrices:
 \begin{thm}[\cite{cohen2015uniform}]
-Given $A\in\R^{n\times d}$, let $T(m)$ be the cost of solving $B^{\top}Bx=b$
-over all submatrices $B$ consisting of $m$ distinct rows of $A$.
-Then, we have that
+Given $A\in\R^{n\times d}$, let $T(m)$ be the cost of solving $B^{\top}Bx=c$,
+for arbitrary $c\in\R^{d}$, over all submatrices $B$ consisting
+of $m$ distinct rows of $A$. Then, we have that
 \[
 T(n)=O^{*}(\nnz(A)+T(O(d\log d))).
 \]

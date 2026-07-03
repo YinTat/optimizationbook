@@ -1,11 +1,11 @@
 
 \section{Accelerated Gradient Descent via Plane Search}
 
-According to legend, the first proof for accelerated gradient descent
-is due to Nemirovski in the 70s. The first proof involves a $2$-dimensional
-plane search subroutine. Later on this was improved to line search
-and finally Nesterov showed how to get rid of line search in 1982.
-We change the proof slightly to get rid of all uses of parameters.
+According to legend, Nemirovski gave the first proof of accelerated
+gradient descent in the 1970s; it used a $2$-dimensional plane search
+subroutine. Later, this was improved to line search, and in 1982 Nesterov
+showed how to remove line search. We modify the proof slightly to
+avoid tuning parameters.
 
 \begin{algorithm2e}[H]
 
@@ -122,6 +122,7 @@ and the gradient mapping
 \[
 g_{x}=L(x-p_{x}).
 \]
+\end{defn}
 
 Note that if $h=0$, then $p_{x}=x-\frac{1}{L}\nabla f(x)$ and $g_{x}=\nabla f(x)$.
 In general, if $\phi\in\mathcal{C}^{2}$, then we have that
@@ -147,8 +148,6 @@ is $\mu$ strongly convex, then we have
 \end{align}
 It turns out that this is true and is exactly what we need for proving
 gradient descent, mirror descent and accelerated gradient descent.
-\end{defn}
-
 \begin{thm}
 \label{thm:gradient_mapping_lower_bound}Given $\phi=f+h$. Suppose
 that $f$ is $\mu$ strongly convex with $L$-Lipschitz gradient.
@@ -371,9 +370,9 @@ the function
 \[
 \phi(x)=f(x)+h(x)\quad\text{with}\quad f(x)=\frac{\mu}{2}\norm x^{2}_{2}\text{ and }h(x)=\ell(x)-\frac{\mu}{2}\norm x^{2}_{2}.
 \]
-Since $f$ is $\mu+\frac{L}{n}$ smooth under this valid upper bound
-and $\mu$ strongly convex and since $h$ is convex, we apply Theorem
-\ref{thm:AGD} and get an algorithm that takes $O^{*}(\sqrt{\frac{L}{n\mu}})$
+Since $f$ is $\mu$-smooth and $\mu$-strongly convex, and since
+$h$ is convex, we apply Theorem \ref{thm:AGD} using the valid smoothness
+upper bound $\mu+\frac{L}{n}$ and get an algorithm that takes $O^{*}(\sqrt{\frac{L}{n\mu}})$
 steps. Note that each step involves $\mathcal{T}_{f}+\mathcal{T}_{h,\mu+\frac{L}{n}}$.
 Obviously, $\mathcal{T}_{f}=0$. Next, note that $\mathcal{T}_{h,\mu+\frac{L}{n}}$
 involves solving a problem of the form
@@ -420,9 +419,9 @@ accelerated gradient descent (Theorem \ref{thm:AGD}). To apply Theorem
 \[
 \phi(x)=f(x)+h(x)\quad\text{with}\quad f(x)=\frac{\mu}{2}\norm x^{2}_{2}\text{ and }h(x)=\ell(x)-\frac{\mu}{2}\norm x^{2}_{2}.
 \]
-Since $f$ is $\mu+\frac{L}{n}$ smooth under this valid upper bound
-and $\mu$ strongly convex and since $h$ is convex, we apply Theorem
-\ref{thm:AGD} and get an algorithm that takes $O^{*}(1+\sqrt{\frac{L}{n\mu}})$
+Since $f$ is $\mu$-smooth and $\mu$-strongly convex, and since
+$h$ is convex, we apply Theorem \ref{thm:AGD} using the valid smoothness
+upper bound $\mu+\frac{L}{n}$ and get an algorithm that takes $O^{*}(1+\sqrt{\frac{L}{n\mu}})$
 steps. Note that each step involves $\mathcal{T}_{f}+\mathcal{T}_{h,\mu+\frac{L}{n}}$.
 Obviously, $\mathcal{T}_{f}=0$. Next, note that $\mathcal{T}_{h,\mu+\frac{L}{n}}$
 involves solving a problem of the form

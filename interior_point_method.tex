@@ -78,7 +78,8 @@ dual problem is
 \[
 (\mathrm{D}):\quad\quad\max_{y,s}b^{\top}y\text{ subject to }A^{\top}y+s=c,s\geq0.
 \]
-Note that for any feasible $x$ and $y$, we have that
+Note that for any primal-feasible $x$ and dual-feasible $(y,s)$,
+we have that
 \[
 0\leq c^{\top}x-b^{\top}y=c^{\top}x-x^{\top}A^{\top}y=x^{\top}s.
 \]
@@ -86,8 +87,8 @@ Hence, $(x,y,s)$ solves the linear program if it satisfies the central
 path equation with $t=0$. Therefore, following the central path is
 a balanced way to decrease $x_{i}s_{i}$ uniformly to $0$. We can
 formalize the intuition that for small $t$, $x^{(t)}$ is a good
-approximation of the primal solution. In fact $t$ itself is a bound
-on the error of the current solution.
+approximation of the primal solution. In fact, $nt$ itself is a bound
+on the duality gap of the current solution.
 \begin{lem}[Duality Gap]
 We have that
 \[
@@ -203,9 +204,8 @@ Hence, we have $\|S^{-1}\delta_{s}\|_{2}\leq\frac{\varepsilon}{1-\varepsilon}$.
 Therefore, when $\varepsilon<\frac{1}{2}$, we have both $\|X^{-1}\delta_{x}\|_{\infty}$
 and $\|S^{-1}\delta_{s}\|_{\infty}$ less than $1$, which shows that
 both $x^{\new}$ and $s^{\new}$ are positive. 
-
-Next, we show that $xs$ is closer to $t$ after one Newton step.
 \end{proof}
+Next, we show that $xs$ is closer to $t$ after one Newton step.
 \begin{lem}
 \label{lem:IPM_progress} If $\sum_{i}\left(x_{i}s{}_{i}-t\right)^{2}\leq\varepsilon^{2}t^{2}$
 with $\varepsilon<\frac{1}{4}$, we have that 
@@ -459,7 +459,7 @@ of entry-wise $\ell_{1}$ norm), and the last step follows from (\ref{eq:theta_is
 \label{def:LP_para}We define the following parameters for the linear
 program $\min_{\ma x=b,x\geq0}c^{\top}x$:
 \begin{enumerate}
-\item Inner radius $r$: There exists a $x\in\PriR$ such that $x_{i}\geq r$
+\item Inner radius $r$: There exists a point $x\in\PriR$ such that $x_{i}\geq r$
 for all $i\in[n]$.
 \item Outer radius $R$: For any $x\geq0$ with $\ma x=b$, we have that
 $\|x\|_{2}\leq R$.
@@ -701,7 +701,7 @@ By the definition of $\widetilde{b}$, we have
 \[
 \widetilde{b}=\sum^{n}_{i=1}x^{+}_{c,i}+\overline{R}\leq\frac{3}{2}n\overline{R}+\overline{R}\leq3n\overline{R}.
 \]
-Similarly, we have $\widetilde{b}=\sum_{i}x^{+}_{i}+\overline{R}\geq\frac{3}{4}n\overline{R}$. 
+Similarly, we have $\widetilde{b}=\sum_{i}x^{+}_{c,i}+\overline{R}\geq\frac{3}{4}n\overline{R}$. 
 
 For the bound on $\widetilde{c}$, recall that $\widetilde{c}=t/x^{-}_{c}$
 with $x^{-}_{c}=x^{+}_{c}-x_{\circ}$ and $x_{\circ}=\ma^{\top}(\ma\ma^{\top})^{-1}b=\arg\min_{\ma x=b}\|x\|_{2}$.
@@ -784,7 +784,7 @@ we have
 \begin{align*}
 0 & \leq\frac{\mu^{\theta}}{x^{\theta}}(x^{\theta}-v_{\theta})+\sum^{n}_{i=1}(c_{i}-\frac{\mu^{+}_{i}}{x^{+}_{i}})(v^{+}-x^{+})_{i}+\sum^{n}_{i=1}(\widetilde{c}_{i}-\frac{\mu^{-}_{i}}{x^{-}_{i}})(v^{-}-x^{-})_{i}\\
  & \leq2LR+4nL\overline{R}-\frac{LRr}{2\min_{i}x^{+}_{i}}+2LR-\frac{t}{4\overline{R}}\max_{i}x^{-}_{i}\\
- & =5nL\overline{R}-\frac{LRr}{2\min_{i}x^{+}_{i}}-\frac{t}{4\overline{R}}\max_{i}x^{-}_{i}.
+ & \leq5nL\overline{R}-\frac{LRr}{2\min_{i}x^{+}_{i}}-\frac{t}{4\overline{R}}\max_{i}x^{-}_{i}.
 \end{align*}
 Hence, we show that $(x^{+},x^{-},x^{\theta})$ is close to the central
 path at $t=LR$ implies that $\min_{i}x^{+}_{i}$ cannot be too small
@@ -854,7 +854,7 @@ have
 \]
 Note that 
 \[
-\norm{P_{t}1}_{\infty}\leq\norm{P_{t}1}_{2}=\sqrt{n}.
+\norm{P_{t}1}_{\infty}\leq\norm{P_{t}1}_{2}\leq\sqrt{n}.
 \]
 Hence, $x_{t}$ and $s_{t}$ can change by at most a constant factor
 when we change $t$ by a $1\pm\frac{1}{\sqrt{n}}$ factor.
@@ -868,8 +868,7 @@ then we can find $x_{t}$ by solving $\tilde{O}(1)$ linear systems.
 \section{Interior Point Method for Convex Programs}
 
 The interior point method can be used to optimize any convex function.
-For more in-depth treatment, please see the structural programming
-section in \cite{nesterov1998introductory}.
+For a more in-depth treatment, please see \cite{nesterov1998introductory}.
 
 Recall that any convex optimization problem
 \[
@@ -958,7 +957,7 @@ lemma below.
 Given a self-concordant function $f$, for any $h_{1},h_{2},h_{3}\in\Rn$,
 we have 
 \[
-D^{3}f(x)[h_{1},h_{2},h_{3}]\leq2\norm{h_{1}}_{x}\norm{h_{2}}_{x}\norm{h_{3}}_{x}.
+\left|D^{3}f(x)[h_{1},h_{2},h_{3}]\right|\leq2\norm{h_{1}}_{x}\norm{h_{2}}_{x}\norm{h_{3}}_{x}.
 \]
 \end{lem}
 

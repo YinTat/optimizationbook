@@ -229,13 +229,14 @@ matrix.
 \subsection{Sparse Johnson-Lindenstrauss}
 
 We consider the sparse matrix $\Pi\in\R^{m\times n}$ where each entry
-is $\pm\frac{1}{\sqrt{s}}$ with probability $\frac{s}{m}$ and $0$
-otherwise. We will show that this random matrix is a $(d,\epsilon,\delta)$-OSE
-for $s=\Theta(\log^{2}(d/\delta)/\epsilon^{2})$ and $m=\Theta(d\log(\frac{d}{\delta})/\epsilon^{2})$.
-When $n=d=1$, $\|\Pi x\|^{2}$ is $1/s$ times the number of nonzero
-entries in its single column. Therefore, we indeed need that $s$
-scales like $1/\epsilon^{2}$. The advantage of a sparse embedding
-is that applying it can be much more efficient.
+is $+\frac{1}{\sqrt{s}}$ with probability $\frac{s}{2m}$, $-\frac{1}{\sqrt{s}}$
+with probability $\frac{s}{2m}$, and $0$ otherwise. We will show
+that this random matrix is a $(d,\epsilon,\delta)$-OSE for $s=\Theta(\log^{2}(d/\delta)/\epsilon^{2})$
+and $m=\Theta(d\log(\frac{d}{\delta})/\epsilon^{2})$. When $n=d=1$,
+$\|\Pi x\|^{2}$ is $1/s$ times the number of nonzero entries in
+its single column. Therefore, we indeed need that $s$ scales like
+$1/\epsilon^{2}$. The advantage of a sparse embedding is that applying
+it can be much more efficient.
 \begin{rem}
 It turns out that one can select exactly $s$ non-zeros for each column.
 This allows us to use $s=\Theta(\frac{\log(d/\delta)}{\epsilon})$.
@@ -336,10 +337,11 @@ with probability $1-\delta$.
 Now we can prove the main theorem.
 \begin{thm}
 \label{thm:sparse_OSE}Consider a random sparse matrix $\Pi\in\R^{m\times n}$
-where each entry is $\pm\frac{1}{\sqrt{s}}$ with probability $\frac{s}{m}$
-and $0$ otherwise. There exist constants $c_{1},c_{2}$ such that
-for $m=c_{1}\frac{d\log(\frac{d}{\delta})}{\epsilon^{2}}$ and $s=c_{2}\frac{\log^{2}(\frac{d}{\delta})}{\epsilon^{2}}$
-$\Pi$ is a $(d,\epsilon,\delta)$-OSE.
+where each entry is $+\frac{1}{\sqrt{s}}$ with probability $\frac{s}{2m}$,
+$-\frac{1}{\sqrt{s}}$ with probability $\frac{s}{2m}$, and $0$
+otherwise. There exist constants $c_{1},c_{2}$ such that for $m=c_{1}\frac{d\log(\frac{d}{\delta})}{\epsilon^{2}}$
+and $s=c_{2}\frac{\log^{2}(\frac{d}{\delta})}{\epsilon^{2}}$ $\Pi$
+is a $(d,\epsilon,\delta)$-OSE.
 \end{thm}
 
 \begin{proof}
@@ -389,11 +391,11 @@ $x^{(k+1)}=x^{(k)}-M^{-1}(A^{\top}Ax^{(k)}-A^{\top}b)$
 
 \end{algorithm2e}
 \begin{thm}
-Given any matrix $A\in\R^{n\times d}$, any vector $b\in\R^{n}$,
-the algorithm $\mathtt{RegressionUsingOSE}$ returns a vector $x$
-such that 
+Given any full-column-rank matrix $A\in\R^{n\times d}$, any vector
+$b\in\R^{n}$, the algorithm $\mathtt{RegressionUsingOSE}$ returns
+a vector $x$ such that 
 \[
-\|A^{\top}Ax-A^{\top}b\|_{(A^{\top}A)^{-1}}\leq\epsilon\|A^{\top}b\|_{(A^{\top}A)^{-1}}.
+\|A^{\top}Ax-A^{\top}b\|_{(A^{\top}A)^{-1}}\leq\epsilon\|A^{\top}b\|_{(A^{\top}A)^{-1}}
 \]
 with probability $1-\delta$ in $\widetilde{O}(\nnz(A)+d^{\omega})$
 time.

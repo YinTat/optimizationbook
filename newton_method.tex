@@ -49,7 +49,7 @@ the following function
 \[
 f(x_{1},x_{2})=\frac{100}{2}x^{2}_{1}+\frac{1}{2}x^{2}_{2}.
 \]
-The gradient descent for this function is
+Gradient descent for this function is
 \[
 (x_{1},x_{2})\leftarrow(x_{1},x_{2})-h\nabla f(x_{1},x_{2})=((1-100h)x_{1},(1-h)x_{2}).
 \]
@@ -123,7 +123,7 @@ and for large enough $k$, we can assume
 \]
 The result follows.
 \end{proof}
-This argument above uses only that $g\in\mathcal{C}^{2}$ and does
+The argument above uses only that $g\in\mathcal{C}^{2}$ and does
 not require convexity. Without further global assumptions on $g$,
 the Newton method does not always converge to a root. The argument
 above only shows that if the algorithm converges, then it converges
@@ -147,7 +147,7 @@ roots, and let $\lambda_{1}$ be its largest root. Suppose that $\lambda_{1}\leq 
 Then, after $O(n\log(\frac{1}{\epsilon}))$ iterations, the Newton
 method finds $x^{(k)}$ such that
 \[
-\lambda_{1}\leq x^{(k)}\leq\lambda_{1}+\varepsilon\cdot(x^{(0)}-\lambda_{1}).
+\lambda_{1}\leq x^{(k)}\leq\lambda_{1}+\epsilon\cdot(x^{(0)}-\lambda_{1}).
 \]
 \end{thm}
 
@@ -177,7 +177,7 @@ where we use $(1)$ to show the inductive step above.
 \begin{xca}
 Consider the following iteration: 
 \[
-x^{t+1}=x^{t}-\frac{1}{n^{1/k}}\frac{g^{(k-1)}(x)}{g^{(k)}(x)}
+x^{(t+1)}=x^{(t)}-\frac{1}{n^{1/k}}\frac{g^{(k-1)}(x^{(t)})}{g^{(k)}(x^{(t)})}
 \]
 where $g^{(k)}(x)=\sum_{i}\frac{1}{(x-\lambda_{i})^{k}}$. For $k=1$,
 this is exactly the Newton iteration as $g^{(0)}(x)=n$. Show that
@@ -190,7 +190,7 @@ Such a dependence of $\log\frac{1}{\epsilon}$ is called linear convergence.
 The convergence of the Newton method can be quadratic, when close
 enough to a root.
 \begin{thm}
-Assume that $|f'(x^{*})|\geq\alpha$ at $f(x^{*})=0$ and $f'$ is
+Assume that $f(x^{*})=0$, $|f'(x^{*})|\geq\alpha$, and $f'$ is
 $L$-Lipschitz. Then, if $|x^{(0)}-x^{*}|\le\frac{\alpha}{2L}$,
 \[
 |x^{(k)}-x^{*}|\leq\frac{\alpha}{L}\left(\frac{L}{\alpha}|x^{(0)}-x^{*}|\right)^{2^{k}}.
@@ -222,12 +222,13 @@ and
 \[
 \frac{L}{\alpha}|x^{(k+1)}-x^{*}|\leq\left(\frac{L}{\alpha}|x^{(k)}-x^{*}|\right)^{2}.
 \]
-After $k$ steps,
+Writing $\epsilon_{0}=|x^{(0)}-x^{*}|$, after $k$ steps,
 \[
 \frac{L}{\alpha}|x^{(k)}-x^{*}|\leq\left(\frac{L}{\alpha}\epsilon_{0}\right)^{2^{k}}
 \]
-implying $|x^{(k)}-x^{*}|<\epsilon$ after $\log\log(\frac{L\epsilon_{0}}{\alpha\epsilon})$
-steps. Note that $f$ has not been assumed to be convex or polynomial.
+This implies $|x^{(k)}-x^{*}|<\epsilon$ after $O(\log\log(\frac{\alpha}{L\epsilon}))$
+steps for fixed $\epsilon_{0}$. Note that $f$ has not been assumed
+to be convex or polynomial.
 \end{proof}
 Moving back to optimization, we can view the goal as finding a root
 of $\nabla f(x)=0$. Newton's iteration is the update 
@@ -249,13 +250,13 @@ Newton method and get the following secant method
 \[
 x^{(k+1)}=x^{(k)}-g(x^{(k)})\frac{x^{(k)}-x^{(k-1)}}{g(x^{(k)})-g(x^{(k-1)})}
 \]
-where we approximated the $g'(x^{(k)})$ by $\frac{g(x^{(k)})-g(x^{(k-1)})}{x^{(k)}-x^{(k-1)}}$.
+where we approximate $g'(x^{(k)})$ by $\frac{g(x^{(k)})-g(x^{(k-1)})}{x^{(k)}-x^{(k-1)}}$.
 For nice enough functions, the convergence rate satisfies $\varepsilon_{k+1}\leq C\cdot\varepsilon^{\frac{1+\sqrt{5}}{2}}_{k}$,
 which is superlinear but not quadratic.
 
 For $g$ that is high-dimensional (of dimension at least $2$), we
 need to approximate its Jacobian. Let $J^{(k)}$ be the approximate
-Jacobian we maintained in the $k^{\mathrm{th}}$ iteration. Similar
+Jacobian we maintain in the $k^{\mathrm{th}}$ iteration. Similar
 to the secant method, we want to enforce
 \[
 J^{(k+1)}\cdot(x^{(k)}-x^{(k-1)})=g(x^{(k)})-g(x^{(k-1)}).

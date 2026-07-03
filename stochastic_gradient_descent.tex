@@ -1,8 +1,9 @@
 
 \section{Stochastic Gradient Descent\label{sec:Stochastic-Gradient-Descent}}
 
-In this section, we study problems with objective $F(x)=\sum_{i}f_{i}(x)$,
-where each $f_{i}$ is convex and the sum may be finite or infinite.
+In this section, we study stochastic objectives, including expectations
+$F(x)=\E_{f\sim\mathcal{D}}f(x)$ and finite sums $F(x)=\frac{1}{n}\sum^{n}_{i=1}f_{i}(x)$,
+where each sampled or component function is convex.
 
 \subsection{Stochastic Problem}
 
@@ -15,7 +16,7 @@ The goal is to find the minimizer $x^{*}=\argmin_{x}F(x)$. Suppose
 we observed samples $f_{1},f_{2},\cdots,f_{T}$ from $\mathcal{D}$.
 Ideally, we wish to approximate $x^{*}$ by the empirical risk minimizer
 \[
-x^{(T)}_{\mathrm{ERM}}=\arg\min_{x}F_{T}(x)\defeq\frac{1}{T}\sum^{T}_{i=1}f_{i}(x).
+F_{T}(x)\defeq\frac{1}{T}\sum^{T}_{i=1}f_{i}(x),\qquad x^{(T)}_{\mathrm{ERM}}=\arg\min_{x}F_{T}(x).
 \]
 It is known that $x^{(T)}_{\mathrm{ERM}}$ is optimal in a certain
 sense in spite of its computational cost. Therefore, to discuss the
@@ -37,7 +38,7 @@ In general, the following lemma shows that
 \[
 \E F(x^{(T)}_{\mathrm{ERM}})-F(x^{*})\rightarrow\frac{\sigma^{2}}{T}\quad\text{where }\sigma^{2}=\frac{1}{2}\E\|\nabla f(x^{*})\|^{2}_{(\nabla^{2}F(x^{*}))^{-1}}.
 \]
-Here,$\frac{\sigma^{2}}{T}$ is called the Cramer-Rao bound. 
+Here, $\frac{\sigma^{2}}{T}$ is called the Cramer-Rao bound. 
 
 \begin{lem}
 Suppose that $f$ is $\mu$-strongly convex with Lipschitz Hessian
@@ -263,7 +264,7 @@ $x^{(k+1)}\leftarrow x^{(k)}-h\cdot(\nabla f_{i}(x^{(k)})-\nabla f_{i}(\widetild
 gradient and $F$ is $\mu$ strongly convex. Let $x^{*}$ be the minimizer
 of $F$. Here $F=\frac{1}{n}\sum^{n}_{i=1}f_{i}$, and the index $i$
 in each inner step is sampled uniformly from $[n]$. For step size
-$h=\frac{1}{64L}$ and $m=\frac{256L}{\mu}$, the sequence $x^{(km)}$
+$h=\frac{1}{64L}$ and $m=\frac{512L}{\mu}$, the sequence $x^{(km)}$
 in $\mathtt{StochasticVarianceReducedGradient}$ satisfies
 \[
 \E F(x^{(km)})-F(x^{*})\leq\frac{1}{2^{k}}\cdot(F(x^{(0)})-F(x^{*})).
@@ -286,7 +287,7 @@ shows that
 \]
 Hence, Theorem \ref{thm:sgd_convex_strongly} shows that
 \begin{align*}
-\frac{1}{m}\sum^{m-1}_{k=0}\E F(x^{(k)})-F(x^{*}) & \leq16hL\cdot(F(x^{(0)})-F(x^{*}))+\frac{F(x^{(0)})-F(x^{*})}{\mu hm}\\
+\frac{1}{m}\sum^{m-1}_{k=0}\E F(x^{(k)})-F(x^{*}) & \leq16hL\cdot(F(x^{(0)})-F(x^{*}))+\frac{2(F(x^{(0)})-F(x^{*}))}{\mu hm}\\
  & \leq\frac{1}{2}(F(x^{(0)})-F(x^{*})).
 \end{align*}
 Hence, the error decreases by half each phase. This shows the result.
@@ -328,7 +329,8 @@ By the same proof as Theorem \ref{thm:gd_convex}, we have the following:
 
 \SetAlgoLined
 
-\textbf{Input:} Initial point $x^{(0)}\in\R^{d}$, step size $h>0$.
+\textbf{Input:} Initial point $x^{(0)}\in\R^{d}$, coordinate smoothness
+constants $L_{i}>0$.
 
 \For{$k=0,1,\cdots,T$}{
 
@@ -342,7 +344,8 @@ $x^{(k+1)}\leftarrow x^{(k)}-\frac{1}{L_{i}}\frac{\partial}{\partial x_{i}}f(x^{
 \begin{thm}[Coordinate Descent Convergence]
 \label{thm:coordinate_descent}Given a convex function $f$, suppose
 that $\frac{\partial^{2}}{\partial x^{2}_{i}}f(x)\leq L_{i}$ for
-all $x$ and let $L=\sum L_{i}$. Consider the algorithm $x^{(k+1)}\leftarrow x^{(k)}-\frac{1}{L_{i}}\frac{\partial}{\partial x_{i}}f(x^{(k)})e_{i}$.
+all $x$ and let $L=\sum L_{i}$. Consider the algorithm that at each
+iteration samples $i$ with probability $L_{i}/L$ and sets $x^{(k+1)}\leftarrow x^{(k)}-\frac{1}{L_{i}}\frac{\partial}{\partial x_{i}}f(x^{(k)})e_{i}$.
 Then, we have that 
 \[
 \E f(x^{(k)})-f(x^{*})\leq\frac{2LR^{2}}{k+4}\quad\text{with}\quad R=\max_{f(x)\leq f(x^{(0)})}\norm{x-x^{*}}_{2}

@@ -83,7 +83,7 @@ $\|x^{*}\|_{2}\leq R$} & {\scriptsize Stochastic Gradient Descent} & {\scriptsiz
 \[
 \min_{x\in\Rn}f(x)
 \]
-} & {\scriptsize$\nabla^{2}f\succeq\mu\cdot I,\partial^{2}_{i}f\leq L_{i}$} & {\scriptsize Accelerated Coordinate Descent} & \multicolumn{2}{c|}{{\scriptsize Total Cost: $\sum_{i}\sqrt{\beta_{i}/\mu}\mathcal{T}_{\partial_{i}f}\log(\frac{1}{\epsilon})$}}\tabularnewline
+} & {\scriptsize$\nabla^{2}f\succeq\mu\cdot I,\partial^{2}_{i}f\leq L_{i}$} & {\scriptsize Accelerated Coordinate Descent} & \multicolumn{2}{c|}{{\scriptsize Total Cost: $\sum_{i}\sqrt{L_{i}/\mu}\mathcal{T}_{\partial_{i}f}\log(\frac{1}{\epsilon})$}}\tabularnewline
 \hline 
 \end{tabular}
 \par\end{centering}
@@ -179,11 +179,11 @@ if the unit of the function value is $J$ (Joule) and the unit of
 the space is $m$, then the units of $G$, $R$ and $\epsilon$ are
 $Jm^{-1}$, $m$ and $J$ respectively. Therefore, the number of iterations
 of gradient descent $\left(\frac{GR}{\epsilon}\right)^{2}$ is unitless.
-In the table, we ignored some entries inside the $\log$ which leads
-to an ``incorrect'' unit. However, when everything is written correctly,
-the number of iterations must be unitless. Furthermore, we can view
-$GR$, $LR^{2}$, $\frac{G^{2}}{\mu}$ all as upper bounds of the
-initial error $f(x^{(0)})-f^{*}$. For example, we know that
+In the tables, we have ignored some entries inside the $\log$ which
+leads to ``incorrect'' units. However, when everything is written
+correctly, the number of iterations must be unitless. Furthermore,
+we can view $GR$, $LR^{2}$, $\frac{G^{2}}{\mu}$ all as upper bounds
+of the initial error $f(x^{(0)})-f^{*}$. For example, we know that
 \[
 f(x^{(0)})-f^{*}\leq\left\langle \nabla f(x^{(0)}),x^{(0)}-x^{*}\right\rangle \leq GR
 \]
@@ -236,8 +236,8 @@ When $x$ is close to the optimum $x^{*}=0$, gradient descent $x^{\new}=x-h\nabla
 is similar to a coordinate-wise iteration $x^{\new}_{i}=(1-h\lambda_{i})x_{i}$.
 This gives a precise description of the convergence rate.
 
-For more complicated algorithms, the theory of convergence rate and
-cost per iteration sometimes gives a bad estimate of the reality.
+For more complicated algorithms, the theory of convergence rates and
+per-iteration costs sometimes gives a poor estimate of practical performance.
 For example, the interior point method often takes $O(\log n)$ iterations
 to converge despite the $\sqrt{n}$ worst-case bound on its convergence
 rate; the simplex method is often the method of choice for solving
@@ -255,16 +255,16 @@ to have an effect when the target accuracy $\epsilon$ is small.
 
 \section{Relations Between Different First-order Methods}
 
-In the table \ref{tab:Black-Box-Problems}, we omitted many cases.
-For example, what is the runtime if we have a stochastic function
-$\min_{x}\E_{\omega}f_{\omega}(x)$ such that $\E_{\omega}f_{\omega}(x)$
-is strongly convex? What is the runtime if we have a finite sum problem
-$\frac{1}{n}\sum_{i}f_{i}(x)$ which is not strongly convex? In this
-section, we show that one can reduce runtimes between different cases.
-To highlight the idea, we will be informal and ignore polylogarithmic
-terms. We note that some of the reduction ideas are not just useful
-for proving theorems, but are practical tricks to speed up algorithms
-and to avoid having to know parameters. See \cite{lin2015universal,frostig2015regularizing,o2015adaptive,allen2016optimal}
+In Table \ref{tab:Black-Box-Problems}, we omitted many cases. For
+example, what is the runtime if we have a stochastic function $\min_{x}\E_{\omega}f_{\omega}(x)$
+such that $\E_{\omega}f_{\omega}(x)$ is strongly convex? What is
+the runtime if we have a finite sum problem $\frac{1}{n}\sum_{i}f_{i}(x)$
+which is not strongly convex? In this section, we show that one can
+reduce runtimes between different cases. To highlight the idea, we
+will be informal and ignore polylogarithmic terms. We note that some
+of the reduction ideas are not just useful for proving theorems, but
+are practical tricks to speed up algorithms and to avoid having to
+know parameters. See \cite{lin2015universal,frostig2015regularizing,o2015adaptive,allen2016optimal}
 for more reduction tricks for first-order methods.
 
 \subsection*{From Strongly Convex to Convex}
@@ -323,8 +323,8 @@ Therefore, we have that
 \|x^{(i)}-x^{*}\|^{2}_{2}\leq2\sqrt{\frac{\epsilon}{\mu}}\|x^{(i-1)}-x^{*}\|_{2}.
 \]
 Therefore, if $\|x^{(i-1)}-x^{*}\|_{2}\geq8\sqrt{\frac{\epsilon}{\mu}}$,
-then the distance to OPT decreases by at least a factor of two. After
-$\widetilde{O}(1)$ iterations, we have that $\|x^{(i-1)}-x^{*}\|_{2}=O\left(\sqrt{\frac{\epsilon}{\mu}}\right)$
+then the distance to the optimum decreases by at least a factor of
+two. After $\widetilde{O}(1)$ iterations, we have that $\|x^{(i-1)}-x^{*}\|_{2}=O\left(\sqrt{\frac{\epsilon}{\mu}}\right)$
 and hence (\ref{eq:convex2strongly}) shows that $f(x^{(i)})\leq\min_{x}f(x)+\sqrt{\mu\epsilon}\cdot O\left(\sqrt{\frac{\epsilon}{\mu}}\right)=\min_{x}f(x)+O(\epsilon)$.
 \begin{xca}
 Given an algorithm that can minimize convex $f$ with $\epsilon$

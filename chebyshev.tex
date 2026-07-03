@@ -3,9 +3,9 @@
 \section{Chebyshev Polynomials\label{sec:Chebyshev-Polynomials}}
 
 The goal of this section is to introduce some basic results in approximation
-theory. Suppose magically there was a polynomial $q(x)$ such that
-$q(0)=1$ and $q(x)=0$ for all $x>0$. By assumption, we know that
-the constant term in $q$ is $1$ and hence we can write 
+theory. Suppose, for a moment, that there were a polynomial $q(x)$
+such that $q(0)=1$ and $q(x)=0$ for all $x>0$. By assumption, we
+know that the constant term in $q$ is $1$ and hence we can write
 \[
 q(x)=1-xp(x)
 \]
@@ -35,7 +35,7 @@ $k$, by a polynomial of degree $\tilde{O}(\sqrt{k})$. The construction
 uses Chebyshev polynomials. This will imply an $\tilde{O}(\sqrt{\frac{L}{\mu}})$
 iteration bound for the conjugate gradient method of the next section.
 \begin{defn}
-For any integer $d$, the degree $d$ Chebyshev polynomial is defined
+For any integer $d$, the Chebyshev polynomial $T_{d}$ is defined
 as the unique polynomial that satisfies 
 \[
 T_{d}(\cos\theta)=\cos(d\theta).
@@ -62,7 +62,7 @@ Now we are ready to show that there is a degree $\tilde{O}(\sqrt{s})$
 polynomial that approximates $x^{s}$.
 \begin{thm}
 \label{thm:approximate_mono}For any positive integers $s$ and $d$,
-there is a polynomial $p$ of degree $d$ such that
+there is a polynomial $p$ of degree at most $d$ such that
 \[
 \max_{x\in[-1,1]}|p(x)-x^{s}|\leq2\exp(-\frac{d^{2}}{2s}).
 \]
@@ -122,7 +122,7 @@ To make both $|q(0)-1|\leq\frac{\epsilon}{3}$ and $\max_{x\in[\mu,L]}\left|q(x)\
 we set $d=O(\sqrt{s\log\frac{1}{\epsilon}})$ and $s=O(\frac{L}{\mu}\log(\frac{1}{\epsilon}))$.
 Since $|q(0)-1|\leq\epsilon/3\leq1/3$, rescaling by $1/q(0)$ changes
 the bound on $[\mu,L]$ by only a constant factor, which can be absorbed
-by adjusting the constants above. After this rescaling,$q$ satisfies
+by adjusting the constants above. After this rescaling, $q$ satisfies
 $q(0)=1$.\selectlanguage{english}%
 \end{proof}
 
