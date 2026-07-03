@@ -1,10 +1,6 @@
 
 \section{The Newton Method\label{sec:Newton-Method}}
 
-\begin{figure}
-\centering{}\includegraphics[width=0.5\columnwidth]{Figures/Section_5\lyxdot 3}\caption{1D Newton Step}
-\end{figure}
-
 We begin with the Newton-Raphson method for finding the zeros of a
 function $g$, i.e. finding $x$ such that $g(x)=0$. In optimization,
 the goal is to find a root of the gradient, $\nabla f(x)=0$. The
@@ -53,7 +49,7 @@ Gradient descent for this function is
 \[
 (x_{1},x_{2})\leftarrow(x_{1},x_{2})-h\nabla f(x_{1},x_{2})=((1-100h)x_{1},(1-h)x_{2}).
 \]
-We need $h<\frac{1}{100}$ in order for the first coordinate to converge,
+We need $h<\frac{2}{100}$ in order for the first coordinate to converge,
 but this will make the second coordinate converge too slowly. In general,
 we may want to take different step sizes for different directions
 and Newton method gives the best step if the function is quadratic.
@@ -66,6 +62,10 @@ for some $c'$) if the starting point is sufficiently close to a root.
 However, each step of Newton method involves solving a linear system,
 which can be much more expensive. Furthermore, Newton method may not
 converge if the starting point is far away.
+
+\begin{figure}
+\centering{}\includegraphics[width=0.5\columnwidth]{Figures/Section_5\lyxdot 3}\caption{1D Newton Step}
+\end{figure}
 
 \begin{algorithm2e}[H]
 
@@ -224,12 +224,11 @@ and
 \]
 Writing $\epsilon_{0}=|x^{(0)}-x^{*}|$, after $k$ steps,
 \[
-\frac{L}{\alpha}|x^{(k)}-x^{*}|\leq\left(\frac{L}{\alpha}\epsilon_{0}\right)^{2^{k}}
+\frac{L}{\alpha}|x^{(k)}-x^{*}|\leq\left(\frac{L}{\alpha}\epsilon_{0}\right)^{2^{k}}.
 \]
-This implies $|x^{(k)}-x^{*}|<\epsilon$ after $O(\log\log(\frac{\alpha}{L\epsilon}))$
-steps for fixed $\epsilon_{0}$. Note that $f$ has not been assumed
-to be convex or polynomial.
 \end{proof}
+This implies $|x^{(k)}-x^{*}|<\epsilon$ after $O(\log\log(\frac{\alpha\epsilon_{0}}{L\epsilon}))$
+steps. Note that $f$ has not been assumed to be convex or polynomial.
 Moving back to optimization, we can view the goal as finding a root
 of $\nabla f(x)=0$. Newton's iteration is the update 
 \[

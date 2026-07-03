@@ -25,13 +25,13 @@ keep the tables short, and there are many important results omitted.
 \[
 \min_{x}f(x)
 \]
-} & \centering{}{\scriptsize -} & {\scriptsize Hybrid Center Cutting Plane} & {\scriptsize$n\log(\frac{n}{\epsilon})$} & {\scriptsize$\mathcal{T}_{f}+n^{2}\log^{O(1)}(\frac{n}{\epsilon})$}\tabularnewline
+} & \centering{}{\scriptsize -} & {\scriptsize Hybrid Center Cutting Plane} & {\scriptsize$n\log(\frac{n}{\epsilon})$} & {\scriptsize$\mathcal{T}_{f}+n^{2}$}\tabularnewline
 \hline 
 {\scriptsize
 \[
 \min_{x\in\Omega_{1}\cap\Omega_{2}}c^{\top}x
 \]
-} & \centering{}{\scriptsize -} & {\scriptsize Hybrid Center Cutting Plane} & {\scriptsize$n\log(\frac{n}{\epsilon})$} & {\scriptsize$\mathcal{T}_{\Omega_{1}}+\mathcal{T}_{\Omega_{2}}+n^{2}\log^{O(1)}(\frac{n}{\epsilon})$}\tabularnewline
+} & \centering{}{\scriptsize -} & {\scriptsize Hybrid Center Cutting Plane} & {\scriptsize$n\log(\frac{n}{\epsilon})$} & {\scriptsize$\mathcal{T}_{\Omega_{1}}+\mathcal{T}_{\Omega_{2}}+n^{2}$}\tabularnewline
 \hline 
 {\scriptsize
 \[
@@ -77,13 +77,13 @@ $\|x^{*}\|_{2}\leq R$} & {\scriptsize Stochastic Gradient Descent} & {\scriptsiz
 \[
 \min_{x}f(x)\defeq\frac{1}{n}\sum_{i}f_{i}(x)
 \]
-} & {\scriptsize$\nabla^{2}f\succeq\mu\cdot I,\nabla^{2}f_{i}\preceq L_{i}\cdot I$} & {\scriptsize Accelerated Stochastic Descent} & \multicolumn{2}{c|}{{\scriptsize Total Cost: $(\mathcal{T}_{\nabla f}+\sqrt{\frac{1}{\mu}\sum_{i}L_{i}}\mathcal{T}_{\nabla f_{i}})\log(\frac{1}{\epsilon})$}}\tabularnewline
+} & {\scriptsize$\nabla^{2}f\succeq\mu\cdot I,\nabla^{2}f_{i}\preceq L_{i}\cdot I$} & {\scriptsize Accelerated Stochastic Descent} & \multicolumn{2}{c|}{{\scriptsize Total: $(\mathcal{T}_{\nabla f}+\sqrt{\frac{1}{\mu}\sum_{i}L_{i}}\mathcal{T}_{\nabla f_{i}})\log(\frac{1}{\epsilon})$}}\tabularnewline
 \hline 
 {\scriptsize
 \[
 \min_{x\in\Rn}f(x)
 \]
-} & {\scriptsize$\nabla^{2}f\succeq\mu\cdot I,\partial^{2}_{i}f\leq L_{i}$} & {\scriptsize Accelerated Coordinate Descent} & \multicolumn{2}{c|}{{\scriptsize Total Cost: $\sum_{i}\sqrt{L_{i}/\mu}\mathcal{T}_{\partial_{i}f}\log(\frac{1}{\epsilon})$}}\tabularnewline
+} & {\scriptsize$\nabla^{2}f\succeq\mu\cdot I,\partial^{2}_{i}f\leq L_{i}$} & {\scriptsize Accelerated Coordinate Descent} & \multicolumn{2}{c|}{{\scriptsize Total: $\sum_{i}\sqrt{L_{i}/\mu}\mathcal{T}_{\partial_{i}f}\log(\frac{1}{\epsilon})$}}\tabularnewline
 \hline 
 \end{tabular}
 \par\end{centering}
@@ -122,11 +122,7 @@ Ax=b
 \cline{2-5}
  & \centering{}{\scriptsize Each row of $A$ has $\leq2$ non-zeros} & {\scriptsize Sparse Cholesky Factorization} & {\scriptsize$\log^{O(1)}(n)\log(\frac{1}{\epsilon})$} & {\scriptsize$\nnz(A)\log^{O(1)}(n)\log(\frac{1}{\epsilon})$}\tabularnewline
 \hline 
-\multirow{2}{0.1\paperwidth}{\centering{}{\scriptsize
-\[
-\min_{Ax=b,x\in\Rn_{+}}c^{\top}x
-\]
-}} & \multirow{2}{0.15\paperwidth}{\centering{}{\scriptsize -}} & {\scriptsize Interior Point Method} & {\scriptsize$\sqrt{n}\log^{O(1)}(n)\log(\frac{1}{\epsilon})$} & {\scriptsize$n^{2.3728\cdots}\log(\frac{1}{\epsilon})$}\tabularnewline
+\multirow{2}{0.1\paperwidth}{\centering{}{\scriptsize$\min_{Ax=b,x\in\Rn_{+}}c^{\top}x$}} & \multirow{2}{0.15\paperwidth}{\centering{}{\scriptsize -}} & {\scriptsize Interior Point Method} & {\scriptsize$\sqrt{n}\log^{O(1)}(n)\log(\frac{1}{\epsilon})$} & {\scriptsize$n^{2.3728\cdots}\log(\frac{1}{\epsilon})$}\tabularnewline
 \cline{3-5}
  &  & {\scriptsize Interior Point Method} & {\scriptsize$\sqrt{r}\log^{O(1)}(n)\log(\frac{1}{\epsilon})$} & {\scriptsize$\sqrt{r}(\nnz(A)+r^{2})\log^{O(1)}n\log(\frac{1}{\epsilon})$}\tabularnewline
 \hline 

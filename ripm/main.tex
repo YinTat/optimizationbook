@@ -69,6 +69,7 @@
 \global\long\def\oms{\overline{\mathbf{S}}}%
 \global\long\def\ox{\overline{x}}%
 \global\long\def\os{\overline{s}}%
+\global\long\def\oy{\overline{y}}%
 
 \global\long\def\ttag#1{\tag{#1}}%
 \global\long\def\PriR{\mathcal{P}}%
@@ -101,7 +102,8 @@ and its dual
 \begin{equation}
 \max_{\ma^{\top}y+s=c,s\in\R^{n}_{\geq0}}b^{\top}y\ttag D\label{eq:tut_dual_LP}
 \end{equation}
-where $\ma\in\R^{d\times n}$ and $\R_{\geq0}=\{x\geq0\}$. The feasible
+where $\ma\in\R^{d\times n}$, $\R_{\geq0}$ denotes the set of nonnegative
+real numbers, and vector inequalities are coordinatewise. The feasible
 regions for the two programs are 
 \[
 \PriR=\{x\in\R^{n}_{\geq0}:\ma x=b\}\mbox{ and }\DualR=\{s\in\R^{n}_{\geq0}:\ma^{\top}y+s=c\text{ for some }y\}.
@@ -110,21 +112,19 @@ We define their interiors:
 \[
 \PriR^{\circ}=\{x\in\R^{n}_{>0}:\ma x=b\}\mbox{ and \ensuremath{\DualR^{\circ}}}=\{s\in\R^{n}_{>0}:\ma^{\top}y+s=c\text{ for some }y\}.
 \]
+One key property about the primal and dual linear program is that
+dual objective $b^{\top}y$ is a lower bound of the primal object
+$c^{\top}y$ and that $x^{\top}s$ measure the gap between two objective.
 
 To motivate the main idea of the interior point method, we recall
 the optimality condition for linear programs.
-\begin{thm}[Complementary Slackness]
-\label{thm:comp_slackness}Any $x\in\PriR$ and $s\in\DualR$ are
-optimal if and only if $x^{\top}s=0$. Moreover, if both $\PriR$
-and $\DualR$ are non-empty, there exist $x^{*}\in\PriR$ and $s^{*}\in\DualR$
-such that $(x^{*})^{\top}s^{*}=0$ and $x^{*}+s^{*}>0$.
-\end{thm}
-
-More generally, the quantity $x^{\top}s$ measures the duality gap
-of the feasible solution:
 \begin{lem}[Duality Gap]
-\label{lem:duality_gap}For any $x\in\PriR$ and $s\in\DualR$, the
-duality gap $c^{\top}x-b^{\top}y=x^{\top}s$. In particular $c^{\top}x\leq\min_{x\in\PriR}c^{\top}x+x^{\top}s$.
+\label{lem:duality_gap}For any $x\in\PriR$ and any dual feasible
+pair $(y,s)$ with $\ma^{\top}y+s=c$, the duality gap satisfies $c^{\top}x-b^{\top}y=x^{\top}s$.
+In particular, we have
+\[
+\max_{\ma^{\top}\oy+\os=c,\os\in\R^{n}_{\geq0}}b^{\top}\oy-x^{\top}s\leq b^{\top}y\leq c^{\top}x\leq\min_{\ma x=b,x\in\R^{n}_{\geq0}}c^{\top}\ox+x^{\top}s.
+\]
 \end{lem}
 
 \begin{proof}
@@ -133,10 +133,19 @@ gap as follows
 \[
 c^{\top}x-b^{\top}y=c^{\top}x-(\ma x)^{\top}y=c^{\top}x-x^{\top}(\ma^{\top}y)=x^{\top}s.
 \]
-By weak duality, we have
+Since $x,s\geq0$, this shows that 
 \[
-c^{\top}x=b^{\top}y+x^{\top}s\leq\max_{\ma^{\top}y+s=c,s\in\R^{n}_{\geq0}}b^{\top}y+x^{\top}s\leq\min_{x\in\PriR}c^{\top}x+x^{\top}s.
+c^{\top}x\geq b^{\top}y.
 \]
+Optimize over all $x$ and $y$, we have the weak duality
+\[
+\min_{\ma x=b,x\in\R^{n}_{\geq0}}c^{\top}\ox\geq\max_{\ma^{\top}y+s=c,s\in\R^{n}_{\geq0}}b^{\top}y.
+\]
+Using this, we have
+\[
+c^{\top}x=b^{\top}y+x^{\top}s\leq\max_{\ma^{\top}y+s=c,s\in\R^{n}_{\geq0}}b^{\top}y+x^{\top}s\leq\min_{\ma x=b,x\in\R^{n}_{\geq0}}c^{\top}\ox+x^{\top}s.
+\]
+The another direction is similar.
 \end{proof}
 
 The main implication of Lemma \ref{lem:duality_gap} is that any feasible
@@ -154,14 +163,14 @@ with components $a_{i}/b_{i}$. For a scalar $t\in\R$, we let $t\mathbf{1}$
 denote the vector with all coordinates equal to $t$. 
 \begin{defn}[Central Path]
 \label{def:central_path}We define the central path $(x_{t},s_{t})\in\PriR^{\circ}\times\DualR^{\circ}$
-by $x_{t}s_{t}=t$. We say $x_{t}$ is on the central path of (\ref{eq:tut_primal_LP})
-at $t$.
+by $x_{t}s_{t}=t\mathbf{1}$. We say $x_{t}$ is on the central path
+of (\ref{eq:tut_primal_LP}) at $t$.
 \end{defn}
 
 The algorithm maintains a pair $(x,s)\in\PriR^{\circ}\times\DualR^{\circ}$
 and a scalar $t>0$ satisfying the invariant 
 \[
-\|\frac{xs}{t}-1\|_{2}\leq\frac{1}{4}.
+\|\frac{xs}{t}-\mathbf{1}\|_{2}\leq\frac{1}{4}.
 \]
 Note that the deviation from the central path is measured in $\ell_{2}$
 norm. In each step, the algorithm decreases $t$ by a factor of $1-\Omega(n^{-1/2})$
@@ -172,9 +181,9 @@ while maintaining the invariant.
 To see why there is a pair $(x,s)\in\PriR^{\circ}\times\DualR^{\circ}$
 satisfying the invariant, we prove the following generalization.
 \begin{lem}[Quadrant Representation of Primal-Dual]
-\label{lem:primal_dual_representation}Suppose $\PriR$ is non-empty
-and bounded. For any positive vector $\mu\in\R^{n}_{>0}$, there is
-an unique pair $(x_{\mu},s_{\mu})\in\PriR^{\circ}\times\DualR^{\circ}$
+\label{lem:primal_dual_representation}Suppose $\PriR^{\circ}$ is
+non-empty and $\PriR$ is bounded. For any positive vector $\mu\in\R^{n}_{>0}$,
+there is a unique pair $(x_{\mu},s_{\mu})\in\PriR^{\circ}\times\DualR^{\circ}$
 such that $x_{\mu}s_{\mu}=\mu$. Furthermore, $x_{\mu}=\arg\min_{x\in\PriR}f_{\mu}(x)$
 where
 \[
@@ -185,9 +194,9 @@ f_{\mu}(x)=c^{\top}x-\sum^{n}_{i=1}\mu_{i}\ln x_{i}.
 \begin{proof}
 Fix $\mu\in\R^{n}_{>0}$. We define $x_{\mu}=\arg\min_{x\in\PriR}f_{\mu}(x)$
 and prove that $(x_{\mu},s_{\mu})\in\PriR^{\circ}\times\DualR^{\circ}$
-with $x_{\mu}s_{\mu}=\mu$ for some $s_{\mu}$. Since $\PriR$ is
-non-empty and bounded and since $f_{\mu}$ is strictly convex, such
-an $x_{\mu}$ exists. Furthermore, since $f_{\mu}(x)\rightarrow+\infty$
+with $x_{\mu}s_{\mu}=\mu$ for some $s_{\mu}$. Since $\PriR^{\circ}$
+is non-empty, $\PriR$ is bounded, and $f_{\mu}$ is strictly convex,
+such an $x_{\mu}$ exists. Furthermore, since $f_{\mu}(x)\rightarrow+\infty$
 as $x_{i}\rightarrow0$ for any $i$, we have that $x_{\mu}\in\PriR^{\circ}$.
 
 By the KKT optimality condition for $f_{\mu}$, there is a vector
@@ -195,7 +204,7 @@ $y$ such that
 \[
 \nabla f_{\mu}(x_{\mu})=c-\frac{\mu}{x_{\mu}}=\ma^{\top}y.
 \]
-Define $s_{\mu}=\frac{\mu}{x_{\mu}}$, then one can check that $s_{\mu}\in\DualR^{\circ}$
+Define $s_{\mu}=\frac{\mu}{x_{\mu}}$. Then one can check that $s_{\mu}\in\DualR^{\circ}$
 and $x_{\mu}s_{\mu}=\mu$.
 
 For the uniqueness, if $(x,s)\in\PriR^{\circ}\times\DualR^{\circ}$
@@ -207,16 +216,16 @@ Lemma \ref{lem:primal_dual_representation} shows that any point in
 $\PriR^{\circ}\times\DualR^{\circ}$ is uniquely represented by a
 positive vector $\mu$. Interior point methods move $\mu$ uniformly
 to $0$ while maintaining the corresponding $x_{\mu}$. Now we discuss
-how to find $(x_{\mu},s_{\mu})$ given a nearby interior feasible
-point $(x,s)$. Namely, how to move $(x,s)$ to $(x+\delta_{x},s+\delta_{s})$
-such that it satisfies the equation
+how to find $(x_{\mu},s_{\mu})$ from a nearby interior feasible point
+$(x,s)$; namely, how to move $(x,s)$ to $(x+\delta_{x},s+\delta_{s})$
+so that the result satisfies the system
 \begin{align*}
 (x+\delta_{x})(s+\delta_{s}) & =\mu,\\
 \ma(x+\delta_{x}) & =b,\\
 \ma^{\top}(y+\delta_{y})+(s+\delta_{s}) & =c,\\
 (x+\delta_{x},s+\delta_{s}) & \in\R^{2n}_{>0}.
 \end{align*}
-Although the equation above involves $y$, our approximate solution
+Although the system above involves $y$, our approximate solution
 does not need to know $y$. By ignoring the inequality constraint
 and the second-order term $\delta_{x}\delta_{s}$ in the first equation
 above, and using $\ma x=b$ and $\ma^{\top}y+s=c$ we can simplify
@@ -226,23 +235,24 @@ xs+\ms\delta_{x}+\mx\delta_{s} & =\mu,\label{eq:LP_newton_step}\\
 \ma\delta_{x} & =0,\nonumber \\
 \ma^{\top}\delta_{y}+\delta_{s} & =0,\nonumber 
 \end{align}
-where $\mx$ and $\ms$ are the diagonal matrix with diagonal $x$
-and $s$. In the following Lemma, we show how to write the step above
-using a projection matrix ($\mproj^{2}=\mproj$).
+where $\mx$ and $\ms$ are the diagonal matrices with diagonals $x$
+and $s$, respectively. In the following lemma, we show how to write
+the step above using a projection matrix ($\mproj^{2}=\mproj$).
 \begin{lem}
 \label{lem:Newton_step}Suppose that $\ma$ has full row rank and
 $(x,s)\in\PriR^{\circ}\times\DualR^{\circ}$. Then, the unique solution
 for the linear system (\ref{eq:LP_newton_step}) is given by
 \begin{align*}
-\mx^{-1}\delta_{x} & =(\mi-\mproj)(\delta_{\mu}/\mu),\\
-\ms^{-1}\delta_{s} & =\mproj(\delta_{\mu}/\mu)
+\mx^{-1}\delta_{x} & =(\mi-\mproj)(\delta_{\mu}/(xs)),\\
+\ms^{-1}\delta_{s} & =\mproj(\delta_{\mu}/(xs))
 \end{align*}
-where $\delta_{\mu}=\mu-xs$ and $\mproj=\ms^{-1}\ma^{\top}(\ma\ms^{-1}\mx\ma^{\top})^{-1}\ma\mx$.
+where $\delta_{\mu}=\mu-xs$, the division by $xs$ is coordinatewise,
+and $\mproj=\ms^{-1}\ma^{\top}(\ma\ms^{-1}\mx\ma^{\top})^{-1}\ma\mx$.
 \end{lem}
 
 \begin{proof}
 Note that the step satisfies $\ms\delta_{x}+\mx\delta_{s}=\delta_{\mu}$.
-Multiply both sides by $\ma\ms^{-1}$ and using $\ma\delta_{x}=0$,
+Multiplying both sides by $\ma\ms^{-1}$ and using $\ma\delta_{x}=0$,
 we have
 \[
 \ma\ms^{-1}\mx\delta_{s}=\ma\ms^{-1}\delta_{\mu}.
@@ -269,13 +279,14 @@ The result follows from the definition of $\mproj$.
 \subsection{Lower Bounding Step Size}
 
 The efficiency of interior point methods depends on how large a step
-we can take while staying within the domain. We first study the step
-operators $(\mi-\mproj)$ and $\mproj$. The following lemma implies
-that $\mproj$ is a nearly orthogonal projection matrix when $\mu$
-is close to a multiple of the all-ones vector. Hence, the relative
-changes of $\mx^{-1}\delta_{x}$ and $\ms^{-1}\delta_{s}$ are essentially
-the orthogonal decomposition of the relative step $\delta_{\mu}/\mu$.
-For two vectors $u,v$, we define $\norm u_{v}\defeq\sqrt{u^{\top}\Diag(v)u}$
+we can take while staying within the domain. In the rest of this subsection,
+we write $\mu=xs$ for the current complementarity vector. We first
+study the step operators $(\mi-\mproj)$ and $\mproj$. The following
+lemma implies that $\mproj$ is a nearly orthogonal projection matrix
+when $\mu$ is close to a multiple of the all-ones vector. Hence,
+the relative changes of $\mx^{-1}\delta_{x}$ and $\ms^{-1}\delta_{s}$
+are essentially the orthogonal decomposition of the relative step
+$\delta_{\mu}/\mu$. For two vectors $u,v$, we define $\norm u_{v}\defeq\sqrt{u^{\top}\Diag(v)u}$
 to be the norm defined by $v$.
 \begin{lem}
 \label{lem:Projection_property}Under the assumption in Lemma \ref{lem:Newton_step},
@@ -329,12 +340,12 @@ h=\sqrt{\frac{\min_{i}\mu_{i}}{\sum_{i}\mu_{i}}}.\label{eq:max_h_formula}
 Note that the above quantity is maximized at $h=n^{-1/2}$ when $\mu$
 has all equal coordinates.
 
-\subsection{Staying within small $\ell_{2}$ distance}
+\subsection{Staying within a small $\ell_{2}$ distance}
 
-Since the step size (\ref{eq:max_h_formula}) maximizes when $\mu$
-is a constant vector. A natural approach is to keep $\mu$ as a vector
-close in $\ell_{2}$ norm to a multiple of the all-ones vector. This
-motivates the following algorithm:
+The step size (\ref{eq:max_h_formula}) is maximized when $\mu$ is
+a constant vector. A natural approach is therefore to keep $\mu$
+as a vector close in $\ell_{2}$ norm to a multiple of the all-ones
+vector. This motivates the following algorithm:
 
 \begin{algorithm2e}[H]
 
@@ -347,10 +358,10 @@ motivates the following algorithm:
 \textbf{Invariant:} $(x,s)\in\PriR^{\circ}\times\DualR^{\circ}$ and
 $\|xs-t\|_{2}\leq\frac{t}{4}$. 
 
-Let $t=t_{\mathrm{start}}$, $h=1/(16\sqrt{n})$ and $n$ is the number
-of columns in $\ma$.
+Let $t=t_{\mathrm{start}}$ and $h=1/(16\sqrt{n})$, where $n$ is
+the number of columns in $\ma$.
 
-\Repeat{$t\neq t_{\mathrm{end}}$}{
+\Repeat{$t=t_{\mathrm{end}}$}{
 
 Let $t'=\max(t/(1+h),t_{\mathrm{end}})$.
 
@@ -371,9 +382,10 @@ to the central path and we will show how to get this in the next section
 (by changing the linear program temporarily).
 
 First, we show that the invariant is maintained in each step. The
-conclusion distance less than $t/6$ is needed in Section \ref{sec:IPM_interior}
-where we call $\mathtt{L2Step}$ on a modified LP, then prove the
-result is close to central path for the original LP.
+conclusion that the distance is less than $t/6$ is needed in Section
+\ref{sec:IPM_interior}, where we call $\mathtt{L2Step}$ on a modified
+LP and then prove that the result is close to the central path for
+the original LP.
 \begin{lem}
 \label{lem:L2Step}Suppose that the input satisfies $(x,s)\in\PriR^{\circ}\times\DualR^{\circ}$
 and $\|xs-t_{\mathrm{start}}\|_{2}\leq\frac{t_{\mathrm{start}}}{4}$.
@@ -385,8 +397,8 @@ and $t>0$ such that $\|xs-t\|_{2}\leq\frac{t}{6}$.
 We prove by induction that $\|xs-t\|_{2}\leq\frac{t}{6}$ after each
 step. Note that the input satisfies $\|xs-t\|_{2}\leq\frac{t}{4}$.
 
-Let $x'=x+\delta_{x}$, $s'=s+\delta_{s}$ and $t'$ defined in the
-algorithm. Note that
+Let $x'=x+\delta_{x}$, $s'=s+\delta_{s}$ and let $t'$ be as defined
+in the algorithm. Note that
 \[
 x's'-t'=(x+\delta_{x})(s+\delta_{s})-t'=\mu+\ms\delta_{x}+\mx\delta_{s}+\delta_{x}\delta_{s}-t'.
 \]
@@ -399,7 +411,7 @@ Using this, we have
 \[
 \|x's'-t'\|_{2}\leq\|\mu^{1/2}\mx^{-1}\delta_{x}\|_{2}\|\mu^{1/2}\ms^{-1}\delta_{s}\|_{2}=\|\mx^{-1}\delta_{x}\|_{\mu}\|\ms^{-1}\delta_{s}\|_{\mu}\leq\|\delta_{\mu}/\mu\|^{2}_{\mu}.
 \]
-where we used Lemma \ref{lem:Projection_property} at the end.
+Here we used Lemma \ref{lem:Projection_property} at the end.
 
 Using $t'-\mu=\frac{t'}{t}(t-\mu)+(\frac{t'}{t}-1)\mu$, we have
 \[
@@ -409,27 +421,27 @@ Since $\|\mu-t\|_{2}\leq\frac{t}{4}$, we have $\min_{i}\mu_{i}\geq\frac{3t}{4}$
 and $\max_{i}\mu_{i}\leq\frac{5}{4}t$. Using $|\frac{t'}{t}-1|\leq h=\frac{1}{16\sqrt{n}}$,
 we have
 \[
-\|\delta_{\mu}/\mu\|_{\mu}\leq\frac{t'}{t}\sqrt{\frac{4}{3t}}\|xs-t\|_{2}+h\sqrt{\frac{5}{4}tn}\leq\sqrt{\frac{t}{12}}+h\sqrt{\frac{5}{4}tn}\leq0.38\sqrt{t}.
+\|\delta_{\mu}/\mu\|_{\mu}\leq\frac{t'}{t}\sqrt{\frac{4}{3t}}\|xs-t\|_{2}+h\sqrt{\frac{5}{4}tn}\leq\sqrt{\frac{t}{12}}+h\sqrt{\frac{5}{4}tn}\leq0.36\sqrt{t}.
 \]
-Hence, we have $\|x's'-t'\|_{2}\leq\|\delta_{\mu}/\mu\|^{2}_{\mu}\leq0.15t\leq t'/6$.
-Furthermore, $\|\delta_{\mu}/\mu\|^{2}_{\mu}<\min_{i}\mu_{i}$ which
-implies $(x,s)$ is feasible (Lemma \ref{lem:step_size}).
+Hence, we have $\|x's'-t'\|_{2}\leq\|\delta_{\mu}/\mu\|^{2}_{\mu}\leq0.13t\leq t'/6$.
+Furthermore, $\|\delta_{\mu}/\mu\|^{2}_{\mu}<\min_{i}\mu_{i}$, which
+implies $(x',s')$ is feasible (Lemma \ref{lem:step_size}).
 \end{proof}
 
-Note that the lemma above only concludes the output is close to central
-path. To upper bound the error, we can apply Lemma \ref{lem:duality_gap}
-which shows the duality gap is equal to $x^{\top}s$.
+Note that the lemma above only concludes that the output is close
+to the central path. To upper bound the error, we can apply Lemma
+\ref{lem:duality_gap} which shows the duality gap is equal to $x^{\top}s$.
 
 \subsection{Solving LP Approximately and Exactly\label{subsec:SolveLP_apx}}
 
 Here we discuss how to get a feasible interior point close to the
-central path by modifying the linear program. The runtime of interior
+central path by modifying the linear program. The runtime of an interior
 point method depends on how degenerate the linear program is.
 \begin{defn}
 \label{def:LP_para}We define the following parameters for the linear
 program $\min_{\ma x=b,x\geq0}c^{\top}x$:
 \begin{enumerate}
-\item Inner radius $r$: There exists a $x\in\PriR$ such that $x_{i}\geq r$
+\item Inner radius $r$: There exists an $x\in\PriR$ such that $x_{i}\geq r$
 for all $i\in[n]$.
 \item Outer radius $R$: For any $x\geq0$ with $\ma x=b$, we have that
 $\|x\|_{2}\leq R$.
@@ -439,97 +451,80 @@ $\|x\|_{2}\leq R$.
 
 Since $\mathtt{L2Step}$ requires a feasible point near the central
 path, we modify the linear program to make it happen. To satisfy the
-constraint $\ma x=b$, we start the algorithm by taking a least square
+constraint $\ma x=b$, we start the algorithm by taking a least-squares
 solution of the constraint $\ma x=b$. Since it can be negative, we
 write the variable $x=x^{+}-x^{-}$ with both $x^{+},x^{-}\geq0$.
 We put a large cost vector on $x^{-}$ to ensure the solution is roughly
 the same. The crux of the proof is that if we optimize this new program
 well enough, we will have $x^{+}-x^{-}>0$ and hence $x^{+}-x^{-}$
-gives a good starting point of the original program. Due to technical
+gives a good starting point of the original program. For technical
 reasons, we need to put an extra constraint $1^{\top}x^{+}\leq\Lambda$
-for some $\Lambda$ to ensure the problem is bounded. The precise
-formulation of the modified linear program is as follows:
-\begin{defn}[Modified Linear Program]
-\label{def:IPM_interior_modified}Consider a linear program $\min_{\ma x=b,x\geq0}c^{\top}x$
-with inner radius $r$, outer radius $R$ and Lipschitz constant $L$.
-For any $\overline{R}\geq10R$, $t\geq8L\overline{R}$, we define
-the modified primal linear program by 
-\[
-\min_{(x^{+},x^{-},x^{\theta})\in\mathcal{P}_{\overline{R},t}}c^{\top}x^{+}+\widetilde{c}^{\top}x^{-}
-\]
-where 
-\[
-\mathcal{P}_{\overline{R},t}=\{(x^{+},x^{-},x^{\theta})\in\R^{2n+1}_{\geq0}:\ma(x^{+}-x^{-})=b,\sum^{n}_{i=1}x^{+}_{i}+x^{\theta}=\widetilde{b}\}
-\]
-with $x^{+}_{c}=\frac{t}{c+t/\overline{R}},x^{-}_{c}=x^{+}_{c}-\ma^{\top}(\ma\ma^{\top})^{-1}b,\widetilde{c}=t/x^{-}_{c}$,
-$\widetilde{b}=\sum_{i}x^{+}_{c,i}+\overline{R}$. We define the corresponding
-dual polytope by
-\[
-\mathcal{D}_{\overline{R},t}=\{(s^{+},s^{-},s^{\theta})\in\R^{2n+1}_{\geq0}:\ma^{\top}y+\lambda\mathbf{1}+s^{+}=c,-\ma^{\top}y+s^{-}=\widetilde{c},\lambda+s^{\theta}=0\text{ for some }y\in\R^{d}\text{ and }\lambda\in\R\}.
-\]
-\end{defn}
-
-The main result about the modified program is the following.
+for some $\Lambda$ to ensure the problem is bounded.
 \begin{thm}
-\label{thm:IPM_interior}Given a linear program $\min_{\ma x=b,x\in\R^{n}_{\geq}}c^{\top}x$
-with inner radius $r$, outer radius $R$ and Lipschitz constant $L$.
-For any $0\leq\epsilon\leq\frac{1}{2}$, the modified linear program
-(Definition \ref{def:IPM_interior_modified}) with $\overline{R}=\frac{5}{\epsilon}R,t=2^{16}\epsilon^{-3}n^{2}\frac{R}{r}\cdot LR$
-has the following properties:
-\begin{itemize}
-\item The point $(x^{+}_{c},x^{-}_{c},\overline{R})$ is on the central
-path of the modified program at $t$.
-\item For any primal $x\defeq(x^{+},x^{-},x^{\theta})\in\mathcal{P}_{\overline{R},t}$
-and dual $s\defeq(s^{+},s^{-},s^{\theta})\in\mathcal{D}_{\overline{R},t}$
-such that $\frac{5}{6}LR\leq x_{i}s_{i}\leq\frac{7}{6}LR$, we have
-that
+\label{thm:modified_LP_construction}Given a linear program $\min_{\ma x=b,x\in\R^{n}_{\geq0}}c^{\top}x$
+with inner radius $r$, outer radius $R$ and Lipschitz constant $L$
+and any $0\leq\eta\leq\frac{1}{3}$. Consider the modified linear
+program by
+\[
+\min_{(x^{+},x^{-},x^{\theta})\in\PriR_{\eta}}\left\langle c^{+},x^{+}\right\rangle +\left\langle c^{-},x^{-}\right\rangle 
+\]
+with
+\[
+\PriR_{\eta}=\left\{ (x^{+},x^{-},x^{\theta})\in\R^{2n+1}_{\geq0}:\ \ma(x^{+}-x^{-})=b,\sum^{n}_{i=1}x^{+}_{i}+x^{\theta}=\widetilde{b}\right\} 
+\]
+where $\overline{R}=6R/\eta$, $\overline{t}=4000n^{2}R/(\eta^{2}r)\cdot LR$,
+$\ox^{+}=\overline{t}/(c+\overline{t}/\overline{R})$, $\ox^{-}=\ox^{+}-\ma^{\top}(\ma\ma^{\top})^{-1}b$,
+$c^{+}=c$, $c^{-}=t/\ox^{-}$ and $\widetilde{b}=\sum^{n}_{i=1}\ox^{+}_{i}+\overline{R}$.
+Then, we have that
+\begin{enumerate}
+\item $(\ox^{+},\ox^{-},\overline{R})$ is on the central path of the modified
+program at $\overline{t}$.
+\item For any primal $x\defeq(x^{+},x^{-},x^{\theta})\in\PriR_{\eta}$ and
+dual $s\defeq(s^{+},s^{-},s^{\theta})$ such that $\frac{5}{6}LR\leq x_{i}s_{i}\leq\frac{7}{6}LR$,
+we have that
 \[
 (x^{+}-x^{-},s^{+}-s^{\theta})\in\PriR\times\DualR
 \]
-and that $x^{-}_{i}\leq\epsilon x^{+}_{i}$ and $s^{\theta}\leq\epsilon s^{+}_{i}$
+and that $x^{-}_{i}\leq\eta x^{+}_{i}$ and $s^{\theta}\leq\eta s^{+}_{i}$
 for all $i$.
-\end{itemize}
+\end{enumerate}
 \end{thm}
 
 \begin{proof}
-Since the proof is not illuminating, we defer it to Appendix \ref{sec:IPM_interior}
-(Lemma \ref{lem:ipm_interior_modified} and Lemma \ref{lemma:IPM_center_original}).
+Since the proof is not illuminating, we defer it to Appendix \ref{sec:IPM_interior}.
 \end{proof}
 
 Now we state our main algorithm.
 
 \begin{algorithm2e}[H]
 
-\caption{$\mathtt{SlowSolveLP}(\ma,b,c,x^{(0)},\delta)$}
+\caption{$\mathtt{SlowSolveLP}(\ma,b,c,\delta)$}
 
 \label{alg:SlowSolveLP}
 
 \textbf{Assumption: the linear program has inner radius $r$, outer
 radius $R$ and Lipschitz constant $L$.}
 
-Let $\epsilon=1/(100\sqrt{n})$, $\overline{R}=\frac{5}{\epsilon}R$,
-$t=2^{16}\epsilon^{-3}n^{2}\frac{R}{r}\cdot LR$. 
+Let $\epsilon=1/(48\sqrt{n})$, $\overline{R}=6R/\eta$, $\overline{t}=4000n^{2}R/(\eta^{2}r)\cdot LR$. 
 
 \tcp{Define the modified program $\min_{\oma x=\overline{b}}\overline{c}^{\top}x$
-by Definition \ref{def:IPM_interior_modified} with parameters $\overline{R}$
-and $t$.}
+by Theorem \ref{thm:modified_LP_construction} with parameters $\overline{R}$
+and $\overline{t}$.}
 
 Let $\oma=\left[\begin{array}{ccc}
 \ma & -\ma & 0\\
-1 & 0 & 1
-\end{array}\right]$, $\overline{c}=(c,\widetilde{c})$, $\overline{b}=(b,\widetilde{b})$
-where $\widetilde{c}$ and $\widetilde{b}$ are defined in Definition
-\ref{def:IPM_interior_modified}.
+1^{\top}_{n} & 0 & 1
+\end{array}\right]$, $\overline{c}=(c,c^{-},0)$, $\overline{b}=(b,\widetilde{b})$ where
+$c^{-}$ and $\widetilde{b}$ are defined in Definition \ref{thm:modified_LP_construction}.
 
-\tcp{Write down the central path at $t$ for modified linear program
-using Lemma \ref{lem:ipm_interior_modified}.}
+Let $(\overline{x},\overline{s})$ be the explicit central path at
+$\overline{t}$ given by Theorem \ref{thm:modified_LP_construction}.
 
-$\overline{x}=(x^{+}_{c},x^{-}_{c},\overline{R})$. $\overline{s}=x/t$.
+$(\overline{x},\overline{s})\leftarrow\mathtt{L2Step}(\oma,\overline{x},\overline{s},\overline{t},LR)$.
 
-$(\overline{x},\overline{s})=\mathtt{L2Step}(\oma,\overline{x},\overline{s},t,LR)$.
-
-$(x,s)=(x^{+}-x^{-},s^{+}-s^{\theta})$ where $\overline{x}=(x^{+},x^{-},x^{\theta})$
-and $\overline{s}=(s^{+},s^{-},s^{\theta})$.
+$(x,s)\leftarrow(\overline{x}^{+}-\overline{x}^{-},\overline{s}^{+}-\overline{s}^{\theta})$
+where $\overline{x}=(\overline{x}^{+},\overline{x}^{-},\overline{x}^{\theta})$
+and $\overline{s}=(\overline{s}^{+},\overline{s}^{-},\overline{s}^{\theta})$.
 
 $(x_{\mathrm{end}},s_{\mathrm{end}})=\mathtt{L2Step}(\ma,x^{+}-x^{-},s^{+}-s^{\theta},LR,t_{\mathrm{end}})$
 with $t_{\mathrm{end}}=\delta LR/(2n)$.
@@ -540,9 +535,9 @@ with $t_{\mathrm{end}}=\delta LR/(2n)$.
 \begin{thm}
 \label{thm:SlowSolveLP}Consider a linear program $\min_{\ma x=b,x\geq0}c^{\top}x$
 with $n$ variables and $d$ constraints. Assume the linear program
-has inner radius $r$, outer radius $R$ and Lipschitz constant $L$
-(see Definition \ref{def:LP_para}). Then, $\mathtt{SlowSolveLP}$
-outputs $x$ such that
+has inner radius $r$, outer radius $R$ and Lipschitz constant $L$(see
+Definition \ref{def:LP_para}). Then, $\mathtt{SlowSolveLP}$ outputs
+$x$ such that
 \begin{align*}
 c^{\top}x & \leq\min_{\ma x=b,x\geq0}c^{\top}x+\delta LR,\\
 \ma x & =b,\\
@@ -552,44 +547,46 @@ The algorithm takes $O(\sqrt{n}\log(nR/(\delta r)))$ Newton steps
 (defined in (\ref{eq:LP_newton_step})).
 
 If we further assume that the solution $x^{*}=\arg\min_{\ma x=b,x\geq0}c^{\top}x$
-is unique and that $c^{\top}x\geq c^{\top}x^{*}+\eta LR$ for any
-other vertex $x$ of $\{\ma x=b,x\geq0\}$ for some $\eta>\delta\geq0$,
-then we have that $\|x-x^{*}\|_{2}\leq\frac{2\delta R}{\eta}$.
+is unique and that $c^{\top}x\geq c^{\top}x^{*}+\zeta LR$ for any
+other vertex $x$ of $\{\ma x=b,x\geq0\}$ for some $\zeta>\delta\geq0$,
+then we have that $\|x-x^{*}\|_{2}\leq\frac{2\delta R}{\zeta}$.
 \end{thm}
 
 \begin{proof}
-By Theorem \ref{thm:IPM_interior}, the point $(x^{+}_{c},x^{-}_{c},\overline{R})$
-is on the central path of the modified program at $t$. After the
-first call of $\mathtt{L2Step}$, Lemma \ref{lem:L2Step} shows that
-$\mathtt{L2Step}$ returns $(\overline{x},\overline{s})$ such that
-$\|\overline{x}\overline{s}-t\|_{2}\leq\frac{t}{6}$ with $t=LR$.
+By Theorem \ref{thm:modified_LP_construction}, the point $(\overline{x},\overline{s})$
+is on the central path of the modified program at $\overline{t}$.
+After the first call of $\mathtt{L2Step}$, Lemma \ref{lem:L2Step}
+shows that $\mathtt{L2Step}$ returns $(\overline{x},\overline{s})$
+such that $\|\overline{x}\overline{s}-t\|_{2}\leq\frac{t}{6}$ with
+$t=LR$.
 
-Theorem \ref{thm:IPM_interior} shows that $(x,s)=(x^{+}-x^{-},s^{+}-s^{\theta})\in\PriR\times\DualR$
-and that $x=(1\pm\epsilon)x^{+}$ and $s=(1\pm\epsilon)s^{+}$. Since
-$\epsilon=\frac{1}{100\sqrt{n}}$ and $\|x^{+}s^{+}-t\|_{2}\leq\frac{t}{6}$
+Theorem \ref{thm:modified_LP_construction} shows that $(x,s)=(\overline{x}^{+}-\overline{x}^{-},\overline{s}^{+}-\overline{s}^{\theta})\in\PriR\times\DualR$
+and that $(1-\eta)\overline{x}^{+}_{i}\leq x_{i}\leq\overline{x}^{+}_{i}$
+and $(1-\eta)\overline{s}^{+}_{i}\leq s_{i}\leq\overline{s}^{+}_{i}$
+. Since $\eta=\frac{1}{48\sqrt{n}}$ and $\|\overline{x}^{+}\overline{s}^{+}-t\|_{2}\leq\frac{t}{6}$
 with $t=LR$, we have that $\|xs-t\|_{2}\leq\frac{t}{4}$. This verifies
 the condition for the second call of $\mathtt{L2Step}$.
 
 After the second call of $\mathtt{L2Step}$, Lemma \ref{lem:L2Step}
 shows that $\mathtt{L2Step}$ returns $(x_{\mathrm{end}},s_{\mathrm{end}})$
-such that $\|x_{\mathrm{end}}s_{\mathrm{end}}-t_{\mathrm{end}}\|_{2}\leq\frac{t}{6}$
+such that $\|x_{\mathrm{end}}s_{\mathrm{end}}-t_{\mathrm{end}}\|_{2}\leq\frac{t_{\mathrm{end}}}{6}$
 with $t_{\mathrm{end}}=\delta LR/(2n)$. Hence, Lemma \ref{lem:duality_gap}
 shows that 
 \[
 c^{\top}x_{\mathrm{end}}\leq\min_{\ma x=b,x\geq0}c^{\top}x+x^{\top}_{\mathrm{end}}s_{\mathrm{end}}\leq\min_{\ma x=b,x\geq0}c^{\top}x+2t_{\mathrm{end}}n\leq\min_{\ma x=b,x\geq0}c^{\top}x+\delta LR.
 \]
-For the runtime, note that $\mathtt{L2Step}$ decreases $t$ by $1-\Omega(n^{-1/2})$
-factor each step. Hence, the first call takes $O(\sqrt{n}\log(nR/r))$
-Newton steps and second call takes $O(\sqrt{n}\log(n/\delta))$ Newton
-steps.
+For the runtime, note that $\mathtt{L2Step}$ decreases $t$ by a
+factor of $1-\Omega(n^{-1/2})$ in each step. Hence, the first call
+takes $O(\sqrt{n}\log(nR/r))$ Newton steps and the second call takes
+$O(\sqrt{n}\log(n/\delta))$ Newton steps.
 
-For the last conclusion, we assume $\delta\leq\eta$ and let $\mathcal{P}_{t}=\mathcal{P}\cap\{c^{\top}x\leq c^{\top}x^{*}+tLR\}$.
-Note that $\mathcal{P}_{\eta}$ is a cone at $x^{*}$ (because there
-is no vertex except $x^{*}$ with value less than $c^{\top}x^{*}+tLR$).
-Hence, we have $\mathcal{P}_{\delta}-x^{*}=\frac{\delta}{\eta}(\mathcal{P}_{\eta}-x^{*})$.
+For the last conclusion, we assume $\delta\leq\zeta$ and let $\mathcal{P}(\zeta)=\mathcal{P}\cap\{c^{\top}x\leq c^{\top}x^{*}+tLR\}$.
+Note that $\mathcal{P}(\zeta)$ is a cone at $x^{*}$ (because there
+is no vertex other than $x^{*}$ with value less than $c^{\top}x^{*}+\zeta LR$).
+Hence, we have $\mathcal{P}(\delta)-x^{*}=\frac{\delta}{\eta}(\mathcal{P}(\zeta)-x^{*})$.
 Since $x\in\mathcal{P}_{\delta}$, we have that 
 \[
-\|x-x^{*}\|_{2}\leq\frac{\delta}{\eta}\text{diameter}(\mathcal{P}_{\eta}-x^{*})\leq\frac{2\delta R}{\eta}.
+\|x-x^{*}\|_{2}\leq\frac{\delta}{\zeta}\text{diameter}(\mathcal{P}(\zeta)-x^{*})\leq\frac{2\delta R}{\zeta}.
 \]
 \end{proof}
 
@@ -618,22 +615,22 @@ in each step is of the form
 \ma\delta_{x} & =0,\nonumber \\
 \ma^{\top}\delta_{y}+\delta_{s} & =0.\label{eq:LP_newton_step_2}
 \end{align}
-In each step, $x,s$ and $\delta_{\mu}$ in the equation above changes
-relatively by a vector with bounded $\ell_{2}$ norm. So, only few
-coordinates change a lot in each step. To take advantage of this,
-the robust interior point method contains two new components: 1) Analyze
-the convergence when we only solve the linear system approximately
-(Section \ref{subsec:IPM_cosh_step}). 2) Show how to maintain the
-solution throughout the iteration (Section \ref{subsec:select_xsr}
-and Section \ref{subsec:IPM_Inverse_Maintenance}).
+In each step, $x$, $s$ and $\delta_{\mu}$ in the equation above
+change relatively by vectors with bounded $\ell_{2}$ norm. Thus,
+only a few coordinates change substantially in each step. To take
+advantage of this, the robust interior point method contains two new
+components: (1) an analysis of convergence when we only solve the
+linear system approximately (Section \ref{subsec:IPM_cosh_step}),
+and (2) a method for maintaining the solution throughout the iteration
+(Section \ref{subsec:select_xsr} and Section \ref{subsec:IPM_Inverse_Maintenance}).
 
 \subsection{Staying within small $\ell_{\infty}$ distance\label{subsec:IPM_cosh_step}}
 
-In the above description and analysis, we assumed that we computed
-each step of the interior point method precisely. But one can imagine
-that it suffices to compute steps approximately since our goal is
-only to stay close to the central path. This could have significant
-computational advantages.
+In the preceding description and analysis, we assumed that we computed
+each step of the interior point method precisely. However, it may
+suffice to compute steps approximately since our goal is only to stay
+close to the central path. This could have significant computational
+advantages.
 
 To make the interior point method robust to noise in the updates to
 $x$ and $s$, we need the method to work under a larger neighborhood
@@ -648,8 +645,7 @@ we use the potential
 \Phi(r)=\sum^{n}_{i=1}\cosh(\lambda r_{i})=\sum^{n}_{i=1}\frac{(e^{\lambda r_{i}}+e^{-\lambda r_{i}})}{2}.\label{eq:Phi_potential}
 \end{equation}
 with $r=\frac{xs-t}{t}$ for some scalar $\lambda=\Theta(\log n)$.
-This potential induces the following algorithm where each step of
-the algorithm takes the step $\delta_{\mu}\approx-c\nabla\Phi(\frac{xs-t}{t})$.
+This potential induces the following algorithm, whose steps use $\delta_{\mu}\approx-c\nabla\Phi(\frac{xs-t}{t})$.
 
 \begin{algorithm2e}[H]
 
@@ -658,15 +654,15 @@ the algorithm takes the step $\delta_{\mu}\approx-c\nabla\Phi(\frac{xs-t}{t})$.
 \label{alg:RobustStep}
 
 \textbf{Define} $\Phi(r)$ according to (\ref{eq:Phi_potential})
-with $\lambda=16\log40n$.
+with $\lambda=16\log(40n)$.
 
 \textbf{Invariant:} $(x,s)\in\PriR^{\circ}\times\DualR^{\circ}$ and
-$\Phi(r)\leq16n$.
+$\Phi((xs-t)/t)\leq16n$.
 
-Let $t=t_{\mathrm{start}}$, $h=1/(128\lambda\sqrt{n})$ and $n$
-is the number of columns in $\ma$.
+Let $t=t_{\mathrm{start}}$, $h=1/(128\lambda\sqrt{n})$, and let
+$n$ be the number of columns in $\ma$.
 
-\Repeat{$t\neq t_{\mathrm{end}}$}{
+\Repeat{$t=t_{\mathrm{end}}$}{
 
 Pick $\ox$, $\os$ and $\overline{r}$ such that $\|\ln\ox-\ln x\|_{\infty}\leq\frac{1}{48}$,
 $\|\ln\os-\ln s\|_{\infty}\leq\frac{1}{48}$ and $\|\overline{r}-\frac{xs-t}{t}\|_{\infty}\leq\frac{1}{48\lambda}$.
@@ -703,7 +699,7 @@ the latter via the cosh ball defined by $\Phi$. }
 We begin with useful facts about $\Phi$.
 \begin{lem}
 \label{lem:robust_IPM_Phi}Define $\Phi(r)$ according to (\ref{eq:Phi_potential}).
-For any $r\in\Rn$, we have that $\|r\|_{\infty}\leq\frac{\log2\Phi(r)}{\lambda}$
+For any $r\in\Rn$, we have that $\|r\|_{\infty}\leq\frac{\log(2\Phi(r))}{\lambda}$
 and $\|\nabla\Phi(r)\|_{2}\geq\frac{\lambda}{\sqrt{n}}(\Phi(r)-n)$.
 Moreover, if $\Phi(r)\geq4n$ and $\|\delta\|_{\infty}\leq\frac{1}{5\lambda}$,
 we have 
@@ -713,10 +709,10 @@ we have
 \end{lem}
 
 \begin{proof}
-We have $\Phi(r)\geq\frac{1}{2}\min_{i}e^{\lambda|r_{i}|}$ and hence
-$\|r\|_{\infty}\leq\frac{\log2\Phi(r)}{\lambda}$.
+For every $i$, we have $\Phi(r)\geq\frac{1}{2}e^{\lambda|r_{i}|}$,
+and hence $\|r\|_{\infty}\leq\frac{\log(2\Phi(r))}{\lambda}$.
 
-For the second claim, wsing that $\nabla\Phi(r)=\sum^{n}_{i=1}\lambda\sinh(\lambda r_{i})$,
+For the second claim, using that $\nabla\Phi(r)=(\lambda\sinh(\lambda r_{i}))^{n}_{i=1}$,
 we have
 \begin{align*}
 \|\nabla\Phi(r)\|_{2} & =\lambda\sqrt{\sum^{n}_{i=1}\sinh^{2}(\lambda r_{i})}=\lambda\sqrt{\sum^{n}_{i=1}(\cosh^{2}(\lambda r_{i})-1)}\\
@@ -725,14 +721,14 @@ we have
 \end{align*}
 
 For the last claim, using $\sinh(r+\delta)=\sinh r\cosh\delta+\cosh r\sinh\delta$
-and $|\cosh r-\sinh r|\leq1$, for $|\delta|\leq\frac{1}{5}$, we
+and $\cosh r\leq|\sinh r|+1$, for $|\delta|\leq\frac{1}{5}$, we
 have
 \begin{align*}
 |\sinh(r+\delta)-\sinh(r)| & \leq|\cosh\delta-1|\cdot|\sinh r|+|\sinh\delta|\cdot\cosh r\\
  & \leq\left(|\cosh\delta-1|+|\sinh\delta|\right)\cdot|\sinh r|+|\sinh\delta|\\
  & \leq\frac{1}{4}|\sinh r|+\frac{1}{4}.
 \end{align*}
-Using that $\nabla\Phi(r)=\sum^{n}_{i=1}\lambda\sinh(\lambda r_{i})$,
+Using that $\nabla\Phi(r)=(\lambda\sinh(\lambda r_{i}))^{n}_{i=1}$,
 for $\|\delta\|_{\infty}\leq\frac{1}{5\lambda}$, we have
 \begin{equation}
 \|\nabla\Phi(r+\delta)-\nabla\Phi(r)\|_{2}\leq\frac{1}{4}\|\nabla\Phi(r)\|_{2}+\frac{\sqrt{n}\lambda}{4}.\label{eq:grad_phi_diff}
@@ -756,27 +752,27 @@ and $\|\delta_{s}/s\|_{2}\leq\frac{1}{16\lambda}$.
 Using $\Phi((xs-t)/t)\leq16n$ and Lemma \ref{lem:robust_IPM_Phi},
 we have
 \[
-\|xs-t\|_{\infty}\leq\frac{t\log32n}{\lambda}\leq\frac{t}{16}
+\|xs-t\|_{\infty}\leq\frac{t\log(32n)}{\lambda}\leq\frac{t}{16}
 \]
 
-By Lemma \ref{lem:Newton_step}, we have $\mx^{-1}\delta_{x}=(\mi-\mproj)(\overline{\delta}_{\mu}/\overline{\mu})$
+By Lemma \ref{lem:Newton_step}, we have $\omx^{-1}\delta_{x}=(\mi-\mproj)(\overline{\delta}_{\mu}/\overline{\mu})$
 where $\overline{\mu}=\ox\os$ and $\mproj=\oms^{-1}\ma^{\top}(\ma\oms^{-1}\omx\ma^{\top})^{-1}\ma\omx$.
 By Lemma \ref{lem:Projection_property}, we have 
 \[
-\|\delta_{x}/x\|_{\overline{\mu}}=\|(\mi-\mproj)v\|_{\overline{\mu}}\leq\|\overline{\delta}_{\mu}/\overline{\mu}\|_{\overline{\mu}}.
+\|\delta_{x}/\ox\|_{\overline{\mu}}=\|(\mi-\mproj)(\overline{\delta}_{\mu}/\overline{\mu})\|_{\overline{\mu}}\leq\|\overline{\delta}_{\mu}/\overline{\mu}\|_{\overline{\mu}}.
 \]
 Using that $\|xs-t\|_{\infty}\leq\frac{t}{16}$, $\|\ln\ox-\ln x\|_{\infty}\leq\frac{1}{48}$,
 $\|\ln\os-\ln s\|_{\infty}\leq\frac{1}{48}$, we have $\overline{\mu}\geq\frac{10}{11}t$
 and hence
 \[
-\|\delta_{x}/x\|_{2}\leq\sqrt{\frac{11}{10t}}\|\delta_{x}/x\|_{\overline{\mu}}\leq\sqrt{\frac{11}{10t}}\|\overline{\delta}_{\mu}\|_{\overline{\mu}^{-1}}\leq\frac{11}{10t}\|\overline{\delta}_{\mu}\|_{2}
+\|\delta_{x}/x\|_{2}\leq e^{1/48}\sqrt{\frac{11}{10t}}\|\delta_{x}/\ox\|_{\overline{\mu}}\leq e^{1/48}\sqrt{\frac{11}{10t}}\|\overline{\delta}_{\mu}\|_{\overline{\mu}^{-1}}\leq e^{1/48}\frac{11}{10t}\|\overline{\delta}_{\mu}\|_{2}
 \]
 Using the formula $\overline{\delta}_{\mu}=-\frac{t'}{32\lambda}\frac{\overline{g}}{\|\overline{g}\|_{2}}$,
 we have
 \begin{align*}
-\|\delta_{x}/x\|_{2} & \leq\frac{11}{10}\frac{t'}{32\lambda t}\leq\frac{1}{16\lambda}.
+\|\delta_{x}/x\|_{2} & \leq e^{1/48}\frac{11}{10}\frac{t'}{32\lambda t}\leq\frac{1}{16\lambda}.
 \end{align*}
-Same proof gives $\|\delta_{s}/s\|_{2}\leq\frac{1}{16\lambda}$.
+The same proof gives $\|\delta_{s}/s\|_{2}\leq\frac{1}{16\lambda}$.
 \end{proof}
 
 Using this, we prove the algorithm $\mathtt{RobustStep}$ satisfies
@@ -820,7 +816,7 @@ we have
 \begin{align}
 \|\eta\|_{2}\leq & |\frac{t}{t'}-1|\|\frac{xs}{t}\|_{\infty}\sqrt{n}+\|\frac{xs}{t'}\|_{\infty}\|\frac{s-\os}{s}\|_{\infty}\|\frac{\delta_{x}}{x}\|_{2}\nonumber \\
  & +\|\frac{xs}{t'}\|_{\infty}\|\frac{x-\ox}{x}\|_{\infty}\|\frac{\delta_{s}}{s}\|_{2}+\|\frac{xs}{t'}\|_{\infty}\|\frac{\delta_{x}}{x}\|_{2}\|\frac{\delta_{s}}{s}\|_{2}\nonumber \\
-\leq & \frac{1}{128\lambda}\frac{17}{16}+\frac{9}{8}(e^{1/48}-1)(\frac{1}{16\lambda}+\frac{1}{16\lambda})+\frac{9}{8}(\frac{1}{16\lambda}\frac{1}{16\lambda})\leq\frac{1}{60\lambda}.\label{eq:robust_IPM_eta}
+\leq & \frac{1}{128\lambda}\frac{17}{16}+\frac{9}{8}(e^{1/48}-1)(\frac{1}{16\lambda}+\frac{1}{16\lambda})+\frac{9}{8}(\frac{1}{16\lambda}\frac{1}{16\lambda})\leq\frac{1}{80\lambda}.\label{eq:robust_IPM_eta}
 \end{align}
 
 In particular, we use (\ref{eq:IPM_robust_r_diff}) and (\ref{eq:robust_IPM_eta})
@@ -855,15 +851,15 @@ we have
 \[
 \Phi(r')-\Phi(r)=\left\langle \overline{g}+\eta_{2},-\frac{1}{32\lambda}\frac{\overline{g}}{\|\overline{g}\|_{2}}+\eta\right\rangle =-\frac{1}{32\lambda}\|\overline{g}\|_{2}-\frac{1}{32\lambda}\eta^{\top}_{2}\frac{\overline{g}}{\|\overline{g}\|_{2}}+\overline{g}^{\top}\eta+\eta^{\top}_{2}\eta.
 \]
-Using $\|\eta_{2}\|_{2}\leq\frac{1}{3}\|\overline{g}\|_{2}$ and $\|\eta\|_{2}\leq\frac{1}{60\lambda}$
+Using $\|\eta_{2}\|_{2}\leq\frac{1}{3}\|\overline{g}\|_{2}$ and $\|\eta\|_{2}\leq\frac{1}{80\lambda}$
 (\ref{eq:robust_IPM_eta}), we have
 \begin{align*}
-\Phi(r')-\Phi(r) & \leq-\frac{1}{32\lambda}\|\overline{g}\|_{2}+\frac{1}{32\lambda}\cdot\frac{1}{3}\|\overline{g}\|_{2}+\|\overline{g}\|_{2}\cdot\frac{1}{60\lambda}+\frac{1}{3}\|\overline{g}\|_{2}\cdot\frac{1}{60\lambda}\leq-\frac{1}{720\lambda}\|\overline{g}\|_{2}
+\Phi(r')-\Phi(r) & \leq-\frac{1}{32\lambda}\|\overline{g}\|_{2}+\frac{1}{32\lambda}\cdot\frac{1}{3}\|\overline{g}\|_{2}+\|\overline{g}\|_{2}\cdot\frac{1}{80\lambda}+\frac{1}{3}\|\overline{g}\|_{2}\cdot\frac{1}{80\lambda}\leq-\frac{1}{240\lambda}\|\overline{g}\|_{2}
 \end{align*}
 Using Lemma \ref{lem:robust_IPM_Phi}, we have $\|\overline{g}\|_{2}\geq\frac{\lambda}{\sqrt{n}}(\Phi(\overline{r})-n)\geq3\lambda\sqrt{n}$.
 Hence, we have
 \begin{equation}
-\Phi(r')\leq\Phi(r)-\frac{\sqrt{n}}{240}<16n.\label{eq:IPM_robust_decrease}
+\Phi(r')\leq\Phi(r)-\frac{\sqrt{n}}{80}<16n.\label{eq:IPM_robust_decrease}
 \end{equation}
 The potential actually decreases in this case. This proves the conclusion
 about $\Phi$.
@@ -920,22 +916,22 @@ are the $\ox,\os$ used in the $k$-th step.
 
 To bound $\mu^{(k)}$, Lemma \ref{lem:RobustStep} shows that the
 invariant $\Phi(r^{(k)})\le16n$ holds and hence Lemma \ref{lem:robust_IPM_Phi}
-shows that (recall $\lambda=16\log40n$):
+shows that (recall $\lambda=16\log(40n)$):
 \[
-\|(x^{(k)}s^{(k)}-t^{(k)})/t^{(k)}\|_{\infty}=\|r^{(k)}\|_{\infty}\leq\frac{\log32n}{\lambda}\leq\frac{1}{16}.
+\|(x^{(k)}s^{(k)}-t^{(k)})/t^{(k)}\|_{\infty}=\|r^{(k)}\|_{\infty}\leq\frac{\log(32n)}{\lambda}\leq\frac{1}{16}.
 \]
  Together with the fact that $\|\ln\ox^{(k)}-\ln x^{(k)}\|_{\infty}\leq\frac{1}{48}$,
 $\|\ln\os^{(k)}-\ln s^{(k)}\|_{\infty}\leq\frac{1}{48}$, we have
 \[
 \|\frac{\ox^{(k)}\os^{(k)}-t^{(k)}}{t^{(k)}}\|_{\infty}\leq\frac{1}{8}.
 \]
-Using this on (\ref{eq:robust_x_step}) gives $\|(x^{(k+1)}-x^{(k)})/x^{(k)}\|_{2}\leq\frac{8}{7}\frac{1}{t^{(k)}}\|\overline{\delta}_{\mu}\|_{2}.$
-Using $\overline{\delta}_{\mu}=-\frac{t'}{32\lambda}\frac{\overline{g}}{\|\overline{g}\|_{2}}$,
+Using this on (\ref{eq:robust_x_step}) gives $\|(x^{(k+1)}-x^{(k)})/x^{(k)}\|_{2}\leq\frac{8}{7}\frac{1}{t^{(k)}}\|\overline{\delta}_{\mu}\|_{2}.$Using
+$\overline{\delta}_{\mu}=-\frac{t^{(k+1)}}{32\lambda}\frac{\overline{g}}{\|\overline{g}\|_{2}}$,
 we have
 \[
 \|(x^{(k+1)}-x^{(k)})/x^{(k)}\|_{2}\leq\frac{1}{28\lambda}.
 \]
-To translate the bound to $\log$ scale, we note that $|\ln(1+t)-t|\leq2t$
+To translate the bound to $\log$ scale, we note that $|\ln(1+t)|\leq2|t|$
 for all $|t|\leq\frac{1}{2}$ and hence
 \[
 \|\ln x^{(k+1)}-\ln x^{(k)}\|_{2}=\|\ln(1+\frac{x^{(k+1)}-x^{(k)}}{x^{(k)}})\|_{2}\leq\frac{1}{14\lambda}.
@@ -957,10 +953,10 @@ it is beneficial to update coordinates preemptively.
 
 Now we state the algorithm for selecting $\ox,\os$ and $\overline{r}$.
 This algorithm is a general algorithm for maintaining a vector $\overline{v}$
-such that $\|\overline{v}-v\|_{\infty}\leq\delta$. For every $2^{k}$
+such that $\|\overline{v}-v\|_{\infty}\leq\delta$. For every $2^{\ell}$
 steps, the algorithm updates the coordinate of the vector $\overline{v}$
 if that coordinate has changed by more than $\delta/(2\log n)$ between
-this step and $2^{k}$ steps earlier.
+this step and $2^{\ell}$ steps earlier.
 
 \begin{algorithm2e}[H]
 
@@ -968,7 +964,7 @@ this step and $2^{k}$ steps earlier.
 
 \label{alg:SelectVector}
 
-Let $I=\{\}$ be the set of updating coordinates.
+Let $I=\{\}$ be the set of coordinates to update.
 
 \For{$\ell=0,1,\cdots,\left\lceil \log n\right\rceil $}{
 
@@ -1013,7 +1009,7 @@ namely, $\overline{v}^{(k)}_{i}=\overline{v}^{(k')}_{i}=v^{(k')}_{i}$.
 Since we set $\overline{v}\leftarrow v$ every $2^{\left\lceil \log n\right\rceil }$
 steps, we have $k-2^{\left\lceil \log n\right\rceil }\leq k'<k$.
 We can write $k'=k_{0}<k_{1}<k_{2}<\cdots<k_{s}=k$ such that $k_{i+1}-k_{i}$
-is a power of $2$ and $k_{i+1}-k_{i}$ divides $k_{i+1}$ with $|s|\leq2\left\lceil \log n\right\rceil $.
+is a power of $2$ and $k_{i+1}-k_{i}$ divides $k_{i+1}$ with $s\leq2\left\lceil \log n\right\rceil $.
 Hence, we have that
 \[
 v^{(k)}_{i}-\overline{v}^{(k)}_{i}=v^{(k_{s})}_{i}-v^{(k_{0})}_{i}=\sum^{s-1}_{j=0}(v^{(k_{j+1})}_{i}-v^{(k_{j})}_{i}).
@@ -1051,18 +1047,18 @@ is given in Algorithm \ref{alg:FastRobustStep}.
 \label{alg:FastRobustStep}
 
 \textbf{Define} $\Phi(r)$ according to (\ref{eq:Phi_potential})
-with $\lambda=16\log40n$.
+with $\lambda=16\log(40n)$.
 
 \textbf{Invariant:} $(x,s)\in\PriR^{\circ}\times\DualR^{\circ}$ and
-$\Phi(r)\leq16n$.
+$\Phi((xs-t)/t)\leq16n$.
 
-Let $t=t_{\mathrm{start}}$, $h=1/(128\lambda\sqrt{n})$ and $n$
-is the number of columns in $\ma$.
+Let $h=1/(128\lambda\sqrt{n})$, and let $n$ be the number of columns
+in $\ma$.
 
-Set $k\leftarrow0$, $x^{(0)}=\ox^{(0)}=x$, $s^{(0)}=\os^{(0)}=s$,
-$r^{(0)}=\overline{r}^{(0)}=\frac{xs-t}{t}$.
+Set $k\leftarrow0$, $t^{(0)}=t_{\mathrm{start}}$, $x^{(0)}=\ox^{(0)}=x$,
+$s^{(0)}=\os^{(0)}=s$, $r^{(0)}=\overline{r}^{(0)}=\frac{xs-t^{(0)}}{t^{(0)}}$.
 
-\Repeat{$t\neq t_{\mathrm{end}}$}{
+\Repeat{$t^{(k)}=t_{\mathrm{end}}$}{
 
 Let $t^{(k+1)}=\max(t^{(k)}/(1+h),t_{\mathrm{end}})$, $\overline{\delta}_{\mu}=-\frac{t^{(k+1)}}{32\lambda}\frac{\overline{g}}{\|\overline{g}\|_{2}}$,
 $\overline{g}=\nabla\Phi(\overline{r}^{(k)})$.
@@ -1076,7 +1072,7 @@ Find $\delta_{x},\delta_{s}$ such that
 \end{align}
 
 Set $x^{(k+1)}\leftarrow x^{(k)}+\delta_{x}$, $s^{(k+1)}\leftarrow s^{(k)}+\delta_{s}$,
-$r^{(k+1)}\leftarrow(x^{(k+1)}s^{(k+1)}-t)/t$.
+$r^{(k+1)}\leftarrow(x^{(k+1)}s^{(k+1)}-t^{(k+1)})/t^{(k+1)}$.
 
 $\ln\overline{x}^{(k+1)}=\mathtt{SelectVector}(\ln\overline{x}^{(k)},\ln x^{(0)},\ln x^{(1)},\cdots,\ln x^{(k+1)},1/48)$.
 
@@ -1084,28 +1080,30 @@ $\ln\overline{s}^{(k+1)}=\mathtt{SelectVector}(\ln\overline{s}^{(k)},\ln s^{(0)}
 
 $\overline{r}^{(k+1)}=\mathtt{SelectVector}(\overline{r}^{(k)},r^{(0)},r^{(1)},\cdots,r^{(k+1)},1/(48\lambda))$.
 
+Set $k\leftarrow k+1$.
+
 }
 
-\textbf{Return} $(x,s)$.
+\textbf{Return} $(x^{(k)},s^{(k)})$.
 
 \end{algorithm2e}
 
-The intermediate variables $x^{(k)},s^{(k)},\ox^{(k)},\os^{(k)}$
+The intermediate variables $x^{(k)},s^{(k)},\ox^{(k)},\os^{(k)},\overline{r}^{(k)}$
 can be stored implicitly and the cost of $\mathtt{SelectVector}$
-roughly depends on how many coordinates of $x,s$ are updated. Hence,
-the bottleneck of $\mathtt{FastRobustStep}$ solving the linear systems
-\ref{eq:LP_newton_step_robust_fast}. The cost of solving a sequence
-of linear systems in general depends on the number of entries changed.
-Combining Lemmas we proved in the previous two subsections, we can
-prove the correctness of $\mathtt{FastRobustStep}$ and bound the
-number of entries changed.
+roughly depends on how many coordinates of $\ox,\os,\overline{r}$
+are updated. Hence, the bottleneck of $\mathtt{FastRobustStep}$ is
+solving the linear systems in \ref{eq:LP_newton_step_robust_fast}.
+The cost of solving a sequence of linear systems in general depends
+on the number of entries changed. Combining the lemmas proved in the
+previous two subsections, we can prove the correctness of $\mathtt{FastRobustStep}$
+and bound the number of entries changed.
 \begin{lem}
 \label{lem:FastRobustStepMeta}Suppose that the input satisfies $(x,s)\in\PriR^{\circ}\times\DualR^{\circ}$
 and $\Phi_{\mathrm{start}}\defeq\Phi((xs-t_{\mathrm{start}})/t_{\mathrm{start}})\leq16n$.
-Using $O(\sqrt{n}\log(t_{\mathrm{start}}/t_{\mathrm{end}}))$, $\mathtt{FastRobustStep}$
-outputs $(x,s)$ such that
+After $O(\sqrt{n}\log(t_{\mathrm{start}}/t_{\mathrm{end}}))$ iterations,
+$\mathtt{FastRobustStep}$ outputs $(x,s)$ such that
 \[
-\Phi((xs-/t_{\mathrm{end}})/t_{\mathrm{end}})\leq\max(\Phi_{\mathrm{start}},12n).
+\Phi((xs-t_{\mathrm{end}})/t_{\mathrm{end}})\leq\max(\Phi_{\mathrm{start}},12n).
 \]
 Furthermore, in the $k$-th step, we have 
 \[
@@ -1115,11 +1113,11 @@ where $\ell_{k}$ is the largest integer $\ell$ with $k=0\mod 2^{\ell}$.
 \end{lem}
 
 \begin{proof}
-Note that $\mathtt{FastRobustStep}$ is a instantiation of $\mathtt{RobustStep}$,
-its output is analyzed in Lemma \ref{lem:RobustStep}. The sparsity
-guarantee of $x$ and $s$ follows from Lemma \ref{lem:SelectVector}
-with $\beta=\frac{1}{8\lambda}$ (Lemma \ref{lem:change_xsr}) and
-$\delta\geq\frac{1}{48\lambda}$.
+Note that $\mathtt{FastRobustStep}$ is an instantiation of $\mathtt{RobustStep}$,
+and its output is analyzed in Lemma \ref{lem:RobustStep}. The sparsity
+guarantees for $\overline{x}$, $\overline{s}$, and $\overline{r}$
+follow from Lemma \ref{lem:SelectVector} with $\beta=\frac{1}{8\lambda}$
+(Lemma \ref{lem:change_xsr}) and $\delta\geq\frac{1}{48\lambda}$.
 \end{proof}
 
 As we see from Section \ref{subsec:SolveLP_apx}, we can solve a linear
@@ -1136,19 +1134,19 @@ and the number of entries changed is bounded by
 \[
 \sum^{T}_{k=1}O(\min(2^{2\ell_{k}}\log^{2}n,n))=O(n\log n\cdot\log(\frac{nR}{\delta r})).
 \]
-Note that we need change at least $n$ entries to get an approximate
+Note that we need to change at least $n$ entries to get an approximate
 solution. Hence, the number of changes is optimal up to a polylogarithmic
 factor. 
 
 \subsection{Inverse Maintenance\label{subsec:IPM_Inverse_Maintenance}}
 
 In this section, we discuss how to maintain the solution of the linear
-system (Newton step) efficiently. There are many different ways on
+system (Newton step) efficiently. There are many different ways of
 maintaining the solution depending on the structure of $\ma$. In
 this note, we consider the generic case that $\ma$ is an arbitrary
 matrix. Although both the matrix and the vector of the Newton step
-changes during the algorithm, we can simplify by moving the vector
-inside the matrix.
+change during the algorithm, we can simplify by moving the vector
+into the matrix.
 \begin{fact}
 \label{fact:block-inverse}For any invertible matrix $\mm\in\R^{n\times n}$
 and any vector $v\in\Rn$, we have
@@ -1174,15 +1172,15 @@ of maintaining a column of the inverse of the matrix
 \end{array}\right).\label{eq:M_xsr_def}
 \end{equation}
 When we update $\ox,\os,\overline{r}$ to $\ox+\delta_{\ox},\os+\delta_{\os},\overline{r}+\delta_{\overline{r}}$
-with $q$ coordinates modified in total, there are only $q$ columns
+with $q$ coordinates modified in total, there are only $q$ entries
 in $\mm$ that change. Hence, we can compute the update of the inverse
 of $\mm$ using the Woodbury matrix identity (Equation (\ref{eq:Woodbury})).
 The idea of using the Woodbury identity together with fast matrix
 multiplication goes back to Vaidya \cite{vaidya1989speeding}.
 \begin{lem}
-\label{lem:maintain_inverse}Given vectors $\ox,\os,\overline{r}\in\R^{n}$
-and the update $\delta_{\ox},\delta_{\os},\delta_{\overline{r}}\in\R^{n}$.
-Let $q=\|\delta_{\ox}\|_{0}+\|\delta_{\os}\|_{0}+\|\delta_{\overline{r}}\|_{0}$
+\label{lem:maintain_inverse}Given vectors $\ox,\os,\overline{r}\in\R^{n}$and
+an update $\delta_{\ox},\delta_{\os},\delta_{\overline{r}}\in\R^{n}$,
+let $q=\|\delta_{\ox}\|_{0}+\|\delta_{\os}\|_{0}+\|\delta_{\overline{r}}\|_{0}$
 and $T_{m,n,\ell}$ be the cost of multiplying an $m\times n$ matrix
 with an $n\times\ell$ matrix. Then,
 \begin{itemize}
@@ -1201,9 +1199,10 @@ Hence, we can write
 \[
 \mm_{1}=\mm_{0}+\mathbf{U}\mathbf{C}\mathbf{V}
 \]
-where $\mathbf{U}$ consists of $q$ columns of identity matrix, $\mathbf{C}$
-is a $q\times q$ matrix and $\mathbf{V}$ consists of $q$ rows of
-identity matrix. Hence, the Woodbury matrix identity shows that
+where $\mathbf{U}$ consists of $q$ columns of the identity matrix,
+$\mathbf{C}$ is a $q\times q$ matrix and $\mathbf{V}$ consists
+of $q$ rows of the identity matrix. Hence, the Woodbury matrix identity
+shows that
 \begin{equation}
 \mm^{-1}_{1}=(\mm_{0}+\mathbf{U}\mathbf{C}\mathbf{V})^{-1}=\mm^{-1}_{0}-\mm^{-1}_{0}\mathbf{U}(\mathbf{C}^{-1}+\mathbf{V}\mm^{-1}_{0}\mathbf{U})^{-1}\mathbf{V}\mm^{-1}_{0}.\label{eq:Woodbury}
 \end{equation}
@@ -1280,7 +1279,7 @@ we compute $\mm^{-1}b$ as needed by using the previously computed
 $\mm^{-1}$ (from possibly many iterations ago) with a low-rank update
 using the Woodbury formula that we maintain.
 
-Combining the Lemma \ref{lem:maintain_inverse} with Lemma \ref{lem:SelectVector},
+Combining Lemma \ref{lem:maintain_inverse} with Lemma \ref{lem:SelectVector},
 we have the following guarantee.
 \begin{lem}
 \label{lem:FastRobustStepTime}Using $\mathtt{InverseMaintenance}$
@@ -1288,7 +1287,7 @@ to implement Line \ref{eq:LP_newton_step_robust_fast} of $\mathtt{FastRobustStep
 (Algorithm \ref{alg:FastRobustStep}), $\mathtt{FastRobustStep}$
 takes in total time 
 \[
-O((n^{\omega+o(1)}+n^{2+1/6+o(1)}+n^{5/2-\alpha/2+o(1)})\log(t_{\mathrm{end}}/t_{\mathrm{start}})).
+O((n^{\omega+o(1)}+n^{2+1/6+o(1)}+n^{5/2-\alpha/2+o(1)})\log(t_{\mathrm{start}}/t_{\mathrm{end}})).
 \]
 \end{lem}
 
@@ -1343,16 +1342,16 @@ since $2^{2\ell_{*}}\leq n^{\alpha}$.
 
 \textbf{Cost of initializing $\mathbf{T}$ and $u$}: $\widetilde{\widetilde{O}}(n^{\omega})$.
 
-Since there are $\sqrt{n}\log(t_{\mathrm{end}}/t_{\mathrm{start}})$
-steps, the total cost is
+Since there are $\sqrt{n}\log(t_{\mathrm{start}}/t_{\mathrm{end}})$
+steps up to constants, the total cost is
 \begin{align*}
- & \widetilde{\widetilde{O}}(n^{\omega}+\sqrt{n}\log(t_{\mathrm{end}}/t_{\mathrm{start}})(2^{2\ell_{*}\omega}+n2^{2\ell_{*}}+n^{\omega-\frac{1}{2}}+n^{2}2^{-\ell_{*}}))\\
-= & \widetilde{\widetilde{O}}(\sqrt{n}\log(t_{\mathrm{end}}/t_{\mathrm{start}})(n2^{2\ell_{*}}+n^{\omega-\frac{1}{2}}+n^{2}2^{-\ell_{*}}))
+ & \widetilde{\widetilde{O}}(n^{\omega}+\sqrt{n}\log(t_{\mathrm{start}}/t_{\mathrm{end}})(2^{2\ell_{*}\omega}+n2^{2\ell_{*}}+n^{\omega-\frac{1}{2}}+n^{2}2^{-\ell_{*}}))\\
+= & \widetilde{\widetilde{O}}(\sqrt{n}\log(t_{\mathrm{start}}/t_{\mathrm{end}})(n2^{2\ell_{*}}+n^{\omega-\frac{1}{2}}+n^{2}2^{-\ell_{*}}))
 \end{align*}
 where we used $2^{2\ell_{*}\omega}\leq n^{\alpha\omega}\leq n$. Putting
 $2^{2\ell_{*}}=\min(n^{\alpha},n^{2/3})$, we have
 \[
-\widetilde{\widetilde{O}}((n^{\omega}+n^{2+1/6}+n^{5/2-\alpha/2})\log(t_{\mathrm{end}}/t_{\mathrm{start}})).
+\widetilde{\widetilde{O}}((n^{\omega}+n^{2+1/6}+n^{5/2-\alpha/2})\log(t_{\mathrm{start}}/t_{\mathrm{end}})).
 \]
 \end{proof}
 
@@ -1363,7 +1362,7 @@ theorem.
 \label{thm:RobustLPApproximate}Consider a linear program $\min_{\ma x=b,x\geq0}c^{\top}x$
 with $n$ variables and $d$ constraints. Assume the linear program
 has inner radius $r$, outer radius $R$ and Lipschitz constant $L$
-(see Definition \ref{def:LP_para}), we can find $x$ such that
+(see Definition \ref{def:LP_para}). Then we can find $x$ such that
 \begin{align*}
 c^{\top}x & \leq\min_{\ma x=b,x\geq0}c^{\top}x+\delta LR,\\
 \ma x & =b,\\
@@ -1381,11 +1380,11 @@ then we have that $\|x-x^{*}\|_{2}\leq\frac{2\delta R}{\eta}$.
 \end{thm}
 
 \begin{proof}
-The algorithm for find $x$ is the same as $\mathtt{SlowSolveLP}$
+The algorithm for finding $x$ is the same as $\mathtt{SlowSolveLP}$
 except that the function $\mathtt{L2Step}$ is replaced by the function
 $\mathtt{FastRobustStep}$. The runtime of $\mathtt{FastRobustStep}$
 is analyzed in Lemma \ref{lem:FastRobustStepTime}. Since $\mathtt{FastRobustStep}$
-is a instantiation of $\mathtt{RobustStep}$, its output is analyzed
+is an instantiation of $\mathtt{RobustStep}$, its output is analyzed
 in Lemma \ref{lem:RobustStep}.
 \end{proof}
 
@@ -1415,12 +1414,18 @@ combinatorial optimization problems such as matchings and flows \cite{BrandLNPSS
 
 We continue from the discussion in Section \ref{subsec:SolveLP_apx}.
 
-First, we show that $x^{(0)}$ defined in Theorem \ref{thm:IPM_interior}
-is indeed on the central path of the modified linear program.
+First, we show that $(\ox^{+},\ox^{-},\overline{R})$ defined in Theorem
+\ref{thm:modified_LP_construction} is indeed on the central path
+of the modified linear program. First, we define the dual of the modified
+linear program as follows
+\[
+\mathcal{D}_{\eta}=\{(s^{+},s^{-},s^{\theta})\in\R^{2n+1}_{\geq0}:\ma^{\top}y+\lambda\mathbf{1}+s^{+}=c^{+},-\ma^{\top}y+s^{-}=c^{-},\lambda+s^{\theta}=0\text{ for some }y\in\R^{d}\text{ and }\lambda\in\R\}.
+\]
+
 \begin{lem}
-\label{lem:ipm_interior_modified}The modified linear program (Definition
-\ref{def:IPM_interior_modified}) has an explicit central path point
-$x^{(0)}=(x^{+}_{c},x^{-}_{c},\overline{R})$ at $t$.
+\label{lem:ipm_interior_modified}The modified linear program in Theorem
+\ref{thm:modified_LP_construction} has an explicit point on the central
+path,$(\ox^{+},\ox^{-},\overline{R})$ at $\overline{t}$.
 \end{lem}
 
 \begin{proof}
@@ -1430,37 +1435,43 @@ the following equation
 \begin{align}
 \ma x^{+}-\ma x^{-} & =b,\nonumber \\
 \sum^{n}_{i=1}x^{+}_{i}+x^{\theta} & =\widetilde{b},\nonumber \\
-\ma^{\top}y+\lambda+s^{+} & =c,\label{eq:KKT_modified_LP}\\
--\ma^{\top}y+s^{-} & =\widetilde{c},\nonumber \\
+\ma^{\top}y+\lambda+s^{+} & =c^{+},\label{eq:KKT_modified_LP}\\
+-\ma^{\top}y+s^{-} & =c^{-},\nonumber \\
 \lambda+s^{\theta} & =0,\nonumber 
 \end{align}
 for some $s^{+},s^{-}\in\R^{n}_{>0}$, $s^{\theta}>0$, $y\in\R^{d}$
 and $\lambda\in\R$.
 
-Now, we verify the solution $x^{+}=\frac{t}{c+t/\overline{R}}$, $x^{-}=\frac{t}{c+t/\overline{R}}-x_{\circ}$,
-$x^{\theta}=\overline{R}$, $x_{\circ}=\ma^{\top}(\ma\ma^{\top})^{-1}b$,
-$y=0$, $s^{+}=\frac{t}{x^{+}}$, $s^{-}=\frac{t}{x^{-}}$, $s^{\theta}=\frac{t}{x^{\theta}}$,
-$\lambda=-s^{\theta}$. Using $\ma x_{\circ}=b$, one can check it
-satisfies all the equality constraints above. 
+Now, we verify the solution $\ox^{+}=\overline{t}/(c+\overline{t}/\overline{R})$,
+$\ox^{-}=\ox^{+}-\ma^{\top}(\ma\ma^{\top})^{-1}b$, $\ox^{\theta}=\overline{R}$,
+$y=0$, $\os^{+}=\overline{t}/\ox^{+}$, $\os^{-}=\overline{t}/\ox^{-}$,
+$\os^{\theta}=\overline{t}/\ox^{\theta}$, $\lambda=-\os^{\theta}$.
+Using $\ma\ma^{\top}(\ma\ma^{\top})^{-1}b=b$, one can check it satisfies
+all the equality constraints above. 
 
-For the inequality constraints, using $\|c\|_{\infty}\leq L$ and
-$t\geq8L\overline{R}$, we have
+For the positivity constraints, using $\|c\|_{\infty}\leq L$ and
+$\overline{t}\geq4L\overline{R}$, we have
 \begin{equation}
-\frac{3}{4}\overline{R}\leq\frac{t}{L+t/\overline{R}}\leq x^{+}_{i}\leq\frac{t}{-L+t/\overline{R}}\leq\frac{3}{2}\overline{R}\label{eq:x_pos_bound}
+\frac{4}{5}\overline{R}\leq\frac{\overline{t}}{L+\overline{t}/\overline{R}}\leq\ox^{+}_{i}\leq\frac{\overline{t}}{-L+\overline{t}/\overline{R}}\leq\frac{4}{3}\overline{R}\label{eq:x_pos_bound}
 \end{equation}
-and hence $x^{+}>0$ and so is $s^{+}$. Since $\|x_{\circ}\|_{2}\leq R\leq\frac{\overline{R}}{2}$
-and $x^{+}_{i}\geq\frac{3}{4}\overline{R}$ for all $i$, we have
-$x^{-}_{i}\geq0$ for all $i$. Hence, $x^{-}$ and $s^{-}$ are positive.
-Finally, $x^{\theta}$ and $s^{\theta}$ are positive. This proves
-that $(\frac{t}{c+t/\overline{R}},\frac{t}{c+t/\overline{R}}-x_{\circ},\overline{R})$
-is on the central path point at $t$.
+and hence $\ox^{+}>0$ and so is $\os^{+}$. Note that $x_{\circ}\defeq\ma^{\top}(\ma\ma^{\top})^{-1}b$
+is the least square solution to $\ma x=b$, so, we have 
+\begin{equation}
+\|x_{\circ}\|_{2}\leq\|x^{*}\|_{2}\leq R<\frac{1}{4}\overline{R}.\label{eq:x0_upper_bound}
+\end{equation}
+Together with $\ox^{+}_{i}\geq\frac{4}{5}\overline{R}$, we have
+\[
+\ox^{-}_{i}\geq\frac{4}{5}\overline{R}-\frac{1}{4}\overline{R}>0
+\]
+for all $i$. Hence, $\ox^{-}$ and $\os^{-}$ are positive. Finally,
+$\ox^{\theta}$ and $\os^{\theta}$ are positive. This proves that
+$(\ox^{+},\ox^{-},\overline{R})$ is on the central path at $t$.
 \end{proof}
 
 Next, we show that the near-central-path point $(x,s)$ at $t=LR$
-is far from the constraints $x^{+}\geq0$ and is close to the constraints
-$x^{-}\geq0$. The proof for both involves the same idea: use the
-optimality condition of $x$. Throughout the rest of the section,
-we are given $(x,s)\in\mathcal{P}_{\overline{R},t}\times\mathcal{D}_{\overline{R},t}$
+is far from the boundary $x^{+}=0$ and is close to the boundary $x^{-}=0$.
+The proof for both involves the same idea: use the optimality condition
+of $x$. Throughout the rest of the proof, we are given $(x,s)\in\PriR_{\eta}\times\mathcal{D}_{\eta}$
 such that $\mu=xs$ satisfies
 \[
 \frac{5}{6}LR\leq\mu\leq\frac{7}{6}LR.
@@ -1469,76 +1480,78 @@ We write $\mu$ into its three parts $(\mu^{+},\mu^{-},\mu^{\theta})$.
 By Lemma \ref{lem:primal_dual_representation}, we have that $x\defeq(x^{+},x^{-},x^{\theta})$
 minimizes the function
 \[
-f(x^{+},x^{-},x^{\theta})\defeq c^{\top}x^{+}+\widetilde{c}^{\top}x^{-}-\sum^{n}_{i=1}\mu^{+}_{i}\log x^{+}_{i}-\sum^{n}_{i=1}\mu^{-}_{i}\log x^{-}_{i}-\mu^{\theta}\log x^{\theta}
+f_{\mu}(x^{+},x^{-},x^{\theta})\defeq\left\langle c^{+},x^{+}\right\rangle +\left\langle c^{-},x^{-}\right\rangle -\sum^{n}_{i=1}\mu^{+}_{i}\log x^{+}_{i}-\sum^{n}_{i=1}\mu^{-}_{i}\log x^{-}_{i}-\mu^{\theta}\log x^{\theta}
 \]
-over the domain $\mathcal{P}_{\overline{R},t}$. The gradient of $f$
-is a bit complicated. We avoid it by considering the directional derivative
-at $x$ along the direction ``$v-x$'' where $v$ is the point such
-that $\ma v=b$ and $v\geq r$. Since our domain is in $\mathcal{P}_{\overline{R},t}\subset\R^{2n+1}$,
-we need to lift $v$ to higher dimension. So we define the point
+over the domain $\PriR_{\eta}$. The gradient of $f_{\mu}$ is somewhat
+complicated. We avoid it by considering the directional derivative
+at $x$ along a feasible direction toward a lifted version of a point
+$v$ such that $\ma v=b$ and $v\geq r$. Since our domain is in $\PriR_{\eta}\subset\R^{2n+1}$,
+we lift $v$ to the higher-dimensional point defined by
 \begin{align*}
-v^{-} & =\min(x^{-},\frac{8L\overline{R}}{t}\cdot R),\\
+v^{-} & =\min(x^{-},\frac{4L\overline{R}}{\overline{t}}\cdot R),\\
 v^{+} & =v+v^{-},\\
 v^{\theta} & =\widetilde{b}-\sum^{n}_{i=1}v^{+}_{i}.
 \end{align*}
-First, we need to get some basic bounds on $\widetilde{b}$ and $\widetilde{c}$.
+First, we need to get some basic bounds on $\widetilde{b}$ and $c^{-}$.
 \begin{lem}
-\label{lem:ipm_propert_modified}We have that $\frac{3}{4}n\overline{R}\leq\widetilde{b}\leq3n\overline{R}$
-and $\widetilde{c}_{i}\geq t/(2\overline{R})$ for all $i$.
+\label{lem:ipm_propert_modified}We have that $\frac{4}{5}n\overline{R}\leq\widetilde{b}\leq3n\overline{R}$
+and $c^{-}_{i}\geq3\overline{t}/(7\overline{R})$ for all $i$.
 \end{lem}
 
 \begin{proof}
-By (\ref{eq:x_pos_bound}), we have $\frac{3}{4}\overline{R}\leq x^{+}_{c,i}\leq\frac{3}{2}\overline{R}$.
+By (\ref{eq:x_pos_bound}), we have $\frac{4}{5}\overline{R}\leq\ox^{+}_{i}\leq\frac{4}{3}\overline{R}$.
 By the definition of $\widetilde{b}$, we have
 \[
-\widetilde{b}=\sum^{n}_{i=1}x^{+}_{c,i}+\overline{R}\leq\frac{3}{2}n\overline{R}+\overline{R}\leq3n\overline{R}.
+\widetilde{b}=\sum^{n}_{i=1}\ox^{+}_{i}+\overline{R}\leq\frac{4}{3}n\overline{R}+\overline{R}\leq3n\overline{R}.
 \]
-Similarly, we have $\widetilde{b}=\sum_{i}x^{+}_{i}+\overline{R}\geq\frac{3}{4}n\overline{R}$. 
+Similarly, we have $\widetilde{b}=\sum_{i}x^{+}_{c,i}+\overline{R}\geq\frac{4}{5}n\overline{R}$. 
 
-For the bound on $\widetilde{c}$, recall that $\widetilde{c}=t/x^{-}_{c}$
-with $x^{-}_{c}=x^{+}_{c}-x_{\circ}$ and $x_{\circ}=\ma^{\top}(\ma\ma^{\top})^{-1}b=\arg\min_{\ma x=b}\|x\|_{2}$.
-Since we assumed the linear program has outer radius $R$, we have
-that $\|x_{\circ}\|_{2}\leq R$. Hence, 
+For the bound on $c^{-}_{i}$, recall that $c^{-}_{i}=t/\ox^{-}_{i}$
+with $\ox^{-}=\ox^{+}-x_{\circ}$ and $x_{\circ}=\ma^{\top}(\ma\ma^{\top})^{-1}b$.
+Using (\ref{eq:x0_upper_bound}), we have 
 \[
-x^{-}_{c,i}\leq\frac{3}{2}\overline{R}+R\leq2\overline{R}.
+x^{-}_{c,i}\leq\frac{4}{3}\overline{R}+R.
 \]
-Therefore, $\widetilde{c}\geq t/(2\overline{R})$.
+Therefore, $c^{-}\geq3\overline{t}/(7\overline{R})$.
 \end{proof}
 
-The following lemma shows that $(v^{+},v^{-},v^{\theta})\in\mathcal{P}_{\overline{R},t}$.
+The following lemma shows that $(v^{+},v^{-},v^{\theta})\in\PriR_{\eta}$.
 \begin{lem}
-\label{lem:IPM_exact_inner_pt}We have that $(v^{+},v^{-},v^{\theta})\in\mathcal{P}_{\overline{R},t}$.
+\label{lem:IPM_exact_inner_pt}We have that $(v^{+},v^{-},v^{\theta})\in\PriR_{\eta}$.
 Furthermore, we have $v^{\theta}\geq\frac{1}{2}n\overline{R}$.
 \end{lem}
 
 \begin{proof}
 Note that $(v^{+},v^{-},v^{\theta})$ satisfies the linear constraints
-of $\mathcal{P}_{\overline{R},t}$ by construction. It suffices to
-prove the vector is positive. Since $x^{-}>0$, we have $v^{-}>0$.
-Since $v\geq r$, we also have $v^{+}>0$. For $v^{\theta}$, we use
-$\widetilde{b}\geq\frac{3}{4}n\overline{R}$ (Lemma \ref{lem:ipm_propert_modified}),
-$v\leq R$ and $v^{-}\leq\frac{8L\overline{R}}{t}\cdot R\leq R$ to
-get
+of $\PriR_{\eta}$ by construction. It suffices to prove that the
+vector is positive. Since $\ox^{-}>0$, we have $v^{-}>0$. Since
+$v\geq r$, we also have $v^{+}>0$. For $v^{\theta}$, we use $\widetilde{b}\geq\frac{4}{5}n\overline{R}$
+(Lemma \ref{lem:ipm_propert_modified}), $v\leq R$ and $v^{-}\leq\frac{4L\overline{R}}{t}\cdot R\leq R$
+to get
+\begin{equation}
+v^{+}_{i}=v+v^{-}\leq2R\label{eq:v_plus_upper}
+\end{equation}
+and hence
 \begin{align*}
-v^{\theta}=\widetilde{b}-\sum^{n}_{i=1}v^{+}_{i} & \geq\frac{3}{4}n\overline{R}-\sum^{n}_{i=1}(v_{i}+v^{-}_{i})\geq\frac{1}{2}n\overline{R}.
+v^{\theta}=\widetilde{b}-\sum^{n}_{i=1}v^{+}_{i} & \geq\frac{4}{5}n\overline{R}-\sum^{n}_{i=1}(v_{i}+v^{-}_{i})\geq\frac{1}{2}n\overline{R}.
 \end{align*}
 \end{proof}
 
-Next, we define the path $p(t)=(1-t)(x^{+},x^{-},x^{\theta})+t(v^{+},v^{-},v^{\theta})$.
-Since $p(0)$ minimizes $f$, we have that $\frac{d}{dt}f(p(t))|_{t=0}\geq0$.
+Next, we define the path $p(\tau)=(1-\tau)(x^{+},x^{-},x^{\theta})+\tau(v^{+},v^{-},v^{\theta})$.
+Since $p(0)$ minimizes $f_{\mu}$, we have that $\frac{d}{d\tau}f_{\mu}(p(\tau))|_{\tau=0}\geq0$.
 In particular, we have
 \begin{align}
-0 & \leq\frac{d}{dt}f(p(t))|_{t=0}\nonumber \\
- & =c^{\top}(v^{+}-x^{+})+\widetilde{c}^{\top}(v^{-}-x^{-})-\sum^{n}_{i=1}\frac{\mu^{+}_{i}}{x^{+}_{i}}(v^{+}-x^{+})_{i}-\sum^{n}_{i=1}\frac{\mu^{-}_{i}}{x^{-}_{i}}(v^{-}-x^{-})_{i}-\frac{\mu^{\theta}}{x^{\theta}}(v_{\theta}-x^{\theta})\nonumber \\
- & =\frac{\mu^{\theta}}{x^{\theta}}(x^{\theta}-v_{\theta})+\sum^{n}_{i=1}(c_{i}-\frac{\mu^{+}_{i}}{x^{+}_{i}})(v^{+}-x^{+})_{i}+\sum^{n}_{i=1}(\widetilde{c}_{i}-\frac{\mu^{-}_{i}}{x^{-}_{i}})(v^{-}-x^{-})_{i}.\label{eq:LP_exact_3_term}
+0 & \leq\frac{d}{d\tau}f_{\mu}(p(\tau))|_{\tau=0}\nonumber \\
+ & =\left\langle c,v^{+}-x^{+}\right\rangle +\left\langle c^{-},v^{-}-x^{-}\right\rangle -\sum^{n}_{i=1}\frac{\mu^{+}_{i}}{x^{+}_{i}}(v^{+}-x^{+})_{i}-\sum^{n}_{i=1}\frac{\mu^{-}_{i}}{x^{-}_{i}}(v^{-}-x^{-})_{i}-\frac{\mu^{\theta}}{x^{\theta}}(v^{\theta}-x^{\theta})\nonumber \\
+ & =\frac{\mu^{\theta}}{x^{\theta}}(x^{\theta}-v^{\theta})+\sum^{n}_{i=1}(c_{i}-\frac{\mu^{+}_{i}}{x^{+}_{i}})(v^{+}-x^{+})_{i}+\sum^{n}_{i=1}(c^{-}_{i}-\frac{\mu^{-}_{i}}{x^{-}_{i}})(v^{-}-x^{-})_{i}.\label{eq:LP_exact_3_term}
 \end{align}
 Now, we bound each term one by one. For the first term, we note that
 \begin{equation}
-\frac{\mu^{\theta}}{x^{\theta}}(x^{\theta}-v_{\theta})\leq\mu^{\theta}\leq2LR.\label{eq:LP_exact_3_term_1}
+\frac{\mu^{\theta}}{x^{\theta}}(x^{\theta}-v^{\theta})\leq\mu^{\theta}\leq2LR.\label{eq:LP_exact_3_term_1}
 \end{equation}
-For the second term in (\ref{eq:LP_exact_3_term}), we have the following
+For the second term in (\ref{eq:LP_exact_3_term}), we have the following:
 \begin{lem}
-\label{lem:LP_exact_3_term_1}We have that $\sum^{n}_{i=1}(c_{i}-\frac{\mu^{+}_{i}}{x^{+}_{i}})(v^{+}-x^{+})_{i}\leq4nL\overline{R}-\frac{LRr}{2\min_{i}x^{+}_{i}}$.
+\label{lem:LP_exact_3_term_1}We have that $\sum^{n}_{i=1}(c_{i}-\frac{\mu^{+}_{i}}{x^{+}_{i}})(v^{+}-x^{+})_{i}\leq4nLR-\frac{LRr}{2\min_{i}x^{+}_{i}}$.
 \end{lem}
 
 \begin{proof}
@@ -1549,28 +1562,28 @@ Note that
  & \leq\|c\|_{\infty}\|v^{+}\|_{1}+2nLR-\frac{1}{2}\sum^{n}_{i=1}\frac{LRr}{x^{+}_{i}}
 \end{align*}
 where we used $\mu^{+}_{i}\in[\frac{LR}{2},2LR]$ and $v^{+}_{i}\geq v_{i}\geq r$
-at the end. The result follows from $\|c\|_{\infty}\leq L$, $\|v^{+}\|_{1}\leq\widetilde{b}\leq3n\overline{R}$
-(Lemma \ref{lem:ipm_propert_modified}).
+at the end. The result follows from $\|c\|_{\infty}\leq L$, $\|v^{+}\|_{1}\leq2nR$
+(\ref{eq:v_plus_upper}).
 \end{proof}
 
-For the third term in (\ref{eq:LP_exact_3_term}), we have the following
+For the third term in (\ref{eq:LP_exact_3_term}), we have the following:
 \begin{lem}
-\label{lem:LP_exact_3_term_2}We have that $\sum^{n}_{i=1}(\widetilde{c}_{i}-\frac{\mu^{-}_{i}}{x^{-}_{i}})(v^{-}-x^{-})_{i}\leq2LR-\frac{t}{4\overline{R}}\max_{i}x^{-}_{i}$.
+\label{lem:LP_exact_3_term_2}We have that $\sum^{n}_{i=1}(c^{-}_{i}-\frac{\mu^{-}_{i}}{x^{-}_{i}})(v^{-}-x^{-})_{i}\leq\frac{1}{2}LR-\frac{\overline{t}}{8\overline{R}}\max_{i}x^{-}_{i}$.
 \end{lem}
 
 \begin{proof}
-Using $v^{-}=\min(x^{-},\frac{8L\overline{R}}{t}\cdot R)$, we have
-$v^{-}_{i}\leq x^{-}_{i}$. We can ignore the terms with $v^{-}_{i}=x^{-}_{i}$. 
+Using $v^{-}=\min(x^{-},\frac{4L\overline{R}}{\overline{t}}\cdot R)$,
+we have $v^{-}_{i}\leq x^{-}_{i}$. We can ignore the terms with $v^{-}_{i}=x^{-}_{i}$. 
 
-For $v^{-}_{i}<x^{-}_{i}$, we have $x^{-}_{i}\geq\frac{8L\overline{R}}{t}R$.
-Using $\widetilde{c}_{i}\geq\frac{t}{2\overline{R}}$ (Lemma \ref{lem:ipm_propert_modified}),
+For $v^{-}_{i}<x^{-}_{i}$, we have $x^{-}_{i}\geq\frac{4L\overline{R}}{\overline{t}}R$.
+Using $c^{-}_{i}\geq3\overline{t}/(7\overline{R})$ (Lemma \ref{lem:ipm_propert_modified}),
 we have
 \[
-\widetilde{c}_{i}-\frac{\mu^{-}_{i}}{x^{-}_{i}}\geq\widetilde{c}_{i}-\frac{\mu^{-}_{i}}{\frac{8L\overline{R}}{t}R}\geq\widetilde{c}_{i}-\frac{2LR}{\frac{8L\overline{R}}{t}R}=\widetilde{c}_{i}-\frac{t}{4\overline{R}}\geq\frac{t}{4\overline{R}}.
+c^{-}_{i}-\frac{\mu^{-}_{i}}{x^{-}_{i}}\geq c^{-}_{i}-\frac{\mu^{-}_{i}}{\frac{4L\overline{R}}{\overline{t}}R}\geq c^{-}_{i}-\frac{\frac{7}{6}LR}{\frac{4L\overline{R}}{\overline{t}}R}=c^{-}_{i}-\frac{7\overline{t}}{24\overline{R}}\geq\frac{\overline{t}}{8\overline{R}}.
 \]
 Hence, we have
 \[
-\sum^{n}_{i=1}(\widetilde{c}_{i}-\frac{\mu^{-}_{i}}{x^{-}_{i}})(v^{-}-x^{-})_{i}\leq\frac{t}{4\overline{R}}\sum^{n}_{i=1}(v^{-}-x^{-})_{i}\leq\frac{t}{4\overline{R}}(\frac{8L\overline{R}}{t}\cdot R-\max_{i}x^{-}_{i}).
+\sum^{n}_{i=1}(c^{-}_{i}-\frac{\mu^{-}_{i}}{x^{-}_{i}})(v^{-}-x^{-})_{i}\leq\frac{\overline{t}}{8\overline{R}}\sum^{n}_{i=1}(v^{-}-x^{-})_{i}\leq\frac{\overline{t}}{8\overline{R}}(\frac{4L\overline{R}}{\overline{t}}\cdot R-\max_{i}x^{-}_{i}).
 \]
 \end{proof}
 
@@ -1578,51 +1591,40 @@ Combining (\ref{eq:LP_exact_3_term}), (\ref{eq:LP_exact_3_term_1}),
 Lemma \ref{lem:LP_exact_3_term_1} and Lemma \ref{lem:LP_exact_3_term_2},
 we have
 \begin{align*}
-0 & \leq\frac{\mu^{\theta}}{x^{\theta}}(x^{\theta}-v_{\theta})+\sum^{n}_{i=1}(c_{i}-\frac{\mu^{+}_{i}}{x^{+}_{i}})(v^{+}-x^{+})_{i}+\sum^{n}_{i=1}(\widetilde{c}_{i}-\frac{\mu^{-}_{i}}{x^{-}_{i}})(v^{-}-x^{-})_{i}\\
- & \leq2LR+4nL\overline{R}-\frac{LRr}{2\min_{i}x^{+}_{i}}+2LR-\frac{t}{4\overline{R}}\max_{i}x^{-}_{i}\\
- & =5nL\overline{R}-\frac{LRr}{2\min_{i}x^{+}_{i}}-\frac{t}{4\overline{R}}\max_{i}x^{-}_{i}.
+0 & \leq\frac{\mu^{\theta}}{x^{\theta}}(x^{\theta}-v^{\theta})+\sum^{n}_{i=1}(c_{i}-\frac{\mu^{+}_{i}}{x^{+}_{i}})(v^{+}-x^{+})_{i}+\sum^{n}_{i=1}(c^{-}_{i}-\frac{\mu^{-}_{i}}{x^{-}_{i}})(v^{-}-x^{-})_{i}\\
+ & \leq2LR+4nLR-\frac{LRr}{2\min_{i}x^{+}_{i}}+\frac{1}{2}LR-\frac{\overline{t}}{8\overline{R}}\max_{i}x^{-}_{i}\\
+ & \leq6nLR-\frac{LRr}{2\min_{i}x^{+}_{i}}-\frac{\overline{t}}{8\overline{R}}\max_{i}x^{-}_{i}.
 \end{align*}
 Hence, we show that $(x^{+},x^{-},x^{\theta})$ is close to the central
 path at $t=LR$ implies that $\min_{i}x^{+}_{i}$ cannot be too small
 and $\max_{i}x^{-}_{i}$ cannot be too large
 \[
-\frac{LRr}{2\min_{i}x^{+}_{i}}+\frac{t}{4\overline{R}}\max_{i}x^{-}_{i}\leq5nL\overline{R}.
+\frac{LRr}{2\min_{i}x^{+}_{i}}+\frac{\overline{t}}{8\overline{R}}\max_{i}x^{-}_{i}\leq6nLR.
 \]
 In particular, this shows the following:
 \begin{lem}
-\label{lem:LP_exact_distance_OPT}We have that $\min_{i}x^{+}_{i}\geq\frac{Rr}{10n\overline{R}}$
-and $\max_{i}x^{-}_{i}\leq\frac{20nL\overline{R}}{t}\cdot\overline{R}$.
+\label{lem:LP_exact_distance_OPT}We have that $\min_{i}x^{+}_{i}\geq\frac{r}{12n}$
+and $\max_{i}x^{-}_{i}\leq\frac{48nL\overline{R}}{\overline{t}}\cdot R$.
 \end{lem}
 
-Now, we are ready to prove the second conclusion of Theorem \ref{thm:IPM_interior}.
-\begin{lem}
-\label{lemma:IPM_center_original}For any primal $x\defeq(x^{+},x^{-},x^{\theta})\in\mathcal{P}_{\overline{R},t}$
-and dual $s\defeq(s^{+},s^{-},s^{\theta})\in\mathcal{D}_{\overline{R},t}$
-such that $\frac{5}{6}LR\leq x_{i}s_{i}\leq\frac{7}{6}LR$, we have
-that
-\[
-(x^{+}-x^{-},s^{+}-s^{\theta})\in\PriR\times\DualR
-\]
-and that $x^{-}_{i}\leq\epsilon x^{+}_{i}$ and $s^{\theta}\leq\epsilon s^{+}_{i}$
-for all $i$.
-\end{lem}
-
-\begin{proof}
+Now, we are ready to prove Theorem \ref{thm:modified_LP_construction}.
+\begin{proof}[Proof of Theorem \ref{thm:modified_LP_construction}]
 First we check $x\defeq x^{+}-x^{-}\in\PriR$. By the choice of $\overline{R}$
-and $t$, Lemma \ref{lem:LP_exact_distance_OPT} shows that 
+and $\overline{t}$, Lemma \ref{lem:LP_exact_distance_OPT} shows
+that 
 \[
-\frac{\max_{i}x^{-}_{i}}{\min_{i}x^{+}_{i}}\leq\frac{\frac{20nL\overline{R}}{t}\cdot\overline{R}}{\frac{Rr}{10n\overline{R}}}=\frac{200n^{2}L\frac{\overline{R}^{3}}{Rr}}{t}\leq\epsilon.
+\frac{\max_{i}x^{-}_{i}}{\min_{i}x^{+}_{i}}\leq\frac{\frac{48nL\overline{R}}{\overline{t}}\cdot R}{\frac{r}{12n}}=576n^{2}\frac{R}{r}\cdot\frac{L\overline{R}}{\overline{t}}<\eta
 \]
 Hence, we have $x^{+}-x^{-}>0$ and that $\ma(x^{+}-x^{-})=b$. 
 
 Next, we check $s\defeq s^{+}-s^{\theta}\in\DualR$. Since $x\in\mathcal{P}$,
-we have $x\leq R$ and $x^{+}_{i}\leq\frac{3}{2}x_{i}\leq\frac{3}{2}R$.
-Since $x^{+}_{i}s^{+}_{i}\geq\frac{5}{6}LR$, we have $s^{+}_{i}\geq\frac{1}{2}L.$
-On the other hand, we have $x^{\theta}=\widetilde{b}-\sum^{n}_{i=1}x^{+}_{i}\geq\widetilde{b}-2nR\geq\frac{1}{2}n\overline{R}$
-(Lemma \ref{lem:ipm_propert_modified}). Hence, $s^{\theta}\leq\frac{\frac{7}{6}LR}{\frac{1}{2}n\overline{R}}\leq\frac{5LR}{2n\overline{R}}.$
+we have $x_{i}\leq R$. Since $x^{-}_{i}\leq\frac{1}{2}x^{+}_{i}$,
+we have $x^{+}_{i}\leq2x_{i}\leq2R$. Since $x^{+}_{i}s^{+}_{i}\geq\frac{5}{6}LR$,
+we have $s^{+}_{i}\geq\frac{1}{3}L.$ On the other hand, we have $x^{\theta}=\widetilde{b}-\sum^{n}_{i=1}x^{+}_{i}\geq\widetilde{b}-2nR\geq\frac{1}{2}n\overline{R}$
+(Lemma \ref{lem:ipm_propert_modified}). Hence, $s^{\theta}\leq\frac{\frac{7}{6}LR}{\frac{1}{2}n\overline{R}}\leq\frac{3LR}{n\overline{R}}.$
 Combining both and the choice of $\overline{R}$, we have
 \[
-\frac{s^{\theta}}{\min_{i}s^{+}_{i}}\leq\frac{\frac{5LR}{2n\overline{R}}}{L/2}=\frac{5R}{n\overline{R}}\leq\epsilon
+\frac{s^{\theta}}{\min_{i}s^{+}_{i}}\leq\frac{\frac{3LR}{n\overline{R}}}{L/2}=\frac{6R}{n\overline{R}}<\eta
 \]
 Hence, we have $s=s^{+}-s^{\theta}>0$ and that $\ma^{\top}y+s=\ma^{\top}y+s^{+}-s^{\theta}=\ma^{\top}y+s^{+}+\lambda=c$
 (See (\ref{eq:KKT_modified_LP})).
@@ -1645,14 +1647,14 @@ we have
 \mzero & \mw_{2} & 0\\
 0 & 0 & \alpha
 \end{array}\right]\oma^{\top}=\left[\begin{array}{cc}
-\ma^{\top}(\mw_{1}+\mw_{2})\ma & \ma w_{1}\\
+\ma(\mw_{1}+\mw_{2})\ma^{\top} & \ma w_{1}\\
 (\ma w_{1})^{\top} & \|w_{1}\|_{1}+\alpha
 \end{array}\right].
 \]
 Note that the second row and second column block has size $1$. By
 the block inverse formula (Fact \ref{fact:block-inverse}), $\mh^{-1}v$
-is an explicit formula involving $(\ma^{\top}(\mw_{1}+\mw_{2})\ma)^{-1}v_{1:n}$
-and $(\ma^{\top}(\mw_{1}+\mw_{2})\ma)^{-1}\ma w_{1}$. Hence, we can
-compute $\mh^{-1}v$ by solving two linear systems of the form $\ma^{\top}\mw\ma$
+is an explicit formula involving $(\ma(\mw_{1}+\mw_{2})\ma^{\top})^{-1}v_{1:d}$
+and $(\ma(\mw_{1}+\mw_{2})\ma^{\top})^{-1}\ma w_{1}$. Hence, we can
+compute $\mh^{-1}v$ by solving two linear systems of the form $\ma\mw\ma^{\top}$
 with some extra linear work.
 \end{document}
