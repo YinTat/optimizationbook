@@ -1,130 +1,148 @@
+\global\long\def\defeq{\stackrel{\mathrm{{\scriptscriptstyle def}}}{=}}%
+\global\long\def\norm#1{\left\Vert #1\right\Vert }%
+\global\long\def\R{\mathbb{R}}%
+\global\long\def\Diag{\mathrm{Diag}}%
+\global\long\def\Rn{\mathbb{R}^{n}}%
+\global\long\def\tr{\mathrm{Tr}}%
+\global\long\def\diag{\mathrm{diag}}%
+\global\long\def\rank{\mathrm{rank}}%
+\global\long\def\ma{A}%
+\global\long\def\mx{X}%
+\global\long\def\ms{S}%
+\global\long\def\mproj{P}%
+\global\long\def\mi{I}%
+\global\long\def\mzero{0}%
+\global\long\def\oma{\overline{\ma}}%
+\global\long\def\md{D}%
+\global\long\def\mw{W}%
+\global\long\def\omx{\overline{X}}%
+\global\long\def\oms{\overline{S}}%
+\global\long\def\ox{\overline{x}}%
+\global\long\def\os{\overline{s}}%
+\global\long\def\oy{\overline{y}}%
+\global\long\def\ttag#1{\tag{#1}}%
+\global\long\def\PriR{\mathcal{P}}%
+ 
+\global\long\def\DualR{\mathcal{D}}%
+ 
 
 \section{Interior Point Method for Linear Programs\label{sec:IPM}}
 
 In this section, we study interior point methods. In practice, this
 method reduces the problem of optimizing a convex function to solving
-a small number (``typically less than $30$'') linear systems. In
-theory, it reduces the problem to $\tilde{O}(\sqrt{n})$ linear systems.
+a small number of linear systems (``typically less than $30$'').
+In theory, it reduces the problem to $\tilde{O}(\sqrt{n})$ linear
+systems. 
 
 We start by describing interior point method for linear programs.
 We establish a polynomial bound and then later discuss implementation
 details.
 
-\subsection{Basic Properties}
+\section{Introduction}
 
-We first consider the primal problem
+Consider the primal linear program
+\begin{equation}
+\min_{\ma x=b,x\in\R^{n}_{\geq0}}c^{\top}x\ttag P\label{eq:tut_primal_LP}
+\end{equation}
+and its dual
+\begin{equation}
+\max_{\ma^{\top}y+s=c,s\in\R^{n}_{\geq0}}b^{\top}y\ttag D\label{eq:tut_dual_LP}
+\end{equation}
+where $\ma\in\R^{d\times n}$, $\R_{\geq0}$ denotes the set of nonnegative
+real numbers, and vector inequalities are coordinatewise. The feasible
+regions for the two programs are 
 \[
-(\mathrm{P}):\quad\quad\min_{x}c^{\top}x\text{ subject to }Ax=b,x\geq0
+\PriR=\{x\in\R^{n}_{\geq0}:\ma x=b\}\mbox{ and }\DualR=\{s\in\R^{n}_{\geq0}:\ma^{\top}y+s=c\text{ for some }y\}.
 \]
-where $A\in\R^{m\times n}$. The difficulty of linear programs is
-the constraint $x\geq0$. Without this constraint, we can simply solve
-it as a linear system. One natural idea to solve linear programs is
-to replace the hard constraint $x\geq0$ by some smooth function.
-So, let us consider the following ``regularized'' version of the
-linear program for some $t\ge0$:
+We define their interiors: 
 \[
-(\mathrm{P}_{t}):\quad\quad\min_{x}c^{\top}x-t\sum_{i=1}^{n}\ln x_{i}\text{ subject to }Ax=b.
+\PriR^{\circ}=\{x\in\R^{n}_{>0}:\ma x=b\}\mbox{ and \ensuremath{\DualR^{\circ}}}=\{s\in\R^{n}_{>0}:\ma^{\top}y+s=c\text{ for some }y\}.
 \]
-We will explain the reason of choosing $\ln x$ in more detail later.
-For now, we can think it as a nice function that blows up to $\infty$
-as $x$ approaches zero.
+One key property of the primal and dual linear programs is that the
+dual objective $b^{\top}y$ is a lower bound on the primal objective
+$c^{\top}x$ and that $x^{\top}s$ measures the gap between the two
+objective values.
 
-One can think that $-\ln x$ gives a force from every constraint $x\geq0$
-to make sure $x\geq0$ is true. Since the gradient of $-\ln x$ blows
-up when $x=0$, when $x$ is close enough, the force is large enough
-to counter the cost $c$. When $t\rightarrow0$, then the problem
-$(\mathrm{P}_{t})$ is closer to the original problem $(\mathrm{P})$
-and hence the minimizer of $(\mathrm{P}_{t})$ is closer to a minimizer
-of $(\mathrm{P})$.
-
-First, we give a formula for the minimizer of $(\mathrm{P}_{t})$.
-\begin{lem}[Existence and Uniqueness of central path]
-If the polytope $\{Ax=b,x\geq0\}$ has an interior, then the optimum
-of $(\mathrm{P}_{t})$ is unique and is given by the solution of the
-following system:
-\begin{align*}
-xs & =t,\\
-Ax & =b,\\
-A^{\top}y+s & =c,\\
-(x,s) & \geq0
-\end{align*}
-where the variables $s_{i}$ are additional ``slack'' variables,
-and $xs=t$ is shorthand of $x_{i}s_{i}=t$ for all $i$.
+To motivate the main idea of the interior point method, we recall
+the optimality condition for linear programs.
+\begin{lem}[Duality Gap]
+\label{lem:duality_gap}For any $x\in\PriR$ and any dual feasible
+pair $(y,s)$ with $\ma^{\top}y+s=c$, the duality gap satisfies $c^{\top}x-b^{\top}y=x^{\top}s$.
+In particular, we have
+\[
+\max_{\ma^{\top}\oy+\os=c,\os\in\R^{n}_{\geq0}}b^{\top}\oy-x^{\top}s\leq b^{\top}y\leq c^{\top}x\leq\min_{\ma\ox=b,\ox\in\R^{n}_{\geq0}}c^{\top}\ox+x^{\top}s.
+\]
 \end{lem}
 
 \begin{proof}
-The optimality condition, using dual variables $y$(Lagrangian multipliers)
-for the Lagrangian of $Ax=b$ is given by
+Using $\ma x=b$ and $\ma^{\top}y+s=c$, we can compute the duality
+gap as follows
 \[
-c-\frac{t}{x}=A^{\top}y.
+c^{\top}x-b^{\top}y=c^{\top}x-(\ma x)^{\top}y=c^{\top}x-x^{\top}(\ma^{\top}y)=x^{\top}s.
 \]
-Write $s_{i}=\frac{t}{x_{i}}$, to get the formula. The solution is
-unique because the function $-\ln x$ is strictly convex.
+Since $x,s\geq0$, this shows that 
+\[
+c^{\top}x\geq b^{\top}y.
+\]
+Optimizing over all $x$ and $y$, we obtain weak duality
+\[
+\min_{\ma\ox=b,\ox\in\R^{n}_{\geq0}}c^{\top}\ox\geq\max_{\ma^{\top}y+s=c,s\in\R^{n}_{\geq0}}b^{\top}y.
+\]
+Using this, we have
+\[
+c^{\top}x=b^{\top}y+x^{\top}s\leq\max_{\ma^{\top}\oy+\os=c,\os\in\R^{n}_{\geq0}}b^{\top}\oy+x^{\top}s\leq\min_{\ma\ox=b,\ox\in\R^{n}_{\geq0}}c^{\top}\ox+x^{\top}s.
+\]
+The other direction is similar.
 \end{proof}
-\begin{defn}
-We define the central path ${\cal C}_{t}=(x^{(t)},y^{(t)},s^{(t)})$
-as the sequence of points satisfying
-\begin{align*}
-x^{(t)}s^{(t)} & =t,\\
-Ax^{(t)} & =b,\\
-A^{\top}y^{(t)}+s^{(t)} & =c,\\
-(x^{(t)},s^{(t)}) & \geq0.
-\end{align*}
+The main implication of Lemma \ref{lem:duality_gap} is that any feasible
+$(x,s)$ with small $x^{\top}s$ is a nearly optimal solution of the
+linear program. This leads us to primal-dual algorithms in which we
+start with a feasible primal-dual solution pair $(x,s)$ and iteratively
+update the solution to decrease the duality gap $x^{\top}s$. 
+
+\section{Interior Point Method}
+
+In this section, we discuss the classical short-step interior point
+method. For two vectors $a,b$, we use $ab$ to denote the vector
+with components $(ab)_{i}=a_{i}b_{i}$ and $a/b$ to denote the vector
+with components $a_{i}/b_{i}$. For a scalar $t\in\R$, we let $t\mathbf{1}$
+denote the vector with all coordinates equal to $t$. 
+\begin{defn}[Central Path]
+\label{def:central_path}We define the central path $(x_{t},s_{t})\in\PriR^{\circ}\times\DualR^{\circ}$
+by $x_{t}s_{t}=t\mathbf{1}$. We say $x_{t}$ is on the central path
+of (\ref{eq:tut_primal_LP}) at $t$.
 \end{defn}
 
-To give another interpretation of the central path, note that the
-dual problem is
+The algorithm maintains a pair $(x,s)\in\PriR^{\circ}\times\DualR^{\circ}$
+and a scalar $t>0$ satisfying the invariant 
 \[
-(\mathrm{D}):\quad\quad\max_{y,s}b^{\top}y\text{ subject to }A^{\top}y+s=c,s\geq0.
+\|\frac{xs}{t}-\mathbf{1}\|_{2}\leq\frac{1}{4}.
 \]
-Note that for any feasible $x$ and $y$, we have that
-\[
-0\leq c^{\top}x-b^{\top}y=c^{\top}x-x^{\top}A^{\top}y=x^{\top}s.
-\]
-Hence, $(x,y,s)$ solves the linear program if it satisfies the central
-path equation with $t=0$. Therefore, following the central path is
-a balanced way to decrease $x_{i}s_{i}$ uniformly to $0$. We can
-formalize the intuition that for small $t$, $x^{(t)}$ is a good
-approximation of the primal solution. In fact $t$ itself is a bound
-on the error of the current solution.
-\begin{lem}[Duality Gap]
-We have that
-\[
-\text{Duality Gap}=c^{\top}x^{(t)}-b^{\top}y^{(t)}=c^{\top}x^{(t)}-\left(x^{(t)}\right)^{\top}A^{\top}y^{(t)}=\left(x^{(t)}\right)^{\top}s^{(t)}=tn.
-\]
-\end{lem}
+Note that the deviation from the central path is measured in $\ell_{2}$
+norm. In each step, the algorithm decreases $t$ by a factor of $1-\Omega(n^{-1/2})$
+while maintaining the invariant.
 
-The interior point method follows the following framework:
-\begin{enumerate}
-\item Find $\mathcal{C}_{1}$
-\item Until $t<\frac{\varepsilon}{n}$,
-\begin{enumerate}
-\item Use $\mathcal{C}_{t}$ to find $\mathcal{C}_{(1-h)t}$ for $h=\frac{1}{10\sqrt{n}}$.
-\end{enumerate}
-\end{enumerate}
-Note that this algorithm only finds a solution with $\varepsilon$
-error. If the linear program is integral, we can simply stop at small
-enough $\varepsilon$ and round it off to the closest integral point.
+\subsection{Basic Property of a Step}
 
 To see why there is a pair $(x,s)\in\PriR^{\circ}\times\DualR^{\circ}$
-satisfying the invariant $xs=t$, we prove the following generalization.
+satisfying the invariant, we prove the following generalization.
 \begin{lem}[Quadrant Representation of Primal-Dual]
-\label{lem:primal_dual_representation}Suppose $\PriR$ is non-empty
-and bounded. For any positive vector $\mu\in\R_{>0}^{n}$, there is
-an unique pair $(x_{\mu},s_{\mu})\in\PriR^{\circ}\times\DualR^{\circ}$
+\label{lem:primal_dual_representation}Suppose $\PriR^{\circ}$ is
+non-empty and $\PriR$ is bounded. For any positive vector $\mu\in\R^{n}_{>0}$,
+there is a unique pair $(x_{\mu},s_{\mu})\in\PriR^{\circ}\times\DualR^{\circ}$
 such that $x_{\mu}s_{\mu}=\mu$. Furthermore, $x_{\mu}=\arg\min_{x\in\PriR}f_{\mu}(x)$
 where
 \[
-f_{\mu}(x)=c^{\top}x-\sum_{i=1}^{n}\mu_{i}\ln x_{i}.
+f_{\mu}(x)=c^{\top}x-\sum^{n}_{i=1}\mu_{i}\ln x_{i}.
 \]
 \end{lem}
 
 \begin{proof}
-Fix $\mu\in\R_{>0}^{n}$. We define $x_{\mu}=\arg\min_{x\in\PriR}f_{\mu}(x)$
+Fix $\mu\in\R^{n}_{>0}$. We define $x_{\mu}=\arg\min_{x\in\PriR}f_{\mu}(x)$
 and prove that $(x_{\mu},s_{\mu})\in\PriR^{\circ}\times\DualR^{\circ}$
-with $x_{\mu}s_{\mu}=\mu$ for some $s_{\mu}$. Since $\PriR$ is
-non-empty and bounded and since $f_{\mu}$ is strictly convex, such
-an $x_{\mu}$ exists. Furthermore, since $f_{\mu}(x)\rightarrow+\infty$
+with $x_{\mu}s_{\mu}=\mu$ for some $s_{\mu}$. Since $\PriR^{\circ}$
+is non-empty, $\PriR$ is bounded, and $f_{\mu}$ is strictly convex,
+such an $x_{\mu}$ exists. Furthermore, since $f_{\mu}(x)\rightarrow+\infty$
 as $x_{i}\rightarrow0$ for any $i$, we have that $x_{\mu}\in\PriR^{\circ}$.
 
 By the KKT optimality condition for $f_{\mu}$, there is a vector
@@ -132,333 +150,240 @@ $y$ such that
 \[
 \nabla f_{\mu}(x_{\mu})=c-\frac{\mu}{x_{\mu}}=\ma^{\top}y.
 \]
-Define $s_{\mu}=\frac{\mu}{x_{\mu}}$, then one can check that $s_{\mu}\in\DualR^{\circ}$
+Define $s_{\mu}=\frac{\mu}{x_{\mu}}$. Then one can check that $s_{\mu}\in\DualR^{\circ}$
 and $x_{\mu}s_{\mu}=\mu$.
+
+For the uniqueness, if $(x,s)\in\PriR^{\circ}\times\DualR^{\circ}$
+and $xs=\mu$, then $x$ satisfies the optimality condition for $f_{\mu}$.
+Since $f_{\mu}$ is strictly convex, such $x$ must be unique.
 \end{proof}
-
-\subsection{Following the central path}
-
-During the algorithm, we maintain a point $(x,y,s)$ such that $Ax=b$,
-$A^{\top}y+s=c$ and $x_{i}s_{i}$ is close to $t$ for all $i$.
-We show how to find a feasible $(x+\delta_{x},y+\delta_{y},s+\delta_{s})$
-such that it is even closer to $t$. We can write the equation as
-follows:
+Lemma \ref{lem:primal_dual_representation} shows that any point in
+$\PriR^{\circ}\times\DualR^{\circ}$ is uniquely represented by a
+positive vector $\mu$. Interior point methods move $\mu$ uniformly
+to $0$ while maintaining the corresponding $x_{\mu}$. Now we discuss
+how to find $(x_{\mu},s_{\mu})$ from a nearby interior feasible point
+$(x,s)$; namely, how to move $(x,s)$ to $(x+\delta_{x},s+\delta_{s})$
+so that the result satisfies the system
 \begin{align*}
-(x+\delta_{x})(s+\delta_{s}) & \thickapprox t,\\
-A(x+\delta_{x}) & =b,\\
-A^{\top}(y+\delta_{y})+(s+\delta_{s}) & =c.
+(x+\delta_{x})(s+\delta_{s}) & =\mu,\\
+\ma(x+\delta_{x}) & =b,\\
+\ma^{\top}(y+\delta_{y})+(s+\delta_{s}) & =c,\\
+(x+\delta_{x},s+\delta_{s}) & \in\R^{2n}_{>0}.
 \end{align*}
-(Omitted the non-negative conditions.) Using our assumption on $(x,y,s)$
-and noting that $\delta_{x}\cdot\delta_{s}$ is small, the equation
-can simplified as follows. We use the notation $X=\Diag(x)$, $S=\Diag(s)$.
-\[
-\left[\begin{array}{ccc}
-0 & A^{\top} & I\\
-A & 0 & 0\\
-S & 0 & X
-\end{array}\right]\left[\begin{array}{c}
-\delta_{x}\\
-\delta_{y}\\
-\delta_{s}
-\end{array}\right]=\left[\begin{array}{c}
-0\\
-0\\
-t-xs
-\end{array}\right].
-\]
-This is a linear system and hence we can solve it exactly.
-\begin{xca}
-\label{exer:d_central}Let $r=t-xs$. Prove that $S\delta_{x}=(I-\overline{P})r$
-and $X\delta_{s}=\overline{P}r$ where $\overline{P}=XA^{\top}(AS^{-1}XA^{\top})^{-1}AS^{-1}$.
-
-First, we show that $x^{\new}=x+\delta_{x}$ and $s^{\new}=s+\delta_{s}$
-are feasible.
-\end{xca}
-
+Although the system above involves $y$, our approximate solution
+does not need to know $y$. By ignoring the inequality constraint
+and the second-order term $\delta_{x}\delta_{s}$ in the first equation
+above, and using $\ma x=b$ and $\ma^{\top}y+s=c$ we can simplify
+the system:
+\begin{align}
+xs+\ms\delta_{x}+\mx\delta_{s} & =\mu,\label{eq:LP_newton_step}\\
+\ma\delta_{x} & =0,\nonumber \\
+\ma^{\top}\delta_{y}+\delta_{s} & =0,\nonumber 
+\end{align}
+where $\mx$ and $\ms$ are the diagonal matrices with diagonals $x$
+and $s$, respectively. In the following lemma, we show how to write
+the step above using a projection matrix ($\mproj^{2}=\mproj$).
 \begin{lem}
-Suppose $\sum_{i}\left(x_{i}s{}_{i}-t\right)^{2}\leq\varepsilon^{2}t^{2}$
-with $\varepsilon<\frac{1}{2}$. Then, $x_{i}^{\new}>0$ and $s_{i}^{\new}>0$
-for all $i$.
+\label{lem:Newton_step}Suppose that $\ma$ has full row rank and
+$(x,s)\in\PriR^{\circ}\times\DualR^{\circ}$. Then, the unique solution
+to the linear system (\ref{eq:LP_newton_step}) is given by
+\begin{align*}
+\mx^{-1}\delta_{x} & =(\mi-\mproj)(\delta_{\mu}/(xs)),\\
+\ms^{-1}\delta_{s} & =\mproj(\delta_{\mu}/(xs))
+\end{align*}
+where $\delta_{\mu}=\mu-xs$, the division by $xs$ is coordinatewise,
+and $\mproj=\ms^{-1}\ma^{\top}(\ma\ms^{-1}\mx\ma^{\top})^{-1}\ma\mx$.
 \end{lem}
 
 \begin{proof}
-Note that $\overline{P}^{2}=\overline{P}$, where $\overline{P}$
-is as defined in the exercise above. However, in general $\overline{P}\neq\overline{P}^{T},$
-i.e., $\overline{P}$ might not be an orthogonal projection matrix.
-It will be convenient to consider the orthogonal projection matrix
-$P=S^{-\frac{1}{2}}X^{\frac{1}{2}}A^{\top}(AS^{-1}XA^{\top})^{-1}AS^{-\frac{1}{2}}X^{\frac{1}{2}}$.
-Note that
+Note that the step satisfies $\ms\delta_{x}+\mx\delta_{s}=\delta_{\mu}$.
+Multiplying both sides by $\ma\ms^{-1}$ and using $\ma\delta_{x}=0$,
+we have
 \[
-X^{-1}\delta_{x}=S^{-\frac{1}{2}}X^{-\frac{1}{2}}(I-P)S^{-\frac{1}{2}}X^{-\frac{1}{2}}r.
+\ma\ms^{-1}\mx\delta_{s}=\ma\ms^{-1}\delta_{\mu}.
 \]
-By the assumption for each $i$, $x_{i}s_{i}\ge(1-\varepsilon)t$.
-Therefore, we have
-\begin{align*}
-\|X^{-1}\delta_{x}\|_{2} & \leq\frac{1}{\sqrt{(1-\varepsilon)t}}\|(I-P)S^{-\frac{1}{2}}X^{-\frac{1}{2}}r\|_{2}\\
- & \leq\frac{1}{\sqrt{(1-\varepsilon)t}}\|S^{-\frac{1}{2}}X^{-\frac{1}{2}}r\|_{2}\\
- & \leq\frac{1}{(1-\varepsilon)t}\|r\|_{2}\leq\frac{\varepsilon}{1-\varepsilon}.
-\end{align*}
-Similarly, we have $S^{-1}\delta_{s}=S^{-\frac{1}{2}}X^{-\frac{1}{2}}PS^{-\frac{1}{2}}X^{-\frac{1}{2}}r$.
-Hence, we have $\|S^{-1}\delta_{s}\|_{2}\leq\frac{\varepsilon}{1-\varepsilon}$.
-Therefore, when $\epsilon<\frac{1}{2}$, we have both $\|X^{-1}\delta_{x}\|_{\infty}$
-and $\|S^{-1}\delta_{s}\|_{\infty}$ less than $1$, which shows that
-both $x^{\new}$ and $s^{\new}$ are positive. 
-
-Next, we show that $xs$ is closer to $t$ after one Newton step.
+Now we use that $\ma^{\top}\delta_{y}+\delta_{s}=0$ and get
+\[
+\ma\ms^{-1}\mx\ma^{\top}\delta_{y}=-\ma\ms^{-1}\delta_{\mu}.
+\]
+Since $\ma\in\R^{d\times n}$ has full row rank and $\ms^{-1}\mx$
+is invertible, we have that $\ma\ms^{-1}\mx\ma^{\top}$ is invertible.
+Hence, 
+\[
+\delta_{y}=-(\ma\ms^{-1}\mx\ma^{\top})^{-1}\ma\ms^{-1}\delta_{\mu}\mbox{\ensuremath{\qquad} and \ensuremath{\qquad}}\delta_{s}=\ma^{\top}(\ma\ms^{-1}\mx\ma^{\top})^{-1}\ma\ms^{-1}\delta_{\mu}.
+\]
+Putting this into $\ms\delta_{x}+\mx\delta_{s}=\delta_{\mu}$, we
+have
+\[
+\delta_{x}=\ms^{-1}\delta_{\mu}-\ms^{-1}\mx\ma^{\top}(\ma\ms^{-1}\mx\ma^{\top})^{-1}\ma\ms^{-1}\delta_{\mu}.
+\]
+The result follows from the definition of $\mproj$.
 \end{proof}
+
+\subsection{Lower Bounding Step Size}
+
+The efficiency of interior point methods depends on how large a step
+we can take while staying within the domain. In the rest of this subsection,
+we write $\mu=xs$ for the current complementarity vector. We first
+study the step operators $(\mi-\mproj)$ and $\mproj$. The following
+lemma implies that $\mproj$ is a nearly orthogonal projection matrix
+when $\mu$ is close to a multiple of the all-ones vector. Hence,
+the relative changes of $\mx^{-1}\delta_{x}$ and $\ms^{-1}\delta_{s}$
+are essentially the orthogonal decomposition of the relative step
+$\delta_{\mu}/\mu$. For a vector $u$ and a positive vector $v$,
+we define $\norm u_{v}\defeq\sqrt{u^{\top}\Diag(v)u}$.
 \begin{lem}
-\label{lem:IPM_progress} If $\sum_{i}\left(x_{i}s{}_{i}-t\right)^{2}\leq\varepsilon^{2}t^{2}$
-with $\varepsilon<\frac{1}{4}$, we have that 
-\[
-\sum_{i}\left(x_{i}^{\new}s_{i}^{\new}-t\right)^{2}\leq\left(\varepsilon^{4}+16\varepsilon^{5}\right)t^{2}.
-\]
+\label{lem:Projection_property}Under the assumption in Lemma \ref{lem:Newton_step},
+$\mproj$ is a projection matrix such that $\|\mproj v\|_{\mu}\leq\|v\|_{\mu}$
+for any $v\in\Rn$. Similarly, we have that $\|(\mi-\mproj)v\|_{\mu}\leq\|v\|_{\mu}$.
 \end{lem}
 
 \begin{proof}
-We have that $x_{i}\delta_{s,i}+s_{i}\delta_{x,i}=t-x_{i}s_{i}$.
-Using this, 
+$\mproj$ is a projection because $\mproj^{2}=\mproj$. Define the
+orthogonal projection matrix
 \[
-\text{LHS}=\sum_{i}\left(x_{i}^{\new}s_{i}^{\new}-t\right)^{2}=\sum_{i}(x_{i}s_{i}+x_{i}\delta_{s,i}+s_{i}\delta_{x,i}+\delta_{x,i}\delta_{s,i}-t)^{2}=\sum_{i}\delta_{x,i}^{2}\delta_{s,i}^{2}\leq\left((1+\epsilon)t\right)^{2}\cdot\sum_{i}\left(\frac{\delta_{x,i}}{x_{i}}\right)^{2}\left(\frac{\delta_{s,i}}{s_{i}}\right)^{2}
+\mproj_{\mathrm{orth}}=\ms^{-1/2}\mx^{1/2}\ma^{\top}(\ma\ms^{-1}\mx\ma^{\top})^{-1}\ma\mx^{1/2}\ms^{-1/2},
 \]
-where in the last step we used $x_{i}^{2}s_{i}^{2}\leq(1+\varepsilon)^{2}t^{2}$.
-Using the previous lemma, we have that
+then we have
 \begin{align*}
-\text{LHS} & \leq\left((1+\varepsilon)t\right)^{2}\cdot\|X^{-1}\delta_{x}\|_{4}^{2}\|S^{-1}\delta_{s}\|_{4}^{2}\\
- & \leq\left((1+\varepsilon)t\right)^{2}\cdot\|X^{-1}\delta_{x}\|_{2}^{2}\|S^{-1}\delta_{s}\|_{2}^{2}\\
- & \leq\left((1+\varepsilon)t\right)^{2}\left(\frac{\varepsilon}{1-\varepsilon}\right)^{4}\\
- & \leq\left(\varepsilon^{4}+16\varepsilon^{5}\right)t^{2}
+\|\mproj v\|^{2}_{\mu} & =v^{\top}\mx\ma^{\top}(\ma\ms^{-1}\mx\ma^{\top})^{-1}\ma\ms^{-1}\mx\ms\ms^{-1}\ma^{\top}(\ma\ms^{-1}\mx\ma^{\top})^{-1}\ma\mx v\\
+ & =v^{\top}\ms^{1/2}\mx^{1/2}\mproj_{\mathrm{orth}}\ms^{1/2}\mx^{1/2}v\\
+ & \leq v^{\top}\ms^{1/2}\mx^{1/2}\ms^{1/2}\mx^{1/2}v=\|v\|^{2}_{\mu}.
 \end{align*}
-Using this, we have the main theorem. 
+The calculation for $\|(\mi-\mproj)v\|_{\mu}$ is similar.
 \end{proof}
-\begin{thm}
-We can solve a linear program to within $\delta$ ``error'' (see
-Lemma \ref{lem:feasible_LP}) in $O(\sqrt{n}\log(\frac{1}{\delta}))$
-iterations and each iteration only needs to solve a linear system.
-\end{thm}
-
-\begin{proof}
-Let $\Phi=\sum_{i}\left(x_{i}s{}_{i}-t\right)^{2}$ be the error of
-the current iteration. We always maintain $\Phi\leq\frac{t^{2}}{16}$
-for the current $(x,y,s)$ and $t$. At each step, we use Lemma \ref{lem:IPM_progress}
-which makes $\Phi\leq\frac{t^{2}}{50}$. Then, we decrease $t$ to
-$t(1-\frac{1}{10\sqrt{n}})$. Note that
-\[
-\sum_{i}\left(x_{i}s{}_{i}-t(1-h)\right)^{2}\leq2\Phi+2t^{2}h^{2}n\leq\frac{2t^{2}}{50}+\frac{2t^{2}}{100}\leq\frac{(t(1-h))^{2}}{16}.
-\]
-Therefore, the invariant is preserved after each step. Since $t$
-is decreased by a $\left(1-\frac{1}{10\sqrt{n}}\right)$ factor each
-step, it takes $O(\sqrt{n}\log(\frac{1}{\delta}))$ to decrease $t$
-from $1$ to $\delta^{2}$.
-\end{proof}
-
-
-\subsection{Finding the initial point}
-
-The first question is to find $\mathcal{C}_{1}$. This can be handled
-by extending the problem to slightly higher dimension. To the reader
-familiar with the Simplex method, this might be reminiscent of the
-two phases of the simplex method, where the purpose of the first phase
-is to find a feasible initial solution.The idea of the construction
-is simple: if we simply solve $Ax=b$, the solution could have negative
-components. So we will allow negative components but penalize them
-heavily in the objective.
+Next we give a lower bound on the largest feasible step size.
 \begin{lem}
-\label{lem:feasible_LP} Consider a linear program $\min_{Ax=b,x\geq0}c^{\top}x$
-with $n$ variables and $d$ constraints. Assume that 
-\begin{enumerate}
-\item Diameter: For any $x\geq0$ with $Ax=b$, we have that $\|x\|_{\infty}\leq R$.
-\item Lipschitz constant of the objective: $\|c\|_{\infty}\leq L$. 
-\end{enumerate}
-For any $0<\delta\leq1$, the modified linear program $\min_{\overline{A}\overline{x}=\overline{b},\overline{x}\geq0}\overline{c}^{\top}\overline{x}$
-with 
-\[
-\overline{A}=\left[\begin{array}{ccc}
-A & 0 & \frac{1}{R}b-A1_{n}\\
-1_{n}^{\top} & 1 & 0
-\end{array}\right],\overline{b}=\left[\begin{array}{c}
-\frac{1}{R}b\\
-n+1
-\end{array}\right]\text{, and }\overline{c}=\left[\begin{array}{c}
-\delta/L\cdot c\\
-0\\
-1
-\end{array}\right]
-\]
-satisfies the following:
-\begin{enumerate}
-\item $\overline{x}=\left[\begin{array}{c}
-1_{n}\\
-1\\
-1
-\end{array}\right]$, $\overline{y}=\left[\begin{array}{c}
-0_{d}\\
--1
-\end{array}\right]$ and $\overline{s}=\left[\begin{array}{c}
-1_{n}+\frac{\delta}{L}\cdot c\\
-1\\
-1
-\end{array}\right]$ are feasible primal dual vectors.
-\item For any feasible primal dual vectors $(\overline{x},\overline{y},\overline{s})$
-with duality gap at most $\delta^{2}$, the vector $\hat{x}=R\cdot\overline{x}_{1:n}$
-($\overline{x}_{1:n}$ are the first $n$ coordinates of $\overline{x}$)
-is an approximate solution to the original linear program in the following
-sense 
-\begin{align*}
-c^{\top}\hat{x} & \leq\min_{Ax=b,x\geq0}c^{\top}x+LR\cdot\delta,\\
-\|A\hat{x}-b\|_{1} & \leq4n\delta\cdot\left(R\sum_{i,j}|A_{i,j}|+\|b\|_{1}\right),\\
-\hat{x} & \geq0.
-\end{align*}
-\end{enumerate}
+\label{lem:step_size}We have that $\|\mx^{-1}\delta_{x}\|^{2}_{\infty}\leq\frac{1}{\min_{i}\mu_{i}}\|\delta_{\mu}/\mu\|^{2}_{\mu}$
+and $\|\ms^{-1}\delta_{s}\|^{2}_{\infty}\leq\frac{1}{\min_{i}\mu_{i}}\|\delta_{\mu}/\mu\|^{2}_{\mu}$.
+In particular, if $\|\delta_{\mu}/\mu\|^{2}_{\mu}<\min_{i}\mu_{i}$,
+we have $(x+\delta_{x},s+\delta_{s})\in\PriR^{\circ}\times\DualR^{\circ}$.
 \end{lem}
 
-\textbf{Part 1.} For the first result, straightforward calculations
-show that $(\overline{x},\overline{y},\overline{s})\in\R^{(n+2)\times(d+1)\times(n+2)}$
-are feasible, i.e.,
+\begin{proof}
+For $\|\mx^{-1}\delta_{x}\|_{\infty}$, we have $\min_{i}\mu_{i}\|\mx^{-1}\delta_{x}\|^{2}_{\infty}\leq\|\mx^{-1}\delta_{x}\|^{2}_{\mu}$
+and hence
 \[
-\overline{A}\overline{x}=\begin{bmatrix}A & 0 & \frac{1}{R}b-A1_{n}\\
-1_{n}^{\top} & 1 & 0
-\end{bmatrix}\cdot\begin{bmatrix}1_{n}\\
-1\\
-1
-\end{bmatrix}=\begin{bmatrix}\frac{1}{R}b\\
-n+1
-\end{bmatrix}=\overline{b}
+\|\mx^{-1}\delta_{x}\|^{2}_{\infty}\leq\frac{1}{\min_{i}\mu_{i}}\|\mx^{-1}\delta_{x}\|^{2}_{\mu}=\frac{1}{\min_{i}\mu_{i}}\|(\mi-\mproj)(\delta_{\mu}/\mu)\|^{2}_{\mu}\leq\frac{1}{\min_{i}\mu_{i}}\|\delta_{\mu}/\mu\|^{2}_{\mu}.
 \]
-and 
-\begin{align*}
-\overline{A}^{\top}\overline{y}+\overline{s}= & ~\begin{bmatrix}A^{\top} & 1_{n}\\
-0 & 1\\
-\frac{1}{R}b^{\top}-1_{n}^{\top}A^{\top} & 0
-\end{bmatrix}\cdot\begin{bmatrix}0_{d}\\
--1
-\end{bmatrix}+\begin{bmatrix}1_{n}+\frac{\delta}{L}\cdot c\\
-1\\
-1
-\end{bmatrix}\\
-= & ~\begin{bmatrix}-1_{n}\\
--1\\
-0
-\end{bmatrix}+\begin{bmatrix}1_{n}+\frac{\delta}{L}\cdot c\\
-1\\
-1
-\end{bmatrix}\\
-= & ~\begin{bmatrix}\frac{\delta}{L}\cdot c\\
-0\\
-1
-\end{bmatrix}=\overline{c}
-\end{align*}
+The proof for $\|\ms^{-1}\delta_{s}\|_{\infty}$ is similar.
 
-\textbf{Part 2.} For the second result, we let 
+Hence, if $\|\delta_{\mu}/\mu\|^{2}_{\mu}<\min_{i}\mu_{i}$, we have
+that $\|\mx^{-1}\delta_{x}\|_{\infty}<1$ and $\|\ms^{-1}\delta_{s}\|_{\infty}<1$,
+i.e., $|\delta_{x,i}|<|x_{i}|$ and $|\delta_{s,i}|<|s_{i}|$ for
+all $i$. Therefore, $x+\delta_{x}>0$ and $s+\delta_{s}>0$ are feasible.
+\end{proof}
+To decrease $\mu$ uniformly, we set $\delta_{\mu}=-h\mu$ for some
+step size $h$. To ensure feasibility, we need $\|\delta_{\mu}/\mu\|^{2}_{\mu}\leq\min_{i}\mu_{i}$
+and this gives the maximum step size
+\begin{equation}
+h=\sqrt{\frac{\min_{i}\mu_{i}}{\sum_{i}\mu_{i}}}.\label{eq:max_h_formula}
+\end{equation}
+Note that the above quantity is maximized at $h=n^{-1/2}$ when $\mu$
+has all equal coordinates.
+
+\subsection{Staying within a small $\ell_{2}$ distance}
+
+The step size (\ref{eq:max_h_formula}) is maximized when $\mu$ is
+a constant vector. A natural approach is therefore to keep $\mu$
+as a vector close in $\ell_{2}$ norm to a multiple of the all-ones
+vector. This motivates the following algorithm:
+
+\begin{algorithm2e}[H]
+
+\caption{$\mathtt{L2Step}(\ma,x,s,t_{\mathrm{start}},t_{\mathrm{end}})$}
+
+\label{alg:L2Step}
+
+\textbf{Define} $\mproj_{x,s}=\ms^{-1}\ma^{\top}(\ma\ms^{-1}\mx\ma^{\top})^{-1}\ma\mx$.
+
+\textbf{Invariant:} $(x,s)\in\PriR^{\circ}\times\DualR^{\circ}$ and
+$\|xs-t\mathbf{1}\|_{2}\leq\frac{t}{4}$. 
+
+Let $t=t_{\mathrm{start}}$ and $h=1/(16\sqrt{n})$, where $n$ is
+the number of columns in $\ma$.
+
+\Repeat{$t=t_{\mathrm{end}}$}{
+
+Let $t'=\max(t/(1+h),t_{\mathrm{end}})$.
+
+Let $\mu=xs$ and $\delta_{\mu}=t'\mathbf{1}-\mu$.
+
+Let $\delta_{x}=\mx(\mi-\mproj_{x,s})(\delta_{\mu}/\mu)$ and $\delta_{s}=\ms\mproj_{x,s}(\delta_{\mu}/\mu)$.
+
+Set $x\leftarrow x+\delta_{x}$, $s\leftarrow s+\delta_{s}$ and $t\leftarrow t'$.
+
+}
+
+\textbf{Return} $(x,s)$.
+
+\end{algorithm2e}
+
+Note that the algorithm requires some initial point $(x,s)$ close
+to the central path and we will show how to get this in the next section
+(by changing the linear program temporarily).
+
+First, we show that the invariant is maintained in each step. The
+conclusion that the distance is less than $t/6$ is needed in Appendix
+\ref{subsec:find_IPM_interior}, where we call $\mathtt{L2Step}$
+on a modified LP and then prove that the result is close to the central
+path for the original LP.
+\begin{lem}
+\label{lem:L2Step}Suppose that the input satisfies $(x,s)\in\PriR^{\circ}\times\DualR^{\circ}$
+and $\|xs-t_{\mathrm{start}}\mathbf{1}\|_{2}\leq\frac{t_{\mathrm{start}}}{4}$.
+Then, the algorithm $\mathtt{L2Step}$ maintains $(x,s)\in\PriR^{\circ}\times\DualR^{\circ}$
+and $t>0$ such that $\|xs-t\mathbf{1}\|_{2}\leq\frac{t}{6}$.
+\end{lem}
+
+\begin{proof}
+We prove by induction that $\|xs-t\mathbf{1}\|_{2}\leq\frac{t}{6}$
+after each step. Note that the input satisfies $\|xs-t\mathbf{1}\|_{2}\leq\frac{t}{4}$.
+
+Let $x'=x+\delta_{x}$, $s'=s+\delta_{s}$ and let $t'$ be as defined
+in the algorithm. Note that
 \[
-\text{OPT}=\min_{Ax=b,x\geq0}c^{\top}x,\text{~~~and,~~~}\overline{\text{OPT}}=\min_{\overline{A}\overline{x}=\overline{b},\overline{x}\geq0}\overline{c}^{\top}\overline{x}
+x's'-t'\mathbf{1}=(x+\delta_{x})(s+\delta_{s})-t'\mathbf{1}=\mu+\ms\delta_{x}+\mx\delta_{s}+\delta_{x}\delta_{s}-t'\mathbf{1}.
 \]
-For any optimal $x\in\R^{n}$ in the original LP, we consider the
-following $\overline{x}\in\R^{n+2}$ 
-\begin{align}
-\overline{x}=\begin{bmatrix}\frac{1}{R}x\\
-n+1-\frac{1}{R}\sum_{i=1}^{n}x_{i}\\
-0
-\end{bmatrix}\label{eq:another_ov_x_in_appendix}
-\end{align}
-and $\overline{c}\in\R^{n+2}$ 
-\begin{align}
-\overline{c}=\begin{bmatrix}\frac{\delta}{L}\cdot c^{\top}\\
-0\\
-1
-\end{bmatrix}\label{eq:another_ov_c_in_appendix}
-\end{align}
-We want to argue that $\overline{x}\in\R^{n+2}$ is feasible in the
-modified LP. It is obvious that $\overline{x}\geq0$, it remains to
-show $\overline{A}\overline{x}=\overline{b}\in\R^{d+1}$. We have
-\begin{align*}
-\overline{A}\overline{x}=\begin{bmatrix}A & 0 & \frac{1}{R}b-A1_{n}\\
-1_{n}^{\top} & 1 & 0
-\end{bmatrix}\cdot\begin{bmatrix}\frac{1}{R}x\\
-n+1-\frac{1}{R}\sum_{i=1}^{n}x_{i}\\
-0
-\end{bmatrix}=\begin{bmatrix}\frac{1}{R}Ax\\
-n+1
-\end{bmatrix}=\begin{bmatrix}\frac{1}{R}b\\
-n+1
-\end{bmatrix}=\overline{b},
-\end{align*}
-where the third step follows from $Ax=b$, and the last step follows
-from definition of $\overline{b}$.
+Lemma \ref{lem:Newton_step} shows that $\ms\delta_{x}+\mx\delta_{s}=t'\mathbf{1}-\mu$.
+Hence, we have 
+\[
+x's'-t'\mathbf{1}=\delta_{x}\delta_{s}=\mx^{-1}\delta_{x}\cdot\ms^{-1}\delta_{s}\cdot\mu.
+\]
+Using this, we have
+\[
+\|x's'-t'\mathbf{1}\|_{2}\leq\|\mu^{1/2}\mx^{-1}\delta_{x}\|_{2}\|\mu^{1/2}\ms^{-1}\delta_{s}\|_{2}=\|\mx^{-1}\delta_{x}\|_{\mu}\|\ms^{-1}\delta_{s}\|_{\mu}\leq\|\delta_{\mu}/\mu\|^{2}_{\mu}.
+\]
+Here we used Lemma \ref{lem:Projection_property} at the end.
 
-Therefore, using the definition of $\overline{x}$ in (\ref{eq:another_ov_x_in_appendix})
-we have that 
-\begin{align}
-\overline{\text{OPT}}\leq\overline{c}^{\top}\overline{x}=\begin{bmatrix}\frac{\delta}{L}\cdot c^{\top} & 0 & 1\end{bmatrix}\cdot\begin{bmatrix}\frac{1}{R}x\\
-n+1-\frac{1}{R}\sum_{i=1}^{n}x_{i}\\
-0
-\end{bmatrix}=\frac{\delta}{LR}\cdot c^{\top}x=\frac{\delta}{LR}\cdot\text{OPT}.\label{eq:bounding_ov_OPT_by_OPT}
-\end{align}
-where the first step follows from modified program is solving a minimization
-problem, the second step follows from definition of $\overline{x}\in\R^{n+2}$
-(\ref{eq:another_ov_x_in_appendix}) and $\overline{c}\in\R^{n+2}$
-(\ref{eq:another_ov_c_in_appendix}), the last step follows from $x\in\R^{n}$
-is an optimal solution in the original linear program.
+Using $t'\mathbf{1}-\mu=\frac{t'}{t}(t\mathbf{1}-\mu)+(\frac{t'}{t}-1)\mu$,
+we have
+\[
+\|\delta_{\mu}/\mu\|_{\mu}=\|\frac{t'}{t}\frac{t\mathbf{1}-\mu}{\mu}+(\frac{t'}{t}-1)\|_{\mu}\leq\frac{t'}{t}\|xs-t\mathbf{1}\|_{\mu^{-1}}+\|\frac{t'}{t}-1\|_{\mu}.
+\]
+Since $\|\mu-t\mathbf{1}\|_{2}\leq\frac{t}{4}$, we have $\min_{i}\mu_{i}\geq\frac{3t}{4}$
+and $\max_{i}\mu_{i}\leq\frac{5}{4}t$. Using $|\frac{t'}{t}-1|\leq h=\frac{1}{16\sqrt{n}}$,
+we have
+\[
+\|\delta_{\mu}/\mu\|_{\mu}\leq\frac{t'}{t}\sqrt{\frac{4}{3t}}\|xs-t\mathbf{1}\|_{2}+h\sqrt{\frac{5}{4}tn}\leq\sqrt{\frac{t}{12}}+h\sqrt{\frac{5}{4}tn}\leq0.36\sqrt{t}.
+\]
+Hence, we have $\|x's'-t'\mathbf{1}\|_{2}\leq\|\delta_{\mu}/\mu\|^{2}_{\mu}\leq0.13t\leq t'/6$.
+Furthermore, $\|\delta_{\mu}/\mu\|^{2}_{\mu}<\min_{i}\mu_{i}$, which
+implies $(x',s')$ is feasible (Lemma \ref{lem:step_size}).
+\end{proof}
+Note that the lemma above only concludes that the output is close
+to the central path. To upper bound the error, we can apply Lemma
+\ref{lem:duality_gap} which shows the duality gap is equal to $x^{\top}s$.
 
-Given a feasible $(\overline{x},\overline{y},\overline{s})\in\R^{(n+2)\times(d+1)\times(n+2)}$
-with duality gap $\delta^{2}$, we can write $\overline{x}=\begin{bmatrix}\overline{x}_{1:n}\\
-\tau\\
-\theta
-\end{bmatrix}\in\R^{n+2}$ for some $\tau\geq0$, $\theta\geq0$. We can compute $\overline{c}^{\top}\overline{x}$
-which is $\frac{\delta}{L}\cdot c^{\top}\overline{x}_{1:n}+\theta$.
-Then, we have 
-\begin{align}
-\frac{\delta}{L}\cdot c^{\top}\overline{x}_{1:n}+\theta\leq\overline{\text{OPT}}+\delta^{2}\leq\frac{\delta}{LR}\cdot\overline{\text{OPT}}+\delta^{2},\label{eq:eq1_in_appendix}
-\end{align}
-where the first step follows from definition of duality gap, the last
-step follows from (\ref{eq:bounding_ov_OPT_by_OPT}).
+\subsection{Finding a feasible interior point by lifting\label{subsec:find_IPM_interior}}
 
-Hence, we can upper bound the $\overline{\text{OPT}}$ of the transformed
-program as follows: 
-\begin{align*}
-c^{\top}\hat{x}=R\cdot c^{\top}\overline{x}_{1:n}=\frac{LR}{\delta}\cdot\frac{\delta}{L}c^{\top}\overline{x}_{1:n}\leq\frac{RL}{\delta}(\frac{\delta}{LR}\cdot\text{OPT}+\delta^{2})=\text{OPT}+LR\cdot\delta,
-\end{align*}
-where the first step follows by $\hat{x}=R\cdot\overline{x}_{1:n}$,
-the third step follows by (\ref{eq:eq1_in_appendix}).
-
-Note that 
-\begin{align}
-\frac{\delta}{L}c^{\top}\overline{x}_{1:n}\geq-\frac{\delta}{L}\|c\|_{\infty}\|\overline{x}_{1:n}\|_{1}=-\frac{\delta}{L}\|c\|_{\infty}\|\frac{1}{R}x\|_{1}\geq-\frac{\delta}{L}\|c\|_{\infty}\frac{n}{R}\|x\|_{\infty}\geq-\delta n,\label{eq:lower_bound_on_delta_L_c_ovx}
-\end{align}
-where the second step follows from definition $\overline{x}\in\R^{n+2}$,
-and the last step follows from $\|c\|_{\infty}\leq L$ and $\|x\|_{\infty}\leq R$.
-
-We can upper bound the $\theta$ in the following sense, 
-\begin{align}
-\theta\leq\frac{\delta}{LR}\cdot\overline{\text{OPT}}+\delta^{2}+\delta n\leq2n\delta+\delta^{2}\leq4n\delta\label{eq:theta_is_at_most_4n_delta}
-\end{align}
-where the first step follows from (\ref{eq:eq1_in_appendix}) and
-(\ref{eq:lower_bound_on_delta_L_c_ovx}), the second step follows
-by $\text{OPT}=\min_{Ax=b,x\geq0}c^{\top}x\leq nLR$ (because $\|c\|_{\infty}\leq L$
-and $\|x\|_{\infty}\leq R$), and the last step follows from $\delta\leq1\leq n$.
-
-The constraint in the new polytope shows that 
-\begin{align*}
-A\overline{x}_{1:n}+(\frac{1}{R}b-A1_{n})\theta=\frac{1}{R}b.
-\end{align*}
-Using $\hat{x}=Rx_{1:n}\in\R^{n}$, we have 
-\begin{align*}
-A\frac{1}{R}\hat{x}+(\frac{1}{R}b-A1_{n})\theta=\frac{1}{R}b.
-\end{align*}
-Rewriting it, we have $A\hat{x}-b=(RA1_{n}-b)\theta\in\R^{d}$ and
-hence 
-\begin{align*}
-\|A\hat{x}-b\|_{1}=\|(RA1_{n}-b)\theta\|_{1}\leq\theta(\|RA1_{n}\|_{1}+\|b\|_{1})\leq\theta\cdot(R\|A\|_{1}+\|b\|_{1})\leq4n\delta\cdot(R\|A\|_{1}+\|b\|_{1}),
-\end{align*}
-where the second step follows from triangle inequality, the third
-step follows from $\|A1_{n}\|_{1}\leq\|A\|_{1}$ (because the definition
-of entry-wise $\ell_{1}$ norm), and the last step follows from (\ref{eq:theta_is_at_most_4n_delta}).
-
-\subsection{Finding a feasible solution close to the Central Path}
+Here we discuss how to get a feasible interior point close to the
+central path by modifying the linear program. The runtime of an interior
+point method depends on how degenerate the linear program is.
 \begin{defn}
 \label{def:LP_para}We define the following parameters for the linear
 program $\min_{\ma x=b,x\geq0}c^{\top}x$:
 \begin{enumerate}
-\item Inner radius $r$: There exists a $x\in\PriR$ such that $x_{i}\geq r$
+\item Inner radius $r$: There exists an $x\in\PriR$ such that $x_{i}\geq r$
 for all $i\in[n]$.
 \item Outer radius $R$: For any $x\geq0$ with $\ma x=b$, we have that
 $\|x\|_{2}\leq R$.
@@ -468,94 +393,319 @@ $\|x\|_{2}\leq R$.
 
 Since $\mathtt{L2Step}$ requires a feasible point near the central
 path, we modify the linear program to make it happen. To satisfy the
-constraint $\ma x=b$, we start the algorithm by taking a least square
-solution of the constraint $\ma x=b$. Since it can be negative, we
-write the variable $x=x^{+}-x^{-}$ with both $x^{+},x^{-}\geq0$.
+constraint $\ma x=b$, we start the algorithm by taking a least-squares
+solution of the constraint $\ma x=b$. Since this solution can be
+negative, we write the variable $x=x^{+}-x^{-}$ with both $x^{+},x^{-}\geq0$.
 We put a large cost vector on $x^{-}$ to ensure the solution is roughly
 the same. The crux of the proof is that if we optimize this new program
 well enough, we will have $x^{+}-x^{-}>0$ and hence $x^{+}-x^{-}$
-gives a good starting point of the original program. We need to put
-an extra constraint $1^{\top}x^{+}\leq\Lambda$ for a suitable $\Lambda$
-to ensure that the problem is bounded. The precise formulation of
-the modified linear program is as follows. 
-\begin{defn}[Modified Linear Program]
-\label{def:IPM_interior_modified}Consider a linear program $\min_{\ma x=b,x\geq0}c^{\top}x$
-with inner radius $r$, outer radius $R$ and Lipschitz constant $L$.
-For any $\overline{R}\geq10R$, $t\geq8L\overline{R}$, we define
-the modified primal linear program by 
-\[
-\min_{(x^{+},x^{-},x^{\theta})\in\mathcal{P}_{\overline{R},t}}c^{\top}x^{+}+\widetilde{c}^{\top}x^{-}
-\]
-where 
-\[
-\mathcal{P}_{\overline{R},t}=\{(x^{+},x^{-},x^{\theta})\in\R_{\geq0}^{2n+1}:\ma(x^{+}-x^{-})=b,\sum_{i=1}^{n}x_{i}^{+}+x^{\theta}=\widetilde{b}\}
-\]
-with $x_{c}^{+}=\frac{t}{c+t/\overline{R}},x_{c}^{-}=x_{c}^{+}-\ma^{\top}(\ma\ma^{\top})^{-1}b,\widetilde{c}=t/x_{c}^{-}$,
-$\widetilde{b}=\sum_{i}x_{c,i}^{+}+\overline{R}$. We define the corresponding
-dual polytope by
-\[
-\mathcal{D}_{\overline{R},t}=\{(s^{+},s^{-},s^{\theta})\in\R_{\geq0}^{2n+1}:\ma^{\top}y+\lambda\mathbf{1}+s^{+}=c,-\ma^{\top}y+s^{-}=\widetilde{c},\lambda+s^{\theta}=0\text{ for some }y\in\R^{d}\text{ and }\lambda\in\R\}.
-\]
-\end{defn}
-
-The main result about the modified program is the following.
+gives a good starting point for the original program. For technical
+reasons, we need to put an extra constraint $1^{\top}x^{+}\leq\Lambda$
+for some $\Lambda$ to ensure the problem is bounded.
 \begin{thm}
-\label{thm:IPM_interior}Given a linear program $\min_{\ma x=b,x\in\R_{\geq}^{n}}c^{\top}x$
-with inner radius $r$, outer radius $R$ and Lipschitz constant $L$.
-For any $0\leq\epsilon\leq\frac{1}{2}$, the modified linear program
-(Definition \ref{def:IPM_interior_modified}) with $\overline{R}=\frac{5}{\epsilon}R,t=2^{16}\epsilon^{-3}n^{2}\frac{R}{r}\cdot LR$
-has the following properties:
-\begin{itemize}
-\item The point $(x_{c}^{+},x_{c}^{-},\overline{R})$ is on the central
-path of the modified program at $t$.
-\item For any primal $x\defeq(x^{+},x^{-},x^{\theta})\in\mathcal{P}_{\overline{R},t}$
-and dual $s\defeq(s^{+},s^{-},s^{\theta})\in\mathcal{D}_{\overline{R},t}$
-such that $\frac{5}{6}LR\leq x_{i}s_{i}\leq\frac{7}{6}LR$, we have
-that
+\label{thm:modified_LP_construction}Given a linear program $\min_{\ma x=b,x\in\R^{n}_{\geq0}}c^{\top}x$
+with inner radius $r$, outer radius $R$ and Lipschitz constant $L$
+and any $0\leq\eta\leq\frac{1}{3}$. Consider the following modified
+linear program:
+\[
+\min_{(x^{+},x^{-},x^{\theta})\in\PriR_{\eta}}\left\langle c^{+},x^{+}\right\rangle +\left\langle c^{-},x^{-}\right\rangle 
+\]
+with
+\[
+\PriR_{\eta}=\left\{ (x^{+},x^{-},x^{\theta})\in\R^{2n+1}_{\geq0}:\ \ma(x^{+}-x^{-})=b,\sum^{n}_{i=1}x^{+}_{i}+x^{\theta}=\widetilde{b}\right\} 
+\]
+where $\overline{R}=6R/\eta$, $\overline{t}=6000n^{2}R/(\eta^{2}r)\cdot LR$,
+$\ox^{+}=\overline{t}/(c+\overline{t}/\overline{R})$, $\ox^{-}=\ox^{+}-\ma^{\top}(\ma\ma^{\top})^{-1}b$,
+$c^{+}=c$, $c^{-}=\overline{t}/\ox^{-}$ and $\widetilde{b}=\sum^{n}_{i=1}\ox^{+}_{i}+\overline{R}$.
+Then, we have that
+\begin{enumerate}
+\item $(\ox^{+},\ox^{-},\overline{R})$ is on the central path of the modified
+program at $\overline{t}$.
+\item For any primal $x\defeq(x^{+},x^{-},x^{\theta})\in\PriR_{\eta}$ and
+dual $s\defeq(s^{+},s^{-},s^{\theta})$ such that $\frac{5}{6}LR\leq x_{i}s_{i}\leq\frac{7}{6}LR$
+for all $i$, we have that
 \[
 (x^{+}-x^{-},s^{+}-s^{\theta})\in\PriR\times\DualR
 \]
-and that $x_{i}^{-}\leq\epsilon x_{i}^{+}$ and $s^{\theta}\leq\epsilon s_{i}^{+}$
+and that $x^{-}_{i}\leq\eta x^{+}_{i}$ and $s^{\theta}\leq\eta s^{+}_{i}$
 for all $i$.
-\end{itemize}
+\end{enumerate}
 \end{thm}
 
-The proof of this theorem is deferred to the end of this section.
+We continue from the discussion in Section \ref{subsec:SolveLP_apx}.
+
+We first show that $(\ox^{+},\ox^{-},\overline{R})$ defined in Theorem
+\ref{thm:modified_LP_construction} is indeed on the central path
+of the modified linear program. We define the dual of the modified
+linear program as follows
+\[
+\mathcal{D}_{\eta}=\{(s^{+},s^{-},s^{\theta})\in\R^{2n+1}_{\geq0}:\ma^{\top}y+\lambda\mathbf{1}+s^{+}=c^{+},-\ma^{\top}y+s^{-}=c^{-},\lambda+s^{\theta}=0\text{ for some }y\in\R^{d}\text{ and }\lambda\in\R\}.
+\]
+
+\begin{lem}
+\label{lem:ipm_interior_modified}The modified linear program in Theorem
+\ref{thm:modified_LP_construction} has an explicit point on the central
+path,$(\ox^{+},\ox^{-},\overline{R})$ at $\overline{t}$.
+\end{lem}
+
+\begin{proof}
+Recall that we say $(x^{+},x^{-},x^{\theta})$ is on the central path
+at $t$ if $x^{+},x^{-},x^{\theta}$ are positive, $x^{+}_{i}s^{+}_{i}=t,x^{-}_{i}s^{-}_{i}=t,x^{\theta}s^{\theta}=t$
+and the following equations hold
+\begin{align}
+\ma x^{+}-\ma x^{-} & =b,\nonumber \\
+\sum^{n}_{i=1}x^{+}_{i}+x^{\theta} & =\widetilde{b},\nonumber \\
+\ma^{\top}y+\lambda+s^{+} & =c^{+},\label{eq:KKT_modified_LP}\\
+-\ma^{\top}y+s^{-} & =c^{-},\nonumber \\
+\lambda+s^{\theta} & =0,\nonumber 
+\end{align}
+for some $s^{+},s^{-}\in\R^{n}_{>0}$, $s^{\theta}>0$, $y\in\R^{d}$
+and $\lambda\in\R$.
+
+Now, we verify the solution $\ox^{+}=\overline{t}/(c+\overline{t}/\overline{R})$,
+$\ox^{-}=\ox^{+}-\ma^{\top}(\ma\ma^{\top})^{-1}b$, $\ox^{\theta}=\overline{R}$,
+$y=0$, $\os^{+}=\overline{t}/\ox^{+}$, $\os^{-}=\overline{t}/\ox^{-}$,
+$\os^{\theta}=\overline{t}/\ox^{\theta}$, $\lambda=-\os^{\theta}$.
+Using $\ma\ma^{\top}(\ma\ma^{\top})^{-1}b=b$, one can check that
+it satisfies all the equality constraints above. 
+
+For the positivity constraints, using $\|c\|_{\infty}\leq L$ and
+$\overline{t}\geq4L\overline{R}$, we have
+\begin{equation}
+\frac{4}{5}\overline{R}\leq\frac{\overline{t}}{L+\overline{t}/\overline{R}}\leq\ox^{+}_{i}\leq\frac{\overline{t}}{-L+\overline{t}/\overline{R}}\leq\frac{4}{3}\overline{R}\label{eq:x_pos_bound}
+\end{equation}
+and hence $\ox^{+}>0$ and so is $\os^{+}$. Note that $x_{\circ}\defeq\ma^{\top}(\ma\ma^{\top})^{-1}b$
+is the least-squares solution to $\ma x=b$, so, we have 
+\begin{equation}
+\|x_{\circ}\|_{2}\leq\|x^{*}\|_{2}\leq R<\frac{1}{4}\overline{R}.\label{eq:x0_upper_bound}
+\end{equation}
+Together with $\ox^{+}_{i}\geq\frac{4}{5}\overline{R}$, we have
+\[
+\ox^{-}_{i}\geq\frac{4}{5}\overline{R}-\frac{1}{4}\overline{R}>0
+\]
+for all $i$. Hence, $\ox^{-}$ and $\os^{-}$ are positive. Finally,
+$\ox^{\theta}$ and $\os^{\theta}$ are positive. This proves that
+$(\ox^{+},\ox^{-},\overline{R})$ is on the central path at $\overline{t}$.
+\end{proof}
+Next, we show that the near-central-path point $(x,s)$ at $t=LR$
+is far from the boundary $x^{+}=0$ and is close to the boundary $x^{-}=0$.
+The proofs of both statements use the same idea: the optimality condition
+of $x$. Throughout the rest of the proof, we are given $(x,s)\in\PriR_{\eta}\times\mathcal{D}_{\eta}$
+such that $\mu=xs$ satisfies
+\[
+\frac{5}{6}LR\leq\mu\leq\frac{7}{6}LR.
+\]
+We write $\mu$ into its three parts $(\mu^{+},\mu^{-},\mu^{\theta})$.
+By Lemma \ref{lem:primal_dual_representation}, we have that $x\defeq(x^{+},x^{-},x^{\theta})$
+minimizes the function
+\[
+f_{\mu}(x^{+},x^{-},x^{\theta})\defeq\left\langle c^{+},x^{+}\right\rangle +\left\langle c^{-},x^{-}\right\rangle -\sum^{n}_{i=1}\mu^{+}_{i}\log x^{+}_{i}-\sum^{n}_{i=1}\mu^{-}_{i}\log x^{-}_{i}-\mu^{\theta}\log x^{\theta}
+\]
+over the domain $\PriR_{\eta}$. The gradient of $f_{\mu}$ is somewhat
+complicated. We avoid it by considering the directional derivative
+at $x$ along a feasible direction toward a lifted version of a point
+$v$ such that $\ma v=b$ and $v\geq r$. Since our domain is in $\PriR_{\eta}\subset\R^{2n+1}$,
+we lift $v$ to the higher-dimensional point defined by
+\begin{align*}
+v^{-} & =\min(x^{-},\frac{4L\overline{R}}{\overline{t}}\cdot R),\\
+v^{+} & =v+v^{-},\\
+v^{\theta} & =\widetilde{b}-\sum^{n}_{i=1}v^{+}_{i}.
+\end{align*}
+First, we need to get some basic bounds on $\widetilde{b}$ and $c^{-}$.
+\begin{lem}
+\label{lem:ipm_propert_modified}We have that $\frac{4}{5}n\overline{R}\leq\widetilde{b}\leq3n\overline{R}$
+and $c^{-}_{i}\geq3\overline{t}/(7\overline{R})$ for all $i$.
+\end{lem}
+
+\begin{proof}
+By (\ref{eq:x_pos_bound}), we have $\frac{4}{5}\overline{R}\leq\ox^{+}_{i}\leq\frac{4}{3}\overline{R}$.
+By the definition of $\widetilde{b}$, we have
+\[
+\widetilde{b}=\sum^{n}_{i=1}\ox^{+}_{i}+\overline{R}\leq\frac{4}{3}n\overline{R}+\overline{R}\leq3n\overline{R}.
+\]
+Similarly, we have $\widetilde{b}=\sum_{i}\ox^{+}_{i}+\overline{R}\geq\frac{4}{5}n\overline{R}$. 
+
+For the bound on $c^{-}_{i}$, recall that $c^{-}_{i}=\overline{t}/\ox^{-}_{i}$
+with $\ox^{-}=\ox^{+}-x_{\circ}$ and $x_{\circ}=\ma^{\top}(\ma\ma^{\top})^{-1}b$.
+Using (\ref{eq:x0_upper_bound}), we have 
+\[
+\ox^{-}_{i}\leq\frac{4}{3}\overline{R}+R.
+\]
+Therefore, $c^{-}\geq3\overline{t}/(7\overline{R})$.
+\end{proof}
+The following lemma shows that $(v^{+},v^{-},v^{\theta})\in\PriR_{\eta}$.
+\begin{lem}
+\label{lem:IPM_exact_inner_pt}We have that $(v^{+},v^{-},v^{\theta})\in\PriR_{\eta}$.
+Furthermore, we have $v^{\theta}\geq\frac{1}{2}n\overline{R}$.
+\end{lem}
+
+\begin{proof}
+Note that $(v^{+},v^{-},v^{\theta})$ satisfies the linear constraints
+of $\PriR_{\eta}$ by construction. It suffices to prove that the
+vector is positive. Since $x^{-}>0$, we have $v^{-}>0$. Since $v\geq r$,
+we also have $v^{+}>0$. For $v^{\theta}$, we use $\widetilde{b}\geq\frac{4}{5}n\overline{R}$
+(Lemma \ref{lem:ipm_propert_modified}), $v_{i}\leq R$ and $v^{-}\leq\frac{4L\overline{R}}{t}\cdot R\leq R$
+to get
+\begin{equation}
+v^{+}_{i}=v_{i}+v^{-}_{i}\leq2R\label{eq:v_plus_upper}
+\end{equation}
+and hence
+\begin{align*}
+v^{\theta}=\widetilde{b}-\sum^{n}_{i=1}v^{+}_{i} & \geq\frac{4}{5}n\overline{R}-\sum^{n}_{i=1}(v_{i}+v^{-}_{i})\geq\frac{1}{2}n\overline{R}.
+\end{align*}
+\end{proof}
+Next, we define the path $p(\tau)=(1-\tau)(x^{+},x^{-},x^{\theta})+\tau(v^{+},v^{-},v^{\theta})$.
+Since $p(0)$ minimizes $f_{\mu}$, we have that $\frac{d}{d\tau}f_{\mu}(p(\tau))|_{\tau=0}\geq0$.
+In particular, we have
+\begin{align}
+0 & \leq\frac{d}{d\tau}f_{\mu}(p(\tau))|_{\tau=0}\nonumber \\
+ & =\left\langle c,v^{+}-x^{+}\right\rangle +\left\langle c^{-},v^{-}-x^{-}\right\rangle -\sum^{n}_{i=1}\frac{\mu^{+}_{i}}{x^{+}_{i}}(v^{+}-x^{+})_{i}-\sum^{n}_{i=1}\frac{\mu^{-}_{i}}{x^{-}_{i}}(v^{-}-x^{-})_{i}-\frac{\mu^{\theta}}{x^{\theta}}(v^{\theta}-x^{\theta})\nonumber \\
+ & =\frac{\mu^{\theta}}{x^{\theta}}(x^{\theta}-v^{\theta})+\sum^{n}_{i=1}(c_{i}-\frac{\mu^{+}_{i}}{x^{+}_{i}})(v^{+}-x^{+})_{i}+\sum^{n}_{i=1}(c^{-}_{i}-\frac{\mu^{-}_{i}}{x^{-}_{i}})(v^{-}-x^{-})_{i}.\label{eq:LP_exact_3_term}
+\end{align}
+We now bound the three terms. For the first term, we note that 
+\begin{equation}
+\frac{\mu^{\theta}}{x^{\theta}}(x^{\theta}-v^{\theta})\leq\mu^{\theta}\leq2LR.\label{eq:LP_exact_3_term_1}
+\end{equation}
+For the second term in (\ref{eq:LP_exact_3_term}), we have the following:
+\begin{lem}
+\label{lem:LP_exact_3_term_1}We have that $\sum^{n}_{i=1}(c_{i}-\frac{\mu^{+}_{i}}{x^{+}_{i}})(v^{+}-x^{+})_{i}\leq4nLR-\frac{LRr}{2\min_{i}x^{+}_{i}}$.
+\end{lem}
+
+\begin{proof}
+Note that
+\begin{align*}
+\sum^{n}_{i=1}(c_{i}-\frac{\mu^{+}_{i}}{x^{+}_{i}})(v^{+}-x^{+})_{i} & =\sum^{n}_{i=1}(c_{i}v^{+}_{i}-\frac{\mu^{+}_{i}}{x^{+}_{i}}v^{+}_{i}-c_{i}x^{+}_{i}+\mu^{+}_{i})\\
+ & \leq\sum^{n}_{i=1}c_{i}v^{+}_{i}+\sum^{n}_{i=1}\mu^{+}_{i}-\sum^{n}_{i=1}\frac{\mu^{+}_{i}}{x^{+}_{i}}v^{+}_{i}\\
+ & \leq\|c\|_{\infty}\|v^{+}\|_{1}+2nLR-\frac{1}{2}\sum^{n}_{i=1}\frac{LRr}{x^{+}_{i}}
+\end{align*}
+where we used $\mu^{+}_{i}\in[\frac{LR}{2},2LR]$ and $v^{+}_{i}\geq v_{i}\geq r$
+at the end. The result follows from $\|c\|_{\infty}\leq L$, $\|v^{+}\|_{1}\leq2nR$
+(\ref{eq:v_plus_upper}).
+\end{proof}
+For the third term in (\ref{eq:LP_exact_3_term}), we have the following:
+\begin{lem}
+\label{lem:LP_exact_3_term_2}We have that $\sum^{n}_{i=1}(c^{-}_{i}-\frac{\mu^{-}_{i}}{x^{-}_{i}})(v^{-}-x^{-})_{i}\leq\frac{1}{2}LR-\frac{\overline{t}}{8\overline{R}}\max_{i}x^{-}_{i}$.
+\end{lem}
+
+\begin{proof}
+Using $v^{-}=\min(x^{-},\frac{4L\overline{R}}{\overline{t}}\cdot R)$,
+we have $v^{-}_{i}\leq x^{-}_{i}$. We can ignore the terms with $v^{-}_{i}=x^{-}_{i}$. 
+
+For $v^{-}_{i}<x^{-}_{i}$, we have $x^{-}_{i}\geq\frac{4L\overline{R}}{\overline{t}}R$.
+Using $c^{-}_{i}\geq3\overline{t}/(7\overline{R})$ (Lemma \ref{lem:ipm_propert_modified}),
+we have
+\[
+c^{-}_{i}-\frac{\mu^{-}_{i}}{x^{-}_{i}}\geq c^{-}_{i}-\frac{\mu^{-}_{i}}{\frac{4L\overline{R}}{\overline{t}}R}\geq c^{-}_{i}-\frac{\frac{7}{6}LR}{\frac{4L\overline{R}}{\overline{t}}R}=c^{-}_{i}-\frac{7\overline{t}}{24\overline{R}}\geq\frac{\overline{t}}{8\overline{R}}.
+\]
+Hence, we have
+\[
+\sum^{n}_{i=1}(c^{-}_{i}-\frac{\mu^{-}_{i}}{x^{-}_{i}})(v^{-}-x^{-})_{i}\leq\frac{\overline{t}}{8\overline{R}}\sum^{n}_{i=1}(v^{-}-x^{-})_{i}\leq\frac{\overline{t}}{8\overline{R}}(\frac{4L\overline{R}}{\overline{t}}\cdot R-\max_{i}x^{-}_{i}).
+\]
+\end{proof}
+Combining (\ref{eq:LP_exact_3_term}), (\ref{eq:LP_exact_3_term_1}),
+Lemma \ref{lem:LP_exact_3_term_1} and Lemma \ref{lem:LP_exact_3_term_2},
+we have
+\begin{align*}
+0 & \leq\frac{\mu^{\theta}}{x^{\theta}}(x^{\theta}-v^{\theta})+\sum^{n}_{i=1}(c_{i}-\frac{\mu^{+}_{i}}{x^{+}_{i}})(v^{+}-x^{+})_{i}+\sum^{n}_{i=1}(c^{-}_{i}-\frac{\mu^{-}_{i}}{x^{-}_{i}})(v^{-}-x^{-})_{i}\\
+ & \leq2LR+4nLR-\frac{LRr}{2\min_{i}x^{+}_{i}}+\frac{1}{2}LR-\frac{\overline{t}}{8\overline{R}}\max_{i}x^{-}_{i}\\
+ & \leq6nLR-\frac{LRr}{2\min_{i}x^{+}_{i}}-\frac{\overline{t}}{8\overline{R}}\max_{i}x^{-}_{i}.
+\end{align*}
+Hence, we show that $(x^{+},x^{-},x^{\theta})$ is close to the central
+path at $t=LR$ implies that $\min_{i}x^{+}_{i}$ cannot be too small
+and $\max_{i}x^{-}_{i}$ cannot be too large
+\[
+\frac{LRr}{2\min_{i}x^{+}_{i}}+\frac{\overline{t}}{8\overline{R}}\max_{i}x^{-}_{i}\leq6nLR.
+\]
+In particular, this shows the following:
+\begin{lem}
+\label{lem:LP_exact_distance_OPT}We have that $\min_{i}x^{+}_{i}\geq\frac{r}{12n}$
+and $\max_{i}x^{-}_{i}\leq\frac{48nL\overline{R}}{\overline{t}}\cdot R$.
+\end{lem}
+
+Now, we are ready to prove Theorem \ref{thm:modified_LP_construction}.
+\begin{proof}[Proof of Theorem \ref{thm:modified_LP_construction}]
+First, we check $x\defeq x^{+}-x^{-}\in\PriR$. By the choice of
+$\overline{R}$ and $\overline{t}$, Lemma \ref{lem:LP_exact_distance_OPT}
+shows that 
+\[
+\frac{\max_{i}x^{-}_{i}}{\min_{i}x^{+}_{i}}\leq\frac{\frac{48nL\overline{R}}{\overline{t}}\cdot R}{\frac{r}{12n}}=576n^{2}\frac{R}{r}\cdot\frac{L\overline{R}}{\overline{t}}<\eta
+\]
+Hence, we have $x^{+}-x^{-}>0$ and that $\ma(x^{+}-x^{-})=b$. 
+
+Next, we check $s\defeq s^{+}-s^{\theta}\in\DualR$. Since $x\in\mathcal{P}$,
+we have $x_{i}\leq R$. Since $x^{-}_{i}\leq\frac{1}{2}x^{+}_{i}$,
+we have $x^{+}_{i}\leq2x_{i}\leq2R$. Since $x^{+}_{i}s^{+}_{i}\geq\frac{5}{6}LR$,
+we have $s^{+}_{i}\geq\frac{1}{3}L.$ On the other hand, we have $x^{\theta}=\widetilde{b}-\sum^{n}_{i=1}x^{+}_{i}\geq\widetilde{b}-2nR\geq\frac{1}{2}n\overline{R}$
+(Lemma \ref{lem:ipm_propert_modified}). Hence, $s^{\theta}\leq\frac{\frac{7}{6}LR}{\frac{1}{2}n\overline{R}}\leq\frac{3LR}{n\overline{R}}.$
+Combining both and the choice of $\overline{R}$, we have
+\[
+\frac{s^{\theta}}{\min_{i}s^{+}_{i}}\leq\frac{\frac{3LR}{n\overline{R}}}{L/3}=\frac{9R}{n\overline{R}}<\eta
+\]
+Hence, we have $s=s^{+}-s^{\theta}>0$ and that $\ma^{\top}y+s=\ma^{\top}y+s^{+}-s^{\theta}=\ma^{\top}y+s^{+}+\lambda=c$
+(See (\ref{eq:KKT_modified_LP})).
+\end{proof}
+To ensure the reduction does not increase the complexity of solving
+the linear systems, we note that the linear constraint in the modified
+linear program is
+\[
+\oma=\left[\begin{array}{ccc}
+\ma & -\ma & 0\\
+1^{\top}_{n} & 0 & 1
+\end{array}\right]
+\]
+For any diagonal matrices $\mw_{1},\mw_{2}$ with diagonals $w_{1},w_{2}$
+and any scalar $\alpha$, we have
+\[
+\mh\defeq\oma\left[\begin{array}{ccc}
+\mw_{1} & 0 & 0\\
+0 & \mw_{2} & 0\\
+0 & 0 & \alpha
+\end{array}\right]\oma^{\top}=\left[\begin{array}{cc}
+\ma(\mw_{1}+\mw_{2})\ma^{\top} & \ma w_{1}\\
+(\ma w_{1})^{\top} & \|w_{1}\|_{1}+\alpha
+\end{array}\right].
+\]
+Note that the second row and second column blocks have size $1$.
+By the block inverse formula, $\mh^{-1}v$ is an explicit formula
+involving $(\ma(\mw_{1}+\mw_{2})\ma^{\top})^{-1}v_{1:d}$ and $(\ma(\mw_{1}+\mw_{2})\ma^{\top})^{-1}\ma w_{1}$.
+Hence, we can compute $\mh^{-1}v$ by solving two linear systems of
+the form $\ma\mw\ma^{\top}$ with some extra linear work.
+
+\subsection{Solving LP Approximately and Exactly\label{subsec:SolveLP_apx}}
+
 Now we state our main algorithm.
 
 \begin{algorithm2e}[H]
 
-\caption{$\mathtt{SlowSolveLP}(\ma,b,c,x^{(0)},\delta)$}
+\caption{$\mathtt{SlowSolveLP}(\ma,b,c,\delta)$}
 
 \label{alg:SlowSolveLP}
 
 \textbf{Assumption: the linear program has inner radius $r$, outer
 radius $R$ and Lipschitz constant $L$.}
 
-Let $\epsilon=1/(100\sqrt{n})$, $\overline{R}=\frac{5}{\epsilon}R$,
-$t=2^{16}\epsilon^{-3}n^{2}\frac{R}{r}\cdot LR$. 
+Let $\eta=1/(48\sqrt{n})$, $\overline{R}=6R/\eta$, $\overline{t}=6000n^{2}R/(\eta^{2}r)\cdot LR$. 
 
 \tcp{Define the modified program $\min_{\oma x=\overline{b}}\overline{c}^{\top}x$
-by Definition \ref{def:IPM_interior_modified} with parameters $\overline{R}$
-and $t$.}
+by Theorem \ref{thm:modified_LP_construction} with parameters $\overline{R}$
+and $\overline{t}$.}
 
 Let $\oma=\left[\begin{array}{ccc}
 \ma & -\ma & 0\\
-1 & 0 & 1
-\end{array}\right]$, $\overline{c}=(c,\widetilde{c})$, $\overline{b}=(b,\widetilde{b})$
-where $\widetilde{c}$ and $\widetilde{b}$ are defined in Definition
-\ref{def:IPM_interior_modified}.
+1^{\top}_{n} & 0 & 1
+\end{array}\right]$, $\overline{c}=(c,c^{-},0)$, $\overline{b}=(b,\widetilde{b})$ where
+$c^{-}$ and $\widetilde{b}$ are defined in Theorem \ref{thm:modified_LP_construction}.
 
-\tcp{Write down the central path at $t$ for modified linear program.}
+Let $(\overline{x},\overline{s})$ be the explicit central path at
+$\overline{t}$ given by Theorem \ref{thm:modified_LP_construction}.
 
-$\overline{x}=(x_{c}^{+},x_{c}^{-},\overline{R})$. $\overline{s}=x/t$.
+$(\overline{x},\overline{s})\leftarrow\mathtt{L2Step}(\oma,\overline{x},\overline{s},\overline{t},LR)$.
 
-$(\overline{x},\overline{s})=\mathtt{L2Step}(\oma,\overline{x},\overline{s},t,LR)$.
+$(x,s)\leftarrow(\overline{x}^{+}-\overline{x}^{-},\overline{s}^{+}-\overline{s}^{\theta})$
+where $\overline{x}=(\overline{x}^{+},\overline{x}^{-},\overline{x}^{\theta})$
+and $\overline{s}=(\overline{s}^{+},\overline{s}^{-},\overline{s}^{\theta})$.
 
-$(x,s)=(x^{+}-x^{-},s^{+}-s^{\theta})$ where $\overline{x}=(x^{+},x^{-},x^{\theta})$
-and $\overline{s}=(s^{+},s^{-},s^{\theta})$.
-
-$(x_{\mathrm{end}},s_{\mathrm{end}})=\mathtt{L2Step}(\ma,x^{+}-x^{-},s^{+}-s^{\theta},LR,t_{\mathrm{end}})$
+$(x_{\mathrm{end}},s_{\mathrm{end}})=\mathtt{L2Step}(\ma,x,s,LR,t_{\mathrm{end}})$
 with $t_{\mathrm{end}}=\delta LR/(2n)$.
 
 \textbf{Return} $x_{\mathrm{end}}$.
@@ -572,263 +722,64 @@ c^{\top}x & \leq\min_{\ma x=b,x\geq0}c^{\top}x+\delta LR,\\
 \ma x & =b,\\
 x & \geq0.
 \end{align*}
-The algorithm takes $O(\sqrt{n}\log(nR/(\delta r)))$ Newton steps.
+The algorithm takes $O(\sqrt{n}\log(nR/(\delta r)))$ Newton steps
+(defined in (\ref{eq:LP_newton_step})).
 
 If we further assume that the solution $x^{*}=\arg\min_{\ma x=b,x\geq0}c^{\top}x$
-is unique and that $c^{\top}x\geq c^{\top}x^{*}+\eta LR$ for any
-other vertex $x$ of $\{\ma x=b,x\geq0\}$ for some $\eta>\delta\geq0$,
-then we have that $\|x-x^{*}\|_{2}\leq\frac{2\delta R}{\eta}$.
+is unique and that $c^{\top}x\geq c^{\top}x^{*}+\zeta LR$ for any
+other vertex $x$ of $\{\ma x=b,x\geq0\}$ for some $\zeta>\delta\geq0$,
+then we have that $\|x-x^{*}\|_{2}\leq\frac{2\delta R}{\zeta}$.
 \end{thm}
 
 \begin{proof}
-By Theorem \ref{thm:IPM_interior}, the point $(x_{c}^{+},x_{c}^{-},\overline{R})$
-is on the central path of the modified program at $t$. After the
-first call of $\mathtt{L2Step}$, we have $(\overline{x},\overline{s})$
+By Theorem \ref{thm:modified_LP_construction}, the point $(\overline{x},\overline{s})$
+is on the central path of the modified program at $\overline{t}$.
+After the first call of $\mathtt{L2Step}$, Lemma \ref{lem:L2Step}
+shows that $\mathtt{L2Step}$ returns $(\overline{x},\overline{s})$
 such that $\|\overline{x}\overline{s}-t\|_{2}\leq\frac{t}{6}$ with
 $t=LR$.
 
-Theorem \ref{thm:IPM_interior} shows that $(x,s)=(x^{+}-x^{-},s^{+}-s^{\theta})\in\PriR\times\DualR$
-and that $x=(1\pm\epsilon)x^{+}$ and $s=(1\pm\epsilon)s^{+}$. Since
-$\epsilon=\frac{1}{100\sqrt{n}}$ and $\|x^{+}s^{+}-t\|_{2}\leq\frac{t}{6}$
-with $t=LR$, we have that $\|xs-t\|_{2}\leq\frac{t}{4}$. This verifies
-the condition for the second call of $\mathtt{L2Step}$.
+Theorem \ref{thm:modified_LP_construction} shows that $(x,s)=(\overline{x}^{+}-\overline{x}^{-},\overline{s}^{+}-\overline{s}^{\theta})\in\PriR\times\DualR$
+and that $(1-\eta)\overline{x}^{+}_{i}\leq x_{i}\leq\overline{x}^{+}_{i}$
+and $(1-\eta)\overline{s}^{+}_{i}\leq s_{i}\leq\overline{s}^{+}_{i}$
+. Since $\eta=\frac{1}{48\sqrt{n}}$ and $\|\overline{x}^{+}\overline{s}^{+}-t\|_{2}\leq\frac{t}{6}$
+with $t=LR$, we have that $\|xs-t\mathbf{1}\|_{2}\leq\frac{t}{4}$.
+This verifies the condition for the second call of $\mathtt{L2Step}$.
 
-After the second call of $\mathtt{L2Step}$, we have $(x_{\mathrm{end}},s_{\mathrm{end}})$
-such that $\|x_{\mathrm{end}}s_{\mathrm{end}}-t_{\mathrm{end}}\|_{2}\leq\frac{t}{6}$
-with $t_{\mathrm{end}}=\delta LR/(2n)$. Hence, by the bound on the
-duality gap, 
+After the second call of $\mathtt{L2Step}$, Lemma \ref{lem:L2Step}
+shows that $\mathtt{L2Step}$ returns $(x_{\mathrm{end}},s_{\mathrm{end}})$
+such that $\|x_{\mathrm{end}}s_{\mathrm{end}}-t_{\mathrm{end}}\|_{2}\leq\frac{t_{\mathrm{end}}}{6}$
+with $t_{\mathrm{end}}=\delta LR/(2n)$. Hence, Lemma \ref{lem:duality_gap}
+shows that 
 \[
-c^{\top}x_{\mathrm{end}}\leq\min_{\ma x=b,x\geq0}c^{\top}x+x_{\mathrm{end}}^{\top}s_{\mathrm{end}}\leq\min_{\ma x=b,x\geq0}c^{\top}x+2t_{\mathrm{end}}n\leq\min_{\ma x=b,x\geq0}c^{\top}x+\delta LR.
+c^{\top}x_{\mathrm{end}}\leq\min_{\ma x=b,x\geq0}c^{\top}x+x^{\top}_{\mathrm{end}}s_{\mathrm{end}}\leq\min_{\ma x=b,x\geq0}c^{\top}x+2t_{\mathrm{end}}n\leq\min_{\ma x=b,x\geq0}c^{\top}x+\delta LR.
 \]
-For the runtime, note that $\mathtt{L2Step}$ decreases $t$ by $1-\Omega(n^{-1/2})$
-factor each step. Hence, the first call takes $O(\sqrt{n}\log(nR/r))$
-Newton steps and second call takes $O(\sqrt{n}\log(n/\delta))$ Newton
-steps.
+For the runtime, note that $\mathtt{L2Step}$ decreases $t$ by a
+factor of $1-\Omega(n^{-1/2})$ in each step. Hence, the first call
+takes $O(\sqrt{n}\log(nR/r))$ Newton steps and the second call takes
+$O(\sqrt{n}\log(n/\delta))$ Newton steps.
 
-For the last conclusion, we assume $\delta\leq\eta$ and let $\mathcal{P}_{t}=\mathcal{P}\cap\{c^{\top}x\leq c^{\top}x^{*}+tLR\}$.
-Note that $\mathcal{P}_{\eta}$ is a cone at $x^{*}$ (because there
-is no vertex except $x^{*}$ with value less than $c^{\top}x^{*}+tLR$).
-Hence, we have $\mathcal{P}_{\delta}-x^{*}=\frac{\delta}{\eta}(\mathcal{P}_{\eta}-x^{*})$.
-Since $x\in\mathcal{P}_{\delta}$, we have that 
+For the last conclusion, we assume $\delta\leq\zeta$ and, for $\alpha\geq0$,
+let $\mathcal{P}(\alpha)=\mathcal{P}\cap\{c^{\top}x\leq c^{\top}x^{*}+\alpha LR\}$.
+Note that $\mathcal{P}(\zeta)$ is a cone at $x^{*}$ (because there
+is no vertex other than $x^{*}$ with value less than $c^{\top}x^{*}+\zeta LR$).
+Hence, we have $\mathcal{P}(\delta)-x^{*}=\frac{\delta}{\zeta}(\mathcal{P}(\zeta)-x^{*})$.
+Since $x\in\mathcal{P}(\delta)$, we have that 
 \[
-\|x-x^{*}\|_{2}\leq\frac{\delta}{\eta}\text{diameter}(\mathcal{P}_{\eta}-x^{*})\leq\frac{2\delta R}{\eta}.
+\|x-x^{*}\|_{2}\leq\frac{\delta}{\zeta}\text{diameter}(\mathcal{P}(\zeta)-x^{*})\leq\frac{2\delta R}{\zeta}.
 \]
 \end{proof}
 If we know the solution of the linear program is integral or rational
 with some bound on the number of bits, then getting a solution close
-enough to $x^{*}$ allows us to round the solution to an integral
+enough to $x^{*}$ allows us to round the solution to an integral/rational
 solution. Therefore, the last conclusion of the theorem above gives
-us an exact linear programming algorithm assuming $\ma,b,c$ are integral
+us an exact linear program algorithm assuming $\ma,b,c$ are integral
 and bounded. The uniqueness assumption can be achieved by perturbing
 the cost vector by a random vector.
+\begin{xca}
+Make the perturbation deterministic while preserving solutions.
+\end{xca}
 
-First, we show that $x^{(0)}$ defined in Theorem \ref{thm:IPM_interior}
-is indeed on the central path of the modified linear program.
-\begin{lem}
-\label{lem:ipm_interior_modified}The modified linear program (Definition
-\ref{def:IPM_interior_modified}) has an explicit central path point
-$x^{(0)}=(x_{c}^{+},x_{c}^{-},\overline{R})$ at $t$.
-\end{lem}
-
-\begin{proof}
-Recall that we say $(x^{+},x^{-},x^{\theta})$ is on the central path
-at $t$ if $x^{+},x^{-},x^{\theta}$ are positive and it satisfies
-the following equation
-\begin{align}
-\ma x^{+}-\ma x^{-} & =b,\nonumber \\
-\sum_{i=1}^{n}x_{i}^{+}+x^{\theta} & =\widetilde{b},\nonumber \\
-\ma^{\top}y+\lambda+s^{+} & =c,\label{eq:KKT_modified_LP}\\
--\ma^{\top}y+s^{-} & =\widetilde{c},\nonumber \\
-\lambda+s^{\theta} & =0,\nonumber 
-\end{align}
-for some $s^{+},s^{-}\in\R_{>0}^{n}$, $s^{\theta}>0$, $y\in\R^{d}$
-and $\lambda\in\R$.
-
-Now, we verify the solution $x^{+}=\frac{t}{c+t/\overline{R}}$, $x^{-}=\frac{t}{c+t/\overline{R}}-x_{\circ}$,
-$x^{\theta}=\overline{R}$, $x_{\circ}=\ma^{\top}(\ma\ma^{\top})^{-1}b$,
-$y=0$, $s^{+}=\frac{t}{x^{+}}$, $s^{-}=\frac{t}{x^{-}}$, $s^{\theta}=\frac{t}{x^{\theta}}$,
-$\lambda=-s^{\theta}$. Using $\ma x_{\circ}=b$, one can check it
-satisfies all the equality constraints above. 
-
-For the inequality constraints, using $\|c\|_{\infty}\leq L$ and
-$t\geq8L\overline{R}$, we have
-\begin{equation}
-\frac{3}{4}\overline{R}\leq\frac{t}{L+t/\overline{R}}\leq x_{i}^{+}\leq\frac{t}{-L+t/\overline{R}}\leq\frac{3}{2}\overline{R}\label{eq:x_pos_bound}
-\end{equation}
-and hence $x^{+}>0$ and so is $s^{+}$. Since $\|x_{\circ}\|_{2}\leq R\leq\frac{\overline{R}}{2}$
-and $x_{i}^{+}\geq\frac{3}{4}\overline{R}$ for all $i$, we have
-$x_{i}^{-}\geq0$ for all $i$. Hence, $x^{-}$ and $s^{-}$ are positive.
-Finally, $x^{\theta}$ and $s^{\theta}$ are positive. This proves
-that $(\frac{t}{c+t/\overline{R}},\frac{t}{c+t/\overline{R}}-x_{\circ},\overline{R})$
-is on the central path point at $t$.
-\end{proof}
-Next, we show that the near-central-path point $(x,s)$ at $t=LR$
-is far from the constraints $x^{+}\geq0$ and is close to the constraints
-$x^{-}\geq0$. The proof for both involves the same idea: use the
-optimality condition of $x$. Throughout the rest of the section,
-we are given $(x,s)\in\mathcal{P}_{\overline{R},t}\times\mathcal{D}_{\overline{R},t}$
-such that $\mu=xs$ satisfies
-\[
-\frac{5}{6}LR\leq\mu\leq\frac{7}{6}LR.
-\]
-We write $\mu$ into its three parts $(\mu^{+},\mu^{-},\mu^{\theta})$.
-By Lemma \ref{lem:primal_dual_representation}, we have that $x\defeq(x^{+},x^{-},x^{\theta})$
-minimizes the function
-\[
-f(x^{+},x^{-},x^{\theta})\defeq c^{\top}x^{+}+\widetilde{c}^{\top}x^{-}-\sum_{i=1}^{n}\mu_{i}^{+}\log x_{i}^{+}-\sum_{i=1}^{n}\mu_{i}^{-}\log x_{i}^{-}-\mu^{\theta}\log x^{\theta}
-\]
-over the domain $\mathcal{P}_{\overline{R},t}$. The gradient of $f$
-is a bit complicated. We avoid it by considering the directional derivative
-at $x$ along the direction ``$v-x$'' where $v$ is the point such
-that $\ma v=b$ and $v\geq r$. Since our domain is in $\mathcal{P}_{\overline{R},t}\subset\R^{2n+1}$,
-we need to lift $v$ to higher dimension. So we define the point
-\begin{align*}
-v^{-} & =\min(x^{-},\frac{8L\overline{R}}{t}\cdot R),\\
-v^{+} & =v+v^{-},\\
-v^{\theta} & =\widetilde{b}-\sum_{i=1}^{n}v_{i}^{+}.
-\end{align*}
-First, we need to get some basic bounds on $\widetilde{b}$ and $\widetilde{c}$.
-\begin{lem}
-\label{lem:ipm_propert_modified}We have that $\frac{3}{4}n\overline{R}\leq\widetilde{b}\leq3n\overline{R}$
-and $\widetilde{c}_{i}\geq t/(2\overline{R})$ for all $i$.
-\end{lem}
-
-\begin{proof}
-By (\ref{eq:x_pos_bound}), we have $\frac{3}{4}\overline{R}\leq x_{c,i}^{+}\leq\frac{3}{2}\overline{R}$.
-By the definition of $\widetilde{b}$, we have
-\[
-\widetilde{b}=\sum_{i=1}^{n}x_{c,i}^{+}+\overline{R}\leq\frac{3}{2}n\overline{R}+\overline{R}\leq3n\overline{R}.
-\]
-Similarly, we have $\widetilde{b}=\sum_{i}x_{i}^{+}+\overline{R}\geq\frac{3}{4}n\overline{R}$. 
-
-For the bound on $\widetilde{c}$, recall that $\widetilde{c}=t/x_{c}^{-}$
-with $x_{c}^{-}=x_{c}^{+}-x_{\circ}$ and $x_{\circ}=\ma^{\top}(\ma\ma^{\top})^{-1}b=\arg\min_{\ma x=b}\|x\|_{2}$.
-Since we assumed the linear program has outer radius $R$, we have
-that $\|x_{\circ}\|_{2}\leq R$. Hence, 
-\[
-x_{c,i}^{-}\leq\frac{3}{2}\overline{R}+R\leq2\overline{R}.
-\]
-Therefore, $\widetilde{c}\geq t/(2\overline{R})$.
-\end{proof}
-The following lemma shows that $(v^{+},v^{-},v^{\theta})\in\mathcal{P}_{\overline{R},t}$.
-\begin{lem}
-\label{lem:IPM_exact_inner_pt}We have that $(v^{+},v^{-},v^{\theta})\in\mathcal{P}_{\overline{R},t}$.
-Furthermore, we have $v^{\theta}\geq\frac{1}{2}n\overline{R}$.
-\end{lem}
-
-\begin{proof}
-Note that $(v^{+},v^{-},v^{\theta})$ satisfies the linear constraints
-of $\mathcal{P}_{\overline{R},t}$ by construction. It suffices to
-prove the vector is positive. Since $x^{-}>0$, we have $v^{-}>0$.
-Since $v\geq r$, we also have $v^{+}>0$. For $v^{\theta}$, we use
-$\widetilde{b}\geq\frac{3}{4}n\overline{R}$ (Lemma \ref{lem:ipm_propert_modified}),
-$v\leq R$ and $v^{-}\leq\frac{8L\overline{R}}{t}\cdot R\leq R$ to
-get
-\begin{align*}
-v^{\theta}=\widetilde{b}-\sum_{i=1}^{n}v_{i}^{+} & \geq\frac{3}{4}n\overline{R}-\sum_{i=1}^{n}(v_{i}+v_{i}^{-})\geq\frac{1}{2}n\overline{R}.
-\end{align*}
-\end{proof}
-Next, we define the path $p(t)=(1-t)(x^{+},x^{-},x^{\theta})+t(v^{+},v^{-},v^{\theta})$.
-Since $p(0)$ minimizes $f$, we have that $\frac{d}{dt}f(p(t))|_{t=0}\geq0$.
-In particular, we have
-\begin{align}
-0 & \leq\frac{d}{dt}f(p(t))|_{t=0}\nonumber \\
- & =c^{\top}(v^{+}-x^{+})+\widetilde{c}^{\top}(v^{-}-x^{-})-\sum_{i=1}^{n}\frac{\mu_{i}^{+}}{x_{i}^{+}}(v^{+}-x^{+})_{i}-\sum_{i=1}^{n}\frac{\mu_{i}^{-}}{x_{i}^{-}}(v^{-}-x^{-})_{i}-\frac{\mu^{\theta}}{x^{\theta}}(v_{\theta}-x^{\theta})\nonumber \\
- & =\frac{\mu^{\theta}}{x^{\theta}}(x^{\theta}-v_{\theta})+\sum_{i=1}^{n}(c_{i}-\frac{\mu_{i}^{+}}{x_{i}^{+}})(v^{+}-x^{+})_{i}+\sum_{i=1}^{n}(\widetilde{c}_{i}-\frac{\mu_{i}^{-}}{x_{i}^{-}})(v^{-}-x^{-})_{i}.\label{eq:LP_exact_3_term}
-\end{align}
-Now, we bound each term one by one. For the first term, we note that
-\begin{equation}
-\frac{\mu^{\theta}}{x^{\theta}}(x^{\theta}-v_{\theta})\leq\mu^{\theta}\leq2LR.\label{eq:LP_exact_3_term_1}
-\end{equation}
-For the second term in (\ref{eq:LP_exact_3_term}), we have the following
-\begin{lem}
-\label{lem:LP_exact_3_term_1}We have that $\sum_{i=1}^{n}(c_{i}-\frac{\mu_{i}^{+}}{x_{i}^{+}})(v^{+}-x^{+})_{i}\leq4nL\overline{R}-\frac{LRr}{2\min_{i}x_{i}^{+}}$.
-\end{lem}
-
-\begin{proof}
-Note that
-\begin{align*}
-\sum_{i=1}^{n}(c_{i}-\frac{\mu_{i}^{+}}{x_{i}^{+}})(v^{+}-x^{+})_{i} & =\sum_{i=1}^{n}(c_{i}v_{i}^{+}-\frac{\mu_{i}^{+}}{x_{i}^{+}}v_{i}^{+}-c_{i}x_{i}^{+}+\mu_{i}^{+})\\
- & \leq\sum_{i=1}^{n}c_{i}v_{i}^{+}+\sum_{i=1}^{n}\mu_{i}^{+}-\sum_{i=1}^{n}\frac{\mu_{i}^{+}}{x_{i}^{+}}v_{i}^{+}\\
- & \leq\|c\|_{\infty}\|v^{+}\|_{1}+2nLR-\frac{1}{2}\sum_{i=1}^{n}\frac{LRr}{x_{i}^{+}}
-\end{align*}
-where we used $\mu_{i}^{+}\in[\frac{LR}{2},2LR]$ and $v_{i}^{+}\geq v_{i}\geq r$
-at the end. The result follows from $\|c\|_{\infty}\leq L$, $\|v^{+}\|_{1}\leq\widetilde{b}\leq3n\overline{R}$
-(Lemma \ref{lem:ipm_propert_modified}).
-\end{proof}
-For the third term in (\ref{eq:LP_exact_3_term}), we have the following
-\begin{lem}
-\label{lem:LP_exact_3_term_2}We have that $\sum_{i=1}^{n}(\widetilde{c}_{i}-\frac{\mu_{i}^{-}}{x_{i}^{-}})(v^{-}-x^{-})_{i}\leq2LR-\frac{t}{4\overline{R}}\max_{i}x_{i}^{-}$.
-\end{lem}
-
-\begin{proof}
-Using $v^{-}=\min(x^{-},\frac{8L\overline{R}}{t}\cdot R)$, we have
-$v_{i}^{-}\leq x_{i}^{-}$. We can ignore the terms with $v_{i}^{-}=x_{i}^{-}$. 
-
-For $v_{i}^{-}<x_{i}^{-}$, we have $x_{i}^{-}\geq\frac{8L\overline{R}}{t}R$.
-Using $\widetilde{c}_{i}\geq\frac{t}{2\overline{R}}$ (Lemma \ref{lem:ipm_propert_modified}),
-we have
-\[
-\widetilde{c}_{i}-\frac{\mu_{i}^{-}}{x_{i}^{-}}\geq\widetilde{c}_{i}-\frac{\mu_{i}^{-}}{\frac{8L\overline{R}}{t}R}\geq\widetilde{c}_{i}-\frac{2LR}{\frac{8L\overline{R}}{t}R}=\widetilde{c}_{i}-\frac{t}{4\overline{R}}\geq\frac{t}{4\overline{R}}.
-\]
-Hence, we have
-\[
-\sum_{i=1}^{n}(\widetilde{c}_{i}-\frac{\mu_{i}^{-}}{x_{i}^{-}})(v^{-}-x^{-})_{i}\leq\frac{t}{4\overline{R}}\sum_{i=1}^{n}(v^{-}-x^{-})_{i}\leq\frac{t}{4\overline{R}}(\frac{8L\overline{R}}{t}\cdot R-\max_{i}x_{i}^{-}).
-\]
-\end{proof}
-Combining (\ref{eq:LP_exact_3_term}), (\ref{eq:LP_exact_3_term_1}),
-Lemma \ref{lem:LP_exact_3_term_1} and Lemma \ref{lem:LP_exact_3_term_2},
-we have
-\begin{align*}
-0 & \leq\frac{\mu^{\theta}}{x^{\theta}}(x^{\theta}-v_{\theta})+\sum_{i=1}^{n}(c_{i}-\frac{\mu_{i}^{+}}{x_{i}^{+}})(v^{+}-x^{+})_{i}+\sum_{i=1}^{n}(\widetilde{c}_{i}-\frac{\mu_{i}^{-}}{x_{i}^{-}})(v^{-}-x^{-})_{i}\\
- & \leq2LR+4nL\overline{R}-\frac{LRr}{2\min_{i}x_{i}^{+}}+2LR-\frac{t}{4\overline{R}}\max_{i}x_{i}^{-}\\
- & =5nL\overline{R}-\frac{LRr}{2\min_{i}x_{i}^{+}}-\frac{t}{4\overline{R}}\max_{i}x_{i}^{-}.
-\end{align*}
-Hence, we show that $(x^{+},x^{-},x^{\theta})$ is close to the central
-path at $t=LR$ implies that $\min_{i}x_{i}^{+}$ cannot be too small
-and $\max_{i}x_{i}^{-}$ cannot be too large
-\[
-\frac{LRr}{2\min_{i}x_{i}^{+}}+\frac{t}{4\overline{R}}\max_{i}x_{i}^{-}\leq5nL\overline{R}.
-\]
-In particular, this shows the following:
-\begin{lem}
-\label{lem:LP_exact_distance_OPT}We have that $\min_{i}x_{i}^{+}\geq\frac{Rr}{10n\overline{R}}$
-and $\max_{i}x_{i}^{-}\leq\frac{20nL\overline{R}}{t}\cdot\overline{R}$.
-\end{lem}
-
-Now, we are ready to prove the second conclusion of Theorem \ref{thm:IPM_interior}.
-\begin{lem}
-\label{lemma:IPM_center_original}For any primal $x\defeq(x^{+},x^{-},x^{\theta})\in\mathcal{P}_{\overline{R},t}$
-and dual $s\defeq(s^{+},s^{-},s^{\theta})\in\mathcal{D}_{\overline{R},t}$
-such that $\frac{5}{6}LR\leq x_{i}s_{i}\leq\frac{7}{6}LR$, we have
-that
-\[
-(x^{+}-x^{-},s^{+}-s^{\theta})\in\PriR\times\DualR
-\]
-and that $x_{i}^{-}\leq\epsilon x_{i}^{+}$ and $s^{\theta}\leq\epsilon s_{i}^{+}$
-for all $i$.
-\end{lem}
-
-\begin{proof}
-First we check $x\defeq x^{+}-x^{-}\in\PriR$. By the choice of $\overline{R}$
-and $t$, Lemma \ref{lem:LP_exact_distance_OPT} shows that 
-\[
-\frac{\max_{i}x_{i}^{-}}{\min_{i}x_{i}^{+}}\leq\frac{\frac{20nL\overline{R}}{t}\cdot\overline{R}}{\frac{Rr}{10n\overline{R}}}=\frac{200n^{2}L\frac{\overline{R}^{3}}{Rr}}{t}\leq\epsilon.
-\]
-Hence, we have $x^{+}-x^{-}>0$ and that $\ma(x^{+}-x^{-})=b$. 
-
-Next, we check $s\defeq s^{+}-s^{\theta}\in\DualR$. Since $x\in\mathcal{P}$,
-we have $x\leq R$ and $x_{i}^{+}\leq\frac{3}{2}x_{i}\leq\frac{3}{2}R$.
-Since $x_{i}^{+}s_{i}^{+}\geq\frac{5}{6}LR$, we have $s_{i}^{+}\geq\frac{1}{2}L.$
-On the other hand, we have $x^{\theta}=\widetilde{b}-\sum_{i=1}^{n}x_{i}^{+}\geq\widetilde{b}-2nR\geq\frac{1}{2}n\overline{R}$
-(Lemma \ref{lem:ipm_propert_modified}). Hence, $s^{\theta}\leq\frac{\frac{7}{6}LR}{\frac{1}{2}n\overline{R}}\leq\frac{5LR}{2n\overline{R}}.$
-Combining both and the choice of $\overline{R}$, we have
-\[
-\frac{s^{\theta}}{\min_{i}s_{i}^{+}}\leq\frac{\frac{5LR}{2n\overline{R}}}{L/2}=\frac{5R}{n\overline{R}}\leq\epsilon
-\]
-Hence, we have $s=s^{+}-s^{\theta}>0$ and that $\ma^{\top}y+s=\ma^{\top}y+s^{+}-s^{\theta}=\ma^{\top}y+s^{+}+\lambda=c$
-(See (\ref{eq:KKT_modified_LP})).
-\end{proof}
 
 \subsection{Why $\sqrt{n}$?}
 
@@ -839,20 +790,20 @@ A\frac{d}{dt}x_{t} & =0,\\
 A^{\top}\frac{d}{dt}y_{t}+\frac{d}{dt}s_{t} & =0.
 \end{align*}
 Solving this linear system, we have that $S_{t}\frac{dx_{t}}{dt}=(I-P_{t})1$
-and $X_{t}\frac{ds_{t}}{dt}=P_{t}1$ where $P_{t}=X_{t}A^{\top}(AS_{t}^{-1}X_{t}A^{\top})^{-1}AS_{t}^{-1}$.
+and $X_{t}\frac{ds_{t}}{dt}=P_{t}1$ where $P_{t}=X_{t}A^{\top}(AS^{-1}_{t}X_{t}A^{\top})^{-1}AS^{-1}_{t}$.
 Using that $x_{t}s_{t}=t$, we have that
 \[
-P_{t}=X_{t}A^{\top}(AX_{t}^{2}A^{\top})^{-1}AX_{t}=S_{t}^{-1}A^{\top}(AS_{t}^{-2}A^{\top})^{-1}AS_{t}^{-1}
+P_{t}=X_{t}A^{\top}(AX^{2}_{t}A^{\top})^{-1}AX_{t}=S^{-1}_{t}A^{\top}(AS^{-2}_{t}A^{\top})^{-1}AS^{-1}_{t}
 \]
-and that $X_{t}^{-1}\frac{dx_{t}}{dt}=\frac{1}{t}(I-P_{t})1$ and
-$S_{t}^{-1}\frac{ds_{t}}{dt}=\frac{1}{t}P_{t}1$. Equivalently, we
+and that $X^{-1}_{t}\frac{dx_{t}}{dt}=\frac{1}{t}(I-P_{t})1$ and
+$S^{-1}_{t}\frac{ds_{t}}{dt}=\frac{1}{t}P_{t}1$. Equivalently, we
 have
 \[
 \frac{d\ln x_{t}}{d\ln t}=(I-P_{t})1\text{ and }\frac{d\ln s_{t}}{d\ln t}=P_{t}1.
 \]
 Note that 
 \[
-\norm{P_{t}1}_{\infty}\leq\norm{P_{t}1}_{2}=\sqrt{n}.
+\norm{P_{t}1}_{\infty}\leq\norm{P_{t}1}_{2}\leq\sqrt{n}.
 \]
 Hence, $x_{t}$ and $s_{t}$ can change by at most a constant factor
 when we change $t$ by a $1\pm\frac{1}{\sqrt{n}}$ factor.
@@ -866,8 +817,7 @@ then we can find $x_{t}$ by solving $\tilde{O}(1)$ linear systems.
 \section{Interior Point Method for Convex Programs}
 
 The interior point method can be used to optimize any convex function.
-For more in-depth treatment, please see the structural programming
-section in \cite{nesterov1998introductory}.
+For a more in-depth treatment, please see \cite{nesterov1998introductory}.
 
 Recall that any convex optimization problem
 \[
@@ -885,11 +835,11 @@ $x\in K$ by a soft constraint as follows:
 \]
 where $\phi(x)$ is a convex function such that $\phi(x)\rightarrow+\infty$
 as $x\rightarrow\partial K$. Note that we put the parameter $t$
-in front of the cost $c^{\top}x$ instead of $\phi$ as in the last
-lecture, it is slightly more convenient here. We say $\phi$ is a
-\emph{barrier} for $K$. To be concrete, we can always keep in mind
-$\phi(x)=-\sum_{i=1}^{n}\ln x_{i}$. As before, we define the central
-path.
+in front of the cost $c^{\top}x$ instead of $\phi$ as in the linear-programming
+formulation above; it is slightly more convenient here. We say $\phi$
+is a \emph{barrier} for $K$. To be concrete, we can always keep in
+mind $\phi(x)=-\sum^{n}_{i=1}\ln x_{i}$. As before, we define the
+central path.
 \begin{defn}
 The central path $x_{t}=\arg\min_{x}\phi_{t}(x)$.
 \end{defn}
@@ -910,25 +860,25 @@ In this section, we give a general analysis for the Newton method.
 In the next section, we will use this to show that interior point
 method can be generalized to convex optimization. A key property of
 the Newton method is that it is invariant under linear transformation.
-In general, whenever a method uses $k^{th}$ order information, we
-need to assume the $k^{th}$ derivative is continuous. Otherwise,
-the $k^{th}$ derivative is not useful for algorithmic purposes. For
-the Newton method, it is convenient to assume that the Hessian is
-Lipschitz. Since the method is invariant under linear transformation,
+In general, whenever a method uses $k^{\mathrm{th}}$ order information,
+we need to assume the $k^{\mathrm{th}}$ derivative is continuous.
+Otherwise, the $k^{\mathrm{th}}$ derivative is not useful for algorithmic
+purposes. For the Newton method, it is convenient to assume that the
+Hessian is Lipschitz. Since the method is invariant under linear transformation,
 it only makes sense to impose an assumption that is invariant under
 linear transformation.
 \begin{defn}
 Given a convex function $f:\R^{n}\rightarrow\R$, and any point $x\in\R^{n},$
-define the norm $\norm ._{x}$ as 
+define the norm $\norm{\cdot}_{x}$ as 
 \[
-\norm v_{x}^{2}=v^{\top}\nabla^{2}f(x)v.
+\norm v^{2}_{x}=v^{\top}\nabla^{2}f(x)v.
 \]
 We call a function $f$ self-concordant if for any $h\in\Rn$ and
 any $x$ in $\dom f$, we have
 \[
-|D^{3}f(x)[h,h,h]|\leq2\norm h_{x}^{3}
+|D^{3}f(x)[h,h,h]|\leq2\norm h^{3}_{x}
 \]
-where $D^{k}f(x)[h_{1},h_{2},\cdots,h_{k}]$ is the directional $k^{th}$
+where $D^{k}f(x)[h_{1},h_{2},\cdots,h_{k}]$ is the directional $k^{\mathrm{th}}$
 derivative of $f$ along the directions $h_{1},h_{2},\cdots,h_{k}$.
 \end{defn}
 
@@ -940,12 +890,12 @@ we can change any constant to any other constant.
 \begin{xca}
 Show that the following property is equivalent to self-concordance
 as defined above: restricted on any straight line $g(t)=f(x+th)$,
-we have $g'''(t)\leq2g''(t)^{3/2}$.
+we have $|g'''(t)|\leq2g''(t)^{3/2}$.
 \end{xca}
 
 \begin{xca}
-Show that the functions $x^{\top}Ax$, $-\ln x$, $-\ln(1-\sum x_{i}^{2})$,
-$-\ln\det X$ are self-concordant under suitable nonnegativity conditions.
+Show that the functions $x^{\top}Ax$, $-\ln x$, $-\ln(1-\sum x^{2}_{i})$,
+$-\ln\det X$ are self-concordant for $A\succeq0$.
 \end{xca}
 
 The self-concordance condition says that locally, the Hessian does
@@ -956,7 +906,7 @@ lemma below.
 Given a self-concordant function $f$, for any $h_{1},h_{2},h_{3}\in\Rn$,
 we have 
 \[
-D^{3}f(x)[h_{1},h_{2},h_{3}]\leq2\norm{h_{1}}_{x}\norm{h_{2}}_{x}\norm{h_{3}}_{x}.
+\left|D^{3}f(x)[h_{1},h_{2},h_{3}]\right|\leq2\norm{h_{1}}_{x}\norm{h_{2}}_{x}\norm{h_{3}}_{x}.
 \]
 \end{lem}
 
@@ -978,18 +928,18 @@ Then, we have that
 \]
 By self-concordance, we have
 \begin{equation}
-\left|\alpha'(t)\right|\leq2\norm{y-x}_{x+t(y-x)}\norm u_{x+t(y-x)}^{2}.\label{eq:self_con_global_alpha}
+\left|\alpha'(t)\right|\leq2\norm{y-x}_{x+t(y-x)}\norm u^{2}_{x+t(y-x)}.\label{eq:self_con_global_alpha}
 \end{equation}
 
 For $u=y-x$, we have $\left|\alpha'(t)\right|\leq2\alpha(t)^{\frac{3}{2}}$.
 Hence, we have $\frac{d}{dt}\frac{1}{\sqrt{\alpha(t)}}\geq-1.$ Integrating
-both sides w.r.t. $t$, we have
+both sides with respect to $t$, we have
 \[
 \frac{1}{\sqrt{\alpha(t)}}\geq\frac{1}{\sqrt{\alpha(0)}}-t=\frac{1}{\norm{x-y}_{x}}-t.
 \]
 Rearranging it gives
 \[
-\norm{y-x}_{x+t(y-x)}^{2}\leq\frac{1}{(\frac{1}{\norm{x-y}_{x}}-t)^{2}}=\frac{\norm{x-y}_{x}^{2}}{(1-t\norm{x-y}_{x})^{2}}.
+\norm{y-x}^{2}_{x+t(y-x)}\leq\frac{1}{(\frac{1}{\norm{x-y}_{x}}-t)^{2}}=\frac{\norm{x-y}^{2}_{x}}{(1-t\norm{x-y}_{x})^{2}}.
 \]
 
 Going back to general $u$, (\ref{eq:self_con_global_alpha}) gives
@@ -1006,21 +956,31 @@ Integrating both from $t=0$ to $1$ gives the result.
 \subsection{Self-concordant barrier functions}
 
 To analyze the algorithm above, we need to assume that $\phi$ is
-well-behaved. We measure the quality of $\phi$ by $\|\nabla\phi\|_{\nabla^{2}\phi(x)^{-1}}$.
-One can think this as the Lipschitz constant of $\phi$ but measured
-in the local norm. 
+well-behaved. We measure the quality of $\phi$ by $\|\nabla\phi\|_{\nabla^{2}\phi(x)^{+}}$,
+where $A^{+}$ denotes the \emph{pseudo inverse} of $A$. If $A$
+is invertible, then $A^{+}=A^{-1}$. One can think of this as the
+Lipschitz constant of $\phi$ but measured in the local norm. 
 \begin{defn}
 We call $\phi$ a $\nu$-self-concordant barrier for $K$ if $\phi$
 is self-concordant, $\phi(x)\rightarrow+\infty$ as $x\rightarrow\partial K$
-and that $\|\nabla\phi(x)\|_{\nabla^{2}\phi(x)^{-1}}^{2}\leq\nu$
-for all $x$.
+and that $\|\nabla\phi(x)\|^{2}_{\nabla^{2}\phi(x)^{+}}\leq\nu$ for
+all $x$.
 \end{defn}
 
+\begin{rem*}
+We use the pseudo-inverse because we only care about the inverse in
+the direction of the gradient: the above definition only makes sense
+if, for any $x\in K$, there is a vector $v_{x}$ such that $\nabla^{2}\phi(x)v_{x}=\nabla\phi(x)$,
+so we can define $\nabla^{2}\phi(x)^{-1}\nabla\phi(x):=v_{x}$. In
+the analysis to come, this will be the semantics of the vector $\nabla^{2}\phi(x)^{-1}\nabla\phi(x)$,
+and the norm induced by the inverse Hessian should be computed with
+this in mind, i.e. $\nabla^{2}f(x)^{-1}$ should be viewed as $\nabla^{2}f(x)^{+}$.
+\end{rem*}
 Not all convex functions are self-concordant. However, for our purpose,
 it suffices to show that we can construct a self-concordant barrier
 for any convex set.
 \begin{thm}
-Any convex set has an $n$-self concordant barrier.
+Any convex set has an $n$-self-concordant barrier.
 \end{thm}
 
 Unfortunately, this is an existence result and the barrier function
@@ -1032,7 +992,7 @@ as a short form for $\nu$-self-concordant barrier.
 \begin{itemize}
 \item $-\ln x$ is $1$-sc for $\{x\geq0\}$.
 \item $-\ln\cos(x)$ is $1$-sc for $\{\left|x\right|\leq\frac{\pi}{2}\}$.
-\item $-\ln(t^{2}-\norm x^{2})$ is $2$-sc for $\{t\geq\norm x_{2}\}$.
+\item $-\ln(t^{2}-\norm x^{2}_{2})$ is $2$-sc for $\{t\geq\norm x_{2}\}$.
 \item $-\ln\det X$ is $n$-sc for $\{X\in\R^{n\times n},X\succeq0\}$.
 \item $-\ln x-\ln(\ln x+t)$ is $2$-sc for $\{x\geq0,t\geq-\ln x\}$.
 \item $-\ln t-\ln(\ln t-x)$ is $2$-sc for $\{t\geq e^{x}\}$.
@@ -1050,19 +1010,19 @@ $p\geq1$.
 
 The following lemma shows how we can combine barriers.
 \begin{lem}
-If $\phi_{1}$ and $\phi_{2}$ are $\nu_{1}$ and $\nu_{2}$-self
-concordant barriers for $K_{1}$ and $K_{2}$ respectively, then $\phi_{1}+\phi_{2}$
-is a $\nu_{1}+\nu_{2}$ self concordant barrier for $K_{1}\cap K_{2}$.
+If $\phi_{1}$ and $\phi_{2}$ are $\nu_{1}$ and $\nu_{2}$-self-concordant
+barriers for $K_{1}$ and $K_{2}$ respectively, then $\phi_{1}+\phi_{2}$
+is a $\nu_{1}+\nu_{2}$ self-concordant barrier for $K_{1}\cap K_{2}$.
 \end{lem}
 
 \begin{lem}
-If $\phi$ is a $\nu$-self concordant barrier for $K$, then $\phi(Ax+b)$
-is $\nu$-self concordant for $\{y:Ay+b\in K\}$.
+If $\phi$ is a $\nu$-self-concordant barrier for $K$, then $\phi(Ax+b)$
+is a $\nu$-self-concordant barrier for $\{x:Ax+b\in K\}$.
 \end{lem}
 
 \begin{xca}
-Using the lemmas above, prove that $-\sum_{i=1}^{m}\ln(a_{i}^{\top}x-b_{i})$
-is an $m$-self concordant barrier for the convex set $\{Ax\geq b\}$. 
+Using the lemmas above, prove that $-\sum^{m}_{i=1}\ln(a^{\top}_{i}x-b_{i})$
+is an $m$-self-concordant barrier for the convex set $\{Ax\geq b\}$. 
 \end{xca}
 
 
@@ -1099,23 +1059,23 @@ and hence
 \]
 To bound $\nabla f(x')$, we calculate that
 \begin{align}
-\nabla f(x') & =\nabla f(x)+\int_{0}^{1}\nabla^{2}f(x+t(x'-x))(x'-x)dt\nonumber \\
- & =\nabla f(x)-\int_{0}^{1}\nabla^{2}f(x+t(x'-x))(\nabla^{2}f(x))^{-1}\nabla f(x)dt\nonumber \\
- & =\left(\nabla^{2}f(x)-\int_{0}^{1}\nabla^{2}f(x+t(x'-x))dt\right)(\nabla^{2}f(x))^{-1}\nabla f(x).\label{eq:grad_f_sc}
+\nabla f(x') & =\nabla f(x)+\int^{1}_{0}\nabla^{2}f(x+t(x'-x))(x'-x)dt\nonumber \\
+ & =\nabla f(x)-\int^{1}_{0}\nabla^{2}f(x+t(x'-x))(\nabla^{2}f(x))^{-1}\nabla f(x)dt\nonumber \\
+ & =\left(\nabla^{2}f(x)-\int^{1}_{0}\nabla^{2}f(x+t(x'-x))dt\right)(\nabla^{2}f(x))^{-1}\nabla f(x).\label{eq:grad_f_sc}
 \end{align}
 For the term in the bracket, we use Lemma \ref{lem:self_con_global}
-to get (note that $\int_{0}^{1}(1-tr)^{2}dt=1-r+\frac{1}{3}r^{2}$):
+to get (note that $\int^{1}_{0}(1-tr)^{2}dt=1-r+\frac{1}{3}r^{2}$):
 \[
-(1-r+\frac{1}{3}r^{2})\nabla^{2}f(x)\preceq\int_{0}^{1}\nabla^{2}f(x+t(x'-x))dt\preceq\frac{1}{1-r}\nabla^{2}f(x).
+(1-r+\frac{1}{3}r^{2})\nabla^{2}f(x)\preceq\int^{1}_{0}\nabla^{2}f(x+t(x'-x))dt\preceq\frac{1}{1-r}\nabla^{2}f(x).
 \]
 Therefore, we have
 \[
-\norm{(\nabla^{2}f(x))^{-\frac{1}{2}}\left(\nabla^{2}f(x)-\int_{0}^{1}\nabla^{2}f(x+t(x'-x))dt\right)(\nabla^{2}f(x))^{-\frac{1}{2}}}_{\text{op}}\leq\max\left(\frac{r}{1-r},r-\frac{1}{3}r^{2}\right)=\frac{r}{1-r}.
+\norm{(\nabla^{2}f(x))^{-\frac{1}{2}}\left(\nabla^{2}f(x)-\int^{1}_{0}\nabla^{2}f(x+t(x'-x))dt\right)(\nabla^{2}f(x))^{-\frac{1}{2}}}_{\text{op}}\leq\max\left(\frac{r}{1-r},r-\frac{1}{3}r^{2}\right)=\frac{r}{1-r}.
 \]
 Putting it into (\ref{eq:grad_f_sc}) gives
 \begin{align*}
 \norm{\nabla f(x')}_{\nabla^{2}f(x)^{-1}} & =\norm{\nabla^{2}f(x)^{-\frac{1}{2}}\nabla f(x')}_{2}\\
- & \le\norm{(\nabla^{2}f(x))^{-\frac{1}{2}}\left(\nabla^{2}f(x)-\int_{0}^{1}\nabla^{2}f(x+t(x'-x))dt\right)(\nabla^{2}f(x))^{-\frac{1}{2}}}_{\text{op}}\norm{(\nabla^{2}f(x))^{-\frac{1}{2}}\nabla f(x)}_{2}\\
+ & \le\norm{(\nabla^{2}f(x))^{-\frac{1}{2}}\left(\nabla^{2}f(x)-\int^{1}_{0}\nabla^{2}f(x+t(x'-x))dt\right)(\nabla^{2}f(x))^{-\frac{1}{2}}}_{\text{op}}\norm{(\nabla^{2}f(x))^{-\frac{1}{2}}\nabla f(x)}_{2}\\
  & \leq\frac{r}{1-r}\cdot r\\
  & =\frac{r^{2}}{1-r}.
 \end{align*}
@@ -1127,20 +1087,20 @@ we have that
 \begin{itemize}
 \item $\|x-x^{*}\|_{x^{*}}\leq2\|\nabla f(x)\|_{\nabla^{2}f(x)^{-1}}$,
 \item $\|x-x^{*}\|_{x}\leq\frac{4}{3}\|\nabla f(x)\|_{\nabla^{2}f(x)^{-1}}$,
-\item $f(x)\leq f(x^{*})+\|\nabla f(x)\|_{\nabla^{2}f(x)^{-1}}^{2}.$
+\item $f(x)\leq f(x^{*})+2\|\nabla f(x)\|^{2}_{\nabla^{2}f(x)^{-1}}.$
 \end{itemize}
 \end{lem}
 
 \begin{proof}
 Let $r=\|x-x^{*}\|_{x}$. Suppose that $r\leq\frac{1}{4}$. Note that
 \[
-\nabla f(x)=\nabla f(x)-\nabla f(x^{*})=\int_{0}^{1}\nabla^{2}f(x^{*}+t(x-x^{*}))(x-x^{*})dt.
+\nabla f(x)=\nabla f(x)-\nabla f(x^{*})=\int^{1}_{0}\nabla^{2}f(x^{*}+t(x-x^{*}))(x-x^{*})dt.
 \]
 Using that $\nabla^{2}f(x^{*}+t(x-x^{*}))\succeq(1-(1-t)r)^{2}\nabla^{2}f(x)$
 (Lemma \ref{lem:self_con_global}), we have
 \begin{align*}
-\|\nabla f(x)\|_{\nabla^{2}f(x)^{-1}} & =\norm{\int_{0}^{1}\nabla^{2}f(x^{*}+t(x-x^{*}))(x-x^{*})\,dt}_{\nabla^{2}f(x)^{-1}}\\
- & \geq\int_{0}^{1}(1-(1-t)r)^{2}\|x-x^{*}\|_{x}dt\\
+\|\nabla f(x)\|_{\nabla^{2}f(x)^{-1}} & =\norm{\int^{1}_{0}\nabla^{2}f(x^{*}+t(x-x^{*}))(x-x^{*})\,dt}_{\nabla^{2}f(x)^{-1}}\\
+ & \geq\int^{1}_{0}(1-(1-t)r)^{2}\|x-x^{*}\|_{x}dt\\
  & =\left(1-r+\frac{r^{2}}{3}\right)r\geq\frac{3r}{4}.
 \end{align*}
 
@@ -1153,17 +1113,15 @@ function). Using Lemma \ref{lem:self_con_global} again, we have
 
 For the bound for $f(x)$, we have that
 \[
-f(x)=f(x^{*})+\left\langle \nabla f(x^{*}),x-x^{*}\right\rangle +\int_{0}^{1}(1-t)(x-x^{*})^{\top}\nabla^{2}f(x^{*}+t(x-x^{*}))(x-x^{*})dt.
+f(x)=f(x^{*})+\left\langle \nabla f(x^{*}),x-x^{*}\right\rangle +\int^{1}_{0}(1-t)(x-x^{*})^{\top}\nabla^{2}f(x^{*}+t(x-x^{*}))(x-x^{*})dt.
 \]
-Using that $\nabla^{2}f(x^{*}+t(x-x^{*}))\preceq\frac{1}{(1-(1-t)r)^{2}}\nabla^{2}f(x)$,
+Using that $\nabla^{2}f(x^{*}+t(x-x^{*}))\preceq\frac{1}{(1-(1-t)r)^{2}}\nabla^{2}f(x)\preceq\frac{16}{9}\nabla^{2}f(x)$,
 we have
 \begin{align*}
-f(x) & \leq f(x^{*})+\int_{0}^{1}\frac{1-t}{(1-(1-t)r)^{2}}dt\cdot\|x-x^{*}\|_{x}^{2}\\
- & =f(x^{*})+\frac{1}{r^{2}}(\frac{r}{1-r}+\log(1-r))\|x-x^{*}\|_{x}^{2}\\
- & \leq f(x^{*})+(\frac{1}{2}+r)\|x-x^{*}\|_{x}^{2}\\
- & \le f(x^{*})+\norm{\nabla f(x)}_{\nabla^{2}f(x)^{-1}}^{2}
+f(x) & \leq f(x^{*})+\frac{16}{9}\int^{1}_{0}(1-t)dt\cdot\|x-x^{*}\|^{2}_{x}\\
+ & \leq f(x^{*})+\|x-x^{*}\|^{2}_{x}\\
+ & \le f(x^{*})+2\norm{\nabla f(x)}^{2}_{\nabla^{2}f(x)^{-1}}.
 \end{align*}
-where we used $r\leq\frac{1}{4}$ at the end.
 \end{proof}
 
 \subsection{Main Algorithm and Analysis}
@@ -1177,11 +1135,11 @@ where we used $r\leq\frac{1}{4}$ at the end.
 \textbf{Input:} A $\nu$-self-concordant barrier $\phi$ for $K$,
 the minimizer $x$ of $\phi$. 
 
-Define $f_{t}(x)=tc^{\top}x+\phi(x)$. $t=\frac{1}{6}\|c\|_{\nabla^{2}\phi(x)^{-1}}^{-1}$.
+Define $f_{t}(x)=tc^{\top}x+\phi(x)$. $t=\frac{1}{6}\|c\|^{-1}_{\nabla^{2}\phi(x)^{-1}}$.
 
 \While{$t\leq\frac{\nu+\sqrt{\nu}}{\epsilon}$}{
 
-$x\leftarrow x-\nabla^{2}f_{t}(x)^{-1}\nabla f_{t}(x)$.
+$x\leftarrow x-\nabla^{2}f_{t}(x)^{+}\nabla f_{t}(x)$.
 
 $t\leftarrow(1+h)t$ with $h=\frac{1}{9\sqrt{\nu}}$.
 
@@ -1193,15 +1151,15 @@ $t\leftarrow(1+h)t$ with $h=\frac{1}{9\sqrt{\nu}}$.
 
 We first explain the initialization and termination conditions. We
 start with the point $x^{(0)}=\arg\min\phi(x)$ (or a point very close
-to it). The choice of $t_{0}$ is to ensure that the norm of the initial
-gradient in the inverse Hessian norm is bounded by a convenient constant
-less than $1$ (we use $1/6$). 
+to it). The choice of initial $t$ is to ensure that the norm of the
+initial gradient in the inverse Hessian norm is bounded by a convenient
+constant less than $1$ (we use $1/6$). 
 
 For the termination, intuitively, we can see that $\min f_{t}(x_{t})$
 tends to optimality as $t\rightarrow\infty$. We first need a lemma
 showing that the gradient of $\phi$ is small.
 \begin{lem}[Duality Gap]
-Suppose that $\phi$ is a $\nu$-self concordant barrier. For any
+Suppose that $\phi$ is a $\nu$-self-concordant barrier. For any
 $x,y\in K$, we have that
 \[
 \left\langle \nabla\phi(x),y-x\right\rangle \leq\nu.
@@ -1222,18 +1180,18 @@ Hence, we have $\alpha'(t)\geq\frac{1}{\nu}\alpha(t)^{2}.$ If $\alpha(0)\leq0$,
 then we are done. Otherwise, $\alpha$ is increasing and hence, $\alpha(1)>0$.
 Therefore, 
 \[
-\frac{1}{\alpha(1)}\leq\frac{1}{\alpha(0)}-\frac{1}{v}
+\frac{1}{\alpha(1)}\leq\frac{1}{\alpha(0)}-\frac{1}{\nu}
 \]
 and we have $\alpha(0)\leq\nu$.
 \end{proof}
 \begin{lem}[Duality Gap]
- Suppose that $\phi$ is a $\nu$-self concordant barrier, we have
+ Suppose that $\phi$ is a $\nu$-self-concordant barrier, we have
 that
 \[
 \left\langle c,x_{t}\right\rangle \leq\left\langle c,x^{*}\right\rangle +\frac{\nu}{t},
 \]
-where $x_{t}=\argmin f_{t}(x)$.\\
-More generally, for any $x$ such that $\|tc+\nabla\phi(x)\|_{(\nabla^{2}\phi(x))^{-1}}\leq\frac{1}{6}$,
+where $x_{t}=\argmin f_{t}(x)$. More generally, for any $x$ such
+that $\|tc+\nabla\phi(x)\|_{(\nabla^{2}\phi(x))^{-1}}\leq\frac{1}{6}$,
 we have that
 \[
 \left\langle c,x\right\rangle \leq\left\langle c,x^{*}\right\rangle +\frac{\nu+\sqrt{\nu}}{t}.
@@ -1242,13 +1200,13 @@ we have that
 
 \begin{proof}
 Let $x^{*}$ be a minimizer of $c^{\top}x$ on $K$. By optimality
-of $x_{t}$for $f_{t}$, we have $tc+\nabla\phi(x_{t})=0$. Therefore,
+of $x_{t}$ for $f_{t}$, we have $tc+\nabla\phi(x_{t})=0$. Therefore,
 we have 
 \[
 \left\langle c,x_{t}\right\rangle -\left\langle c,x^{*}\right\rangle =\frac{1}{t}\left\langle \nabla\phi(x_{t}),x^{*}-x_{t}\right\rangle \leq\frac{\nu}{t}.
 \]
 
-For the second result, let $f(x)=tc^{T}x+\phi(x)$. Lemma \ref{lem:self_concordant_err}
+For the second result, let $f(x)=tc^{\top}x+\phi(x)$. Lemma \ref{lem:self_concordant_err}
 shows that
 \[
 \|x-x_{t}\|_{x}\leq2\|\nabla f(x)\|_{\nabla^{2}f(x)^{-1}}\leq\frac{1}{3}.
@@ -1266,10 +1224,10 @@ have
 This gives the result.
 \end{proof}
 Hence, it suffices to end with $t=(\nu+\sqrt{\nu})/\varepsilon$,
-which is exactly same as the previous lecture.
+which is exactly the same as in the linear-programming case above.
 \begin{thm}
-Given a $\nu$-self concordant barrier $\phi$ and its minimizer.
-We can find $x\in K$ such that $c^{\top}x\leq c^{\top}x^{*}+\epsilon$
+Given a $\nu$-self-concordant barrier $\phi$ and its minimizer,
+we can find $x\in K$ such that $c^{\top}x\leq c^{\top}x^{*}+\epsilon$
 in 
 \[
 O(\sqrt{\nu}\log(\frac{\nu}{\epsilon}\|c\|_{\nabla^{2}\phi(x^{(0)})^{-1}}))
@@ -1278,7 +1236,7 @@ iterations.
 \end{thm}
 
 \begin{proof}
-We prove by induction that $\|\nabla f_{t}(x)\|_{\nabla^{2}f_{t}(x))^{-1}}\leq\frac{1}{6}$
+We prove by induction that $\|\nabla f_{t}(x)\|_{\nabla^{2}f_{t}(x)^{-1}}\leq\frac{1}{6}$
 at the beginning of each iteration. This is true at the beginning
 by the definition of initial $t$. By Lemma \ref{lem:Newton_improvement},
 after the Newton step, we have

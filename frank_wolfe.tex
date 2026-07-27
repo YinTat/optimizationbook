@@ -17,21 +17,16 @@ Then,
 \begin{proof}
 By the strong convexity of $\Phi$, we have that 
 \begin{align*}
-\E_{s_{k}\in\{\pm1\}\ \forall k\in[n]}\Phi(s_{1},\cdots,s_{n}) & \geq\E_{s_{k}\in\{\pm1\}\ \forall k\in[n-1]}\Phi(s_{1},\cdots,s_{n-1},0)+\E_{s_{n}}\left\langle \nabla\Phi(s_{1},\cdots,s_{n-1},0),s_{n}\right\rangle +\frac{1}{2}\\
+\E_{s_{k}\in\{\pm1\}\ \forall k\in[n]}\Phi(s_{1},\cdots,s_{n}) & \geq\E_{s_{k}\in\{\pm1\}\ \forall k\in[n-1]}\Phi(s_{1},\cdots,s_{n-1},0)+\E_{s_{n}}\left\langle \nabla\Phi(s_{1},\cdots,s_{n-1},0),s_{n}e_{n}\right\rangle +\frac{1}{2}\\
  & =\E_{s_{k}\in\{\pm1\}\ \forall k\in[n-1]}\Phi(s_{1},\cdots,s_{n-1},0)+\frac{1}{2}\\
  & \vdots\\
  & \geq\Phi(0)+\frac{n}{2}.
 \end{align*}
 \end{proof}
-\begin{rem*}
-This inequality is tight because $\frac{1}{2}\|x\|^{2}$ is $1$-strongly
-convex in $\|\cdot\|_{\infty}$ and its value is between $0$ and
-$\frac{n}{2}$.
-\end{rem*}
 
 \subsection{Algorithm}
 
-Now we give another geometry dependent algorithm that relies on a
+Now we give another geometry-dependent algorithm that relies on a
 different set of assumptions. The problem we study in this section
 is of the form
 \[
@@ -47,7 +42,7 @@ problems.
 
 \SetAlgoLined
 
-\textbf{Input:} Initial point $x^{(0)}\in\Rn$, step size $h>0$.
+\textbf{Input:} Initial point $x^{(0)}\in\mathcal{D}$.
 
 \For{$k=0,1,\cdots,T-1$}{
 
@@ -64,11 +59,11 @@ $x^{(k+1)}\leftarrow(1-h_{k})x^{(k)}+h_{k}y^{(k)}$ with $h_{k}=\frac{2}{k+2}$.
 \subsection*{Analysis}
 \begin{thm}
 Let $f$ be a convex function on a convex set $\mathcal{D}$ with
-a constant $C_{f}$ such that
+a constant $C_{f}$ such that for any $x,y\in\mathcal{D}$ and $h\in[0,1]$,
 \[
-f((1-h)x+hy))\leq f(x)+h\left\langle \nabla f(x),y-x\right\rangle +\frac{1}{2}C_{f}h^{2}.
+f((1-h)x+hy)\leq f(x)+h\left\langle \nabla f(x),y-x\right\rangle +\frac{1}{2}C_{f}h^{2}.
 \]
-Then, for any $x,y\in\mathcal{D}$ and $h\in[0,1]$, we have
+Then, for every $k\ge1$, we have
 \[
 f(x^{(k)})-f(x^{*})\leq\frac{2C_{f}}{k+2}.
 \]
@@ -81,7 +76,7 @@ over the domain $\mathcal{D}$, then $C_{f}\leq L\cdot\text{diam}_{\|\cdot\|}(\ma
 \begin{proof}
 By the definition of $C_{f}$, we have that
 \[
-f(x^{(k+1)})\leq f(x^{(k)})+h_{k}\left\langle \nabla f(x^{(k)}),y^{(k)}-x^{(k)}\right\rangle +\frac{1}{2}C_{f}h_{k}^{2}.
+f(x^{(k+1)})\leq f(x^{(k)})+h_{k}\left\langle \nabla f(x^{(k)}),y^{(k)}-x^{(k)}\right\rangle +\frac{1}{2}C_{f}h^{2}_{k}.
 \]
 Note that 
 \[
@@ -90,18 +85,17 @@ f(x^{*})\geq f(x^{(k)})+\left\langle \nabla f(x^{(k)}),x^{*}-x^{(k)}\right\rangl
 where we used the fact that $y^{(k)}=\arg\min_{y\in\mathcal{D}}\left\langle y,\nabla f(x^{(k)})\right\rangle $
 and that $x^{*}\in\mathcal{D}$. Hence, we have that
 \[
-f(x^{(k+1)})\leq f(x^{(k)})-h_{k}(f(x^{(k)})-f(x^{*}))+\frac{1}{2}C_{f}h_{k}^{2}.
+f(x^{(k+1)})\leq f(x^{(k)})-h_{k}(f(x^{(k)})-f(x^{*}))+\frac{1}{2}C_{f}h^{2}_{k}.
 \]
 Let $e_{k}=f(x^{(k)})-f(x^{*})$. Then, 
 \[
-e_{k+1}\leq(1-h_{k})e_{k}+\frac{1}{2}C_{f}h_{k}^{2}.
+e_{k+1}\leq(1-h_{k})e_{k}+\frac{1}{2}C_{f}h^{2}_{k}.
 \]
-Note that $e_{0}=f(x^{(0)})-f^{*}\leq\frac{1}{2}C_{f}$. By induction,
-we have that $e_{k}\leq\frac{2C_{f}}{k+2}$.
+Since $h_{0}=1$, the recurrence gives $e_{1}\leq\frac{1}{2}C_{f}\leq\frac{2}{3}C_{f}$.
+By induction, for every $k\ge1$, we have that $e_{k}\leq\frac{2C_{f}}{k+2}$.
 \end{proof}
 \begin{rem*}
 Note that this proof is in fact the same as Theorem \ref{thm:gd_convex}.
 
 \end{rem*}
-
 

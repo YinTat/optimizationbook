@@ -1,5 +1,5 @@
-#LyX 2.4 created this file. For more info see https://www.lyx.org/
-\lyxformat 620
+#LyX 2.5 created this file. For more info see https://www.lyx.org/
+\lyxformat 643
 \begin_document
 \begin_header
 \save_transient_properties true
@@ -50,11 +50,19 @@
 \use_indices false
 \paperorientation portrait
 \suppress_date false
-\justification true
-\use_refstyle 1
+\justification default
+\crossref_package refstyle
 \use_formatted_ref 0
 \use_minted 0
 \use_lineno 0
+\backgroundcolor none
+\fontcolor none
+\notefontcolor lightgray
+\boxbgcolor red
+\table_border_color default
+\table_odd_row_color default
+\table_even_row_color default
+\table_alt_row_colors_start 1
 \index Index
 \shortcut idx
 \color #008000
@@ -80,6 +88,7 @@
 \html_be_strict false
 \docbook_table_output 0
 \docbook_mathml_prefix 1
+\docbook_mathml_version 0
 \end_header
 
 \begin_body
@@ -155,7 +164,7 @@ where
 \end_inset
 
  is a matrix,
- and when it is PSD,
+ and when it is positive definite,
  it defines a local norm at 
 \begin_inset Formula $x$
 \end_inset
@@ -184,20 +193,12 @@ where
  Hamiltonian Monte Carlo (or RHMC) 
 \begin_inset CommandInset citation
 LatexCommand cite
-key "Neal1996,Neal2012"
+key "Neal1996,Neal2012,Girolami2009,Girolami2011"
 literal "true"
 
 \end_inset
 
-
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Girolami2009,Girolami2011"
-literal "true"
-
-\end_inset
-
- is a Markov Chain Monte Carlo method for sampling from a desired distribution.
+ is a Markov chain Monte Carlo method for sampling from a desired distribution.
  Each step of the method consists of the following:
  At a current point 
 \begin_inset Formula $x$
@@ -250,10 +251,20 @@ For the choice of
 \end_inset
 
 .
- Note that HMC does not require a Metropolis filter!
- Thus,
- unlike the walks we have seen so far,
- its step sizes are not limited by this consideration even in high dimension.
+ For the exact Hamiltonian flow 
+\begin_inset Formula $T_{\step}$
+\end_inset
+
+,
+ no Metropolis correction is needed.
+ In numerical HMC,
+ an inexact reversible volume-preserving integrator is usually paired with a Metropolis filter to correct discretization error.
+ For exact flow,
+ there is no discretization step size to tune.
+ For numerical integrators,
+ the integrator step size is still constrained by accuracy and acceptance
+ probability,
+ even though the Metropolis filter corrects the stationary distribution.
  Hamiltonian Monte Carlo can be used for sampling from a general distribution 
 \begin_inset Formula $e^{-H(x,y)}$
 \end_inset
@@ -276,11 +287,11 @@ Hamiltonian
 \begin_inset Formula $\mathcal{M}$
 \end_inset
 
- is the 
+ is the domain of the 
 \begin_inset Formula $x$
 \end_inset
 
- domain of 
+-coordinate of 
 \begin_inset Formula $H$
 \end_inset
 
@@ -314,7 +325,7 @@ We define the map
 \begin_inset Formula $T_{\step}(x,y)\defeq(x(\step),y(\step))$
 \end_inset
 
- where the 
+ where 
 \begin_inset Formula $(x(t),y(t))$
 \end_inset
 
@@ -341,7 +352,6 @@ status open
 
 \begin_layout Plain Layout
 
-
 \backslash
 begin{algorithm2e}
 \end_layout
@@ -357,7 +367,6 @@ status open
 
 \begin_layout Plain Layout
 
-
 \backslash
 caption{
 \end_layout
@@ -369,7 +378,6 @@ Hamiltonian Monte Carlo
 status open
 
 \begin_layout Plain Layout
-
 }
 \end_layout
 
@@ -383,7 +391,6 @@ status open
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 SetAlgoLined
@@ -413,7 +420,6 @@ status open
 
 \begin_layout Plain Layout
 
-
 \backslash
 For{
 \end_layout
@@ -421,7 +427,7 @@ For{
 \end_inset
 
 
-\begin_inset Formula $i=1,2,\cdots,T$
+\begin_inset Formula $k=1,2,\cdots,T$
 \end_inset
 
 
@@ -429,7 +435,6 @@ For{
 status open
 
 \begin_layout Plain Layout
-
 }{
 \end_layout
 
@@ -482,7 +487,6 @@ Otherwise,
 status open
 
 \begin_layout Plain Layout
-
 }
 \end_layout
 
@@ -509,7 +513,6 @@ Output:
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 end{algorithm2e}
@@ -646,8 +649,7 @@ nolink "false"
 
 \end_inset
 
-) w.r.t.
- 
+) with respect to 
 \begin_inset Formula $s$
 \end_inset
 
@@ -729,7 +731,6 @@ Using the previous two lemmas,
 \end_layout
 
 \begin_layout Lemma
-*
 \begin_inset CommandInset label
 LatexCommand label
 name "lem:time_reversibility"
@@ -765,7 +766,7 @@ Let
 
 \end_inset
 
-for almost everywhere in 
+for almost every 
 \begin_inset Formula $x$
 \end_inset
 
@@ -791,7 +792,7 @@ Fix
 
 .
  Let 
-\begin_inset Formula $F_{\step}^{x}(y)$
+\begin_inset Formula $F^{x}_{\step}(y)$
 \end_inset
 
  be the 
@@ -804,11 +805,11 @@ Fix
 
 .
  Let 
-\begin_inset Formula $V_{+}=\{y:\text{ }F_{\step}^{x}(y)=x'\}$
+\begin_inset Formula $V_{+}=\{y:\text{ }F^{x}_{\step}(y)=x'\}$
 \end_inset
 
  and 
-\begin_inset Formula $V_{-}=\{y:\text{ }F_{-\step}^{x}(y)=x')\}$
+\begin_inset Formula $V_{-}=\{y:\text{ }F^{x}_{-\step}(y)=x'\}$
 \end_inset
 
 .
@@ -816,31 +817,36 @@ Fix
  
 \begin_inset Formula 
 \[
-\pi(x)p_{x}(x')=\frac{1}{2}\int_{y\in V_{+}}\frac{e^{-H(x,y)}}{\left|\det\left(DF_{\step}^{x}(y)\right)\right|}+\frac{1}{2}\int_{y\in V_{-}}\frac{e^{-H(x,y)}}{\left|\det\left(DF_{-\step}^{x}(y)\right)\right|}.
+\pi(x)p_{x}(x')=\frac{1}{2}\int_{y\in V_{+}}\frac{e^{-H(x,y)}}{\left|\det\left(DF^{x}_{\step}(y)\right)\right|}+\frac{1}{2}\int_{y\in V_{-}}\frac{e^{-H(x,y)}}{\left|\det\left(DF^{x}_{-\step}(y)\right)\right|}.
 \]
 
 \end_inset
 
-We note that this formula assumed that 
-\begin_inset Formula $DF_{\step}^{x}$
+We note that this formula assumes that 
+\begin_inset Formula $DF^{x}_{\step}$
 \end_inset
 
  is invertible.
- Sard's theorem showed that 
-\begin_inset Formula $F_{\step}^{x}(N)$
+ Sard's theorem shows that 
+\begin_inset Formula $F^{x}_{\step}(N)$
 \end_inset
 
- is measure 
+ has measure 
 \begin_inset Formula $0$
 \end_inset
 
  where 
-\begin_inset Formula $N\defeq\{y:\,DF_{s}^{x}(y)\text{ is not invertible}\}$
+\begin_inset Formula $N\defeq\{y:\,DF^{x}_{\step}(y)\text{ is not invertible}\}$
+\end_inset
+
+.
+ The same argument applies to 
+\begin_inset Formula $F^{x}_{-\step}$
 \end_inset
 
 .
  Therefore,
- the formula is correct except for a measure zero subset.
+ the formula is correct except for a measure zero subset of target points.
 \end_layout
 
 \begin_layout Proof
@@ -853,7 +859,7 @@ By reversing time for the Hamiltonian curve,
  
 \begin_inset Formula 
 \begin{equation}
-\pi(x')p_{x'}(x)=\frac{1}{2}\int_{y\in V_{+}}\frac{e^{-H(x',y')}}{\left|\det\left(DF_{-\step}^{x'}(y')\right)\right|}+\frac{1}{2}\int_{y\in V_{-}}\frac{e^{-H(x',y')}}{\left|\det\left(DF_{\step}^{x'}(y')\right)\right|}\label{eq:ham_transit}
+\pi(x')p_{x'}(x)=\frac{1}{2}\int_{y\in V_{+}}\frac{e^{-H(x',y')}}{\left|\det\left(DF^{x'}_{-\step}(y')\right)\right|}+\frac{1}{2}\int_{y\in V_{-}}\frac{e^{-H(x',y')}}{\left|\det\left(DF^{x'}_{\step}(y')\right)\right|}\label{eq:ham_transit}
 \end{equation}
 
 \end_inset
@@ -874,7 +880,7 @@ where
 \begin_inset Formula $T_{-\step}(x,y)$
 \end_inset
 
- in the first and second sum respectively.
+ in the first and second terms, respectively.
 \end_layout
 
 \begin_layout Proof
@@ -887,46 +893,73 @@ C & D
 \end_inset
 
 .
- Since 
-\begin_inset Formula $T_{\step}\circ T_{-\step}=I$
+ At the regular points used in the change-of-variables formula,
+ the block 
+\begin_inset Formula $B=DF^{x}_{\step}(y)$
 \end_inset
 
- and 
-\begin_inset Formula $T_{\step}(x,y)=(x',y')$
+ is invertible.
+ Let 
+\begin_inset Formula $DT_{-\step}(x',y')=\left(\begin{array}{cc}
+* & M\\
+* & *
+\end{array}\right)$
+\end_inset
+
+. Then 
+\begin_inset Formula $M=DF^{x'}_{-\step}(y')$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $T_{-\step}$
+\end_inset
+
+ is the inverse of 
+\begin_inset Formula $T_{\step}$
 \end_inset
 
 ,
- the inverse function theorem shows that 
-\begin_inset Formula $DT_{-\step}(x',y')$
-\end_inset
-
- is the inverse map of 
+ this matrix is the inverse of 
 \begin_inset Formula $DT_{\step}(x,y)$
 \end_inset
 
 .
- Hence,
- we have that
-\begin_inset Formula 
-\[
-DT_{-\step}(x',y')=\left(\begin{array}{cc}
-A & B\\
-C & D
-\end{array}\right)^{-1}=\left(\begin{array}{cc}
-\cdots & -A^{-1}B(D-CA^{-1}B)^{-1}\\
-\cdots & \cdots
-\end{array}\right).
-\]
-
+ To compute 
+\begin_inset Formula $M$
 \end_inset
 
-Therefore,
+,
+ solve 
+\begin_inset Formula $\left(\begin{array}{cc}
+A & B\\
+C & D
+\end{array}\right)\binom{u}{v}=\binom{0}{q}$
+\end_inset
+
+.
+ The first block equation gives 
+\begin_inset Formula $v=-B^{-1}Au$
+\end_inset
+
+,
+ and the second gives 
+\begin_inset Formula $(C-DB^{-1}A)u=q$
+\end_inset
+
+.
+ Thus 
+\begin_inset Formula $M=(C-DB^{-1}A)^{-1}$
+\end_inset
+
+.
+ Therefore,
  we have that 
-\begin_inset Formula $F_{\step}^{x}(y)=B$
+\begin_inset Formula $DF^{x}_{\step}(y)=B$
 \end_inset
 
  and 
-\begin_inset Formula $F_{-\step}^{x'}(y')=-A^{-1}B(D-CA^{-1}B)^{-1}$
+\begin_inset Formula $DF^{x'}_{-\step}(y')=(C-DB^{-1}A)^{-1}$
 \end_inset
 
 .
@@ -934,7 +967,7 @@ Therefore,
  we have that
 \begin_inset Formula 
 \begin{align*}
-\left|\det\left(DF_{-\step}^{x'}(y')\right)\right| & =\left|\det A^{-1}\det B\det\left(D-CA^{-1}B\right)^{-1}\right|=\frac{\left|\det B\right|}{\left|\det\left(\begin{array}{cc}
+\left|\det\left(DF^{x'}_{-\step}(y')\right)\right| & =\left|\det(C-DB^{-1}A)^{-1}\right|=\frac{\left|\det B\right|}{\left|\det\left(\begin{array}{cc}
 A & B\\
 C & D
 \end{array}\right)\right|}.
@@ -961,7 +994,7 @@ nolink "false"
  we have that
 \begin_inset Formula 
 \[
-\left|\det\left(DF_{-\step}^{x'}(y')\right)\right|=\left|\det\left(DF_{\step}^{x}(y)\right)\right|.
+\left|\det\left(DF^{x'}_{-\step}(y')\right)\right|=\left|\det\left(DF^{x}_{\step}(y)\right)\right|.
 \]
 
 \end_inset
@@ -970,8 +1003,8 @@ Hence,
  we have that
 \begin_inset Formula 
 \begin{align*}
-\frac{1}{2}\int_{y\in V_{+}}\frac{e^{-H(x,y)}}{\left|\det\left(DF_{\step}^{x}(y)\right)\right|} & =\frac{1}{2}\int_{y\in V_{+}}\frac{e^{-H(x,y)}}{\left|\det\left(DF_{-\step}^{x'}(y')\right)\right|}\\
- & =\frac{1}{2}\int_{y\in V_{+}}\frac{e^{-H(x',y')}}{\left|\det\left(DF_{-\step}^{x'}(y')\right)\right|}
+\frac{1}{2}\int_{y\in V_{+}}\frac{e^{-H(x,y)}}{\left|\det\left(DF^{x}_{\step}(y)\right)\right|} & =\frac{1}{2}\int_{y\in V_{+}}\frac{e^{-H(x,y)}}{\left|\det\left(DF^{x'}_{-\step}(y')\right)\right|}\\
+ & =\frac{1}{2}\int_{y\in V_{+}}\frac{e^{-H(x',y')}}{\left|\det\left(DF^{x'}_{-\step}(y')\right)\right|}
 \end{align*}
 
 \end_inset
@@ -1006,7 +1039,7 @@ nolink "false"
  we have that
 \begin_inset Formula 
 \[
-\frac{1}{2}\int_{y\in V_{-}}\frac{e^{-H(x,y)}}{\left|\det\left(DF_{-\step}^{x}(y)\right)\right|}=\frac{1}{2}\int_{y\in V_{+}}\frac{e^{-H(x',y')}}{\left|\det\left(DF_{\step}^{x'}(y')\right)\right|}
+\frac{1}{2}\int_{y\in V_{-}}\frac{e^{-H(x,y)}}{\left|\det\left(DF^{x}_{-\step}(y)\right)\right|}=\frac{1}{2}\int_{y\in V_{-}}\frac{e^{-H(x',y')}}{\left|\det\left(DF^{x'}_{\step}(y')\right)\right|}
 \]
 
 \end_inset
@@ -1019,7 +1052,8 @@ Convergence
 \end_layout
 
 \begin_layout Standard
-First we consider the convergence in the case when 
+First,
+ we consider convergence when 
 \begin_inset Formula $H(x,v)=f(x)+\frac{1}{2}\norm v^{2}$
 \end_inset
 
@@ -1048,7 +1082,7 @@ First we consider the convergence in the case when
 
 ,
  with their next step directions chosen to be identical.
- The key lemma is that with this setting the squared distance decreases up to a certain time that depends on the condition number.
+ The key lemma is that under this coupling the squared distance decreases up to a certain time that depends on the condition number.
  For a tight analysis,
  showing a mixing rate of 
 \begin_inset Formula $O(\kappa)$

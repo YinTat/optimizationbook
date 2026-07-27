@@ -251,7 +251,7 @@ The runtime depends on the number of iterations and the cost per iteration.
  only converted from one form of difficulty to another.
  When we decrease the number of iterations,
  the cost per iteration often increases.
- The gain of new methods often come from avoiding some wasted computation,
+ The gain from new methods often comes from avoiding some wasted computation,
  utilizing some forgotten information or giving a faster but tailored algorithm for a sub-problem.
  This is of course just an empirical observation.
 \end_layout
@@ -409,7 +409,7 @@ Partial Approximation:
 \begin_layout Itemize
 Taylor Approximation:
  
-\begin_inset Formula $f(y)\approx\sum_{k=0}^{K}D^{k}f(x)[y-x]^{k}/k!$
+\begin_inset Formula $f(y)\approx\sum_{k=0}^{K}D^{k}f(x)[y-x]^{k}/k!.$
 \end_inset
 
  
@@ -422,7 +422,6 @@ Cite
 
 \end_inset
 
-.
 \end_layout
 
 \begin_layout Itemize
@@ -514,7 +513,7 @@ add more stuff here
 
 \begin_layout Standard
 The second question to answer is how to maintain different approximations created in different steps.
- One simple way would be forget the approximation we got in previous steps,
+ One simple way would be to forget the approximation we got in previous steps,
  but this is often not optimal.
  Another way is to keep all previous approximations/information (such as Section 
 \begin_inset CommandInset ref
@@ -557,7 +556,7 @@ Perhaps the most natural algorithm for optimization is gradient descent.
 
  to be optimized is continuously differentiable.
  By basic calculus,
- either the minimum (or point achieving the minimum) is unbounded or the gradient is zero at a minimum.
+ either the objective is unbounded below or the gradient is zero at any attained unconstrained minimum.
  So we try to find a point with gradient close to zero (which,
  of course,
  does not guarantee global optimality).
@@ -850,7 +849,7 @@ The term
 \begin_layout Standard
 The step size of the algorithm usually either uses a fixed constant,
  or follows a predetermined schedule,
- or determined using a line search.
+ or is determined using a line search.
 \end_layout
 
 \begin_layout Standard
@@ -973,10 +972,10 @@ Let
 \end_layout
 
 \begin_layout Enumerate
-\begin_inset Formula $-LI\preceq\nabla^{2}f(x)\preceq L$
+\begin_inset Formula $-LI\preceq\nabla^{2}f(x)\preceq LI$
 \end_inset
 
-I for all 
+ for all 
 \begin_inset Formula $x\in\Rn$
 \end_inset
 
@@ -1021,7 +1020,7 @@ Suppose (1) holds.
 \end_inset
 
 Since 
-\begin_inset Formula $\|\frac{\nabla f(x+hv)-\nabla f(x)}{h}\|_{2}\leq\frac{L}{h}\|hv\|_{2}=L\|v\|_{2}$
+\begin_inset Formula $\|\frac{\nabla f(x+hv)-\nabla f(x)}{h}\|_{2}\leq\frac{L}{|h|}\|hv\|_{2}=L\|v\|_{2}$
 \end_inset
 
 ,
@@ -1270,7 +1269,7 @@ nolink "false"
 
 .
  In general,
- many optimization methods involves minimizing some upper bound function every step.
+ many optimization methods involve minimizing some upper bound function every step.
  Note that the progress we made for 
 \begin_inset Formula $f$
 \end_inset
@@ -1317,7 +1316,7 @@ Analysis for general functions
 
 \begin_layout Standard
 Gradient descent works for both convex and non-convex functions.
- For non-convex function,
+ For non-convex functions,
  we can only find a point with small gradient (called an 
 \emph on
 approximate stationary
@@ -1604,7 +1603,7 @@ nolink "false"
 
 \end_inset
 
- and Cauchy-Schwarz inequality shows that 
+ and the Cauchy-Schwarz inequality show that 
 \begin_inset Formula 
 \[
 f(x)-f(y)\leq\left\langle \nabla f(x),x-y\right\rangle \leq\|\nabla f(x)\|_{2}\cdot\|x-y\|_{2}.
@@ -1616,7 +1615,7 @@ f(x)-f(y)\leq\left\langle \nabla f(x),x-y\right\rangle \leq\|\nabla f(x)\|_{2}\c
 \end_layout
 
 \begin_layout Standard
-This in turn give a better bound on the number of iterations because the bound in Theorem 
+This in turn gives a better bound on the number of iterations because the bound in Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:gd_general"
@@ -1629,7 +1628,7 @@ nolink "false"
 \end_inset
 
  rather than 
-\begin_inset Formula $\norm{x-x^{*}}_{2}$
+\begin_inset Formula $\norm{x-x^{*}}_{2}.$
 \end_inset
 
 
@@ -1797,7 +1796,7 @@ This style of proof is typical in optimization.
 \end_layout
 
 \begin_layout Standard
-This proof above does not make essential use any property of 
+The proof above does not make essential use of any property of 
 \begin_inset Formula $\ell_{2}$
 \end_inset
 
@@ -1828,15 +1827,15 @@ For
 
 .
  Therefore,
- for an 
-\begin_inset Formula $L$
-\end_inset
-
--gradient Lipschitz convex function 
+ for a convex function 
 \begin_inset Formula $f$
 \end_inset
 
-,
+ with 
+\begin_inset Formula $L$
+\end_inset
+
+-Lipschitz gradient,
  for GD with 
 \begin_inset Formula $h=\frac{1}{L}$
 \end_inset
@@ -1936,16 +1935,16 @@ nolink "false"
 \end_layout
 
 \begin_layout Exercise
-Show for GD on convex,
- 
-\begin_inset Formula $L$
-\end_inset
-
--gradient Lipschitz 
+Show that,
+ for GD on a convex 
 \begin_inset Formula $f\in\mathcal{C}^{2}(\R^{n})$
 \end_inset
 
- with step size 
+ with 
+\begin_inset Formula $L$
+\end_inset
+
+-Lipschitz gradient and step size 
 \begin_inset Formula $h\leq\frac{2}{L}$
 \end_inset
 
@@ -1981,7 +1980,7 @@ nolink "false"
 \end_inset
 
  iterations.
- Compare to the bound 
+ Compared with the bound 
 \begin_inset Formula $\frac{2L}{\epsilon^{2}}\left(f(x^{(0)})-f(x^{*})\right)$
 \end_inset
 
@@ -2172,10 +2171,10 @@ Let
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $\nabla^{2}f(x)\succeq\mu$
+\begin_inset Formula $\nabla^{2}f(x)\succeq\mu I$
 \end_inset
 
-I for all 
+ for all 
 \begin_inset Formula $x\in\Rn$
 \end_inset
 
@@ -2229,7 +2228,7 @@ Let
 \begin_inset Formula $x,y\in\R^{n},$
 \end_inset
 
-we have
+ we have
 \begin_inset Formula 
 \[
 \norm{\nabla f(x)}_{2}^{2}\ge2\mu\left(f(x)-f(y)\right).
@@ -2245,7 +2244,7 @@ By the definition of
 \begin_inset Formula $\mu$
 \end_inset
 
- strong convexity,
+-strong convexity,
  we have 
 \begin_inset Formula 
 \[
@@ -2357,8 +2356,8 @@ nolink "false"
 \begin_inset Formula 
 \begin{align}
 f(x^{(k+1)})-f(x^{*}) & \leq f(x^{(k)})-f(x^{*})-\frac{1}{2L}\|\nabla f(x^{(k)})\|_{2}^{2}\label{eq:strong_convex_progress}\\
- & \le f(x^{(k)})-f(x^{*})-\frac{\mu}{L}\left(f(x^{(k)})-f^{*}\right)\\
- & =\left(1-\frac{\mu}{L}\right)\left(f(x^{(k)})-f^{*}\right)
+ & \le f(x^{(k)})-f(x^{*})-\frac{\mu}{L}\left(f(x^{(k)})-f(x^{*})\right)\\
+ & =\left(1-\frac{\mu}{L}\right)\left(f(x^{(k)})-f(x^{*})\right)
 \end{align}
 
 \end_inset
@@ -2607,7 +2606,7 @@ Let the objective for progress be
 \end_inset
 
 .
- The first condition requires the algorithm makes sufficient progress (
+ The first condition requires the algorithm to make sufficient progress (
 \begin_inset Formula $\phi(h)\geq c_{1}h\cdot\phi'(0)$
 \end_inset
 
@@ -2617,7 +2616,7 @@ Let the objective for progress be
 \end_inset
 
 ).
- One can think the first condition gives a upper bound on 
+ One can think of the first condition as giving an upper bound on 
 \begin_inset Formula $h$
 \end_inset
 
@@ -2627,7 +2626,7 @@ Let the objective for progress be
 
 .
  In general,
- a step size satisfying the Wolfe conditions will be larger than the step size 
+ a step size satisfying the Wolfe conditions can be larger than the step size 
 \begin_inset Formula $h=\frac{1}{L}$
 \end_inset
 
@@ -2678,7 +2677,7 @@ As a corollary,
 
 .
  Therefore,
- this gives the same guarantee Theorem 
+ this gives the same guarantee as Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:gd_convex"
@@ -2705,7 +2704,7 @@ nolink "false"
  and hence if our line search accepts the step size immediately,
  the line search almost costs nothing extra.
  Therefore,
- if we maintain a step size throughout the algorithm and decreases it only when it violates the condition,
+ if we maintain a step size throughout the algorithm and decrease it only when it violates the condition,
  the total cost of the line search will be only an additive logarithmic number of gradient calls throughout the algorithm and is negligible.
 \end_layout
 
@@ -2727,7 +2726,7 @@ Finally,
 \end_inset
 
  and 
-\begin_inset Formula $Ah$
+\begin_inset Formula $Ap$
 \end_inset
 
 .
@@ -2740,7 +2739,7 @@ Generalizing Gradient Descent*
 \begin_layout Standard
 Here we study properties of gradient descent that were actually used for the strongly convex case.
  There are many ways to generalize this case.
- One way is to view gradient descent is as approximating the function 
+ One way is to view gradient descent as approximating the function 
 \begin_inset Formula $f$
 \end_inset
 
@@ -2758,7 +2757,12 @@ Here we study properties of gradient descent that were actually used for the str
 \end_layout
 
 \begin_layout Definition
-We say 
+For 
+\begin_inset Formula $0<\alpha\leq1$
+\end_inset
+
+,
+ we say 
 \begin_inset Formula $g+h$
 \end_inset
 
@@ -2797,7 +2801,7 @@ We say
 \begin_inset Formula $g(x)=f(x)$
 \end_inset
 
- ,
+,
 \end_layout
 
 \begin_layout Itemize
@@ -2969,7 +2973,7 @@ Input:
 
 ,
  approximation factor 
-\begin_inset Formula $\alpha>0$
+\begin_inset Formula $0<\alpha\leq1$
 \end_inset
 
 .
@@ -3074,7 +3078,13 @@ name "thm:gd_general_apx"
 \begin_inset Formula $f$
 \end_inset
 
- such that we can find an 
+ such that,
+ for some 
+\begin_inset Formula $0<\alpha\leq1$
+\end_inset
+
+,
+ we can find an 
 \begin_inset Formula $\alpha$
 \end_inset
 
@@ -3222,7 +3232,7 @@ Show that the third condition in the definition of
 -approximation can be replaced by 
 \begin_inset Formula 
 \[
-g(y)+\alpha h(y/\alpha)\leq f(y)\leq g(y)+h(y)
+g(y)+\alpha h\left(x+\frac{y-x}{\alpha}\right)\leq f(y)\leq g(y)+h(y)
 \]
 
 \end_inset
@@ -3427,7 +3437,7 @@ nolink "false"
 
 \end_inset
 
- only need to solve the sub-problem approximately.
+ only needs to solve the sub-problem approximately.
  Therefore,
  this shows that one can solve 
 \begin_inset Formula $\ell^{p}$
@@ -3465,7 +3475,7 @@ For matrices
 \begin_inset Formula $A$
 \end_inset
 
- satisfying restricted isometry property,
+ satisfying the restricted isometry property,
  one can apply 
 \begin_inset Formula $\mathtt{GeneralizedGradientDescent}$
 \end_inset
@@ -3510,7 +3520,7 @@ In continuous time,
 \end_inset
 
 This can be viewed as the canonical continuous algorithm.
- Finding the right discretization has lead to many fruitful research directions.
+ Finding the right discretization has led to many fruitful research directions.
  One benefit of the continuous view is to simplify some calculations.
  For example,
  for strongly convex 
@@ -3656,7 +3666,7 @@ literal "false"
 \begin_inset Formula $\ell^{p}$
 \end_inset
 
- flow problem can be used as a subroutine to solve uncapacitied maximum flow problem in 
+ flow problem can be used as a subroutine to solve uncapacitated maximum flow problem in 
 \begin_inset Formula $m^{4/3+o(1)}$
 \end_inset
 

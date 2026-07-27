@@ -3,7 +3,7 @@ for convex optimization. These algorithms use knowledge of the function
 in a minimal way, essentially by querying the function value along
 with weak bounds on its support and range. Historically, the ideas
 in this chapter originated in the work of \cite{Grunbaum1960,yudin1976evaluation},
-developed into polynomial-time algorithms by \cite{khachiyan1980polynomial,grotschel1981ellipsoid,bertsimas2004solving}.
+and were developed into polynomial-time algorithms by \cite{khachiyan1980polynomial,grotschel1981ellipsoid,bertsimas2004solving}.
 For a comprehensive presentation of related problems and ellipsoid-based
 algorithms, the reader is referred to the classic book \cite{grotschel2012geometric}. 
 
@@ -54,8 +54,8 @@ of finding an approximate minimizer of $f$.
 \end{rem*}
 In this framework, we maintain a convex set $E^{(k)}$ that contains
 the set $K$. In each iteration, we choose some $x^{(k)}$ based on
-$E^{(k)}$ and query the oracle for $g(x^{(k)})$ . The guarantee
-for $g(.)$ implies that $K$ lies in the halfspace 
+$E^{(k)}$ and query the oracle for $g(x^{(k)})$. The guarantee for
+$g(.)$ implies that $K$ lies in the halfspace 
 \[
 H^{(k)}=\{y:g(x^{(k)})^{\top}(y-x^{(k)})\leq0\}
 \]
@@ -76,7 +76,7 @@ Choose a point $x^{(k)}\in E^{(k)}$.
 
 \lIf{$E^{(k)}$ is ``small enough''}{\Return$x^{(k)}$}
 
-Find $E^{(k+1)}\supset E^{(k)}\cap H^{(k)}$ where
+Find $E^{(k+1)}\supseteq E^{(k)}\cap H^{(k)}$ where
 \begin{equation}
 H^{(k)}\defeq\{x\in\Rn\text{ such that }g(x^{(k)})^{\top}(x-x^{(k)})\leq0\}.\label{eq:Hk}
 \end{equation}
@@ -143,10 +143,10 @@ E^{(k)}\defeq\{y\in\Rn:\ (y-x^{(k)})^{\top}\left(A^{(k)}\right)^{-1}(y-x^{(k)})\
 \]
 that contains $K$ and becomes smaller in volume in each step. Note
 that for this to be an ellipsoid the matrix $A^{(k)}$ must be symmetric
-PSD. After we compute $g(x^{(k)})$ and $H^{(k)}$ via (\ref{eq:Hk}),
-we define $E^{(k+1)}$ to be the smallest volume ellipsoid containing
-$E^{(k)}\cap H^{(k)}$. The key observation is that the volume of
-the ellipsoid $E^{(k)}$ decreases by a factor of $1-\Theta(\frac{1}{n})$
+positive definite. After we compute $g(x^{(k)})$ and $H^{(k)}$ via
+(\ref{eq:Hk}), we define $E^{(k+1)}$ to be the smallest volume ellipsoid
+containing $E^{(k)}\cap H^{(k)}$. The key observation is that the
+volume of the ellipsoid $E^{(k)}$ decreases by a factor of $1-\Theta(\frac{1}{n})$
 every iteration. This volume property holds for any halfspace through
 the center of the current ellipsoid (not only for the one whose normal
 is the gradient), a property we will exploit in the next chapter.
@@ -184,25 +184,26 @@ We usually obtain $g(x)$ from a \emph{separation oracle}.
 
 \begin{rem}
 Note that the proof below also shows that $\vol E^{(k+1)}=e^{-\Theta(\frac{1}{n})}\vol E^{(k)}$.
-Therefore, the ellipsoid method does not run faster even for any function,
-e.g., a linear function, making it provably ``slow'' in practice.
+Therefore, the ellipsoid method does not run faster even for simple
+functions, e.g., linear functions, making it provably ``slow'' in
+practice.
 \end{rem}
 
 \begin{proof}
 Note that the ratio of $\vol E^{(k+1)}/\vol E^{(k)}$ does not change
 under any affine transformation, and neither does set containment.
 Therefore, we can do a transformation so that $A^{(k)}=I$, $x^{(k)}=0$
-and $v(x^{(k)})=e_{1}$. Therefore $H^{(k)}$ is simply the halfspace
+and $g(x^{(k)})=e_{1}$. Therefore $H^{(k)}$ is simply the halfspace
 $\{x:x_{1}\le0\}$. This simplifies our calculation. We need to prove
 two statements: $\vol E^{(k+1)}<e^{-\frac{1}{2n+2}}\vol E^{(k)}$
 and that $E^{(k)}\cap H^{(k)}\subset E^{(k+1)}$.
 
 Claim 1: $\vol E^{(k+1)}<e^{-\frac{1}{2(n+1)}}\vol E^{(k)}$.
 
-Note that since $v(x^{(k)})=e_{1},$we have $A^{(k+1)}=\frac{n^{2}}{n^{2}-1}\left(I-\frac{2}{n+1}e_{1}e_{1}^{\top}\right)$.
+Note that since $g(x^{(k)})=e_{1},$ we have $A^{(k+1)}=\frac{n^{2}}{n^{2}-1}\left(I-\frac{2}{n+1}e_{1}e^{\top}_{1}\right)$.
 Therefore, we have that
 \begin{align*}
-\left(\frac{\vol E^{(k+1)}}{\vol E^{(k)}}\right)^{2}=\left|\frac{\det A^{(k+1)}}{\det A^{(k)}}\right| & =\left(\frac{n^{2}}{n^{2}-1}\right)^{n}\det\left(I-\frac{2}{n+1}e_{1}e_{1}^{\top}\right)\\
+\left(\frac{\vol E^{(k+1)}}{\vol E^{(k)}}\right)^{2}=\left|\frac{\det A^{(k+1)}}{\det A^{(k)}}\right| & =\left(\frac{n^{2}}{n^{2}-1}\right)^{n}\det\left(I-\frac{2}{n+1}e_{1}e^{\top}_{1}\right)\\
  & =\left(\frac{n^{2}}{n^{2}-1}\right)^{n-1}\frac{n^{2}}{n^{2}-1}\left(\frac{n-1}{n+1}\right)\\
  & =\left(1+\frac{1}{n^{2}-1}\right)^{n-1}\left(1-\frac{1}{n+1}\right)^{2}\\
  & <\exp(\frac{n-1}{n^{2}-1}-\frac{2}{n+1})=\exp(-\frac{1}{n+1})
@@ -211,7 +212,7 @@ where we used $1+x\leq e^{x}$ for all $x$.
 
 Claim 2. $E^{(k)}\cap H^{(k)}\subset E^{(k+1)}$.
 
-By the definition of $E^{(k)}$and the assumption $A^{(k)}=I$, we
+By the definition of $E^{(k)}$ and the assumption $A^{(k)}=I$, we
 have 
 \[
 x^{(k+1)}=-\frac{e_{1}}{n+1}
@@ -219,11 +220,11 @@ x^{(k+1)}=-\frac{e_{1}}{n+1}
 and, for any $x\in E^{(k)}\cap H^{(k)}$, we have that $\|x\|_{2}\leq1$
 and $x_{1}\leq0$. By direct computation, using the fact that 
 \[
-\left(I-\frac{2}{n+1}e_{1}e_{1}^{\top}\right)^{-1}=\left(I+\frac{2}{n-1}e_{1}e_{1}^{\top}\right)
+\left(I-\frac{2}{n+1}e_{1}e^{\top}_{1}\right)^{-1}=\left(I+\frac{2}{n-1}e_{1}e^{\top}_{1}\right)
 \]
 we have
 \begin{align*}
- & (x+\frac{e_{1}}{n+1})^{\top}\left(1-\frac{1}{n^{2}}\right)\left(I+\frac{2}{n-1}e_{1}e_{1}^{\top}\right)(x+\frac{e_{1}}{n+1})\\
+ & (x+\frac{e_{1}}{n+1})^{\top}\left(1-\frac{1}{n^{2}}\right)\left(I+\frac{2}{n-1}e_{1}e^{\top}_{1}\right)(x+\frac{e_{1}}{n+1})\\
 = & \left(1-\frac{1}{n^{2}}\right)\left(\|x\|^{2}+\frac{2x_{1}(1+x_{1})}{n-1}+\frac{1}{n^{2}-1}\right)\\
 \leq & \left(1-\frac{1}{n^{2}}\right)\left(1+0+\frac{1}{n^{2}-1}\right)=1
 \end{align*}
@@ -370,9 +371,9 @@ As an illustration, we show how to solve linear programs to desired
 approximation in polynomial time here. 
 \begin{thm}
 Given a linear program $\min_{x\in P}c^{\top}x$ where $P=\{x\text{: }Ax\geq b\}$.
-Let the diameter of $P$ be $R\defeq\max_{x\in P}\norm x_{2}$ and
-its volume radius be $r=\vol(P)^{1/n}$. Then, we can find $x\in P$
-for which 
+Let $R\defeq\max_{x\in P}\norm x_{2}$ be an outer radius for $P$
+and let its volume radius be $r=\vol(P)^{1/n}$. Then, we can find
+$x\in P$ for which 
 \[
 c^{\top}x-\min_{y\in P}c^{\top}y\leq\varepsilon\cdot(\max_{y\in P}c^{\top}y-\min_{y\in P}c^{\top}y)
 \]
@@ -390,18 +391,18 @@ For the linear program $\min_{Ax\geq b}c^{\top}x$, the function we
 want to minimize is
 \begin{equation}
 L(x)=c^{\top}x+\delta_{Ax\geq b}(x)\quad\text{where}\quad\delta_{Ax\geq b}(x)=\begin{cases}
-0 & \text{if }a_{i}^{\top}x\geq b_{i}\text{ for all }i\\
+0 & \text{if }a^{\top}_{i}x\geq b_{i}\text{ for all }i\\
 +\infty & \text{otherwise.}
 \end{cases}.\label{eq:LP_func}
 \end{equation}
 
 For this function $L$, we can use the separation oracle $v(x)=c$
-if $Ax\geq b$ and $v(x)=-a_{i}$ if $a_{i}^{\top}x<b_{i}$. If there
+if $Ax\geq b$ and $v(x)=-a_{i}$ if $a^{\top}_{i}x<b_{i}$. If there
 are many violated constraints, any one of them will do.
 
 In this case, we can set $\Omega=P$. We can simply pick $E^{(0)}$
-be the unit ball centered at $0$ with radius $R$. We apply Theorem
-\ref{thm:ellipsoid} to find $x$ such that
+to be the Euclidean ball centered at $0$ with radius $R$. We apply
+Theorem \ref{thm:ellipsoid} to find $x$ such that
 \[
 c^{\top}x-\min_{y\in P}c^{\top}y\leq\varepsilon\cdot(\max_{y\in P}c^{\top}y-\min_{y\in P}c^{\top}y)
 \]
@@ -448,7 +449,7 @@ at what rate? The following classical theorem shows that the volume
 of the convex body decreases by a constant factor (no more than $1-\frac{1}{e}$)
 when using the exact center of gravity.
 \begin{thm}
-\label{thm:Grunbaum}\cite{Grunbaum1960}Let $K$ be a convex body
+\label{thm:Grunbaum}\cite{Grunbaum1960} Let $K$ be a convex body
 in $\R^{n}$ with center of gravity $z$. Let $H$ be any halfspace
 containing $z$. Then, 
 \[
@@ -473,7 +474,7 @@ on logconcave functions. A distribution $p$ is \emph{isotropic} if
 the mean of a random variable drawn from the distribution is zero
 and the covariance is the identity matrix.
 
-The randomized center of gravity method defined as follows: 
+The randomized center of gravity method is defined as follows: 
 
 \begin{algorithm2e}[H]
 
@@ -490,7 +491,7 @@ The randomized center of gravity method defined as follows:
 Let $y^{(1)},\ldots,y^{(N)}$ be uniform random points from $E^{(k)}$
 and set
 \begin{align*}
-x^{(k)} & =\frac{1}{N}\sum_{i=1}^{N}y^{(i)}\\
+x^{(k)} & =\frac{1}{N}\sum^{N}_{i=1}y^{(i)}\\
 E^{(k+1)} & =E^{(k)}\cap H^{(k)}
 \end{align*}
 
@@ -510,8 +511,8 @@ of Theorem \ref{thm:Grunbaum}, which will give a similar result despite
 using only an approximate center of gravity.
 \begin{thm}[Robust Gr\"unbaum]
 \label{thm:grun-1}Let $p$ be an isotropic logconcave distribution,
-namely $\E_{x\sim p}x=0$ and $\E_{x\sim p}x^{2}=1$. For any unit
-vector $\theta\in\R^{n}$, $t\in\R$ we have
+namely $\E_{x\sim p}x=0$ and $\E_{x\sim p}xx^{\top}=I$. For any
+unit vector $\theta\in\R^{n}$, $t\in\R$ we have
 \[
 \P_{x\sim p}(x^{\top}\theta\geq t)\geq\frac{1}{e}-\left|t\right|.
 \]
@@ -527,11 +528,11 @@ $M$ (to be rigorous, we do the proof below for finite $M$ and a
 RHS $\epsilon(M)$ instead of zero, then take the limit $M\rightarrow\infty$).
 Since $\E_{x\sim p}x=0$, we have that
 \[
-\int_{-M}^{M}t\frac{dP(t)}{dt}\,dt=0
+\int^{M}_{-M}t\frac{dP(t)}{dt}\,dt=0
 \]
-Integration by parts gives that $\int_{-M}^{M}P(t)dt=M$. Note that
+Integration by parts gives that $\int^{M}_{-M}P(t)dt=M$. Note that
 $P(t)$ is increasing logconcave, if $P(0)$ is too small, it would
-make $\int_{-M}^{M}P(t)dt$ too small. To be precise, since $P$ is
+make $\int^{M}_{-M}P(t)dt$ too small. To be precise, since $P$ is
 logconcave, i.e., $-\log P(t)$ is convex, and so we have,
 \[
 -\log P(t)\geq-\log P(0)-\frac{\frac{d}{dt}P(0)}{P(0)}t.
@@ -539,20 +540,22 @@ logconcave, i.e., $-\log P(t)$ is convex, and so we have,
 Or we simply write $P(t)\leq P(0)e^{\alpha t}$ for some $\alpha$.
 Hence,
 \[
-M=\int_{-M}^{M}P(t)dt\leq\int_{-\infty}^{\frac{1}{\alpha}}P(0)e^{\alpha t}dt+\int_{1/\alpha}^{M}1dt=\frac{eP(0)}{\alpha}+M-\frac{1}{\alpha}.
+M=\int^{M}_{-M}P(t)dt\leq\int^{\frac{1}{\alpha}}_{-\infty}P(0)e^{\alpha t}dt+\int^{M}_{1/\alpha}1dt=\frac{eP(0)}{\alpha}+M-\frac{1}{\alpha}.
 \]
-This shows that $P(0)\geq\frac{1}{e}$.
+This shows that $P(0)\geq\frac{1}{e}$. Applying the same argument
+with $-\theta$ gives $\P_{x\sim p}(x^{\top}\theta\ge0)\ge1/e$.
 
 Next, Lemma \ref{lem:logcon_max-1} shows that $\max_{x}p(x)\le1$.
-Therefore, the cumulative distribution $P$ is $1$-Lipschitz and
-we have
+Therefore, the cumulative distribution $P$ is $1$-Lipschitz. Hence,
+for $t\ge0$ we have
 \[
 \P_{x\sim p}(x^{\top}\theta\geq t)\ge\P_{x\sim p}(x^{\top}\theta\geq0)-t\geq\frac{1}{e}-t.
 \]
+For $t<0$, the claim follows from $\P_{x\sim p}(x^{\top}\theta\ge t)\ge\P_{x\sim p}(x^{\top}\theta\ge0)\ge1/e\ge1/e-\left|t\right|$.
 \end{proof}
 \begin{lem}
 \label{lem:logcon_max-1}Let $p$ be a one-dimensional isotropic logconcave
-density$.$ Then $\max p(x)\le1$.
+density. Then $\max p(x)\le1$.
 \end{lem}
 
 For a proof of this (and for other properties of logconcave functions),
@@ -568,7 +571,7 @@ set. Obtaining such a random sample algorithmically is an interesting
 problem that we will study in the second part of this book.
 \begin{lem}
 Suppose $y^{(1)},\ldots,y^{(N)}$ are i.i.d. uniform random points
-from a convex body $K$ and $y=\frac{1}{N}\sum_{i=1}^{N}y^{(i)}$.
+from a convex body $K$ and $y=\frac{1}{N}\sum^{N}_{i=1}y^{(i)}$.
 Then for any halfspace $H$ not containing $y$, 
 \[
 \E(\vol(K\cap H))\le\left(1-\frac{1}{e}+\sqrt{\frac{n}{N}}\right)\vol(K).
@@ -580,13 +583,14 @@ Without loss of generality, we assume that $K$ is in isotropic position,
 i.e., $\E_{K}(y^{(i)})=0$ and $\E_{K}(y^{(i)}(y^{(i)})^{\top})=I$.
 Then we have $\E(y)=0$ and
 \begin{align*}
-\E\norm y^{2} & =\frac{1}{N^{2}}\E\sum_{i=1}^{N}\norm{y^{(i)}}^{2}=\frac{1}{N}\E\norm{y^{(1)}}^{2}=\frac{n}{N}.
+\E\norm y^{2} & =\frac{1}{N^{2}}\E\sum^{N}_{i=1}\norm{y^{(i)}}^{2}=\frac{1}{N}\E\norm{y^{(1)}}^{2}=\frac{n}{N}.
 \end{align*}
 Therefore, by Jensen's inequality,
 \[
 \E\norm y\le\sqrt{\E\left(\norm y^{2}\right)}=\sqrt{\frac{n}{N}}.
 \]
-Thus, we can apply Theorem \ref{thm:grun-1} with $t=\sqrt{\frac{n}{N}}$
+Thus, we can apply Theorem \ref{thm:grun-1} with $t=|\theta^{\top}y|$
+and then use $\E|\theta^{\top}y|\le\E\norm y\le\sqrt{\frac{n}{N}}$
 to bound $\E(\vol(K\cap H))/\vol(K)$. 
 \end{proof}
 Theorem \ref{thm:conv_opt} readily gives the following guarantee
@@ -620,7 +624,7 @@ $(n-1)$-dimensional volume as $A(t)$.
 
 \begin{figure}[h]
 
-\centering{}\includegraphics[width=0.85\columnwidth]{Figures/Thrm_3\lyxdot 20}\caption{Affine transformations for Centre of Gravity method}
+\centering{}\includegraphics[width=0.85\columnwidth]{Figures/Thrm_3\lyxdot 20}\caption{Affine transformations for Center of Gravity method}
 \end{figure}
 
 The goal of the proof is to show that the smallest possible halfspace
@@ -689,16 +693,16 @@ queries to the oracle.
 \begin{proof}
 Suppose $K$ is a cube of side length $\epsilon$ contained in the
 cube $[0,R]^{n}$. Imagine a tiling of the big cube by cubes of side
-length $\epsilon$. Consider the oracle that always returns an axis
-parallel halfspace that does not cut any little cube and contains
-at least half of the volume of the ``remaining'' region, i.e., the
-set given by the original cube intersected with all halfspaces given
-by the oracle so far. This is always possible since for any halfspace
-either the halfspace or its complement will contain at least half
-the volume of any set. Thus each query at best halves the remaining
-volume. To solve the problem, the algorithm needs to cut down to a
-set of volume $\epsilon^{n}$ starting from a set of volume $R^{n}.$
-Thus it needs at least $n\log_{2}(R/\epsilon)$ queries.
+length $\epsilon$. Consider the oracle that always returns an axis-parallel
+halfspace that does not cut any little cube and contains at least
+half of the volume of the ``remaining'' region, i.e., the set given
+by the original cube intersected with all halfspaces given by the
+oracle so far. This is always possible since for any halfspace either
+the halfspace or its complement will contain at least half the volume
+of any set. Thus each query at best halves the remaining volume. To
+solve the problem, the algorithm needs to cut down to a set of volume
+$\epsilon^{n}$ starting from a set of volume $R^{n}.$ Thus it needs
+at least $n\log_{2}(R/\epsilon)$ queries.
 \end{proof}
 \begin{figure}[h]
 \centering{}\includegraphics[width=0.75\columnwidth]{Figures/Thrm_3\lyxdot 22}\caption{Complexity using a separation oracle}

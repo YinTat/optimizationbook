@@ -94,12 +94,12 @@ Here is a list of problems we want to cover with general techniques:
 \end_layout
 
 \begin_layout Itemize
-Linear system,
- SDD,
+Linear systems:
+ SDD systems,
  M-matrices,
- Directed Laplacian,
- Multi-Commodity Flow,
- Totally Unimodular Matrices (what other linear systems?) 
+ directed Laplacians,
+ multi-commodity flow,
+ totally unimodular matrices.
 \end_layout
 
 \begin_layout Itemize
@@ -114,7 +114,7 @@ Logistic Regression,
 \end_layout
 
 \begin_layout Itemize
-Linear Program < Quadratic Program < Second-Order Cone Program < Semidefinite Program < Conic Program < Convex Program
+Problem hierarchy: linear programs < quadratic programs < second-order cone programs < semidefinite programs < conic programs < convex programs.
 \end_layout
 
 \begin_deeper

@@ -101,7 +101,7 @@ literal "false"
 \end_inset
 
 ,
- developed into polynomial-time algorithms by 
+ and were developed into polynomial-time algorithms by 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "khachiyan1980polynomial,grotschel1981ellipsoid,bertsimas2004solving"
@@ -177,7 +177,7 @@ Let
  we have that 
 \begin_inset Formula 
 \[
-f(x)\geq f(x^{*})\geq f(x)+\left\langle \nabla f(x),x^{*}-x\right\rangle .
+f(x)\geq f(x^{*})\geq f(x)+\left\langle \nabla f(x),x^{*}-x\right\rangle.
 \]
 
 \end_inset
@@ -384,7 +384,7 @@ In this framework,
 \begin_inset Formula $g(x^{(k)})$
 \end_inset
 
- .
+.
  The guarantee for 
 \begin_inset Formula $g(.)$
 \end_inset
@@ -601,7 +601,7 @@ status open
 
 \begin_layout Standard
 Find 
-\begin_inset Formula $E^{(k+1)}\supset E^{(k)}\cap H^{(k)}$
+\begin_inset Formula $E^{(k+1)}\supseteq E^{(k)}\cap H^{(k)}$
 \end_inset
 
  where
@@ -1332,7 +1332,7 @@ that contains
 \begin_inset Formula $A^{(k)}$
 \end_inset
 
- must be symmetric PSD.
+ must be symmetric positive definite.
  After we compute 
 \begin_inset Formula $g(x^{(k)})$
 \end_inset
@@ -1632,9 +1632,9 @@ Note that the proof below also shows that
 
 .
  Therefore,
- the ellipsoid method does not run faster even for any function,
+ the ellipsoid method does not run faster even for simple functions,
  e.g.,
- a linear function,
+ linear functions,
  making it provably 
 \begin_inset Quotes eld
 \end_inset
@@ -1664,7 +1664,7 @@ Note that the ratio of
 \end_inset
 
  and 
-\begin_inset Formula $v(x^{(k)})=e_{1}$
+\begin_inset Formula $g(x^{(k)})=e_{1}$
 \end_inset
 
 .
@@ -1701,10 +1701,10 @@ Claim 1:
 
 \begin_layout Proof
 Note that since 
-\begin_inset Formula $v(x^{(k)})=e_{1},$
+\begin_inset Formula $g(x^{(k)})=e_{1},$
 \end_inset
 
-we have 
+ we have 
 \begin_inset Formula $A^{(k+1)}=\frac{n^{2}}{n^{2}-1}\left(I-\frac{2}{n+1}e_{1}e_{1}^{\top}\right)$
 \end_inset
 
@@ -1746,7 +1746,7 @@ By the definition of
 \begin_inset Formula $E^{(k)}$
 \end_inset
 
-and the assumption 
+ and the assumption 
 \begin_inset Formula $A^{(k)}=I$
 \end_inset
 
@@ -2457,15 +2457,15 @@ Given a linear program
 \end_inset
 
 .
- Let the diameter of 
-\begin_inset Formula $P$
-\end_inset
-
- be 
+ Let 
 \begin_inset Formula $R\defeq\max_{x\in P}\norm x_{2}$
 \end_inset
 
- and its volume radius be 
+ be an outer radius for 
+\begin_inset Formula $P$
+\end_inset
+
+ and let its volume radius be 
 \begin_inset Formula $r=\vol(P)^{1/n}$
 \end_inset
 
@@ -2565,7 +2565,7 @@ In this case,
 \begin_inset Formula $E^{(0)}$
 \end_inset
 
- be the unit ball centered at 
+ to be the Euclidean ball centered at 
 \begin_inset Formula $0$
 \end_inset
 
@@ -2719,7 +2719,7 @@ literal "false"
 
 \end_inset
 
-Let 
+ Let 
 \begin_inset Formula $K$
 \end_inset
 
@@ -2815,7 +2815,7 @@ isotropic
 \end_layout
 
 \begin_layout Standard
-The randomized center of gravity method defined as follows:
+The randomized center of gravity method is defined as follows:
  
 \end_layout
 
@@ -3134,7 +3134,7 @@ Let
 \end_inset
 
  and 
-\begin_inset Formula $\E_{x\sim p}x^{2}=1$
+\begin_inset Formula $\E_{x\sim p}xx^{\top}=I$
 \end_inset
 
 .
@@ -3296,6 +3296,15 @@ This shows that
 \end_inset
 
 .
+ Applying the same argument with 
+\begin_inset Formula $-\theta$
+\end_inset
+
+ gives 
+\begin_inset Formula $\P_{x\sim p}(x^{\top}\theta\ge0)\ge1/e$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Proof
@@ -3325,7 +3334,13 @@ nolink "false"
 \begin_inset Formula $1$
 \end_inset
 
--Lipschitz and we have
+-Lipschitz.
+ Hence,
+ for 
+\begin_inset Formula $t\ge0$
+\end_inset
+
+ we have
 \begin_inset Formula 
 \[
 \P_{x\sim p}(x^{\top}\theta\geq t)\ge\P_{x\sim p}(x^{\top}\theta\geq0)-t\geq\frac{1}{e}-t.
@@ -3333,6 +3348,16 @@ nolink "false"
 
 \end_inset
 
+For 
+\begin_inset Formula $t<0$
+\end_inset
+
+,
+ the claim follows from 
+\begin_inset Formula $\P_{x\sim p}(x^{\top}\theta\ge t)\ge\P_{x\sim p}(x^{\top}\theta\ge0)\ge1/e\ge1/e-\left|t\right|$
+\end_inset
+
+.
 
 \end_layout
 
@@ -3347,10 +3372,7 @@ Let
 \begin_inset Formula $p$
 \end_inset
 
- be a one-dimensional isotropic logconcave density
-\begin_inset Formula $.$
-\end_inset
-
+ be a one-dimensional isotropic logconcave density.
  Then 
 \begin_inset Formula $\max p(x)\le1$
 \end_inset
@@ -3500,7 +3522,11 @@ nolink "false"
 \end_inset
 
  with 
-\begin_inset Formula $t=\sqrt{\frac{n}{N}}$
+\begin_inset Formula $t=|\theta^{\top}y|$
+\end_inset
+
+ and then use 
+\begin_inset Formula $\E|\theta^{\top}y|\le\E\norm y\le\sqrt{\frac{n}{N}}$
 \end_inset
 
  to bound 
@@ -3689,7 +3715,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Affine transformations for Centre of Gravity method
+Affine transformations for Center of Gravity method
 \end_layout
 
 \end_inset
@@ -3960,7 +3986,7 @@ Suppose
 \end_inset
 
 .
- Consider the oracle that always returns an axis parallel halfspace that does not cut any little cube and contains at least half of the volume of the 
+ Consider the oracle that always returns an axis-parallel halfspace that does not cut any little cube and contains at least half of the volume of the 
 \begin_inset Quotes eld
 \end_inset
 

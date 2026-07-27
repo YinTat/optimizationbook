@@ -1,0 +1,774 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyperFirstAtBeginDocument{\AtBeginDocument}
+\HyperFirstAtBeginDocument{\ifx\hyper@anchor\@undefined
+\global\let\oldnewlabel\newlabel
+\gdef\newlabel#1#2{\newlabelxx{#1}#2}
+\gdef\newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
+\AtEndDocument{\ifx\hyper@anchor\@undefined
+\let\newlabel\oldnewlabel
+\fi}
+\fi}
+\global\let\hyper@last\relax 
+\gdef\HyperFirstAtBeginDocument#1{#1}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\providecommand\babel@aux[2]{}
+\@nameuse{bbl@beforestart}
+\providecommand \oddpage@label [2]{}
+\babel@aux{english}{}
+\newlabel{def:lower-semi}{{0.3}{3}{}{thm.0.0.3}{}}
+\newlabel{thm:taylor_expansion}{{0.4}{3}{Taylor's Remainder Theorem}{thm.0.0.4}{}}
+\newlabel{def:PSD}{{0.6}{3}{}{thm.0.0.6}{}}
+\citation{van2014renyi}
+\newlabel{defn:KL-divergence}{{0.10}{4}{}{thm.0.0.10}{}}
+\newlabel{defn:The-Wasserstein--distance}{{0.12}{4}{}{thm.0.0.12}{}}
+\newlabel{def:p-dist}{{0.13}{4}{}{thm.0.0.13}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {1}Introduction}{6}{chapter.1}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\@writefile{loa}{\addvspace {10\p@ }}
+\@writefile{toc}{\contentsline {section}{\numberline {1.1}Why non-convex functions can be difficult to optimize}{7}{section.1.1}\protected@file@percent }
+\newlabel{eq:f_lower_bound}{{1.1}{7}{Why non-convex functions can be difficult to optimize}{equation.1.1.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.1}{\ignorespaces Optimizing general $1$-Lipschitz functions\relax }}{7}{figure.caption.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {1.2}Why is convexity useful? Linear Separability!}{7}{section.1.2}\protected@file@percent }
+\newlabel{def:convex_func}{{1.3}{7}{}{thm.1.2.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.2}{\ignorespaces Non-Convex Function; Convex Function\relax }}{8}{figure.caption.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1.3}{\ignorespaces Convex function; Convex set\relax }}{8}{figure.caption.5}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:convex}{{1.3}{8}{Convex function; Convex set\relax }{figure.caption.5}{}}
+\newlabel{thm:sep}{{1.6}{8}{Hyperplane separation theorem}{thm.1.2.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.4}{\ignorespaces Polyhedron; Polytope\relax }}{9}{figure.caption.6}\protected@file@percent }
+\newlabel{eq:seq_1}{{1.2}{9}{Why is convexity useful? Linear Separability!}{equation.1.2.2}{}}
+\newlabel{cor:convex_function_intersection}{{1.7}{9}{}{thm.1.2.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.5}{\ignorespaces Convex set with separating hyperplane\relax }}{10}{figure.caption.7}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1.6}{\ignorespaces First-order condition for convexity of a function\relax }}{10}{figure.caption.8}\protected@file@percent }
+\newlabel{thm:first_order}{{1.9}{10}{}{thm.1.2.9}{}}
+\newlabel{eq:f_lower}{{1.3}{10}{}{equation.1.2.3}{}}
+\newlabel{thm:optimality_condition}{{1.10}{11}{Optimality condition for unconstrained problems}{thm.1.2.10}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.3}Convex problems are everywhere!}{11}{section.1.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.1}Minimum Cost Flow Problem (Computer Science)}{11}{subsection.1.3.1}\protected@file@percent }
+\citation{stigler1945cost}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.2}Linear Programs (Operations Research/Economics)}{12}{subsection.1.3.2}\protected@file@percent }
+\newlabel{eq:LP_standard}{{1.4}{12}{Linear Programs (Operations Research/Economics)}{equation.1.3.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.3}Logistic regression (from Machine Learning)}{12}{subsection.1.3.3}\protected@file@percent }
+\newlabel{eq:logistic_regression}{{1.5}{12}{Logistic regression (from Machine Learning)}{equation.1.3.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.3.4}Minimal Surface (Physics)}{12}{subsection.1.3.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {1.4}Examples of convex sets and functions}{13}{section.1.4}\protected@file@percent }
+\newlabel{def:epigraph}{{1.14}{13}{}{thm.1.4.14}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.7}{\ignorespaces Epigraph of $f$; quasiconvex function\relax }}{13}{figure.caption.9}\protected@file@percent }
+\newlabel{fig:quasiconvex}{{1.7}{13}{Epigraph of $f$; quasiconvex function\relax }{figure.caption.9}{}}
+\newlabel{sec:Checking-Convexity}{{1.5}{14}{Checking convexity\label {sec:Checking-Convexity}}{section.1.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.5}Checking convexity}{14}{section.1.5}\protected@file@percent }
+\newlabel{lem:second_order}{{1.19}{14}{}{thm.1.5.19}{}}
+\newlabel{thm:equ_convex}{{1.20}{14}{}{thm.1.5.20}{}}
+\newlabel{sec:Subgradients}{{1.6}{15}{Subgradients\label {sec:Subgradients}}{section.1.6}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.6}Subgradients}{15}{section.1.6}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1.8}{\ignorespaces Subgradient\relax }}{16}{figure.caption.10}\protected@file@percent }
+\newlabel{sec:Logconcave-functions}{{1.7}{16}{Logconcave functions\label {sec:Logconcave-functions}}{section.1.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.7}Logconcave functions}{16}{section.1.7}\protected@file@percent }
+\newlabel{lem:marginal}{{1.26}{16}{Dinghas; Prékopa; Leindler}{thm.1.7.26}{}}
+\newlabel{thm:Prekopa-Leindler}{{1.27}{16}{Prékopa-Leindler}{thm.1.7.27}{}}
+\newlabel{thm:Brunn-Minkowski}{{1.28}{16}{Brunn-Minkowski}{thm.1.7.28}{}}
+\@writefile{lof}{\ttl@tocsep }
+\@writefile{lot}{\ttl@tocsep }
+\@writefile{toc}{\contentsline {part}{I\hspace  {1em}Optimization}{18}{part.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {2}Gradient Descent}{19}{chapter.2}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\@writefile{loa}{\addvspace {10\p@ }}
+\@writefile{toc}{\contentsline {section}{\numberline {2.1}Philosophy}{19}{section.2.1}\protected@file@percent }
+\@writefile{loa}{\contentsline {algocf}{\numberline {1}{\ignorespaces $\mathtt  {OptimizationFramework}$\relax }}{19}{algocf.1}\protected@file@percent }
+\newlabel{sec:Gradient-Descent}{{2.2}{20}{Basic Algorithm\label {sec:Gradient-Descent}}{section.2.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.2}Basic Algorithm}{20}{section.2.2}\protected@file@percent }
+\@writefile{loa}{\contentsline {algocf}{\numberline {2}{\ignorespaces $\mathtt  {GradientDescent}$ (GD)\relax }}{20}{algocf.2}\protected@file@percent }
+\newlabel{thm:L_equ_def}{{2.2}{20}{}{thm.2.2.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.1}Analysis for general functions}{21}{subsection.2.2.1}\protected@file@percent }
+\newlabel{thm:gd_general}{{2.6}{21}{}{thm.2.2.6}{}}
+\newlabel{lem:gradient_progress}{{2.7}{21}{}{thm.2.2.7}{}}
+\citation{carmon2017lower}
+\@writefile{toc}{\contentsline {section}{\numberline {2.3}Analysis for convex functions}{22}{section.2.3}\protected@file@percent }
+\newlabel{lem:f_diff_diameter}{{2.8}{22}{}{thm.2.3.8}{}}
+\newlabel{thm:gd_convex}{{2.9}{22}{}{thm.2.3.9}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.4}Strongly Convex Functions}{24}{section.2.4}\protected@file@percent }
+\newlabel{lem:strongly_convex}{{2.14}{24}{}{thm.2.4.14}{}}
+\newlabel{thm:gd_convex_strongly}{{2.15}{24}{}{thm.2.4.15}{}}
+\newlabel{eq:strong_convex_progress}{{2.1}{24}{Strongly Convex Functions}{equation.2.4.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.5}Line Search}{25}{section.2.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2.6}Generalizing Gradient Descent{*}}{26}{section.2.6}\protected@file@percent }
+\@writefile{loa}{\contentsline {algocf}{\numberline {3}{\ignorespaces $\mathtt  {GeneralizedGradientDescent}$\relax }}{26}{algocf.3}\protected@file@percent }
+\newlabel{thm:gd_general_apx}{{2.24}{26}{}{thm.2.6.24}{}}
+\citation{blumensath2009iterative}
+\newlabel{eq:l2lp}{{2.4}{27}{}{equation.2.6.4}{}}
+\citation{manselli1991maximum}
+\citation{adil2019iterative}
+\citation{kyng2019flows}
+\citation{kathuria2020unit}
+\citation{lu2016relatively}
+\@writefile{toc}{\contentsline {section}{\numberline {2.7}Gradient Flow}{28}{section.2.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2.8}Discussion}{28}{section.2.8}\protected@file@percent }
+\citation{Grunbaum1960}
+\citation{yudin1976evaluation}
+\citation{khachiyan1980polynomial}
+\citation{grotschel1981ellipsoid}
+\citation{bertsimas2004solving}
+\citation{grotschel2012geometric}
+\@writefile{toc}{\contentsline {chapter}{\numberline {3}Elimination}{29}{chapter.3}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\newlabel{chap:Elimination}{{3}{29}{Elimination}{chapter.3}{}}
+\@writefile{loa}{\addvspace {10\p@ }}
+\newlabel{sec:Cutting-Plane-Methods}{{3.1}{29}{Cutting Plane Methods\label {sec:Cutting-Plane-Methods}}{section.3.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.1}Cutting Plane Methods}{29}{section.3.1}\protected@file@percent }
+\newlabel{eq:sub_grad_def}{{3.1}{29}{Cutting Plane Methods\label {sec:Cutting-Plane-Methods}}{equation.3.1.1}{}}
+\newlabel{prob:abstract_convex_problem}{{3.1}{29}{Finding a point in a convex set}{thm.3.1.1}{}}
+\citation{levin1965algorithm}
+\citation{newman1965location}
+\citation{yudin1976evaluation}
+\citation{shor1977cut}
+\citation{khachiyan1980polynomial}
+\citation{khachiyan1988inscribed}
+\citation{DBLP:conf/focs/Vaidya89b}
+\citation{atkinson1995cutting}
+\citation{bertsimas2004solving}
+\citation{lee2015faster}
+\citation{jiang2020improved}
+\@writefile{loa}{\contentsline {algocf}{\numberline {4}{\ignorespaces $\mathtt  {CuttingPlaneFramework}$\relax }}{30}{algocf.4}\protected@file@percent }
+\newlabel{alg:cutting_plane}{{4}{30}{Cutting Plane Methods\label {sec:Cutting-Plane-Methods}}{algocf.4}{}}
+\newlabel{eq:Hk}{{3.2}{30}{Cutting Plane Methods\label {sec:Cutting-Plane-Methods}}{equation.3.1.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3.1}{\ignorespaces {\footnotesize  Different Cutting Plane Methods. Omitted polylogarithmic terms. The number of iterations follows from the rate.}\relax }}{30}{table.caption.11}\protected@file@percent }
+\newlabel{table:cpm}{{3.1}{30}{{\footnotesize \label {table:cpm}Different Cutting Plane Methods. Omitted polylogarithmic terms. The number of iterations follows from the rate.}\relax }{table.caption.11}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.2}Ellipsoid Method}{30}{section.3.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces Ellipsoid Method\relax }}{30}{figure.caption.12}\protected@file@percent }
+\@writefile{loa}{\contentsline {algocf}{\numberline {5}{\ignorespaces $\mathtt  {Ellipsoid}$\relax }}{31}{algocf.5}\protected@file@percent }
+\newlabel{alg:ellipsoid_method}{{5}{31}{Ellipsoid Method}{algocf.5}{}}
+\newlabel{lem:ellipsoid_vol_decrease}{{3.3}{31}{}{thm.3.2.3}{}}
+\newlabel{sec:vol2val}{{3.3}{32}{From Volume to Function Value\label {sec:vol2val}}{section.3.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.3}From Volume to Function Value}{32}{section.3.3}\protected@file@percent }
+\newlabel{thm:conv_opt}{{3.7}{32}{}{thm.3.3.7}{}}
+\newlabel{thm:ellipsoid}{{3.9}{33}{}{thm.3.3.9}{}}
+\newlabel{eq:LP_func}{{3.3}{33}{From Volume to Function Value\label {sec:vol2val}}{equation.3.3.3}{}}
+\citation{Grunbaum1960}
+\citation{rademacher2007approximating}
+\@writefile{toc}{\contentsline {section}{\numberline {3.4}Center of Gravity Method}{34}{section.3.4}\protected@file@percent }
+\newlabel{thm:Grunbaum}{{3.14}{34}{}{thm.3.4.14}{}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {6}{\ignorespaces $\mathtt  {RandomizedCenterOfGravity}$\relax }}{34}{algocf.6}\protected@file@percent }
+\newlabel{alg:randomized_cog}{{6}{34}{Center of Gravity Method}{algocf.6}{}}
+\citation{lovasz2007geometry}
+\newlabel{thm:grun-1}{{3.16}{35}{Robust Gr\"unbaum}{thm.3.4.16}{}}
+\newlabel{lem:logcon_max-1}{{3.17}{35}{}{thm.3.4.17}{}}
+\citation{rademacher2007approximating}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.2}{\ignorespaces Affine transformations for Center of Gravity method\relax }}{37}{figure.caption.13}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3.3}{\ignorespaces Complexity using a separation oracle\relax }}{38}{figure.caption.14}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3.5}Sphere and Parabola Methods}{38}{section.3.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.1}Sphere Method}{39}{subsection.3.5.1}\protected@file@percent }
+\newlabel{eq:geometricdescent_ball-1}{{3.4}{39}{Sphere Method}{equation.3.5.4}{}}
+\newlabel{eq:radius-decrease}{{3.5}{39}{Sphere Method}{equation.3.5.5}{}}
+\newlabel{eq:geometr_descent_simple-1}{{3.6}{39}{Sphere Method}{equation.3.5.6}{}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {7}{\ignorespaces $\mathtt  {SphereMethod}$\relax }}{39}{algocf.7}\protected@file@percent }
+\newlabel{lem:one_ball_shrink-1}{{3.23}{39}{}{thm.3.5.23}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.4}{\ignorespaces The left diagram shows the intersection shrinks at the same rate if only one of the balls shrinks; the right diagram shows the intersection shrinks much faster if two balls shrink at the same absolute amount.\relax }}{40}{figure.caption.15}\protected@file@percent }
+\newlabel{fig:geometric_descent-1}{{3.4}{40}{The left diagram shows the intersection shrinks at the same rate if only one of the balls shrinks; the right diagram shows the intersection shrinks much faster if two balls shrink at the same absolute amount.\relax }{figure.caption.15}{}}
+\citation{drusvyatskiy2016optimal}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.2}Parabola Method Via Epigraph}{41}{subsection.3.5.2}\protected@file@percent }
+\newlabel{eq:epigraph_cuttingplane-1}{{3.7}{41}{Parabola Method Via Epigraph}{equation.3.5.7}{}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {8}{\ignorespaces $\mathtt  {ParabolaMethod}$\relax }}{41}{algocf.8}\protected@file@percent }
+\@writefile{loa}{\contentsline {algocf}{\numberline {9}{\ignorespaces $q=\mathtt  {maxParabola}(\max (q_{a},q_{b}))$\relax }}{41}{algocf.9}\protected@file@percent }
+\newlabel{lem:geometric_convergence_rate-1}{{3.27}{42}{}{thm.3.5.27}{}}
+\newlabel{eq:r_ratio-1}{{3.8}{42}{Parabola Method Via Epigraph}{equation.3.5.8}{}}
+\newlabel{eq:geometric_key-1}{{3.9}{42}{Parabola Method Via Epigraph}{equation.3.5.9}{}}
+\citation{drusvyatskiy2016optimal}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5.3}Discussion}{43}{subsection.3.5.3}\protected@file@percent }
+\babel@aux{american}{}
+\newlabel{sec:Lower-Bounds}{{3.6}{43}{Lower Bounds\label {sec:Lower-Bounds}}{section.3.6}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.6}Lower Bounds}{43}{section.3.6}\protected@file@percent }
+\newlabel{eq:worst_function}{{3.10}{43}{}{equation.3.6.10}{}}
+\babel@aux{english}{}
+\citation{grotschel2012geometric}
+\citation{lee2020efficient}
+\citation{grotschel2012geometric}
+\citation{grotschel2012geometric}
+\citation{grotschel2012geometric}
+\@writefile{toc}{\contentsline {chapter}{\numberline {4}Reduction}{46}{chapter.4}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\@writefile{loa}{\addvspace {10\p@ }}
+\@writefile{toc}{\contentsline {section}{\numberline {4.1}Equivalences between Oracles}{46}{section.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.1}Oracles for Convex Sets}{46}{subsection.4.1.1}\protected@file@percent }
+\newlabel{def:MEM}{{4.1}{46}{Membership Oracle (MEM)}{thm.4.1.1}{}}
+\newlabel{def:SEP}{{4.2}{46}{Separation Oracle (SEP)}{thm.4.1.2}{}}
+\newlabel{def:VAL}{{4.3}{46}{Validity Oracle (VAL)}{thm.4.1.3}{}}
+\newlabel{def:OPT}{{4.4}{46}{Optimization Oracle (OPT)}{thm.4.1.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces The relationships among the four oracles for convex sets. The arrows are implications. \relax }}{47}{figure.caption.16}\protected@file@percent }
+\newlabel{fig:oracles}{{4.1}{47}{The relationships among the four oracles for convex sets. The arrows are implications. \relax }{figure.caption.16}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.2}Duals of Convex Sets}{47}{subsection.4.1.2}\protected@file@percent }
+\newlabel{prop:K**}{{4.9}{47}{}{thm.4.1.9}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces Insights into the Dual. (a) K contains the origin. (b) K does not contain the origin.\relax }}{48}{figure.caption.17}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.3}Oracles for Convex Functions}{48}{subsection.4.1.3}\protected@file@percent }
+\newlabel{def:EVAL}{{4.11}{48}{Evaluation Oracle (EVAL)}{thm.4.1.11}{}}
+\newlabel{def:GRAD}{{4.12}{48}{Subgradient Oracle (GRAD)}{thm.4.1.12}{}}
+\newlabel{eq:grad_guarantee}{{4.1}{48}{Subgradient Oracle (GRAD)}{equation.4.1.1}{}}
+\newlabel{lem:gradient_conjugate}{{4.14}{49}{}{thm.4.1.14}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.3}{\ignorespaces This illustrates the relationships of oracles for a convex function $f$ and its convex conjugate $f^{*}$. \relax }}{49}{figure.caption.18}\protected@file@percent }
+\newlabel{fig:rel}{{4.3}{49}{This illustrates the relationships of oracles for a convex function $f$ and its convex conjugate $f^{*}$. \relax }{figure.caption.18}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1.4}Convex Conjugate and Equivalences}{49}{subsection.4.1.4}\protected@file@percent }
+\citation{artstein2009concept}
+\newlabel{lem:involution}{{4.18}{50}{Involution property}{thm.4.1.18}{}}
+\citation{constantin2018convex}
+\citation{lee2017efficient}
+\newlabel{sec:From-EVAL-to}{{4.2}{51}{Gradient from Evaluation via Finite Difference\label {sec:From-EVAL-to}}{section.4.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.2}Gradient from Evaluation via Finite Difference}{51}{section.4.2}\protected@file@percent }
+\newlabel{lem:convex_almost_flat}{{4.25}{51}{\cite {lee2017efficient}}{thm.4.2.25}{}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {10}{\ignorespaces $\mathtt  {SubgradConvexFunc}(f,x,r_{1},\varepsilon )$\relax }}{53}{algocf.10}\protected@file@percent }
+\newlabel{alg:separateFunc}{{10}{53}{Gradient from Evaluation via Finite Difference\label {sec:From-EVAL-to}}{algocf.10}{}}
+\newlabel{lem:separate_conv_func}{{4.27}{53}{}{thm.4.2.27}{}}
+\newlabel{thm:box-poincare}{{4.30}{55}{$L^{1}$-Poincar\'e inequality}{thm.4.2.30}{}}
+\newlabel{sec:From-Membership-to}{{4.3}{55}{Separation via Membership \label {sec:From-Membership-to}}{section.4.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.3}Separation via Membership }{55}{section.4.3}\protected@file@percent }
+\newlabel{lem:h_convex}{{4.33}{55}{}{thm.4.3.33}{}}
+\newlabel{lem:h_Lip}{{4.34}{55}{}{thm.4.3.34}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.4}{\ignorespaces The convex height function $h_{x}$\relax }}{56}{figure.caption.22}\protected@file@percent }
+\newlabel{fig:height-function}{{4.4}{56}{The convex height function $h_{x}$\relax }{figure.caption.22}{}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {11}{\ignorespaces $\mathtt  {Separate}_{\varepsilon ,\rho }(K,x)$\relax }}{56}{algocf.11}\protected@file@percent }
+\newlabel{alg:sep_set}{{11}{56}{Separation via Membership \label {sec:From-Membership-to}}{algocf.11}{}}
+\newlabel{def:SEP-1}{{4.35}{57}{Separation Oracle (SEP)}{thm.4.3.35}{}}
+\newlabel{def:MEM-1}{{4.36}{57}{Membership Oracle (MEM)}{thm.4.3.36}{}}
+\newlabel{lem:separate_set}{{4.37}{57}{}{thm.4.3.37}{}}
+\newlabel{eq:hxy-1}{{4.2}{58}{Separation via Membership \label {sec:From-Membership-to}}{equation.4.3.2}{}}
+\newlabel{eq:lowerbound_g}{{4.3}{58}{Separation via Membership \label {sec:From-Membership-to}}{equation.4.3.3}{}}
+\newlabel{thm:separate_set}{{4.39}{58}{}{thm.4.3.39}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.1}Gradient from Evaluation via Auto Differentiation }{59}{subsection.4.3.1}\protected@file@percent }
+\newlabel{thm:auto_diff}{{4.40}{59}{}{thm.4.3.40}{}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {12}{\ignorespaces $\mathtt  {AutoDifferentiation}$\relax }}{59}{algocf.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.2}Gradient from Evaluation via Complex Step Differentiation}{60}{subsection.4.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.4}Composite Problem via Duality}{61}{section.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.1}Motivation}{61}{subsection.4.4.1}\protected@file@percent }
+\newlabel{lem:dual-decomp}{{4.43}{61}{}{thm.4.4.43}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.2}Example: Semidefinite Programming}{63}{subsection.4.4.2}\protected@file@percent }
+\newlabel{eq:SDP}{{4.4}{63}{Example: Semidefinite Programming}{equation.4.4.4}{}}
+\newlabel{eq:dual_SDP}{{4.5}{63}{Example: Semidefinite Programming}{equation.4.4.5}{}}
+\newlabel{eq:SDP_apx}{{4.6}{63}{Example: Semidefinite Programming}{equation.4.4.6}{}}
+\newlabel{eq:SDP_LP}{{4.7}{63}{Example: Semidefinite Programming}{equation.4.4.7}{}}
+\citation{cohen2018solving}
+\citation{lee2015faster}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.3}Duality and Convex Hull}{64}{subsection.4.4.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4.5}{\ignorespaces The oracle behaves identically on $K_{1}$ and $\setbox \z@ \hbox {\mathsurround \z@ $\textstyle K_{1}$}\mathaccent "0365{K_{1}}$ \relax }}{65}{figure.caption.25}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {5}Geometrization}{67}{chapter.5}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\@writefile{loa}{\addvspace {10\p@ }}
+\newlabel{sec:FrankWolfe}{{5.1}{67}{Frank--Wolfe \label {sec:FrankWolfe}}{section.5.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.1}Frank--Wolfe }{67}{section.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1.1}Algorithm}{67}{subsection.5.1.1}\protected@file@percent }
+\@writefile{loa}{\contentsline {algocf}{\numberline {13}{\ignorespaces $\mathtt  {FrankWolfe}$\relax }}{67}{algocf.13}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces 1D Newton Step\relax }}{68}{figure.caption.26}\protected@file@percent }
+\newlabel{sec:Newton-Method}{{5.2}{68}{The Newton Method\label {sec:Newton-Method}}{section.5.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.2}The Newton Method}{68}{section.5.2}\protected@file@percent }
+\@writefile{loa}{\contentsline {algocf}{\numberline {14}{\ignorespaces $\mathtt  {NewtonMethod}$\relax }}{69}{algocf.14}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.2}{\ignorespaces Secant Method\relax }}{72}{figure.caption.29}\protected@file@percent }
+\newlabel{eq:broyden_method_opt}{{5.1}{72}{}{equation.5.2.1}{}}
+\citation{fletcher1987practical}
+\citation{fletcher1991new}
+\newlabel{eq:broyden_method}{{5.2}{73}{}{equation.5.2.2}{}}
+\newlabel{eq:recursive}{{5.3}{73}{}{equation.5.2.3}{}}
+\newlabel{sec:IPM}{{5.3}{73}{Interior Point Method for Linear Programs\label {sec:IPM}}{section.5.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.3}Interior Point Method for Linear Programs}{73}{section.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.1}Basic Properties}{74}{subsection.5.3.1}\protected@file@percent }
+\newlabel{lem:primal_dual_representation}{{5.11}{75}{Quadrant Representation of Primal-Dual}{thm.5.3.11}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.2}Following the central path}{75}{subsection.5.3.2}\protected@file@percent }
+\newlabel{exer:d_central}{{5.12}{75}{}{thm.5.3.12}{}}
+\newlabel{lem:IPM_progress}{{5.14}{76}{}{thm.5.3.14}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.3}Finding the initial point}{77}{subsection.5.3.3}\protected@file@percent }
+\newlabel{lem:feasible_LP}{{5.16}{77}{}{thm.5.3.16}{}}
+\newlabel{eq:another_ov_x_in_appendix}{{5.4}{77}{Finding the initial point}{equation.5.3.4}{}}
+\newlabel{eq:another_ov_c_in_appendix}{{5.5}{78}{Finding the initial point}{equation.5.3.5}{}}
+\newlabel{eq:bounding_ov_OPT_by_OPT}{{5.6}{78}{Finding the initial point}{equation.5.3.6}{}}
+\newlabel{eq:eq1_in_appendix}{{5.7}{78}{Finding the initial point}{equation.5.3.7}{}}
+\newlabel{eq:lower_bound_on_delta_L_c_ovx}{{5.8}{78}{Finding the initial point}{equation.5.3.8}{}}
+\newlabel{eq:theta_is_at_most_4n_delta}{{5.9}{78}{Finding the initial point}{equation.5.3.9}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.4}Finding a feasible solution close to the Central Path}{79}{subsection.5.3.4}\protected@file@percent }
+\newlabel{def:LP_para}{{5.17}{79}{}{thm.5.3.17}{}}
+\newlabel{def:IPM_interior_modified}{{5.18}{79}{Modified Linear Program}{thm.5.3.18}{}}
+\newlabel{thm:IPM_interior}{{5.19}{79}{}{thm.5.3.19}{}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {15}{\ignorespaces $\mathtt  {SlowSolveLP}(\mathbf  {A},b,c,x^{(0)},\delta )$\relax }}{79}{algocf.15}\protected@file@percent }
+\newlabel{alg:SlowSolveLP}{{15}{79}{Finding a feasible solution close to the Central Path}{algocf.15}{}}
+\newlabel{thm:SlowSolveLP}{{5.20}{80}{}{thm.5.3.20}{}}
+\newlabel{lem:ipm_interior_modified}{{5.21}{80}{}{thm.5.3.21}{}}
+\newlabel{eq:KKT_modified_LP}{{5.10}{80}{Finding a feasible solution close to the Central Path}{equation.5.3.10}{}}
+\newlabel{eq:x_pos_bound}{{5.11}{81}{Finding a feasible solution close to the Central Path}{equation.5.3.11}{}}
+\newlabel{lem:ipm_propert_modified}{{5.22}{81}{}{thm.5.3.22}{}}
+\newlabel{lem:IPM_exact_inner_pt}{{5.23}{81}{}{thm.5.3.23}{}}
+\newlabel{eq:LP_exact_3_term}{{5.12}{82}{Finding a feasible solution close to the Central Path}{equation.5.3.12}{}}
+\newlabel{eq:LP_exact_3_term_1}{{5.13}{82}{Finding a feasible solution close to the Central Path}{equation.5.3.13}{}}
+\newlabel{lem:LP_exact_3_term_1}{{5.24}{82}{}{thm.5.3.24}{}}
+\newlabel{lem:LP_exact_3_term_2}{{5.25}{82}{}{thm.5.3.25}{}}
+\newlabel{lem:LP_exact_distance_OPT}{{5.26}{83}{}{thm.5.3.26}{}}
+\newlabel{lemma:IPM_center_original}{{5.27}{83}{}{thm.5.3.27}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3.5}Why $\sqrt  {n}$?}{83}{subsection.5.3.5}\protected@file@percent }
+\citation{nesterov1998introductory}
+\@writefile{toc}{\contentsline {section}{\numberline {5.4}Interior Point Method for Convex Programs}{84}{section.5.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4.1}Self-concordance}{84}{subsection.5.4.1}\protected@file@percent }
+\newlabel{lem:self_con_global}{{5.34}{85}{}{thm.5.4.34}{}}
+\newlabel{eq:self_con_global_alpha}{{5.14}{85}{Self-concordance}{equation.5.4.14}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4.2}Self-concordant barrier functions}{85}{subsection.5.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4.3}Convergence of Newton method for self-concordant functions}{86}{subsection.5.4.3}\protected@file@percent }
+\newlabel{lem:Newton_improvement}{{5.41}{86}{}{thm.5.4.41}{}}
+\newlabel{eq:grad_f_sc}{{5.15}{87}{Convergence of Newton method for self-concordant functions}{equation.5.4.15}{}}
+\newlabel{lem:self_concordant_err}{{5.43}{87}{}{thm.5.4.43}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4.4}Main Algorithm and Analysis}{88}{subsection.5.4.4}\protected@file@percent }
+\@writefile{loa}{\contentsline {algocf}{\numberline {16}{\ignorespaces $\mathtt  {InteriorPointMethod}$\relax }}{88}{algocf.16}\protected@file@percent }
+\babel@aux{american}{}
+\@writefile{toc}{\contentsline {section}{\numberline {5.5}State of the Art}{90}{section.5.5}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {5.1}{\ignorespaces Black-box Problems. The goal is to find $x$ such that $f(x)-\min _{x}f\leq \epsilon $ with initial point $x^{(0)}=0$. $\mathcal  {T}_{\nabla f}$ is the cost of computing $\nabla f(x)$ for any $x$. $\mathcal  {T}_{g}$ is the cost of computing $\arg \min _{x}g(x)+\frac  {\lambda }{2}\|x-c\|^{2}$ for any $c$. $\mathcal  {T}_{\Omega }$ is the cost of computing $\arg \min _{x\in \Omega }c^{\top }x$ for any $c$. $\mathcal  {T}_{\nabla f_{\omega }}$, $\mathcal  {T}_{\nabla f_{i}}$ and $\mathcal  {T}_{\partial _{i}f}$ are the cost of computing $\nabla f_{\omega }$, $\nabla f_{i}$ and $\partial _{i}f$ for one of the $\omega $ or $i$.\relax }}{91}{table.caption.30}\protected@file@percent }
+\newlabel{tab:Black-Box-Problems}{{5.1}{91}{Black-box Problems. The goal is to find $x$ such that $f(x)-\min _{x}f\protect \leq \epsilon $ with initial point $x^{(0)}=0$. $\mathcal {T}_{\nabla f}$ is the cost of computing $\nabla f(x)$ for any $x$. $\mathcal {T}_{g}$ is the cost of computing $\arg \min _{x}g(x)+\frac {\lambda }{2}\|x-c\|^{2}$ for any $c$. $\mathcal {T}_{\Omega }$ is the cost of computing $\arg \min _{x\in \Omega }c^{\top }x$ for any $c$. $\mathcal {T}_{\nabla f_{\omega }}$, $\mathcal {T}_{\nabla f_{i}}$ and $\mathcal {T}_{\partial _{i}f}$ are the cost of computing $\nabla f_{\omega }$, $\nabla f_{i}$ and $\partial _{i}f$ for one of the $\omega $ or $i$.\relax }{table.caption.30}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5.2}{\ignorespaces Structured Problems. $r=\mathrm  {rank}(A)$. We omit the precise definition of $\epsilon $, but all algorithms have complexity depending on $\log (1/\epsilon )$.\relax }}{92}{table.caption.31}\protected@file@percent }
+\newlabel{tab:Structured-Problems}{{5.2}{92}{Structured Problems. $r=\mathrm {rank}(A)$. We omit the precise definition of $\epsilon $, but all algorithms have complexity depending on $\log (1/\epsilon )$.\relax }{table.caption.31}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.6}Remarks on the Runtime}{92}{section.5.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.6.1}Structured vs black-box problems}{92}{subsection.5.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.6.2}Understanding the bounds}{92}{subsection.5.6.2}\protected@file@percent }
+\citation{lin2015universal}
+\citation{frostig2015regularizing}
+\citation{o2015adaptive}
+\citation{allen2016optimal}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.6.3}$L/\mu $ can be dimension dependent}{93}{subsection.5.6.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.6.4}Accuracy of analysis}{93}{subsection.5.6.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5.7}Relations Between Different First-order Methods}{93}{section.5.7}\protected@file@percent }
+\newlabel{eq:convex2strongly}{{5.16}{94}{}{equation.5.7.16}{}}
+\babel@aux{english}{}
+\@writefile{toc}{\contentsline {chapter}{\numberline {6}Sparsification}{95}{chapter.6}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\@writefile{loa}{\addvspace {10\p@ }}
+\newlabel{sec:Subspace-embedding}{{6.1}{95}{Subspace embedding\label {sec:Subspace-embedding}}{section.6.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.1}Subspace embedding}{95}{section.6.1}\protected@file@percent }
+\newlabel{lem:Richardson}{{6.1}{95}{}{thm.6.1.1}{}}
+\citation{Vempala04}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1.1}Oblivious Subspace Embedding via Johnson-Lindenstrauss}{96}{subsection.6.1.1}\protected@file@percent }
+\newlabel{lem:OSE_reduction}{{6.9}{97}{}{thm.6.1.9}{}}
+\citation{cohen2016nearly}
+\citation{tropp2015introduction}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1.2}Sparse Johnson-Lindenstrauss}{98}{subsection.6.1.2}\protected@file@percent }
+\newlabel{thm:matrix-chernoff}{{6.11}{98}{Matrix Chernoff}{thm.6.1.11}{}}
+\newlabel{matrix_ub}{{6.1}{98}{Sparse Johnson-Lindenstrauss}{equation.6.1.1}{}}
+\newlabel{thm:sparse_OSE}{{6.14}{99}{}{thm.6.1.14}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1.3}Back to Regression}{99}{subsection.6.1.3}\protected@file@percent }
+\@writefile{loa}{\contentsline {algocf}{\numberline {17}{\ignorespaces $\mathtt  {RegressionUsingOSE}$\relax }}{99}{algocf.17}\protected@file@percent }
+\citation{woodruff2014sketching}
+\citation{kannan_vempala_2017}
+\citation{cohen2015uniform}
+\newlabel{sec:Leverage-Score-Sampling}{{6.2}{100}{Leverage Score Sampling\label {sec:Leverage-Score-Sampling}}{section.6.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.2}Leverage Score Sampling}{100}{section.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2.1}Leverage scores}{100}{subsection.6.2.1}\protected@file@percent }
+\newlabel{rank_bound}{{6.2}{100}{Leverage scores}{equation.6.2.2}{}}
+\newlabel{leverage_score_opt}{{6.18}{100}{}{thm.6.2.18}{}}
+\citation{spielman2011graph}
+\newlabel{leverage_score_opt_2}{{6.19}{101}{}{thm.6.2.19}{}}
+\newlabel{eq:leverage_score_spectral_upper}{{6.3}{101}{}{equation.6.2.3}{}}
+\newlabel{lem:leveragescoresampling}{{6.20}{101}{}{thm.6.2.20}{}}
+\newlabel{eq:TmnS1}{{6.4}{101}{Leverage scores}{equation.6.2.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2.2}Uniform Sampling}{101}{subsection.6.2.2}\protected@file@percent }
+\newlabel{lem:sigmaSi}{{6.21}{102}{}{thm.6.2.21}{}}
+\newlabel{sec:Stochastic-Gradient-Descent}{{6.3}{102}{Stochastic Gradient Descent\label {sec:Stochastic-Gradient-Descent}}{section.6.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.3}Stochastic Gradient Descent}{102}{section.6.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3.1}Stochastic Problem}{103}{subsection.6.3.1}\protected@file@percent }
+\newlabel{eq:error_F_N}{{6.5}{103}{Stochastic Problem}{equation.6.3.5}{}}
+\newlabel{lem:change_variance}{{6.23}{104}{}{thm.6.3.23}{}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {18}{\ignorespaces $\mathtt  {StochasticGradientDescent}$ (SGD)\relax }}{104}{algocf.18}\protected@file@percent }
+\newlabel{thm:sgd_convex_strongly}{{6.24}{104}{}{thm.6.3.24}{}}
+\newlabel{eq:SGD_distance}{{6.6}{105}{Stochastic Problem}{equation.6.3.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3.2}Finite Sum Problem}{105}{subsection.6.3.2}\protected@file@percent }
+\newlabel{lem:variance_reduction}{{6.26}{105}{}{thm.6.3.26}{}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {19}{\ignorespaces $\mathtt  {StochasticVarianceReducedGradient}$ (SVRG)\relax }}{106}{algocf.19}\protected@file@percent }
+\newlabel{thm:stochastic_method}{{6.27}{106}{}{thm.6.3.27}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.4}Coordinate Descent}{106}{section.6.4}\protected@file@percent }
+\newlabel{lem:coordinate_descent}{{6.28}{106}{}{thm.6.4.28}{}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {20}{\ignorespaces $\mathtt  {CoordinateDescent}$ (CD)\relax }}{107}{algocf.20}\protected@file@percent }
+\newlabel{thm:coordinate_descent}{{6.29}{107}{Coordinate Descent Convergence}{thm.6.4.29}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {7}Acceleration}{108}{chapter.7}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\@writefile{loa}{\addvspace {10\p@ }}
+\babel@aux{american}{}
+\newlabel{sec:Chebyshev-Polynomials}{{7.1}{108}{Chebyshev Polynomials\label {sec:Chebyshev-Polynomials}}{section.7.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7.1}Chebyshev Polynomials}{108}{section.7.1}\protected@file@percent }
+\newlabel{eq:T_avg_recursion}{{7.1}{108}{}{equation.7.1.1}{}}
+\newlabel{thm:chernoff}{{7.3}{108}{Chernoff Bound}{thm.7.1.3}{}}
+\newlabel{thm:approximate_mono}{{7.4}{108}{}{thm.7.1.4}{}}
+\citation{sachdeva2014faster}
+\citation{sachdeva2014faster}
+\newlabel{eq:E_z_x_s}{{7.2}{109}{Chebyshev Polynomials\label {sec:Chebyshev-Polynomials}}{equation.7.1.2}{}}
+\babel@aux{english}{}
+\babel@aux{american}{}
+\babel@aux{american}{}
+\@writefile{toc}{\contentsline {section}{\numberline {7.2}Conjugate Gradient}{109}{section.7.2}\protected@file@percent }
+\newlabel{lem:CG_v}{{7.8}{110}{}{thm.7.2.8}{}}
+\newlabel{eq:CG_p_temp}{{7.3}{111}{Conjugate Gradient}{equation.7.2.3}{}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {21}{\ignorespaces $\mathtt  {ConjugateGradient}$ (CG)\relax }}{111}{algocf.21}\protected@file@percent }
+\newlabel{thm:CG}{{7.10}{111}{}{thm.7.2.10}{}}
+\babel@aux{english}{}
+\@writefile{toc}{\contentsline {section}{\numberline {7.3}Accelerated Gradient Descent via Plane Search}{112}{section.7.3}\protected@file@percent }
+\@writefile{loa}{\contentsline {algocf}{\numberline {22}{\ignorespaces $\mathtt  {NemAGD}$\relax }}{112}{algocf.22}\protected@file@percent }
+\newlabel{sec:Accelerated-Gradient-Descent}{{7.4}{113}{Accelerated Gradient Descent\label {sec:Accelerated-Gradient-Descent}}{section.7.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7.4}Accelerated Gradient Descent}{113}{section.7.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.4.1}Gradient Mapping}{113}{subsection.7.4.1}\protected@file@percent }
+\newlabel{eq:gradient_lower_bound}{{7.4}{114}{Gradient Mapping}{equation.7.4.4}{}}
+\newlabel{thm:gradient_mapping_lower_bound}{{7.14}{114}{}{thm.7.4.14}{}}
+\newlabel{lem:Lipschitz_constant_g}{{7.15}{115}{}{thm.7.4.15}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.4.2}Gradient Descent Using Gradient Mapping}{115}{subsection.7.4.2}\protected@file@percent }
+\newlabel{lem:gradient_descent_lemma}{{7.16}{115}{Gradient Descent Lemma}{thm.7.4.16}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.4.3}Mirror Descent Using Gradient Mapping}{116}{subsection.7.4.3}\protected@file@percent }
+\newlabel{eq:mirror_step}{{7.5}{116}{Mirror Descent Using Gradient Mapping}{equation.7.4.5}{}}
+\newlabel{eq:mirror_lemma}{{7.6}{116}{Mirror Descent Using Gradient Mapping}{equation.7.4.6}{}}
+\newlabel{lem:mirror_step}{{7.17}{116}{Mirror Descent Lemma}{thm.7.4.17}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.4.4}Algorithm and Analysis}{116}{subsection.7.4.4}\protected@file@percent }
+\@writefile{loa}{\contentsline {algocf}{\numberline {23}{\ignorespaces $\mathtt  {AGD}$\relax }}{116}{algocf.23}\protected@file@percent }
+\newlabel{thm:AGD}{{7.18}{116}{}{thm.7.4.18}{}}
+\newlabel{eq:AGD_1}{{7.7}{116}{Algorithm and Analysis}{equation.7.4.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7.5}Accelerated Coordinate Descent}{117}{section.7.5}\protected@file@percent }
+\citation{allen2016even}
+\newlabel{thm:coordinate_descent_linear_acc}{{7.19}{118}{Accelerated Coordinate Descent Convergence}{thm.7.5.19}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7.6}Accelerated Stochastic Descent}{118}{section.7.6}\protected@file@percent }
+\newlabel{thm:acc_stochastic_method}{{7.21}{118}{}{thm.7.6.21}{}}
+\@writefile{lof}{\ttl@tocsep }
+\@writefile{lot}{\ttl@tocsep }
+\@writefile{toc}{\contentsline {part}{II\hspace  {1em}Sampling}{119}{part.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {8}Gradient-based Sampling}{120}{chapter.8}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\@writefile{loa}{\addvspace {10\p@ }}
+\@writefile{toc}{\contentsline {section}{\numberline {8.1}Gradient-based Sampling: Langevin Dynamics}{120}{section.8.1}\protected@file@percent }
+\@writefile{loa}{\contentsline {algocf}{\numberline {24}{\ignorespaces $\mathtt  {LangevinDiffusion}$ (LD)\relax }}{121}{algocf.24}\protected@file@percent }
+\newlabel{eq:sde}{{8.1}{121}{Gradient-based Sampling: Langevin Dynamics}{equation.8.1.1}{}}
+\newlabel{lem:itos}{{8.2}{121}{It\^{o}'s lemma}{thm.8.1.2}{}}
+\citation{oksendal2013stochastic}
+\newlabel{thm:fokker_planck}{{8.3}{122}{Fokker--Planck equation}{thm.8.1.3}{}}
+\citation{aldous1995reversible}
+\newlabel{thm:langevin_stationary}{{8.4}{123}{}{thm.8.1.4}{}}
+\newlabel{eq:dp_LD}{{8.2}{123}{Gradient-based Sampling: Langevin Dynamics}{equation.8.1.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.1.1}Convergence via Coupling in Wasserstein distance}{123}{subsection.8.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.1.2}Convergence in $\chi ^{2}$ and KL divergences}{124}{subsection.8.1.2}\protected@file@percent }
+\newlabel{eq:pi}{{8.3}{125}{}{equation.8.1.3}{}}
+\newlabel{eq:lsi}{{8.4}{125}{}{equation.8.1.4}{}}
+\newlabel{thm:LDinKL}{{8.12}{125}{}{thm.8.1.12}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8.2}Langevin Dynamics is Gradient Descent in Density Space*\FN@sf@gobble@opt  {Sections marked with * are more mathematical and can be skipped.}}{126}{section.8.2}\protected@file@percent }
+\newlabel{sec:LD_GD}{{8.2}{126}{Langevin Dynamics is Gradient Descent in Density Space*\footnote {Sections marked with * are more mathematical and can be skipped.}}{section.8.2}{}}
+\newlabel{lem:local-norm}{{8.17}{126}{}{thm.8.2.17}{}}
+\newlabel{thm:LD_GD}{{8.18}{127}{}{thm.8.2.18}{}}
+\newlabel{lem:grad-dom}{{8.19}{127}{}{thm.8.2.19}{}}
+\newlabel{eq:LD_strong_convexity}{{8.5}{127}{}{equation.8.2.5}{}}
+\citation{wibisono2018sampling}
+\citation{lee2024eldan}
+\newlabel{lem:log_sob_LD}{{8.20}{128}{}{thm.8.2.20}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.2.1}Discussion}{128}{subsection.8.2.1}\protected@file@percent }
+\citation{BF87}
+\citation{BF88}
+\citation{E86}
+\@writefile{toc}{\contentsline {chapter}{\numberline {9}Elimination and Reduction}{129}{chapter.9}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\newlabel{chap:Elimination-and-Reduction}{{9}{129}{Elimination and Reduction}{chapter.9}{}}
+\@writefile{loa}{\addvspace {10\p@ }}
+\babel@aux{american}{}
+\newlabel{problem:volume}{{9.1}{129}{Volume Estimation}{thm.9.0.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {9.1}Hardness of Volume Estimation}{129}{section.9.1}\protected@file@percent }
+\citation{DF88}
+\@writefile{toc}{\contentsline {section}{\numberline {9.2}Cutting Plane method for Volume Computation: Reduction to Center-of-Gravity}{130}{section.9.2}\protected@file@percent }
+\@writefile{loa}{\contentsline {algocf}{\numberline {25}{\ignorespaces $\mathtt  {CuttingPlaneVolume}$\relax }}{130}{algocf.25}\protected@file@percent }
+\newlabel{alg:cutting-plane-volume}{{25}{130}{Cutting Plane method for Volume Computation: Reduction to Center-of-Gravity}{algocf.25}{}}
+\newlabel{lem:centroid}{{9.6}{130}{}{thm.9.2.6}{}}
+\citation{rademacher2007approximating}
+\newlabel{lem:width}{{9.7}{131}{}{thm.9.2.7}{}}
+\babel@aux{english}{}
+\citation{brightwell1991counting}
+\@writefile{lof}{\contentsline {figure}{\numberline {9.1}{\ignorespaces \foreignlanguage  {american}{Algorithm (\ref {alg:cutting-plane-volume}) in its second iteration. }\relax }}{132}{figure.caption.32}\protected@file@percent }
+\newlabel{fig:cutting_plane_vol}{{9.1}{132}{\foreignlanguage {american}{Algorithm (\ref {alg:cutting-plane-volume}) in its second iteration. }\relax }{figure.caption.32}{}}
+\babel@aux{american}{}
+\newlabel{ex: linExt-volume}{{9.9}{132}{}{thm.9.2.9}{}}
+\newlabel{sec:Proof-of-BM}{{9.3}{132}{Proof of the Brunn-Minkowski Inequality\label {sec:Proof-of-BM}}{section.9.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {9.3}Proof of the Brunn-Minkowski Inequality}{132}{section.9.3}\protected@file@percent }
+\newlabel{eq:BM-ineq}{{9.1}{132}{Proof of the Brunn-Minkowski Inequality\label {sec:Proof-of-BM}}{equation.9.3.1}{}}
+\citation{belloni2015escaping}
+\citation{Feldman2015statistical}
+\citation{bubeck2016kernel}
+\citation{Kalai2006simulated}
+\newlabel{eq:AB_ratio}{{9.2}{133}{Proof of the Brunn-Minkowski Inequality\label {sec:Proof-of-BM}}{equation.9.3.2}{}}
+\babel@aux{english}{}
+\@writefile{toc}{\contentsline {section}{\numberline {9.4}Optimization from Membership via Sampling}{133}{section.9.4}\protected@file@percent }
+\newlabel{thm:OPTviaSampling}{{9.10}{134}{OPT via sampling}{thm.9.4.10}{}}
+\citation{lovasz1993random}
+\@writefile{toc}{\contentsline {chapter}{\numberline {10}Geometrization }{135}{chapter.10}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\@writefile{loa}{\addvspace {10\p@ }}
+\@writefile{loa}{\contentsline {algocf}{\numberline {26}{\ignorespaces $\mathtt  {BallWalk}$\relax }}{135}{algocf.26}\protected@file@percent }
+\newlabel{lem:ballwalk-stationary}{{10.1}{135}{}{thm.10.0.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {10.1}Basics of Markov chains}{135}{section.10.1}\protected@file@percent }
+\citation{lovasz1993random}
+\newlabel{thm:s-mixing}{{10.14}{139}{}{thm.10.1.14}{}}
+\newlabel{cor:s-mixing}{{10.15}{139}{}{thm.10.1.15}{}}
+\newlabel{thm:transition-operator-norm}{{10.16}{140}{}{thm.10.1.16}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {10.2}Conductance of the Ball Walk}{141}{section.10.2}\protected@file@percent }
+\newlabel{lem:ONESTEP}{{10.20}{142}{One-step overlap}{thm.10.2.20}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10.1}{\ignorespaces  One-step overlap fully contained in K\relax }}{143}{figure.caption.35}\protected@file@percent }
+\newlabel{fig:fully-contained}{{10.1}{143}{One-step overlap fully contained in K\relax }{figure.caption.35}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10.2}{\ignorespaces One-step overlap intersected by K\relax }}{143}{figure.caption.36}\protected@file@percent }
+\newlabel{thm:isoD}{{10.22}{144}{Isoperimetry}{thm.10.2.22}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10.3}{\ignorespaces Partitions of convex body\relax }}{144}{figure.caption.37}\protected@file@percent }
+\newlabel{thm:ball_walk_cond}{{10.23}{144}{}{thm.10.2.23}{}}
+\newlabel{COND}{{10.1}{144}{Conductance of the Ball Walk}{equation.10.2.1}{}}
+\newlabel{thm:ballwalk_warmstart}{{10.25}{146}{}{thm.10.2.25}{}}
+\newlabel{lem:avg-local-conductance}{{10.26}{146}{}{thm.10.2.26}{}}
+\newlabel{COND-1}{{10.2}{146}{}{equation.10.2.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {10.3}Generating a warm start}{148}{section.10.3}\protected@file@percent }
+\@writefile{loa}{\contentsline {algocf}{\numberline {27}{\ignorespaces $\mathtt  {Warm\,Start}$\relax }}{148}{algocf.27}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {10.4}Isotropic Transformation}{148}{section.10.4}\protected@file@percent }
+\newlabel{thm:isotropic-r-R}{{10.33}{148}{}{thm.10.4.33}{}}
+\citation{adamczak2010quantitative}
+\citation{Bourgain96}
+\citation{Rudelson1999}
+\citation{srivastava2013covariance}
+\citation{Kannan1995}
+\@writefile{loa}{\contentsline {algocf}{\numberline {28}{\ignorespaces $\mathtt  {IsotropicTransform}$\relax }}{149}{algocf.28}\protected@file@percent }
+\newlabel{thm:convex_body_rounding}{{10.39}{149}{}{thm.10.4.39}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {10.5}Isoperimetry via localization}{149}{section.10.5}\protected@file@percent }
+\citation{KarzanovK91}
+\citation{DyerF90}
+\citation{LS90}
+\citation{KarzanovK91}
+\citation{li1980estimates}
+\citation{klartag2017needle}
+\citation{payne1960optimal}
+\citation{Kannan1995}
+\citation{Kannan1995}
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.5.1}Localization}{150}{subsection.10.5.1}\protected@file@percent }
+\newlabel{ISO2}{{10.42}{150}{\cite {DyerF90,LS90,KarzanovK91}}{thm.10.5.42}{}}
+\newlabel{eq:1}{{10.3}{150}{Localization}{equation.10.5.3}{}}
+\newlabel{lem:LOCALIZATION}{{10.44}{150}{Localization Lemma \cite {Kannan1995}}{thm.10.5.44}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10.4}{\ignorespaces Going to an affine needle\relax }}{152}{figure.caption.40}\protected@file@percent }
+\newlabel{AFTERLEMMA}{{10.4}{153}{Localization}{equation.10.5.4}{}}
+\newlabel{FEQ}{{10.5}{153}{Localization}{equation.10.5.5}{}}
+\citation{Kannan1995}
+\citation{CV2014}
+\citation{Ledoux1999}
+\citation{CV2015}
+\citation{carbery2001distributional}
+\newlabel{FEQ2}{{10.6}{154}{Localization}{equation.10.5.6}{}}
+\newlabel{thm:KLS_thm}{{10.45}{154}{\cite {Kannan1995}}{thm.10.5.45}{}}
+\newlabel{thm:Gaussian-iso}{{10.46}{154}{}{thm.10.5.46}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.5.2}Alternative formulations of Localization}{154}{subsection.10.5.2}\protected@file@percent }
+\citation{fradelizi2004extreme}
+\newlabel{lem:localization_exp_needles}{{10.49}{155}{Localization: exponential needles}{thm.10.5.49}{}}
+\citation{LV3}
+\citation{LV3}
+\@writefile{lof}{\contentsline {figure}{\numberline {10.5}{\ignorespaces Hit-and-Run Algorithm\relax }}{156}{figure.caption.42}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {10.6}Hit-and-Run}{156}{section.10.6}\protected@file@percent }
+\@writefile{loa}{\contentsline {algocf}{\numberline {29}{\ignorespaces $\mathtt  {Hit\mbox  {-}and\mbox  {-}Run}$\relax }}{156}{algocf.29}\protected@file@percent }
+\newlabel{lem:har-next-step}{{10.53}{156}{}{thm.10.6.53}{}}
+\newlabel{thm:har-cond}{{10.55}{156}{}{thm.10.6.55}{}}
+\citation{Lovasz1998}
+\newlabel{lem:har_one_step}{{10.56}{157}{}{thm.10.6.56}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10.6}{\ignorespaces Hit-and-Run from a corner\relax }}{158}{figure.caption.44}\protected@file@percent }
+\newlabel{thm:iso-cross-ratio}{{10.57}{158}{}{thm.10.6.57}{}}
+\newlabel{xca:exp_needle_one_dim}{{10.58}{159}{}{thm.10.6.58}{}}
+\newlabel{thm:har_weighted_iso}{{10.59}{159}{}{thm.10.6.59}{}}
+\newlabel{eq:weightediso99}{{10.7}{160}{Hit-and-Run}{equation.10.6.7}{}}
+\citation{kannan1997random}
+\newlabel{lem:step_out_prob}{{10.61}{161}{}{thm.10.6.61}{}}
+\newlabel{lem:step-size}{{10.62}{161}{}{thm.10.6.62}{}}
+\newlabel{COND-2}{{10.8}{162}{Hit-and-Run}{equation.10.6.8}{}}
+\citation{JLLV26}
+\@writefile{toc}{\contentsline {section}{\numberline {10.7}Dikin walk}{163}{section.10.7}\protected@file@percent }
+\newlabel{algo:Dikin}{{30}{163}{Dikin walk}{algocfline.30}{}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {30}{\ignorespaces $\mathtt  {DikinWalk}$\relax }}{163}{algocf.30}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.7.1}Strong Self-Concordance}{164}{subsection.10.7.1}\protected@file@percent }
+\newlabel{lem:global_self_concordant}{{10.65}{164}{}{thm.10.7.65}{}}
+\newlabel{eq:phi_bound}{{10.9}{164}{Strong Self-Concordance}{equation.10.7.9}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10.7}{\ignorespaces (a) $E_{u}\subseteq K\cap (2u-K)\subseteq \alpha E_{u}.$ (b) Strong self-concordance measures the rate of change of the Hessian of a barrier in the Frobenius norm\relax }}{165}{figure.caption.47}\protected@file@percent }
+\newlabel{lem:global_strongly_self_concordant}{{10.67}{165}{}{thm.10.7.67}{}}
+\newlabel{thm:dikin}{{10.69}{166}{}{thm.10.7.69}{}}
+\newlabel{thm:dikin-fast}{{10.70}{166}{}{thm.10.7.70}{}}
+\newlabel{lem:dikin-one-step-1}{{10.71}{166}{}{thm.10.7.71}{}}
+\newlabel{eq:dikin_formula}{{10.10}{166}{Strong Self-Concordance}{equation.10.7.10}{}}
+\newlabel{eq:reject_prob_z}{{10.11}{166}{Strong Self-Concordance}{equation.10.7.11}{}}
+\newlabel{eq:log_det_Hzx}{{10.12}{166}{Strong Self-Concordance}{equation.10.7.12}{}}
+\newlabel{eq:grad_prob}{{10.13}{166}{Strong Self-Concordance}{equation.10.7.13}{}}
+\newlabel{eq:grad_log_H}{{10.14}{167}{Strong Self-Concordance}{equation.10.7.14}{}}
+\newlabel{eq:rejection}{{10.15}{167}{Strong Self-Concordance}{equation.10.7.15}{}}
+\newlabel{eq:rej_xy}{{10.16}{167}{Strong Self-Concordance}{equation.10.7.16}{}}
+\newlabel{eq:H_minus_I_F}{{10.17}{167}{Strong Self-Concordance}{equation.10.7.17}{}}
+\newlabel{eq:H_I_op}{{10.18}{167}{Strong Self-Concordance}{equation.10.7.18}{}}
+\newlabel{eq:vol_E_x}{{10.19}{167}{Strong Self-Concordance}{equation.10.7.19}{}}
+\newlabel{eq:volPxyPx}{{10.20}{167}{Strong Self-Concordance}{equation.10.7.20}{}}
+\newlabel{eq:volPxyPy}{{10.21}{167}{Strong Self-Concordance}{equation.10.7.21}{}}
+\newlabel{lem:dikin-dist-1}{{10.73}{168}{}{thm.10.7.73}{}}
+\newlabel{lem:dikin_sandwich}{{10.74}{168}{}{thm.10.7.74}{}}
+\citation{Neal1996}
+\citation{Neal2012}
+\citation{Girolami2009}
+\citation{Girolami2011}
+\@writefile{toc}{\contentsline {section}{\numberline {10.8}Hamiltonian Monte Carlo}{169}{section.10.8}\protected@file@percent }
+\newlabel{eq:ham}{{10.22}{170}{}{equation.10.8.22}{}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {31}{\ignorespaces Hamiltonian Monte Carlo\relax }}{170}{algocf.31}\protected@file@percent }
+\newlabel{lem:ham_eng_pre}{{10.77}{170}{Energy Conservation}{thm.10.8.77}{}}
+\newlabel{lem:ham_measure_pre}{{10.78}{170}{Measure Preservation}{thm.10.8.78}{}}
+\newlabel{lem:time_reversibility}{{10.79}{171}{Time reversibility}{thm.10.8.79}{}}
+\newlabel{eq:ham_transit}{{10.23}{171}{}{equation.10.8.23}{}}
+\citation{chen2022optimal}
+\citation{LV2022geodesic}
+\citation{LV18riemannian}
+\citation{Simonovits03}
+\citation{VemSurvey}
+\citation{DyerFK89}
+\citation{LS90}
+\citation{L90}
+\citation{applegate1991sampling}
+\citation{DyerF90}
+\citation{LS93}
+\citation{kannan1997random}
+\citation{LV2003}
+\citation{CV2015}
+\citation{lee2017convergence}
+\citation{JLLV26}
+\@writefile{toc}{\contentsline {chapter}{\numberline {11}Annealing }{173}{chapter.11}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\newlabel{chap:Annealing}{{11}{173}{Annealing}{chapter.11}{}}
+\@writefile{loa}{\addvspace {10\p@ }}
+\@writefile{lot}{\contentsline {table}{\numberline {11.1}{\ignorespaces  Complexities for volume estimation; each step uses $\setbox \z@ \hbox {\mathsurround \z@ $\textstyle O$}\mathaccent "0365{O}(n)$ bits of randomness. The last algorithm needs $\setbox \z@ \hbox {\mathsurround \z@ $\textstyle O$}\mathaccent "0365{O}\left (mn^{\omega -1}\right )$ steps per iteration while the rest need $O(n^{2})$ per oracle query.\relax }}{173}{table.caption.49}\protected@file@percent }
+\newlabel{tab:volume}{{11.1}{173}{Complexities for volume estimation; each step uses $\widetilde {O}(n)$ bits of randomness. The last algorithm needs $\widetilde {O}\left (mn^{\omega -1}\right )$ steps per iteration while the rest need $O(n^{2})$ per oracle query.\relax }{table.caption.49}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {11.1}Volume Computation: the DFK Algorithm}{173}{section.11.1}\protected@file@percent }
+\citation{DyerFK89}
+\@writefile{loa}{\contentsline {algocf}{\numberline {32}{\ignorespaces $\mathtt  {DFK\ Volume}$\relax }}{174}{algocf.32}\protected@file@percent }
+\newlabel{lem:r_bound}{{11.5}{174}{}{thm.11.1.5}{}}
+\newlabel{lem:prod_var}{{11.6}{174}{}{thm.11.1.6}{}}
+\citation{kannan1997random}
+\@writefile{toc}{\contentsline {section}{\numberline {11.2}Simulated Annealing}{175}{section.11.2}\protected@file@percent }
+\@writefile{loa}{\contentsline {algocf}{\numberline {33}{\ignorespaces $\mathtt  {SimulatedAnnealing}$\relax }}{176}{algocf.33}\protected@file@percent }
+\newlabel{thm:L2_warm_start}{{11.9}{176}{}{thm.11.2.9}{}}
+\newlabel{lem:ratio_var}{{11.10}{176}{}{thm.11.2.10}{}}
+\babel@aux{american}{}
+\@writefile{toc}{\contentsline {section}{\numberline {11.3}Volume Computation by Annealing}{177}{section.11.3}\protected@file@percent }
+\@writefile{loa}{\contentsline {algocf}{\numberline {34}{\ignorespaces $\mathtt  {LV\ Volume}$\relax }}{177}{algocf.34}\protected@file@percent }
+\newlabel{lem:chebychev_ratio}{{11.11}{177}{}{thm.11.3.11}{}}
+\citation{LV2003}
+\citation{CV2015}
+\@writefile{toc}{\contentsline {section}{\numberline {11.4}Integration by Annealing}{179}{section.11.4}\protected@file@percent }
+\@writefile{loa}{\contentsline {algocf}{\numberline {35}{\ignorespaces $\mathtt  {LV\ Integration}$\relax }}{179}{algocf.35}\protected@file@percent }
+\babel@aux{english}{}
+\babel@aux{american}{}
+\bibstyle{plain}
+\bibdata{main}
+\bibcite{adamczak2010quantitative}{1}
+\bibcite{adil2019iterative}{2}
+\bibcite{aldous1995reversible}{3}
+\bibcite{allen2016optimal}{4}
+\bibcite{allen2016even}{5}
+\bibcite{applegate1991sampling}{6}
+\bibcite{artstein2009concept}{7}
+\bibcite{atkinson1995cutting}{8}
+\bibcite{belloni2015escaping}{9}
+\bibcite{bertsimas2004solving}{10}
+\bibcite{blumensath2009iterative}{11}
+\bibcite{Bourgain96}{12}
+\bibcite{brightwell1991counting}{13}
+\bibcite{bubeck2016kernel}{14}
+\bibcite{carbery2001distributional}{15}
+\bibcite{carmon2017lower}{16}
+\bibcite{chen2022optimal}{17}
+\bibcite{cohen2016nearly}{18}
+\bibcite{cohen2015uniform}{19}
+\bibcite{cohen2018solving}{20}
+\bibcite{CV2014}{21}
+\bibcite{CV2015}{22}
+\bibcite{drusvyatskiy2016optimal}{23}
+\bibcite{DF88}{24}
+\bibcite{DyerF90}{25}
+\bibcite{DyerFK89}{26}
+\bibcite{E86}{27}
+\bibcite{Feldman2015statistical}{28}
+\bibcite{fletcher1987practical}{29}
+\bibcite{fletcher1991new}{30}
+\bibcite{fradelizi2004extreme}{31}
+\bibcite{frostig2015regularizing}{32}
+\bibcite{BF87}{33}
+\bibcite{BF88}{34}
+\bibcite{Girolami2009}{35}
+\bibcite{Girolami2011}{36}
+\bibcite{grotschel1981ellipsoid}{37}
+\bibcite{grotschel2012geometric}{38}
+\bibcite{Grunbaum1960}{39}
+\bibcite{JLLV26}{40}
+\bibcite{jiang2020improved}{41}
+\bibcite{Kalai2006simulated}{42}
+\bibcite{Kannan1995}{43}
+\bibcite{kannan1997random}{44}
+\bibcite{kannan_vempala_2017}{45}
+\bibcite{KarzanovK91}{46}
+\bibcite{kathuria2020unit}{47}
+\bibcite{khachiyan1988inscribed}{48}
+\bibcite{khachiyan1980polynomial}{49}
+\bibcite{klartag2017needle}{50}
+\bibcite{kyng2019flows}{51}
+\bibcite{Ledoux1999}{52}
+\bibcite{lee2017efficient}{53}
+\bibcite{lee2020efficient}{54}
+\bibcite{lee2015faster}{55}
+\bibcite{LV2022geodesic}{56}
+\bibcite{lee2017convergence}{57}
+\bibcite{LV18riemannian}{58}
+\bibcite{lee2024eldan}{59}
+\bibcite{levin1965algorithm}{60}
+\bibcite{li1980estimates}{61}
+\bibcite{lin2015universal}{62}
+\bibcite{L90}{63}
+\bibcite{Lovasz1998}{64}
+\bibcite{LS90}{65}
+\bibcite{LS93}{66}
+\bibcite{LV3}{67}
+\bibcite{lovasz1993random}{68}
+\bibcite{LV2003}{69}
+\bibcite{lovasz2007geometry}{70}
+\bibcite{lu2016relatively}{71}
+\bibcite{manselli1991maximum}{72}
+\bibcite{Neal2012}{73}
+\bibcite{Neal1996}{74}
+\bibcite{nesterov1998introductory}{75}
+\bibcite{newman1965location}{76}
+\bibcite{constantin2018convex}{77}
+\bibcite{o2015adaptive}{78}
+\bibcite{oksendal2013stochastic}{79}
+\bibcite{payne1960optimal}{80}
+\bibcite{rademacher2007approximating}{81}
+\bibcite{Rudelson1999}{82}
+\bibcite{sachdeva2014faster}{83}
+\bibcite{shor1977cut}{84}
+\bibcite{Simonovits03}{85}
+\bibcite{spielman2011graph}{86}
+\bibcite{srivastava2013covariance}{87}
+\bibcite{stigler1945cost}{88}
+\bibcite{tropp2015introduction}{89}
+\bibcite{DBLP:conf/focs/Vaidya89b}{90}
+\bibcite{van2014renyi}{91}
+\bibcite{VemSurvey}{92}
+\bibcite{Vempala04}{93}
+\bibcite{wibisono2018sampling}{94}
+\bibcite{woodruff2014sketching}{95}
+\bibcite{yudin1976evaluation}{96}
+\@writefile{toc}{\contentsline {chapter}{\numberline {A}Calculus - Review}{185}{appendix.A}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\@writefile{loa}{\addvspace {10\p@ }}
+\@writefile{toc}{\contentsline {section}{\numberline {A.1}Divergence and Integration by Parts}{185}{section.A.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {A.2}Tips for Computing Gradients}{185}{section.A.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.2.1}Computing gradients via directional derivatives}{185}{subsection.A.2.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {A.1}{\ignorespaces The ``fastest'' curve\relax }}{186}{figure.caption.51}\protected@file@percent }
+\newlabel{fig:rel-1}{{A.1}{186}{The ``fastest'' curve\relax }{figure.caption.51}{}}
+\newlabel{brach_d}{{A.1}{187}{Computing gradients via directional derivatives}{equation.A.2.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.2.2}Taking derivatives on both sides}{188}{subsection.A.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.2.3}Linearity of Expectation: the Continuous Version}{188}{subsection.A.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {A.3}Solving optimization problems by hand}{188}{section.A.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {B}Notation}{190}{appendix.B}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\@writefile{loa}{\addvspace {10\p@ }}
+\gdef \@abspage@last{191}

@@ -103,7 +103,7 @@ Simulated Annealing,
 which is also provably efficient for convex optimization.
  The volume problem was defined in Chapter 
 \begin_inset CommandInset ref
-LatexCommand eqref
+LatexCommand ref
 reference "chap:Elimination-and-Reduction"
 plural "false"
 caps "false"
@@ -114,7 +114,7 @@ nolink "false"
 
  (Problem 
 \begin_inset CommandInset ref
-LatexCommand eqref
+LatexCommand ref
 reference "problem:volume"
 plural "false"
 caps "false"
@@ -138,7 +138,7 @@ Integration
 \end_inset
 
  Given an evaluation oracle for an integrable logconcave function 
-\begin_inset Formula $f:\R^{n}\rightarrow\R$
+\begin_inset Formula $f:\R^{n}\rightarrow\R_{+}$
 \end_inset
 
 ,
@@ -146,7 +146,7 @@ Integration
 \begin_inset Formula $x_{0}$
 \end_inset
 
- s.t.
+ such that
  
 \begin_inset Formula $f(x_{0})\ge\beta,$
 \end_inset
@@ -155,9 +155,9 @@ Integration
 \begin_inset Formula $r,R>0$
 \end_inset
 
- s.t.
+ such that
  (i) 
-\begin_inset Formula $\E(\norm{x-x_{0}}^{2})\le R^{2}$
+\begin_inset Formula $\E(\norm{x-x_{0}}^{2})\le R^{2},$
 \end_inset
 
  (ii) the level set of 
@@ -182,7 +182,7 @@ Integration
 \begin_inset Formula $A$
 \end_inset
 
- s.t.
+ such that
  
 \begin_inset Formula 
 \[
@@ -196,7 +196,7 @@ Integration
 
 \begin_layout Problem
 As in all problems in oracle models discussed in this book,
- the complexity of an algorithm to solve the above problem is given by the number of oracles calls and the number of arithmetic operations.
+ the complexity of an algorithm to solve the above problem is given by the number of oracle calls and the number of arithmetic operations.
  
 \end_layout
 
@@ -725,12 +725,12 @@ name "tab:volume"
 
 \end_inset
 
- The complexity of volume estimation,
+ Complexities for volume estimation;
  each step uses 
 \begin_inset Formula $\widetilde{O}(n)$
 \end_inset
 
- bit of randomness.
+ bits of randomness.
  The last algorithm needs 
 \begin_inset Formula $\widetilde{O}\left(mn^{\omega-1}\right)$
 \end_inset
@@ -758,19 +758,21 @@ Volume Computation:
 \end_layout
 
 \begin_layout Theorem
-There exists a randomized algorithm that given any 
+There exists a randomized algorithm that,
+ given any 
 \begin_inset Formula $\varepsilon,\delta>0$
 \end_inset
 
-,
  and any convex body 
 \begin_inset Formula $K$
 \end_inset
 
+,
  with probability at least 
 \begin_inset Formula $1-\delta$
 \end_inset
 
+,
  solves the Volume Estimation problem for 
 \begin_inset Formula $K$
 \end_inset
@@ -812,7 +814,7 @@ Show that a randomized algorithm that outputs an acceptable estimate of a real n
  times and taking the median of the outputs of the independent trials.
 \end_layout
 
-\begin_layout Exercise
+\begin_layout Standard
 Going forward,
  we ignore the parameter 
 \begin_inset Formula $\delta$
@@ -823,7 +825,7 @@ Going forward,
  We will now show an algorithm for volume computation (as a first attempt) whose analysis yields a suboptimal bound on the sample complexity.
 \end_layout
 
-\begin_layout Exercise
+\begin_layout Standard
 The polynomial-time algorithm of Dyer,
  Frieze and Kannan 
 \begin_inset CommandInset citation
@@ -835,7 +837,7 @@ literal "true"
 
  is based on the following idea.
  We consider a sequence of convex bodies 
-\begin_inset Formula $K_{0}=B_{n}\subset K_{1}\subseteq\ldots\subseteq K_{m}=K$
+\begin_inset Formula $K_{0}=B^{n}\subset K_{1}\subseteq\ldots\subseteq K_{m}=K$
 \end_inset
 
 ,
@@ -859,7 +861,7 @@ literal "true"
 
 \end_layout
 
-\begin_layout Exercise
+\begin_layout Standard
 To estimate the volume of 
 \begin_inset Formula $K$
 \end_inset
@@ -880,8 +882,8 @@ K_{i}=2^{\frac{i}{n}}B\cap K.
 
 \end_inset
 
- The length the sequence is 
-\begin_inset Formula $m=\lceil n\log R\rceil$
+ The length of the sequence is 
+\begin_inset Formula $m=\lceil n\log_{2}R\rceil$
 \end_inset
 
  so that the final body is just 
@@ -1015,11 +1017,11 @@ Set
 \end_deeper
 \begin_layout Enumerate
 Let 
-\begin_inset Formula $Y=\prod_{i=1}^{m-1}Y_{i}$
+\begin_inset Formula $Y=\prod_{i=0}^{m-1}Y_{i}$
 \end_inset
 
  and return 
-\begin_inset Formula $\vol(B_{n})/Y$
+\begin_inset Formula $\vol(B^{n})/Y$
 \end_inset
 
 .
@@ -1109,7 +1111,7 @@ For all
 We have 
 \begin_inset Formula 
 \[
-K_{i+1}=2^{(i+1)/n}B_{n}\cap K\subseteq2^{1/n}(2^{i/n}B_{n}\cap K)=2^{1/n}K_{i}.
+K_{i+1}=2^{(i+1)/n}B^{n}\cap K\subseteq2^{1/n}(2^{i/n}B^{n}\cap K)=2^{1/n}K_{i}.
 \]
 
 \end_inset
@@ -1181,7 +1183,7 @@ For any input convex body
 \end_inset
 
  satisfying 
-\begin_inset Formula $B_{n}\subseteq K\subseteq RB_{n}$
+\begin_inset Formula $B^{n}\subseteq K\subseteq RB^{n}$
 \end_inset
 
  given by a membership oracle and any 
@@ -1300,7 +1302,8 @@ literal "true"
  To make this rigorous,
  besides establishing the amortized complexity of uniform sampling,
  we have to deal with some nontrivial technical issues:
- (1) the distribution from which samples are produced is close to the target uniform distribution but not exactly uniform (2) samples are nearly independent but not perfectly independent.
+ (1) the distribution from which samples are produced is close to the target uniform distribution but not exactly uniform;
+ (2) samples are nearly independent but not perfectly independent.
  Another important problem that will arise in establishing the complexity of (approximate) uniform sampling is 
 \begin_inset Quotes eld
 \end_inset
@@ -1344,7 +1347,7 @@ The quadratic sample complexity might appear to be nearly optimal – the final 
 \begin_inset Formula $m=\Omega(n)$
 \end_inset
 
- is needed to get polynomial complexity even.
+ is needed even to get polynomial complexity.
  We will soon see that this intuitive reasoning is not valid.
  
 \end_layout
@@ -1375,7 +1378,7 @@ The same high-level algorithm can be used for optimization,
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\int_{\R^{n}}f=\int f_{0}\frac{\int f_{1}}{\int f_{0}}\frac{\int f_{2}}{\int f_{3}}\cdots\frac{\int f_{m}}{\int f_{m-1}}
+\int_{\R^{n}}f=\int f_{0}\frac{\int f_{1}}{\int f_{0}}\frac{\int f_{2}}{\int f_{1}}\cdots\frac{\int f_{m}}{\int f_{m-1}}
 \]
 
 \end_inset
@@ -1389,7 +1392,7 @@ where
 \end_inset
 
 .
- To compute any the ratio 
+ To compute any ratio 
 \begin_inset Formula $\int g/\int h$
 \end_inset
 
@@ -1429,7 +1432,7 @@ For integrable functions
 \begin_inset Formula $g,h$
 \end_inset
 
- with with support of 
+ with support of 
 \begin_inset Formula $g$
 \end_inset
 
@@ -1763,7 +1766,7 @@ name "thm:L2_warm_start"
  satisfies
 \begin_inset Formula 
 \[
-\E_{p_{i}}\left(\frac{p_{i}(x)}{p_{i+1}(x)}\right)=O(1).
+\E_{X\sim p_{i}}\left(\frac{p_{i}(X)}{p_{i+1}(X)}\right)=O(1).
 \]
 
 \end_inset
@@ -1791,11 +1794,11 @@ name "lem:ratio_var"
 \end_inset
 
  Then 
-\begin_inset Formula $Z(a)=a^{n}\int_{\R^{n}}f(x)^{a}$
+\begin_inset Formula $Z(a)=a^{n}\int_{\R^{n}}f(x)^{a}\,dx$
 \end_inset
 
  is logconcave for 
-\begin_inset Formula $a\ge0$
+\begin_inset Formula $a>0$
 \end_inset
 
 .
@@ -1809,7 +1812,7 @@ name "lem:ratio_var"
 
 ,
  then 
-\begin_inset Formula $Z(a)=a^{n}\int_{K}f(ax)$
+\begin_inset Formula $Z(a)=a^{n}\int_{K}f(x)^{a}\,dx$
 \end_inset
 
  is logconcave for 
@@ -1865,7 +1868,7 @@ F\left(\frac{x+y}{2},\frac{t+s}{2}\right) & =f\left(\frac{x+y}{t+s}\right)^{\fra
 \end_layout
 
 \begin_layout Proof
-Now by the Prekopa-Leindler Theorem (see
+Now by the Prekopa-Leindler Theorem (see Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:marginal"
@@ -1899,7 +1902,7 @@ where we made the substitution
 
 \begin_layout Standard
 Note that in the simulated annealing algorithm we choose 
-\begin_inset Formula $\frac{a_{\{i+1\}}}{a_{i}}=(1+\frac{1}{\sqrt{{n\}}}})$
+\begin_inset Formula $\frac{a_{i+1}}{a_i}=1+\frac{1}{\sqrt n}$
 \end_inset
 
  since this guarantees that the distribution with density proportional to 
@@ -1920,7 +1923,7 @@ Note that in the simulated annealing algorithm we choose
 
 .
  This will be useful later in bounding 
-\begin_inset Formula $\text{{var}(Y)/\ensuremath{\mathbb{E}[Y]^{2}}}$
+\begin_inset Formula $\mathrm{var}(Y)/\mathbb{E}[Y]^2$
 \end_inset
 
  of the random variable given by 

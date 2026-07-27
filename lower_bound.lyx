@@ -108,7 +108,8 @@ gradient-based
 \end_inset
 
  methods.
- For convenience the reader may consider 
+ For convenience,
+ the reader may consider 
 \begin_inset Formula $\mu=1$
 \end_inset
 
@@ -169,7 +170,7 @@ f(x^{(k)})-\min_{x}f(x)\geq(\frac{\mu}{L})^{3/2}(\frac{\sqrt{L/\mu}-1}{\sqrt{L/\
 \begin_layout Proof
 First, we check the strong convexity and smoothness.
  Note that 
-\begin_inset Formula $f(x)=-x_{1}+\frac{1}{2}x^{\top}Ax$
+\begin_inset Formula $f(x)=-\frac{L-\mu}{4}x_{1}+\frac{1}{2}x^{\top}Ax$
 \end_inset
 
  for some matrix 
@@ -224,19 +225,18 @@ To lower bound the error, we note that the gradient at
 \begin_inset Formula $x^{(0)}$
 \end_inset
 
- is of the form 
-\begin_inset Formula $(?,0,0,0,\cdots)$
+ is supported only on the first coordinate.
+ Hence,
+ by the assumption,
+ 
+\begin_inset Formula $x^{(1)}$
 \end_inset
 
- and hence by the assumption 
-\begin_inset Formula $x^{(1)}=(?,0,0,0,\cdots)$
+ is supported only on the first coordinate and 
+\begin_inset Formula $\nabla f(x^{(1)})$
 \end_inset
 
- and 
-\begin_inset Formula $\nabla f(x^{(1)})=(?,?,0,0,\cdots)$
-\end_inset
-
-.
+ is supported only on the first two coordinates.
  By induction, only the first 
 \begin_inset Formula $k$
 \end_inset
@@ -289,7 +289,8 @@ By a direct substitution, we have that
 and that
 \begin_inset Formula 
 \[
-\|x^{(0)}-x^{*}\|_{2}^{2}\leq\sum_{i=1}^{\infty}(\frac{\sqrt{L/\mu}-1}{\sqrt{L/\mu}+1})^{2i}=(\frac{\sqrt{L/\mu}-1}{\sqrt{L/\mu}+1})^{2}\frac{\sqrt{L/\mu}+1}{2}.
+\|x^{(0)}-x^{*}\|_{2}^{2}\leq\sum_{i=1}^{\infty}q^{2i}=\frac{q^{2}}{1-q^{2}}=q^{2}\frac{(\sqrt{L/\mu}+1)^{2}}{4\sqrt{L/\mu}}\leq q^{2}\frac{\sqrt{L/\mu}+1}{2},
+\quad q=\frac{\sqrt{L/\mu}-1}{\sqrt{L/\mu}+1}.
 \]
 
 \end_inset
@@ -319,8 +320,10 @@ worst
 \end_inset
 
  function naturally appears in many problems.
- So, it is a problem we need to address.
- In some sense, the proof points out a common issue of any algorithm which
+ Thus,
+ it is a problem we need to address.
+ In some sense,
+ the proof points out a common issue of any algorithm that
  only uses gradient information.
  Given any convex function, we construct the dependence graph 
 \begin_inset Formula $G$
@@ -359,11 +362,11 @@ worst
 \begin_inset Formula $G$
 \end_inset
 
- of the worst function is simply a 
+ of the worst function is simply an 
 \begin_inset Formula $n$
 \end_inset
 
- vertex path, whose diameter is 
+-vertex path, whose diameter is 
 \begin_inset Formula $n-1$
 \end_inset
 
@@ -374,11 +377,7 @@ worst
 \begin_inset Formula $\Omega(\mathrm{diameter})$
 \end_inset
 
- time to solve the problem unless we know the solution is sparse (when 
-\begin_inset Formula $L/\mu$
-\end_inset
-
- is small).
+ time to solve the problem.
  However, we note that this is not a lower bound for all algorithms.
 \end_layout
 
@@ -390,8 +389,7 @@ reference "eq:worst_function"
 
 \end_inset
 
-) belongs to a general class of functions called Laplacian systems and it
- can be solved in nearly linear time using spectral graph theory.
+) is a quadratic whose optimality conditions form a Laplacian linear system, and it can be solved in nearly linear time using spectral graph theory.
  
 \begin_inset Note Note
 status open

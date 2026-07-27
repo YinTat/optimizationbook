@@ -87,15 +87,17 @@ name "sec:Stochastic-Gradient-Descent"
 \end_layout
 
 \begin_layout Standard
-In this section, we study problems of the form 
-\begin_inset Formula $\sum f_{i}$
+In this section, we study stochastic objectives,
+ including expectations 
+\begin_inset Formula $F(x)=\E_{f\sim\mathcal{D}}f(x)$
 \end_inset
 
- where each 
-\begin_inset Formula $f_{i}$
+ and finite sums 
+\begin_inset Formula $F(x)=\frac{1}{n}\sum_{i=1}^{n}f_{i}(x)$
 \end_inset
 
- is convex and the sum can be either infinite or finite.
+,
+ where each sampled or component function is convex.
 \end_layout
 
 \begin_layout Subsection
@@ -141,7 +143,7 @@ where
  by the empirical risk minimizer
 \begin_inset Formula 
 \[
-x_{\mathrm{ERM}}^{(T)}=\arg\min_{x}F_{T}(x)\defeq\frac{1}{T}\sum_{i=1}^{T}f_{i}(x).
+F_{T}(x)\defeq\frac{1}{T}\sum_{i=1}^{T}f_{i}(x),\qquad x_{\mathrm{ERM}}^{(T)}=\arg\min_{x}F_{T}(x).
 \]
 
 \end_inset
@@ -169,12 +171,12 @@ We will first discuss the term
 
 .
  As an example, consider the simplest one-dimensional problem 
-\begin_inset Formula $F(x)=\E_{b\sim N(0,I)}(x-b)^{2}$
+\begin_inset Formula $F(x)=\E_{b\sim N(0,1)}(x-b)^{2}$
 \end_inset
 
 .
  Note that 
-\begin_inset Formula $x^{(T)}$
+\begin_inset Formula $x_{\mathrm{ERM}}^{(T)}$
 \end_inset
 
  is simply the average of 
@@ -199,7 +201,7 @@ In general, the following lemma shows that
 
 \end_inset
 
-where 
+Here, 
 \begin_inset Formula $\frac{\sigma^{2}}{T}$
 \end_inset
 
@@ -310,10 +312,10 @@ By the
 \begin_inset Formula $\mu$
 \end_inset
 
--strongly convexity, we have
+-strong convexity, we have
 \begin_inset Formula 
 \[
-\|x_{\mathrm{ERM}}^{(N)}-x^{*}\|_{2}^{2}\leq\frac{1}{\mu}\|\nabla F_{N}(x^{*})\|^{2}.
+\|x_{\mathrm{ERM}}^{(N)}-x^{*}\|_{2}^{2}\leq\frac{1}{\mu^{2}}\|\nabla F_{N}(x^{*})\|^{2}.
 \]
 
 \end_inset
@@ -325,8 +327,8 @@ Since
 , we have
 \begin_inset Formula 
 \begin{align*}
-\E\|x_{\mathrm{ERM}}^{(N)}-x^{*}\|_{2}^{2} & \leq\frac{1}{\mu}\E\frac{1}{N^{2}}\sum_{i}\|\nabla f_{i}(x^{*})\|^{2}\\
- & =\frac{1}{\mu N}\E_{f\sim\mathcal{D}}\|\nabla f(x^{*})\|^{2}
+\E\|x_{\mathrm{ERM}}^{(N)}-x^{*}\|_{2}^{2} & \leq\frac{1}{\mu^{2}}\E\frac{1}{N^{2}}\sum_{i}\|\nabla f_{i}(x^{*})\|^{2}\\
+ & =\frac{1}{\mu^{2} N}\E_{f\sim\mathcal{D}}\|\nabla f(x^{*})\|^{2}
 \end{align*}
 
 \end_inset
@@ -422,7 +424,8 @@ Now, we discuss how to achieve a bound similar to
 \end_inset
 
  using stochastic gradient descent.
- Since gradient descent is a first order method, we can only achieve a bound
+ Since gradient descent is a first-order method,
+ we can only achieve a bound
  related to the 
 \begin_inset Formula $\ell_{2}$
 \end_inset
@@ -722,6 +725,16 @@ Suppose
 \end_inset
 
 .
+ Assume 
+\begin_inset Formula $\sigma^{2}<\infty$
+\end_inset
+
+ and that each sampled gradient is independent of the past,
+ so 
+\begin_inset Formula $\E[\nabla f(x)\mid x]=\nabla F(x)$
+\end_inset
+
+.
  For step size 
 \begin_inset Formula $h\leq\frac{1}{4L}$
 \end_inset
@@ -772,14 +785,18 @@ Note that
 
 \end_inset
 
-Taking expectation on 
+Conditioning on 
+\begin_inset Formula $x^{(k)}$
+\end_inset
+
+ and taking expectation over the randomness in 
 \begin_inset Formula $f$
 \end_inset
 
  and using that 
 \begin_inset Formula 
 \begin{align*}
-\E\|\nabla f(x^{(k)})\|^{2} & \leq2\E\|\nabla f(x^{(k)})-\nabla f(x^{*})\|^{2}+2\E\|\nabla f(x^{*})\|^{2}\\
+\E[\|\nabla f(x^{(k)})\|^{2}\mid x^{(k)}] & \leq2\E[\|\nabla f(x^{(k)})-\nabla f(x^{*})\|^{2}\mid x^{(k)}]+2\E\|\nabla f(x^{*})\|^{2}\\
  & \leq4L\cdot(F(x^{(k)})-F(x^{*}))+4\sigma^{2},
 \end{align*}
 
@@ -788,7 +805,7 @@ Taking expectation on
 we have
 \begin_inset Formula 
 \begin{align}
-\E\|x^{(k+1)}-x^{*}\|^{2} & =\|x^{(k)}-x^{*}\|^{2}-2h\left\langle x^{(k)}-x^{*},\nabla F(x^{(k)})\right\rangle +4h^{2}\sigma^{2}+4Lh^{2}\cdot(F(x^{(k)})-F(x^{*}))\nonumber \\
+\E[\|x^{(k+1)}-x^{*}\|^{2}\mid x^{(k)}] & =\|x^{(k)}-x^{*}\|^{2}-2h\left\langle x^{(k)}-x^{*},\nabla F(x^{(k)})\right\rangle +4h^{2}\sigma^{2}+4Lh^{2}\cdot(F(x^{(k)})-F(x^{*}))\nonumber \\
  & \leq\|x^{(k)}-x^{*}\|^{2}-(2h-4Lh^{2})(F(x^{(k)})-F(x^{*}))+4h^{2}\sigma^{2}.\label{eq:SGD_distance}
 \end{align}
 
@@ -799,7 +816,7 @@ Using
 \end_inset
 
  and 
-\begin_inset Formula $F(x^{(k)})-F(x^{*})\leq\frac{1}{2\mu}\|\nabla F(x^{(k)})\|_{2}^{2}$
+\begin_inset Formula $F(x^{(k)})-F(x^{*})\geq\frac{\mu}{2}\|x^{(k)}-x^{*}\|_{2}^{2}$
 \end_inset
 
 , we have
@@ -815,11 +832,13 @@ fixed some terms here.
 
 \begin_inset Formula 
 \[
-\E\|x^{(k+1)}-x^{*}\|^{2}\leq4h^{2}\sigma^{2}+(1-\frac{h\mu}{2})\cdot\|x^{(k)}-x^{*}\|^{2}.
+\E[\|x^{(k+1)}-x^{*}\|^{2}\mid x^{(k)}]\leq4h^{2}\sigma^{2}+(1-\frac{h\mu}{2})\cdot\|x^{(k)}-x^{*}\|^{2}.
 \]
 
 \end_inset
 
+Taking total expectation gives the same inequality with unconditional expectations.
+ 
 
 \end_layout
 
@@ -855,11 +874,11 @@ Hence, we have
 \end_layout
 
 \begin_layout Exercise
-Applying the theorem above twice, show that one can achieve error 
+Apply the theorem above twice to show that one can achieve error 
 \begin_inset Formula $\tilde{O}(\frac{\sigma^{2}}{\mu T})$
 \end_inset
 
-, which is roughly same as the Cramer-Rao bound.
+, which is roughly the same as the Cramer-Rao bound.
  
 \begin_inset Note Note
 status open
@@ -993,7 +1012,7 @@ Note that
 \begin_inset Formula 
 \begin{align*}
 \E\|\nabla\widetilde{f}(x^{*})\|^{2} & \leq2\E\|\nabla f(x^{*})-\nabla f(x^{(0)})\|^{2}+2\|\nabla F(x^{(0)})-\nabla F(x^{*})\|^{2}\\
- & =2\E\|\nabla f(x^{*})-\nabla f(x^{(0)})\|^{2}+2\E\|\nabla f(x^{(0)})-\nabla f(x^{*})\|^{2}\\
+ & \leq2\E\|\nabla f(x^{*})-\nabla f(x^{(0)})\|^{2}+2\E\|\nabla f(x^{(0)})-\nabla f(x^{*})\|^{2}\\
  & \leq4L(F(x^{(0)})-F(x^{*}))+4L(F(x^{(0)})-F(x^{*}))
 \end{align*}
 
@@ -1209,18 +1228,16 @@ status open
 
 \begin_layout Standard
 Sample 
-\begin_inset Formula $f_{i}$
-\end_inset
-
- for 
 \begin_inset Formula $i\in[n]$
 \end_inset
+
+ uniformly.
 
 
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $x^{(k+1)}\leftarrow x^{(k)}-h\cdot(\nabla f(x^{(k)})-\nabla f(\widetilde{x})+\nabla F(\widetilde{x}))$
+\begin_inset Formula $x^{(k+1)}\leftarrow x^{(k)}-h\cdot(\nabla f_i(x^{(k)})-\nabla f_i(\widetilde{x})+\nabla F(\widetilde{x}))$
 \end_inset
 
 .
@@ -1263,19 +1280,15 @@ name "thm:stochastic_method"
 
 \end_inset
 
-Suppose 
-\begin_inset Formula $f$
+Suppose each 
+\begin_inset Formula $f_i$
 \end_inset
 
  has 
 \begin_inset Formula $L$
 \end_inset
 
--Lipschitz gradient for all 
-\begin_inset Formula $f_{i}$
-\end_inset
-
- and 
+-Lipschitz gradient and 
 \begin_inset Formula $F$
 \end_inset
 
@@ -1293,12 +1306,26 @@ Suppose
 \end_inset
 
 .
+ Here 
+\begin_inset Formula $F=\frac{1}{n}\sum_{i=1}^{n}f_i$
+\end_inset
+
+,
+ and the index 
+\begin_inset Formula $i$
+\end_inset
+
+ in each inner step is sampled uniformly from 
+\begin_inset Formula $[n]$
+\end_inset
+
+.
  For step size 
 \begin_inset Formula $h=\frac{1}{64L}$
 \end_inset
 
  and 
-\begin_inset Formula $m=\frac{256L}{\mu}$
+\begin_inset Formula $m=\frac{512L}{\mu}$
 \end_inset
 
 , the sequence 
@@ -1346,7 +1373,7 @@ Gradient descent gives
 \end_inset
 
  gradients 
-\begin_inset Formula $\nabla f$
+\begin_inset Formula $\nabla f_i$
 \end_inset
 
 .
@@ -1373,7 +1400,7 @@ reference "lem:variance_reduction"
  shows that 
 \begin_inset Formula 
 \[
-\E\|\nabla f(x^{(k)})-\nabla f(x^{(0)})+\nabla F(x^{(0)})\|^{2}\leq8L\cdot(F(x^{(0)})-F(x^{*})).
+\E\|\nabla f(x^{*})-\nabla f(x^{(0)})+\nabla F(x^{(0)})\|^{2}\leq8L\cdot(F(x^{(0)})-F(x^{*})).
 \]
 
 \end_inset
@@ -1388,7 +1415,7 @@ reference "thm:sgd_convex_strongly"
  shows that
 \begin_inset Formula 
 \begin{align*}
-\frac{1}{m}\sum_{k=0}^{m-1}\E F(x^{(k)})-F(x^{*}) & \leq16hL\cdot(F(x^{(0)})-F(x^{*}))+\frac{F(x^{(0)})-F(x^{*})}{\mu hm}\\
+\frac{1}{m}\sum_{k=0}^{m-1}\E F(x^{(k)})-F(x^{*}) & \leq16hL\cdot(F(x^{(0)})-F(x^{*}))+\frac{2(F(x^{(0)})-F(x^{*}))}{\mu hm}\\
  & \leq\frac{1}{2}(F(x^{(0)})-F(x^{*})).
 \end{align*}
 
@@ -1463,7 +1490,7 @@ Note that the function
  Hence, we have that
 \begin_inset Formula 
 \[
-f(x-\frac{1}{L_{i}}\frac{\partial}{\partial x_{i}}f(x)e_{i})\leq f(x)-\frac{1}{2L_{i}}\frac{\partial}{\partial x_{i}}f(x)^{2}.
+f(x-\frac{1}{L_{i}}\frac{\partial}{\partial x_{i}}f(x)e_{i})\leq f(x)-\frac{1}{2L_{i}}\left(\frac{\partial f}{\partial x_{i}}(x)\right)^{2}.
 \]
 
 \end_inset
@@ -1479,8 +1506,8 @@ Since we sample coordinate
 , we have that
 \begin_inset Formula 
 \begin{align*}
-\E f(x-\frac{1}{L_{i}}\frac{\partial}{\partial x_{i}}f(x)e_{i}) & \le f(x)-\sum_{i}\frac{L_{i}}{L}\frac{1}{2L_{i}}\frac{\partial}{\partial x_{i}}f(x)^{2}\\
- & =f(x)-\frac{1}{2L}\sum_{i}\frac{\partial}{\partial x_{i}}f(x)^{2}\\
+\E f(x-\frac{1}{L_{i}}\frac{\partial}{\partial x_{i}}f(x)e_{i}) & \le f(x)-\sum_{i}\frac{L_{i}}{L}\frac{1}{2L_{i}}\left(\frac{\partial f}{\partial x_{i}}(x)\right)^{2}\\
+ & =f(x)-\frac{1}{2L}\sum_{i}\left(\frac{\partial f}{\partial x_{i}}(x)\right)^{2}\\
  & =f(x)-\frac{1}{2L}\norm{\nabla f(x)}_{2}^{2}.
 \end{align*}
 
@@ -1572,8 +1599,8 @@ Input:
 \begin_inset Formula $x^{(0)}\in\R^{d}$
 \end_inset
 
-, step size 
-\begin_inset Formula $h>0$
+, coordinate smoothness constants 
+\begin_inset Formula $L_{i}>0$
 \end_inset
 
 .
@@ -1693,7 +1720,15 @@ Given a convex function
 \end_inset
 
 .
- Consider the algorithm 
+ Consider the algorithm that at each iteration samples 
+\begin_inset Formula $i$
+\end_inset
+
+ with probability 
+\begin_inset Formula $L_{i}/L$
+\end_inset
+
+ and sets 
 \begin_inset Formula $x^{(k+1)}\leftarrow x^{(k)}-\frac{1}{L_{i}}\frac{\partial}{\partial x_{i}}f(x^{(k)})e_{i}$
 \end_inset
 
@@ -1740,7 +1775,8 @@ Note that
 \end_inset
 
 .
- Therefore gradient descent takes at least 
+ Therefore,
+ gradient descent takes at least 
 \begin_inset Formula $\frac{1}{d}$
 \end_inset
 
@@ -1788,9 +1824,10 @@ Given a graph
 
 \end_inset
 
-For now, we can think this as a generalization of the worst-case function.
+For now,
+ we can think of this as a generalization of the worst-case function.
  Directly applying accelerated gradient descent, accelerated coordinate
- descent or accelerated stochastic descent all gives 
+ descent or accelerated stochastic descent all give 
 \begin_inset Formula $O^{*}(mn)$
 \end_inset
 
@@ -1869,7 +1906,7 @@ We call any
 \begin_inset Formula $c(e)$
 \end_inset
 
- be an unit cycle on 
+ to be a unit cycle on 
 \begin_inset Formula $\{e\}\cup T$
 \end_inset
 

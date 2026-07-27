@@ -80,16 +80,17 @@ Accelerated Gradient Descent via Plane Search
 \end_layout
 
 \begin_layout Standard
-According to legend, the first proof for accelerated gradient descent is
- due to Nemirovski in the 70s.
- The first proof involves a 
+According to legend,
+ Nemirovski gave the first proof of accelerated gradient descent in the 1970s;
+ it used a 
 \begin_inset Formula $2$
 \end_inset
 
 -dimensional plane search subroutine.
- Later on this was improved to line search and finally Nesterov showed how
- to get rid of line search in 1982.
- We change the proof slightly to get rid of all uses of parameters.
+ Later,
+ this was improved to line search,
+ and in 1982 Nesterov showed how to remove line search.
+ We modify the proof slightly to avoid tuning parameters.
 \end_layout
 
 \begin_layout Standard
@@ -398,7 +399,7 @@ Hence, we have
 \end_inset
 
 Since 
-\begin_inset Formula $x^{(k)+}\in P$
+\begin_inset Formula $x^{(k)+}\in P^{(k)}$
 \end_inset
 
 , we have that 
@@ -440,7 +441,7 @@ Solve the recursion omitted at the end of the proof.
 
 \begin_layout Standard
 Note that the proof above used only the fact that 
-\begin_inset Formula $\{x^{(1)},x^{(k)+},\sum_{s=1}^{k}\frac{\nabla f(x^{(s)})}{\|\nabla f(x^{(s)})\|}\}\subset P$
+\begin_inset Formula $\{x^{(1)},x^{(k)+},\sum_{s=1}^{k}\frac{\nabla f(x^{(s)})}{\|\nabla f(x^{(s)})\|}\}\subset P^{(k)}$
 \end_inset
 
 .
@@ -457,7 +458,7 @@ P=x^{(k)}+\mathrm{span}(x^{(k)}-x^{(1)},\nabla f(x^{(k)}),\sum_{s=1}^{k}\frac{\n
 
 \end_inset
 
-then one can prove that this algorithm is equivalently to conjugate gradient
+then one can prove that this algorithm is equivalent to conjugate gradient
  when 
 \begin_inset Formula $f$
 \end_inset
@@ -495,7 +496,8 @@ Gradient Mapping
 \end_layout
 
 \begin_layout Standard
-To give a general version of acceleration, we consider problem of the form
+To give a general version of acceleration,
+ we consider a problem of the form
 \begin_inset Formula 
 \[
 \min_{x}\phi(x)\defeq f(x)+h(x)
@@ -574,8 +576,8 @@ The idea is to move whatever we can optimize in
 \end_inset
 
  may not be differentiable.
- To handle this issue, we need to define an approximate derivative of 
-\begin_inset Formula $h$
+ To handle this issue, we need to define an approximate gradient of 
+\begin_inset Formula $\phi$
 \end_inset
 
  that we can compute.
@@ -601,7 +603,7 @@ g_{x}=L(x-p_{x}).
 
 \end_layout
 
-\begin_layout Definition
+\begin_layout Standard
 Note that if 
 \begin_inset Formula $h=0$
 \end_inset
@@ -637,18 +639,18 @@ Therefore, we have that
 \end_inset
 
  that is computable in time 
-\begin_inset Formula $\mathcal{T}_{g}+\mathcal{T}_{h,L}$
+\begin_inset Formula $\mathcal{T}_{f}+\mathcal{T}_{h,L}$
 \end_inset
 
 .
 \end_layout
 
-\begin_layout Definition
+\begin_layout Standard
 The key lemma we use here is that 
 \begin_inset Formula $\phi$
 \end_inset
 
- satisfies a lower bound defining using 
+ satisfies a lower bound defined using 
 \begin_inset Formula $g_{x}$
 \end_inset
 
@@ -661,7 +663,7 @@ The key lemma we use here is that
 
 \end_inset
 
-But it is WRONG.
+However, this inequality is false.
  If that was true for all 
 \begin_inset Formula $z$
 \end_inset
@@ -874,7 +876,7 @@ Let
 \begin_inset Formula $\overline{f}(y)=f(x)+\nabla f(x)^{\top}(y-x)+\frac{L}{2}\norm{y-x}_{2}^{2}$
 \end_inset
 
-, then this is same as 
+, then this is the same as 
 \begin_inset Formula 
 \begin{equation}
 \nabla\overline{f}(p_{x})^{\top}(z-p_{x})+h(z)-h(p_{x})\geq0\label{eq:grad_map_claim}
@@ -986,14 +988,24 @@ f(x)+\nabla f(x)^{\top}(p_{x}-x)+\frac{L}{2}\norm{p_{x}-x}^{2}+h(p_{x})\leq f(x)
 
 \end_inset
 
-Using 
-\begin_inset Formula $h(p_{x})\geq h(x)+\nabla h(x)^{\top}(p_{x}-x)$
+Let 
+\begin_inset Formula $s\in\partial h(x)$
 \end_inset
 
-, we have that
+.
+ Using 
+\begin_inset Formula $h(p_{x})\geq h(x)+s^{\top}(p_{x}-x)$
+\end_inset
+
+ and 
+\begin_inset Formula $\nabla f(x)+s\in\partial\phi(x)$
+\end_inset
+
+,
+ we have that
 \begin_inset Formula 
 \[
-0\geq\nabla\phi(x)^{\top}(p_{x}-x)+\frac{L}{2}\norm{p_{x}-x}^{2}\geq-G\norm{p_{x}-x}_{2}+\frac{L}{2}\norm{p_{x}-x}^{2}.
+0\geq(\nabla f(x)+s)^{\top}(p_{x}-x)+\frac{L}{2}\norm{p_{x}-x}^{2}\geq-G\norm{p_{x}-x}_{2}+\frac{L}{2}\norm{p_{x}-x}^{2}.
 \]
 
 \end_inset
@@ -1063,9 +1075,11 @@ This shows that each step of the gradient step decreases the function value
 \end_inset
 
 .
- Therefore, if the gradient is large, then we decrease the function value
- by a lot.
- On the other hand, Putting 
+ Therefore,
+ if the gradient is large,
+ then the function value decreases substantially.
+ On the other hand,
+ putting 
 \begin_inset Formula $z=x^{*}$
 \end_inset
 
@@ -1088,8 +1102,8 @@ reference "thm:gradient_mapping_lower_bound"
 \end_layout
 
 \begin_layout Standard
-If the gradient is small and domain is bounded, this shows that we are close
- to the optimal.
+If the gradient is small and the domain is bounded,
+ this shows that we are close to the optimum.
  Combining these two facts, we can get the gradient descent.
 \end_layout
 
@@ -1098,6 +1112,11 @@ Mirror Descent Using Gradient Mapping
 \end_layout
 
 \begin_layout Standard
+In this subsection,
+ the mirror map is the Euclidean quadratic,
+ so the mirror descent update has the same form as a gradient step with
+ the gradient mapping in place of the gradient.
+ 
 Consider the mirror descent as
 \begin_inset Formula 
 \begin{equation}
@@ -1140,8 +1159,9 @@ Therefore, it suffices to upper bound
 \begin_inset Formula $g_{x^{(i)}}^{\top}(x^{(i)}-x^{*})$
 \end_inset
 
- is large, then either the gradient is large or the distance to optimum
- moves a lot.
+ is large,
+ then either the gradient is large or the distance to the optimum changes
+ substantially.
  It turns out this holds for any vector 
 \begin_inset Formula $g$
 \end_inset
@@ -1174,7 +1194,7 @@ Let
  Then, we have that
 \begin_inset Formula 
 \[
-g^{\top}(x-u)=\frac{\eta}{2}\norm g_{2}^{2}+\frac{1}{2\eta}\left(\norm{x-u}_{2}^{2}-\norm{p-u}_{2}^{2}\right)
+g^{\top}(x-u)=\frac{\eta}{2}\norm{g}_{2}^{2}+\frac{1}{2\eta}\left(\norm{x-u}_{2}^{2}-\norm{p-u}_{2}^{2}\right)
 \]
 
 \end_inset
@@ -1198,7 +1218,8 @@ reference "lem:gradient_descent_lemma"
 
 \end_inset
 
- shows that if the gradient is large, gradient descent makes a large progress.
+ shows that if the gradient is large,
+ gradient descent makes large progress.
  On the other hand, if the gradient is small, (
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1206,7 +1227,7 @@ reference "eq:mirror_lemma"
 
 \end_inset
 
-) shows that mirror descent makes a large progress.
+) shows that mirror descent makes large progress.
  Therefore, it is natural to combine two approaches.
 \end_layout
 
@@ -1450,6 +1471,7 @@ in
 \begin_inset Formula $\mathcal{T}_{f}+\mathcal{T}_{h,L}$
 \end_inset
 
+.
 
 \end_layout
 
@@ -1498,7 +1520,7 @@ This shows that if the mirror descent has large error
 \begin_inset Formula $g_{x^{(k+1)}}^{\top}(z^{(k)}-x^{*})$
 \end_inset
 
-, then the gradient descent makes a large progress (
+, then the gradient descent makes large progress (
 \begin_inset Formula $\frac{\eta}{2}\norm{g_{x^{(k+1)}}}_{2}^{2}$
 \end_inset
 
@@ -1550,7 +1572,11 @@ g_{x^{(k+1)}}^{\top}(x^{(k+1)}-x^{*})\leq\eta L(\phi(y^{(k)})-\phi(y^{(k+1)}))+\
 
 \end_inset
 
-Taking a sum on both side and let 
+Summing over all 
+\begin_inset Formula $k$
+\end_inset
+
+ and letting 
 \begin_inset Formula $\overline{x}=\frac{1}{T}\sum_{k=1}^{T}p_{x^{(k+1)}}$
 \end_inset
 
@@ -1560,7 +1586,7 @@ Taking a sum on both side and let
 \phi(\overline{x})-\phi(x^{*}) & \leq\frac{1}{T}\sum_{k=1}^{T}(\phi(p_{x^{(k+1)}})-\phi(x^{*}))\\
  & \leq\frac{1}{T}\sum_{k=1}^{T}g_{x^{(k+1)}}^{\top}(x^{(k+1)}-x^{*})\\
  & \leq\frac{\eta L}{T}\left(\phi(y^{(1)})-\phi(y^{(T+1)})\right)+\frac{1}{2\eta T}\norm{z^{(1)}-x^{*}}_{2}^{2}\\
- & \leq\left(\frac{\eta L}{T}+\frac{1}{2\eta T\mu}\right)\left(\phi(x^{(1)})-\phi(x^{*})\right)
+ & \leq\left(\frac{\eta L}{T}+\frac{1}{\eta T\mu}\right)\left(\phi(x^{(1)})-\phi(x^{*})\right)
 \end{align*}
 
 \end_inset
@@ -1611,7 +1637,7 @@ reference "thm:coordinate_descent"
  coordinate steps such that 
 \begin_inset Formula 
 \[
-\E\ell(x^{(k)})-\ell(x^{*})\leq(1-\frac{\mu}{L})^{\Omega(k)}(\ell(x^{(0)})-f(x^{*}))
+\E\ell(x^{(k)})-\ell(x^{*})\leq(1-\frac{\mu}{L})^{\Omega(k)}(\ell(x^{(0)})-\ell(x^{*}))
 \]
 
 \end_inset
@@ -1635,18 +1661,15 @@ Since
 \end_inset
 
  is 
-\begin_inset Formula $\mu+\frac{L}{n}$
-\end_inset
-
- smooth (YES!, I know this is also 
 \begin_inset Formula $\mu$
 \end_inset
 
- smooth) and 
+-smooth and 
 \begin_inset Formula $\mu$
 \end_inset
 
- strongly convex and since 
+-strongly convex,
+ and since 
 \begin_inset Formula $h$
 \end_inset
 
@@ -1655,6 +1678,10 @@ Since
 LatexCommand ref
 reference "thm:AGD"
 
+\end_inset
+
+ using the valid smoothness upper bound 
+\begin_inset Formula $\mu+\frac{L}{n}$
 \end_inset
 
  and get an algorithm that takes 
@@ -1679,7 +1706,7 @@ reference "thm:AGD"
  involves solving a problem of the form
 \begin_inset Formula 
 \begin{align*}
-y_{x} & =\argmin_{y}(\frac{\mu}{2}+\frac{L}{2n})\norm{y-x}^{2}+(\ell(y)-\frac{\mu}{2}\norm x^{2})\\
+y_{x} & =\argmin_{y}(\frac{\mu}{2}+\frac{L}{2n})\norm{y-x}^{2}+(\ell(y)-\frac{\mu}{2}\norm y^{2})\\
  & =\argmin_{y}\ell(y)-\mu y^{\top}x+\frac{L}{2n}\norm{y-x}^{2}.
 \end{align*}
 
@@ -1729,15 +1756,15 @@ Accelerated Coordinate Descent Convergence
 
 \end_inset
 
-Given an 
-\begin_inset Formula $\mu$
-\end_inset
-
- strongly-convex function 
+Let 
 \begin_inset Formula $\ell$
 \end_inset
 
-.
+ be a 
+\begin_inset Formula $\mu$
+\end_inset
+
+-strongly convex function.
  Suppose that 
 \begin_inset Formula $\frac{\partial^{2}}{\partial x_{i}^{2}}\ell(x)\leq L_{i}$
 \end_inset
@@ -1803,7 +1830,7 @@ reference "thm:stochastic_method"
 \end_inset
 
  that if 
-\begin_inset Formula $\nabla^{2}\ell_{i}(x)\leq L$
+\begin_inset Formula $\nabla^{2}\ell_{i}(x)\preceq L\cdot I$
 \end_inset
 
  for all 
@@ -1871,18 +1898,15 @@ Since
 \end_inset
 
  is 
-\begin_inset Formula $\mu+\frac{L}{n}$
-\end_inset
-
- smooth (YES!, I know this is also 
 \begin_inset Formula $\mu$
 \end_inset
 
- smooth) and 
+-smooth and 
 \begin_inset Formula $\mu$
 \end_inset
 
- strongly convex and since 
+-strongly convex,
+ and since 
 \begin_inset Formula $h$
 \end_inset
 
@@ -1891,6 +1915,10 @@ Since
 LatexCommand ref
 reference "thm:AGD"
 
+\end_inset
+
+ using the valid smoothness upper bound 
+\begin_inset Formula $\mu+\frac{L}{n}$
 \end_inset
 
  and get an algorithm that takes 
@@ -1915,7 +1943,7 @@ reference "thm:AGD"
  involves solving a problem of the form
 \begin_inset Formula 
 \begin{align*}
-y_{x} & =\argmin_{y}(\frac{\mu}{2}+\frac{L}{2n})\norm{y-x}^{2}+(\ell(y)-\frac{\mu}{2}\norm x^{2})\\
+y_{x} & =\argmin_{y}(\frac{\mu}{2}+\frac{L}{2n})\norm{y-x}^{2}+(\ell(y)-\frac{\mu}{2}\norm y^{2})\\
  & =\argmin_{y}\ell(y)-\mu y^{\top}x+\frac{L}{2n}\norm{y-x}^{2}\\
  & =\argmin_{y}\frac{1}{n}\sum_{i}(\ell_{i}(y)+\frac{L}{2n}\norm{y-x}^{2}-\mu y^{\top}x)
 \end{align*}
@@ -1962,7 +1990,7 @@ Given a convex function
 
 .
  Suppose that 
-\begin_inset Formula $\nabla^{2}\ell_{i}(x)\leq L$
+\begin_inset Formula $\nabla^{2}\ell_{i}(x)\preceq L\cdot I$
 \end_inset
 
  for all 

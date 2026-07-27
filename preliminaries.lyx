@@ -295,18 +295,22 @@ For any
 
 \begin_layout Definition
 A function 
-\begin_inset Formula $f\in\mathcal{C}^{k}(\Rn)$
+\begin_inset Formula $f$
+\end_inset
+
+ is in 
+\begin_inset Formula $\mathcal{C}^{k}(\Rn)$
 \end_inset
 
  if 
 \begin_inset Formula $f$
 \end_inset
 
- is a 
+ is 
 \begin_inset Formula $k$
 \end_inset
 
--differentiable function and its 
+-times differentiable and its 
 \begin_inset Formula $k^{\mathrm{th}}$
 \end_inset
 
@@ -365,7 +369,7 @@ A function
 \begin_inset Formula $x_{0}$
 \end_inset
 
- iff 
+ if and only if 
 \end_layout
 
 \begin_layout Definition
@@ -376,7 +380,7 @@ A function
 
 \end_inset
 
-The function is lower semi-continuous if is it so at every point in its domain.
+The function is lower semi-continuous if it is so at every point in its domain.
  The definition of upper semi-continuous is analogous with the inequalities reversed and 
 \begin_inset Formula $\liminf$
 \end_inset
@@ -437,9 +441,9 @@ g(y)=\sum_{j=0}^{k}g^{(j)}(x)\frac{(y-x)^{j}}{j!}+g^{(k+1)}(\zeta)\frac{(y-x)^{k
 
 \begin_layout Definition
 The 
-\begin_inset Formula $convolution$
-\end_inset
-
+\emph on
+convolution
+\emph default
  of two functions 
 \begin_inset Formula $f,g:\R^{n}\rightarrow\R$
 \end_inset
@@ -511,7 +515,7 @@ For any matrix
 ,
  we define its trace,
  
-\begin_inset Formula $\tr A=\sum A_{ii}$
+\begin_inset Formula $\tr A=\sum_i A_{ii}$
 \end_inset
 
 ,
@@ -574,6 +578,10 @@ For a vector
 \begin_inset Formula $x$
 \end_inset
 
+ and a positive definite matrix 
+\begin_inset Formula $A$
+\end_inset
+
 ,
  
 \begin_inset Formula $\norm x_{A}=\sqrt{x^{T}Ax}$
@@ -588,7 +596,7 @@ For a vector
  
 \begin_inset Formula 
 \[
-\norm B_{A}=\sup_{x}\frac{\norm{Bx}_{A}}{\norm x_{A}}.
+\norm B_{A}=\sup_{x\ne0}\frac{\norm{Bx}_{A}}{\norm x_{A}}.
 \]
 
 \end_inset
@@ -618,16 +626,30 @@ Sherman-Morrison-Woodbury
  we have
 \begin_inset Formula 
 \[
-\left(A+uv^{\top}\right)^{-1}=A^{-1}-\frac{A^{-1}uv^{\top}A^{-1}}{1+u^{\top}A^{-1}v}.
+\left(A+uv^{\top}\right)^{-1}=A^{-1}-\frac{A^{-1}uv^{\top}A^{-1}}{1+u^{\top}A^{-1}v},
 \]
 
 \end_inset
 
-For matrices 
+provided 
+\begin_inset Formula $A$
+\end_inset
+
+ is invertible and 
+\begin_inset Formula $1+u^{\top}A^{-1}v\neq0$
+\end_inset
+
+.
+ For matrices 
 \begin_inset Formula $U,V\in\R^{n\times k},$
 \end_inset
 
-we have
+ we have,
+ provided 
+\begin_inset Formula $I+V^{\top}A^{-1}U$
+\end_inset
+
+ is invertible,
 \begin_inset Formula 
 \[
 \left(A+UV^{\top}\right)^{-1}=A^{-1}-A^{-1}U\left(I+V^{\top}A^{-1}U\right)^{-1}V^{\top}A^{-1}.
@@ -647,11 +669,11 @@ The Total Variation (TV) or
 \begin_inset Formula $\ell_{1}$
 \end_inset
 
--distance between two distributions with measures 
+-distance between two distributions with densities 
 \begin_inset Formula $\rho,\nu$
 \end_inset
 
- with support 
+ on 
 \begin_inset Formula $\Omega$
 \end_inset
 
@@ -663,6 +685,32 @@ d_{TV}(\rho,\nu)=\frac{1}{2}\int_{\Omega}\left|\rho(x)-\nu(x)\right|\,dx=\sup_{S
 
 \end_inset
 
+Here,
+ 
+\begin_inset Formula $\rho(S)$
+\end_inset
+
+ denotes the measure induced by the density 
+\begin_inset Formula $\rho$
+\end_inset
+
+,
+ i.e.,
+ 
+\begin_inset Formula $\rho(S)=\int_{S}\rho(x)\,dx$
+\end_inset
+
+,
+ and similarly for 
+\begin_inset Formula $\nu$
+\end_inset
+
+.
+ The last equality follows because 
+\begin_inset Formula $\rho-\nu$
+\end_inset
+
+ has total mass zero.
 
 \end_layout
 
@@ -726,7 +774,7 @@ The
 \begin_inset Formula $\chi$
 \end_inset
 
--squared distance of a densities 
+-squared distance of a density 
 \begin_inset Formula $\rho$
 \end_inset
 
@@ -849,7 +897,7 @@ name "def:p-dist"
 \begin_inset Formula $\mu\ll\nu$
 \end_inset
 
- is defined as,
+ is defined as follows:
  for a convex function 
 \begin_inset Formula $f:\R_{+}\to\R$
 \end_inset
@@ -947,7 +995,7 @@ status open
  is defined as
 \begin_inset Formula 
 \[
-\RR_{\infty}(\mu\|\nu):=\log\esssup_{\mu}\frac{d\mu}{d\nu}\,.
+\RR_{\infty}(\mu\|\nu):=\log\esssup_{\nu}\frac{d\mu}{d\nu}\,.
 \]
 
 \end_inset
@@ -971,7 +1019,7 @@ status open
 \end_inset
 
  and 
-\begin_inset Formula $2\,\norm{\cdot}_{\tv}^{2}\leq\KL\leq\RR_{2}=\log(\chi^{2}+1)\leq\chi^{2}$
+\begin_inset Formula $2\,d_{TV}(\mu,\nu)^{2}\leq\KL(\mu\|\nu)\leq\RR_{2}(\mu\|\nu)=\log(\chi^{2}(\mu,\nu)+1)\leq\chi^{2}(\mu,\nu)$
 \end_inset
 
 .
@@ -987,7 +1035,7 @@ literal "false"
 
 \end_inset
 
- for other basic properties of  R
+ for other basic properties of R
 \begin_inset ERT
 status open
 
@@ -1000,7 +1048,7 @@ status open
 
 \end_inset
 
-nyi-divergence.
+nyi divergence.
 \end_layout
 
 \begin_layout Standard
@@ -1023,7 +1071,7 @@ marginal
 \begin_inset Formula $\nu$
 \end_inset
 
- in the span of a 
+ onto a 
 \begin_inset Formula $k$
 \end_inset
 
@@ -1088,8 +1136,8 @@ Geometry
 \end_layout
 
 \begin_layout Definition
-We denote the unit Euclidean ball as 
-\begin_inset Formula $B^{n}=\left\{ x:\norm x_{2}\le1\right\} .$
+We denote the unit Euclidean ball by 
+\begin_inset Formula $B^{n}=\left\{ x:\norm x_{2}\le1\right\}.$
 \end_inset
 
  More generally,
@@ -1126,9 +1174,9 @@ We denote the unit Euclidean ball as
 \begin_layout Definition
 The 
 \emph on
-Minkowski sum 
+Minkowski sum
 \emph default
-of two sets 
+ of two sets 
 \begin_inset Formula $A,B\subset\R^{n}$
 \end_inset
 

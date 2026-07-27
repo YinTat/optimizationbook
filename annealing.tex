@@ -4,21 +4,21 @@
 In this chapter, we develop efficient algorithms for volume computation
 and integration based on a technique called \emph{Simulated Annealing,
 }which is also provably efficient for convex optimization. The volume
-problem was defined in Chapter (\ref{chap:Elimination-and-Reduction})
-(Problem (\ref{problem:volume})). Integration is the following generalization.
+problem was defined in Chapter \ref{chap:Elimination-and-Reduction}
+(Problem \ref{problem:volume}). Integration is the following generalization.
 \begin{problem}[Integration]
  Given an evaluation oracle for an integrable logconcave function
-$f:\R^{n}\rightarrow\R$, a point $x_{0}$ s.t. $f(x_{0})\ge\beta,$
-numbers $r,R>0$ s.t. (i) $\E(\norm{x-x_{0}}^{2})\le R^{2}$ (ii)
-the level set of $\pi_{f}$ of measure $1/8$ contains a ball of radius
-$r$, and $\varepsilon>0$, output a number $A$ s.t. 
+$f:\R^{n}\rightarrow\R_{+}$, a point $x_{0}$ such that $f(x_{0})\ge\beta,$
+numbers $r,R>0$ such that (i) $\E(\norm{x-x_{0}}^{2})\le R^{2},$
+(ii) the level set of $\pi_{f}$ of measure $1/8$ contains a ball
+of radius $r$, and $\varepsilon>0$, output a number $A$ such that
 \[
 (1-\varepsilon)\int f\le A\le(1+\varepsilon)\int f.
 \]
 
 As in all problems in oracle models discussed in this book, the complexity
 of an algorithm to solve the above problem is given by the number
-of oracles calls and the number of arithmetic operations. 
+of oracle calls and the number of arithmetic operations. 
 \end{problem}
 
 Table \ref{tab:volume} below summarizes progress on the volume problem
@@ -55,8 +55,8 @@ Year/Authors & New ingredients & Steps\tabularnewline
 \hline 
 2021/Jia-Laddha-Lee-Vempala \cite{JLLV26} & Faster rounding & $n^{3.5}$\tabularnewline
 \hline 
-\end{tabular}\caption{\label{tab:volume} The complexity of volume estimation, each step
-uses $\widetilde{O}(n)$ bit of randomness. The last algorithm needs
+\end{tabular}\caption{\label{tab:volume} Complexities for volume estimation; each step
+uses $\widetilde{O}(n)$ bits of randomness. The last algorithm needs
 $\widetilde{O}\left(mn^{\omega-1}\right)$ steps per iteration while
 the rest need $O(n^{2})$ per oracle query.}
 \end{table}
@@ -65,8 +65,8 @@ the volume of a convex body in high dimension.
 
 \section{Volume Computation: the DFK Algorithm}
 \begin{thm}
-There exists a randomized algorithm that given any $\varepsilon,\delta>0$,
-and any convex body $K$ with probability at least $1-\delta$ solves
+There exists a randomized algorithm that, given any $\varepsilon,\delta>0$
+and any convex body $K$, with probability at least $1-\delta$, solves
 the Volume Estimation problem for $K$ using $\mbox{poly}(n,1/\varepsilon,\ln(1/\delta),\ln R)$
 oracle queries and arithmetic operations. 
 \end{thm}
@@ -80,6 +80,7 @@ of a real number with failure probability at most $1/4$ can be converted
 to one that outputs an acceptable estimate with failure probability
 at most $\delta$ by repeating the algorithm independently $O(\ln(1/\delta))$
 times and taking the median of the outputs of the independent trials.
+\end{xca}
 
 Going forward, we ignore the parameter $\delta$, and focus on algorithms
 with constant failure probability. We will now show an algorithm for
@@ -88,7 +89,7 @@ bound on the sample complexity.
 
 The polynomial-time algorithm of Dyer, Frieze and Kannan \cite{DyerFK89}
 is based on the following idea. We consider a sequence of convex bodies
-$K_{0}=B_{n}\subset K_{1}\subseteq\ldots\subseteq K_{m}=K$, starting
+$K_{0}=B^{n}\subset K_{1}\subseteq\ldots\subseteq K_{m}=K$, starting
 with the ball contained inside the input body $K$ and ending with
 $K$ itself. Then the following telescoping formula suggests an algorithm:
 \[
@@ -104,12 +105,11 @@ body $K$:
 \[
 K_{i}=2^{\frac{i}{n}}B\cap K.
 \]
- The length the sequence is $m=\lceil n\log R\rceil$ so that the
-final body is just $K$. We can now state the algorithm. In each iteration
-the algorithm estimates the ratio $\vol(K_{i})/\vol(K_{i+1})$ by
-sampling uniformly from $K_{i+1}$ and using the fraction of the sample
-that lies in $K_{i}$ as the estimator.
-\end{xca}
+ The length of the sequence is $m=\lceil n\log_{2}R\rceil$ so that
+the final body is just $K$. We can now state the algorithm. In each
+iteration the algorithm estimates the ratio $\vol(K_{i})/\vol(K_{i+1})$
+by sampling uniformly from $K_{i+1}$ and using the fraction of the
+sample that lies in $K_{i}$ as the estimator.
 
 \begin{algorithm2e}[H]
 
@@ -123,7 +123,7 @@ that lies in $K_{i}$ as the estimator.
 \item uniformly sample $X^{(1)},X^{(2)},\ldots,X^{(N)}$ from $K_{i+1}$.
 \item Set $Y_{i}=|{\{j:X^{(j)}\in K_{i}\}}|/N$. 
 \end{enumerate}
-\item Let $Y=\prod_{i=1}^{m-1}Y_{i}$ and return $\vol(B_{n})/Y$.
+\item Let $Y=\prod^{m-1}_{i=0}Y_{i}$ and return $\vol(B^{n})/Y$.
 \end{enumerate}
 \end{algorithm2e}
 
@@ -144,7 +144,7 @@ this.
 \begin{proof}
 We have 
 \[
-K_{i+1}=2^{(i+1)/n}B_{n}\cap K\subseteq2^{1/n}(2^{i/n}B_{n}\cap K)=2^{1/n}K_{i}.
+K_{i+1}=2^{(i+1)/n}B^{n}\cap K\subseteq2^{1/n}(2^{i/n}B^{n}\cap K)=2^{1/n}K_{i}.
 \]
 The lemma follows.
 \end{proof}
@@ -154,17 +154,17 @@ of $N=O(m^{3}/\varepsilon^{2})$ samples per phase. The next lemma
 which applies to any product of independent random variables gives
 us the ``right'' bound.
 \begin{lem}
-\label{lem:prod_var}Let $Y=\prod_{i=0}^{m-1}Y_{i}$ where $Y_{i}\ge0$
+\label{lem:prod_var}Let $Y=\prod^{m-1}_{i=0}Y_{i}$ where $Y_{i}\ge0$
 are independent real-valued random variables. Then, 
 \[
-\frac{\Var(Y)}{\E(Y)^{2}}=\prod_{i=0}^{m-1}\left(1+\frac{\Var(Y_{i})}{\E(Y_{i})^{2}}\right)-1.
+\frac{\Var(Y)}{\E(Y)^{2}}=\prod^{m-1}_{i=0}\left(1+\frac{\Var(Y_{i})}{\E(Y_{i})^{2}}\right)-1.
 \]
 \end{lem}
 
 We can now prove the main theorem about the sample complexity of the
 DFK volume algorithm.
 \begin{thm}
-For any input convex body $K$ satisfying $B_{n}\subseteq K\subseteq RB_{n}$
+For any input convex body $K$ satisfying $B^{n}\subseteq K\subseteq RB^{n}$
 given by a membership oracle and any $\varepsilon>0$, with $N=O(\varepsilon^{-2}n\log R)$
 samples per phase, with probability at least $3/4$, the DFK volume
 algorithm outputs a multiplicative $(1+\varepsilon)$ approximation
@@ -174,7 +174,7 @@ to the volume of $K$. The total number of samples is thus $O^{*}(m^{2})=O^{*}(n^
 \begin{proof}
 In each phase we have 
 \[
-\frac{\Var(Y_{i})}{\E(Y_{i})^{2}}=\frac{r_{i}(1-r_{i})}{Nr_{i}^{2}}=\frac{1-r_{i}}{Nr_{i}}\le\frac{1}{N}
+\frac{\Var(Y_{i})}{\E(Y_{i})^{2}}=\frac{r_{i}(1-r_{i})}{Nr^{2}_{i}}=\frac{1-r_{i}}{Nr_{i}}\le\frac{1}{N}
 \]
 where we used the fact that $r_{i}\ge1/2$ from Lemma \ref{lem:r_bound}.
 Now using Lemma \ref{lem:prod_var}, we have 
@@ -191,7 +191,7 @@ for the entire algorithm. To make this rigorous, besides establishing
 the amortized complexity of uniform sampling, we have to deal with
 some nontrivial technical issues: (1) the distribution from which
 samples are produced is close to the target uniform distribution but
-not exactly uniform (2) samples are nearly independent but not perfectly
+not exactly uniform; (2) samples are nearly independent but not perfectly
 independent. Another important problem that will arise in establishing
 the complexity of (approximate) uniform sampling is ``rounding''
 which allows us to reduce the dependence of the sampling complexity
@@ -201,8 +201,9 @@ The quadratic sample complexity might appear to be nearly optimal
 -- the final ratio being estimated could be as large as $R^{n}$
 or $n^{n}$, which means that any sequence that uses at most $m$
 phases estimates a ratio as large as $n^{n/m}$ needing as many samples,
-and this means that $m=\Omega(n)$ is needed to get polynomial complexity
-even. We will soon see that this intuitive reasoning is not valid. 
+and this means that $m=\Omega(n)$ is needed even to get polynomial
+complexity. We will soon see that this intuitive reasoning is not
+valid. 
 
 \section{Simulated Annealing}
 
@@ -216,21 +217,21 @@ For integration, the desired integral of a function $f:\R^{n}\rightarrow\R_{+}$
 can be expressed as the following telescoping product:
 
 \[
-\int_{\R^{n}}f=\int f_{0}\frac{\int f_{1}}{\int f_{0}}\frac{\int f_{2}}{\int f_{3}}\cdots\frac{\int f_{m}}{\int f_{m-1}}
+\int_{\R^{n}}f=\int f_{0}\frac{\int f_{1}}{\int f_{0}}\frac{\int f_{2}}{\int f_{1}}\cdots\frac{\int f_{m}}{\int f_{m-1}}
 \]
 where $f_{0}$ is chosen to be a function with an easy integral (typically
-a formula) and $f_{m}=f$. To compute any the ratio $\int g/\int h$
-we can do the following: 
+a formula) and $f_{m}=f$. To compute any ratio $\int g/\int h$ we
+can do the following: 
 \begin{enumerate}
 \item Sample $X$ from the distribution with density proportional to $h$. 
 \item Use the estimator $Y=\frac{g(X)}{h(X)}$. 
 \end{enumerate}
 It is easy to establish the following fact about this estimator. 
 \begin{lem}
-For integrable functions $g,h$ with with support of $g$ contained
-in the support of $h$ and $g(X)/h(X)$ defined everywhere in the
-support of $h$, for $X$ drawn from the distribution with density
-proportional to $h$ and $Y=g(X)/h(X)$, we have 
+For integrable functions $g,h$ with support of $g$ contained in
+the support of $h$ and $g(X)/h(X)$ defined everywhere in the support
+of $h$, for $X$ drawn from the distribution with density proportional
+to $h$ and $Y=g(X)/h(X)$, we have 
 \[
 \E(Y)=\frac{\int g}{\int h}.
 \]
@@ -258,10 +259,10 @@ specialize it to optimization and integration.
 \[
 a_{i}=b\left(1+\frac{1}{\sqrt{n}}\right)^{i}\mbox{ and }f_{i}(x)=f(x)^{a_{i}}.
 \]
-\item Let $X_{0}^{1},\ldots,X_{0}^{k}$ be independent random points with
+\item Let $X^{1}_{0},\ldots,X^{k}_{0}$ be independent random points with
 density proportional to $f_{0}$.
-\item For $i=0,\ldots,m-1$: starting with $X_{i}^{1},\ldots,X_{i}^{k}$,
-generate random points $X_{i+1}=\{X_{i+1}^{1},\ldots,X_{i+1}^{k}\}$;
+\item For $i=0,\ldots,m-1$: starting with $X^{1}_{i},\ldots,X^{k}_{i}$,
+generate random points $X_{i+1}=\{X^{1}_{i+1},\ldots,X^{k}_{i+1}\}$;
 update a running estimate $g$ based on these samples; update the
 isotropic transformation using the samples.
 \item Output the final $g$.
@@ -294,16 +295,16 @@ $f_{i}$ defined as in the annealing algorithm for some logconcave
 function $f:\R^{n}\rightarrow\R_{+}$. Then a random sample $X\sim p_{i}$
 satisfies
 \[
-\E_{p_{i}}\left(\frac{p_{i}(x)}{p_{i+1}(x)}\right)=O(1).
+\E_{X\sim p_{i}}\left(\frac{p_{i}(X)}{p_{i+1}(X)}\right)=O(1).
 \]
 \end{lem}
 
 The underlying mathematical property behind this lemma is the following.
 \begin{lem}
 \label{lem:ratio_var} Let $f$ be a logconcave function in $\R^{n}.$
-Then $Z(a)=a^{n}\int_{\R^{n}}f(x)^{a}$ is logconcave for $a\ge0$.
-If $f$ has support $K$, then $Z(a)=a^{n}\int_{K}f(ax)$ is logconcave
-for $a>0$.
+Then $Z(a)=a^{n}\int_{\R^{n}}f(x)^{a}\,dx$ is logconcave for $a>0$.
+If $f$ has support $K$, then $Z(a)=a^{n}\int_{K}f(x)^{a}\,dx$ is
+logconcave for $a>0$.
 \end{lem}
 
 \begin{proof}
@@ -320,17 +321,17 @@ F\left(\frac{x+y}{2},\frac{t+s}{2}\right) & =f\left(\frac{x+y}{t+s}\right)^{\fra
  & \ge f\left(\frac{x}{t}\right)^{\frac{t}{2}}f\left(\frac{y}{s}\right)^{\frac{s}{2}}=\sqrt{F(x,t)F(y,s)}.
 \end{align*}
 
-Now by the Prekopa-Leindler Theorem (see\ref{lem:marginal}), the
-marginal of $F$ in $t$ is also logconcave. This marginal is 
+Now by the Prekopa-Leindler Theorem (see Lemma \ref{lem:marginal}),
+the marginal of $F$ in $t$ is also logconcave. This marginal is
 \[
 \int_{\R^{n}}F(x,t)\,dx=\int_{\R^{n}}f\left(\frac{x}{t}\right)^{t}\,dx=t^{n}\int_{\R^{n}}f(y)^{t}\,dy
 \]
 where we made the substitution $y=x/t$.
 \end{proof}
-Note that in the simulated annealing algorithm we choose $\frac{a_{\{i+1\}}}{a_{i}}=(1+\frac{1}{\sqrt{{n\}}}})$
+Note that in the simulated annealing algorithm we choose $\frac{a_{i+1}}{a_{i}}=1+\frac{1}{\sqrt{n}}$
 since this guarantees that the distribution with density proportional
 to $f_{i}$ has $\chi^{2}$-distance $O(1)$ to the distribution with
 density proportional to $f_{i+1}$. This will be useful later in bounding
-$\text{{var}(Y)/\ensuremath{\mathbb{E}[Y]^{2}}}$ of the random variable
-given by $Y=f_{i+1}(X)/f_{i}(X)$ for a random sample $X$ drawn from
-the distribution with density proportional to $f_{i}$.
+$\mathrm{var}(Y)/\mathbb{E}[Y]^{2}$ of the random variable given
+by $Y=f_{i+1}(X)/f_{i}(X)$ for a random sample $X$ drawn from the
+distribution with density proportional to $f_{i}$.

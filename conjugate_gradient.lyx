@@ -47,8 +47,9 @@ Define the Krylov subspaces
 .
 \end_layout
 
-\begin_layout Definition
-Therefore, the best such an algorithm can do is to solve 
+\begin_layout Standard
+Therefore,
+ the best such algorithm can do is to solve 
 \begin_inset Formula $\min_{x\in\K_{k}}f(x)$
 \end_inset
 
@@ -77,21 +78,25 @@ where
 .
 \end_layout
 
-\begin_layout Definition
+\begin_layout Standard
 Throughout this section, we assume 
 \begin_inset Formula $A$
 \end_inset
 
  is positive definite.
- For a given linear system 
+ For a consistent full-column-rank linear system 
 \begin_inset Formula $Ax=b$
 \end_inset
 
-, we can always go to 
-\begin_inset Formula $A^{T}Ax=A^{T}b$
+ (or for the associated least-squares problem),
+ we can pass to 
+\begin_inset Formula $A^{\top}Ax=A^{\top}b$
 \end_inset
 
  to satisfy the assumption.
+ This transformation may square the condition number,
+ so it is mainly a reduction to the positive definite setting rather than
+ a numerically preferable method.
 \end_layout
 
 \begin_layout Lemma
@@ -100,7 +105,6 @@ Let
 \end_inset
 
  be the Krylov sequence.
- .
  Then, the steps 
 \begin_inset Formula $v^{(k)}=x^{(k)}-x^{(k-1)}$
 \end_inset
@@ -164,11 +168,12 @@ Next, we note that
 \end_layout
 
 \begin_layout Standard
-Since the steps are conjugate, 
+Since the steps are conjugate,
+ the vectors 
 \begin_inset Formula $v^{(i)}$
 \end_inset
 
- forms a conjugate basis for the Krylov subspaces:
+ form a conjugate basis for the Krylov subspaces:
 \begin_inset Formula 
 \[
 \K_{k}=\spn\{v^{(1)},v^{(2)},\cdots,v^{(k)}\}.
@@ -199,10 +204,15 @@ name "lem:CG_v"
 
 \end_inset
 
-We have 
+For 
+\begin_inset Formula $k\ge2$
+\end_inset
+
+,
+ we have 
 \begin_inset Formula 
 \[
-v^{(k)}=\frac{v^{(k)\top}r^{(k-1)}}{\|r^{(k-1)}\|^{2}}\left(r^{(k-1)}-\frac{r^{(k-1)\top}Av^{(k-1)}}{v^{(k-1)}Av^{(k-1)}}v^{(k-1)}\right).
+v^{(k)}=\frac{v^{(k)\top}r^{(k-1)}}{\|r^{(k-1)}\|^{2}}\left(r^{(k-1)}-\frac{r^{(k-1)\top}Av^{(k-1)}}{v^{(k-1)\top}Av^{(k-1)}}v^{(k-1)}\right).
 \]
 
 \end_inset
@@ -286,7 +296,7 @@ For
 , we have
 \begin_inset Formula 
 \[
-0=v^{(k)\top}Av^{(k-1)}=c_{0}r^{(k-1)\top}Av^{(k-1)}+c_{k-1}v^{(k-1)}Av^{(k-1)}
+0=v^{(k)\top}Av^{(k-1)}=c_{0}r^{(k-1)\top}Av^{(k-1)}+c_{k-1}v^{(k-1)\top}Av^{(k-1)}
 \]
 
 \end_inset
@@ -296,7 +306,7 @@ For
 
 \begin_layout Proof
 and 
-\begin_inset Formula $c_{k-1}=-c_{0}\cdot\frac{r^{(k-1)\top}Av^{(k-1)}}{v^{(k-1)}Av^{(k-1)}}$
+\begin_inset Formula $c_{k-1}=-c_{0}\cdot\frac{r^{(k-1)\top}Av^{(k-1)}}{v^{(k-1)\top}Av^{(k-1)}}$
 \end_inset
 
 .
@@ -330,14 +340,14 @@ For other
 \end_layout
 
 \begin_layout Proof
-Substitute the 
+Substituting the 
 \begin_inset Formula $c_{i}$
 \end_inset
 
 , we get
 \begin_inset Formula 
 \[
-v^{(k)}=\frac{v^{(k)\top}r^{(k-1)}}{\|r^{(k-1)}\|^{2}}\left(r^{(k-1)}-\frac{r^{(k-1)\top}Av^{(k-1)}}{v^{(k-1)}Av^{(k-1)}}v^{(k-1)}\right).
+v^{(k)}=\frac{v^{(k)\top}r^{(k-1)}}{\|r^{(k-1)}\|^{2}}\left(r^{(k-1)}-\frac{r^{(k-1)\top}Av^{(k-1)}}{v^{(k-1)\top}Av^{(k-1)}}v^{(k-1)}\right).
 \]
 
 \end_inset
@@ -347,7 +357,11 @@ v^{(k)}=\frac{v^{(k)\top}r^{(k-1)}}{\|r^{(k-1)}\|^{2}}\left(r^{(k-1)}-\frac{r^{(
 
 \begin_layout Standard
 To make the formula simpler, we define 
-\begin_inset Formula $p^{(k)}=\frac{\|r^{(k-1)}\|_{2}^{2}}{v^{(k)\top}r^{(k-1)}}v^{(k)}$
+\begin_inset Formula $p^{(k-1)}=\frac{\|r^{(k-1)}\|_{2}^{2}}{v^{(k)\top}r^{(k-1)}}v^{(k)}$
+\end_inset
+
+ for 
+\begin_inset Formula $k\ge1$
 \end_inset
 
 .
@@ -355,11 +369,17 @@ To make the formula simpler, we define
 
 \begin_layout Lemma
 We have that 
-\begin_inset Formula $x^{(k)}=x^{(k-1)}+\frac{\|r^{(k-1)}\|_{2}^{2}}{p^{(k)\top}Ap^{(k)}}p^{(k)}$
+\begin_inset Formula $x^{(k)}=x^{(k-1)}+\frac{\|r^{(k-1)}\|_{2}^{2}}{p^{(k-1)\top}Ap^{(k-1)}}p^{(k-1)}$
 \end_inset
 
- and 
-\begin_inset Formula $p^{(k)}=r^{(k-1)}-\frac{\|r^{(k-1)}\|^{2}}{\|r^{(k-2)}\|_{2}^{2}}p^{(k-1)}.$
+ and,
+ for 
+\begin_inset Formula $k\ge2$
+\end_inset
+
+,
+ 
+\begin_inset Formula $p^{(k-1)}=r^{(k-1)}+\frac{\|r^{(k-1)}\|^{2}}{\|r^{(k-2)}\|_{2}^{2}}p^{(k-2)}.$
 \end_inset
 
 
@@ -369,7 +389,7 @@ We have that
 For the first formula, note that
 \begin_inset Formula 
 \[
-x^{(k)}=x^{(k-1)}+v^{(k)}=x^{(k-1)}+\frac{v^{(k)\top}r^{(k-1)}}{\|r^{(k-1)}\|_{2}^{2}}p^{(k)}.
+x^{(k)}=x^{(k-1)}+v^{(k)}=x^{(k-1)}+\frac{v^{(k)\top}r^{(k-1)}}{\|r^{(k-1)}\|_{2}^{2}}p^{(k-1)}.
 \]
 
 \end_inset
@@ -390,20 +410,20 @@ For the quantity
 \begin_inset Formula 
 \begin{align*}
 v^{(k)\top}r^{(k-1)} & =v^{(k)\top}Av^{(k)}\\
- & =\frac{v^{(k)\top}r^{(k-1)}}{\|r^{(k-1)}\|_{2}^{2}}\frac{v^{(k)\top}r^{(k-1)}}{\|r^{(k-1)}\|_{2}^{2}}p^{(k)\top}Ap^{(k)}
+ & =\frac{v^{(k)\top}r^{(k-1)}}{\|r^{(k-1)}\|_{2}^{2}}\frac{v^{(k)\top}r^{(k-1)}}{\|r^{(k-1)}\|_{2}^{2}}p^{(k-1)\top}Ap^{(k-1)}
 \end{align*}
 
 \end_inset
 
 where we used the definition of 
-\begin_inset Formula $p^{(k)}$
+\begin_inset Formula $p^{(k-1)}$
 \end_inset
 
 .
  Simplifying gives
 \begin_inset Formula 
 \[
-\frac{v^{(k)\top}r^{(k-1)}}{\|r^{(k-1)}\|_{2}^{2}}=\frac{\|r^{(k-1)}\|_{2}^{2}}{p^{(k)\top}Ap^{(k)}}
+\frac{v^{(k)\top}r^{(k-1)}}{\|r^{(k-1)}\|_{2}^{2}}=\frac{\|r^{(k-1)}\|_{2}^{2}}{p^{(k-1)\top}Ap^{(k-1)}}
 \]
 
 \end_inset
@@ -420,14 +440,14 @@ reference "lem:CG_v"
 \end_inset
 
  and substitute 
-\begin_inset Formula $p^{(k)}=\frac{\|r^{(k-1)}\|_{2}^{2}}{v^{(k)\top}r^{(k-1)}}v^{(k)}$
+\begin_inset Formula $p^{(k-1)}=\frac{\|r^{(k-1)}\|_{2}^{2}}{v^{(k)\top}r^{(k-1)}}v^{(k)}$
 \end_inset
 
 .
  This gives
 \begin_inset Formula 
 \begin{equation}
-p^{(k)}=r^{(k-1)}-\frac{r^{(k-1)\top}Av^{(k-1)}}{\|r^{(k-2)}\|_{2}^{2}}p^{(k-1)}.\label{eq:CG_p_temp}
+p^{(k-1)}=r^{(k-1)}-\frac{r^{(k-1)\top}Av^{(k-1)}}{\|r^{(k-2)}\|_{2}^{2}}p^{(k-2)}.\label{eq:CG_p_temp}
 \end{equation}
 
 \end_inset
@@ -449,11 +469,11 @@ Taking inner product with
 \end_inset
 
  gives 
-\begin_inset Formula $\|r^{(k-1)}\|^{2}=r^{(k-1)\top}Av^{(k-1)}$
+\begin_inset Formula $\|r^{(k-1)}\|^{2}=-r^{(k-1)\top}Av^{(k-1)}$
 \end_inset
 
 .
- Put this into (
+ Putting this into (
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:CG_p_temp"
@@ -461,6 +481,39 @@ reference "eq:CG_p_temp"
 \end_inset
 
 ) gives the result.
+\end_layout
+
+\begin_layout Standard
+We use the standard zero-indexed search directions:
+ 
+\begin_inset Formula $r^{(0)}=b-Ax^{(0)}$
+\end_inset
+
+,
+ 
+\begin_inset Formula $p^{(0)}=r^{(0)}$
+\end_inset
+
+,
+ and iteration 
+\begin_inset Formula $k$
+\end_inset
+
+ produces 
+\begin_inset Formula $x^{(k+1)}$
+\end_inset
+
+,
+ 
+\begin_inset Formula $r^{(k+1)}$
+\end_inset
+
+,
+ and 
+\begin_inset Formula $p^{(k+1)}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -552,7 +605,7 @@ For{
 \end_inset
 
 
-\begin_inset Formula $k=1,2,\cdots$
+\begin_inset Formula $k=0,1,2,\cdots$
 \end_inset
 
 
@@ -570,21 +623,21 @@ status open
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $\alpha=\frac{\|r^{(k-1)}\|_{2}^{2}}{p^{(k)\top}Ap^{(k)}}$
+\begin_inset Formula $\alpha_k=\frac{\|r^{(k)}\|_{2}^{2}}{p^{(k)\top}Ap^{(k)}}$
 \end_inset
 
 .
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $x^{(k)}\leftarrow x^{(k-1)}+\alpha p^{(k)}$
+\begin_inset Formula $x^{(k+1)}\leftarrow x^{(k)}+\alpha_k p^{(k)}$
 \end_inset
 
 .
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $r^{(k)}\leftarrow r^{(k-1)}+\alpha Ap^{(k)}$
+\begin_inset Formula $r^{(k+1)}\leftarrow r^{(k)}-\alpha_k Ap^{(k)}$
 \end_inset
 
 .
@@ -604,7 +657,7 @@ lIf{
 \end_inset
 
 
-\begin_inset Formula $\|r^{(k)}\|_{2}\leq\epsilon$
+\begin_inset Formula $\|r^{(k+1)}\|_{2}\leq\epsilon$
 \end_inset
 
 
@@ -621,7 +674,7 @@ Return
 \end_inset
 
 
-\begin_inset Formula $x^{(k)}$
+\begin_inset Formula $x^{(k+1)}$
 \end_inset
 
 
@@ -639,7 +692,14 @@ status open
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $p^{(k+1)}=r^{(k)}-\frac{\|r^{(k)}\|^{2}}{\|r^{(k-1)}\|^{2}}p^{(k)}.$
+\begin_inset Formula $\beta_k=\frac{\|r^{(k+1)}\|^{2}}{\|r^{(k)}\|^{2}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $p^{(k+1)}=r^{(k+1)}+\beta_k p^{(k)}.$
 \end_inset
 
 
@@ -707,7 +767,7 @@ Let
  Then, we have
 \begin_inset Formula 
 \[
-f(x^{(k)})-f(x^{*})\leq\frac{1}{2}\inf_{q(0)=1}\max_{i}q(\lambda_{i})^{2}\cdot\|b\|_{A^{-1}}^{2}
+f(x^{(k)})-f(x^{*})\leq\frac{1}{2}\inf_{\deg q\leq k,\,q(0)=1}\max_{i}q(\lambda_{i})^{2}\cdot\|b\|_{A^{-1}}^{2}
 \]
 
 \end_inset
@@ -716,7 +776,7 @@ where
 \begin_inset Formula $q$
 \end_inset
 
- searches over polynomials of degree at most 
+ ranges over polynomials of degree at most 
 \begin_inset Formula $k$
 \end_inset
 
@@ -733,7 +793,7 @@ where
 
 \begin_layout Proof
 Note that 
-\begin_inset Formula $\K_{k}=\{p(A):\deg p<k\}$
+\begin_inset Formula $\K_{k}=\{p(A)b:\deg p<k\}$
 \end_inset
 
 .
@@ -774,7 +834,7 @@ Let
 \begin_inset Formula 
 \begin{align*}
 2(f(x^{(k)})-f(x^{*})) & =\inf_{\deg q\leq k,q(0)=1}\|q(A)A^{-\frac{1}{2}}b\|_{2}^{2}\\
- & \leq\inf_{q(0)=1}\|q(A)\|_{\op}^{2}\cdot\|b\|_{A^{-1}}^{2}.
+ & \leq\inf_{\deg q\leq k,q(0)=1}\|q(A)\|_{\op}^{2}\cdot\|b\|_{A^{-1}}^{2}.
 \end{align*}
 
 \end_inset
@@ -787,16 +847,21 @@ The result follows from the fact that
 \end_layout
 
 \begin_layout Standard
-It is known that for any 
-\begin_inset Formula $0<\mu\leq L$
+Assume that 
+\begin_inset Formula $0<\mu$
 \end_inset
 
-, there is a degree 
-\begin_inset Formula $k$
+ and 
+\begin_inset Formula $\mu I\preceq A\preceq LI$
 \end_inset
 
- polynomial 
+.
+ It is known that there is a polynomial 
 \begin_inset Formula $q$
+\end_inset
+
+ of degree 
+\begin_inset Formula $k$
 \end_inset
 
  with 

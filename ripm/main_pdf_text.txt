@@ -1,0 +1,1516 @@
+                       Tutorial on the Robust Interior Point Method
+                                      Yin Tat Lee∗                    Santosh S. Vempala†
+
+
+
+                                                         July 3, 2026
+
+
+                                                           Abstract
+           We give a short, self-contained proof of the interior point method and its robust version.
+
+
+1      Introduction
+Consider the primal linear program
+                                                            min         c⊤ x                                           (P)
+                                                         Ax=b,x∈Rn
+                                                                 ≥0
+
+
+and its dual
+                                                            max          b⊤ y                                          (D)
+                                                       A⊤ y+s=c,s∈Rn
+                                                                   ≥0
+
+
+where A ∈ Rd×n , R≥0 denotes the set of nonnegative real numbers, and vector inequalities are coordinatewise. The
+feasible regions for the two programs are
+
+                         P = {x ∈ Rn≥0 : Ax = b} and D = {s ∈ Rn≥0 : A⊤ y + s = c for some y}.
+
+We define their interiors:
+
+                        P ◦ = {x ∈ Rn>0 : Ax = b} and D◦ = {s ∈ Rn>0 : A⊤ y + s = c for some y}.
+
+One key property about the primal and dual linear program is that dual objective b⊤ y is a lower bound of the
+primal object c⊤ y and that x⊤ s measure the gap between two objective.
+   To motivate the main idea of the interior point method, we recall the optimality condition for linear programs.
+Lemma 1 (Duality Gap). For any x ∈ P and any dual feasible pair (y, s) with A⊤ y + s = c, the duality gap
+satisfies c⊤ x − b⊤ y = x⊤ s. In particular, we have
+
+                                   max        b⊤ y − x⊤ s ≤ b⊤ y ≤ c⊤ x ≤          min       c⊤ x + x⊤ s.
+                             A⊤ y+s=c,s∈Rn
+                                         ≥0
+                                                                                Ax=b,x∈Rn
+                                                                                        ≥0
+
+
+
+Proof. Using Ax = b and A⊤ y + s = c, we can compute the duality gap as follows
+
+                                   c⊤ x − b⊤ y = c⊤ x − (Ax)⊤ y = c⊤ x − x⊤ (A⊤ y) = x⊤ s.
+
+Since x, s ≥ 0, this shows that
+                                                          c⊤ x ≥ b⊤ y.
+Optimize over all x and y, we have the weak duality
+
+                                                min      c⊤ x ≥         max         b⊤ y.
+                                            Ax=b,x∈Rn
+                                                    ≥0            A⊤ y+s=c,s∈Rn
+                                                                              ≥0
+
+    ∗ University of Washington & Microsoft Research.
+                                                 Email: yintat@uw.edu. Supported in part by NSF awards CCF-1749609, DMS-
+1839116, DMS-2023166, CCF-2105772, Microsoft Research Faculty Fellowship, Sloan Research Fellowship and Packard Fellowship.
+   † Georgia Tech. Email: vempala@gatech.edu. Supported in part by NSF awards DMS-1839323, CCF-1909756, CCF-2007443 and
+
+CCF-2106444.
+
+
+                                                                  1
+Using this, we have
+
+                      c⊤ x = b⊤ y + x⊤ s ≤        max         b⊤ y + x⊤ s ≤      min       c⊤ x + x⊤ s.
+                                             A⊤ y+s=c,s∈Rn
+                                                         ≥0
+                                                                              Ax=b,x∈Rn
+                                                                                      ≥0
+
+
+
+The another direction is similar.
+    The main implication of Lemma 1 is that any feasible (x, s) with small x⊤ s is a nearly optimal solution of the
+linear program. This leads us to primal-dual algorithms in which we start with a feasible primal-dual solution pair
+(x, s) and iteratively update the solution to decrease the duality gap x⊤ s.
+
+
+2     Interior Point Method
+In this section, we discuss the classical short-step interior point method. For two vectors a, b, we use ab to denote
+the vector with components (ab)i = ai bi and a/b to denote the vector with components ai /bi . For a scalar t ∈ R,
+we let t1 denote the vector with all coordinates equal to t.
+
+Definition 2 (Central Path). We define the central path (xt , st ) ∈ P ◦ × D◦ by xt st = t1. We say xt is on the
+central path of (P) at t.
+    The algorithm maintains a pair (x, s) ∈ P ◦ × D◦ and a scalar t > 0 satisfying the invariant
+                                                        xs        1
+                                                    ∥      − 1∥2 ≤ .
+                                                         t        4
+Note that the deviation from the central path is measured in ℓ2 norm. In each step, the algorithm decreases t by a
+factor of 1 − Ω(n−1/2 ) while maintaining the invariant.
+
+2.1    Basic Property of a Step
+To see why there is a pair (x, s) ∈ P ◦ × D◦ satisfying the invariant, we prove the following generalization.
+Lemma 3 (Quadrant Representation of Primal-Dual). Suppose P ◦ is non-empty and P is bounded. For any positive
+vector µ ∈ Rn>0 , there is a unique pair (xµ , sµ ) ∈ P ◦ × D◦ such that xµ sµ = µ. Furthermore, xµ = arg minx∈P fµ (x)
+where
+                                                                 Xn
+                                                fµ (x) = c⊤ x −      µi ln xi .
+                                                                  i=1
+
+Proof. Fix µ ∈ Rn>0 . We define xµ = arg minx∈P fµ (x) and prove that (xµ , sµ ) ∈ P ◦ × D◦ with xµ sµ = µ for
+some sµ . Since P ◦ is non-empty, P is bounded, and fµ is strictly convex, such an xµ exists. Furthermore, since
+fµ (x) → +∞ as xi → 0 for any i, we have that xµ ∈ P ◦ .
+    By the KKT optimality condition for fµ , there is a vector y such that
+                                                                  µ
+                                              ∇fµ (xµ ) = c −        = A⊤ y.
+                                                                  xµ
+
+Define sµ = xµµ . Then one can check that sµ ∈ D◦ and xµ sµ = µ.
+    For the uniqueness, if (x, s) ∈ P ◦ × D◦ and xs = µ, then x satisfies the optimality condition for fµ . Since fµ is
+strictly convex, such x must be unique.
+
+    Lemma 3 shows that any point in P ◦ × D◦ is uniquely represented by a positive vector µ. Interior point methods
+move µ uniformly to 0 while maintaining the corresponding xµ . Now we discuss how to find (xµ , sµ ) from a nearby
+interior feasible point (x, s); namely, how to move (x, s) to (x + δx , s + δs ) so that the result satisfies the system
+
+                                                   (x + δx )(s + δs ) = µ,
+                                                          A(x + δx ) = b,
+                                             A⊤ (y + δy ) + (s + δs ) = c,
+                                                    (x + δx , s + δs ) ∈ R2n
+                                                                          >0 .
+
+
+
+
+                                                              2
+Although the system above involves y, our approximate solution does not need to know y. By ignoring the inequality
+constraint and the second-order term δx δs in the first equation above, and using Ax = b and A⊤ y + s = c we can
+simplify the system:
+
+                                                  xs + Sδx + Xδs = µ,                                             (2.1)
+                                                                 Aδx = 0,
+                                                         ⊤
+                                                       A δy + δs = 0,
+
+where X and S are the diagonal matrices with diagonals x and s, respectively. In the following lemma, we show
+how to write the step above using a projection matrix (P2 = P).
+Lemma 4. Suppose that A has full row rank and (x, s) ∈ P ◦ × D◦ . Then, the unique solution for the linear system
+(2.1) is given by
+
+                                               X−1 δx = (I − P)(δµ /(xs)),
+                                               S−1 δs = P(δµ /(xs))
+
+where δµ = µ − xs, the division by xs is coordinatewise, and P = S−1 A⊤ (AS−1 XA⊤ )−1 AX.
+Proof. Note that the step satisfies Sδx + Xδs = δµ . Multiplying both sides by AS−1 and using Aδx = 0, we have
+
+                                                 AS−1 Xδs = AS−1 δµ .
+
+Now we use that A⊤ δy + δs = 0 and get
+
+                                               AS−1 XA⊤ δy = −AS−1 δµ .
+
+Since A ∈ Rd×n has full row rank and S−1 X is invertible, we have that AS−1 XA⊤ is invertible. Hence,
+
+                  δy = −(AS−1 XA⊤ )−1 AS−1 δµ            and         δs = A⊤ (AS−1 XA⊤ )−1 AS−1 δµ .
+
+Putting this into Sδx + Xδs = δµ , we have
+
+                                  δx = S−1 δµ − S−1 XA⊤ (AS−1 XA⊤ )−1 AS−1 δµ .
+
+The result follows from the definition of P.
+
+2.2    Lower Bounding Step Size
+The efficiency of interior point methods depends on how large a step we can take while staying within the domain.
+In the rest of this subsection, we write µ = xs for the current complementarity vector. We first study the step
+operators (I − P) and P. The following lemma implies that P is a nearly orthogonal projection matrix when µ
+is close to a multiple of the all-ones vector. Hence, the relative changes of X−1 δx and Sp   −1
+                                                                                                 δs are essentially the
+orthogonal decomposition of the relative step δµ /µ. For two vectors u, v, we define ∥u∥v = u⊤ Diag(v)u to be the
+                                                                                          def
+
+
+norm defined by v.
+Lemma 5. Under the assumption in Lemma 4, P is a projection matrix such that ∥Pv∥µ ≤ ∥v∥µ for any v ∈ Rn .
+Similarly, we have that ∥(I − P)v∥µ ≤ ∥v∥µ .
+Proof. P is a projection because P2 = P. Define the orthogonal projection matrix
+
+                                Porth = S−1/2 X1/2 A⊤ (AS−1 XA⊤ )−1 AX1/2 S−1/2 ,
+
+then we have
+
+                      ∥Pv∥2µ = v ⊤ XA⊤ (AS−1 XA⊤ )−1 AS−1 XSS−1 A⊤ (AS−1 XA⊤ )−1 AXv
+                             = v ⊤ S1/2 X1/2 Porth S1/2 X1/2 v
+                             ≤ v ⊤ S1/2 X1/2 S1/2 X1/2 v = ∥v∥2µ .
+
+The calculation for ∥(I − P)v∥µ is similar.
+
+
+                                                             3
+   Next we give a lower bound on the largest feasible step size.
+Lemma 6. We have that ∥X−1 δx ∥2∞ ≤ min1i µi ∥δµ /µ∥2µ and ∥S−1 δs ∥2∞ ≤ min1i µi ∥δµ /µ∥2µ . In particular, if ∥δµ /µ∥2µ <
+mini µi , we have (x + δx , s + δs ) ∈ P ◦ × D◦
+Proof. For ∥X−1 δx ∥∞ , we have mini µi ∥X−1 δx ∥2∞ ≤ ∥X−1 δx ∥2µ and hence
+
+                                     1                     1                            1
+                   ∥X−1 δx ∥2∞ ≤           ∥X−1 δx ∥2µ =         ∥(I − P)(δµ /µ)∥2µ ≤         ∥δµ /µ∥2µ .
+                                   mini µi               mini µi                      mini µi
+
+The proof for ∥S−1 δs ∥∞ is similar.
+    Hence, if ∥δµ /µ∥2µ < mini µi , we have that ∥X−1 δx ∥∞ < 1 and ∥S−1 δs ∥∞ < 1, i.e., |δx,i | < |xi | and |δs,i | < |si |
+for all i. Therefore, x + δx > 0 and s + δs > 0 are feasible.
+   To decrease µ uniformly, we set δµ = −hµ for some step size h. To ensure the feasibility, we need ∥δµ /µ∥2µ ≤
+mini µi and this gives the maximum step size
+                                                   s
+                                                     mini µi
+                                               h=     P      .                                             (2.2)
+                                                        i µi
+
+
+Note that the above quantity is maximized at h = n−1/2 when µ has all equal coordinates.
+
+2.3    Staying within a small ℓ2 distance
+The step size (2.2) is maximized when µ is a constant vector. A natural approach is therefore to keep µ as a vector
+close in ℓ2 norm to a multiple of the all-ones vector. This motivates the following algorithm:
+ Algorithm 1: L2Step(A, x, s, tstart , tend )
+   Define Px,s = S−1 A⊤ (AS−1 XA⊤ )−1 AX.
+   Invariant: (x, s) ∈ P ◦ × D◦√and ∥xs − t∥2 ≤ 4t .
+   Let t = tstart and h = 1/(16 n), where n is the number of columns in A.
+   repeat
+      Let t′ = max(t/(1 + h), tend ).
+      Let µ = xs and δµ = t′ − µ.
+      Let δx = X(I − Px,s )(δµ /µ) and δs = SPx,s (δµ /µ).
+      Set x ← x + δx , s ← s + δs and t ← t′ .
+   until t = tend ;
+   Return (x, s).
+    Note that the algorithm requires some initial point (x, s) close to the central path and we will show how to get
+this in the next section (by changing the linear program temporarily).
+    First, we show that the invariant is maintained in each step. The conclusion that the distance is less than t/6 is
+needed in Section A, where we call L2Step on a modified LP and then prove that the result is close to the central
+path for the original LP.
+Lemma 7. Suppose that the input satisfies (x, s) ∈ P ◦ × D◦ and ∥xs − tstart ∥2 ≤ tstart
+                                                                                    4 . Then, the algorithm L2Step
+maintains (x, s) ∈ P ◦ × D◦ and t > 0 such that ∥xs − t∥2 ≤ 6t .
+Proof. We prove by induction that ∥xs − t∥2 ≤ 6t after each step. Note that the input satisfies ∥xs − t∥2 ≤ 4t .
+   Let x′ = x + δx , s′ = s + δs and let t′ be as defined in the algorithm. Note that
+
+                             x′ s′ − t′ = (x + δx )(s + δs ) − t′ = µ + Sδx + Xδs + δx δs − t′ .
+
+Lemma 4 shows that Sδx + Xδs = t′ − µ. Hence, we have
+
+                                           x′ s′ − t′ = δx δs = X−1 δx · S−1 δs · µ.
+
+Using this, we have
+
+                    ∥x′ s′ − t′ ∥2 ≤ ∥µ1/2 X−1 δx ∥2 ∥µ1/2 S−1 δs ∥2 = ∥X−1 δx ∥µ ∥S−1 δs ∥µ ≤ ∥δµ /µ∥2µ .
+
+
+                                                              4
+Here we used Lemma 5 at the end.
+                    ′              ′
+   Using t′ − µ = tt (t − µ) + ( tt − 1)µ, we have
+
+                                             t′ t − µ    t′       t′              t′
+                              ∥δµ /µ∥µ = ∥            + ( − 1)∥µ ≤ ∥xs − t∥µ−1 + ∥ − 1∥µ .
+                                             t µ         t        t               t
+                                                                              ′
+
+                                        4 and maxi µi ≤ 4 t. Using | t − 1| ≤ h = 16 n , we have
+Since ∥µ − t∥2 ≤ 4t , we have mini µi ≥ 3t              5           t               1
+                                                                                    √
+
+                                         r                   r               r
+                                                                                          √
+                                                                      r
+                                    t′       4                 5         t     5
+                         ∥δµ /µ∥µ ≤             ∥xs − t∥2 + h    tn ≤      +h    tn ≤ 0.36 t.
+                                    t        3t                4        12     4
+
+Hence, we have ∥x′ s′ − t′ ∥2 ≤ ∥δµ /µ∥2µ ≤ 0.13t ≤ t′ /6. Furthermore, ∥δµ /µ∥2µ < mini µi , which implies (x′ , s′ ) is
+feasible (Lemma 6).
+    Note that the lemma above only concludes that the output is close to the central path. To upper bound the
+error, we can apply Lemma 1 which shows the duality gap is equal to x⊤ s.
+
+2.4     Solving LP Approximately and Exactly
+Here we discuss how to get a feasible interior point close to the central path by modifying the linear program. The
+runtime of an interior point method depends on how degenerate the linear program is.
+Definition 8. We define the following parameters for the linear program minAx=b,x≥0 c⊤ x:
+
+  1. Inner radius r: There exists an x ∈ P such that xi ≥ r for all i ∈ [n].
+  2. Outer radius R: For any x ≥ 0 with Ax = b, we have that ∥x∥2 ≤ R.
+  3. Lipschitz constant L: ∥c∥2 ≤ L.
+
+   Since L2Step requires a feasible point near the central path, we modify the linear program to make it happen.
+To satisfy the constraint Ax = b, we start the algorithm by taking a least-squares solution of the constraint Ax = b.
+Since it can be negative, we write the variable x = x+ − x− with both x+ , x− ≥ 0. We put a large cost vector on
+x− to ensure the solution is roughly the same. The crux of the proof is that if we optimize this new program well
+enough, we will have x+ − x− > 0 and hence x+ − x− gives a good starting point of the original program. For
+technical reasons, we need to put an extra constraint 1⊤ x+ ≤ Λ for some Λ to ensure the problem is bounded.
+
+Theorem 9. Given a linear program minAx=b,x∈Rn≥0 c⊤ x with inner radius r, outer radius R and Lipschitz constant
+L and any 0 ≤ η ≤ 31 . Consider the modified linear program by
+
+                                                   min           c+ , x+ + c− , x−
+                                              (x+ ,x− ,xθ )∈Pη
+
+with                             (                                                                     )
+                                                                                     n
+                                                                                     X
+                         Pη =      (x+ , x− , xθ ) ∈ R2n+1
+                                                      ≥0   : A(x+ − x− ) = b,              x+ + xθ = eb
+                                                                                            i
+                                                                                     i=1
+
+ where R = 6R/η, t = 4000n2 R/(η 2 r) · LR, x+ = t/(c + t/R), x− = x+ − A⊤ (AA⊤ )−1 b, c+ = c, c− = t/x− and
+eb = Pn x+ + R. Then, we have that
+       i=1 i
+
+  1. (x+ , x− , R) is on the central path of the modified program at t.
+                        def                                      def
+  2. For any primal x = (x+ , x− , xθ ) ∈ Pη and dual s = (s+ , s− , sθ ) such that 65 LR ≤ xi si ≤ 76 LR, we have that
+
+                                                    (x+ − x− , s+ − sθ ) ∈ P × D
+
+       and that x−     +      θ    +
+                 i ≤ ηxi and s ≤ ηsi for all i.
+
+Proof. Since the proof is not illuminating, we defer it to Appendix A.
+
+
+
+
+                                                                  5
+   Now we state our main algorithm.
+ Algorithm 2: SlowSolveLP(A, b, c, δ)
+  Assumption:√ the linear program has inner radius r, outer radius R and Lipschitz constant L.
+  Let ϵ = 1/(48 n), R = 6R/η, t = 4000n2 R/(η 2 r) · LR.
+  // Define the modified program minAx=b c⊤ x by Theorem 9 with parameters R and t.
+                            
+                 A −A 0
+  Let A =                     , c = (c, c− , 0), b = (b, eb) where c− and eb are defined in Definition 9.
+                 1⊤
+                  n   0   1
+  Let (x, s) be the explicit central path at t given by Theorem 9.
+  (x, s) ← L2Step(A, x, s, t, LR).
+  (x, s) ← (x+ − x− , s+ − sθ ) where x = (x+ , x− , xθ ) and s = (s+ , s− , sθ ).
+  (xend , send ) = L2Step(A, x+ − x− , s+ − sθ , LR, tend ) with tend = δLR/(2n).
+  Return xend .
+
+Theorem 10. Consider a linear program minAx=b,x≥0 c⊤ x with n variables and d constraints. Assume the linear
+program has inner radius r, outer radius R and Lipschitz constant L(see Definition 8). Then, SlowSolveLP outputs
+x such that
+
+                                               c⊤ x ≤       min       c⊤ x + δLR,
+                                                        Ax=b,x≥0
+
+                                                Ax = b,
+                                              x ≥ 0.
+                      √
+The algorithm takes O( n log(nR/(δr))) Newton steps (defined in (2.1)).
+   If we further assume that the solution x∗ = arg minAx=b,x≥0 c⊤ x is unique and that c⊤ x ≥ c⊤ x∗ + ζLR for any
+other vertex x of {Ax = b, x ≥ 0} for some ζ > δ ≥ 0, then we have that ∥x − x∗ ∥2 ≤ 2δR
+                                                                                       ζ .
+
+Proof. By Theorem 9, the point (x, s) is on the central path of the modified program at t. After the first call of
+L2Step, Lemma 7 shows that L2Step returns (x, s) such that ∥xs − t∥2 ≤ 6t with t = LR.
+     Theorem 9 shows that (x, s) = (x+ −x− , s+ −sθ ) ∈ P ×D and that (1−η)x+i ≤ xi ≤ xi and (1−η)si ≤ si ≤ si
+                                                                                           +              +           +
+
+. Since η = 48√n and ∥x s − t∥2 ≤ 6 with t = LR, we have that ∥xs − t∥2 ≤ 4 . This verifies the condition for
+                1           +  +        t                                          t
+
+the second call of L2Step.
+     After the second call of L2Step, Lemma 7 shows that L2Step returns (xend , send ) such that ∥xend send − tend ∥2 ≤
+  6 with tend = δLR/(2n). Hence, Lemma 1 shows that
+tend
+
+
+                c⊤ xend ≤     min      c⊤ x + x⊤
+                                               end send ≤     min       c⊤ x + 2tend n ≤     min      c⊤ x + δLR.
+                            Ax=b,x≥0                        Ax=b,x≥0                       Ax=b,x≥0
+
+
+For√the runtime, note that L2Step decreases t by a factor of √  1 − Ω(n−1/2 ) in each step. Hence, the first call takes
+O( n log(nR/r)) Newton steps and the second call takes O( n log(n/δ)) Newton steps.
+    For the last conclusion, we assume δ ≤ ζ and let P(ζ) = P ∩{c⊤ x ≤ c⊤ x∗ +tLR}. Note that P(ζ) is a cone at x∗
+(because there is no vertex other than x∗ with value less than c⊤ x∗ +ζLR). Hence, we have P(δ)−x∗ = ηδ (P(ζ)−x∗ ).
+Since x ∈ Pδ , we have that
+                                                  δ                         2δR
+                                     ∥x − x∗ ∥2 ≤ diameter(P(ζ) − x∗ ) ≤         .
+                                                  ζ                           ζ
+
+
+    If we know the solution of the linear program is integral or rational with some bound on the number of bits,
+then getting a solution close enough to x∗ allows us to round the solution to an integral solution. Therefore, the
+last conclusion of the theorem above gives us an exact linear program algorithm assuming A, b, c are integral and
+bounded. The uniqueness assumption can be achieved by perturbing the cost vector by a random vector (e.g., using
+the “isolation” lemma [10, Lemma 4]).
+Exercise 11. Make the perturbation deterministic while preserving solutions.
+
+
+
+
+                                                                  6
+3     Robust Interior Point Method
+To improve the interior point method, one can either improve the number of steps O(   e √n) or the cost per step. The
+first is a major open problem. In this note, we focus on the latter question. Recall from (2.1) that the linear system
+we solve in each step is of the form
+
+                                                     Sδx + Xδs = δµ ,
+                                                               Aδx = 0,
+                                                       ⊤
+                                                     A δy + δs = 0.                                              (3.1)
+
+In each step, x, s and δµ in the equation above change relatively by vectors with bounded ℓ2 norm. Thus, only
+a few coordinates change substantially in each step. To take advantage of this, the robust interior point method
+contains two new components: (1) an analysis of convergence when we only solve the linear system approximately
+(Section 3.1), and (2) a method for maintaining the solution throughout the iteration (Section 3.2 and Section 3.4).
+
+3.1    Staying within small ℓ∞ distance
+In the preceding description and analysis, we assumed that we computed each step of the interior point method
+precisely. However, it may suffice to compute steps approximately since our goal is only to stay close to the central
+path. This could have significant computational advantages.
+    To make the interior point method robust to noise in the updates to x and s, we need the method to work
+under a larger neighborhood than that given by the Euclidean norm (∥xs − t∥2 ≤ 4t ). We cannot increase the radius
+of the ℓ2 ball because we need the neighborhood to lie strictly inside the feasible region. One natural alternative
+choice of distance and potential would be a higher norm, ∥xs − t∥qq . However, analyzing the step δµ that minimizes
+∥µ + δµ − t∥qq involves many cases. Instead, we use the potential
+                                              n                     n
+                                              X                     X (eλri + e−λri )
+                                     Φ(r) =         cosh(λri ) =                         .                       (3.2)
+                                              i=1                   i=1
+                                                                               2
+
+with r = xs−t
+           t   for some scalar λ = Θ(log n). This potential induces the following algorithm, whose steps use
+δµ ≈ −c∇Φ( xs−t
+             t ).
+
+ Algorithm 3: RobustStep(A, x, s, tstart , tend )
+  Define Φ(r) according to (3.2) with λ = 16 log(40n).
+  Invariant: (x, s) ∈ P ◦ × D√◦ and Φ((xs − t)/t) ≤ 16n.
+  Let t = tstart , h = 1/(128λ n), and let n be the number of columns in A.
+  repeat
+     Pick x, s and r such that ∥ ln x − ln x∥∞ ≤ 48 1
+                                                       , ∥ ln s − ln s∥∞ ≤ 48
+                                                                           1
+                                                                                         t ∥∞ ≤ 48λ .
+                                                                              and ∥r − xs−t      1
+
+                                             t′
+     Let t = max(t/(1 + h), tend ), δ µ = − 32λ ∥g∥2 , g = ∇Φ(r).
+           ′                                      g
+
+     Find δx , δs such that
+
+
+                                                        Sδx + Xδs = δ µ ,
+                                                                 Aδx = 0,
+                                                           ⊤
+                                                        A δy + δs = 0.                                       (3.3)
+
+       Set x ← x + δx , s ← s + δs and t ← t′ .
+    until t = tend ;
+    Return (x, s).
+    We begin with useful facts about Φ.
+
+Lemma 12. Define Φ(r) according to (3.2). For any r ∈ Rn , we have that ∥r∥∞ ≤ log(2Φ(r))
+                                                                                    λ     and ∥∇Φ(r)∥2 ≥
+√λ (Φ(r) − n). Moreover, if Φ(r) ≥ 4n and ∥δ∥∞ ≤ 1 , we have
+  n                                              5λ
+
+                                                                          1
+                                       ∥∇Φ(r + δ) − ∇Φ(r)∥2 ≤               ∥∇Φ(r)∥2 .
+                                                                          3
+
+
+                                                                7
+Figure 3.1: The Central Path. The standard method keeps the current point within a relative ℓ2 -norm ball, while
+it suffices to use a larger ℓ∞ -norm ball. The robust method provides a bridge to the latter via the cosh ball defined
+by Φ.
+
+
+Proof. For every i, we have Φ(r) ≥ 12 eλ|ri | , and hence ∥r∥∞ ≤ log(2Φ(r))
+                                                                      λ     .
+   For the second claim, using that ∇Φ(r) = (λ sinh(λri ))ni=1 , we have
+                                         v                       v
+                                         u n                     u n
+                                         uX                      uX
+                          ∥∇Φ(r)∥2 = λ   t            2
+                                                  sinh (λri ) = λt (cosh2 (λri ) − 1)
+                                              i=1                      i=1
+                                              n q                         n
+                                          λ X                         λ X
+                                        ≥√        cosh2 (λri ) − 1 ≥ √       (cosh(λri ) − 1)
+                                           n i=1                       n i=1
+                                           λ
+                                        = √ (Φ(r) − n).
+                                            n
+   For the last claim, using sinh(r + δ) = sinh r cosh δ + cosh r sinh δ and cosh r ≤ | sinh r| + 1, for |δ| ≤ 51 , we have
+                        | sinh(r + δ) − sinh(r)| ≤ | cosh δ − 1| · | sinh r| + | sinh δ| · cosh r
+                                                    ≤ (| cosh δ − 1| + | sinh δ|) · | sinh r| + | sinh δ|
+                                                      1            1
+                                                    ≤ | sinh r| + .
+                                                      4            4
+Using that ∇Φ(r) = (λ sinh(λri ))ni=1 , for ∥δ∥∞ ≤ 5λ
+                                                    1
+                                                      , we have
+                                                                     √
+                                                       1               nλ
+                                ∥∇Φ(r + δ) − ∇Φ(r)∥2 ≤ ∥∇Φ(r)∥2 +         .                                             (3.4)
+                                                       4               4
+                                          √
+Since Φ(r) ≥ 4n, we have that ∥∇Φ(r)∥2 ≥ 3 nλ and hence (3.4) shows that
+                                                    1  1          1
+                            ∥∇Φ(r + δ) − ∇Φ(r)∥2 ≤ ( + )∥∇Φ(r)∥2 = ∥∇Φ(r)∥2 .
+                                                    4 12          3
+
+
+   We collect some basic bounds on the step in the following lemma.
+Lemma 13. Using the notation in RobustStep (Algorithm 3). Under the invariant Φ((xs − t)/t) ≤ 16n, we have
+             t               1                    1
+∥xs − t∥∞ ≤ 16 , ∥δx /x∥2 ≤ 16λ , and ∥δs /s∥2 ≤ 16λ .
+Proof. Using Φ((xs − t)/t) ≤ 16n and Lemma 12, we have
+                                                               t log(32n)    t
+                                              ∥xs − t∥∞ ≤                 ≤
+                                                                    λ       16
+                              −1                                                       −1          −1
+    By Lemma 4, we have X          δx = (I − P)(δ µ /µ) where µ = xs and P = S              A⊤ (AS      XA⊤ )−1 AX. By Lemma
+5, we have
+                                        ∥δx /x∥µ = ∥(I − P)(δ µ /µ)∥µ ≤ ∥δ µ /µ∥µ .
+
+
+                                                                8
+Using that ∥xs − t∥∞ ≤ 16
+                        t
+                          , ∥ ln x − ln x∥∞ ≤ 48
+                                              1
+                                                 , ∥ ln s − ln s∥∞ ≤ 48
+                                                                     1
+                                                                                      11 t and hence
+                                                                        , we have µ ≥ 10
+                                              r                          r
+                                       1/48       11                         11                    11
+                        ∥δx /x∥2 ≤ e                  ∥δx /x∥µ ≤ e1/48           ∥δ µ ∥µ−1 ≤ e1/48     ∥δ µ ∥2
+                                                  10t                        10t                   10t
+                             ′
+Using the formula δ µ = − 32λ
+                           t
+                              ∥g∥2 , we have
+                               g
+
+
+
+                                                                     11 t′      1
+                                                  ∥δx /x∥2 ≤ e1/48           ≤     .
+                                                                     10 32λt   16λ
+The same proof gives ∥δs /s∥2 ≤ 16λ
+                                 1
+                                    .
+   Using this, we prove the algorithm RobustStep satisfies the invariant on the distance.
+Lemma 14. Suppose that the input satisfies (x, s) ∈ P ◦ × D◦ and Φ((xs − tstart )/tstart ) ≤ 16n. Let x(k) , s(k) , t(k)
+be the x, s, t computed in the RobustStep after the k-th step. Let Φ(k) = Φ((x(k) s(k) − t(k) )/t(k) ). Then, we have
+                                                    (
+                                           (k+1)     12n if Φ(k) ≤ 8n
+                                         Φ       ≤                       .
+                                                     Φ(k) otherwise
+
+                                               1
+Furthermore, we have that ∥r(k+1) − r(k) ∥2 ≤ 16λ where r(k) = (x(k) s(k) − t(k) )/t(k) .
+
+Proof. Fix some iteration k. Let x = x(k) , s = s(k) , t = t(k) , x′ = x(k+1) , s′ = s(k+1) and t′ = t(k+1) . We define
+                                                                                                         t′
+r = (xs − t)/t and r′ = (x′ s′ − t′ )/t′ . By the definition of δx and δs , we have Sδx + Xδs = δ µ = − 32λ ∥g∥2 and hence
+                                                                                                             g
+
+
+
+                            x′ s′ − t′ (x + δx )(s + δs ) − t′   xs + sδx + xδs + δx δs − t′
+                                      =                        =
+                                t′                t′                         t′
+                                        xs − t′ + sδx + xδs + (s − s)δx + (x − x)δs + δx δs
+                                      =
+                                                                  t′
+                                        xs − t      1     g
+                                      =        −      ·        +η                                                   (3.5)
+                                          t       32λ ∥g∥2
+
+where the error term
+                                          t      xs (s − s)δx + (x − x)δs + δx δs
+                                    η = ( ′ − 1)    +                             .
+                                         t        t              t′
+Now, we bound the error term η. Using Lemma 13 (∥δx /x∥2 ≤ 16λ        1
+                                                                         , ∥δs /s∥2 ≤ 16λ
+                                                                                       1
+                                                                                          , ∥xs − t∥∞ ≤ 16 t
+                                                                                                             ) and the
+                                                   ′
+definition of the algorithm (λ ≥ 16, |t − t| ≤ 128λ n ≤ 128λ n , ∥ ln x − ln x∥∞ ≤ 48 , ∥ ln s − ln s∥∞ ≤ 48 ), we have
+                                       ′          t√       t√                        1                    1
+
+
+                                  t      xs √       xs    s−s       δx
+                          ∥η∥2 ≤| ′ − 1|∥ ∥∞ n + ∥ ′ ∥∞ ∥       ∥∞ ∥ ∥2
+                                  t       t          t      s        x
+                                     xs     x−x     δs     xs      δx   δs
+                                 + ∥ ′ ∥∞ ∥     ∥∞ ∥ ∥2 + ∥ ′ ∥∞ ∥ ∥2 ∥ ∥2
+                                      t      x      s       t      x     s
+                                    1 17 9 1/48         1     1      9 1 1         1
+                               ≤         + (e    − 1)(    +      )+ (          )≤     .                             (3.6)
+                                 128λ 16 8             16λ 16λ       8 16λ 16λ    80λ
+   In particular, we use (3.5) and (3.6) to get
+                                                                  1            1
+                                                  ∥r − r′ ∥2 ≤       + ∥η∥2 ≤     .
+                                                                 32λ          16λ
+This proves the conclusion about r.
+   Case 1: Φ(r) ≤ 8n.
+   The definition of Φ together with the fact ∥r − r′ ∥2 ≤ 16λ
+                                                            1
+                                                               implies that Φ(r′ ) ≤ 32 Φ(r) ≤ 12n.
+   Case 2: Φ(r) ≥ 8n.
+   Mean value theorem shows there is re between r and r′ such that
+                                                                                           
+                           ′                      ′                            1    g
+                        Φ(r ) = Φ(r) + ⟨∇Φ(e r), r − r⟩ = Φ(r) + ∇Φ(e   r), −           +η
+                                                                              32λ ∥g∥2
+
+
+
+                                                                   9
+where we used (3.5) at the end. Using ∥r − r′ ∥2 ≤ 16λ
+                                                    1
+                                                       and ∥r − r∥∞ ≤ 48λ
+                                                                       1
+                                                                          (by assumption), we have ∥r − re∥∞ ≤ 5λ
+                                                                                                                1
+                                                                                                                  .
+Since Φ(r) ≥ 8n, we have Φ(r) ≥ 4n and hence Lemma 12 shows that
+                                                                        1
+                                                  r) − ∇Φ(r)∥2 ≤
+                                              ∥∇Φ(e                       ∥∇Φ(r)∥2 .
+                                                                        3
+Using g = ∇Φ(r) and letting η2 = ∇Φ(er) − ∇Φ(r), we have
+                                                   
+                                         1   g            1          1 ⊤ g
+             Φ(r′ ) − Φ(r) = g + η2 , −          +η =−       ∥g∥2 −    η       + g ⊤ η + η2⊤ η.
+                                        32λ ∥g∥2         32λ        32λ 2 ∥g∥2
+Using ∥η2 ∥2 ≤ 31 ∥g∥2 and ∥η∥2 ≤ 80λ
+                                   1
+                                      (3.6), we have
+                                   1           1    1               1    1       1       1
+                 Φ(r′ ) − Φ(r) ≤ −   ∥g∥2 +        · ∥g∥2 + ∥g∥2 ·     + ∥g∥2 ·     ≤−      ∥g∥2
+                                 32λ          32λ 3                80λ 3        80λ    240λ
+                                                       √
+Using Lemma 12, we have ∥g∥2 ≥ √λn (Φ(r) − n) ≥ 3λ n. Hence, we have
+                                                             √
+                                                               n
+                                                 ′
+                                             Φ(r ) ≤ Φ(r) −      < 16n.                                   (3.7)
+                                                             80
+The potential actually decreases in this case. This proves the conclusion about Φ.
+                                                                  Pn
+Exercise 15. Show that we can use the potential function Φ = i=1 exp(λ|vi |) to get a similar conclusion.
+
+3.2    Selecting x, s and r
+Each step of the robust interior point method solves the linear system
+                                                                      
+                                       S X 0              δx         ∇Φ(r)
+                                     A 0       0   δs  =          0   
+                                                 ⊤        δ            0
+                                        0 I A               y
+
+for some vectors x, s, r such that ∥ ln x − ln x∥∞ ≤ 48
+                                                      1
+                                                        , ∥ ln s − ln s∥∞ ≤ 48
+                                                                             1
+                                                                               , ∥r − r∥∞ ≤ 48λ
+                                                                                             1
+                                                                                                . The key observation
+is that only a few coordinates of x, s and r change significantly each step and hence we can maintain the solution
+of the linear system instead of computing from scratch. In this section, we discuss how to select x, s, r with as few
+updates as possible while maintaining the invariants.
+    First, we observe that ln x, ln s and r change by O(1) in ℓ2 norm in each step.
+Lemma 16. Define x(k) , s(k) , r(k) according to Lemma 14. Then, ∥ ln x(k+1) − ln x(k) ∥2 , ∥ ln s(k+1) − ln s(k) ∥2 and
+∥r(k+1) − r(k) ∥2 are all bounded by 1/(8λ).
+Proof. Lemma 5 shows that
+                                          ∥(x(k+1) − x(k) )/x(k) ∥µ(k) ≤ ∥δ µ /µ(k) ∥µ(k)                          (3.8)
+where µ = x s and x , s are the x, s used in the k-th step.
+        (k)     (k) (k)       (k)   (k)
+
+   To bound µ(k) , Lemma 14 shows that the invariant Φ(r(k) ) ≤ 16n holds and hence Lemma 12 shows that (recall
+λ = 16 log(40n)):
+                                                                              log(32n)      1
+                               ∥(x(k) s(k) − t(k) )/t(k) ∥∞ = ∥r(k) ∥∞ ≤               ≤      .
+                                                                                  λ        16
+Together with the fact that ∥ ln x(k) − ln x(k) ∥∞ ≤ 48  1
+                                                           , ∥ ln s(k) − ln s(k) ∥∞ ≤ 48
+                                                                                       1
+                                                                                         , we have
+                                                        x(k) s(k) − t(k)     1
+                                                    ∥           (k)
+                                                                         ∥∞ ≤ .
+                                                              t              8
+                                                                                       (k+1)
+Using this on (3.8) gives ∥(x(k+1) − x(k) )/x(k) ∥2 ≤ 87 t(k)
+                                                           1                                g
+                                                              ∥δ µ ∥2 .Using δ µ = − t 32λ ∥g∥ 2
+                                                                                                 , we have
+                                                                               1
+                                                ∥(x(k+1) − x(k) )/x(k) ∥2 ≤       .
+                                                                              28λ
+To translate the bound to log scale, we note that | ln(1 + t)| ≤ 2|t| for all |t| ≤ 12 and hence
+                                                                       x(k+1) − x(k)        1
+                                ∥ ln x(k+1) − ln x(k) ∥2 = ∥ ln(1 +                  )∥2 ≤     .
+                                                                           x(k)            14λ
+   The bound for ∥ ln s(k+1) − ln s(k) ∥2 is similar.
+   The bound for ∥r(k+1) − r(k) ∥2 follows from Lemma 14.
+
+
+                                                                 10
+    Now the question is how to select ln x, ln s and r such that they are close to ln x, ln s and r in ℓ∞ norm. If the cost
+of updating the inverse of a matrix is linear in the rank of the update, then we can simply update any coordinate
+of x, s and r whenever they violate the condition. However, due to fast matrix multiplication, the average cost
+(per rank) of update is lower when the rank of update is large. Therefore, it is beneficial to update coordinates
+preemptively.
+    Now we state the algorithm for selecting x, s and r. This algorithm is a general algorithm for maintaining a
+vector v such that ∥v − v∥∞ ≤ δ. For every 2ℓ steps, the algorithm updates the coordinate of the vector v if that
+coordinate has changed by more than δ/(2 log n) between this step and 2ℓ steps earlier.
+ Algorithm 4: SelectVector(v, v (0) , v (1) , · · · , v (k) , δ)
+  Let I = {} be the set of coordinates to update.
+  for ℓ = 0, 1, · · · , ⌈log n⌉ do
+     if k = 0 mod 2ℓ then
+         if ℓ = ⌈log n⌉ then
+             I = [n].
+         else
+                                   (k)      (k−2ℓ )
+            I = I ∪ {i : |vi             − vi         | ≥ δ/(2 ⌈log n⌉)}.
+         end
+      end
+   end
+            (k)
+   v i ← vi for all i ∈ I
+   Return v
+
+Lemma 17. Given vectors v (0) , v (1) , v (2) , · · · arriving in a stream, suppose that ∥v (k+1) − v (k) ∥2 ≤ β for all k. For
+any 12 > δ > 0, define the vector v (0) = v (0) and v (k) = SelectVector(v (k−1) , v (0) , v (1) , · · · , v (k) , δ). Then, we have
+that
+   • ∥v (k) − v (k) ∥∞ ≤ δ for all k.
+
+   • ∥v (k) − v (k−1) ∥0 ≤ O(min(22ℓk (β/δ)2 log2 n, n)) where ℓk is the largest integer ℓ with k = 0 mod 2ℓ .
+Proof. For bounding the error, we first fix some coordinate i ∈ [n]. Let k ′ be the iteration when v i was last updated,
+          (k)    (k′ )     (k′ )
+namely, v i = v i = vi . Since we set v ← v every 2⌈log n⌉ steps, we have k − 2⌈log n⌉ ≤ k ′ < k. We can write
+k ′ = k0 < k1 < k2 < · · · < ks = k such that ki+1 − ki is a power of 2 and ki+1 − ki divides ki+1 with s ≤ 2 ⌈log n⌉.
+Hence, we have that
+                                                                s−1
+                                     (k)   (k)    (k )    (k )        (k   )     (k )
+                                                                X
+                                   vi − v i = vi s − v i 0 =        (vi j+1 − vi j ).
+                                                                            j=0
+
+                                                    (k   )   (k )                              (k)     (k)
+Since v i is not updated since step k ′ , we have |vi j+1 − vi j | ≤ δ/(2 ⌈log n⌉) and hence |vi − v i | ≤ δ. Since this
+holds for every i, we have that ∥v (k) − v (k) ∥∞ ≤ δ.
+                                                                                         (k)    (k−2ℓ )
+   For the sparsity of v (k+1) − v (k) , we first bound the size of the set Iℓ = {i : |vi − vi
+                                                                                def
+                                                                                                        | ≥ δ/(2 ⌈log n⌉)}.
+Note that
+                                            n                             n    k−1
+                                    δ2     X      (k)     (k−2ℓ ) 2    ℓ
+                                                                         X     X      (t+1)    (t)
+                       |Iℓ | ·        2  ≤     |v i   − v i      |  ≤ 2             |vi     − vi |2 ≤ 22ℓ β 2
+                                 5 log n   i=1                           i=1 t=k−2ℓ
+
+where we used ∥v (t+1) − v (t) ∥2 ≤ β at the end. Hence, we have |Iℓ | = O(22ℓ (β/δ)2 log2 n). Hence, the total number
+of changes is bounded by
+                                                ℓk
+                                                X
+                                          |I| ≤    |Iℓ | = O(22ℓk (β/δ)2 log2 n).
+                                                           ℓ=0
+
+
+
+
+3.3     Framework
+In this section, we give the meta theorem by combining the algorithm RobustStep and SelectVector. The
+algorithm is given in Algorithm 5.
+
+
+                                                                       11
+ Algorithm 5: FastRobustStep(A, x, s, tstart , tend )
+  Define Φ(r) according to (3.2) with λ = 16 log(40n).
+  Invariant: (x, s)√∈ P ◦ × D◦ and Φ((xs − t)/t) ≤ 16n.
+  Let h = 1/(128λ n), and let n be the number of columns in A.
+                                                                                  (0)
+  Set k ← 0, t(0) = tstart , x(0) = x(0) = x, s(0) = s(0) = s, r(0) = r(0) = xs−t
+                                                                               t(0)
+                                                                                      .
+  repeat
+                                                       (k+1)
+     Let t(k+1) = max(t(k) /(1 + h), tend ), δ µ = − t 32λ ∥g∥
+                                                             g
+                                                               2
+                                                                 , g = ∇Φ(r(k) ).
+     Find δx , δs such that
+
+                                                       (k)            (k)
+                                                     S       δx + X         δs = δ µ ,
+                                                                      Aδx = 0,
+                                                               ⊤
+                                                             A δy + δs = 0.                                         (3.9)
+
+      Set x(k+1) ← x(k) + δx , s(k+1) ← s(k) + δs , r(k+1) ← (x(k+1) s(k+1) − t(k+1) )/t(k+1) .
+      ln x(k+1) = SelectVector(ln x(k) , ln x(0) , ln x(1) , · · · , ln x(k+1) , 1/48).
+      ln s(k+1) = SelectVector(ln s(k) , ln s(0) , ln s(1) , · · · , ln s(k+1) , 1/48).
+      r(k+1) = SelectVector(r(k) , r(0) , r(1) , · · · , r(k+1) , 1/(48λ)).
+      Set k ← k + 1.
+   until t(k) = tend ;
+   Return (x(k) , s(k) ).
+    The intermediate variables x(k) , s(k) , x(k) , s(k) , r(k) can be stored implicitly and the cost of SelectVector roughly
+depends on how many coordinates of x, s, r are updated. Hence, the bottleneck of FastRobustStep is solving the
+linear systems in 3.9. The cost of solving a sequence of linear systems in general depends on the number of
+entries changed. Combining the lemmas proved in the previous two subsections, we can prove the correctness of
+FastRobustStep and bound the number of entries changed.
+                                                                                         def
+Lemma
+  √     18. Suppose that the input satisfies (x, s) ∈ P ◦ × D◦ and Φstart = Φ((xs − tstart )/tstart ) ≤ 16n. After
+O( n log(tstart /tend )) iterations, FastRobustStep outputs (x, s) such that
+
+                                          Φ((xs − tend )/tend ) ≤ max(Φstart , 12n).
+
+Furthermore, in the k-th step, we have
+
+                   ∥x(k) − x(k−1) ∥0 + ∥s(k) − s(k−1) ∥0 + ∥r(k) − r(k−1) ∥0 ≤ O(min(22ℓk log2 n, n))
+
+where ℓk is the largest integer ℓ with k = 0 mod 2ℓ .
+Proof. Note that FastRobustStep is an instantiation of RobustStep, and its output is analyzed in Lemma 14. The
+sparsity guarantees for x, s, and r follow from Lemma 17 with β = 8λ
+                                                                   1
+                                                                     (Lemma 16) and δ ≥ 48λ 1
+                                                                                              .
+   As we see from Section 2.4, we can solve a linear program by calling FastRobustStep (or L2Step) twice and
+that                                                       O(1)
+                                              tstart     nR
+                                                     =
+                                               tend      δr
+for both calls. Hence, the total number of steps is bounded by
+                                                          √       nR
+                                                    T = O( n log(    ))
+                                                                  δr
+and the number of entries changed is bounded by
+                                   T
+                                   X                                                     nR
+                                         O(min(22ℓk log2 n, n)) = O(n log n · log(          )).
+                                                                                         δr
+                                   k=1
+
+Note that we need to change at least n entries to get an approximate solution. Hence, the number of changes is
+optimal up to a polylogarithmic factor.
+
+
+                                                               12
+3.4    Inverse Maintenance
+In this section, we discuss how to maintain the solution of the linear system (Newton step) efficiently. There are
+many different ways of maintaining the solution depending on the structure of A. In this note, we consider the
+generic case that A is an arbitrary matrix. Although both the matrix and the vector of the Newton step change
+during the algorithm, we can simplify by moving the vector into the matrix.
+Fact 19. For any invertible matrix M ∈ Rn×n and any vector v ∈ Rn , we have
+                                                    −1
+                                                                   M−1   M−1 v
+                                                                               
+                                           M   v
+                                                          =                          .
+                                           0   −1                   0     −1
+
+    Hence, the question of maintaining the solution reduces to the problem of maintaining a column of the inverse
+of the matrix                                                           
+                                                    S X 0 ∇Φ(r)
+                                                  A 0       0      0
+                                                                                                           (3.10)
+                                             def
+                                                                         
+                                      Mx,s,r =   0 I A⊤
+                                                                         .
+                                                                    0    
+                                                    0 0      0     −1
+When we update x, s, r to x + δx , s + δs , r + δr with q coordinates modified in total, there are only q entries in M
+that change. Hence, we can compute the update of the inverse of M using the Woodbury matrix identity (Equation
+(3.11)). The idea of using the Woodbury identity together with fast matrix multiplication goes back to Vaidya [18].
+Lemma 20. Given vectors x, s, r ∈ Rn and an update δx , δs , δr ∈ Rn , let q = ∥δx ∥0 + ∥δs ∥0 + ∥δr ∥0 and Tm,n,ℓ be
+the cost of multiplying an m × n matrix with an n × ℓ matrix. Then,
+            −1                      −1
+   • Given Mx,s,r , we can compute Mx+δx ,s+δs ,r+δr
+                                                     in time O(Tn,q,n ).
+
+   • Given M−1         −1                       −1
+            x,s,r and Mx,s,r b, we can compute Mx+δx ,s+δs ,r+δr b in time O(Tq,q,q + nq).
+
+Proof. We write M0 = Mx,s,r and M1 = Mx+δx ,s+δs ,r+δr . Note that M1 and M0 are off by just q entries. Hence,
+we can write
+                                         M1 = M0 + UCV
+where U consists of q columns of the identity matrix, C is a q × q matrix and V consists of q rows of the identity
+matrix. Hence, the Woodbury matrix identity shows that
+
+                      M−1
+                       1 = (M0 + UCV)
+                                     −1
+                                        = M−1   −1
+                                           0 − M0 U(C
+                                                     −1
+                                                        + VM−1
+                                                            0 U)
+                                                                 −1
+                                                                    VM−1
+                                                                      0 .                                      (3.11)
+
+Note that M−1         −1         −1                       −1
+           0 U, VM0 U, VM0 are just blocks of M0 and no computation is needed. Hence, we can compute
+           −1
+(C−1 + VM0 U)−1 in the time to invert two q × q matrices, which is O(Tq,q,q ). The rest of the formula can be
+computed in O(Tn,q,q + Tn,q,n ) = O(Tn,q,n ) time. In total, the runtime is O(Tn,q,n ).
+   For computing M−11 b, we note that
+
+                               M−1     −1     −1
+                                1 b = M0 b − M0 U(C
+                                                    −1
+                                                       + VM−1
+                                                           0 U)
+                                                                −1
+                                                                   VM−1
+                                                                     0 b.
+
+Since M−1
+        0 b is given, the above formula can be computed in O(Tq,q,q + nq) time where the O(nq) term comes from
+multiplying a q × n matrix with an n-vector and a n × q matrix with a q-vector.
+   To use the previous lemma, we use the following estimate for Tn,r,n .
+Definition 21. The exponent of matrix multiplication ω is the infimum among all ω ≥ 0 such that it takes nω+o(1)
+time to multiply an n×n matrix by an n×n matrix. The dual exponent of matrix multiplication α is the supremum
+among all α ≥ 0 such that it takes n2+o(1) time to multiply an n × n matrix by an n × nα matrix. Currently,
+ω ≤ 2.3729 [3, 24, 11, 1] and α ≥ 0.3138 [11, 5].
+                                                              ω−2        ω−2
+Lemma 22. For r ≤ n, we have Tn,r,n = n2+o(1) + nω− 1−α +o(1) r 1−α .
+
+
+
+
+                                                              13
+ Algorithm 6: InverseMaintenance()
+   Set k ← 0 and ℓ∗ such that 22ℓ∗ = Θ(min(nα , n2/3 )).
+   while Not finished do
+      Obtain the current x(k) , s(k) , r(k) .
+      if k = 0 mod 2ℓ∗ then
+          Update T to M−1    x(k) ,s(k) ,r (k)
+                                                using Lemma 20.
+          u ← Te2n+d+1 , v ← u.
+      else
+          Update v to Mx−1    (k) ,s(k) ,r (k) e2n+d+1 using vector u and Lemma 20.
+
+      end
+      k ←k+1
+      Let (δx , δs ) be the first 2n coordinates of v.
+      Yield (δx , δs )
+   end
+    We note that in the algorithm above, we do not compute the inverse of M in every iteration, which would be
+too expensive. Rather, we compute M−1 b as needed by using the previously computed M−1 (from possibly many
+iterations ago) with a low-rank update using the Woodbury formula that we maintain.
+    Combining Lemma 20 with Lemma 17, we have the following guarantee.
+Lemma 23. Using InverseMaintenance to implement Line 3.9 of FastRobustStep (Algorithm 5), FastRobustStep
+takes in total time
+                       O((nω+o(1) + n2+1/6+o(1) + n5/2−α/2+o(1) ) log(tstart /tend )).
+Proof. The bottleneck of FastRobustStep is the time to update v and T. This depends on the number of coordinates
+updated in x, s, r. Lemma 16 shows that ln x, ln s and r change by at most α = 1/(8λ) in ℓ2 norm per step. Since we
+                                                                              def
+
+
+set the error of SelectVector to be δ = 1/(48λ) (or larger), Lemma 17 shows that qk = O(22ℓk log2 n) coordinates
+                                        def                                            def
+
+
+in x, s, r are updated at the k-th step where ℓk is the largest integer ℓ with k = 0 mod 2ℓ . We can now bound all
+the computation costs as follows.
+    Cost of updating v: We update u whenever k = 0 mod 2ℓ∗ . Within that 2ℓ∗ steps, the number of coordinates
+updated in x, s, r is bounded by
+                                           ℓ∗              ℓ∗
+                                          2X  −1          2X  −1
+                                                                   O(22ℓk log2 n) = O(22ℓ∗ log2 n).
+                                    def
+                                  q=               qk =
+                                           k=1             k=1
+
+Therefore, Mx(k) ,s(k) ,r(k) and T−1 are off by at most q coordinates. Lemma 20 shows that it takes
+
+                                                                  ee 2ℓ∗ ω
+                                                 O(Tq,q,q + nq) = O(2      + n22ℓ∗ )
+
+time to compute v = M−1                 e       using u = Te2n+d+1 , where we used O    to omit no(1) terms.
+                                                                                     ee
+                       x(k) ,s(k) ,r (k) 2n+d+1
+   Cost of updating T: For the k-th step that updates T, the number of coordinates updated in x, s, r is bounded
+by q + O(22ℓk log2 n) = O(22ℓk log2 n) where the first term is due to the delayed updates and the second term is
+due to the updates at that step. Lemma 20 shows that it takes O(T           2ℓk ) time to update T. Since 2
+                                                                                                             2ℓk
+                                                                                                                 updates
+                                                                     ee
+                                                                                   n,n,2
+happen every 2ℓk iterations, the amortized cost is
+                                1                                   1
+                                2 log n                             2 log n
+                             ee X −ℓ             ee X ω− ω−2     ω−2
+                             O(   2 Tn,n,22ℓ ) = O(  (n 1−α 22ℓ· 1−α −ℓ + n2 2−ℓ ))
+                                 ℓ=ℓ∗                                ℓ=ℓ∗
+                                                                    1
+                                                                    2 log n
+                                                             ee X ω− ω−2     ω−2
+                                                           = O(   n 1−α 22ℓ· 1−α −ℓ + n2 2−ℓ∗ )
+                                                                     ℓ=ℓ∗
+
+where we used Lemma 22. The sum above is dominated by either the term at ℓ = ℓ∗ or the term at ℓ = 12 log n.
+Hence, the amortized cost of updating T is
+                            ee ω− ω−2        ω−2           1               ee ω− 21
+                                  1−α 22ℓ∗ · 1−α −ℓ∗ + nω− 2 + n2 2−ℓ∗ ) = O(n
+                            O(n                                                     + n2 2−ℓ∗ )
+
+
+                                                                       14
+                    ω−2     ω−2
+where we used nω− 1−α 22ℓ∗ · 1−α ≤ n2 since 22ℓ∗ ≤ nα .
+                                      ee ω
+   Cost of initializing
+                  √      T and u: O(n       ).
+   Since there are n log(tstart /tend ) steps up to constants, the total cost is
+
+                            ee ω √                                               1
+                            O(n   + n log(tstart /tend )(22ℓ∗ ω + n22ℓ∗ + nω− 2 + n2 2−ℓ∗ ))
+                            ee √                                  1
+                           =O(   n log(tstart /tend )(n22ℓ∗ + nω− 2 + n2 2−ℓ∗ ))
+
+where we used 22ℓ∗ ω ≤ nαω ≤ n. Putting 22ℓ∗ = min(nα , n2/3 ), we have
+
+                                    ee ω
+                                    O((n + n2+1/6 + n5/2−α/2 ) log(tstart /tend )).
+
+
+
+   Following Section 2.4, we can find the initial point by modifying the linear program and this gives the following
+theorem.
+Theorem 24. Consider a linear program minAx=b,x≥0 c⊤ x with n variables and d constraints. Assume the linear
+program has inner radius r, outer radius R and Lipschitz constant L (see Definition 8). Then we can find x such
+that
+
+                                             c⊤ x ≤      min     c⊤ x + δLR,
+                                                      Ax=b,x≥0
+
+                                              Ax = b,
+                                                x ≥ 0.
+
+in time
+                              O((nω+o(1) + n2+1/6+o(1) + n5/2−α/2+o(1) ) log(R/(δr))).
+   If we further assume that the solution x∗ = arg minAx=b,x≥0 c⊤ x is unique and that c⊤ x ≥ c⊤ x∗ + ηLR for any
+other vertex x of {Ax = b, x ≥ 0} for some η > δ ≥ 0, then we have that ∥x − x∗ ∥2 ≤ 2δR
+                                                                                       η .
+
+Proof. The algorithm for finding x is the same as SlowSolveLP except that the function L2Step is replaced by the
+function FastRobustStep. The runtime of FastRobustStep is analyzed in Lemma 23. Since FastRobustStep is
+an instantiation of RobustStep, its output is analyzed in Lemma 14.
+
+Historical Note. The interior-point method was pioneered by Karmarkar [9] and developed in beautiful ways
+(including
+√           [17, 18, 15, 16, 12, 13]). This classical approach appeared to reach its limit of requiring the solution of
+  n linear systems until the paper of Cohen, Lee and Song [2] which reduced the complexity of approximate linear
+programming to nω+o(1) log(1/ϵ), by introducing the robust central path method. Using further insights, their
+algorithm was derandomized by van den Brand [19]. The technique has been extended in subsequent papers to
+other optimization problems [14, 7, 23, 8, 20, 6], and has also played a crucial role in faster algorithms for classical
+combinatorial optimization problems such as matchings and flows [22, 21, 4].
+
+
+References
+ [1] Josh Alman and Virginia Vassilevska Williams. A refined laser method and faster matrix multiplication. In
+     Proceedings of the 2021 ACM-SIAM Symposium on Discrete Algorithms (SODA), pages 522–539. SIAM, 2021.
+ [2] Michael B Cohen, Yin Tat Lee, and Zhao Song. Solving linear programs in the current matrix multiplication
+     time. arXiv preprint arXiv:1810.07896, 2018.
+ [3] Don Coppersmith and Shmuel Winograd. Matrix multiplication via arithmetic progressions. In Proceedings of
+     the nineteenth annual ACM symposium on Theory of computing, pages 1–6, 1987.
+ [4] Sally Dong, Yin Tat Lee, and Guanghao Ye. A nearly-linear time algorithm for linear programs with small
+     treewidth: A multiscale representation of robust central path. In Proceedings of the 53rd Annual ACM SIGACT
+     Symposium on Theory of Computing, STOC 2021, pages 1784–1797, New York, NY, USA, 2021. Association
+     for Computing Machinery.
+
+
+                                                           15
+ [5] François Le Gall and Florent Urrutia. Improved rectangular matrix multiplication using powers of the
+     coppersmith-winograd tensor. In Proceedings of the Twenty-Ninth Annual ACM-SIAM Symposium on Dis-
+     crete Algorithms, pages 1029–1046. SIAM, 2018.
+ [6] Baihe Huang, Shunhua Jiang, Zhao Song, and Runzhou Tao. Solving tall dense sdps in the current matrix
+     multiplication time. arXiv preprint arXiv:2101.08208, 2021.
+ [7] Haotian Jiang, Tarun Kathuria, Yin Tat Lee, Swati Padmanabhan, and Zhao Song. A faster interior point
+     method for semidefinite programming. In 2020 IEEE 61st Annual Symposium on Foundations of Computer
+     Science (FOCS), pages 910–918. IEEE, 2020.
+ [8] Shunhua Jiang, Zhao Song, Omri Weinstein, and Hengjie Zhang. A faster algorithm for solving general lps. In
+     Proceedings of the 53rd Annual ACM SIGACT Symposium on Theory of Computing, pages 823–832, 2021.
+ [9] N. Karmarkar. A new polynomial-time algorithm for linear programming. Combinatorica, 4(4):373–396, 1984.
+[10] Adam R Klivans and Daniel Spielman. Randomness efficient identity testing of multivariate polynomials. In
+     Proceedings of the thirty-third annual ACM symposium on Theory of computing, pages 216–223, 2001.
+[11] François Le Gall. Powers of tensors and fast matrix multiplication. In Proceedings of the 39th international
+     symposium on symbolic and algebraic computation, pages 296–303, 2014.
+[12] Yin Tat Lee and Aaron Sidford. Path finding methods for linear programming: Solving linear programs in
+     õ (vrank) iterations and faster algorithms for maximum flow. In Foundations of Computer Science (FOCS),
+     2014 IEEE 55th Annual Symposium on, pages 424–433. IEEE, 2014.
+[13] Yin Tat Lee, Aaron Sidford, and Sam Chiu-wai Wong. A faster cutting plane method and its implications for
+     combinatorial and convex optimization. In Foundations of Computer Science (FOCS), 2015 IEEE 56th Annual
+     Symposium on, pages 1049–1065. IEEE, 2015.
+[14] Yin Tat Lee, Zhao Song, and Qiuyi Zhang. Solving empirical risk minimization in the current matrix multi-
+     plication time. In Conference on Learning Theory, pages 2140–2157. PMLR, 2019.
+[15] Yurii Nesterov and Arkadii Nemirovskii. Interior-point polynomial algorithms in convex programming. SIAM,
+     1994.
+[16] Yurii E Nesterov, Michael J Todd, et al. On the riemannian geometry defined by self-concordant barriers and
+     interior-point methods. Foundations of Computational Mathematics, 2(4):333–361, 2002.
+[17] James Renegar. A polynomial-time algorithm, based on newton’s method, for linear programming. Mathemat-
+     ical Programming, 40(1):59–93, 1988.
+[18] Pravin M. Vaidya. Speeding-up linear programming using fast matrix multiplication (extended abstract). In
+     30th Annual Symposium on Foundations of Computer Science, Research Triangle Park, North Carolina, USA,
+     30 October - 1 November 1989, pages 332–337, 1989.
+[19] Jan van den Brand. A deterministic linear program solver in current matrix multiplication time. In Shuchi
+     Chawla, editor, Proceedings of the 2020 ACM-SIAM Symposium on Discrete Algorithms, SODA 2020, Salt
+     Lake City, UT, USA, January 5-8, 2020, pages 259–278. SIAM, 2020.
+[20] Jan van den Brand. Unifying matrix data structures: Simplifying and speeding up iterative algorithms. In
+     Symposium on Simplicity in Algorithms (SOSA), pages 1–13. SIAM, 2021.
+[21] Jan van den Brand, Yin Tat Lee, Yang P Liu, Thatchaphol Saranurak, Aaron Sidford, Zhao Song, and Di Wang.
+     Minimum cost flows, MDPs, and l1-regression in nearly linear time for dense instances. In Proceedings of the
+     53rd Annual ACM SIGACT Symposium on Theory of Computing, pages 859–869, 2021.
+[22] Jan van den Brand, Yin-Tat Lee, Danupon Nanongkai, Richard Peng, Thatchaphol Saranurak, Aaron Sidford,
+     Zhao Song, and Di Wang. Bipartite matching in nearly-linear time on moderately dense graphs. In 2020 IEEE
+     61st Annual Symposium on Foundations of Computer Science (FOCS), pages 919–930. IEEE, 2020.
+[23] Jan van den Brand, Yin Tat Lee, Aaron Sidford, and Zhao Song. Solving tall dense linear programs in nearly
+     linear time. In Proceedings of the 52nd Annual ACM SIGACT Symposium on Theory of Computing, pages
+     775–788, 2020.
+
+
+                                                       16
+[24] Virginia Vassilevska Williams. Multiplying matrices faster than coppersmith-winograd. In Proceedings of the
+     forty-fourth annual ACM symposium on Theory of computing, pages 887–898, 2012.
+
+
+A     Finding a Point on the Central Path
+We continue from the discussion in Section 2.4.
+   First, we show that (x+ , x− , R) defined in Theorem 9 is indeed on the central path of the modified linear
+program. First, we define the dual of the modified linear program as follows
+
+  Dη = {(s+ , s− , sθ ) ∈ R2n+1
+                           ≥0   : A⊤ y + λ1 + s+ = c+ , −A⊤ y + s− = c− , λ + sθ = 0 for some y ∈ Rd and λ ∈ R}.
+
+Lemma 25. The modified linear program in Theorem 9 has an explicit point on the central path,(x+ , x− , R) at t.
+Proof. Recall that we say (x+ , x− , xθ ) is on the central path at t if x+ , x− , xθ are positive and it satisfies the
+following equation
+
+                                                       Ax+ − Ax− = b,
+                                                       Xn
+                                                          x+    θ
+                                                           i + x = b,
+                                                                   e
+                                                        i=1
+                                                  A⊤ y + λ + s+ = c+ ,                                                  (A.1)
+                                                              ⊤         −       −
+                                                       −A y + s = c ,
+                                                                  λ + sθ = 0,
+
+for some s+ , s− ∈ Rn>0 , sθ > 0, y ∈ Rd and λ ∈ R.
+    Now, we verify the solution x+ = t/(c + t/R), x− = x+ − A⊤ (AA⊤ )−1 b, xθ = R, y = 0, s+ = t/x+ , s− = t/x− ,
+s = t/xθ , λ = −sθ . Using AA⊤ (AA⊤ )−1 b = b, one can check it satisfies all the equality constraints above.
+ θ
+
+    For the positivity constraints, using ∥c∥∞ ≤ L and t ≥ 4LR, we have
+
+                                        4       t              t      4
+                                          R≤         ≤ x+
+                                                        i ≤          ≤ R                                                (A.2)
+                                        5    L + t/R        −L + t/R  3
+
+and hence x+ > 0 and so is s+ . Note that x◦ = A⊤ (AA⊤ )−1 b is the least square solution to Ax = b, so, we have
+                                                 def
+
+
+
+
+                                                                                 1
+                                                ∥x◦ ∥2 ≤ ∥x∗ ∥2 ≤ R <              R.                                   (A.3)
+                                                                                 4
+Together with x+
+               i ≥ 5 R, we have
+                   4
+
+                                                              4   1
+                                                   x−
+                                                    i ≥         R− R>0
+                                                              5   4
+for all i. Hence, x− and s− are positive. Finally, xθ and sθ are positive. This proves that (x+ , x− , R) is on the
+central path at t.
+   Next, we show that the near-central-path point (x, s) at t = LR is far from the boundary x+ = 0 and is close to
+the boundary x− = 0. The proof for both involves the same idea: use the optimality condition of x. Throughout
+the rest of the proof, we are given (x, s) ∈ Pη × Dη such that µ = xs satisfies
+
+                                                       5         7
+                                                         LR ≤ µ ≤ LR.
+                                                       6         6
+
+We write µ into its three parts (µ+ , µ− , µθ ). By Lemma 3, we have that x = (x+ , x− , xθ ) minimizes the function
+                                                                                           def
+
+
+
+                                                                      n
+                                                                      X                   n
+                                                                                          X
+                          −                        −      −
+                                                                                                µ−      −
+                                  def
+                      +       θ
+                 fµ (x , x , x ) = c , x+   +
+                                                + c ,x            −         µ+      +
+                                                                             i log xi −
+                                                                                                             θ
+                                                                                                 i log xi − µ log x
+                                                                                                                    θ
+
+                                                                      i=1                 i=1
+
+
+
+
+                                                                   17
+over the domain Pη . The gradient of fµ is somewhat complicated. We avoid it by considering the directional
+derivative at x along a feasible direction toward a lifted version of a point v such that Av = b and v ≥ r. Since our
+domain is in Pη ⊂ R2n+1 , we lift v to the higher-dimensional point defined by
+
+                                                                           4LR
+                                                      v − = min(x− ,           · R),
+                                                                            t
+                                                      v+ = v + v− ,
+                                                                 n
+                                                                 X
+                                                      v θ = eb −    vi+ .
+                                                                    i=1
+
+First, we need to get some basic bounds on eb and c− .
+Lemma 26. We have that 54 nR ≤ eb ≤ 3nR and c−
+                                             i ≥ 3t/(7R) for all i.
+
+                                 i ≤ 3 R. By the definition of b, we have
+Proof. By (A.2), we have 54 R ≤ x+   4                         e
+                                                    n
+                                                    X                     4
+                                             eb =         x+
+                                                           i +R ≤           nR + R ≤ 3nR.
+                                                    i=1
+                                                                          3
+
+Similarly, we have eb = i x+          4
+                         P
+                           c,i + R ≥ 5 nR.
+                       −              −
+   For the bound on ci , recall that ci = t/x−
+                                             i with x = x − x◦ and x◦ = A (AA )
+                                                     −   +               ⊤   ⊤ −1
+                                                                                  b. Using (A.3), we have
+                                                                      4
+                                                             x−
+                                                              c,i ≤     R + R.
+                                                                      3
+Therefore, c− ≥ 3t/(7R).
+   The following lemma shows that (v + , v − , v θ ) ∈ Pη .
+Lemma 27. We have that (v + , v − , v θ ) ∈ Pη . Furthermore, we have v θ ≥ 12 nR.
+Proof. Note that (v + , v − , v θ ) satisfies the linear constraints of Pη by construction. It suffices to prove that the
+vector is positive. Since x− > 0, we have v − > 0. Since v ≥ r, we also have v + > 0. For v θ , we use eb ≥ 45 nR
+(Lemma 26), v ≤ R and v − ≤ 4LR       t · R ≤ R to get
+
+                                                           vi+ = v + v − ≤ 2R                                       (A.4)
+
+and hence
+                                                    n                     n
+                                                    X             4      X                1
+                                       v θ = eb −         vi+ ≥     nR −     (vi + vi− ) ≥ nR.
+                                                    i=1
+                                                                  5      i=1
+                                                                                          2
+
+
+
+   Next, we define the path p(τ ) = (1 − τ )(x+ , x− , xθ ) + τ (v + , v − , v θ ). Since p(0) minimizes fµ , we have that
+dτ fµ (p(τ ))|τ =0 ≥ 0. In particular, we have
+ d
+
+
+                   d
+            0≤       fµ (p(τ ))|τ =0
+                  dτ
+                                                            n                       n
+                                                            X µ+                   X  µ−             µθ θ
+              = c, v + − x+ + c− , v − − x− −                    i
+                                                                 + (v +
+                                                                        − x +
+                                                                              )i −      i   −   −             θ
+                                                                                        − (v − x )i − θ (v − x )
+                                                               x
+                                                            i=1 i
+                                                                                      x
+                                                                                   i=1 i
+                                                                                                     x
+                                   n                               n
+                  µθ θ            X          µ+                   X
+                                                                        −   µ−
+              =      (x − v θ
+                              ) +     (c i −   i
+                                               + )(v +
+                                                       − x +
+                                                             )i +     (ci −   i    −   −
+                                                                              − )(v − x )i .                        (A.5)
+                  xθ              i=1
+                                             x i                  i=1
+                                                                            x i
+
+Now, we bound each term one by one. For the first term, we note that
+                                                     µθ θ
+                                                        (x − v θ ) ≤ µθ ≤ 2LR.                                      (A.6)
+                                                     xθ
+For the second term in (A.5), we have the following:
+
+
+                                                                      18
+                            Pn           µ+    +   +               LRr
+Lemma 28. We have that         i=1 (ci − x+ )(v − x )i ≤ 4nLR − 2 mini x+ .
+                                          i
+
+                                              i                                          i
+
+
+Proof. Note that
+                            n                                  n
+                            X             µ+                  X            µ+
+                                  (ci −    i
+                                           + )(v +
+                                                   − x +
+                                                         )i =     (ci vi+ − +  vi − c i x +
+                                                                             i +               +
+                                                                                          i + µi )
+                            i=1
+                                          xi                  i=1
+                                                                           x i
+                                                                n                n            n
+                                                                X                X            X µ+
+                                                            ≤         ci vi+ +         µ+
+                                                                                        i −
+                                                                                                    i +
+                                                                                                    + vi
+                                                                i=1              i=1          i=1
+                                                                                                  x i
+                                                                                                   n
+                                                                                                1 X LRr
+                                                            ≤ ∥c∥∞ ∥v + ∥1 + 2nLR −
+                                                                                                2 i=1 x+
+                                                                                                       i
+
+
+               i ∈ [ 2 , 2LR] and vi ≥ vi ≥ r at the end. The result follows from ∥c∥∞ ≤ L, ∥v ∥1 ≤ 2nR
+where we used µ+    LR             +                                                          +
+
+(A.4).
+   For the third term in (A.5), we have the following:
+                            Pn       −   µ−    −   −     1       t       −
+Lemma 29. We have that         i=1 (ci − x− )(v − x )i ≤ 2 LR − 8R maxi xi .
+                                          i
+
+                                                  i
+
+
+Proof. Using v − = min(x− , 4LR
+                             t
+                                · R), we have vi− ≤ x−                                 −    −
+                                                     i . We can ignore the terms with vi = xi .
+   For vi− < x−            −               −
+              i , we have xi ≥ t R. Using ci ≥ 3t/(7R) (Lemma 26), we have
+                              4LR
+
+
+                                     µ−         µ−           7
+                                                             6 LR         7t    t
+                             c−
+                              i −
+                                      i    −     i
+                                      − ≥ ci − 4LR   ≥ c−
+                                                        i − 4LR   = c−
+                                                                     i −     ≥    .
+                                     xi            R            R        24R   8R
+                                                      t                   t
+
+Hence, we have
+                      n                                  n
+                     X         µ−                     t X −               t 4LR
+                         (c−
+                           i −   i
+                                 − )(v −
+                                         − x −
+                                               ) i ≤        (v − x− )i ≤    (   · R − max x−
+                                                                                           i ).
+                     i=1
+                               x i                   8R i=1
+                                                                         8R   t        i
+
+
+
+
+   Combining (A.5), (A.6), Lemma 28 and Lemma 29, we have
+                                            n                               n
+                           µθ θ      θ
+                                           X          µ+i     +     +
+                                                                           X
+                                                                                 −   µ−i    −   −
+                      0≤      (x − v   ) +     (c i −   + )(v   − x   )i +     (ci −   − )(v − x )i
+                           xθ              i=1
+                                                      x i                  i=1
+                                                                                     x i
+
+                                           LRr        1      t
+                        ≤ 2LR + 4nLR −            + + LR −     max x−
+                                                                    i
+                                         2 mini xi    2     8R i
+                                   LRr          t
+                        ≤ 6nLR −            −      max x−
+                                                        i .
+                                 2 mini x+
+                                         i    8R    i
+
+
+                                                                                              i cannot be too small
+Hence, we show that (x+ , x− , xθ ) is close to the central path at t = LR implies that mini x+
+and maxi x−
+          i cannot be too large
+                                              LRr        t
+                                                   + +      max x−i ≤ 6nLR.
+                                           2 mini xi    8R i
+In particular, this shows the following:
+                                               −
+Lemma 30. We have that mini x+    r
+                             i ≥ 12n and maxi xi ≤
+                                                   48nLR
+                                                      t
+                                                         · R.
+   Now, we are ready to prove Theorem 9.
+
+Proof of Theorem 9. First we check x = x+ − x− ∈ P. By the choice of R and t, Lemma 30 shows that
+                                            def
+
+
+
+                                                          48nLR
+                                          maxi x−                 ·R        R LR
+                                                i
+                                                  ≤          t
+                                                               r     = 576n2 ·   <η
+                                          mini x+
+                                                i             12n           r  t
+
+Hence, we have x+ − x− > 0 and that A(x+ − x− ) = b.
+
+
+                                                                 19
+   Next, we check s = s+ − sθ ∈ D. Since x ∈ P, we have xi ≤ R. Since x− i ≤ 2 xi , we have xi ≤ 2xi ≤ 2R.
+                      def                                                      1 +           +
+                                                                           n
+       i si ≥ 6 LR, we have si ≥ 3 L. On the other hand, we have x = b −
+Since x+  +   5              +   1                                θ
+                                                                           i=1 xi ≥ b − 2nR ≥ 2 nR (Lemma
+                                                                                +              1
+                                                                     e   P          e
+                 7
+                     LR
+26). Hence, sθ ≤ 61 nR ≤ 3LR
+                          nR
+                             . Combining both and the choice of R, we have
+                 2
+
+
+                                                      3LR
+                                             sθ           6R
+                                                   ≤ nR =    <η
+                                           mini s+
+                                                 i   L/2  nR
+
+Hence, we have s = s+ − sθ > 0 and that A⊤ y + s = A⊤ y + s+ − sθ = A⊤ y + s+ + λ = c (See (A.1)).
+
+   To ensure the reduction does not increase the complexity of solving linear system, we note that the linear
+constraint in the modified linear program is
+                                                              
+                                                   A −A 0
+                                             A=
+                                                   1   0    1
+
+For any diagonal matrices W1 , W2 and any scalar α, we have
+                                            
+                                W1    0    0
+                                                        A(W1 + W2 )A⊤
+                                                                                         
+                        def                      ⊤                             Aw1
+                     H=A        0   W2 0 A =                                                  .
+                                                            (Aw1 )⊤
+                                            
+                                                                             ∥w1 ∥1 + α
+                                0     0   α
+
+Note that the second row and second column block has size 1. By the block inverse formula (Fact 19), H−1 v is an
+explicit formula involving (A(W1 + W2 )A⊤ )−1 v1:d and (A(W1 + W2 )A⊤ )−1 Aw1 . Hence, we can compute H−1 v
+by solving two linear systems of the form AWA⊤ with some extra linear work.
+
+
+
+
+                                                      20
+

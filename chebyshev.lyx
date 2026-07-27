@@ -21,7 +21,9 @@ name "sec:Chebyshev-Polynomials"
 \begin_layout Standard
 The goal of this section is to introduce some basic results in approximation
  theory.
- Suppose magically there was a polynomial 
+ Suppose,
+ for a moment,
+ that there were a polynomial 
 \begin_inset Formula $q(x)$
 \end_inset
 
@@ -79,7 +81,7 @@ and hence
 \begin_inset Formula $A^{-1}b$
 \end_inset
 
- by calculating 
+ by computing 
 \begin_inset Formula $p(A)b$
 \end_inset
 
@@ -93,8 +95,9 @@ and hence
 \end_inset
 
 .
- In this section, we will discuss if there is such polynomial that satisfies
- the condition above approximately.
+ In this section,
+ we will discuss whether there is a polynomial that approximately satisfies
+ the condition above.
  
 \end_layout
 
@@ -125,20 +128,21 @@ We will bound
 \end_inset
 
 This corresponds to the Richardson iteration, and the above bound shows
- that it takes 
+ that it requires degree 
 \begin_inset Formula $O(\frac{L}{\mu}\log(\frac{1}{\epsilon}))$
 \end_inset
 
- degree to make the error bounded by 
+ to bound the error by 
 \begin_inset Formula $\epsilon$
 \end_inset
 
 .
- The key fact we will use is that we can in general approximate a polynomial
- of degree 
+ The key fact we will use is that we can approximate the Richardson polynomial above,
+ which has degree 
 \begin_inset Formula $k$
 \end_inset
 
+,
  by a polynomial of degree 
 \begin_inset Formula $\tilde{O}(\sqrt{k})$
 \end_inset
@@ -157,11 +161,11 @@ For any integer
 \begin_inset Formula $d$
 \end_inset
 
-, the 
-\begin_inset Formula $d$
+, the Chebyshev polynomial 
+\begin_inset Formula $T_{d}$
 \end_inset
 
-'th Chebyshev polynomial is defined as the unique polynomial that satisfies
+ is defined as the unique polynomial that satisfies
  
 \begin_inset Note Note
 status open
@@ -252,7 +256,7 @@ Now we are ready to show that there is a degree
 \begin_inset Formula $\tilde{O}(\sqrt{s})$
 \end_inset
 
- polynomial that estimates 
+ polynomial that approximates 
 \begin_inset Formula $x^{s}$
 \end_inset
 
@@ -278,7 +282,7 @@ For any positive integers
 \begin_inset Formula $p$
 \end_inset
 
- of degree 
+ of degree at most 
 \begin_inset Formula $d$
 \end_inset
 
@@ -298,8 +302,8 @@ Let
 \begin_inset Formula $Y_{i}$
 \end_inset
 
- are i.i.d.
- random variable uniform on 
+ be i.i.d.
+ random variables uniform on 
 \begin_inset Formula $\{-1,1\}$
 \end_inset
 
@@ -372,7 +376,7 @@ reference "eq:E_z_x_s"
 \begin_inset Formula $x\in[-1,1]$
 \end_inset
 
- on the third line and Chernoff bound (Theorem 
+ on the third line and the Chernoff bound (Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:chernoff"
@@ -420,7 +424,7 @@ For any
 \end_inset
 
  and any 
-\begin_inset Formula $0\leq\epsilon\leq1$
+\begin_inset Formula $0<\epsilon\leq1$
 \end_inset
 
 , there is a polynomial 
@@ -434,7 +438,7 @@ For any
  such that 
 \begin_inset Formula 
 \[
-\inf_{q(0)=1}\max_{\mu\leq x\leq L}\left|q(x)\right|\leq\epsilon.
+q(0)=1\quad\text{and}\quad\max_{\mu\leq x\leq L}\left|q(x)\right|\leq\epsilon.
 \]
 
 \end_inset
@@ -483,7 +487,7 @@ To make both
 \end_inset
 
 , we set 
-\begin_inset Formula $d=O(\sqrt{s}\log\frac{1}{\epsilon})$
+\begin_inset Formula $d=O(\sqrt{s\log\frac{1}{\epsilon}})$
 \end_inset
 
  and 
@@ -491,11 +495,26 @@ To make both
 \end_inset
 
 .
- By rescaling 
+ Since 
+\begin_inset Formula $|q(0)-1|\leq\epsilon/3\leq1/3$
+\end_inset
+
+,
+ rescaling by 
+\begin_inset Formula $1/q(0)$
+\end_inset
+
+ changes the bound on 
+\begin_inset Formula $[\mu,L]$
+\end_inset
+
+ by only a constant factor,
+ which can be absorbed by adjusting the constants above.
+ After this rescaling, 
 \begin_inset Formula $q$
 \end_inset
 
-, we have 
+ satisfies 
 \begin_inset Formula $q(0)=1$
 \end_inset
 

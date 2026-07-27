@@ -1,0 +1,414 @@
+In this chapter, we study some randomization techniques for faster
+convex optimization.
+
+\section{Subspace embedding\label{sec:Subspace-embedding}}
+
+In this section and the next section, we consider the least squares
+regression problem
+\[
+\min_{x}\|Ax-b\|_{2}^{2}
+\]
+where $A\in\R^{n\times d}$ with $n\ge d$ (we assume this throughout
+the chapter). The gradient of the function is $2A^{\top}Ax-2A^{\top}b$.
+Setting it to zero, and assuming $A^{\top}A$ is invertible, the solution
+is given by 
+\[
+x=(A^{\top}A)^{-1}A^{\top}b.
+\]
+If $A^{T}A$ is not invertible, we use its pseudo-inverse. If the
+matrix $A^{\top}A\in\R^{d\times d}$ is given, then we can solve the
+equation above in time $d^{\omega}$, the current complexity of matrix
+multiplication. If $n>d^{\omega}$, then the bottleneck is simply
+to compute $A^{\top}A$. The following lemma shows that it suffices
+to approximate $A^{\top}A$. 
+
+The simplest iteration is the Richardson iteration: 
+\[
+x^{(k+1)}=A^{T}b+(I-A^{\top}A)x^{(k)}=x^{(k)}+A^{T}b-A^{\top}Ax^{(k)}.
+\]
+To ensure this converges, we scale down $A^{T}A$ by its largest eigenvalue
+so that $A^{T}A\prec I$. This gives a bound of $O(\kappa(A^{\top}A)\log(1/\epsilon))$
+on the number of iterations to get $\epsilon$ error where $\kappa(A^{\top}A)=\lambda_{\max}(A^{\top}A)/\lambda_{\min}(A^{\top}A)$.
+More generally, one can use \emph{pre-conditioning. }Recall that for
+a vector $v$, the norm $\norm v_{M}$ is defined as $v^{T}Mv$.
+\begin{lem}
+\label{lem:Richardson}Given a matrix $M$ such that $A^{\top}A\preceq M\preceq\kappa\cdot A^{\top}A$
+for some $\kappa\geq1$. Consider the algorithm $x^{(k+1)}=x^{(k)}-M^{-1}(A^{\top}Ax^{(k)}-A^{\top}b)$
+. Then, we have that
+\[
+\|x^{(k)}-x^{*}\|_{M}\leq\left(1-\frac{1}{\kappa}\right)^{k}\|x^{(0)}-x^{*}\|_{M}.
+\]
+\end{lem}
+
+\begin{rem}
+The proof also shows why the choice of norm above is the natural one.
+In this norm, the residual drops geometrically.
+\end{rem}
+
+\begin{proof}
+Using $x^{*}=(A^{\top}A)^{-1}A^{\top}b$, i.e., $A^{\top}b=(A^{\top}A)x^{*}$,
+and the formula of $x^{(k+1)}$, we have
+\begin{align*}
+x^{(k+1)}-x^{*} & =x^{(k)}-M^{-1}(A^{\top}Ax^{(k)}-A^{\top}b)-x^{*}\\
+ & =x^{(k)}-M^{-1}(A^{\top}Ax^{(k)}-A^{\top}Ax^{*})-x^{*}\\
+ & =\left(I-M^{-1}A^{\top}A\right)\left(x^{(k)}-x^{*}\right).
+\end{align*}
+Therefore, the norm of error is
+\begin{align*}
+\|x^{(k+1)}-x^{*}\|_{M}^{2} & =\left(x^{(k)}-x^{*}\right)^{\top}(I-A^{\top}AM^{-1})M(I-M^{-1}A^{\top}A)\left(x^{(k)}-x^{*}\right)\\
+ & =\left(x^{(k)}-x^{*}\right)^{\top}M^{\frac{1}{2}}(I-H)^{2}M^{\frac{1}{2}}\left(x^{(k)}-x^{*}\right)
+\end{align*}
+where $H=M^{-\frac{1}{2}}A^{\top}AM^{-\frac{1}{2}}$. Note that the
+eigenvalues of $H$ lie between $1/\kappa$ and $1$ and hence 
+\[
+\lambda_{\max}(I-H)^{2}\leq\left(1-\frac{1}{\kappa}\right){}^{2}.
+\]
+This gives the conclusion.
+\end{proof}
+Note that $x^{\top}A^{\top}Ax=\|Ax\|^{2}$. Alternatively, we can
+think that our goal is to approximate $A$ by a smaller matrix $B$
+s.t. $\|Ax\|^{2}$ is close to $\|Bx\|^{2}$ for all $x$. In this
+section, we show that we can simply take $B=\Pi A$ for a random matrix
+$\Pi$ with relatively few rows. With this choice of $M$, we can
+run the Richardson iteration. We need to see if this will make the
+entire procedure more efficient.
+\begin{defn}
+A matrix $\Pi\in\R^{m\times n}$ is an embedding for a set $S\subset\R^{n}$
+with distortion $\epsilon$ if 
+\[
+(1-\epsilon)\|y\|^{2}\leq\|\Pi y\|^{2}\leq(1+\epsilon)\|y\|^{2}
+\]
+for all $y\in S$.
+\end{defn}
+
+In this section, we focus on the case that $S$ is a $d$-dimensional
+subspace in $\Rn$, namely $S=\{Ax:x\in\R^{d}\}$. Consider the SVD
+$A=U\Sigma V^{\top}$. For any $y\in S$, we have that
+\[
+\|U^{\top}y\|_{2}^{2}=\|U^{\top}U\Sigma V^{\top}x\|_{2}^{2}=x^{\top}V\Sigma^{2}V^{\top}x=\|Ax\|^{2}.
+\]
+Therefore, any $d$-dimensional subspace has a zero distortion embedding
+of size $d\times n$.
+\begin{xca}
+For any $d$-dimensional subspace $S$, any embedding with distortion
+$\epsilon<1$ must have at least $d$ rows.
+\end{xca}
+
+This embedding is not useful for solving the least squares problem
+because the solution of the least square problem is simply a closed
+form of the SVD decomposition $x=V\Sigma^{-1}U^{\top}b$ and finding
+the SVD is usually more expensive.
+
+\subsection{Oblivious Subspace Embedding via Johnson-Lindenstrauss}
+
+Surprisingly, there are random embeddings that have small distortion
+without knowledge of the subspace.
+\begin{defn}
+A random matrix $\Pi\in\R^{m\times n}$ is a $(d,\epsilon,\delta)$-oblivious
+subspace embedding (OSE) if for any fixed $d$-dimensional subspace
+$S\subset\R^{n}$, $\Pi$ is an embedding for $S$ with distortion
+$\epsilon$ with probability at least $1-\delta$.
+\end{defn}
+
+The next lemma provides an equivalent definition.
+\begin{lem}
+We call $\Pi$ a $(d,\epsilon,\delta)$ OSE if for any matrix $U\in\R^{n\times d}$
+with orthonormal columns, we have that
+\[
+\P(\|U^{\top}\Pi^{\top}\Pi U-I_{d}\|_{\op}\leq\epsilon)\geq1-\delta.
+\]
+\end{lem}
+
+\begin{proof}
+Let $S$ be the subspace with an orthonormal basis $U\in\R^{n\times d}$,
+namely $S=\{y:y=Uz\}$ Then, the condition
+\[
+(1-\epsilon)\|y\|^{2}\leq\|\Pi y\|^{2}\leq(1+\epsilon)\|y\|^{2}
+\]
+can be rewritten as
+\[
+(1-\epsilon)U^{\top}U\preceq U^{\top}\Pi^{\top}\Pi U\preceq(1+\epsilon)U^{\top}U.
+\]
+Using $U^{\top}U=I_{d}$, we have
+\[
+(1-\epsilon)I_{d}\preceq U^{\top}\Pi^{\top}\Pi U\preceq(1+\epsilon)I_{d}.
+\]
+\end{proof}
+For the special case $d=1$, the definition becomes
+\[
+\P\left[|\|\Pi a\|_{2}^{2}-1|\leq\epsilon\right]\geq1-\delta
+\]
+for all unit vectors $a$. An OSE for $d=1$ is given by the Johnson-Lindenstrauss
+Lemma. The original version was for a uniform random subspace of dimension
+$d$, but later versions extended this to Gaussian, Bernoulli and
+more general random matrices \cite{Vempala04}.
+\begin{lem}[Johnson-Lindenstrauss Lemma]
+Let $\Pi\in\R^{m\times n}$ be a random matrix with i.i.d entries
+from $N(0,\frac{1}{\sqrt{m}})$ or uniformly sampled from $\pm\frac{1}{\sqrt{m}}$
+with $m=\Theta(\frac{1}{\epsilon^{2}}\log(\frac{1}{\delta}))$. Then,
+$\Pi$ is a $(1,\epsilon,\delta)$ OSE.
+\end{lem}
+
+We will skip the proof for this as we will prove a more general result
+later. Next, we show that any OSE for $d=1$ is a OSE for general
+$d$. Therefore, it suffices to focus on the case $d=1$. First, we
+need a lemma about $\epsilon$-net on $S^{n-1}$.
+\begin{lem}
+For any $\epsilon>0$ and any $n\in\mathbb{N}$, there are at most
+$(1+\frac{2}{\epsilon})^{n}$ unit vectors $x_{i}\in\Rn$ such that
+for any unit vector $x\in\Rn$, there is an $i$ such that $\|x-x_{i}\|_{2}\leq\epsilon$.
+\end{lem}
+
+\begin{rem*}
+We call the points $\{x_{i}\}_{i}$ the $\epsilon$-net on $S^{n-1}$.
+\end{rem*}
+\begin{proof}
+We consider the following algorithm:
+\begin{enumerate}
+\item $V=S^{n-1}$. $i\leftarrow1$.
+\item While there is $x_{i}\in V$
+\begin{enumerate}
+\item $V\leftarrow V\backslash B(x_{i},\epsilon)$.
+\item $i\leftarrow i+1$.
+\end{enumerate}
+\end{enumerate}
+Let $\{x_{1},x_{2},\cdots,x_{N}\}$ be the points it found. By the
+construction, it is clear that $\|x-x_{i}\|\leq\epsilon$ for some
+$i$ (else the procedure would continue). Now consider balls of radius
+$\epsilon/2$ centered at each $x_{i}$. To bound the number of points,
+we note that all $B(x_{i},\frac{\epsilon}{2})$ are disjoint and that
+all balls lie in $B(0,1+\frac{\epsilon}{2})$. Therefore,
+\[
+N\cdot\vol(B(0,\frac{\epsilon}{2}))\leq\vol(B(0,1+\frac{\epsilon}{2})).
+\]
+and hence $N\leq(1+\frac{2}{\epsilon})^{n}$.
+\end{proof}
+\begin{lem}
+\label{lem:OSE_reduction}Suppose that $\Pi$ is a $(1,\epsilon,\delta)$
+OSE. Then, $\Pi$ is a $(d,4\epsilon,5^{d}\delta)$ OSE.
+\end{lem}
+
+\begin{proof}
+Let $N=\{x_{i}\}_{i=1}$ be a $\frac{1}{2}$-net for $S^{d-1}$. Then,
+for any $x$, we have $x_{1}\in N$ such that $\|x-x_{1}\|_{2}\leq\frac{1}{2}$.
+Using the $\frac{1}{2}$-net guarantee on the vector $x-x_{1}$, we
+can find $x_{2}\in N$ and $0\leq t_{2}\leq\frac{1}{2}$ such that
+\[
+\|x-x_{1}-t_{2}x_{2}\|\leq\frac{1}{4}.
+\]
+Continuing similarly, we have $x=\sum_{i=1}^{\infty}t_{i}x_{i}$ with
+$0\leq t_{i}\leq\frac{1}{2^{i-1}}$. Hence, we have that
+\begin{align*}
+x^{\top}(U^{\top}\Pi^{\top}\Pi U-I_{d})x & =\sum_{i,j}t_{i}t_{j}x_{i}^{\top}(U^{\top}\Pi^{\top}\Pi U-I_{d})x_{j}\\
+ & \leq\sum_{i,j}t_{i}t_{j}\cdot\max_{x\in N}\left|x^{\top}\left|U^{\top}\Pi^{\top}\Pi U-I_{d}\right|x\right|\\
+ & \le4\max_{x\in N}\left|x^{\top}\left|U^{\top}\Pi^{\top}\Pi U-I_{d}\right|x\right|\\
+ & =4\max_{x\in UN}\left|\|\Pi x\|^{2}-1\right|
+\end{align*}
+
+Now, using that $\Pi$ is $(1,\epsilon,\delta)$ OSE, we have that
+\[
+\P(\left|\|\Pi x\|^{2}-1\right|\leq\epsilon)\geq1-\delta.
+\]
+Taking a union bound over all $x\in UN$, we have
+\[
+\P(x^{\top}(U^{\top}\Pi^{\top}\Pi U-I_{d})x\leq4\epsilon)\geq1-5^{d}\delta.
+\]
+\end{proof}
+This reduction and the Johnson-Lindenstrauss Lemma shows that a random
+$\pm\frac{1}{\sqrt{m}}$ is a $(d,\epsilon,\delta)$ OSE with
+\[
+m=\Theta(\frac{1}{\epsilon^{2}}(d+\log(\frac{1}{\delta}))).
+\]
+As we discussed before any $(d,\epsilon,\delta)$ OSE should have
+at least $d$ rows. Therefore, the number of rows of this OSE is tight
+for the regime $\epsilon=\Theta(1)$. We only need an OSE for $\epsilon=\Theta(1)$
+because of Lemma \ref{lem:Richardson}; by iterating we can get any
+$\epsilon$ with an overhead of $\log(1/\epsilon)$. Unfortunately,
+computing $\Pi A$ is in fact more expensive than $A^{\top}A$. The
+first involves multiplying $\Theta(d)\times n$ and $n\times d$ matrix,
+the second one involves multiplying $d\times n$ and $n\times d$
+matrix.
+
+\subsection{Sparse Johnson-Lindenstrauss}
+
+We consider the sparse matrix $\Pi\in\R^{m\times n}$ where each entry
+is $\pm\frac{1}{\sqrt{s}}$ with probability $\frac{s}{m}$ and $0$
+otherwise. We will show that this random matrix is a $(d,\epsilon,\delta)$-OSE
+for $s=\Theta(\log^{2}(d/\delta)/\epsilon^{2})$ and $m=\Theta(d\log(\frac{d}{\delta})/\epsilon^{2})$.
+When $n=d=1$, $\|\Pi x\|^{2}$ is the number of non-zeros in the
+only column. Therefore, we indeed need that $s$ scales like $1/\epsilon^{2}$.
+The advantage of a sparse embedding is that applying it can be much
+more efficient.
+\begin{rem}
+It turns out that one can select exactly $s$ non-zeros for each column.
+This allows us to use $s=\Theta(\frac{\log(d/\delta)}{\epsilon})$.
+The proof of this is slightly more complicated due to the lack of
+independence \cite{cohen2016nearly}.
+\end{rem}
+
+To analyze $U^{\top}\Pi^{\top}\Pi U$, we note that 
+\[
+U^{\top}\Pi^{\top}\Pi U=\sum_{r=1}^{m}(\Pi U)_{r}^{\top}(\Pi U)_{r}.
+\]
+Since each row of $\Pi$ is independent, we can use matrix concentration
+bounds to analyze the sum above. See \cite{tropp2015introduction}
+for a survey on matrix concentration bounds.
+\begin{thm}[Matrix Chernoff]
+\label{thm:matrix-chernoff}Suppose we have a sequence of independent,
+random, self-adjoint matrices $M_{j}\in\R^{n\times n}$ such that
+$\E M_{j}=I$ and $0\preceq M_{j}\preceq R\cdot I$. Then, for $T=\frac{R}{\varepsilon^{2}}\log\frac{n}{\delta}$,
+\[
+(1-O(\varepsilon))I\preceq\frac{1}{T}\sum_{j=1}^{T}M_{j}\preceq(1+O(\varepsilon))I
+\]
+with probability at least $1-\delta$.
+\end{thm}
+
+\begin{lem}[Hanson-Wright Inequality]
+For independent random variables $\sigma_{1},\cdots,\sigma_{n}$
+with $\E\sigma_{i}=0$, $|\sigma_{i}|\leq1$ and $A\in\R^{n\times n}$,
+we have 
+\[
+\left|\sigma^{\top}A\sigma-\E\sigma^{\top}A\sigma\right|\lesssim\|A\|_{F}\sqrt{\log(\frac{1}{\delta})}+\|A\|_{\op}\log(\frac{1}{\delta})
+\]
+with probability $1-\delta$.
+\end{lem}
+
+For our problem, we set $M_{r}=m\cdot U^{\top}\pi_{r}\pi_{r}^{\top}U$
+where $\pi_{r}$ is the $r$-th row of $\Pi$ (as a column vector).
+One can check that $M_{r}\succeq0$ and that $\E M_{r}=I$. Next,
+we note that
+\begin{equation}
+M_{r}\preceq m\cdot\pi_{r}^{\top}UU^{\top}\pi_{r}\cdot I.\label{matrix_ub}
+\end{equation}
+With small probability, $\pi_{r}^{\top}UU^{\top}\pi_{r}$ can be huge.
+However, as long as $\pi_{r}^{\top}UU^{\top}\pi_{r}$ is bounded by
+$R$ with probability $1-\delta$, then we can still use the matrix
+Chernoff bound above. To bound $\pi_{r}^{\top}UU^{\top}\pi_{r}$,
+we will use the following large deviation inequality.
+
+\begin{lem}
+Assume that $s\gg\frac{m}{n}\log(\frac{1}{\delta}),$$\log^{2}(\frac{1}{\delta})/\epsilon^{2}$
+and $m\gg d\log(\frac{1}{\delta})/\epsilon^{2}$. Then, 
+\[
+\pi_{r}^{\top}UU^{\top}\pi_{r}\leq\frac{\epsilon^{2}}{\log(d/\delta)}
+\]
+with probability $1-\delta$. (Here $\gg$ means greater by a sufficiently
+large constant factor).
+\end{lem}
+
+\begin{proof}
+Note that $\pi_{r}\in\Rn$ with each entry non-zero with probability
+$\frac{s}{m}$. By the Chernoff bound, one can show that $\pi_{r}$
+has at most $2sn/m$ non-zeros with probability $1-\delta$ using
+that $sn/m\gg\log(\frac{1}{\delta})$. Let $I$ be the set of indices
+for which $\pi_{r}$ is non-zero. Conditional on the set $I$ and
+that $|I|\leq2sn/m$, note that $\sigma\defeq\pi_{r}|_{I}$ is a random
+$\pm\frac{1}{\sqrt{s}}$ vector. Let $P=(UU^{\top})|_{I\times I}$.
+Then, we have that
+\[
+\pi_{r}^{\top}UU^{\top}\pi_{r}=\sigma^{\top}P\sigma.
+\]
+The Hanson-Wright inequality shows that
+\[
+\left|\sigma^{\top}P\sigma-\E\sigma^{\top}P\sigma\right|\lesssim\frac{1}{s}\|P\|_{F}\sqrt{\log(\frac{1}{\delta})}+\frac{1}{s}\|P\|_{\op}\log(\frac{1}{\delta}).
+\]
+Note that $UU^{\top}$ is a projection matrix and hence $\|P\|_{\op}\leq1$.
+Since $P\succeq0$, we have that
+\[
+\|P\|_{F}=\sqrt{\tr P^{2}}\leq\sqrt{\|P\|_{\op}\cdot\tr P}\leq\sqrt{\tr P}.
+\]
+Also, we have that $\E\sigma^{\top}P\sigma=\frac{1}{s}\tr P$. Hence,
+we have
+\[
+\sigma^{\top}P\sigma\leq\frac{1}{s}\left(\tr P+O\left(\sqrt{\tr P\cdot\log\frac{1}{\delta}}+\log\frac{1}{\delta}\right)\right)
+\]
+with probability $1-\delta$. Note that $\tr UU^{\top}=\tr U^{\top}U=d$
+and that $P$ is a random diagonal block of $UU^{\top}$of size at
+most $2sn/m$. By the Chernoff bound, one can show that
+\[
+\tr P\leq\frac{4sd}{m}.
+\]
+Hence, we have
+\[
+\sigma^{\top}P\sigma\leq\frac{4d}{m}+\frac{1}{s}O\left(\sqrt{\frac{sd}{m}\cdot\log\frac{1}{\delta}}+\log\frac{1}{\delta}\right)
+\]
+with probability $1-\delta$. Using $s\gg\log^{2}(\frac{d}{\delta})/\epsilon^{2}$
+and $m\gg d\log(\frac{d}{\delta})/\epsilon^{2}$ , we have $\sigma^{\top}P\sigma\leq\frac{\epsilon^{2}}{\log(d/\delta)}$
+with probability $1-\delta$.
+\end{proof}
+Now we can prove the main theorem.
+\begin{thm}
+\label{thm:sparse_OSE}Consider a random sparse matrix $\Pi\in\R^{m\times n}$
+where each entry is $\pm\frac{1}{\sqrt{s}}$ with probability $\frac{s}{m}$
+and $0$ otherwise. There exist constants $c_{1},c_{2}$ such that
+for $m=c_{1}\frac{d\log(\frac{d}{\delta})}{\epsilon^{2}}$ and $s=c_{2}\frac{\log^{2}(\frac{d}{\delta})}{\epsilon^{2}}$
+$\Pi$ is an $O(d,\epsilon,\delta)$-OSE.
+\end{thm}
+
+\begin{proof}
+By the previous lemma, we have that
+\[
+\pi_{r}^{\top}UU^{\top}\pi_{r}\leq\frac{\epsilon^{2}}{\log(d/\delta)}
+\]
+with high probability. Under this event, using Theorem \ref{thm:matrix-chernoff}
+and (\ref{matrix_ub}), we have that
+\[
+(1-O(\varepsilon))I\preceq\sum_{r=1}^{m}\pi_{r}^{\top}UU^{\top}\pi_{r}\preceq(1+O(\varepsilon))I.
+\]
+\end{proof}
+
+\subsection{Back to Regression}
+
+In the last subsection, we presented a proof sketch of a suboptimal
+OSE. For completeness, we state a tighter version here:
+
+\begin{algorithm2e}[H]
+
+\caption{$\mathtt{RegressionUsingOSE}$}
+
+\SetAlgoLined
+
+\textbf{Input:} a matrix $A\in\R^{n\times d}$, a vector $b\in\R^{d}$,
+success probability $\delta$ and target accuracy $\epsilon$.
+
+Let $\Pi$ be a $O(d,\frac{1}{4},\delta)$ OSE constructed by Theorem
+\ref{thm:sparse_OSE}.
+
+Compute $A'=2\Pi A$, $M=A'{}^{\top}A'$ and $M^{-1}$.
+
+$x^{(1)}=0$.
+
+\For{$k=1,2,\cdots,4\log(\frac{1}{\epsilon})$}{
+
+$x^{(k+1)}=x^{(k)}-M^{-1}(A^{\top}Ax^{(k)}-A^{\top}b)$
+
+}
+
+\Return $x^{\last}$.
+
+\end{algorithm2e}
+\begin{thm}
+Given any matrix $A\in\R^{n\times d}$, any vector $b\in\R^{d}$,
+the algorithm $\mathtt{RegressionUsingOSE}$ returns a vector $x$
+such that 
+\[
+\|A^{\top}Ax-A^{\top}b\|_{(A^{\top}A)^{-1}}\leq\epsilon\|A^{\top}b\|_{(A^{\top}A)^{-1}}.
+\]
+with probability $1-\delta$ in $\widetilde{O}(\nnz(A)+d^{\omega})$
+time.
+\end{thm}
+
+\begin{proof}
+The guarantee of $x$ follows from the definition of OSE and Lemma
+\ref{lem:Richardson}. We note that $\Pi A$ simply involves duplicating
+each row of $A$ into roughly $s$ many rows in $\Pi A$. Hence, the
+cost of computing $\Pi A$ is $O(s\cdot\nnz(A))=\widetilde{O}(\nnz(A))$.
+The cost of computing $M$ takes $\widetilde{O}(d^{\omega})$ time.
+Computing $M^{-1}$ takes $\widetilde{O}(d^{\omega})$ time. The loop
+takes $\widetilde{O}(\nnz(A))$ time. This explain the total time.
+\end{proof}
+Linear regression can also be solved in time $O\left(\nnz(A)+d^{O(1)}\right)$
+via a very sparse embedding: each column of $\Pi$ picks exactly one
+nonzero entry in a random location. This was analyzed by Clarkson
+and Woodruff \cite{woodruff2014sketching}. See also \cite{kannan_vempala_2017}
+for a survey.

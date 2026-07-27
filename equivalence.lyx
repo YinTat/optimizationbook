@@ -869,7 +869,7 @@ polar
  is defined as the following convex set:
 \begin_inset Formula 
 \[
-K^{*}=\left\{ y:\forall x\in K,\left\langle x,y\right\rangle \le1\right\} .
+K^{*}=\left\{ y:\forall x\in K,\left\langle x,y\right\rangle \le1\right\}.
 \]
 
 \end_inset
@@ -961,7 +961,7 @@ We first prove that
 \begin_inset Formula $x\in K^{**}$
 \end_inset
 
- .
+.
  Moreover,
  
 \begin_inset Formula $\langle0,y\rangle=0\leq1$
@@ -983,7 +983,7 @@ We first prove that
 \begin_layout Proof
 We now prove the other direction.
  Suppose there is a vector 
-\begin_inset Formula $x\in K^{**}\setminus\mathrm{cl(conv(\mathit{K}\cup\left\{ 0\right\} ))}$
+\begin_inset Formula $y\in K^{**}\setminus\mathrm{cl(conv(\mathit{K}\cup\left\{ 0\right\} ))}$
 \end_inset
 
 .
@@ -1006,7 +1006,7 @@ nolink "false"
  such that
 \begin_inset Formula 
 \[
-\theta^{\top}y>\max_{x\in cl(conv(\mathit{K}\cup\left\{ 0\right\} ))}\theta^{\top}x.
+\theta^{\top}y>\sup_{x\in cl(conv(\mathit{K}\cup\left\{ 0\right\} ))}\theta^{\top}x.
 \]
 
 \end_inset
@@ -1034,7 +1034,7 @@ Since
  so that 
 \begin_inset Formula 
 \[
-\theta^{\top}y>1\geq\max_{x\in cl(conv(\mathit{K}\cup\left\{ 0\right\} ))}\theta^{\top}x.
+\theta^{\top}y>1\geq\sup_{x\in cl(conv(\mathit{K}\cup\left\{ 0\right\} ))}\theta^{\top}x.
 \]
 
 \end_inset
@@ -1076,7 +1076,7 @@ Let
 \begin_inset Formula $\,\R^{n}$
 \end_inset
 
- be a closed convex set .
+ be a closed convex set.
  Then 
 \begin_inset Formula $(K^{*})^{*}=K$
 \end_inset
@@ -1303,8 +1303,12 @@ For any continuous function
 \begin_inset Formula $f$
 \end_inset
 
- with differentiable 
+ with 
 \begin_inset Formula $f^{*}$
+\end_inset
+
+ differentiable at 
+\begin_inset Formula $\theta$
 \end_inset
 
 ,
@@ -1410,18 +1414,27 @@ First we observe that the supremum is achieved.
 \end_inset
 
 .
+ Choose 
+\begin_inset Formula $t>0$
+\end_inset
+
+ small enough that 
+\begin_inset Formula $f^{*}(\theta+tu)<\infty$
+\end_inset
+
+.
  Since 
-\begin_inset Formula $g_{\theta+u}(x_{i})=g_{\theta}(x_{i})+u^{\top}x_{i}\ge f^{*}(\theta)-\epsilon+u^{\top}x_{i}$
+\begin_inset Formula $g_{\theta+tu}(x_{i})=g_{\theta}(x_{i})+tu^{\top}x_{i}\ge f^{*}(\theta)-\epsilon+tu^{\top}x_{i}$
 \end_inset
 
 ,
  this means that 
-\begin_inset Formula $g_{\theta+u}(x_{i})\to\infty$
+\begin_inset Formula $g_{\theta+tu}(x_{i})\to\infty$
 \end_inset
 
 ,
  contradicting 
-\begin_inset Formula $f^{*}(\theta+u)$
+\begin_inset Formula $f^{*}(\theta+tu)$
 \end_inset
 
  being finite.
@@ -1864,7 +1877,7 @@ The conjugate of
 \end_inset
 
  (with 
-\begin_inset Formula $p,q\ge1)$
+\begin_inset Formula $1<p,q<\infty)$
 \end_inset
 
 .
@@ -2019,7 +2032,7 @@ nolink "false"
 \begin_inset Formula ${\cal H}$
 \end_inset
 
- s.t.
+ such that
  
 \begin_inset Formula 
 \[
@@ -2055,7 +2068,8 @@ where
  we can write
 \begin_inset Formula 
 \[
-\epi(f)=\bigcap_{{\cal H}=\left\{ (\theta,b):\,\forall x,\,f(x)\ge\theta^{\top}x-b\right\} }\left\{ (x,t):t\ge\theta^{\top}x-b\right\} .
+\mathcal{H}=\left\{ (\theta,b):\,\forall x,\,f(x)\ge\theta^{\top}x-b\right\},\qquad
+\epi(f)=\bigcap_{(\theta,b)\in\mathcal{H}}\left\{ (x,t):t\ge\theta^{\top}x-b\right\}.
 \]
 
 \end_inset
@@ -2109,7 +2123,7 @@ Let
 \begin_inset Formula $f=f^{*}$
 \end_inset
 
- iff 
+ if and only if 
 \begin_inset Formula $f(x)=\frac{\norm x^{2}}{2}$
 \end_inset
 
@@ -2282,13 +2296,13 @@ Order reversal
 \end_inset
 
  (both for all 
-\begin_inset Formula $x\in\R^{n})$
+\begin_inset Formula $x\in\R^{n}$
 \end_inset
 
-.
+).
 \end_layout
 
-\begin_layout Exercise
+\begin_layout Remark*
 Interestingly,
  the convex conjugate is the 
 \emph on
@@ -2431,7 +2445,7 @@ Let
 \begin_inset Formula $z\in B(K,\epsilon)$
 \end_inset
 
- such that.
+ such that
  
 \begin_inset Formula 
 \[
@@ -2810,7 +2824,7 @@ where
 \begin_inset Formula $0$
 \end_inset
 
- on outside.
+ outside the set.
 \end_layout
 
 \begin_layout Proof
@@ -2831,17 +2845,17 @@ where
 \begin_inset Formula $n(y)$
 \end_inset
 
- is the normal vector on 
+ is the outward normal vector on 
 \begin_inset Formula $\partial B_{\infty}(x,r_{1})$
 \end_inset
 
- the boundary of the box 
+ of the box 
 \begin_inset Formula $B_{\infty}(x,r_{1})$
 \end_inset
 
 ,
  i.e.
- standard basis vectors.
+ a signed standard basis vector.
  Since 
 \begin_inset Formula $f$
 \end_inset
@@ -2895,7 +2909,7 @@ For an
 \begin_inset Formula $f:\R^{n}\rightarrow\R,$
 \end_inset
 
-and 
+ and 
 \begin_inset Formula $h=f*\chi_{B_{\infty}(0,1/2)}$
 \end_inset
 
@@ -2909,7 +2923,7 @@ and
 \end_inset
 
 -gradient-Lipschitz and 
-\begin_inset Formula $\Delta h(y)=\E_{z\sim B_{\infty(y,1/2)}}(\Delta f(z))$
+\begin_inset Formula $\Delta h(y)=\E_{z\sim B_{\infty}(y,1/2)}(\Delta f(z))$
 \end_inset
 
 .
@@ -3040,7 +3054,7 @@ Require:
 
 \begin_layout Standard
 Set 
-\begin_inset Formula $r_{2}=\sqrt{\frac{\varepsilon r_{1}}{\sqrt{n}L}}$
+\begin_inset Formula $r_{2}=\frac{1}{2}\sqrt{\frac{\varepsilon r_{1}}{\sqrt{n}L}}$
 \end_inset
 
 .
@@ -3221,7 +3235,7 @@ on
 \begin_inset Formula $z\in B_{\infty}(x,2r_{1})$
 \end_inset
 
- and suppose that we can evaluate f to within 
+ and suppose that we can evaluate the function to within 
 \begin_inset Formula $\varepsilon$
 \end_inset
 
@@ -3236,7 +3250,7 @@ on
 
 .
  Then,
- there is random variable 
+ there is a random variable 
 \begin_inset Formula $\zeta\geq0$
 \end_inset
 
@@ -3359,7 +3373,7 @@ where we used that both
 \begin_inset Formula $z$
 \end_inset
 
- are uniform distribution on 
+ are uniformly distributed on 
 \begin_inset Formula $B_{\infty}(y,r_{2})$
 \end_inset
 
@@ -3443,7 +3457,7 @@ nolink "false"
 \end_inset
 
  and use 
-\begin_inset Formula $r_{2}=\sqrt{\frac{\varepsilon r_{1}}{\sqrt{n}L}}\leq r_{1}$
+\begin_inset Formula $r_{2}=\frac{1}{2}\sqrt{\frac{\varepsilon r_{1}}{\sqrt{n}L}}\leq r_{1}$
 \end_inset
 
  to get
@@ -3484,7 +3498,7 @@ Since we only compute
  we instead have that
 \begin_inset Formula 
 \[
-\E\zeta\leq2n^{3/2}\frac{r_{2}}{r_{1}}L+\frac{\varepsilon n}{2r_{2}}.
+\E\zeta\leq2n^{3/2}\frac{r_{2}}{r_{1}}L+\frac{\varepsilon n}{r_{2}}.
 \]
 
 \end_inset
@@ -3656,7 +3670,7 @@ status open
 \begin_inset Formula $S$
 \end_inset
 
- s.t.
+ such that
  
 \begin_inset Formula $S$
 \end_inset
@@ -3751,7 +3765,7 @@ Let
 \begin_inset Formula $K$
 \end_inset
 
- be a convex body s.t.
+ be a convex body such that
  
 \begin_inset Formula $B(0,1)\subseteq K\subseteq B(0,R)$
 \end_inset
@@ -4354,7 +4368,7 @@ Therefore,
 \end_inset
 
  and 
-\begin_inset Formula $h_{x}(\lambda d_{1}+(1-\lambda d_{2})\leq\lambda h_{x}(d_{1})+\lambda h_{x}(d_{2})$
+\begin_inset Formula $h_{x}(\lambda d_{1}+(1-\lambda)d_{2})\leq\lambda h_{x}(d_{1})+(1-\lambda)h_{x}(d_{2})$
 \end_inset
 
  as claimed.
@@ -4489,7 +4503,14 @@ Case 2:
 \end_inset
 
 .
- We consider the point 
+ If 
+\begin_inset Formula $d_{1}=d_{2}$
+\end_inset
+
+,
+ the claim is trivial.
+ Otherwise,
+ we consider the point 
 \begin_inset Formula $d_{3}=d_{1}+\frac{d_{2}-d_{1}}{\lambda}$
 \end_inset
 
@@ -4577,7 +4598,7 @@ The next lemma shows that
 \begin_inset Formula $h_{x}$
 \end_inset
 
- gives us a way to implement an approximation separation oracle and only needs access to an approximation evaluation oracle for 
+ gives us a way to implement an approximate separation oracle and only needs access to an approximate evaluation oracle for 
 \begin_inset Formula $h_{x}$
 \end_inset
 
@@ -4784,7 +4805,11 @@ name "lem:separate_set"
 \begin_inset Formula $\mathtt{Separate}_{\varepsilon,\rho}(K,x)$
 \end_inset
 
- outputs a halfspace that contains 
+ either asserts 
+\begin_inset Formula $x\in B(K,\varepsilon)$
+\end_inset
+
+ or outputs a halfspace that contains 
 \begin_inset Formula $K$
 \end_inset
 
@@ -5081,7 +5106,7 @@ name "thm:separate_set"
 
 .
  For any 
-\begin_inset Formula $0\leq\eta<\frac{1}{2}$
+\begin_inset Formula $0<\eta<\frac{1}{2}$
 \end_inset
 
 ,
@@ -5139,7 +5164,7 @@ Next,
 \begin_inset Formula $\tilde{g}$
 \end_inset
 
- may not be an unit vector and we need to re-normalize the 
+ may not be a unit vector and we need to re-normalize 
 \begin_inset Formula $\tilde{g}$
 \end_inset
 
@@ -5149,7 +5174,7 @@ Next,
 
 .
  So,
- we need to a lower bound 
+ we need a lower bound 
 \begin_inset Formula $\norm{\tilde{g}}_{2}$
 \end_inset
 
@@ -5213,7 +5238,7 @@ Hence,
  Therefore,
 \begin_inset Formula 
 \[
-\text{SEP}_{\Omega(\max(n^{7/6}\kappa^{2}\delta^{1/3}/\rho+\rho+n\log(1/\delta)\delta)}(K)\leq O(\log(1/\delta))\text{MEM}_{\delta}(K).
+\text{SEP}_{O(\max\{n^{7/6}\kappa^{2}\delta^{1/3}/\rho,\rho,n\log(1/\delta)\delta\})}(K)\leq O(n\log(1/\delta))\text{MEM}_{\delta}(K).
 \]
 
 \end_inset
@@ -5230,7 +5255,7 @@ Setting
  we have that 
 \begin_inset Formula 
 \[
-\text{SEP}_{\eta}(K)\leq O(\log(\frac{n\kappa}{\eta}))\text{MEM}_{\eta^{6}/(n^{7/2}\kappa^{6})}(K).
+\text{SEP}_{\eta}(K)\leq O(n\log(\frac{n\kappa}{\eta}))\text{MEM}_{\eta^{6}/(n^{7/2}\kappa^{6})}(K).
 \]
 
 \end_inset
@@ -5258,7 +5283,7 @@ name "thm:auto_diff"
 \begin_inset Formula $f:\R^{n}\rightarrow\R$
 \end_inset
 
- represented by an circuit whose gates compute differentiable functions of a finite number of variables.
+ represented by a circuit whose gates compute differentiable functions of a finite number of variables.
  Suppose that 
 \begin_inset Formula $f(x)$
 \end_inset
@@ -5291,7 +5316,7 @@ In practice,
 \end_inset
 
  assuming we have enough memory.
- Check out google/jax for a modern implementation.
+ Check out JAX for a modern implementation.
 \end_layout
 
 \begin_layout Remark*
@@ -5351,7 +5376,7 @@ Before proving it formally,
 Note that each step involves computing
 \begin_inset Formula 
 \[
-x_{i}=f_{i}(\overset{\text{only few }x_{j}}{\overbrace{x_{1},\cdots,x_{i-1}}})
+x_{i}=f_{i}(\overset{\text{only a few }x_{j}}{\overbrace{x_{1},\cdots,x_{i-1}}})
 \]
 
 \end_inset
@@ -5361,8 +5386,8 @@ with simple functions
 \end_inset
 
  whose derivatives we know how to compute.
- The key idea is compute 
-\begin_inset Formula $\frac{\partial f}{\partial x_{1}}$
+ The key idea is to compute 
+\begin_inset Formula $\frac{\partial f}{\partial x_{i}}$
 \end_inset
 
  not just for the inputs 
@@ -5403,7 +5428,7 @@ with simple functions
 \end_inset
 
 ,
- we can simply compute first compute all 
+ we can first compute all 
 \begin_inset Formula $x_{i}$
 \end_inset
 
@@ -5788,7 +5813,7 @@ We prove by induction that the formula
 .
  For the induction,
  we let 
-\begin_inset Formula $L_{i}=\{x_{j_{1}},x_{j_{2}},\cdots,x_{j_{k}}\}$
+\begin_inset Formula $L_{i}=\{j_{1},j_{2},\cdots,j_{k}\}$
 \end_inset
 
 .
@@ -5828,25 +5853,7 @@ We prove by induction that the formula
 \end_inset
 
 .
- More precisely,
- we have
-\begin_inset Formula 
-\[
-f(x_{i})=f(x_{j_{1}}(x_{i},x_{j_{-1}}),x_{j_{2}}(x_{i},x_{j_{-2}}),\cdots,x_{j_{k}}(x_{i},x_{j_{-k}}))
-\]
-
-\end_inset
-
-where we use 
-\begin_inset Formula $x_{j_{-1}}$
-\end_inset
-
- to denote the variables 
-\begin_inset Formula $x_{j_{2}},x_{j_{3}},\cdots,x_{j_{k}}$
-\end_inset
-
-.
- By chain rule,
+ Applying the chain rule to these direct dependencies,
  we have
 \begin_inset Formula 
 \[
@@ -5864,7 +5871,7 @@ To bound the runtime,
 \begin_inset Formula $G$
 \end_inset
 
- be a graph on 
+ to be a graph on 
 \begin_inset Formula $x_{1},x_{2},\cdots,x_{m}$
 \end_inset
 
@@ -5896,11 +5903,11 @@ To bound the runtime,
 \end_inset
 
  and the cost of our algorithm are both 
-\begin_inset Formula $\Theta(m)$
+\begin_inset Formula $\Theta(\mathcal{T})$
 \end_inset
 
  where 
-\begin_inset Formula $m$
+\begin_inset Formula $\mathcal{T}$
 \end_inset
 
  is the number of edges in 
@@ -5913,7 +5920,7 @@ To bound the runtime,
 \end_layout
 
 \begin_layout Standard
-We note that an efficient implementation of the chain rule is the heart of the backpropagation algorithm fo neural networks.
+We note that an efficient implementation of the chain rule is the heart of the backpropagation algorithm for neural networks.
  To conclude this section,
  we see that Theorem 
 \begin_inset CommandInset ref
@@ -5933,6 +5940,10 @@ If we can compute
 
  exactly in time 
 \begin_inset Formula $\mathcal{T}$
+\end_inset
+
+ for nonsingular 
+\begin_inset Formula $A$
 \end_inset
 
 ,
@@ -5989,7 +6000,7 @@ Auto differentiation is great if the function can be computed exactly.
 \begin_inset Formula $f$
 \end_inset
 
- can be only approximated or the computation of 
+ can only be approximated or the computation of 
 \begin_inset Formula $f$
 \end_inset
 
@@ -6104,7 +6115,7 @@ where
 The complex step differentiation uses the step
 \begin_inset Formula 
 \[
-\frac{\mathrm{Im}f(x+ih)}{h}\approx f'(x)+O(h^{2})f''(\zeta).
+\frac{\mathrm{Im}f(x+ih)}{h}\approx f'(x)+O(h^{2})f'''(\zeta).
 \]
 
 \end_inset

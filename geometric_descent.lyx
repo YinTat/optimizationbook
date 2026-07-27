@@ -99,16 +99,16 @@ checked calculations
 \end_layout
 
 \begin_layout Standard
-In Section 
+By Theorem 
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "sec:Gradient-Descent"
+reference "thm:gd_convex_strongly"
 nolink "false"
 
 \end_inset
 
 ,
- we proved that gradient descent converges at the rate 
+ gradient descent converges at the rate 
 \begin_inset Formula $(1-\frac{\mu}{L})^{k}$
 \end_inset
 
@@ -636,7 +636,7 @@ The fact
  suppose that 
 \begin_inset Formula 
 \[
-Q^{(k)}=\left\{ x\in\Rn:\|x-x^{(k)}\|\leq R^{(k)}\right\} .
+Q^{(k)}=\left\{ x\in\Rn:\|x-x^{(k)}\|\leq R^{(k)}\right\}.
 \]
 
 \end_inset
@@ -672,7 +672,7 @@ To compute
  we have
 \begin_inset Formula 
 \[
-Q^{(k+1)}=\mathtt{minSphere}\left(\left\{ \norm{x-g}_{2}^{2}\leq(1-\frac{\mu}{L})\cdot\norm g_{2}^{2}\right\} \cap\left\{ \|x\|\leq1\right\} \right).
+Q^{(k+1)}=\mathtt{minSphere}\left(\left\{ \norm{x-g}_{2}^{2}\leq(1-\frac{\mu}{L})\cdot\norm{g}_{2}^{2}\right\} \cap\left\{ \|x\|\leq1\right\} \right).
 \]
 
 \end_inset
@@ -1144,7 +1144,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-The left diagram shows the intersection shrinks at the same rate if only one of the ball shrinks;
+The left diagram shows the intersection shrinks at the same rate if only one of the balls shrinks;
  the right diagram shows the intersection shrinks much faster if two balls shrink at the same absolute amount.
 \begin_inset CommandInset label
 LatexCommand label
@@ -1216,7 +1216,7 @@ As the algorithm proceeds,
  the original inequality can be strengthened to 
 \begin_inset Formula 
 \[
-f(x^{(new)})>f(x)+\left\langle \nabla f(x),x^{*}-x\right\rangle 
+f(x^{\new})>f(x)+\left\langle \nabla f(x),x^{*}-x\right\rangle 
 \]
 
 \end_inset
@@ -1224,7 +1224,7 @@ f(x^{(new)})>f(x)+\left\langle \nabla f(x),x^{*}-x\right\rangle
 or 
 \begin_inset Formula 
 \[
-\left\langle \nabla f(x),x^{*}-x\right\rangle <-(f(x)-f(x^{(new)})).
+\left\langle \nabla f(x),x^{*}-x\right\rangle <-(f(x)-f(x^{\new})).
 \]
 
 \end_inset
@@ -1480,7 +1480,7 @@ Let
 \begin_inset Formula $c^{(k+1)}$
 \end_inset
 
- be the minimizer of 
+ is the minimizer of 
 \begin_inset Formula $q^{(k+1)}(y)$
 \end_inset
 
@@ -1528,8 +1528,8 @@ As in gradient descent,
 \begin_inset Formula $x^{(k)}$
 \end_inset
 
- along the direction 
-\begin_inset Formula $\nabla f(x^{(k)})$
+ along the descent direction 
+\begin_inset Formula $-\nabla f(x^{(k)})$
 \end_inset
 
 .
@@ -1550,7 +1550,7 @@ The differences between
 \end_layout
 
 \begin_layout Enumerate
-The latter is an epigraph cutting plane method and does not need to know
+The latter is an epigraph cutting plane method and does not need to know 
 \begin_inset Formula $f^{*}$
 \end_inset
 
@@ -1830,7 +1830,7 @@ v_{\lambda}=v_{A}+\frac{\mu}{8}\frac{(\|c_{A}-c_{B}\|^{2}+\frac{2}{\mu}(v_{B}-v_
 
 \end_inset
 
-This says that the quadratic lower bound improves a lot whenever 
+This says that the quadratic lower bound improves significantly whenever 
 \begin_inset Formula $\frac{\mu}{2}\|c_{A}-c_{B}\|^{2}\gg v_{B}-v_{A}$
 \end_inset
 
@@ -1868,7 +1868,7 @@ Assume that
 
 -Lipschitz gradient.
  Let 
-\begin_inset Formula $r_{k}=f(x^{(k)})-\min_{y}q^{(k)}(y)$
+\begin_inset Formula $r_{k}^{2}=f(x^{(k)})-\min_{y}q^{(k)}(y)$
 \end_inset
 
 .
@@ -1909,10 +1909,10 @@ Note that the squared radius of
 .
  Hence,
  
-\begin_inset Formula $r_{k}$
+\begin_inset Formula $r_{k}^{2}$
 \end_inset
 
- is measuring the squared radius of our quadratic lower bound.
+ measures the squared radius of our quadratic lower bound.
  To relate to the cutting plane framework,
  we can view the set as 
 \begin_inset Formula $\{y:q^{(k)}(y)\leq f(x^{(k)})\}$
@@ -1986,7 +1986,7 @@ Using the notation in
 
 \end_inset
 
-To bound the right hand side,
+To bound the right-hand side,
  it suffices to bound 
 \begin_inset Formula $v_{A}$
 \end_inset
@@ -2090,14 +2090,19 @@ nolink "false"
 \begin_inset Formula 
 \begin{align}
 \frac{r_{k}^{2}-r_{k+1}^{2}}{r_{k}^{2}} & \geq\frac{f(x^{(k)})-f(x^{(k+1)})}{r_{k}^{2}}+\frac{\mu\cdot r_{k}^{2}}{2\|\nabla f(x^{(k)})\|^{2}}\nonumber \\
- & \geq\frac{f(x^{(k+\frac{1}{2})})-f(x^{(k+1)})}{r_{k}^{2}}+\frac{\mu\cdot r_{k}^{2}}{2\|\nabla f(x^{(k)})\|^{2}}\nonumber \\
+ & \geq\frac{f(x^{(k)})-f(x^{(k+\frac{1}{2})})}{r_{k}^{2}}+\frac{\mu\cdot r_{k}^{2}}{2\|\nabla f(x^{(k)})\|^{2}}\nonumber \\
  & \geq\frac{\|\nabla f(x^{(k)})\|^{2}}{2Lr_{k}^{2}}+\frac{\mu\cdot r_{k}^{2}}{2\|\nabla f(x^{(k)})\|^{2}}\label{eq:geometric_key-1}\\
  & \geq\sqrt{\frac{\mu}{L}}\nonumber 
 \end{align}
 
 \end_inset
 
-where the second inequality is due to the fact 
+where the second inequality uses 
+\begin_inset Formula $f(x^{(k+1)})\leq f(x^{(k+\frac{1}{2})})$
+\end_inset
+
+,
+ and the third inequality follows from the fact that 
 \begin_inset Formula $x^{(k+\frac{1}{2})}$
 \end_inset
 
@@ -2106,7 +2111,7 @@ where the second inequality is due to the fact
 \end_inset
 
 ,
- the third inequality is due to the assumption on 
+ together with the assumption on 
 \begin_inset Formula $L$
 \end_inset
 
@@ -2139,7 +2144,7 @@ Hence,
 \end_inset
 
  and hence 
-\begin_inset Formula $r_{1}\leq f(x^{(1)})-v^{(1)}\leq\frac{1}{2\mu}\|\nabla f(x^{(0)})\|^{2}$
+\begin_inset Formula $r_{1}^{2}=f(x^{(1)})-v^{(1)}\leq\frac{1}{2\mu}\|\nabla f(x^{(0)})\|^{2}$
 \end_inset
 
 .
@@ -2190,7 +2195,7 @@ nolink "false"
 
  as the key equation of the proof above.
  It shows that the progress is roughly 
-\begin_inset Formula $\frac{\|\nabla f\|^{2}}{L}+\frac{\mu}{\|\nabla f\|^{2}}$
+\begin_inset Formula $\frac{\|\nabla f\|^{2}}{Lr_{k}^{2}}+\frac{\mu r_{k}^{2}}{\|\nabla f\|^{2}}$
 \end_inset
 
  where the first term comes from the progress on the function value and the second term comes from 
@@ -2221,7 +2226,7 @@ nolink "false"
 \begin_inset Formula $x$
 \end_inset
 
- s.t.
+ such that
  
 \begin_inset Formula $B(0,\sqrt{1-\epsilon|g|^{2}})\cap B(g,|g|\sqrt{1-\epsilon})\subset B(x,\sqrt{1-\sqrt{\epsilon}})$
 \end_inset
@@ -2244,7 +2249,7 @@ This section was about the idea of managing cutting planes,
 .
  However,
  it seems that the use of line search helps in practice and that with a careful implementation,
- line search can be as cheap as gradient computation.
+ line search can be as cheap as a gradient computation.
  For more difficult problems,
  one may want to store multiple quadratic lower bounds (see 
 \begin_inset CommandInset citation

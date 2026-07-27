@@ -1,0 +1,125 @@
+\selectlanguage{american}%
+
+\section{Chebyshev Polynomials\label{sec:Chebyshev-Polynomials}}
+
+The goal of this section is to introduce some basic results in approximation
+theory. Suppose magically there was a polynomial $q(x)$ such that
+$q(0)=1$ and $q(x)=0$ for all $x>0$. By assumption, we know that
+the constant term in $q$ is $1$ and hence we can write 
+\[
+q(x)=1-xp(x)
+\]
+for some $p(x)$. Therefore, for any positive definite matrix $A$,
+we have that
+\[
+I-Ap(A)=0
+\]
+and hence $A^{-1}=p(A).$ Therefore, we could compute $A^{-1}b$ by
+calculating $p(A)b$ which takes $\text{deg}(p)\cdot\nnz(A)$ time.
+Unfortunately, there is no such polynomial $q$. In this section,
+we will discuss if there is such polynomial that satisfies the condition
+above approximately. 
+
+We will bound $\inf_{q(0)=1}\left(\max_{i}\left|q(\lambda_{i})\right|\right)$
+for matrices $A$ satisfying $\mu\cdot I\preceq A\preceq L\cdot I$.
+First, we note that we can choose $q(x)=\left(1-\frac{x}{L}\right)^{k}$
+and get
+\[
+\inf_{q(0)=1}\max_{\mu\leq x\leq L}\left|q(x)\right|\leq\left(1-\frac{\mu}{L}\right)^{k}.
+\]
+This corresponds to the Richardson iteration, and the above bound
+shows that it takes $O(\frac{L}{\mu}\log(\frac{1}{\epsilon}))$ degree
+to make the error bounded by $\epsilon$. The key fact we will use
+is that we can in general approximate a polynomial of degree $k$
+by a polynomial of degree $\tilde{O}(\sqrt{k})$. The construction
+uses Chebyshev polynomials. This will imply an $\tilde{O}(\sqrt{\frac{L}{\mu}})$
+iteration bound for the conjugate gradient method of the next section.
+\begin{defn}
+For any integer $d$, the $d$'th Chebyshev polynomial is defined
+as the unique polynomial that satisfies 
+\[
+T_{d}(\cos\theta)=\cos(d\theta).
+\]
+\end{defn}
+
+\begin{xca}
+Show that $T_{d}(x)$ is a degree $|d|$ polynomial in $x$ and that
+\begin{equation}
+xT_{d}(x)=\frac{T_{d+1}(x)+T_{d-1}(x)}{2}.\label{eq:T_avg_recursion}
+\end{equation}
+\end{xca}
+
+\begin{thm}[Chernoff Bound]
+\label{thm:chernoff}For independent random variables $Y_{1},\cdots,Y_{s}$
+such that $\P(Y_{i}=1)=\P(Y_{i}=-1)=\frac{1}{2}$, for any $a\geq0$,
+we have
+\[
+\P(\left|\sum_{i=1}^{s}Y_{i}\right|\geq a)\leq2\exp(-\frac{a^{2}}{2s}).
+\]
+\end{thm}
+
+Now we are ready to show that there is a degree $\tilde{O}(\sqrt{s})$
+polynomial that estimates $x^{s}$.
+\begin{thm}
+\label{thm:approximate_mono}For any positive integers $s$ and $d$,
+there is a polynomial $p$ of degree $d$ such that
+\[
+\max_{x\in[-1,1]}|p(x)-x^{s}|\leq2\exp(-\frac{d^{2}}{2s}).
+\]
+\end{thm}
+
+\begin{proof}
+Let $Y_{i}$ are i.i.d. random variable uniform on $\{-1,1\}$. Let
+$Z_{s}=\sum_{i=1}^{s}Y_{i}$. Note that
+\[
+\E_{z\sim Z_{s}}T_{z}=\E_{z\sim Z_{s-1}}\frac{1}{2}(T_{z+1}+T_{z-1})
+\]
+
+Now, (\ref{eq:T_avg_recursion}) shows that $\E_{z\sim Z_{s}}T_{z}(x)=\E_{z\sim Z_{s-1}}xT_{z}(x)$.
+By induction, we have
+\begin{equation}
+\E_{z\sim Z_{s}}T_{z}(x)=x^{s}T_{0}(x)=x^{s}.\label{eq:E_z_x_s}
+\end{equation}
+Now, we define the polynomial $p(x)=\E_{z\sim Z_{s}}T_{z}(x)1_{|z|\leq d}$.
+The error of the polynomial can be bounded as follows
+\begin{align*}
+\max_{x\in[-1,1]}|p(x)-x^{s}| & =\max_{x\in[-1,1]}|\E_{z\sim Z_{s}}T_{z}(x)1_{|z|>d}|\\
+ & \leq\max_{x\in[-1,1]}\E_{z\sim Z_{s}}|T_{z}(x)|1_{|z|>d}\\
+ & \leq\P_{z\sim Z_{s}}(|z|>d)\\
+ & \leq2\exp(-\frac{d^{2}}{2s})
+\end{align*}
+where we used (\ref{eq:E_z_x_s}) on the first line, $|T_{z}(x)|\leq1$
+for all $x\in[-1,1]$ on the third line and Chernoff bound (Theorem
+\ref{thm:chernoff}) on the last line.
+\end{proof}
+\begin{rem*}
+This proof comes from \cite{sachdeva2014faster}. Please see \cite{sachdeva2014faster}
+for the approximation of other functions.
+\end{rem*}
+By scaling and translating Theorem \ref{thm:approximate_mono}, we
+have the following guarantee.
+\begin{thm}
+For any $0<\mu\leq L$ and any $0\leq\epsilon\leq1$, there is a polynomial
+$q$ of degree $O(\sqrt{\frac{L}{\mu}}\log(\frac{1}{\epsilon}))$
+such that 
+\[
+\inf_{q(0)=1}\max_{\mu\leq x\leq L}\left|q(x)\right|\leq\epsilon.
+\]
+\end{thm}
+
+\begin{proof}
+Theorem \ref{thm:approximate_mono} shows that there is $q$ such
+that 
+\[
+\max_{x\in[0,L]}\left|q(x)-\left(1-\frac{x}{L}\right)^{s}\right|\leq2\exp(-\frac{d^{2}}{2s}).
+\]
+Hence, we have that $\left|q(0)-1\right|\leq2\exp(-\frac{d^{2}}{2s})$
+and that
+\[
+\max_{x\in[\mu,L]}\left|q(x)\right|\leq\left(1-\frac{\mu}{L}\right)^{s}+2\exp(-\frac{d^{2}}{2s}).
+\]
+To make both $|q(0)-1|\leq\frac{\epsilon}{3}$ and $\max_{x\in[\mu,L]}\left|q(x)\right|\leq\frac{\epsilon}{3}$,
+we set $d=O(\sqrt{s}\log\frac{1}{\epsilon})$ and $s=O(\frac{L}{\mu}\log(\frac{1}{\epsilon}))$.
+By rescaling $q$, we have $q(0)=1$.\selectlanguage{english}%
+\end{proof}
+

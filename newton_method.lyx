@@ -1,5 +1,5 @@
-#LyX 2.4 created this file. For more info see https://www.lyx.org/
-\lyxformat 620
+#LyX 2.5 created this file. For more info see https://www.lyx.org/
+\lyxformat 643
 \begin_document
 \begin_header
 \save_transient_properties true
@@ -50,11 +50,19 @@
 \use_indices false
 \paperorientation portrait
 \suppress_date false
-\justification true
-\use_refstyle 1
+\justification default
+\crossref_package refstyle
 \use_formatted_ref 0
 \use_minted 0
 \use_lineno 0
+\backgroundcolor none
+\fontcolor none
+\notefontcolor lightgray
+\boxbgcolor red
+\table_border_color default
+\table_odd_row_color default
+\table_even_row_color default
+\table_alt_row_colors_start 1
 \index Index
 \shortcut idx
 \color #008000
@@ -80,6 +88,7 @@
 \html_be_strict false
 \docbook_table_output 0
 \docbook_mathml_prefix 1
+\docbook_mathml_version 0
 \end_header
 
 \begin_body
@@ -89,49 +98,6 @@ The Newton Method
 \begin_inset CommandInset label
 LatexCommand label
 name "sec:Newton-Method"
-
-\end_inset
-
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-mention higher order method here.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-placement document
-alignment document
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename Figures/Section_5.3.png
-	width 50col%
-
-\end_inset
-
-
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-1D Newton Step
-\end_layout
-
-\end_inset
-
-
-\end_layout
 
 \end_inset
 
@@ -161,15 +127,15 @@ We begin with the Newton-Raphson method for finding the zeros of a function
 \end_inset
 
 .
- The Newton-Raphson iteration approximates a function by its gradient/Jacobian,
- then guesses where the gradient intersects the zero line as a likely zero,
+ The Newton-Raphson iteration approximates a function by its linearization/Jacobian,
+ then guesses where the linear approximation intersects the zero line as a likely zero,
  repeating this process until a sufficient approximation has been found.
  In one dimension,
  we approximate the function 
 \begin_inset Formula $g$
 \end_inset
 
- by its gradient 
+ by its linearization 
 \begin_inset Formula 
 \[
 g(x)\sim g(x^{(k)})+g'(x^{(k)})(x-x^{(k)}).
@@ -177,7 +143,7 @@ g(x)\sim g(x^{(k)})+g'(x^{(k)})(x-x^{(k)}).
 
 \end_inset
 
-Finding the zeros of the right hand side,
+Finding the zeros of the right-hand side,
  we have the Newton step
 \begin_inset Formula 
 \[
@@ -203,7 +169,7 @@ x^{(k+1)}=x^{(k)}-\left(Dg(x^{(k)})\right)^{-1}g(x^{(k)}).
 \end_layout
 
 \begin_layout Standard
-When the function 
+When 
 \begin_inset Formula $g(x)=\nabla f(x)$
 \end_inset
 
@@ -224,7 +190,7 @@ Alternatively,
  we can derive the Newton step as 
 \begin_inset Formula 
 \[
-x^{(k+1)}\leftarrow\min_{x}f(x^{(k)})+\left\langle \nabla f(x^{(k)}),x-x^{(k)}\right\rangle +\frac{1}{2}(x-x^{(k)})^{\mathsf{T}}(\nabla^{2}f(x^{(k)}))(x-x^{(k)}).
+x^{(k+1)}\leftarrow\arg\min_{x}f(x^{(k)})+\left\langle \nabla f(x^{(k)}),x-x^{(k)}\right\rangle +\frac{1}{2}(x-x^{(k)})^{\mathsf{T}}(\nabla^{2}f(x^{(k)}))(x-x^{(k)}).
 \]
 
 \end_inset
@@ -255,12 +221,12 @@ To see why affine-invariance is important for optimization,
  we consider the following function
 \begin_inset Formula 
 \[
-f(x_{1},x_{2})=\frac{100}{2}x_{1}^{2}+\frac{1}{2}x_{2}^{2}.
+f(x_{1},x_{2})=\frac{100}{2}x^{2}_{1}+\frac{1}{2}x^{2}_{2}.
 \]
 
 \end_inset
 
-The gradient descent for this function is
+Gradient descent for this function is
 \begin_inset Formula 
 \[
 (x_{1},x_{2})\leftarrow(x_{1},x_{2})-h\nabla f(x_{1},x_{2})=((1-100h)x_{1},(1-h)x_{2}).
@@ -269,7 +235,7 @@ The gradient descent for this function is
 \end_inset
 
 We need 
-\begin_inset Formula $h<\frac{1}{100}$
+\begin_inset Formula $h<\frac{2}{100}$
 \end_inset
 
  in order for the first coordinate to converge,
@@ -303,7 +269,40 @@ For many classes of functions,
  each step of Newton method involves solving a linear system,
  which can be much more expensive.
  Furthermore,
- Newton method may not converges if the starting point is far away.
+ Newton method may not converge if the starting point is far away.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement document
+alignment document
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Figures/Section_5.3.png
+	width 50col%
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+1D Newton Step
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -311,7 +310,6 @@ For many classes of functions,
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 begin{algorithm2e}[H]
@@ -328,7 +326,6 @@ status open
 
 \begin_layout Plain Layout
 
-
 \backslash
 caption{
 \end_layout
@@ -344,7 +341,6 @@ caption{
 status open
 
 \begin_layout Plain Layout
-
 }
 \end_layout
 
@@ -358,7 +354,6 @@ status open
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 SetAlgoLined
@@ -375,8 +370,18 @@ SetAlgoLined
 Input:
 
 \series default
- Initial point 
+ Function 
+\begin_inset Formula $g:\Rn\to\Rn$
+\end_inset
+
+,
+ initial point 
 \begin_inset Formula $x^{(0)}\in\Rn$
+\end_inset
+
+,
+ and iteration count 
+\begin_inset Formula $T$
 \end_inset
 
 
@@ -387,7 +392,6 @@ Input:
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 For{
@@ -404,7 +408,6 @@ For{
 status open
 
 \begin_layout Plain Layout
-
 }{
 \end_layout
 
@@ -425,7 +428,6 @@ status open
 status open
 
 \begin_layout Plain Layout
-
 }
 \end_layout
 
@@ -439,7 +441,6 @@ status open
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 Return
@@ -459,7 +460,6 @@ Return
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 end{algorithm2e}
@@ -514,51 +514,10 @@ Assume that
 
  large enough,
  we have
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-we need bound on operator norm below for every 
-\begin_inset Formula $x^{(k)}$
-\end_inset
-
-right?
- not just 
-\begin_inset Formula $x^{*}?$
-\end_inset
-
- We are assuming 
-\begin_inset Formula $g$
-\end_inset
-
- is twice continuously differentiable.
- So,
- they are same.
- We already assume 
-\begin_inset Formula $x^{(k)}$
-\end_inset
-
- converges.
-\end_layout
-
-\end_inset
-
-
 \begin_inset Formula 
 \[
 \|x^{(k+1)}-x^{*}\|\leq\|(Dg(x^{*}))^{-1}D^{2}g(x^{*})\|_{\op}\cdot\|x^{(k)}-x^{*}\|^{2}.
 \]
-
-\end_inset
-
-
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-should change this lemma to affine invariant version.
- Measure distance by the Jacobian norm.
-\end_layout
 
 \end_inset
 
@@ -575,7 +534,7 @@ Let
  we have that
 \begin_inset Formula 
 \[
-g(x^{*})=g(x^{(k)})+Dg(x^{(k)})[e^{(k)}]+\int_{0}^{1}(1-s)D^{2}g(x^{(k)}+se^{(k)})[e^{(k)},e^{(k)}]ds.
+g(x^{*})=g(x^{(k)})+Dg(x^{(k)})[e^{(k)}]+\int^{1}_{0}(1-s)D^{2}g(x^{(k)}+se^{(k)})[e^{(k)},e^{(k)}]ds.
 \]
 
 \end_inset
@@ -584,7 +543,7 @@ Hence,
  we have
 \begin_inset Formula 
 \[
-0=Dg(x^{(k)})^{-1}g(x^{(k)})+x^{*}-x^{(k)}+\int_{0}^{1}(1-s)Dg(x^{(k)})^{-1}D^{2}g(x^{(k)}+se^{(k)})[e^{(k)},e^{(k)}]ds.
+0=Dg(x^{(k)})^{-1}g(x^{(k)})+x^{*}-x^{(k)}+\int^{1}_{0}(1-s)Dg(x^{(k)})^{-1}D^{2}g(x^{(k)}+se^{(k)})[e^{(k)},e^{(k)}]ds.
 \]
 
 \end_inset
@@ -597,7 +556,7 @@ Since
  we have
 \begin_inset Formula 
 \[
-x^{(k+1)}-x^{*}=\int_{0}^{1}(1-s)Dg(x^{(k)})^{-1}D^{2}g(x^{(k)}+se^{(k)})[e^{(k)},e^{(k)}]ds.
+x^{(k+1)}-x^{*}=\int^{1}_{0}(1-s)Dg(x^{(k)})^{-1}D^{2}g(x^{(k)}+se^{(k)})[e^{(k)},e^{(k)}]ds.
 \]
 
 \end_inset
@@ -606,8 +565,8 @@ So,
  we have
 \begin_inset Formula 
 \begin{align*}
-\|x^{(k+1)}-x^{*}\| & \leq\int_{0}^{1}(1-s)\|Dg(x^{(k)})^{-1}D^{2}g(x^{(k)}+se^{(k)})[e^{(k)},e^{(k)}]\|ds\\
- & \leq\int_{0}^{1}(1-s)\|Dg(x^{(k)})^{-1}D^{2}g(x^{(k)}+se^{(k)})\|_{\op}ds\cdot\|x^{(k)}-x^{*}\|^{2}.
+\|x^{(k+1)}-x^{*}\| & \leq\int^{1}_{0}(1-s)\|Dg(x^{(k)})^{-1}D^{2}g(x^{(k)}+se^{(k)})[e^{(k)},e^{(k)}]\|ds\\
+ & \leq\int^{1}_{0}(1-s)\|Dg(x^{(k)})^{-1}D^{2}g(x^{(k)}+se^{(k)})\|_{\op}ds\cdot\|x^{(k)}-x^{*}\|^{2}.
 \end{align*}
 
 \end_inset
@@ -642,7 +601,7 @@ The result follows.
 \end_layout
 
 \begin_layout Standard
-This argument above uses only that 
+The argument above uses only that 
 \begin_inset Formula $g\in\mathcal{C}^{2}$
 \end_inset
 
@@ -705,12 +664,12 @@ globally
 \end_layout
 
 \begin_layout Theorem
-Given a polynomial 
-\begin_inset Formula $g(x)=\sum_{i=1}^{n}a_{i}x^{i}$
+Let 
+\begin_inset Formula $g(x)=\sum^{n}_{i=0}a_{i}x^{i}$
 \end_inset
 
- with only real roots.
- Let 
+ be a polynomial with only real roots,
+ and let 
 \begin_inset Formula $\lambda_{1}$
 \end_inset
 
@@ -733,7 +692,7 @@ Given a polynomial
  such that
 \begin_inset Formula 
 \[
-\lambda_{1}\leq x^{(k)}\leq\lambda_{1}+\varepsilon\cdot(x^{(0)}-\lambda_{1}).
+\lambda_{1}\leq x^{(k)}\leq\lambda_{1}+\epsilon\cdot(x^{(0)}-\lambda_{1}).
 \]
 
 \end_inset
@@ -750,7 +709,7 @@ Since the roots of
  we can write
 \begin_inset Formula 
 \[
-g(x)=b\cdot\prod_{i=1}^{n}(x-\lambda_{i})
+g(x)=b\cdot\prod^{n}_{i=1}(x-\lambda_{i})
 \]
 
 \end_inset
@@ -778,7 +737,7 @@ for some
 \end_inset
 
 For any 
-\begin_inset Formula $x\geq\lambda_{1}$
+\begin_inset Formula $x>\lambda_{1}$
 \end_inset
 
 ,
@@ -821,7 +780,7 @@ Consider the following iteration:
  
 \begin_inset Formula 
 \[
-x^{t+1}=x^{t}-\frac{1}{n^{1/k}}\frac{g^{(k-1)}(x)}{g^{(k)}(x)}
+x^{(t+1)}=x^{(t)}-\frac{1}{n^{1/k}}\frac{g^{(k-1)}(x^{(t)})}{g^{(k)}(x^{(t)})}
 \]
 
 \end_inset
@@ -856,6 +815,21 @@ where
 \end_inset
 
 .
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Tat:
+ I don't see why the formula of 
+\begin_inset Formula $g^{(k)}$
+\end_inset
+
+ is that.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -864,33 +838,39 @@ Such a dependence of
 \end_inset
 
  is called linear convergence.
- The convergence of the Newton method can be quadratic,
+ The convergence of the Newton method can be quadratic,
  when close enough to a root.
 \end_layout
 
 \begin_layout Theorem
 Assume that 
-\begin_inset Formula $|f'(x^{*})|\geq\alpha$
-\end_inset
-
- at 
 \begin_inset Formula $f(x^{*})=0$
 \end_inset
 
- and f' is 
+,
+ 
+\begin_inset Formula $|f'(x^{*})|\geq\alpha$
+\end_inset
+
+,
+ and 
+\begin_inset Formula $f'$
+\end_inset
+
+ is 
 \begin_inset Formula $L$
 \end_inset
 
 -Lipschitz.
  Then,
  if 
-\begin_inset Formula $|x^{0}-x^{*}|\le\frac{\alpha}{2L}$
+\begin_inset Formula $|x^{(0)}-x^{*}|\le\frac{\alpha}{2L}$
 \end_inset
 
 ,
 \begin_inset Formula 
 \[
-|x^{(k)}-x^{*}|\leq\frac{\alpha}{L}\left(\frac{L}{\alpha}|x^{(0)}-x^{*}|\right)^{2^{(k)}}.
+|x^{(k)}-x^{*}|\leq\frac{\alpha}{L}\left(\frac{L}{\alpha}|x^{(0)}-x^{*}|\right)^{2^{k}}.
 \]
 
 \end_inset
@@ -910,7 +890,7 @@ x^{(k+1)}-x^{*}=x^{(k)}-x^{*}-\frac{f(x^{(k)})}{f'(x^{(k)})}.
 
 \begin_inset Formula 
 \begin{align*}
-f(x^{*}) & =f(x^{(k)})+\int_{x^{k}}^{x^{*}}f'(z)dz=f(x^{(k)})+f'(x^{(k)})(x^{*}-x^{(k)})+\int_{x^{k}}^{x^{*}}(f'(z)-f'(x^{(k)}))dz.
+f(x^{*}) & =f(x^{(k)})+\int^{x^{*}}_{x^{(k)}}f'(z)dz=f(x^{(k)})+f'(x^{(k)})(x^{*}-x^{(k)})+\int^{x^{*}}_{x^{(k)}}(f'(z)-f'(x^{(k)}))dz.
 \end{align*}
 
 \end_inset
@@ -919,15 +899,14 @@ Therefore,
  
 \begin_inset Formula 
 \begin{align*}
-x^{(k+1)}-x^{*} & =\frac{1}{f'(x^{(k)})}\int_{x^{k}}^{x^{*}}(f'(z)-f'(x^{(k)}))dz.\\
- & \leq\frac{L}{|f'(x^{(k)})|}\int_{x^{k}}^{x^{*}}|z-x^{(k)}|dz\\
- & =\frac{L|x^{*}-x^{(k)}|^{2}}{2|f'(x^{(k)})|}.
+\left|x^{(k+1)}-x^{*}\right| & =\frac{1}{|f'(x^{(k)})|}\left|\int^{x^{*}}_{x^{(k)}}(f'(z)-f'(x^{(k)}))dz\right|\\
+ & \leq\frac{L|x^{*}-x^{(k)}|^{2}}{2|f'(x^{(k)})|}.
 \end{align*}
 
 \end_inset
 
 Since 
-\begin_inset Formula $f'(x^{(k)})\geq f'(x^{*})-L|x^{(k)}-x^{*}|$
+\begin_inset Formula $|f'(x^{(k)})|\geq|f'(x^{*})|-L|x^{(k)}-x^{*}|$
 \end_inset
 
 
@@ -959,24 +938,33 @@ and
 
 \end_inset
 
-After 
-\begin_inset Formula $t$
+Writing 
+\begin_inset Formula $\epsilon_{0}=|x^{(0)}-x^{*}|$
+\end_inset
+
+,
+ after 
+\begin_inset Formula $k$
 \end_inset
 
  steps,
 \begin_inset Formula 
 \[
-\frac{L}{\alpha}|x^{(k)}-x^{*}|\leq\left(\frac{L}{\alpha}\epsilon_{0}\right)^{2^{(k)}}
+\frac{L}{\alpha}|x^{(k)}-x^{*}|\leq\left(\frac{L}{\alpha}\epsilon_{0}\right)^{2^{k}}.
 \]
 
 \end_inset
 
-implying 
+
+\end_layout
+
+\begin_layout Standard
+This implies 
 \begin_inset Formula $|x^{(k)}-x^{*}|<\epsilon$
 \end_inset
 
  after 
-\begin_inset Formula $\log\log(\frac{L\epsilon_{0}}{\alpha\epsilon})$
+\begin_inset Formula $O(\log\log(\frac{\alpha\epsilon_{0}}{L\epsilon}))$
 \end_inset
 
  steps.
@@ -985,10 +973,7 @@ implying
 \end_inset
 
  has not been assumed to be convex or polynomial.
-\end_layout
-
-\begin_layout Standard
-Moving back to optimization,
+ Moving back to optimization,
  we can view the goal as finding a root of 
 \begin_inset Formula $\nabla f(x)=0$
 \end_inset
@@ -1003,7 +988,7 @@ x^{(k+1)}=x^{(k)}-(\nabla^{2}f(x^{(k)}))^{-1}\nabla f(x^{(k)}).
 \end_inset
 
 By the above proof,
- Newton's iteration has quadratic convergence from points close enough to the optimal.
+ Newton's iteration has quadratic convergence from points close enough to the optimum.
 \end_layout
 
 \begin_layout Subsection*
@@ -1050,7 +1035,7 @@ When the Jacobian of
 
  is not available,
  we can approximate it using the function itself.
- For one dimension,
+ In one dimension,
  we can approximate the Newton method and get the following secant method 
 \begin_inset Formula 
 \[
@@ -1059,7 +1044,7 @@ x^{(k+1)}=x^{(k)}-g(x^{(k)})\frac{x^{(k)}-x^{(k-1)}}{g(x^{(k)})-g(x^{(k-1)})}
 
 \end_inset
 
-where we approximated the 
+where we approximate 
 \begin_inset Formula $g'(x^{(k)})$
 \end_inset
 
@@ -1070,11 +1055,11 @@ where we approximated the
 .
  For nice enough functions,
  the convergence rate satisfies 
-\begin_inset Formula $\varepsilon_{k+1}\leq C\cdot\varepsilon_{k}^{\frac{1+\sqrt{5}}{2}}$
+\begin_inset Formula $\varepsilon_{k+1}\leq C\cdot\varepsilon^{\frac{1+\sqrt{5}}{2}}_{k}$
 \end_inset
 
 ,
- which is super linearly but not quadratic.
+ which is superlinear but not quadratic.
 \end_layout
 
 \begin_layout Standard
@@ -1082,7 +1067,7 @@ For
 \begin_inset Formula $g$
 \end_inset
 
-that is high-dimensional (of dimension at least 
+ that is high-dimensional (of dimension at least 
 \begin_inset Formula $2$
 \end_inset
 
@@ -1092,8 +1077,8 @@ that is high-dimensional (of dimension at least
 \begin_inset Formula $J^{(k)}$
 \end_inset
 
- be the approximate Jacobian we maintained in the 
-\begin_inset Formula $k^{th}$
+ be the approximate Jacobian we maintain in the 
+\begin_inset Formula $k^{\mathrm{th}}$
 \end_inset
 
  iteration.
@@ -1245,7 +1230,7 @@ To achieve all of these conditions,
  the natural optimization is 
 \begin_inset Formula 
 \[
-J^{(k+1)}\defeq\arg\min_{Js=y,J=J^{\top}}\norm{W^{\frac{1}{2}}\left(J^{-1}-\left(J^{(k)}\right)^{-1}\right)W^{\frac{1}{2}}}_{F}^{2}
+J^{(k+1)}\defeq\arg\min_{Js=y,J=J^{\top}}\norm{W^{\frac{1}{2}}\left(J^{-1}-\left(J^{(k)}\right)^{-1}\right)W^{\frac{1}{2}}}^{2}_{F}
 \]
 
 \end_inset
@@ -1260,7 +1245,7 @@ where
 \end_inset
 
  and 
-\begin_inset Formula $W=\int_{0}^{1}\nabla^{2}f(x^{(k-1)}+s(x^{(k)}-x^{(k-1)}))ds$
+\begin_inset Formula $W=\int^{1}_{0}\nabla^{2}f(x^{(k-1)}+s(x^{(k)}-x^{(k-1)}))ds$
 \end_inset
 
  (or any 
@@ -1268,7 +1253,7 @@ where
 \end_inset
 
  such that 
-\begin_inset Formula $Wy=s$
+\begin_inset Formula $Ws=y$
 \end_inset
 
 ).
@@ -1287,7 +1272,7 @@ literal "false"
 \end_inset
 
 ,
- one obtain the update
+ one obtains the update
 \begin_inset Formula 
 \begin{equation}
 \left(J^{(k+1)}\right)^{-1}=(I-\rho_{k}\cdot s^{(k)}y^{(k)\top})\left(J^{(k)}\right)^{-1}(I-\rho_{k}\cdot y^{(k)}s^{(k)\top})+\rho_{k}\cdot s^{(k)}s^{(k)\top}\label{eq:recursive}
@@ -1353,11 +1338,12 @@ nolink "false"
 
 \begin_layout Standard
 In practice,
- the recursive formula 
-\begin_inset Formula $J^{(k)}$
+ the recursive formula for 
+\begin_inset Formula $\left(J^{(k)}\right)^{-1}$
 \end_inset
 
- becomes too expensive and hence one can stop the recursive formula after constant steps,
+ becomes too expensive,
+ and hence one can truncate the recursion after a constant number of steps,
  which gives the limited-memory BFGS algorithm.
 \end_layout
 
@@ -1532,7 +1518,7 @@ The function
 
 \begin_layout Theorem
 Consider the generalized Newton method 
-\begin_inset Formula $x^{(k+1)}\leftarrow x^{(k)}-V_{k}^{-1}g(x^{(k)})$
+\begin_inset Formula $x^{(k+1)}\leftarrow x^{(k)}-V^{-1}_{k}g(x^{(k)})$
 \end_inset
 
  where 
@@ -1549,7 +1535,7 @@ Consider the generalized Newton method
 \end_inset
 
  are invertible.
- Then generalized Newton method is super-linear convergence in a neighborhood of 
+ Then generalized Newton method has super-linear convergence in a neighborhood of 
 \begin_inset Formula $x^{*}$
 \end_inset
 

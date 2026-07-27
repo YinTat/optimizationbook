@@ -1,0 +1,210 @@
+%% LyX 2.4.3 created this file.  For more info, see https://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[oneside,american,english]{book}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{1}
+\usepackage{array}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{rotating}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+%% A simple dot to overcome graphicx limitations
+\newcommand{\lyxdot}{.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\input{preamble.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{url}
+\usepackage{xargs}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+%\usepackage[pdftex,dvipsnames]{xcolor}
+\usepackage{float}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\usepackage[lined,boxed,ruled,norelsize,algo2e]{algorithm2e}
+\usepackage[small,bf]{caption}
+\usepackage{tikz}
+\usepackage{enumitem}
+\usepackage[stable]{footmisc}
+\setlist{nolistsep}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=red,
+    filecolor=red,
+    linkcolor=red,
+    urlcolor=red
+}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+\global\long\def\R{\mathbb{R}}%
+\global\long\def\RR{\mathbb{{\cal R}}}%
+\global\long\def\Rn{\mathbb{R}^{n}}%
+\global\long\def\Rm{\mathbb{R}^{m}}%
+\global\long\def\norm#1{\left\Vert #1\right\Vert }%
+\global\long\def\defeq{\overset{\mathrm{def}}{=}}%
+\global\long\def\dom{\mathrm{dom}}%
+\global\long\def\vol{\mathrm{vol}}%
+\global\long\def\nnz{\mathrm{nnz}}%
+\global\long\def\E{\mathbf{E}}%
+\global\long\def\P{\mathbf{P}}%
+\global\long\def\tr{\mathrm{tr}}%
+\global\long\def\op{\mathrm{op}}%
+\global\long\def\argmin{\mathrm{argmin}}%
+\global\long\def\argmax{\mathrm{argmax}}%
+\global\long\def\epi{\mathrm{epi}}%
+\global\long\def\KL{d_{\mathrm{KL}}}%
+\global\long\def\last{(\mathrm{last})}%
+\global\long\def\new{(\mathrm{new})}%
+\global\long\def\ls{\mathtt{lineSearch}}%
+\global\long\def\conv{\mathrm{conv}}%
+\global\long\def\Lip{\mathrm{Lip}}%
+\global\long\def\Diag{\mathrm{Diag}}%
+\global\long\def\step{\delta}%
+\global\long\def\spn{\mathrm{span}}%
+\global\long\def\K{\mathcal{K}}%
+\global\long\def\d{\mathcal{\mathrm{d}}}%
+\global\long\def\T{\mathcal{\mathcal{T}}}%
+\global\long\def\diag{\mathrm{diag}}%
+\global\long\def\one{\mathbb{{\bf 1}}}%
+\global\long\def\abs#1{\left\vert #1\right\vert }%
+\global\long\def\bdiag{\mathbf{Diag}}%
+\global\long\def\mh{\mathbf{H}}%
+\global\long\def\mi{\mathbf{I}}%
+\global\long\def\mv{\mathbf{V}}%
+\global\long\def\mw{\mathbf{W}}%
+\global\long\def\ms{\mathbf{S}}%
+\global\long\def\mproj{\mathbf{P}}%
+\global\long\def\msigma{\mathbf{\Sigma}}%
+\global\long\def\ma{\mathbf{A}}%
+\global\long\def\poly{\mbox{poly}}%
+\global\long\def\cov{\mathrm{Cov}}%
+\global\long\def\oma{\overline{\ma}}%
+\global\long\def\Var{\mathrm{Var}}%
+\global\long\def\rank{\mathrm{rank}}%
+\global\long\def\Ent{\mathrm{Ent}}%
+\global\long\def\spe{\mathrm{op}}%
+\global\long\def\esssup{\operatorname{ess\,sup}}%
+\global\long\def\tv{\mathrm{TV}}%
+\global\long\def\PriR{\mathcal{P}}%
+ 
+\global\long\def\DualR{\mathcal{D}}%
+ 
+\title{Techniques in Optimization and Sampling\\
+(book in progress with improving citations)}
+\author{Yin Tat Lee\thanks{yintat@uw.edu. This work is supported in part by CCF-1749609, DMS-1839116,
+DMS-2023166, Microsoft Research Faculty Fellowship, Sloan Research
+Fellowship and Packard Fellowships.}\\
+\\
+University of Washington\\
+\& OpenAI \and  Santosh S. Vempala\thanks{vempala@gatech.edu. This work is supported in part by CCF-1563838,
+E2CDA-1640081, CCF-1717349 and DMS-1839323.}\\
+\\
+Georgia Tech}
+
+\maketitle
+\tableofcontents{}
+
+\newpage{}
+
+\chapter*{Preliminaries}
+
+\input{preliminaries.tex}
+
+\input{examples.tex} 
+
+\chapter{Introduction}
+
+\input{convexity.tex}
+
+\part{Optimization}
+
+
+\chapter{Gradient Descent}
+
+\input{gradient_descent.tex}
+
+\chapter{Elimination\label{chap:Elimination}}
+
+\input{cutting_plane.tex}\input{geometric_descent.tex}\input{lower_bound.tex}
+
+\chapter{Reduction}
+
+\input{equivalence.tex} \input{duality.tex}
+
+\chapter{Geometrization}
+
+\input{mirror_descent.tex}
+
+\input{frank_wolfe.tex}\input{newton_method.tex}\input{interior_point_method.tex}\input{reduction.tex}
+
+\chapter{Sparsification}
+
+\input{subspace_embedding.tex}\input{leverage_score_sampling.tex}\input{stochastic_gradient_descent.tex}
+
+\chapter{Acceleration}
+
+\input{chebyshev.tex}\input{conjugate_gradient.tex}\input{accelerated_gradient_descent.tex}
+
+\part{Sampling}
+
+\chapter{Gradient-based Sampling}
+
+\input{langevin_dynamics.tex}
+
+\chapter{Elimination and Reduction\label{chap:Elimination-and-Reduction}}
+
+\input{cutting_plane_volume.tex}
+
+\input{opt_from_mem.tex}
+
+\chapter{Geometrization }
+
+\input{ball_walk.tex}\input{har_dikin.tex}\input{RHMC.tex}
+
+\chapter{Annealing \label{chap:Annealing} }
+
+\input{annealing.tex}\input{annealing_volume.tex}
+
+\clearpage{}
+
+\bibliographystyle{plain}
+\bibliography{main}
+
+
+\appendix
+
+\chapter{Calculus - Review}
+
+\input{appendix.tex}
+
+\chapter{Notation }
+
+\input{notation.tex}\end{document}
+
+\chapter{----}
+
+\chapter{Expansion}
+
+\input{ode.tex}\input{collocation_method.tex}
+
+\chapter{Decomposition}
+
+\input{cholesky_decomposition.tex}\input{multigrid.tex}
+\end{document}

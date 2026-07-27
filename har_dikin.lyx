@@ -94,7 +94,7 @@ Hit-and-Run
 \begin_layout Standard
 The ball walk does not mix rapidly from all starting points in arbitrary convex bodies.
  While this hurdle can be overcome by starting with a deep point and carefully maintaining a warm start,
- it is natural to ask if there is a simple process that does truly mix rapidly from any starting point.
+ it is natural to ask if there is a simple process that truly does mix rapidly from any starting point.
  Hit-and-Run satisfies this requirement.
 \end_layout
 
@@ -161,7 +161,7 @@ caption{
 \end_inset
 
 
-\begin_inset Formula $\mathtt{Hit-and-Run}$
+\begin_inset Formula $\mathtt{Hit\mbox{-}and\mbox{-}Run}$
 \end_inset
 
 
@@ -233,7 +233,7 @@ Pick a uniform random direction
 \end_layout
 
 \begin_layout Enumerate
-Go to uniform random point 
+Go to a uniformly random point 
 \begin_inset Formula $y$
 \end_inset
 
@@ -415,7 +415,7 @@ nolink "false"
 .
 \end_layout
 
-\begin_layout Exercise
+\begin_layout Standard
 The main theorem of this section is the following 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -427,7 +427,7 @@ literal "false"
 .
 \end_layout
 
-\begin_layout Exercise
+\begin_layout Standard
 \begin_inset Float figure
 placement document
 alignment document
@@ -479,7 +479,7 @@ name "thm:har-cond"
 
 \end_inset
 
-The conductance of Hit-and-Run in a convex body 
+ The conductance of Hit-and-Run in a convex body 
 \begin_inset Formula $K$
 \end_inset
 
@@ -488,7 +488,7 @@ The conductance of Hit-and-Run in a convex body
 \end_inset
 
  is 
-\begin_inset Formula $\Omega(1/nD)$
+\begin_inset Formula $\Omega(1/(nD))$
 \end_inset
 
 .
@@ -557,11 +557,11 @@ median
 \begin_inset Formula $F$
 \end_inset
 
- as the 
+ by setting 
 \begin_inset Formula $F(x)$
 \end_inset
 
- such that
+ to satisfy
 \begin_inset Formula 
 \[
 \Pr(\norm{x-y}\le F(x))=\frac{1}{8}
@@ -746,7 +746,7 @@ nolink "false"
 \end_inset
 
  into subsets 
-\begin_inset Formula $S_{1},S_{2,}S_{3}$
+\begin_inset Formula $S_{1},S_{2},S_{3}$
 \end_inset
 
 .
@@ -801,7 +801,7 @@ nolink "false"
 
 .
  By the localization lemma there exist 
-\begin_inset Formula $a.b\in\R^{n}$
+\begin_inset Formula $a,b\in\R^{n}$
 \end_inset
 
  and 
@@ -848,9 +848,9 @@ Define
 
 We will prove the opposite inequality to establish a contradiction.
  Moreover,
- WLOG,
+ without loss of generality,
  we can assume as in the proof of Euclidean isoperimetry that 
-\begin_inset Formula $Z_{1}Z_{2}$
+\begin_inset Formula $Z_{1},Z_{2}$
 \end_inset
 
  are single intervals,
@@ -904,7 +904,7 @@ name "xca:exp_needle_one_dim"
  we have 
 \begin_inset Formula 
 \[
-\frac{(e^{v}-e^{u})(e^{w}-1)}{(e^{u}-1)(e^{w}-e^{v})}\ge\frac{(v-u)(w-1)}{u(w-v)}.
+\frac{(e^{v}-e^{u})(e^{w}-1)}{(e^{u}-1)(e^{w}-e^{v})}\ge\frac{(v-u)w}{u(w-v)}.
 \]
 
 \end_inset
@@ -988,7 +988,7 @@ name "thm:har_weighted_iso"
 \begin_inset Formula $S_{1},S_{2},S_{3}$
 \end_inset
 
-be a partition of a convex body 
+ be a partition of a convex body 
 \begin_inset Formula $K$
 \end_inset
 
@@ -997,11 +997,12 @@ be a partition of a convex body
 \begin_inset Formula $h:K\rightarrow\R_{+}$
 \end_inset
 
- be a function s.t.
+ be a function such that
  for any 
 \begin_inset Formula $u\in S_{1},$
 \end_inset
 
+ any 
 
 \begin_inset Formula $v\in S_{2}$
 \end_inset
@@ -1023,13 +1024,13 @@ be a partition of a convex body
  we have 
 \begin_inset Formula 
 \[
-h(x)\le\frac{1}{3}\min\left\{ 1,d_{K}(u,v)\right\} .
+h(x)\le\frac{1}{3}\min\left\{ 1,d_{K}(u,v)\right\}.
 \]
 
 \end_inset
 
 Then,
- for any logconave measure 
+ for any logconcave measure 
 \begin_inset Formula $\pi$
 \end_inset
 
@@ -1041,7 +1042,7 @@ Then,
  we have
 \begin_inset Formula 
 \[
-\pi(S_{3})\ge\E_{K}(h(x))\min\left\{ \pi(S_{1}),\pi(S_{2})\right\} .
+\pi(S_{3})\ge\E_{K}(h(x))\min\left\{ \pi(S_{1}),\pi(S_{2})\right\}.
 \]
 
 \end_inset
@@ -1361,7 +1362,7 @@ Let
 
 .
  We will show that 
-\begin_inset Formula $s(x)\ge(s(x_{1})+s(x_{2})/2$
+\begin_inset Formula $s(x)\ge(s(x_{1})+s(x_{2}))/2$
 \end_inset
 
 .
@@ -1399,7 +1400,7 @@ A\subseteq K\cap\left(x+\frac{r_{1}+r_{2}}{2}B^{n}\right).
 
 \end_inset
 
-By the Brunn-Minkowsky inequality (Thm.
+By the Brunn-Minkowski inequality (Thm.
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1615,7 +1616,7 @@ For the second part,
  we have
 \begin_inset Formula 
 \[
-(1-\gamma)\vol(sB^{n})\le\vol((x+sB^{n}\setminus K)\le p\vol(sB^{n})-\vol((s/2)B^{n}).
+(1-\gamma)\vol(sB^{n})\ge\vol((x+sB^{n})\setminus K)\ge p\vol(sB^{n})-\vol((s/2)B^{n}).
 \]
 
 \end_inset
@@ -1647,7 +1648,7 @@ Now consider a random line
 
 :
  with probability at least 
-\begin_inset Formula $1−2p$
+\begin_inset Formula $1-2p$
 \end_inset
 
 ,
@@ -1695,7 +1696,7 @@ We are now ready for the proof of the main theorem.
 status open
 
 \begin_layout Plain Layout
-Proof of Thm.
+Proof of Theorem
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1759,7 +1760,7 @@ deep
  
 \begin_inset Formula 
 \[
-S_{1}'=\left\{ x\in S_{1}:P_{x}(S_{2})<\frac{1}{1000}\right\} \mbox{ and }S_{2}'=\left\{ x\in S_{2}:P_{x}(S_{1})<\frac{1}{1000}\right\} .
+S_{1}'=\left\{ x\in S_{1}:P_{x}(S_{2})<\frac{1}{1000}\right\} \mbox{ and }S_{2}'=\left\{ x\in S_{2}:P_{x}(S_{1})<\frac{1}{1000}\right\}.
 \]
 
 \end_inset
@@ -1844,7 +1845,7 @@ nolink "false"
 \end_inset
 
 ,
- we get that that one of the following holds:
+ we get that one of the following holds:
 \begin_inset Formula 
 \[
 d_{K}(u,v)\ge\frac{1}{8}\mbox{ or }\norm{u-v}\ge\frac{2}{\sqrt{n}}\max\left\{ F(u),F(v)\right\} 
@@ -1852,7 +1853,7 @@ d_{K}(u,v)\ge\frac{1}{8}\mbox{ or }\norm{u-v}\ge\frac{2}{\sqrt{n}}\max\left\{ F(
 
 \end_inset
 
-We will now prove that Thm.
+We now apply Theorem
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -1881,7 +1882,7 @@ nolink "false"
 \begin_inset Formula $d_{K}(u,v)\ge\frac{1}{8},$
 \end_inset
 
-then we have 
+ then we have 
 \begin_inset Formula $h(x)\le d_{K}(u,v)/3$
 \end_inset
 
@@ -1902,7 +1903,8 @@ then we have
 \begin_inset Formula $p,q.$
 \end_inset
 
- Suppose WLOG that 
+ Without loss of generality,
+ suppose that 
 \begin_inset Formula $x\in[u,q]$
 \end_inset
 
@@ -2098,15 +2100,21 @@ The general Dikin walk is defined as follows.
 \begin_inset Formula $u\in K$
 \end_inset
 
- ,
+,
  let
 \begin_inset Formula 
 \[
-E_{u}(r)=\left\{ x:\,(x-u)^{\top}\mh(u)(x-u)\le r\right\} .
+E_{u}(r)=\left\{ x:\,(x-u)^{\top}\mh(u)(x-u)\le r^{2}\right\}.
 \]
 
 \end_inset
 
+Thus 
+\begin_inset Formula $r$
+\end_inset
+
+ denotes radius in the local norm.
+ 
 
 \end_layout
 
@@ -2245,6 +2253,12 @@ If
 \end_inset
 
 .
+ Otherwise,
+ stay at 
+\begin_inset Formula $x$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -2307,7 +2321,7 @@ For any convex set
 \end_inset
 
 ,
- we call a matrix function 
+ we say that a matrix function 
 \begin_inset Formula $\mathbf{H}:K\rightarrow\R^{n\times n}$
 \end_inset
 
@@ -2434,7 +2448,7 @@ Now we fix any
  
 \begin_inset Formula 
 \[
-\left|\psi'(t)\right|=\left|v^{\top}\frac{d}{dt}\mh(x_{t})v\right|\leq2\|h\|_{x_{t}}\|v\|_{x_{t}}^{2}=2\phi(t)\psi(t).
+\left|\psi'(t)\right|=\left|v^{\top}\frac{d}{dt}\mh(x_{t})v\right|\leq2\|h\|_{x_{t}}\|v\|_{x_{t}}^{2}=2\sqrt{\phi(t)}\psi(t).
 \]
 
 \end_inset
@@ -2500,7 +2514,7 @@ Many natural barriers,
  satisfy a much stronger condition than self-concordance.
  However,
  this is not always true,
- as one can construct counterexamples even in one-dimension.
+ as one can construct counterexamples even in one dimension.
  
 \begin_inset Note Note
 status open
@@ -2584,7 +2598,7 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename symmetry.png
+	filename Figures/symmetry.png
 	scale 45
 
 \end_inset
@@ -2621,7 +2635,7 @@ status open
 \noindent
 \align left
 \begin_inset Graphics
-	filename ssc.png
+	filename Figures/ssc.png
 	scale 35
 
 \end_inset
@@ -2642,7 +2656,7 @@ status open
 \begin_inset Formula $E_{u}\subseteq K\cap(2u-K)\subseteq\alpha E_{u}.$
 \end_inset
 
- (b) Strong self-concordance measures the rate of change of Hessian of a barrier in the Frobenius norm
+ (b) Strong self-concordance measures the rate of change of the Hessian of a barrier in the Frobenius norm
 \end_layout
 
 \end_inset
@@ -2683,8 +2697,8 @@ Given any strongly self-concordant matrix function
 \begin_inset Formula $K\subset\Rn$
 \end_inset
 
-.
- For any 
+,
+ for any 
 \begin_inset Formula $x,y\in K$
 \end_inset
 
@@ -2776,7 +2790,7 @@ nolink "false"
 \end_layout
 
 \begin_layout Standard
-We note that strong self-concordance can be stronger than self-concordance since the Frobenius norm is always larger or equal to the spectral norm.
+We note that strong self-concordance can be stronger than self-concordance since the Frobenius norm is always greater than or equal to the spectral norm.
  
 \end_layout
 
@@ -2784,7 +2798,7 @@ We note that strong self-concordance can be stronger than self-concordance since
 Verify that the Hessian of the standard log barrier is strongly self-concordant.
 \end_layout
 
-\begin_layout Exercise
+\begin_layout Standard
 The main theorem of this section is the following guarantee for the Dikin walk.
 \end_layout
 
@@ -2896,7 +2910,7 @@ Prove the following for the log barrier in the polytope
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $\Pr_{w\sim E_{x}(r)}\left(\norm{w-x}_{x}\le r^{2}\left(1-\frac{1}{n}\right)\right)\ge1-c_{0}r$
+\begin_inset Formula $\Pr_{w\sim E_{x}(r)}\left(\norm{w-x}_{x}\le r\left(1-\frac{1}{n}\right)\right)\ge1-c_{0}r$
 \end_inset
 
  for some constant 
@@ -2907,7 +2921,7 @@ Prove the following for the log barrier in the polytope
 \end_layout
 
 \begin_layout Itemize
-\begin_inset Formula $\Pr_{w\sim E_{x}(r)}\left(\norm{w-x}_{w}+\norm{w-x}_{2x-w}\le2r^{2}\left(1-\frac{1}{n}\right)\vert\norm{w-x}_{x}\le r^{2}\left(1-\frac{1}{n}\right)\right)\ge1-c_{1}r$
+\begin_inset Formula $\Pr_{w\sim E_{x}(r)}\left(\norm{w-x}_{w}+\norm{w-x}_{2x-w}\le2r\left(1-\frac{1}{n}\right)\vert\norm{w-x}_{x}\le r\left(1-\frac{1}{n}\right)\right)\ge1-c_{1}r$
 \end_inset
 
  for some constant 
@@ -2992,7 +3006,7 @@ For the rejection probability at
 \end_inset
 
 ,
- we consider the algorithm pick 
+ we consider the algorithm that picks 
 \begin_inset Formula $z$
 \end_inset
 
@@ -3013,7 +3027,7 @@ For the rejection probability at
  is
 \begin_inset Formula 
 \begin{equation}
-\min\left\{ 1,\frac{\vol(E_{x}(r))}{\vol(E_{z}(r))}\right\} =\min\left\{ 1,\sqrt{\frac{\det(\mathbf{H}(z))}{\det(\mathbf{H}(x))}}\right\} .\label{eq:reject_prob_z}
+\min\left\{ 1,\frac{\vol(E_{x}(r))}{\vol(E_{z}(r))}\right\} =\min\left\{ 1,\sqrt{\frac{\det(\mathbf{H}(z))}{\det(\mathbf{H}(x))}}\right\}.\label{eq:reject_prob_z}
 \end{equation}
 
 \end_inset
@@ -3081,7 +3095,7 @@ To compute
 \end_inset
 
 ,
- it is easier to compute directional derivative of 
+ it is easier to compute the directional derivative of 
 \begin_inset Formula $\nabla f$
 \end_inset
 
@@ -3226,7 +3240,7 @@ Now,
 
 .
  Then,
- the strongly self-concordance and Lemma 
+ strong self-concordance and Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:global_strongly_self_concordant"
@@ -3490,7 +3504,7 @@ For
 \end_inset
 
  where 
-\begin_inset Formula $\norm ._{u}$
+\begin_inset Formula $\norm{\cdot}_{u}$
 \end_inset
 
  is the norm induced by the Hessian of the log barrier.
@@ -3510,7 +3524,7 @@ name "lem:dikin_sandwich"
 
 For the Dikin ellipsoid induced by any self-concordant barrier,
  we have 
-\begin_inset Formula $E_{u}(1)\subseteq K\cap2x-K$
+\begin_inset Formula $E_{x}(1)\subseteq K\cap(2x-K)$
 \end_inset
 
  and for the logarithmic barrier for a polytope 
@@ -3522,7 +3536,7 @@ For the Dikin ellipsoid induced by any self-concordant barrier,
 \end_inset
 
  inequalities we also have 
-\begin_inset Formula $K\cap2x-K\subseteq E_{u}(\sqrt{m})$
+\begin_inset Formula $K\cap(2x-K)\subseteq E_{x}(\sqrt{m})$
 \end_inset
 
 .
@@ -3536,10 +3550,10 @@ For the first inequality,
 
 ,
  we have that the barrier function 
-\begin_inset Formula $\phi(x)$
+\begin_inset Formula $\phi$
 \end_inset
 
- is finite with bounded first and second moments,
+ is finite with bounded first and second derivatives,
  and by Lemma 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -3552,7 +3566,7 @@ nolink "false"
 \end_inset
 
 ,
- the Hessian remains finite for for every point in 
+ the Hessian remains finite for every point in 
 \begin_inset Formula $[x,y]$
 \end_inset
 
@@ -3560,7 +3574,7 @@ nolink "false"
 \begin_inset Formula $y$
 \end_inset
 
- s.t.
+ such that
  
 \begin_inset Formula $\norm{x-y}_{x}<1$
 \end_inset
@@ -3591,7 +3605,7 @@ nolink "false"
 \begin_layout Proof
 For the second part,
  for any 
-\begin_inset Formula $y\in K\cap2x-K$
+\begin_inset Formula $y\in K\cap(2x-K)$
 \end_inset
 
 ,
@@ -3620,7 +3634,7 @@ Therefore,
  
 \begin_inset Formula 
 \[
-(y-x)^{\top}\nabla^{2}\phi(x)(y0x)=\sum_{i=1}^{m}\frac{\left(a_{i}^{\top}(y-x)\right)^{2}}{\left(a_{i}^{\top}x-b_{i}\right)^{2}}\le m.
+(y-x)^{\top}\nabla^{2}\phi(x)(y-x)=\sum_{i=1}^{m}\frac{\left(a_{i}^{\top}(y-x)\right)^{2}}{\left(a_{i}^{\top}x-b_{i}\right)^{2}}\le m.
 \]
 
 \end_inset
@@ -3844,8 +3858,8 @@ We can now bound the conductance of
 \begin_inset Formula 
 \begin{align*}
 \int_{S_{1}}P_{x}(S_{2})\,dx & \ge\frac{1}{2}\int_{S_{3}'}\frac{1}{8}dx\ge\frac{1}{16}\vol(S_{3}')\\
-\mbox{using isoperimetry (Theorem \ref{thm:iso-cross-ratio})} & \ge\frac{1}{16}d_{K}(S_{1}',S_{2}')\frac{\vol(S_{1}')\vol(S_{2}')}{\vol(P)}\\
- & \ge\frac{r}{1000\sqrt{nm}}\min\left\{ \vol(S_{1}),\vol(S_{2})\right\} .
+ & \ge\frac{1}{16}d_{K}(S_{1}',S_{2}')\frac{\vol(S_{1}')\vol(S_{2}')}{\vol(P)}\qquad\text{(Theorem \ref{thm:iso-cross-ratio})}\\
+ & \ge\frac{r}{1000\sqrt{nm}}\min\left\{ \vol(S_{1}),\vol(S_{2})\right\}.
 \end{align*}
 
 \end_inset
@@ -3899,7 +3913,7 @@ Let
  we have
 \begin_inset Formula 
 \[
-\int_{\partial S}p(x)dx\geq\frac{1}{\psi_{n}}\min\left\{ \int_{S}p(x)dx,\int_{\R^{n}\backslash S}p(x)dx\right\} .
+\int_{\partial S}p(x)dx\geq\frac{1}{\psi_{n}}\min\left\{ \int_{S}p(x)dx,\int_{\R^{n}\backslash S}p(x)dx\right\}.
 \]
 
 \end_inset

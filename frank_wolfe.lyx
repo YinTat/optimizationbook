@@ -1,16 +1,16 @@
-#LyX 2.3 created this file. For more info see http://www.lyx.org/
-\lyxformat 544
+#LyX 2.5 created this file. For more info see https://www.lyx.org/
+\lyxformat 643
 \begin_document
 \begin_header
 \save_transient_properties true
 \origin unavailable
 \textclass optbook
 \use_default_options true
-\maintain_unincluded_children false
+\maintain_unincluded_children no
 \language english
 \language_package default
-\inputencoding auto
-\fontencoding global
+\inputencoding auto-legacy
+\fontencoding auto
 \font_roman "default" "default"
 \font_sans "default" "default"
 \font_typewriter "default" "default"
@@ -18,7 +18,9 @@
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
-\font_osf false
+\font_roman_osf false
+\font_sans_osf false
+\font_typewriter_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
 \use_microtype false
@@ -48,9 +50,19 @@
 \use_indices false
 \paperorientation portrait
 \suppress_date false
-\justification true
-\use_refstyle 1
+\justification default
+\crossref_package refstyle
+\use_formatted_ref 0
 \use_minted 0
+\use_lineno 0
+\backgroundcolor none
+\fontcolor none
+\notefontcolor lightgray
+\boxbgcolor red
+\table_border_color default
+\table_odd_row_color default
+\table_even_row_color default
+\table_alt_row_colors_start 1
 \index Index
 \shortcut idx
 \color #008000
@@ -66,11 +78,17 @@
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
+\tablestyle default
 \tracking_changes false
 \output_changes false
+\change_bars false
+\postpone_fragile_content false
 \html_math_output 0
 \html_css_as_file 0
 \html_be_strict false
+\docbook_table_output 0
+\docbook_mathml_prefix 1
+\docbook_mathml_version 0
 \end_header
 
 \begin_body
@@ -88,8 +106,7 @@ name "sec:FrankWolfe"
 
 \begin_layout Standard
 Mirror descent is not suitable for all spaces.
- The guarantee of mirror descent crucially depends on the fact that there
- is a 
+ The guarantee of mirror descent crucially depends on the fact that there is a 
 \begin_inset Formula $1$
 \end_inset
 
@@ -106,7 +123,8 @@ Mirror descent is not suitable for all spaces.
 \begin_inset Formula $\{x:\|x\|_{\infty}\leq1\}$
 \end_inset
 
-, the range 
+,
+ the range 
 \begin_inset Formula $\max_{x}\Phi(x)-\min_{x}\Phi(x)$
 \end_inset
 
@@ -131,7 +149,8 @@ Let
 \end_inset
 
 .
- Then, 
+ Then,
+ 
 \begin_inset Formula 
 \[
 \max_{\|x\|_{\infty}\leq1}\Phi(x)\geq\min_{\|x\|_{\infty}\leq1}\Phi(x)+\frac{n}{2}.
@@ -147,10 +166,11 @@ By the strong convexity of
 \begin_inset Formula $\Phi$
 \end_inset
 
-, we have that 
+,
+ we have that 
 \begin_inset Formula 
 \begin{align*}
-\E_{s_{k}\in\{\pm1\}\ \forall k\in[n]}\Phi(s_{1},\cdots,s_{n}) & \geq\E_{s_{k}\in\{\pm1\}\ \forall k\in[n-1]}\Phi(s_{1},\cdots,s_{n-1},0)+\E_{s_{n}}\left\langle \nabla\Phi(s_{1},\cdots,s_{n-1},0),s_{n}\right\rangle +\frac{1}{2}\\
+\E_{s_{k}\in\{\pm1\}\ \forall k\in[n]}\Phi(s_{1},\cdots,s_{n}) & \geq\E_{s_{k}\in\{\pm1\}\ \forall k\in[n-1]}\Phi(s_{1},\cdots,s_{n-1},0)+\E_{s_{n}}\left\langle \nabla\Phi(s_{1},\cdots,s_{n-1},0),s_{n}e_{n}\right\rangle +\frac{1}{2}\\
  & =\E_{s_{k}\in\{\pm1\}\ \forall k\in[n-1]}\Phi(s_{1},\cdots,s_{n-1},0)+\frac{1}{2}\\
  & \vdots\\
  & \geq\Phi(0)+\frac{n}{2}.
@@ -161,37 +181,12 @@ By the strong convexity of
 
 \end_layout
 
-\begin_layout Remark*
-This inequality is tight because 
-\begin_inset Formula $\frac{1}{2}\|x\|^{2}$
-\end_inset
-
- is 
-\begin_inset Formula $1$
-\end_inset
-
--strongly convex in 
-\begin_inset Formula $\|\cdot\|_{\infty}$
-\end_inset
-
- and its value is between 
-\begin_inset Formula $0$
-\end_inset
-
- and 
-\begin_inset Formula $\frac{n}{2}$
-\end_inset
-
-.
-\end_layout
-
 \begin_layout Subsection
 Algorithm
 \end_layout
 
 \begin_layout Standard
-Now we give another geometry dependent algorithm that relies on a different
- set of assumptions.
+Now we give another geometry-dependent algorithm that relies on a different set of assumptions.
  The problem we study in this section is of the form
 \begin_inset Formula 
 \[
@@ -217,8 +212,7 @@ Lipschitz
 \end_inset
 
  in a certain sense.
- The algorithm reduces the problem to a sequence of linear optimization
- problems.
+ The algorithm reduces the problem to a sequence of linear optimization problems.
 \end_layout
 
 \begin_layout Standard
@@ -226,7 +220,6 @@ Lipschitz
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 begin{algorithm2e}[H]
@@ -243,7 +236,6 @@ status open
 
 \begin_layout Plain Layout
 
-
 \backslash
 caption{
 \end_layout
@@ -259,7 +251,6 @@ caption{
 status open
 
 \begin_layout Plain Layout
-
 }
 \end_layout
 
@@ -274,7 +265,6 @@ status open
 
 \begin_layout Plain Layout
 
-
 \backslash
 SetAlgoLined
 \end_layout
@@ -288,13 +278,10 @@ SetAlgoLined
 
 \series bold
 Input:
+
 \series default
  Initial point 
-\begin_inset Formula $x^{(0)}\in\Rn$
-\end_inset
-
-, step size 
-\begin_inset Formula $h>0$
+\begin_inset Formula $x^{(0)}\in\mathcal{D}$
 \end_inset
 
 .
@@ -305,7 +292,6 @@ Input:
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 For{
@@ -322,7 +308,6 @@ For{
 status open
 
 \begin_layout Plain Layout
-
 }{
 \end_layout
 
@@ -355,7 +340,6 @@ Compute
 status open
 
 \begin_layout Plain Layout
-
 }
 \end_layout
 
@@ -369,7 +353,6 @@ status open
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 Return
@@ -389,7 +372,6 @@ Return
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 end{algorithm2e}
@@ -417,15 +399,7 @@ Let
 \begin_inset Formula $C_{f}$
 \end_inset
 
- such that
-\begin_inset Formula 
-\[
-f((1-h)x+hy))\leq f(x)+h\left\langle \nabla f(x),y-x\right\rangle +\frac{1}{2}C_{f}h^{2}.
-\]
-
-\end_inset
-
-Then, for any 
+ such that for any 
 \begin_inset Formula $x,y\in\mathcal{D}$
 \end_inset
 
@@ -433,7 +407,21 @@ Then, for any
 \begin_inset Formula $h\in[0,1]$
 \end_inset
 
-, we have
+,
+\begin_inset Formula 
+\[
+f((1-h)x+hy)\leq f(x)+h\left\langle \nabla f(x),y-x\right\rangle +\frac{1}{2}C_{f}h^{2}.
+\]
+
+\end_inset
+
+Then,
+ for every 
+\begin_inset Formula $k\ge1$
+\end_inset
+
+,
+ we have
 \begin_inset Formula 
 \[
 f(x^{(k)})-f(x^{*})\leq\frac{2C_{f}}{k+2}.
@@ -461,7 +449,8 @@ If
 \begin_inset Formula $\mathcal{D}$
 \end_inset
 
-, then 
+,
+ then 
 \begin_inset Formula $C_{f}\leq L\cdot\text{diam}_{\|\cdot\|}(\mathcal{D})^{2}.$
 \end_inset
 
@@ -473,10 +462,11 @@ By the definition of
 \begin_inset Formula $C_{f}$
 \end_inset
 
-, we have that
+,
+ we have that
 \begin_inset Formula 
 \[
-f(x^{(k+1)})\leq f(x^{(k)})+h_{k}\left\langle \nabla f(x^{(k)}),y^{(k)}-x^{(k)}\right\rangle +\frac{1}{2}C_{f}h_{k}^{2}.
+f(x^{(k+1)})\leq f(x^{(k)})+h_{k}\left\langle \nabla f(x^{(k)}),y^{(k)}-x^{(k)}\right\rangle +\frac{1}{2}C_{f}h^{2}_{k}.
 \]
 
 \end_inset
@@ -498,10 +488,11 @@ where we used the fact that
 \end_inset
 
 .
- Hence, we have that
+ Hence,
+ we have that
 \begin_inset Formula 
 \[
-f(x^{(k+1)})\leq f(x^{(k)})-h_{k}(f(x^{(k)})-f(x^{*}))+\frac{1}{2}C_{f}h_{k}^{2}.
+f(x^{(k+1)})\leq f(x^{(k)})-h_{k}(f(x^{(k)})-f(x^{*}))+\frac{1}{2}C_{f}h^{2}_{k}.
 \]
 
 \end_inset
@@ -511,37 +502,32 @@ Let
 \end_inset
 
 .
- Then, 
+ Then,
+ 
 \begin_inset Formula 
 \[
-e_{k+1}\leq(1-h_{k})e_{k}+\frac{1}{2}C_{f}h_{k}^{2}.
+e_{k+1}\leq(1-h_{k})e_{k}+\frac{1}{2}C_{f}h^{2}_{k}.
 \]
 
 \end_inset
 
-Note that 
-\begin_inset Formula $e_{0}=f(x^{(0)})-f^{*}\leq\frac{1}{2}C_{f}$
+Since 
+\begin_inset Formula $h_{0}=1$
+\end_inset
+
+,
+ the recurrence gives 
+\begin_inset Formula $e_{1}\leq\frac{1}{2}C_{f}\leq\frac{2}{3}C_{f}$
 \end_inset
 
 .
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-change that from 
-\begin_inset Formula $e_{2}$
+ By induction,
+ for every 
+\begin_inset Formula $k\ge1$
 \end_inset
 
- to 
-\begin_inset Formula $e_{0}$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
- By induction, we have that 
+,
+ we have that 
 \begin_inset Formula $e_{k}\leq\frac{2C_{f}}{k+2}$
 \end_inset
 
@@ -553,6 +539,7 @@ Note that this proof is in fact the same as Theorem
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:gd_convex"
+nolink "false"
 
 \end_inset
 
@@ -561,11 +548,11 @@ reference "thm:gd_convex"
 
 \begin_layout Remark*
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
-This looks nice, but need to add more context/details before including in
- book?
+This looks nice,
+ but need to add more context/details before including in book?
 \end_layout
 
 \begin_layout Subsection
@@ -577,29 +564,31 @@ When the domain
 \begin_inset Formula $\mathcal{D}$
 \end_inset
 
- is a simplex, the step 
+ is a simplex,
+ the step 
 \begin_inset Formula $y^{(k)}$
 \end_inset
 
  always has a single non-zero.
- Hence, each step of Frank-Wolfe increases the sparsity by at most 
+ Hence,
+ each step of Frank-Wolfe increases the sparsity by at most 
 \begin_inset Formula $1$
 \end_inset
 
 .
- So, we can think that the convergence result of Frank Wolfe proves that
- there is an approximate sparse solution of the optimization problem.
- In particular, this shows that Frank Wolfe is optimal in the following
- sense.
+ Therefore,
+ we can view the convergence result of Frank Wolfe as proving that there is an approximate sparse solution of the optimization problem.
+ In particular,
+ this shows that Frank Wolfe is optimal in the following sense.
 \end_layout
 
 \begin_layout Lemma
 Let 
-\begin_inset Formula $f(x)=\|x\|_{2}^{2}$
+\begin_inset Formula $f(x)=\|x\|^{2}_{2}$
 \end_inset
 
  and 
-\begin_inset Formula $\mathcal{D}=\{\sum_{i=1}^{n}x_{i}=1,x_{i}\geq0\}$
+\begin_inset Formula $\mathcal{D}=\{\sum^{n}_{i=1}x_{i}=1,x_{i}\geq0\}$
 \end_inset
 
 .
@@ -631,11 +620,13 @@ The minimizer is given by setting
 \end_layout
 
 \begin_layout Plain Layout
-More generally, if 
+More generally,
+ if 
 \begin_inset Formula $\mathcal{D}=\conv(z_{i})$
 \end_inset
 
-, then the step 
+,
+ then the step 
 \begin_inset Formula $y^{(k)}$
 \end_inset
 
@@ -644,14 +635,14 @@ More generally, if
 \end_inset
 
 .
- Therefore, the solution is always given by a small combination of vertices
- 
+ Therefore,
+ the solution is always given by a small combination of vertices 
 \begin_inset Formula $z_{i}$
 \end_inset
 
 .
- In particular, it shows that any point in a convex set can be approximated
- by a small combination of vertices:
+ In particular,
+ it shows that any point in a convex set can be approximated by a small combination of vertices:
 \end_layout
 
 \begin_layout Lemma
@@ -659,7 +650,7 @@ Let polytope
 \begin_inset Formula $P=\conv(v_{i})$
 \end_inset
 
- be a polytope that lies inside an unit ball.
+ be a polytope that lies inside a unit ball.
  For any 
 \begin_inset Formula $u\in P$
 \end_inset
@@ -668,7 +659,8 @@ Let polytope
 \begin_inset Formula $\epsilon>0$
 \end_inset
 
-, there are 
+,
+ there are 
 \begin_inset Formula $k=O(\frac{1}{\epsilon^{2}})$
 \end_inset
 
@@ -683,7 +675,7 @@ Let polytope
  such that
 \begin_inset Formula 
 \[
-\|\sum_{i=1}^{k}\lambda_{i}v_{i}-u\|_{2}\leq\epsilon
+\|\sum^{k}_{i=1}\lambda_{i}v_{i}-u\|_{2}\leq\epsilon
 \]
 
 \end_inset
@@ -692,7 +684,8 @@ for some
 \begin_inset Formula $\sum_{i}\lambda_{i}=1$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $\lambda_{i}\geq0$
 \end_inset
 
@@ -700,7 +693,8 @@ for some
 \end_layout
 
 \begin_layout Remark*
-Using mirror descent instead, one can prove there are vertices with 
+Using mirror descent instead,
+ one can prove there are vertices with 
 \begin_inset Formula $\lambda_{i}=\frac{1}{k}$
 \end_inset
 
@@ -722,7 +716,8 @@ literal "false"
 status open
 
 \begin_layout Plain Layout
-How? Should be easy...but it is from a paper.
+How?
+ Should be easy...but it is from a paper.
 \end_layout
 
 \end_inset
@@ -736,7 +731,7 @@ We run Frank-Wolfe on
 \end_inset
 
  with the function 
-\begin_inset Formula $f(x)=\frac{1}{2}\|x-u\|_{2}^{2}$
+\begin_inset Formula $f(x)=\frac{1}{2}\|x-u\|^{2}_{2}$
 \end_inset
 
 .
@@ -761,7 +756,8 @@ We run Frank-Wolfe on
 \end_inset
 
 .
- Hence, we have that
+ Hence,
+ we have that
 \begin_inset Formula 
 \[
 C_{f}\leq1.
@@ -769,7 +765,8 @@ C_{f}\leq1.
 
 \end_inset
 
-Therefore, Frank-Wolfe shows that
+Therefore,
+ Frank-Wolfe shows that
 \begin_inset Formula 
 \[
 f(x^{(k)})-f(u)\leq\frac{2}{k+2}.
@@ -781,7 +778,8 @@ Since
 \begin_inset Formula $f(u)=0$
 \end_inset
 
-, we have that 
+,
+ we have that 
 \begin_inset Formula $\|x^{(k)}-u\|^{2}\leq\frac{4}{k+2}.$
 \end_inset
 
@@ -789,12 +787,14 @@ Since
 \end_layout
 
 \begin_layout Plain Layout
-Here, let us give another proof.
+Here,
+ let us give another proof.
  For any 
 \begin_inset Formula $x\in P$
 \end_inset
 
-, we can write 
+,
+ we can write 
 \begin_inset Formula $x=\sum_{i}c_{i}v_{i}$
 \end_inset
 
@@ -806,7 +806,8 @@ Here, let us give another proof.
 \begin_inset Formula $\sum_{i}c_{i}=1$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $c_{i}\geq0$
 \end_inset
 
@@ -842,7 +843,8 @@ Here, let us give another proof.
 \end_inset
 
 .
- Then, we have that
+ Then,
+ we have that
 \begin_inset Formula 
 \[
 \E\|X_{T}-x\|^{2}=\frac{1}{T}\E\|X-x\|^{2}\leq\frac{\E\|X\|^{2}}{T}=\frac{1}{T}.
@@ -854,7 +856,8 @@ Here, let us give another proof.
 \end_layout
 
 \begin_layout Plain Layout
-Therefore, any point in 
+Therefore,
+ any point in 
 \begin_inset Formula $P$
 \end_inset
 
@@ -867,8 +870,8 @@ Therefore, any point in
 \end_inset
 
 .
- Note that this gives a tighter bound than Frank-wolfe, but one need to
- solve a linear program to find the coefficients 
+ Note that this gives a tighter bound than Frank-wolfe,
+ but one need to solve a linear program to find the coefficients 
 \begin_inset Formula $c$
 \end_inset
 
@@ -878,11 +881,8 @@ Therefore, any point in
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Subsection
 Applications to Maximum Flow* (in progress)
@@ -899,8 +899,8 @@ Probably need much more explanations...
 \end_layout
 
 \begin_layout Plain Layout
-In this section, we discuss how to approximate the maximum flow in an undirected
- graph in almost linear time.
+In this section,
+ we discuss how to approximate the maximum flow in an undirected graph in almost linear time.
  The key fact we use about flow is the following.
 \begin_inset Note Note
 status open
@@ -936,11 +936,14 @@ For any graph
 \begin_inset Formula $G=(V,E)$
 \end_inset
 
-, there is a map 
+,
+ there is a map 
 \begin_inset Formula $R:\R^{|V|}\rightarrow\R^{|E|}$
 \end_inset
 
-, called oblivious routing, such that for any demand 
+,
+ called oblivious routing,
+ such that for any demand 
 \begin_inset Formula $d\in\R^{|V|}$
 \end_inset
 
@@ -948,7 +951,8 @@ For any graph
 \begin_inset Formula $\sum_{v\in V}d_{V}=0$
 \end_inset
 
-, we have
+,
+ we have
 \end_layout
 
 \begin_deeper
@@ -971,12 +975,13 @@ For any graph
 \begin_inset Formula $n^{o(1)}$
 \end_inset
 
- is the competitive ratio; it represents how good this routing compared
- to the optimum).
+ is the competitive ratio;
+ it represents how good this routing compared to the optimum).
 \end_layout
 
 \begin_layout Plain Layout
-Moreover, 
+Moreover,
+ 
 \begin_inset Formula $Rv$
 \end_inset
 
@@ -1005,8 +1010,8 @@ Do we have an oblivious routing that can be computed in
 \end_layout
 
 \begin_layout Plain Layout
-First, we note that the maximum flow problem is same as finding a unit flow
- from 
+First,
+ we note that the maximum flow problem is the same as finding a unit flow from 
 \begin_inset Formula $s$
 \end_inset
 
@@ -1018,7 +1023,9 @@ First, we note that the maximum flow problem is same as finding a unit flow
 \begin_inset Formula $\|f\|_{\infty}$
 \end_inset
 
-, namely, finding
+,
+ namely,
+ finding
 \begin_inset Formula 
 \[
 \min_{B^{\top}f=1_{st}}\norm f_{\infty}
@@ -1066,7 +1073,8 @@ where
 \end_inset
 
 .
- Then, we know that 
+ Then,
+ we know that 
 \begin_inset Formula $\|f^{(0)}\|_{\infty}\leq\frac{n^{o(1)}}{v}$
 \end_inset
 
@@ -1078,7 +1086,8 @@ where
 \end_layout
 
 \begin_layout Plain Layout
-Now, we can further simplify the problem by
+Now,
+ we can further simplify the problem by
 \begin_inset Formula 
 \[
 \min_{B^{\top}f=0}\norm{f+f^{(0)}}_{\infty}.
@@ -1086,7 +1095,8 @@ Now, we can further simplify the problem by
 
 \end_inset
 
-To remove the constraint, we note the following:
+To remove the constraint,
+ we note the following:
 \end_layout
 
 \begin_layout Lemma
@@ -1104,7 +1114,8 @@ Let
 \end_inset
 
 .
- Furthermore, we have that 
+ Furthermore,
+ we have that 
 \begin_inset Formula $\|P\|_{\infty\rightarrow\infty}=n^{o(1)}.$
 \end_inset
 
@@ -1122,7 +1133,8 @@ The set
 \end_inset
 
 .
- Hence, all 
+ Hence,
+ all 
 \begin_inset Formula $Pf$
 \end_inset
 
@@ -1130,16 +1142,20 @@ The set
 \end_layout
 
 \begin_layout Proof
-On the other any, given any circulation 
+On the other any,
+ given any circulation 
 \begin_inset Formula $f$
 \end_inset
 
-, then, 
+,
+ then,
+ 
 \begin_inset Formula $Pf=f-RB^{\top}f=f$
 \end_inset
 
 .
- Hence, any circulation 
+ Hence,
+ any circulation 
 \begin_inset Formula $f$
 \end_inset
 
@@ -1151,21 +1167,25 @@ On the other any, given any circulation
 \end_layout
 
 \begin_layout Proof
-For the last result, we note that 
+For the last result,
+ we note that 
 \begin_inset Formula $\|Pf\|_{\infty\rightarrow\infty}\leq1+\|RB^{\top}\|_{\infty\rightarrow\infty}$
 \end_inset
 
 .
- For the last term, note that for any 
+ For the last term,
+ note that for any 
 \begin_inset Formula $g$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $\|RB^{\top}g\|_{\infty}\leq n^{o(1)}\min_{B^{\top}f=B^{\top}g}\|f\|_{\infty}\leq n^{o(1)}\|g\|_{\infty}$
 \end_inset
 
 .
- Hence, we have 
+ Hence,
+ we have 
 \begin_inset Formula $\|RB^{\top}\|_{\infty\rightarrow\infty}\leq n^{o(1)}$
 \end_inset
 
@@ -1173,7 +1193,8 @@ For the last result, we note that
 \end_layout
 
 \begin_layout Plain Layout
-Due to the lemma above, we have that
+Due to the lemma above,
+ we have that
 \begin_inset Formula 
 \[
 \min_{B^{\top}f=0}\norm{f+f^{(0)}}_{\infty}=\min_{f}\norm{Pf+f^{(0)}}_{\infty}.
@@ -1185,7 +1206,8 @@ Due to the lemma above, we have that
 \end_layout
 
 \begin_layout Plain Layout
-Now, we can apply Frank-Wolfe on the right problem.
+Now,
+ we can apply Frank-Wolfe on the right problem.
 \end_layout
 
 \begin_layout Theorem
@@ -1228,7 +1250,7 @@ literal "true"
 
 \end_inset
 
- designed a specified first-order method for 
+ designed a specific first-order method for 
 \begin_inset Formula $\norm{\cdot}_{\infty}$
 \end_inset
 
@@ -1240,11 +1262,12 @@ literal "true"
 \end_layout
 
 \begin_layout Proof
-To smoothen 
+To smooth 
 \begin_inset Formula $\norm{\cdot}_{\infty}$
 \end_inset
 
-, we consider the potential 
+,
+ we consider the potential 
 \begin_inset Formula 
 \[
 \ell_{\delta}(f)=\mathrm{smax}_{\delta}(Pf+f^{(0)})
@@ -1269,7 +1292,8 @@ Suppose that
 \end_inset
 
 .
- Then, we have that
+ Then,
+ we have that
 \begin_inset Formula 
 \[
 \norm{Pf+f^{(0)}}_{\infty}\leq\ell_{\delta}(t)\leq\min_{f}\ell_{\delta}(f)+\frac{\varepsilon}{2v}\leq\min_{f}\ell(f)+\frac{\varepsilon}{2v}+\delta\log(2m).
@@ -1281,7 +1305,8 @@ Setting
 \begin_inset Formula $\delta=\frac{\varepsilon}{2v\log(2m)}$
 \end_inset
 
-, we have that 
+,
+ we have that 
 \begin_inset Formula $\norm{Pf+f^{(0)}}_{\infty}\leq\min_{f}\ell(f)+\frac{\varepsilon}{v}$
 \end_inset
 
@@ -1290,7 +1315,8 @@ Setting
 \begin_inset Formula $B^{\top}(Pf+f^{(0)})=B^{\top}f^{(0)}=1_{st}$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $Pf+f^{(0)}$
 \end_inset
 
@@ -1298,7 +1324,8 @@ Setting
 \end_layout
 
 \begin_layout Proof
-Now, we analyze how fast Frank-Wolfe takes to solve the problem.
+Now,
+ we analyze how fast Frank-Wolfe takes to solve the problem.
  It is easy to prove that 
 \begin_inset Formula $\nabla\ell_{\delta}$
 \end_inset
@@ -1310,7 +1337,7 @@ Now, we analyze how fast Frank-Wolfe takes to solve the problem.
  bounded by
 \begin_inset Formula 
 \[
-O(\frac{\norm P_{\infty\rightarrow\infty}^{2}}{\delta})=O(\frac{v}{\varepsilon}n^{o(1)}).
+O(\frac{\norm P^{2}_{\infty\rightarrow\infty}}{\delta})=O(\frac{v}{\varepsilon}n^{o(1)}).
 \]
 
 \end_inset
@@ -1324,7 +1351,8 @@ Let
 \end_inset
 
 .
- Then, 
+ Then,
+ 
 \begin_inset Formula $Pf^{*}$
 \end_inset
 
@@ -1336,12 +1364,14 @@ Let
 
 \end_inset
 
-Therefore, the diameter 
+Therefore,
+ the diameter 
 \begin_inset Formula $R=O^{*}(\frac{1}{v})$
 \end_inset
 
 .
- Therefore, the Frank-wolfe shows that
+ Therefore,
+ the Frank-wolfe shows that
 \begin_inset Formula 
 \[
 \ell_{\delta}(f^{(k)})\leq\ell_{\delta}(f^{*})+\frac{O(\frac{v}{\varepsilon}n^{o(1)})\cdot O^{*}(\frac{1}{v^{2}})}{k}\leq\ell_{\delta}(f^{*})+\frac{n^{o(1)}}{v\epsilon k}.
@@ -1349,21 +1379,20 @@ Therefore, the diameter
 
 \end_inset
 
-Hence, after 
+Hence,
+ after 
 \begin_inset Formula $k=n^{o(1)}/\epsilon^{2}$
 \end_inset
 
- iterations, we find the approximate maximum flow.
+ iterations,
+ we find the approximate maximum flow.
 \end_layout
 
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Stay away step
@@ -1372,11 +1401,8 @@ Stay away step
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Subsection
 Relation to mirror descent
@@ -1385,9 +1411,6 @@ Relation to mirror descent
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
 \begin_inset Note Note
 status open
 
@@ -1398,11 +1421,8 @@ Add the application about SDP
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Can I use frankwolfe for 

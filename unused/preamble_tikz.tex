@@ -1,0 +1,99 @@
+\usepackage{tikz}
+
+% Define scaletikzpicturetowidth
+% See https://tex.stackexchange.com/questions/6388/how-to-scale-a-tikzpicture-to-textwidth
+\usepackage{environ}
+\makeatletter
+\newsavebox{\measure@tikzpicture}
+\NewEnviron{scaletikzpicturetowidth}[1]{%
+  \def\tikz@width{#1}%
+  \def\tikzscale{1}\begin{lrbox}{\measure@tikzpicture}%
+      \BODY
+  \end{lrbox}%
+  \pgfmathparse{#1/\wd\measure@tikzpicture}%
+  \edef\tikzscale{\pgfmathresult}%
+  \BODY
+}
+\makeatother
+
+
+\usetikzlibrary{arrows,intersections}
+\usetikzlibrary{shapes.misc}
+\tikzset{cross/.style={cross out, draw=black, minimum size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt},cross/.default={1pt}}
+
+
+
+\makeatletter
+\newcommand{\xleftrightarrow}[2][]{\ext@arrow 3359\leftrightarrowfill@{#1}{#2}}
+\newcommand{\xdashrightarrow}[2][]{\ext@arrow 0359\rightarrowfill@@{#1}{#2}}
+\newcommand{\xdashleftarrow}[2][]{\ext@arrow 3095\leftarrowfill@@{#1}{#2}}
+\newcommand{\xdashleftrightarrow}[2][]{\ext@arrow 3359\leftrightarrowfill@@{#1}{#2}}
+\def\rightarrowfill@@{\arrowfill@@\relax\relbar\rightarrow}
+\def\leftarrowfill@@{\arrowfill@@\leftarrow\relbar\relax}
+\def\leftrightarrowfill@@{\arrowfill@@\leftarrow\relbar\rightarrow}
+\def\arrowfill@@#1#2#3#4{%
+  $\m@th\thickmuskip0mu\medmuskip\thickmuskip\thinmuskip\thickmuskip
+   \relax#4#1
+   \xleaders\hbox{$#4#2$}\hfill
+   #3$%
+}
+
+% alternative to arrow
+\pgfarrowsdeclare{tonew}{tonew}
+{
+  \ifdim\pgfgetarrowoptions{tonew}=-1pt%
+    \pgfutil@tempdima=0.84pt%
+    \advance\pgfutil@tempdima by1.3\pgflinewidth%
+    \pgfutil@tempdimb=0.21pt%
+    \advance\pgfutil@tempdimb by.625\pgflinewidth%
+  \else%
+    \pgfutil@tempdima=\pgfgetarrowoptions{tonew}%
+    \pgfarrowsleftextend{+-0.8\pgfutil@tempdima}%
+    \pgfarrowsrightextend{+0.2\pgfutil@tempdima}%
+  \fi%
+}
+{
+  \ifdim\pgfgetarrowoptions{tonew}=-1pt%
+    \pgfutil@tempdima=0.28pt%
+    \advance\pgfutil@tempdima by.3\pgflinewidth%
+    \pgfutil@tempdimb=0pt,%
+  \else%
+    \pgfutil@tempdima=\pgfgetarrowoptions{tonew}%
+    \multiply\pgfutil@tempdima by 100%
+    \divide\pgfutil@tempdima by 375%
+    \pgfutil@tempdimb=0.4\pgflinewidth%
+  \fi%
+  \pgfsetdash{}{+0pt}
+  \pgfsetroundcap
+  \pgfsetroundjoin
+  \pgfpathmoveto{\pgfpointorigin}
+  \pgflineto{\pgfpointadd{\pgfpoint{0.75\pgfutil@tempdima}{0bp}}
+                         {\pgfqpoint{-2\pgfutil@tempdimb}{0bp}}}
+  \pgfusepathqstroke
+  \pgfsetlinewidth{0.8\pgflinewidth}
+  \pgfpathmoveto{\pgfpointadd{\pgfqpoint{-3\pgfutil@tempdima}{4\pgfutil@tempdima}}
+                             {\pgfqpoint{\pgfutil@tempdimb}{0bp}}}
+  \pgfpathcurveto
+  {\pgfpointadd{\pgfqpoint{-2.75\pgfutil@tempdima}{2.5\pgfutil@tempdima}}
+               {\pgfqpoint{0.5\pgfutil@tempdimb}{0bp}}}
+  {\pgfpointadd{\pgfqpoint{0pt}{0.25\pgfutil@tempdima}}
+               {\pgfqpoint{-0.5\pgfutil@tempdimb}{0bp}}}
+  {\pgfpointadd{\pgfqpoint{0.75\pgfutil@tempdima}{0pt}}
+               {\pgfqpoint{-\pgfutil@tempdimb}{0bp}}}
+  \pgfpathcurveto
+  {\pgfpointadd{\pgfqpoint{0pt}{-0.25\pgfutil@tempdima}}
+               {\pgfqpoint{-0.5\pgfutil@tempdimb}{0bp}}}
+  {\pgfpointadd{\pgfqpoint{-2.75\pgfutil@tempdima}{-2.5\pgfutil@tempdima}}
+               {\pgfqpoint{0.5\pgfutil@tempdimb}{0bp}}}
+  {\pgfpointadd{\pgfqpoint{-3\pgfutil@tempdima}{-4\pgfutil@tempdima}}
+               {\pgfqpoint{\pgfutil@tempdimb}{0bp}}}
+  \pgfusepathqstroke
+}
+
+% alias alternative to arrow
+\pgfarrowsdeclarealias{<new}{>new}{tonew}{tonew}
+\pgfsetarrowoptions{tonew}{-1pt}
+\pgfkeys{/tikz/.cd, arrowhead/.default=-1pt, arrowhead/.code={
+  \pgfsetarrowoptions{tonew}{#1},
+}}
+\makeatother
