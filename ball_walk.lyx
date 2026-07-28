@@ -5401,7 +5401,7 @@ centering{}
 
 
 \begin_inset Graphics
-	filename Figures/concave-to-affine.png
+	filename Figures/Thrm_10.4.png
 	width 50text%
 
 \end_inset
@@ -5806,39 +5806,6 @@ The functions
  an open set.
  Since we are proving strict inequalities,
  these modifications do not affect the conclusion.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-placement document
-alignment document
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename Figures/Lemma_10.30.png
-	width 75col%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\align center
-
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard

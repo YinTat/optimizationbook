@@ -382,7 +382,8 @@ Techniques in Optimization and Sampling
 \begin_inset Newline newline
 \end_inset
 
-(book in progress; citations being improved)
+(book in progress;
+ citations being improved)
 \end_layout
 
 \begin_layout Author
@@ -934,13 +935,11 @@ status open
 
 \begin_layout Plain Layout
 
-
 \backslash
 phantomsection
 \end_layout
 
 \begin_layout Plain Layout
-
 
 \backslash
 addcontentsline{toc}{chapter}{Preliminaries}
@@ -994,7 +993,7 @@ Optimization
 status open
 
 \begin_layout Plain Layout
-Maybe I can add a plot somewhere looks like this:
+Maybe add a plot somewhere looks like this:
 \end_layout
 
 \begin_layout Plain Layout
@@ -1120,7 +1119,7 @@ Geometrization
 
 \begin_layout Standard
 \begin_inset Note Note
-status collapsed
+status open
 
 \begin_layout Plain Layout
 Seems Mirror Descent is really doing the job as Newton Method.
@@ -1135,7 +1134,7 @@ Just we never use in that way?
 
 
 \begin_inset Note Note
-status collapsed
+status open
 
 \begin_layout Plain Layout
 Should we give a continuous proof everywhere?
@@ -1148,6 +1147,14 @@ The proof for mirror descent is much easier.
 \begin_layout Plain Layout
 Is mirror descent is about the decomposition of online and offline parts?
 \end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset include
+LatexCommand input
+filename "mirror_descent.lyx"
+literal "false"
 
 \end_inset
 

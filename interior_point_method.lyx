@@ -275,10 +275,6 @@ We start by describing interior point method for linear programs.
  We establish a polynomial bound and then later discuss implementation details.
 \end_layout
 
-\begin_layout Section
-Introduction
-\end_layout
-
 \begin_layout Standard
 Consider the primal linear program
 \begin_inset Formula 
@@ -482,7 +478,7 @@ nolink "false"
 \end_layout
 
 \begin_layout Section
-Interior Point Method
+Central Path
 \end_layout
 
 \begin_layout Standard
