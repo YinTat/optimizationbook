@@ -1,5 +1,5 @@
-#LyX 2.4 created this file. For more info see https://www.lyx.org/
-\lyxformat 620
+#LyX 2.5 created this file. For more info see https://www.lyx.org/
+\lyxformat 643
 \begin_document
 \begin_header
 \save_transient_properties true
@@ -54,11 +54,19 @@
 \use_indices false
 \paperorientation portrait
 \suppress_date false
-\justification true
-\use_refstyle 1
+\justification default
+\crossref_package refstyle
 \use_formatted_ref 0
 \use_minted 0
 \use_lineno 0
+\backgroundcolor none
+\fontcolor none
+\notefontcolor lightgray
+\boxbgcolor red
+\table_border_color default
+\table_odd_row_color default
+\table_even_row_color default
+\table_alt_row_colors_start 1
 \index Index
 \shortcut idx
 \color #008000
@@ -84,6 +92,7 @@
 \html_be_strict false
 \docbook_table_output 0
 \docbook_mathml_prefix 1
+\docbook_mathml_version 0
 \end_header
 
 \begin_body
@@ -133,22 +142,20 @@ In the DFK algorithm,
  we consider 
 \begin_inset Formula 
 \[
-f_{i}(x)=\exp(-a_{i}\norm{x})\chi_{K}(x)\mbox{ or }f_{i}(x)=\exp(-a_{i}\norm{x}^{2}/2)\chi_{K}(x).
+f_{i}(x)=\exp(-a_{i}\norm x)\chi_{K}(x)\mbox{ or }f_{i}(x)=\exp(-a_{i}\norm x^{2}/2)\chi_{K}(x).
 \]
 
 \end_inset
 
 The first form is a useful radial model,
  while the second is the Gaussian cooling schedule used below for volume.
- The variance calculation below is stated in the more general logconcave-power
- form,
+ The variance calculation below is stated in the more general logconcave-power form,
  which includes the Gaussian schedule by taking 
-\begin_inset Formula $f(x)=e^{-\norm{x}^{2}/2}\chi_{K}(x)$
+\begin_inset Formula $f(x)=e^{-\norm x^{2}/2}\chi_{K}(x)$
 \end_inset
 
 .
- 
-The coefficient 
+ The coefficient 
 \begin_inset Formula $a_{i}$
 \end_inset
 
@@ -203,7 +210,6 @@ status open
 
 \begin_layout Plain Layout
 
-
 \backslash
 begin{algorithm2e}[H]
 \end_layout
@@ -218,7 +224,6 @@ begin{algorithm2e}[H]
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 caption{
@@ -235,7 +240,6 @@ caption{
 status open
 
 \begin_layout Plain Layout
-
 }
 \end_layout
 
@@ -250,7 +254,6 @@ status open
 
 \begin_layout Plain Layout
 
-
 \backslash
 SetAlgoLined
 \end_layout
@@ -262,7 +265,7 @@ SetAlgoLined
 
 \begin_layout Enumerate
 For 
-\begin_inset Formula $i=0,\ldots,m=\left\lceil \log_{1+1/\sqrt{n}}(8R^{2}n/\varepsilon)\right\rceil$
+\begin_inset Formula $i=0,\ldots,m=\left\lceil \log_{1+1/\sqrt{n}}(8R^{2}n/\varepsilon)\right\rceil $
 \end_inset
 
 ,
@@ -271,7 +274,7 @@ For
 \end_inset
 
  and 
-\begin_inset Formula $f_i(x)=f(x)^{a_i}.$
+\begin_inset Formula $f_{i}(x)=f(x)^{a_{i}}.$
 \end_inset
 
 
@@ -301,7 +304,7 @@ sample
 
 \begin_layout Enumerate
 Set 
-\begin_inset Formula $Y_{i}=\frac{1}{N}\sum_{j=1}^{N}\frac{f_{i+1}(X^{(j)})}{f_{i}(X^{(j)})}$
+\begin_inset Formula $Y_{i}=\frac{1}{N}\sum^{N}_{j=1}\frac{f_{i+1}(X^{(j)})}{f_{i}(X^{(j)})}$
 \end_inset
 
  
@@ -310,7 +313,7 @@ Set
 \end_deeper
 \begin_layout Enumerate
 Let 
-\begin_inset Formula $Y=\prod_{i=0}^{m-1}Y_{i}$
+\begin_inset Formula $Y=\prod^{m-1}_{i=0}Y_{i}$
 \end_inset
 
  and return 
@@ -325,7 +328,6 @@ Let
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 end{algorithm2e}
@@ -349,11 +351,11 @@ name "lem:chebychev_ratio"
 \end_inset
 
  For 
-\begin_inset Formula $X\sim\pi_{f_i}$
+\begin_inset Formula $X\sim\pi_{f_{i}}$
 \end_inset
 
  with 
-\begin_inset Formula $f_{i}(x)=e^{-a_{i}\norm x}\chi_{K}(x)$
+\begin_inset Formula $f_{i}(x)=e^{-a_{i}\norm x}\chi_{K}(x)\mbox{ or }f_{i}(x)=\exp(-a_{i}\norm x^{2}/2)\chi_{K}(x)$
 \end_inset
 
  for a convex body 
@@ -377,7 +379,7 @@ name "lem:chebychev_ratio"
  satisfies 
 \begin_inset Formula 
 \[
-\frac{\E\left(Y^{2}\right)}{\E\left(Y\right)^{2}}\le\left(\frac{a_{i+1}^{2}}{(2a_{i+1}-a_{i})a_{i}}\right)^{n}
+\frac{\E\left(Y^{2}\right)}{\E\left(Y\right)^{2}}\le\left(\frac{a^{2}_{i+1}}{(2a_{i+1}-a_{i})a_{i}}\right)^{n}
 \]
 
 \end_inset
@@ -438,7 +440,7 @@ nolink "false"
  and hence
 \begin_inset Formula 
 \[
-\frac{F(2a_{i+1}-a_{i})F(a_{i})}{F(a_{i+1})^{2}}=\frac{Z(2a_{i+1}-a_{i})Z(a_{i})}{Z(a_{i+1})^{2}}\left(\frac{a_{i+1}^{2}}{(2a_{i+1}-a_{i})a_{i}}\right)^{n}\le\left(\frac{a_{i+1}^{2}}{(2a_{i+1}-a_{i})a_{i}}\right)^{n}.
+\frac{F(2a_{i+1}-a_{i})F(a_{i})}{F(a_{i+1})^{2}}=\frac{Z(2a_{i+1}-a_{i})Z(a_{i})}{Z(a_{i+1})^{2}}\left(\frac{a^{2}_{i+1}}{(2a_{i+1}-a_{i})a_{i}}\right)^{n}\le\left(\frac{a^{2}_{i+1}}{(2a_{i+1}-a_{i})a_{i}}\right)^{n}.
 \]
 
 \end_inset
@@ -509,7 +511,7 @@ reference "lem:chebychev_ratio"
  we have 
 \begin_inset Formula 
 \begin{align*}
-\frac{\Var(Y)}{\E(Y)^{2}} & =\prod_{i=0}^{m-1}\left(1+\frac{\Var(Y_{i})}{\E(Y_{i})^{2}}\right)-1\\
+\frac{\Var(Y)}{\E(Y)^{2}} & =\prod^{m-1}_{i=0}\left(1+\frac{\Var(Y_{i})}{\E(Y_{i})^{2}}\right)-1\\
  & \le\left(1+\frac{\varepsilon^{2}}{32m}\right)^{m}-1\\
  & \le\frac{\varepsilon^{2}}{16}.
 \end{align*}
@@ -757,7 +759,15 @@ However,
 
 \end_inset
 
-Recent work shows that a well-rounded convex body can be turned into a near-isotropic one with complexity 
+The work of 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "JLLV26"
+literal "false"
+
+\end_inset
+
+ shows that a well-rounded convex body can be turned into a near-isotropic one with complexity 
 \begin_inset Formula $\tilde{O}(n^{3})$
 \end_inset
 
@@ -848,7 +858,6 @@ status open
 
 \begin_layout Plain Layout
 
-
 \backslash
 begin{algorithm2e}[H]
 \end_layout
@@ -863,7 +872,6 @@ begin{algorithm2e}[H]
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 caption{
@@ -880,7 +888,6 @@ caption{
 status open
 
 \begin_layout Plain Layout
-
 }
 \end_layout
 
@@ -894,7 +901,6 @@ status open
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 SetAlgoLined
@@ -949,7 +955,7 @@ For
 \end_inset
 
  and 
-\begin_inset Formula $f_i(x)=f(x)^{a_i}$
+\begin_inset Formula $f_{i}(x)=f(x)^{a_{i}}$
 \end_inset
 
 ,
@@ -957,8 +963,7 @@ For
 \begin_inset Formula $m-1$
 \end_inset
 
- being the largest integer such that
- 
+ being the largest integer such that 
 \begin_inset Formula $a_{m-1}<1$
 \end_inset
 
@@ -990,7 +995,7 @@ sample
 
 \begin_layout Enumerate
 Set 
-\begin_inset Formula $Y_{i}=\frac{1}{N}\sum_{j=1}^{N}f(X^{(j)})^{a_{i+1}-a_{i}}$
+\begin_inset Formula $Y_{i}=\frac{1}{N}\sum^{N}_{j=1}f(X^{(j)})^{a_{i+1}-a_{i}}$
 \end_inset
 
 
@@ -999,7 +1004,7 @@ Set
 \end_deeper
 \begin_layout Enumerate
 Let 
-\begin_inset Formula $Y=\prod_{i=0}^{m-1}Y_{i}$
+\begin_inset Formula $Y=\prod^{m-1}_{i=0}Y_{i}$
 \end_inset
 
  and return 
@@ -1014,7 +1019,6 @@ Let
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 end{algorithm2e}

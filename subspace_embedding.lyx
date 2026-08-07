@@ -1,16 +1,16 @@
-#LyX 2.3 created this file. For more info see http://www.lyx.org/
-\lyxformat 544
+#LyX 2.5 created this file. For more info see https://www.lyx.org/
+\lyxformat 643
 \begin_document
 \begin_header
 \save_transient_properties true
 \origin unavailable
 \textclass optbook
 \use_default_options true
-\maintain_unincluded_children false
+\maintain_unincluded_children no
 \language english
 \language_package default
-\inputencoding auto
-\fontencoding global
+\inputencoding auto-legacy
+\fontencoding auto
 \font_roman "default" "default"
 \font_sans "default" "default"
 \font_typewriter "default" "default"
@@ -18,7 +18,9 @@
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
-\font_osf false
+\font_roman_osf false
+\font_sans_osf false
+\font_typewriter_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
 \use_microtype false
@@ -48,9 +50,19 @@
 \use_indices false
 \paperorientation portrait
 \suppress_date false
-\justification true
-\use_refstyle 1
+\justification default
+\crossref_package refstyle
+\use_formatted_ref 0
 \use_minted 0
+\use_lineno 0
+\backgroundcolor none
+\fontcolor none
+\notefontcolor lightgray
+\boxbgcolor red
+\table_border_color default
+\table_odd_row_color default
+\table_even_row_color default
+\table_alt_row_colors_start 1
 \index Index
 \shortcut idx
 \color #008000
@@ -66,18 +78,24 @@
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
+\tablestyle default
 \tracking_changes false
 \output_changes false
+\change_bars false
+\postpone_fragile_content false
 \html_math_output 0
 \html_css_as_file 0
 \html_be_strict false
+\docbook_table_output 0
+\docbook_mathml_prefix 1
+\docbook_mathml_version 0
 \end_header
 
 \begin_body
 
 \begin_layout Standard
-In this chapter, we study some randomization techniques for faster convex
- optimization.
+In this chapter,
+ we study some randomization techniques for faster convex optimization.
 \end_layout
 
 \begin_layout Section
@@ -92,11 +110,11 @@ name "sec:Subspace-embedding"
 \end_layout
 
 \begin_layout Standard
-In this section and the next section, we consider the least squares regression
- problem
+In this section and the next section,
+ we consider the least squares regression problem
 \begin_inset Formula 
 \[
-\min_{x}\|Ax-b\|_{2}^{2}
+\min_{x}\|Ax-b\|^{2}_{2}
 \]
 
 \end_inset
@@ -115,11 +133,13 @@ where
 \end_inset
 
 .
- Setting it to zero, and assuming 
+ Setting it to zero,
+ and assuming 
 \begin_inset Formula $A^{\top}A$
 \end_inset
 
- is invertible, the solution is given by 
+ is invertible,
+ the solution is given by 
 \begin_inset Formula 
 \[
 x=(A^{\top}A)^{-1}A^{\top}b.
@@ -131,21 +151,25 @@ If
 \begin_inset Formula $A^{\top}A$
 \end_inset
 
- is not invertible, we use its pseudo-inverse.
+ is not invertible,
+ we use its pseudo-inverse.
  If the matrix 
 \begin_inset Formula $A^{\top}A\in\R^{d\times d}$
 \end_inset
 
- is given, then we can solve the equation above in time 
+ is given,
+ then we can solve the equation above in time 
 \begin_inset Formula $d^{\omega}$
 \end_inset
 
-, the current complexity of matrix multiplication.
+,
+ the current complexity of matrix multiplication.
  If 
 \begin_inset Formula $n>d^{\omega}$
 \end_inset
 
-, then the bottleneck is simply to compute 
+,
+ then the bottleneck is simply to compute 
 \begin_inset Formula $A^{\top}A$
 \end_inset
 
@@ -159,7 +183,8 @@ If
 \end_layout
 
 \begin_layout Standard
-The simplest iteration is the Richardson iteration: 
+The simplest iteration is the Richardson iteration:
+ 
 \begin_inset Formula 
 \[
 x^{(k+1)}=A^{\top}b+(I-A^{\top}A)x^{(k)}=x^{(k)}+A^{\top}b-A^{\top}Ax^{(k)}.
@@ -167,7 +192,8 @@ x^{(k+1)}=A^{\top}b+(I-A^{\top}A)x^{(k)}=x^{(k)}+A^{\top}b-A^{\top}Ax^{(k)}.
 
 \end_inset
 
-To ensure this converges, we scale down 
+To ensure this converges,
+ we scale down 
 \begin_inset Formula $A^{\top}A$
 \end_inset
 
@@ -189,7 +215,8 @@ To ensure this converges, we scale down
 \end_inset
 
 .
- More generally, one can use 
+ More generally,
+ one can use 
 \emph on
 pre-conditioning.
  
@@ -198,8 +225,9 @@ Recall that for a vector
 \begin_inset Formula $v$
 \end_inset
 
-, the squared norm 
-\begin_inset Formula $\norm{v}_{M}^{2}$
+,
+ the squared norm 
+\begin_inset Formula $\norm v^{2}_{M}$
 \end_inset
 
  is defined as 
@@ -244,7 +272,8 @@ Given a matrix
 \end_inset
 
 .
- Then, we have that
+ Then,
+ we have that
 \begin_inset Formula 
 \[
 \|x^{(k)}-x^{*}\|_{M}\leq\left(1-\frac{1}{\kappa}\right)^{k}\|x^{(0)}-x^{*}\|_{M}.
@@ -257,7 +286,8 @@ Given a matrix
 
 \begin_layout Remark
 The proof also shows why the choice of norm above is the natural one.
- In this norm, the residual drops geometrically.
+ In this norm,
+ the residual drops geometrically.
 \end_layout
 
 \begin_layout Proof
@@ -265,15 +295,19 @@ Using
 \begin_inset Formula $x^{*}=(A^{\top}A)^{-1}A^{\top}b$
 \end_inset
 
-, i.e., 
+,
+ i.e.,
+ 
 \begin_inset Formula $A^{\top}b=(A^{\top}A)x^{*}$
 \end_inset
 
-, and the formula of 
+,
+ and the formula of 
 \begin_inset Formula $x^{(k+1)}$
 \end_inset
 
-, we have
+,
+ we have
 \begin_inset Formula 
 \begin{align*}
 x^{(k+1)}-x^{*} & =x^{(k)}-M^{-1}(A^{\top}Ax^{(k)}-A^{\top}b)-x^{*}\\
@@ -283,10 +317,11 @@ x^{(k+1)}-x^{*} & =x^{(k)}-M^{-1}(A^{\top}Ax^{(k)}-A^{\top}b)-x^{*}\\
 
 \end_inset
 
-Therefore, the norm of error is
+Therefore,
+ the norm of error is
 \begin_inset Formula 
 \begin{align*}
-\|x^{(k+1)}-x^{*}\|_{M}^{2} & =\left(x^{(k)}-x^{*}\right)^{\top}(I-A^{\top}AM^{-1})M(I-M^{-1}A^{\top}A)\left(x^{(k)}-x^{*}\right)\\
+\|x^{(k+1)}-x^{*}\|^{2}_{M} & =\left(x^{(k)}-x^{*}\right)^{\top}(I-A^{\top}AM^{-1})M(I-M^{-1}A^{\top}A)\left(x^{(k)}-x^{*}\right)\\
  & =\left(x^{(k)}-x^{*}\right)^{\top}M^{\frac{1}{2}}(I-H)^{2}M^{\frac{1}{2}}\left(x^{(k)}-x^{*}\right)
 \end{align*}
 
@@ -335,8 +370,7 @@ Note that
 \begin_inset Formula $B$
 \end_inset
 
- such that
- 
+ such that 
 \begin_inset Formula $\|Ax\|^{2}$
 \end_inset
 
@@ -349,7 +383,8 @@ Note that
 \end_inset
 
 .
- In this section, we show that we can simply take 
+ In this section,
+ we show that we can simply take 
 \begin_inset Formula $B=\Pi A$
 \end_inset
 
@@ -362,7 +397,8 @@ Note that
 \begin_inset Formula $M$
 \end_inset
 
-, we can run the Richardson iteration.
+,
+ we can run the Richardson iteration.
  We need to see if this will make the entire procedure more efficient.
 \end_layout
 
@@ -395,7 +431,8 @@ for all
 \end_layout
 
 \begin_layout Standard
-In this section, we focus on the case that 
+In this section,
+ we focus on the case that 
 \begin_inset Formula $S$
 \end_inset
 
@@ -407,7 +444,8 @@ In this section, we focus on the case that
 \begin_inset Formula $\Rn$
 \end_inset
 
-, namely 
+,
+ namely 
 \begin_inset Formula $S=\{Ax:x\in\R^{d}\}$
 \end_inset
 
@@ -421,15 +459,17 @@ In this section, we focus on the case that
 \begin_inset Formula $y\in S$
 \end_inset
 
-, we have that
+,
+ we have that
 \begin_inset Formula 
 \[
-\|U^{\top}y\|_{2}^{2}=\|U^{\top}U\Sigma V^{\top}x\|_{2}^{2}=x^{\top}V\Sigma^{2}V^{\top}x=\|Ax\|^{2}.
+\|U^{\top}y\|^{2}_{2}=\|U^{\top}U\Sigma V^{\top}x\|^{2}_{2}=x^{\top}V\Sigma^{2}V^{\top}x=\|Ax\|^{2}.
 \]
 
 \end_inset
 
-Therefore, any 
+Therefore,
+ any 
 \begin_inset Formula $d$
 \end_inset
 
@@ -449,7 +489,8 @@ For any
 \begin_inset Formula $S$
 \end_inset
 
-, any embedding with distortion 
+,
+ any embedding with distortion 
 \begin_inset Formula $\epsilon<1$
 \end_inset
 
@@ -461,9 +502,7 @@ For any
 \end_layout
 
 \begin_layout Standard
-This embedding is not useful for solving the least squares problem because
- the solution of the least squares problem is simply a closed form of the
- SVD decomposition 
+This embedding is not useful for solving the least squares problem because the solution of the least squares problem is simply a closed form of the SVD decomposition 
 \begin_inset Formula $x=V\Sigma^{-1}U^{\top}b$
 \end_inset
 
@@ -475,8 +514,8 @@ Oblivious Subspace Embedding via Johnson-Lindenstrauss
 \end_layout
 
 \begin_layout Standard
-Surprisingly, there are random embeddings that have small distortion without
- knowledge of the subspace.
+Surprisingly,
+ there are random embeddings that have small distortion without knowledge of the subspace.
 \end_layout
 
 \begin_layout Definition
@@ -496,7 +535,8 @@ A random matrix
 \begin_inset Formula $S\subset\R^{n}$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $\Pi$
 \end_inset
 
@@ -532,7 +572,8 @@ We call
 \begin_inset Formula $U\in\R^{n\times d}$
 \end_inset
 
- with orthonormal columns, we have that
+ with orthonormal columns,
+ we have that
 \begin_inset Formula 
 \[
 \P(\|U^{\top}\Pi^{\top}\Pi U-I_{d}\|_{\op}\leq\epsilon)\geq1-\delta.
@@ -552,11 +593,14 @@ Let
 \begin_inset Formula $U\in\R^{n\times d}$
 \end_inset
 
-, namely 
+,
+ namely 
 \begin_inset Formula $S=\{y:y=Uz\}$
 \end_inset
 
-. Then, the condition
+.
+ Then,
+ the condition
 \begin_inset Formula 
 \[
 (1-\epsilon)\|y\|^{2}\leq\|\Pi y\|^{2}\leq(1+\epsilon)\|y\|^{2}
@@ -576,7 +620,8 @@ Using
 \begin_inset Formula $U^{\top}U=I_{d}$
 \end_inset
 
-, we have
+,
+ we have
 \begin_inset Formula 
 \[
 (1-\epsilon)I_{d}\preceq U^{\top}\Pi^{\top}\Pi U\preceq(1+\epsilon)I_{d}.
@@ -592,10 +637,11 @@ For the special case
 \begin_inset Formula $d=1$
 \end_inset
 
-, the definition becomes
+,
+ the definition becomes
 \begin_inset Formula 
 \[
-\P\left[|\|\Pi a\|_{2}^{2}-1|\leq\epsilon\right]\geq1-\delta
+\P\left[|\|\Pi a\|^{2}_{2}-1|\leq\epsilon\right]\geq1-\delta
 \]
 
 \end_inset
@@ -605,10 +651,8 @@ for all unit vectors
 \end_inset
 
 .
- The classical Johnson-Lindenstrauss lemma is usually stated for finite
- point sets under random projection.
- The OSE formulation asks instead for simultaneous preservation of every
- vector in a fixed 
+ The classical Johnson-Lindenstrauss lemma is usually stated for finite point sets under random projection.
+ The OSE formulation asks instead for simultaneous preservation of every vector in a fixed 
 \begin_inset Formula $d$
 \end_inset
 
@@ -654,7 +698,8 @@ Let
 \end_inset
 
 .
- Then, 
+ Then,
+ 
 \begin_inset Formula $\Pi$
 \end_inset
 
@@ -670,13 +715,14 @@ Let
 status open
 
 \begin_layout Plain Layout
-I should add a proof here.
+add a proof here!
 \end_layout
 
 \end_inset
 
 We will skip the proof for this as we will prove a more general result later.
- Next, we show that any OSE for 
+ Next,
+ we show that any OSE for 
 \begin_inset Formula $d=1$
 \end_inset
 
@@ -685,12 +731,14 @@ We will skip the proof for this as we will prove a more general result later.
 \end_inset
 
 .
- Therefore, it suffices to focus on the case 
+ Therefore,
+ it suffices to focus on the case 
 \begin_inset Formula $d=1$
 \end_inset
 
 .
- First, we need a lemma about 
+ First,
+ we need a lemma about 
 \begin_inset Formula $\epsilon$
 \end_inset
 
@@ -710,7 +758,8 @@ For any
 \begin_inset Formula $n\in\mathbb{N}$
 \end_inset
 
-, there are at most 
+,
+ there are at most 
 \begin_inset Formula $(1+\frac{2}{\epsilon})^{n}$
 \end_inset
 
@@ -722,7 +771,8 @@ For any
 \begin_inset Formula $x\in\Rn$
 \end_inset
 
-, there is an 
+,
+ there is an 
 \begin_inset Formula $i$
 \end_inset
 
@@ -797,7 +847,8 @@ Let
 \end_inset
 
  be the points it found.
- By the construction, it is clear that 
+ By the construction,
+ it is clear that 
 \begin_inset Formula $\|x-x_{i}\|\leq\epsilon$
 \end_inset
 
@@ -815,7 +866,8 @@ Let
 \end_inset
 
 .
- To bound the number of points, we note that all 
+ To bound the number of points,
+ we note that all 
 \begin_inset Formula $B(x_{i},\frac{\epsilon}{2})$
 \end_inset
 
@@ -855,7 +907,8 @@ Suppose that
 \end_inset
 
  OSE.
- Then, 
+ Then,
+ 
 \begin_inset Formula $\Pi$
 \end_inset
 
@@ -868,7 +921,7 @@ Suppose that
 
 \begin_layout Proof
 Let 
-\begin_inset Formula $\mathcal{N}=\{x_i\}_{i=1}^{N}$
+\begin_inset Formula $\mathcal{N}=\{x_{i}\}^{N}_{i=1}$
 \end_inset
 
  be a 
@@ -881,12 +934,12 @@ Let
 
 ,
  with 
-\begin_inset Formula $N\leq5^d$
+\begin_inset Formula $N\leq5^{d}$
 \end_inset
 
 .
  Put 
-\begin_inset Formula $\Delta=U^\top\Pi^\top\Pi U-I_d$
+\begin_inset Formula $\Delta=U^{\top}\Pi^{\top}\Pi U-I_{d}$
 \end_inset
 
 .
@@ -904,14 +957,14 @@ Let
 
 ,
  with probability at least 
-\begin_inset Formula $1-5^d\delta$
+\begin_inset Formula $1-5^{d}\delta$
 \end_inset
 
 ,
  
 \begin_inset Formula 
 \[
-|y^\top\Delta y|=\left|\|\Pi Uy\|^2-1\right|\leq\epsilon\quad\text{for all }y\in\mathcal{N}.
+|y^{\top}\Delta y|=\left|\|\Pi Uy\|^{2}-1\right|\leq\epsilon\quad\text{for all }y\in\mathcal{N}.
 \]
 
 \end_inset
@@ -926,7 +979,7 @@ On this event,
 \end_inset
 
  with 
-\begin_inset Formula $|x^\top\Delta x|=\|\Delta\|_{\op}$
+\begin_inset Formula $|x^{\top}\Delta x|=\|\Delta\|_{\op}$
 \end_inset
 
 ,
@@ -935,7 +988,7 @@ On this event,
 \end_inset
 
  with 
-\begin_inset Formula $\|x-y\|_2\leq\frac{1}{2}$
+\begin_inset Formula $\|x-y\|_{2}\leq\frac{1}{2}$
 \end_inset
 
 .
@@ -956,7 +1009,7 @@ On this event,
  so
 \begin_inset Formula 
 \[
-|y^\top\Delta y|\geq(2\alpha^2-1)\|\Delta\|_{\op}\geq\frac{17}{32}\|\Delta\|_{\op}.
+|y^{\top}\Delta y|\geq(2\alpha^{2}-1)\|\Delta\|_{\op}\geq\frac{17}{32}\|\Delta\|_{\op}.
 \]
 
 \end_inset
@@ -969,7 +1022,7 @@ Thus
  and hence
 \begin_inset Formula 
 \[
-\P\left(\|U^\top\Pi^\top\Pi U-I_d\|_{\op}\leq4\epsilon\right)\geq1-5^d\delta.
+\P\left(\|U^{\top}\Pi^{\top}\Pi U-I_{d}\|_{\op}\leq4\epsilon\right)\geq1-5^{d}\delta.
 \]
 
 \end_inset
@@ -1003,7 +1056,8 @@ As we discussed before any
 \end_inset
 
  rows.
- Therefore, the number of rows of this OSE is tight for the regime 
+ Therefore,
+ the number of rows of this OSE is tight for the regime 
 \begin_inset Formula $\epsilon=\Theta(1)$
 \end_inset
 
@@ -1016,10 +1070,12 @@ As we discussed before any
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:Richardson"
+nolink "false"
 
 \end_inset
 
-; by iterating we can get any 
+;
+ by iterating we can get any 
 \begin_inset Formula $\epsilon$
 \end_inset
 
@@ -1028,7 +1084,8 @@ reference "lem:Richardson"
 \end_inset
 
 .
- Unfortunately, computing 
+ Unfortunately,
+ computing 
 \begin_inset Formula $\Pi A$
 \end_inset
 
@@ -1045,7 +1102,8 @@ reference "lem:Richardson"
 \begin_inset Formula $n\times d$
 \end_inset
 
- matrix, the second one involves multiplying 
+ matrix,
+ the second one involves multiplying 
 \begin_inset Formula $d\times n$
 \end_inset
 
@@ -1105,7 +1163,8 @@ We consider the sparse matrix
 \begin_inset Formula $n=d=1$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $\|\Pi x\|^{2}$
 \end_inset
 
@@ -1114,7 +1173,8 @@ We consider the sparse matrix
 \end_inset
 
  times the number of nonzero entries in its single column.
- Therefore, we indeed need that 
+ Therefore,
+ we indeed need that 
 \begin_inset Formula $s$
 \end_inset
 
@@ -1123,8 +1183,7 @@ We consider the sparse matrix
 \end_inset
 
 .
- The advantage of a sparse embedding is that applying it can be much more
- efficient.
+ The advantage of a sparse embedding is that applying it can be much more efficient.
 \end_layout
 
 \begin_layout Remark
@@ -1138,8 +1197,7 @@ It turns out that one can select exactly
 \end_inset
 
 .
- The proof of this is slightly more complicated due to the lack of independence
- 
+ The proof of this is slightly more complicated due to the lack of independence 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "cohen2016nearly"
@@ -1155,10 +1213,11 @@ To analyze
 \begin_inset Formula $U^{\top}\Pi^{\top}\Pi U$
 \end_inset
 
-, we note that 
+,
+ we note that 
 \begin_inset Formula 
 \[
-U^{\top}\Pi^{\top}\Pi U=\sum_{r=1}^{m}(\Pi U)_{r}^{\top}(\Pi U)_{r}.
+U^{\top}\Pi^{\top}\Pi U=\sum^{m}_{r=1}(\Pi U)^{\top}_{r}(\Pi U)_{r}.
 \]
 
 \end_inset
@@ -1167,8 +1226,8 @@ Since each row of
 \begin_inset Formula $\Pi$
 \end_inset
 
- is independent, we can use matrix concentration bounds to analyze the sum
- above.
+ is independent,
+ we can use matrix concentration bounds to analyze the sum above.
  See 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -1197,8 +1256,9 @@ name "thm:matrix-chernoff"
 
 \end_inset
 
-Suppose we have a sequence of independent, random, self-adjoint matrices
- 
+Suppose we have a sequence of independent,
+ random,
+ self-adjoint matrices 
 \begin_inset Formula $M_{j}\in\R^{n\times n}$
 \end_inset
 
@@ -1211,14 +1271,16 @@ Suppose we have a sequence of independent, random, self-adjoint matrices
 \end_inset
 
 .
- Then, for 
+ Then,
+ for 
 \begin_inset Formula $T=\frac{R}{\varepsilon^{2}}\log\frac{n}{\delta}$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula 
 \[
-(1-O(\varepsilon))I\preceq\frac{1}{T}\sum_{j=1}^{T}M_{j}\preceq(1+O(\varepsilon))I
+(1-O(\varepsilon))I\preceq\frac{1}{T}\sum^{T}_{j=1}M_{j}\preceq(1+O(\varepsilon))I
 \]
 
 \end_inset
@@ -1264,7 +1326,8 @@ For independent random variables
 \begin_inset Formula $\E\sigma_{i}=0$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $|\sigma_{i}|\leq1$
 \end_inset
 
@@ -1272,7 +1335,8 @@ For independent random variables
 \begin_inset Formula $A\in\R^{n\times n}$
 \end_inset
 
-, we have 
+,
+ we have 
 \begin_inset Formula 
 \[
 \left|\sigma^{\top}A\sigma-\E\sigma^{\top}A\sigma\right|\lesssim\|A\|_{F}\sqrt{\log(\frac{1}{\delta})}+\|A\|_{\op}\log(\frac{1}{\delta})
@@ -1288,8 +1352,9 @@ with probability
 \end_layout
 
 \begin_layout Standard
-For our problem, we set 
-\begin_inset Formula $M_{r}=m\cdot U^{\top}\pi_{r}\pi_{r}^{\top}U$
+For our problem,
+ we set 
+\begin_inset Formula $M_{r}=m\cdot U^{\top}\pi_{r}\pi^{\top}_{r}U$
 \end_inset
 
  where 
@@ -1314,21 +1379,24 @@ For our problem, we set
 \end_inset
 
 .
- Next, we note that
+ Next,
+ we note that
 \begin_inset Formula 
 \begin{equation}
-M_{r}\preceq m\cdot\pi_{r}^{\top}UU^{\top}\pi_{r}\cdot I.\label{matrix_ub}
+M_{r}\preceq m\cdot\pi^{\top}_{r}UU^{\top}\pi_{r}\cdot I.\label{matrix_ub}
 \end{equation}
 
 \end_inset
 
-With small probability, 
-\begin_inset Formula $\pi_{r}^{\top}UU^{\top}\pi_{r}$
+With small probability,
+ 
+\begin_inset Formula $\pi^{\top}_{r}UU^{\top}\pi_{r}$
 \end_inset
 
  can be huge.
- However, as long as 
-\begin_inset Formula $\pi_{r}^{\top}UU^{\top}\pi_{r}$
+ However,
+ as long as 
+\begin_inset Formula $\pi^{\top}_{r}UU^{\top}\pi_{r}$
 \end_inset
 
  is bounded by 
@@ -1339,12 +1407,14 @@ With small probability,
 \begin_inset Formula $1-\delta$
 \end_inset
 
-, then we can still use the matrix Chernoff bound above.
+,
+ then we can still use the matrix Chernoff bound above.
  To bound 
-\begin_inset Formula $\pi_{r}^{\top}UU^{\top}\pi_{r}$
+\begin_inset Formula $\pi^{\top}_{r}UU^{\top}\pi_{r}$
 \end_inset
 
-, we will use the following large deviation inequality.
+,
+ we will use the following large deviation inequality.
 \end_layout
 
 \begin_layout Standard
@@ -1352,7 +1422,8 @@ With small probability,
 status open
 
 \begin_layout Plain Layout
-Now, we can bound 
+Now,
+ we can bound 
 \begin_inset Formula $R$
 \end_inset
 
@@ -1374,10 +1445,11 @@ Assume that
 \end_inset
 
 .
- Then, 
+ Then,
+ 
 \begin_inset Formula 
 \[
-\pi_{r}^{\top}UU^{\top}\pi_{r}\leq\frac{\epsilon^{2}}{\log(d/\delta)}
+\pi^{\top}_{r}UU^{\top}\pi_{r}\leq\frac{\epsilon^{2}}{\log(d/\delta)}
 \]
 
 \end_inset
@@ -1404,7 +1476,8 @@ Note that
 \end_inset
 
 .
- By the Chernoff bound, one can show that 
+ By the Chernoff bound,
+ one can show that 
 \begin_inset Formula $\pi_{r}$
 \end_inset
 
@@ -1438,7 +1511,8 @@ Note that
 \begin_inset Formula $|I|\leq2sn/m$
 \end_inset
 
-, note that 
+,
+ note that 
 \begin_inset Formula $\sigma\defeq\pi_{r}|_{I}$
 \end_inset
 
@@ -1452,10 +1526,11 @@ Note that
 \end_inset
 
 .
- Then, we have that
+ Then,
+ we have that
 \begin_inset Formula 
 \[
-\pi_{r}^{\top}UU^{\top}\pi_{r}=\sigma^{\top}P\sigma.
+\pi^{\top}_{r}UU^{\top}\pi_{r}=\sigma^{\top}P\sigma.
 \]
 
 \end_inset
@@ -1481,7 +1556,8 @@ Note that
 \begin_inset Formula $P\succeq0$
 \end_inset
 
-, we have that
+,
+ we have that
 \begin_inset Formula 
 \[
 \|P\|_{F}=\sqrt{\tr P^{2}}\leq\sqrt{\|P\|_{\op}\cdot\tr P}\leq\sqrt{\tr P}.
@@ -1489,12 +1565,14 @@ Note that
 
 \end_inset
 
-Also, we have that 
+Also,
+ we have that 
 \begin_inset Formula $\E\sigma^{\top}P\sigma=\frac{1}{s}\tr P$
 \end_inset
 
 .
- Hence, we have
+ Hence,
+ we have
 \begin_inset Formula 
 \[
 \sigma^{\top}P\sigma\leq\frac{1}{s}\left(\tr P+O\left(\sqrt{\tr P\cdot\log\frac{1}{\delta}}+\log\frac{1}{\delta}\right)\right)
@@ -1524,7 +1602,8 @@ with probability
 \end_inset
 
 .
- By the Chernoff bound, one can show that
+ By the Chernoff bound,
+ one can show that
 \begin_inset Formula 
 \[
 \tr P\leq\frac{4sd}{m}.
@@ -1532,7 +1611,8 @@ with probability
 
 \end_inset
 
-Hence, we have
+Hence,
+ we have
 \begin_inset Formula 
 \[
 \sigma^{\top}P\sigma\leq\frac{4d}{m}+\frac{1}{s}O\left(\sqrt{\frac{sd}{m}\cdot\log\frac{1}{\delta}}+\log\frac{1}{\delta}\right)
@@ -1553,7 +1633,8 @@ with probability
 \begin_inset Formula $m\gg d\log(\frac{d}{\delta})/\epsilon^{2}$
 \end_inset
 
-, we have 
+,
+ we have 
 \begin_inset Formula $\sigma^{\top}P\sigma\leq\frac{\epsilon^{2}}{\log(d/\delta)}$
 \end_inset
 
@@ -1640,7 +1721,7 @@ Apply the previous lemma with failure probability
  every row satisfies
 \begin_inset Formula 
 \[
-\pi_{r}^{\top}UU^{\top}\pi_{r}\leq\frac{\epsilon^{2}}{\log(2d/\delta)}.
+\pi^{\top}_{r}UU^{\top}\pi_{r}\leq\frac{\epsilon^{2}}{\log(2d/\delta)}.
 \]
 
 \end_inset
@@ -1653,6 +1734,7 @@ reference "thm:matrix-chernoff"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -1663,6 +1745,7 @@ reference "matrix_ub"
 plural "false"
 caps "false"
 noprefix "false"
+nolink "false"
 
 \end_inset
 
@@ -1689,7 +1772,6 @@ This is exactly the OSE guarantee for the subspace spanned by
 \end_inset
 
 .
-
 \end_layout
 
 \begin_layout Subsection
@@ -1697,8 +1779,10 @@ Back to Regression
 \end_layout
 
 \begin_layout Standard
-In the last subsection, we presented a proof sketch of a suboptimal OSE.
- For completeness, we state a tighter version here:
+In the last subsection,
+ we presented a proof sketch of a suboptimal OSE.
+ For completeness,
+ we state a tighter version here:
 \end_layout
 
 \begin_layout Standard
@@ -1706,7 +1790,6 @@ In the last subsection, we presented a proof sketch of a suboptimal OSE.
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 begin{algorithm2e}[H]
@@ -1723,7 +1806,6 @@ status open
 
 \begin_layout Plain Layout
 
-
 \backslash
 caption{
 \end_layout
@@ -1739,7 +1821,6 @@ caption{
 status open
 
 \begin_layout Plain Layout
-
 }
 \end_layout
 
@@ -1754,7 +1835,6 @@ status open
 
 \begin_layout Plain Layout
 
-
 \backslash
 SetAlgoLined
 \end_layout
@@ -1768,16 +1848,19 @@ SetAlgoLined
 
 \series bold
 Input:
+
 \series default
  a matrix 
 \begin_inset Formula $A\in\R^{n\times d}$
 \end_inset
 
-, a vector 
+,
+ a vector 
 \begin_inset Formula $b\in\R^{n}$
 \end_inset
 
-, success probability 
+,
+ success probability 
 \begin_inset Formula $\delta$
 \end_inset
 
@@ -1801,6 +1884,7 @@ Let
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "thm:sparse_OSE"
+nolink "false"
 
 \end_inset
 
@@ -1812,7 +1896,8 @@ Compute
 \begin_inset Formula $A'=2\Pi A$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $M=A'^{\top}A'$
 \end_inset
 
@@ -1836,7 +1921,6 @@ status open
 
 \begin_layout Plain Layout
 
-
 \backslash
 For{
 \end_layout
@@ -1852,7 +1936,6 @@ For{
 status open
 
 \begin_layout Plain Layout
-
 }{
 \end_layout
 
@@ -1873,7 +1956,6 @@ status open
 status open
 
 \begin_layout Plain Layout
-
 }
 \end_layout
 
@@ -1887,7 +1969,6 @@ status open
 status open
 
 \begin_layout Plain Layout
-
 
 \backslash
 Return
@@ -1908,7 +1989,6 @@ status open
 
 \begin_layout Plain Layout
 
-
 \backslash
 end{algorithm2e}
 \end_layout
@@ -1923,11 +2003,13 @@ Given any full-column-rank matrix
 \begin_inset Formula $A\in\R^{n\times d}$
 \end_inset
 
-, any vector 
+,
+ any vector 
 \begin_inset Formula $b\in\R^{n}$
 \end_inset
 
-, the algorithm 
+,
+ the algorithm 
 \begin_inset Formula $\mathtt{RegressionUsingOSE}$
 \end_inset
 
@@ -1963,6 +2045,7 @@ The guarantee of
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "lem:Richardson"
+nolink "false"
 
 \end_inset
 
@@ -1984,7 +2067,8 @@ reference "lem:Richardson"
 \end_inset
 
 .
- Hence, the cost of computing 
+ Hence,
+ the cost of computing 
 \begin_inset Formula $\Pi A$
 \end_inset
 
@@ -2024,7 +2108,8 @@ Linear regression can also be solved in time
 \begin_inset Formula $O\left(\nnz(A)+d^{O(1)}\right)$
 \end_inset
 
- via a very sparse embedding: each column of 
+ via a very sparse embedding:
+ each column of 
 \begin_inset Formula $\Pi$
 \end_inset
 
